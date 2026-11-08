@@ -1,0 +1,40 @@
+name: release
+
+# A version tag. The gates, the registration check and the claim gate run again on the tagged
+# commit, then a GitHub release is made with notes printed from the manifest, and the manifest and
+# the plan registration attached. No cache is restored in a release job.
+on:
+  push:
+    tags: ["v*.*.*"]
+
+permissions:
+  contents: read
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: "3.12"
+          enable-cache: false
+      - run: uv sync --frozen
+      - name: The gates and the claim gate on the tagged commit
+        run: |
+          make gates
+          uv run python scripts/build_manifest.py
+          uv run python scripts/check_published_numbers.py
+      - name: The release with its evidence
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          uv run python scripts/release_notes.py > "${RUNNER_TEMP}/notes.md"
+          gh release create "${TAG}" --verify-tag --title "unscheduled ${TAG}" \
+            --notes-file "${RUNNER_TEMP}/notes.md" \
+            results/manifest.json evaluation/registration_plan.json evaluation/registration.json
