@@ -1,0 +1,48 @@
+{
+ "as_of": "2026-11-07",
+ "secrets_typed_by_build": 0,
+ "repository": {
+  "name": "mekala27-45/unscheduled",
+  "visibility": "public",
+  "actions": "workflows may write contents and open pull requests"
+ },
+ "vercel": {
+  "plan": "hobby",
+  "projects": [
+   {
+    "name": "unscheduled-api",
+    "root": ".",
+    "build": "container from Dockerfile.vercel, port 80",
+    "domain": "unscheduled-api.vercel.app",
+    "environment_variable_names": [
+     "DATABASE_URL",
+     "DATABASE_URL_UNPOOLED",
+     "UNSCHED_CORS_ORIGINS"
+    ],
+    "database_variables_set_by": "the Neon integration for Vercel",
+    "cors_variable": "a config variable holding the two public web origins"
+   },
+   {
+    "name": "unscheduled",
+    "root": "web",
+    "build": "Next.js",
+    "domain": "unscheduled-triage.vercel.app",
+    "redirects_here": [
+     "unscheduled-sigma.vercel.app"
+    ]
+   }
+  ]
+ },
+ "neon": {
+  "project": "unscheduled",
+  "region": "aws-us-east-1",
+  "plan": "free",
+  "linked_to": "unscheduled-api",
+  "link": "Neon integration for Vercel, Link Existing Neon Account, one Vercel project"
+ },
+ "github_actions_secrets": [],
+ "notes": [
+  "Vercel marks the two database variables as readable values that look like secrets. They are written and rotated by the Neon integration, never by hand, so they are left as the integration made them.",
+  "No credential for the database is held by GitHub Actions. The API pulls the serving bundle from a public release (ADR 0007)."
+ ]
+}
