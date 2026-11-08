@@ -47,6 +47,7 @@ register:
 
 probe:
 	$(PY) scripts/probe_hosts.py
+	$(PY) scripts/probe_platform.py
 
 web:
 	cd web && pnpm install --frozen-lockfile && pnpm build

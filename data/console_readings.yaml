@@ -1,0 +1,29 @@
+# What the hosting consoles showed, read in Chrome by the build on the date below. Names, plans,
+# limits and counts only, never a credential or a value of one. scripts/probe_platform.py copies
+# these beside its live measurements and refuses a reading older than thirty days.
+read_on: 2026-11-07
+neon:
+  project: unscheduled
+  region: AWS US East 1 (N. Virginia)
+  plan: Free plan, 0 dollars a month
+  plan_limits_per_project: 1 GB storage, autoscaling to 2 CU, 100 compute hours, 10 branches
+  postgres_version: "18"
+  default_compute: 0.25 to 2 CU
+  history_retention: 6 hours
+  storage_used: 0 kB
+  branches: 2
+  linked_vercel_project: unscheduled-api
+vercel:
+  plan: Hobby
+  api_project: unscheduled-api
+  api_domain: unscheduled-api.vercel.app
+  api_variable_names: [DATABASE_URL, DATABASE_URL_UNPOOLED, UNSCHED_CORS_ORIGINS]
+  database_variables_written_by: the Neon integration for Vercel
+  web_project: unscheduled
+  web_domain: unscheduled-triage.vercel.app
+  web_variable_names: [NEXT_PUBLIC_API_URL]
+  system_variables_exposed: true
+github:
+  actions_allowed: all actions and reusable workflows
+  default_token_permissions: read and write, narrowed by every workflow to what it needs
+  actions_may_open_pull_requests: true

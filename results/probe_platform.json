@@ -1,0 +1,56 @@
+{
+ "probed_at": "2026-11-08T03:20:48+00:00",
+ "api": {
+  "health_status": 200,
+  "first_request_ms": 395,
+  "warm_p50_ms": 187,
+  "warm_max_ms": 266,
+  "version": "0.1.0.dev0",
+  "database": "not yet connected",
+  "cors_allows_web_origin": false
+ },
+ "web": {
+  "status": 200,
+  "ms": 220,
+  "statement_present": true,
+  "nvd_notice_present": true
+ },
+ "consoles": {
+  "read_on": "2026-11-07",
+  "neon": {
+   "project": "unscheduled",
+   "region": "AWS US East 1 (N. Virginia)",
+   "plan": "Free plan, 0 dollars a month",
+   "plan_limits_per_project": "1 GB storage, autoscaling to 2 CU, 100 compute hours, 10 branches",
+   "postgres_version": "18",
+   "default_compute": "0.25 to 2 CU",
+   "history_retention": "6 hours",
+   "storage_used": "0 kB",
+   "branches": 2,
+   "linked_vercel_project": "unscheduled-api"
+  },
+  "vercel": {
+   "plan": "Hobby",
+   "api_project": "unscheduled-api",
+   "api_domain": "unscheduled-api.vercel.app",
+   "api_variable_names": [
+    "DATABASE_URL",
+    "DATABASE_URL_UNPOOLED",
+    "UNSCHED_CORS_ORIGINS"
+   ],
+   "database_variables_written_by": "the Neon integration for Vercel",
+   "web_project": "unscheduled",
+   "web_domain": "unscheduled-triage.vercel.app",
+   "web_variable_names": [
+    "NEXT_PUBLIC_API_URL"
+   ],
+   "system_variables_exposed": true
+  },
+  "github": {
+   "actions_allowed": "all actions and reusable workflows",
+   "default_token_permissions": "read and write, narrowed by every workflow to what it needs",
+   "actions_may_open_pull_requests": true
+  },
+  "age_days": 1
+ }
+}
