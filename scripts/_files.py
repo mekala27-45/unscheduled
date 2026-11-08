@@ -7,6 +7,7 @@ text gates do not apply to it.
 
 from __future__ import annotations
 
+import os
 import subprocess
 from pathlib import Path
 
@@ -55,13 +56,18 @@ SKIP_PARTS = {
 DATA_ROOTS = {"data", "results"}
 DATA_PATHS = {("evals", "cassettes")}
 # Third party code vendored with its own licence: its word lists and comments are not ours to edit.
+# The diagram pages in web/public/diagrams carry archify's viewer; their source is docs/diagrams.
 VENDORED = {("tools", "hallmark")}
 
 
 def repo_files(root: Path) -> list[Path]:
+    # Before a push the hook checks what is committed, not files still being written beside it.
+    listing = (
+        ["--cached"] if os.environ.get("UNSCHED_GATES_TRACKED_ONLY") == "1" else ["--cached", "--others"]
+    )
     try:
         tracked = subprocess.run(
-            ["git", "ls-files", "--cached", "--others", "--exclude-standard"],
+            ["git", "ls-files", *listing, "--exclude-standard"],
             cwd=root,
             check=True,
             capture_output=True,
@@ -87,7 +93,7 @@ def authored_files(root: Path, *, include_data: bool = False) -> list[Path]:
             continue
         if tuple(rel.parts[:2]) in DATA_PATHS or tuple(rel.parts[:2]) in VENDORED:
             continue
-        if rel.parts[:3] == ("web", "public", "data"):
+        if rel.parts[:3] in {("web", "public", "data"), ("web", "public", "diagrams")}:
             continue
         if path.name in {"uv.lock", "package-lock.json", "LICENSE"}:
             continue

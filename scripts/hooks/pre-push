@@ -1,9 +1,9 @@
 #!/bin/sh
-# The gates before a push: the text gates, the registration check, and gitleaks over the commits
-# being pushed when gitleaks is installed (CI runs it on every push either way).
+# The gates before a push, over the committed files only: the text gates, the registration check,
+# and gitleaks over the commits being pushed when gitleaks is installed (CI runs it on every push).
 # Install once with: make hooks
 set -e
-make --no-print-directory gates
+UNSCHED_GATES_TRACKED_ONLY=1 make --no-print-directory gates
 if command -v gitleaks >/dev/null 2>&1; then
   zero=0000000000000000000000000000000000000000
   while read -r _local_ref local_sha _remote_ref remote_sha; do
