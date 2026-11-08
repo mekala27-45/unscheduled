@@ -1,0 +1,161 @@
+{
+ "as_of": "2026-11-08",
+ "values": {
+  "build.checklist_done": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_manifest.py",
+    "population": "the section 20 checklist",
+    "source": "build",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "build.checklist_total": {
+   "value": 18,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_manifest.py",
+    "population": "the section 20 checklist",
+    "source": "build",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  }
+ },
+ "tables": {
+  "checklist": {
+   "columns": [
+    "Item",
+    "Status",
+    "Line",
+    "Evidence"
+   ],
+   "formats": [
+    "int",
+    "text",
+    "text",
+    "text"
+   ],
+   "rows": [
+    [
+     1,
+     "not done",
+     "The setup done by the build with no typed secret; the probes ran first",
+     "results/probe.json, results/setup.json"
+    ],
+    [
+     2,
+     "not done",
+     "Every source fetched and locked by digest with licences and terms recorded",
+     "data/locks/nvd.lock.json, data/locks/cvelist.lock.json, data/locks/kev.lock.json, data/PROVENANCE.md"
+    ],
+    [
+     3,
+     "not done",
+     "Every change to every CVE dated; the as-of engine passes parity and the planted future fact test",
+     "results/lake/asof_tests.json"
+    ],
+    [
+     4,
+     "not done",
+     "dbt contracts and tests pass; quarantine counts in the manifest; status vocabulary registered",
+     "results/lake/dbt_results.json, config/labels.yaml"
+    ],
+    [
+     5,
+     "not done",
+     "The month criteria and the Phase 1 plan hashed before any test CVE was scored",
+     "evaluation/registration.json"
+    ],
+    [
+     6,
+     "not done",
+     "Q1 to Q8 answered with intervals and every chart with its table and SQL",
+     "results/backlog/q1.json, results/backlog/q8.json"
+    ],
+    [
+     7,
+     "not done",
+     "The customer name checked; six stand ins pinned by rule; SBOMs committed",
+     "results/name_check.json, config/products.yaml"
+    ],
+    [
+     8,
+     "not done",
+     "The matcher and osv-scanner agree; the CPE contrast measured",
+     "results/exposure/disagreements.json, results/exposure/summary.json"
+    ],
+    [
+     9,
+     "not done",
+     "The legacy script characterized and replaced by the adapter",
+     "report/legacy.md"
+    ],
+    [
+     10,
+     "not done",
+     "The API live on Vercel with Neon, loaded only by the sync, verified from a separate client",
+     "results/live/api_verify.json"
+    ],
+    [
+     11,
+     "not done",
+     "Persistence observed independently; schemathesis green; the load test with the cold start",
+     "results/load/c8.json"
+    ],
+    [
+     12,
+     "not done",
+     "The CLI gives the same answers as the API on the same inputs",
+     "results/cli_parity.json"
+    ],
+    [
+     13,
+     "not done",
+     "The design system in place with the palette validator green in CI",
+     "web/theme/palette.json, web/styles/tokens.css"
+    ],
+    [
+     14,
+     "not done",
+     "The console, the ruler, the landing, the docs and the report live on Vercel",
+     "results/live/web_verify.json"
+    ],
+    [
+     15,
+     "not done",
+     "sloplint, axe and Lighthouse green; the look reviewed or marked pending",
+     "results/design/gates.json"
+    ],
+    [
+     16,
+     "not done",
+     "README with the matrix, RESULTS, DECISIONS, the memos and notebooks; the humanizer pass",
+     "RESULTS.md, report/discovery.md, report/backlog.md"
+    ],
+    [
+     17,
+     "not done",
+     "The live check awake and asleep; reset and rederive reproduced every number",
+     "results/live_check.json, results/rederive.json"
+    ],
+    [
+     18,
+     "not done",
+     "At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2",
+     "results/release.json"
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/build_manifest.py",
+    "population": "the section 20 checklist",
+    "source": "build",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  }
+ },
+ "figures": {}
+}

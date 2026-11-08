@@ -1,0 +1,87 @@
+# Section 20 of the Phase 1 prompt. Each line is done only when its evidence exists, so the
+# checklist asks whether a step ran, not whether its output looks right.
+items:
+  - n: 1
+    text: "The setup done by the build with no typed secret; the probes ran first"
+    evidence:
+      - results/probe.json
+      - results/setup.json
+  - n: 2
+    text: "Every source fetched and locked by digest with licences and terms recorded"
+    evidence:
+      - data/locks/nvd.lock.json
+      - data/locks/cvelist.lock.json
+      - data/locks/kev.lock.json
+      - data/PROVENANCE.md
+  - n: 3
+    text: "Every change to every CVE dated; the as-of engine passes parity and the planted future fact test"
+    evidence:
+      - results/lake/asof_tests.json
+  - n: 4
+    text: "dbt contracts and tests pass; quarantine counts in the manifest; status vocabulary registered"
+    evidence:
+      - results/lake/dbt_results.json
+      - config/labels.yaml
+  - n: 5
+    text: "The month criteria and the Phase 1 plan hashed before any test CVE was scored"
+    evidence:
+      - evaluation/registration.json
+  - n: 6
+    text: "Q1 to Q8 answered with intervals and every chart with its table and SQL"
+    evidence:
+      - results/backlog/q1.json
+      - results/backlog/q8.json
+  - n: 7
+    text: "The customer name checked; six stand ins pinned by rule; SBOMs committed"
+    evidence:
+      - results/name_check.json
+      - config/products.yaml
+  - n: 8
+    text: "The matcher and osv-scanner agree; the CPE contrast measured"
+    evidence:
+      - results/exposure/disagreements.json
+      - results/exposure/summary.json
+  - n: 9
+    text: "The legacy script characterized and replaced by the adapter"
+    evidence:
+      - report/legacy.md
+  - n: 10
+    text: "The API live on Vercel with Neon, loaded only by the sync, verified from a separate client"
+    evidence:
+      - results/live/api_verify.json
+  - n: 11
+    text: "Persistence observed independently; schemathesis green; the load test with the cold start"
+    evidence:
+      - results/load/c8.json
+  - n: 12
+    text: "The CLI gives the same answers as the API on the same inputs"
+    evidence:
+      - results/cli_parity.json
+  - n: 13
+    text: "The design system in place with the palette validator green in CI"
+    evidence:
+      - web/theme/palette.json
+      - web/styles/tokens.css
+  - n: 14
+    text: "The console, the ruler, the landing, the docs and the report live on Vercel"
+    evidence:
+      - results/live/web_verify.json
+  - n: 15
+    text: "sloplint, axe and Lighthouse green; the look reviewed or marked pending"
+    evidence:
+      - results/design/gates.json
+  - n: 16
+    text: "README with the matrix, RESULTS, DECISIONS, the memos and notebooks; the humanizer pass"
+    evidence:
+      - RESULTS.md
+      - report/discovery.md
+      - report/backlog.md
+  - n: 17
+    text: "The live check awake and asleep; reset and rederive reproduced every number"
+    evidence:
+      - results/live_check.json
+      - results/rederive.json
+  - n: 18
+    text: "At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2"
+    evidence:
+      - results/release.json

@@ -1,0 +1,9 @@
+# Literals a template may type by hand: names, dates and versions, never a measured number.
+Phase 1 of 5
+Phase 1
+Phase 2
+1 of 5
+v0.1.0
+15 April 2026
+11 September 2026
+24 hours

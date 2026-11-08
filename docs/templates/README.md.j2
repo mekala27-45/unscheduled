@@ -1,0 +1,31 @@
+# unscheduled
+
+Triage for the CVEs the NVD no longer analyzes.
+
+{% if open_items() %}
+**Phase 1 of 5 is in progress.** {{ v("build.checklist_done") }} of {{ v("build.checklist_total") }} checklist lines are done. Still missing:
+
+{% for row in open_items() %}
+- {{ row[2] }}
+{% endfor %}
+{% else %}
+**Phase 1 of 5 is complete.** Every checklist line is done (RESULTS.md has the evidence).
+{% endif %}
+
+## What it is
+
+Since 15 April 2026 the NVD enriches CVEs in the CISA KEV catalog, CVEs in software the federal
+government uses and CVEs in critical software first, and labels every other CVE lowest priority,
+not scheduled for immediate enrichment. Since 11 September 2026 a maker of a product sold in the EU
+must send an early warning within 24 hours of learning that a vulnerability in it is actively
+exploited. unscheduled measures that gap, finds it in a company SBOM, and over five phases fills,
+ranks and routes the CVEs nobody scheduled, with a person approving every plan.
+
+## Where things are
+
+- AGENTS.md: setup, tests, gates and rules
+- BUILD_STATE.md: where the build stands
+- DECISIONS.md: every decision with its source
+- config/criteria.yaml: what the customer signed
+
+{{ statement() }}
