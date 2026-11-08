@@ -1,0 +1,232 @@
+{
+ "tool": {
+  "name": "syft",
+  "version": "1.57.0",
+  "asset": "syft_1.57.0_linux_amd64.tar.gz",
+  "sha256": "9c077a7d43029b3b13e98a8db720661e700c4d58db6352153a06395ae4a2a704"
+ },
+ "format": "CycloneDX 1.6 JSON",
+ "sboms": [
+  {
+   "product": "cloud-dashboard",
+   "ecosystem": "npm",
+   "file": "customer/sboms/cloud-dashboard.cdx.json",
+   "sha256": "0186547290b68eb8a187de9d7db15813e7082de304f3d92e87a9ea39f0780151",
+   "size": 4334116,
+   "spec_version": "1.6",
+   "components_with_purl": 3065,
+   "components_without_version": 0,
+   "quarantined_q07": 0,
+   "not_packages": {
+    "file": 1
+   },
+   "validated": "CycloneDX 1.6 JSON schema (cyclonedx-python-lib 11.12.0)",
+   "source": {
+    "repository": "freeCodeCamp/freeCodeCamp",
+    "commit": "c864299c3009423a29649db4744aa44a1c483183",
+    "scope": "Syft reads the root files pnpm-lock.yaml, package.json at the pinned commit"
+   },
+   "inputs": [
+    {
+     "path": "package.json",
+     "sha256": "dca394e47ef95c60dcdcc62e8d2ca081bf115cc41eac5423b6a90bcfb94084ff",
+     "size": 6213
+    },
+    {
+     "path": "pnpm-lock.yaml",
+     "sha256": "cf025a4fb1e434580e5f2b86b37bdcae6b42b4125425f5bd57d5105760a6dca6",
+     "size": 1041864
+    }
+   ],
+   "generated_at": "2026-11-08T03:18:25Z"
+  },
+  {
+   "product": "door-controller-firmware",
+   "ecosystem": "Debian",
+   "file": "customer/sboms/door-controller-firmware.cdx.json",
+   "sha256": "9c1364d48993b4ad00050d7907fa0cf648a530a46ebd824c4d62a585227c03c4",
+   "size": 1023502,
+   "spec_version": "1.6",
+   "components_with_purl": 88,
+   "components_without_version": 0,
+   "quarantined_q07": 0,
+   "not_packages": {
+    "file": 2984,
+    "operating-system": 1
+   },
+   "validated": "CycloneDX 1.6 JSON schema (cyclonedx-python-lib 11.12.0)",
+   "source": {
+    "image": "docker.io/library/debian:bookworm-20241223-slim",
+    "digest": "sha256:273c4267223752a058c730533a8b9a5e1c44b213674f258b76fd1135fc87fdd2",
+    "platform": "linux/arm64/v8",
+    "pulled_from": "docker.io/library/debian",
+    "name": "library/debian"
+   },
+   "inputs": [],
+   "refusals": [],
+   "generated_at": "2026-11-08T03:19:01Z"
+  },
+  {
+   "product": "go-edge-service",
+   "ecosystem": "Go",
+   "file": "customer/sboms/go-edge-service.cdx.json",
+   "sha256": "6a868001f5e742d472c3fecfe494caf9c3f49d30b19c1bb053d9c0d13cf980a3",
+   "size": 9272,
+   "spec_version": "1.6",
+   "components_with_purl": 13,
+   "components_without_version": 0,
+   "quarantined_q07": 0,
+   "not_packages": {
+    "file": 1
+   },
+   "validated": "CycloneDX 1.6 JSON schema (cyclonedx-python-lib 11.12.0)",
+   "source": {
+    "repository": "avelino/awesome-go",
+    "commit": "f038ca533006108c0f610998bc638e5603dfa74b",
+    "scope": "Syft reads the root files go.sum, go.mod at the pinned commit"
+   },
+   "inputs": [
+    {
+     "path": "go.mod",
+     "sha256": "9cbb81896828213825f0f47beb3c5e4b70a4ba799e2724a461930df2982053f1",
+     "size": 617
+    },
+    {
+     "path": "go.sum",
+     "sha256": "a273d2e012a88aee188ef0b42ab159ec75e63c0afa61e42cb54939d004cb36eb",
+     "size": 6263
+    }
+   ],
+   "generated_at": "2026-11-08T03:18:28Z"
+  },
+  {
+   "product": "java-integration-service",
+   "ecosystem": "Maven",
+   "file": "customer/sboms/java-integration-service.cdx.json",
+   "sha256": "2bee8c7b2b0137a8bd785e7e02f4470817254998cf9f7ebe7dde85c057dec14c",
+   "size": 81909,
+   "spec_version": "1.6",
+   "components_with_purl": 35,
+   "components_without_version": 13,
+   "quarantined_q07": 0,
+   "not_packages": {
+    "file": 8
+   },
+   "validated": "CycloneDX 1.6 JSON schema (cyclonedx-python-lib 11.12.0)",
+   "source": {
+    "repository": "macrozheng/mall",
+    "commit": "782f0d43aa9554b170160ad63cebdf79a4d6bb3f",
+    "scope": "Syft reads the root files pom.xml at the pinned commit and the module poms the root pom declares; a pom declares dependencies and is not a lock, so only declared dependencies with versions the poms resolve are seen, with no transitive resolution"
+   },
+   "inputs": [
+    {
+     "path": "mall-admin/pom.xml",
+     "sha256": "cf8c021d9b859c63dfbd8fdf700319bc589c2fde011bdf3391e724b6163a0daa",
+     "size": 1606
+    },
+    {
+     "path": "mall-common/pom.xml",
+     "sha256": "c87ef5ff5d72d39b300e4452a38d75727e8f9dddfc33e934a3597834d408b548",
+     "size": 1835
+    },
+    {
+     "path": "mall-demo/pom.xml",
+     "sha256": "c4ae914a4e53990182d188d3488533b622e37767cc10ec798cd02e57bbac3696",
+     "size": 1570
+    },
+    {
+     "path": "mall-mbg/pom.xml",
+     "sha256": "207aec02179acf8337a2acb1d29c65367d7232ef6a12a93038532236fee47a45",
+     "size": 1473
+    },
+    {
+     "path": "mall-portal/pom.xml",
+     "sha256": "3e69329efddee8e48788acdcb866e9192bc678c8f1b97a44b73fce74e6733407",
+     "size": 2221
+    },
+    {
+     "path": "mall-search/pom.xml",
+     "sha256": "1ab69599e563b53ba7448ee43843ef5a1244fc4799ee1dae7a2e6c3035c3e4a5",
+     "size": 1669
+    },
+    {
+     "path": "mall-security/pom.xml",
+     "sha256": "d66255e1bf95e0b21273219492cfd1bb6decd97960d70b043966037758a5192f",
+     "size": 1497
+    },
+    {
+     "path": "pom.xml",
+     "sha256": "5dbc8429368cab5b6150b9506a7b2614f504d530392725bb5940d209790a49f6",
+     "size": 12233
+    }
+   ],
+   "generated_at": "2026-11-08T03:18:29Z"
+  },
+  {
+   "product": "python-data-jobs",
+   "ecosystem": "PyPI",
+   "file": "customer/sboms/python-data-jobs.cdx.json",
+   "sha256": "0b5dabe3b02b269e0d7bdcb387fb6ea81604ebfbf311484f3bac1d13b9ef67b6",
+   "size": 180353,
+   "spec_version": "1.6",
+   "components_with_purl": 82,
+   "components_without_version": 0,
+   "quarantined_q07": 0,
+   "not_packages": {
+    "file": 1
+   },
+   "validated": "CycloneDX 1.6 JSON schema (cyclonedx-python-lib 11.12.0)",
+   "source": {
+    "repository": "TheAlgorithms/Python",
+    "commit": "12b1023a9d97ca19be761c10129cba5509c9b450",
+    "scope": "Syft reads the root files uv.lock, pyproject.toml at the pinned commit"
+   },
+   "inputs": [
+    {
+     "path": "pyproject.toml",
+     "sha256": "36997e02dfd8b1a70c67fbf986d5ba644e9d83860f8ebb88910eafc38dde4629",
+     "size": 6750
+    },
+    {
+     "path": "uv.lock",
+     "sha256": "c968a3ec5d117bc899557433c32615b3e726bfd13d1ab76ac94d80f3b58bb5ff",
+     "size": 129277
+    }
+   ],
+   "generated_at": "2026-11-08T03:18:27Z"
+  },
+  {
+   "product": "rust-cli",
+   "ecosystem": "crates.io",
+   "file": "customer/sboms/rust-cli.cdx.json",
+   "sha256": "dc980c258b22db1abc54bb9299c490385cd9c62a49c88e3c842813b690aee8a6",
+   "size": 1080362,
+   "spec_version": "1.6",
+   "components_with_purl": 789,
+   "components_without_version": 0,
+   "quarantined_q07": 8,
+   "not_packages": {
+    "file": 1
+   },
+   "validated": "CycloneDX 1.6 JSON schema (cyclonedx-python-lib 11.12.0)",
+   "source": {
+    "repository": "rustdesk/rustdesk",
+    "commit": "98b00cdb3d44af95c1b93a9b9596b6032c5ddb8d",
+    "scope": "Syft reads the root files Cargo.lock, Cargo.toml at the pinned commit"
+   },
+   "inputs": [
+    {
+     "path": "Cargo.lock",
+     "sha256": "1b9cbc093ad4e3c396ad19a37b4c8f109b8164b58397c4da4720b88c912b9ff8",
+     "size": 203224
+    },
+    {
+     "path": "Cargo.toml",
+     "sha256": "38c6a126e1113013c860b699f55a838595a98080a47070aaa6f90b3233273d28",
+     "size": 7079
+    }
+   ],
+   "generated_at": "2026-11-08T03:18:49Z"
+  }
+ ]
+}

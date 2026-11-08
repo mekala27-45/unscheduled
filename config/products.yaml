@@ -1,0 +1,216 @@
+# The stand in products of the fictional customer in config/customer.yaml.
+# Public open source repositories, and one public image, stand in for its six products; none of
+# them is the customer's code and every page that shows one names it as a stand in.
+# The rule below is fixed. `uv run python scripts/make_sboms.py select` applies it and rewrites
+# this file with stand_ins as read on the day, each with the repositories passed over and why.
+# Edit the rule, never the picks.
+rule:
+  cutoff: '2025-01-01T00:00:00Z'
+  min_stars: 1000
+  statement: 'One public repository per ecosystem (npm, PyPI, Go, Maven or Gradle, crates.io) and one
+    public container image for the firmware Linux layer. A repository qualifies when it was created before
+    the cutoff, is not a fork and is not archived, has at least the minimum stars, carries a licence GitHub
+    detects whose SPDX id the SPDX licence list marks OSI approved, has a commit on its default branch
+    committed before the cutoff, and has a lockfile of its ecosystem at the root at that commit (for Maven
+    a root pom.xml counts, and the build then declares that only declared dependencies are seen). The
+    licence file at the pinned commit must be the licence file of today, so the licence GitHub detects
+    today held at the pin. It is pinned to its newest commit before the cutoff, so that known vulnerabilities
+    exist today. Of the qualifying repositories in the ecosystem''s languages the most starred is chosen,
+    ties broken by name. The image is the Docker Official Image of Debian, the distribution whose advisories
+    the sources fetch from OSV, in its slim variant: the last dated tag before the cutoff, pinned by the
+    digest of its linux/arm64 manifest, the platform the door controllers run on.'
+ecosystems:
+- product: cloud-dashboard
+  ecosystem: npm
+  languages:
+  - JavaScript
+  - TypeScript
+  lockfiles:
+  - package-lock.json
+  - npm-shrinkwrap.json
+  - yarn.lock
+  - pnpm-lock.yaml
+  manifests:
+  - package.json
+- product: python-data-jobs
+  ecosystem: PyPI
+  languages:
+  - Python
+  lockfiles:
+  - poetry.lock
+  - uv.lock
+  - Pipfile.lock
+  - pdm.lock
+  manifests:
+  - pyproject.toml
+  - Pipfile
+- product: go-edge-service
+  ecosystem: Go
+  languages:
+  - Go
+  lockfiles:
+  - go.sum
+  manifests:
+  - go.mod
+- product: java-integration-service
+  ecosystem: Maven
+  languages:
+  - Java
+  lockfiles:
+  - gradle.lockfile
+  - pom.xml
+  manifests: []
+- product: rust-cli
+  ecosystem: crates.io
+  languages:
+  - Rust
+  lockfiles:
+  - Cargo.lock
+  manifests:
+  - Cargo.toml
+image:
+  product: door-controller-firmware
+  ecosystem: Debian
+  registry: docker.io
+  repository: library/debian
+  tag_prefix: bookworm-
+  tag_pattern: ^bookworm-(?P<date>\d{8})-slim$
+  platform: linux/arm64
+  mirrors:
+  - mirror.gcr.io/library/debian
+osi_list:
+  source: https://raw.githubusercontent.com/spdx/license-list-data/main/json/licenses.json
+  version: 8791eda
+  read_at: '2026-11-08T03:46:20Z'
+stand_ins:
+- product: cloud-dashboard
+  ecosystem: npm
+  kind: repository
+  repository: freeCodeCamp/freeCodeCamp
+  url: https://github.com/freeCodeCamp/freeCodeCamp
+  default_branch: main
+  commit: c864299c3009423a29649db4744aa44a1c483183
+  commit_date: '2024-12-30T21:42:53Z'
+  licence: BSD-3-Clause
+  licence_file: LICENSE.md
+  licence_file_sha256: 7d359ecc3a5e20332f6932b41326c305a946c719824ad411de9e2830313460cf
+  stars: 458727
+  lockfiles:
+  - pnpm-lock.yaml
+  scope: Syft reads the root files pnpm-lock.yaml, package.json at the pinned commit
+  date_read: '2026-11-07'
+  read_at: '2026-11-08T03:46:33Z'
+  passed_over: []
+- product: python-data-jobs
+  ecosystem: PyPI
+  kind: repository
+  repository: TheAlgorithms/Python
+  url: https://github.com/TheAlgorithms/Python
+  default_branch: master
+  commit: 12b1023a9d97ca19be761c10129cba5509c9b450
+  commit_date: '2024-12-31T02:16:32Z'
+  licence: MIT
+  licence_file: LICENSE.md
+  licence_file_sha256: 4395a1dc4bda1d6054c45b4d1230c709c7398e6d66f1d0aff4b22d95973bea56
+  stars: 225944
+  lockfiles:
+  - uv.lock
+  scope: Syft reads the root files uv.lock, pyproject.toml at the pinned commit
+  date_read: '2026-11-07'
+  read_at: '2026-11-08T03:46:45Z'
+  passed_over:
+  - repository: public-apis/public-apis
+    stars: 497057
+    reason: no root lockfile (poetry.lock, uv.lock, Pipfile.lock, pdm.lock) at the pinned commit 274ecf0e19e8
+  - repository: EbookFoundation/free-programming-books
+    stars: 401228
+    reason: licence CC-BY-4.0 is not OSI approved
+  - repository: donnemartin/system-design-primer
+    stars: 377270
+    reason: no licence GitHub can name
+  - repository: vinta/awesome-python
+    stars: 333260
+    reason: no licence GitHub can name
+  - repository: practical-tutorials/project-based-learning
+    stars: 289305
+    reason: no root lockfile (poetry.lock, uv.lock, Pipfile.lock, pdm.lock) at the pinned commit 243d33995fc5
+- product: go-edge-service
+  ecosystem: Go
+  kind: repository
+  repository: avelino/awesome-go
+  url: https://github.com/avelino/awesome-go
+  default_branch: main
+  commit: f038ca533006108c0f610998bc638e5603dfa74b
+  commit_date: '2024-12-30T14:45:16Z'
+  licence: MIT
+  licence_file: LICENSE
+  licence_file_sha256: 55df7521c33945cd0ab5b4fbaf0046a8a58cc1cf81ee9096614bf33a0e2e0983
+  stars: 192658
+  lockfiles:
+  - go.sum
+  scope: Syft reads the root files go.sum, go.mod at the pinned commit
+  date_read: '2026-11-07'
+  read_at: '2026-11-08T03:46:52Z'
+  passed_over: []
+- product: java-integration-service
+  ecosystem: Maven
+  kind: repository
+  repository: macrozheng/mall
+  url: https://github.com/macrozheng/mall
+  default_branch: master
+  commit: 782f0d43aa9554b170160ad63cebdf79a4d6bb3f
+  commit_date: '2024-12-26T06:50:09Z'
+  licence: Apache-2.0
+  licence_file: LICENSE
+  licence_file_sha256: 74414549f0768c8c895d5ecf3736850f99b2696c89b977e3f192dc6b81c9cb65
+  stars: 85014
+  lockfiles:
+  - pom.xml
+  scope: Syft reads the root files pom.xml at the pinned commit and the module poms the root pom declares;
+    a pom declares dependencies and is not a lock, so only declared dependencies with versions the poms
+    resolve are seen, with no transitive resolution
+  date_read: '2026-11-07'
+  read_at: '2026-11-08T03:47:02Z'
+  passed_over:
+  - repository: NationalSecurityAgency/ghidra
+    stars: 98587
+    reason: no root lockfile (gradle.lockfile, pom.xml) at the pinned commit 01984fa13628
+  - repository: iluwatar/java-design-patterns
+    stars: 94855
+    reason: no licence GitHub can name
+- product: rust-cli
+  ecosystem: crates.io
+  kind: repository
+  repository: rustdesk/rustdesk
+  url: https://github.com/rustdesk/rustdesk
+  default_branch: master
+  commit: 98b00cdb3d44af95c1b93a9b9596b6032c5ddb8d
+  commit_date: '2024-12-30T03:51:36Z'
+  licence: AGPL-3.0
+  licence_file: LICENCE
+  licence_file_sha256: 8486a10c4393cee1c25392769ddd3b2d6c242d6ec7928e1414efff7dfb2f07ef
+  stars: 128576
+  lockfiles:
+  - Cargo.lock
+  scope: Syft reads the root files Cargo.lock, Cargo.toml at the pinned commit
+  date_read: '2026-11-07'
+  read_at: '2026-11-08T03:47:13Z'
+  passed_over:
+  - repository: clash-verge-rev/clash-verge-rev
+    stars: 156991
+    reason: no root lockfile (Cargo.lock) at the pinned commit 6b349eda4585
+- product: door-controller-firmware
+  ecosystem: Debian
+  kind: image
+  image: docker.io/library/debian
+  tag: bookworm-20241223-slim
+  index_digest: sha256:d365f4920711a9074c4bcd178e8f457ee59250426441ab2a5f8106ed8fe948eb
+  digest: sha256:273c4267223752a058c730533a8b9a5e1c44b213674f258b76fd1135fc87fdd2
+  platform: linux/arm64/v8
+  pushed: '2024-12-24T21:34:21Z'
+  mirrors:
+  - mirror.gcr.io/library/debian
+  scope: Syft reads every package the image's dpkg database lists, pulled by the platform digest
+  date_read: '2026-11-07'
+  read_at: '2026-11-08T03:47:14Z'
+  passed_over: []
