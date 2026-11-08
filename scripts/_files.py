@@ -54,6 +54,8 @@ SKIP_PARTS = {
 }
 DATA_ROOTS = {"data", "results"}
 DATA_PATHS = {("evals", "cassettes")}
+# Third party code vendored with its own licence: its word lists and comments are not ours to edit.
+VENDORED = {("tools", "hallmark")}
 
 
 def repo_files(root: Path) -> list[Path]:
@@ -83,7 +85,7 @@ def authored_files(root: Path, *, include_data: bool = False) -> list[Path]:
             continue
         if not include_data and rel.parts[0] in DATA_ROOTS:
             continue
-        if tuple(rel.parts[:2]) in DATA_PATHS:
+        if tuple(rel.parts[:2]) in DATA_PATHS or tuple(rel.parts[:2]) in VENDORED:
             continue
         if rel.parts[:3] == ("web", "public", "data"):
             continue

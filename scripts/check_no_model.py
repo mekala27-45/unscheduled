@@ -53,7 +53,7 @@ def check(root: Path, files: list[Path] | None = None) -> int:
     problems = [
         f"{p.relative_to(root)}: {sorted(set(found))}"
         for p in files
-        if (found := refused_imports(p.read_text(encoding="utf-8")))
+        if p.exists() and (found := refused_imports(p.read_text(encoding="utf-8")))
     ]
     if problems:
         raise ValueError("no model gate failed (Phase 1 has no model):\n" + "\n".join(problems))

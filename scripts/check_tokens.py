@@ -65,7 +65,7 @@ def check(root: Path, files: list[Path] | None = None) -> int:
     for path in targets:
         try:
             text = path.read_text(encoding="utf-8")
-        except UnicodeDecodeError:
+        except (UnicodeDecodeError, FileNotFoundError):
             continue
         for line, name in find_literals(text):
             problems.append(f"{path.relative_to(root)}:{line}: {name}")
