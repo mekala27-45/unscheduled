@@ -1,0 +1,305 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "unscheduled, from the public sources to the console",
+    "output": "web/public/diagrams/architecture.html",
+    "locale": "en",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "analyst",
+      "type": "external",
+      "label": "Security engineer",
+      "sublabel": "in a browser",
+      "pos": [
+        560,
+        40
+      ],
+      "size": [
+        140,
+        64
+      ]
+    },
+    {
+      "id": "web",
+      "type": "frontend",
+      "label": "Web",
+      "sublabel": "Next.js on Vercel",
+      "pos": [
+        840,
+        40
+      ],
+      "size": [
+        140,
+        64
+      ],
+      "tag": "landing, console, docs"
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "API",
+      "sublabel": "FastAPI container",
+      "pos": [
+        1120,
+        40
+      ],
+      "size": [
+        140,
+        64
+      ],
+      "tag": "budget per client"
+    },
+    {
+      "id": "neon",
+      "type": "database",
+      "label": "Neon Postgres",
+      "sublabel": "the serving slice",
+      "pos": [
+        1400,
+        40
+      ],
+      "size": [
+        140,
+        64
+      ]
+    },
+    {
+      "id": "sources",
+      "type": "external",
+      "label": "Public sources",
+      "sublabel": "NVD, CVE List, KEV, EPSS, OSV",
+      "pos": [
+        40,
+        330
+      ],
+      "size": [
+        180,
+        64
+      ]
+    },
+    {
+      "id": "fetchers",
+      "type": "backend",
+      "label": "Fetchers",
+      "sublabel": "packages/sources",
+      "pos": [
+        340,
+        330
+      ],
+      "size": [
+        140,
+        64
+      ],
+      "tag": "one per source"
+    },
+    {
+      "id": "raw",
+      "type": "cloud",
+      "label": "Raw files",
+      "sublabel": "release assets",
+      "pos": [
+        340,
+        530
+      ],
+      "size": [
+        140,
+        64
+      ],
+      "tag": "named by digest"
+    },
+    {
+      "id": "lake",
+      "type": "database",
+      "label": "Lake",
+      "sublabel": "DuckDB, Parquet, dbt",
+      "pos": [
+        600,
+        326
+      ],
+      "size": [
+        150,
+        72
+      ],
+      "tag": "every fact dated"
+    },
+    {
+      "id": "analysis",
+      "type": "backend",
+      "label": "Analysis",
+      "sublabel": "Q1 to Q8, the manifest",
+      "pos": [
+        880,
+        220
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "matcher",
+      "type": "backend",
+      "label": "Matcher",
+      "sublabel": "SBOMs against advisories",
+      "pos": [
+        880,
+        440
+      ],
+      "size": [
+        160,
+        64
+      ]
+    },
+    {
+      "id": "serving",
+      "type": "cloud",
+      "label": "Serving release",
+      "sublabel": "bundle with digests",
+      "pos": [
+        1120,
+        330
+      ],
+      "size": [
+        150,
+        64
+      ]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "GitHub Actions and Releases",
+      "wraps": [
+        "fetchers",
+        "raw",
+        "lake",
+        "analysis",
+        "matcher",
+        "serving"
+      ]
+    },
+    {
+      "kind": "region",
+      "label": "Vercel",
+      "wraps": [
+        "web",
+        "api"
+      ]
+    },
+    {
+      "kind": "security-group",
+      "label": "reachable only from the API",
+      "wraps": [
+        "neon"
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "id": "pull-sources",
+      "from": "sources",
+      "to": "fetchers",
+      "label": "HTTPS, no key",
+      "variant": "emphasis"
+    },
+    {
+      "id": "lock-raw",
+      "from": "fetchers",
+      "to": "raw",
+      "label": "locked by digest",
+      "variant": "dashed"
+    },
+    {
+      "id": "write-bronze",
+      "from": "fetchers",
+      "to": "lake",
+      "label": "bronze Parquet",
+      "variant": "emphasis"
+    },
+    {
+      "id": "marts",
+      "from": "lake",
+      "to": "analysis",
+      "label": "marts, as of"
+    },
+    {
+      "id": "advisories",
+      "from": "lake",
+      "to": "matcher",
+      "label": "advisory ranges"
+    },
+    {
+      "id": "bundle",
+      "from": "lake",
+      "to": "serving",
+      "label": "current state, ruler events",
+      "variant": "emphasis"
+    },
+    {
+      "id": "backlog",
+      "from": "analysis",
+      "to": "serving",
+      "label": "backlog values"
+    },
+    {
+      "id": "findings",
+      "from": "matcher",
+      "to": "serving",
+      "label": "findings"
+    },
+    {
+      "id": "sync",
+      "from": "serving",
+      "to": "api",
+      "label": "pulled by the sync",
+      "variant": "security"
+    },
+    {
+      "id": "sql",
+      "from": "api",
+      "to": "neon",
+      "label": "SQL"
+    },
+    {
+      "id": "json",
+      "from": "web",
+      "to": "api",
+      "label": "JSON over HTTPS"
+    },
+    {
+      "id": "browse",
+      "from": "analyst",
+      "to": "web",
+      "label": "browser"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "The dated fact",
+      "items": [
+        "Every value published about a CVE is kept with when it became known and when it stopped",
+        "The as-of engine answers what was known at any time, tested with a planted future fact"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "No secret in Actions",
+      "items": [
+        "The API pulls the serving release and checks every digest before it loads a chunk",
+        "Vercel holds the database connection through the Neon integration; nobody typed it"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Two engines, one answer",
+      "items": [
+        "osv-scanner checks every finding the matcher makes, and a disagreement needs a reason",
+        "The CLI calls the same services as the API, so both give the same answers"
+      ]
+    }
+  ]
+}
