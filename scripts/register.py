@@ -58,14 +58,15 @@ def main(check: bool) -> int:
     if OUT.exists():
         print("registration: already registered; a change is a change request in DECISIONS.md")
         return 1
-    record = {
+    digest = combined(files)
+    record: dict[str, object] = {
         "registered_at": datetime.now(UTC).isoformat(timespec="seconds"),
-        "hash": combined(files),
+        "hash": digest,
         "files": files,
         "note": "registered before any test CVE was scored by anything",
     }
     OUT.write_text(json.dumps(record, indent=1) + "\n", encoding="utf-8")
-    print(f"registration: hashed {len(files)} files as {record['hash'][:12]}")
+    print(f"registration: hashed {len(files)} files as {digest[:12]}")
     return 0
 
 
