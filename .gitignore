@@ -1,0 +1,33 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+# Data that lives in Releases, never in git
+data/raw/
+data/bronze/
+data/silver/
+data/lake/
+data/cache/
+*.duckdb
+*.duckdb.wal
+# dbt
+dbt/target/
+dbt/logs/
+dbt/dbt_packages/
+# Web
+web/node_modules/
+web/.next/
+web/out/
+web/test-results/
+web/playwright-report/
+node_modules/
+# Local
+.env
+.env.*
+!.env.example
+.DS_Store
