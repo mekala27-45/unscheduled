@@ -1,0 +1,13 @@
+# The unscheduled API as a Vercel container function (Hobby, no card), port 80.
+# The database connection arrives as environment variables written by the Neon integration; nothing
+# secret is baked into the image. Migrations run at start, then uvicorn, from the virtual environment.
+FROM python:3.12-slim
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 UV_LINK_MODE=copy UV_COMPILE_BYTECODE=1 \
+    PORT=80 UNSCHED_ROOT=/app
+RUN pip install --no-cache-dir "uv>=0.11,<0.12"
+WORKDIR /app
+COPY pyproject.toml uv.lock README.md LICENSE AGENTS.md ./
+COPY packages ./packages
+RUN uv sync --frozen --no-dev
+EXPOSE 80
+CMD ["sh", "-c", "exec /app/.venv/bin/uvicorn unscheduled_api.main:app --host 0.0.0.0 --port ${PORT:-80} --proxy-headers --forwarded-allow-ips='*'"]

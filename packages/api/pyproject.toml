@@ -1,0 +1,18 @@
+[project]
+name = "unscheduled-api"
+version = "0.1.0"
+description = "The API: every CVE with its history, the backlog, the exposure and live SBOM matching"
+requires-python = ">=3.12,<3.13"
+license = "Apache-2.0"
+dependencies = [
+  "unscheduled-core",
+  "fastapi>=0.120",
+  "uvicorn>=0.34",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/unscheduled_api"]
