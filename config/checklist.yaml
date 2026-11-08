@@ -1,10 +1,12 @@
 # Section 20 of the Phase 1 prompt. Each line is done only when its evidence exists, so the
-# checklist asks whether a step ran, not whether its output looks right.
+# checklist asks whether a step ran, not whether its output looks right. Evidence is a file a step
+# or a check wrote, never an input that merely exists.
 items:
   - n: 1
     text: "The setup done by the build with no typed secret; the probes ran first"
     evidence:
       - results/probe.json
+      - results/probe_platform.json
       - results/setup.json
   - n: 2
     text: "Every source fetched and locked by digest with licences and terms recorded"
@@ -60,8 +62,8 @@ items:
   - n: 13
     text: "The design system in place with the palette validator green in CI"
     evidence:
-      - web/theme/palette.json
       - web/styles/tokens.css
+      - results/design/palette.json
   - n: 14
     text: "The console, the ruler, the landing, the docs and the report live on Vercel"
     evidence:

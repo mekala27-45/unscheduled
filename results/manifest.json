@@ -43,7 +43,7 @@
      1,
      "not done",
      "The setup done by the build with no typed secret; the probes ran first",
-     "results/probe.json, results/setup.json"
+     "results/probe.json, results/probe_platform.json, results/setup.json"
     ],
     [
      2,
@@ -115,7 +115,7 @@
      13,
      "not done",
      "The design system in place with the palette validator green in CI",
-     "web/theme/palette.json, web/styles/tokens.css"
+     "web/styles/tokens.css, results/design/palette.json"
     ],
     [
      14,

@@ -1,0 +1,37 @@
+{% set spec = data("config/criteria.yaml") %}
+{% set plan = data("evaluation/registration_plan.json") %}
+# The criteria {{ spec.customer }} signed
+
+These are the terms the whole month answers to, written as code in config/criteria.yaml and signed
+on {{ spec.signed }}. They were hashed with the splits, the budgets and the Phase 1 plan at
+{{ plan.registered_at }} (hash {{ plan.hash[:12] }}), before the lake existed and before any result
+was computed. A change after the hash is a change request in DECISIONS.md with both verdicts.
+
+{% set ns = namespace(ids=[]) %}
+{% for c in spec.criteria %}
+{% if c.phase is string or c.phase == 1 %}
+{% set ns.ids = ns.ids + [c.id] %}
+{% endif %}
+{% endfor %}
+Each criterion names the phase that produces its evidence. Phase 1 produces the evidence for
+{{ ns.ids | join(", ") }}, in part or in full; the others say which phase will.
+
+{% for c in spec.criteria %}
+## {{ c.id }}, {{ c.name | lower }}
+
+{{ c.sentence }}
+
+- Metric: {{ c.metric }}
+- Population: {{ c.population }}
+- Split: {{ c.split }}
+- Interval: {{ c.interval }}
+- Compared with: {{ c.comparator }}
+- Evidence file: {{ c.evidence }}
+- Phase that produces it: {{ c.phase }}
+{% set verdict = "criteria." ~ c.id | lower ~ ".verdict" %}
+{% if has(verdict) %}
+- Verdict so far: {{ v(verdict) }}
+{% endif %}
+
+{% endfor %}
+{{ statement() }}
