@@ -1,0 +1,69 @@
+# The customer of this build. It is fictional: no such company exists, and every page that shows it
+# says so. The name is checked against GLEIF and SEC EDGAR on the day by scripts/check_name.py
+# (results/name_check.json); if the first candidate is taken the next one is used and DECISIONS.md
+# records the rename. Public open source repositories stand in for its products (config/products.yaml).
+name: Velloran Systems
+name_candidates:
+- Velloran Systems
+- Tessaly Access
+- Brannoch Systems
+name_check: results/name_check.json
+fictional: true
+business: maker of building access controllers (door controllers, readers and the software around them) sold in the EU
+main_establishment:
+  member_state: Belgium
+  iso_3166: BE
+  why_it_matters: >-
+    Under the Cyber Resilience Act a manufacturer notifies an actively exploited vulnerability in
+    its product to the CSIRT designated as coordinator of the member state of its main
+    establishment, through the single reporting platform ENISA runs, with an early warning within
+    24 hours of becoming aware of it. The reporting obligations apply from 11 September 2026.
+  csirt_designated_as_coordinator: >-
+    Centre for Cybersecurity Belgium (CCB): under the Belgian NIS2 law it acts as the national CSIRT
+    and as coordinator for the coordinated disclosure of vulnerabilities
+  source: https://ccb.belgium.be/sites/default/files/2026-01/national_CSIRT_charter_260120_EN.pdf
+  source_title: National CSIRT charter, version 2.0 (January 2026), sections on the CSIRT missions
+  read_on: '2026-11-07'
+security_team:
+  size: 2
+  engineers:
+  - id: sec-1
+    role: product security lead (firmware and devices)
+    triages: [door-controller-firmware, go-edge-service, rust-cli]
+  - id: sec-2
+    role: security engineer (cloud and integrations)
+    triages: [cloud-dashboard, java-integration-service, python-data-jobs]
+products:
+- id: door-controller-firmware
+  name: door controller firmware
+  what: the embedded Linux root file system of the door controllers
+  ecosystem: Debian
+  platform: linux/arm64
+- id: cloud-dashboard
+  name: cloud dashboard
+  what: the web console building managers use to run sites, doors and badges
+  ecosystem: npm
+- id: go-edge-service
+  name: edge service
+  what: the on site service that relays controller events to the cloud, written in Go
+  ecosystem: Go
+- id: java-integration-service
+  name: integration service
+  what: the Java service that connects the access system to customers' HR and visitor systems
+  ecosystem: Maven
+- id: rust-cli
+  name: installer tool
+  what: the command line tool field engineers use to provision controllers, written in Rust
+  ecosystem: crates.io
+- id: python-data-jobs
+  name: data jobs
+  what: the Python jobs that build occupancy and audit reports from access events
+  ecosystem: PyPI
+legacy:
+  handed_over: the nightly vulnerability report the security team has run from cron since 2019
+  script: customer/legacy/vuln_report.py
+  config: customer/legacy/vuln_report.ini
+  note: >-
+    The script is a fixture written for this build in the style of that job, as its header says.
+    It is never run against the live NVD; the characterization tests run it on sample files in
+    the NVD 1.1 feed layout.

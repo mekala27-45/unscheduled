@@ -1,0 +1,55 @@
+{
+ "date_read": "2026-11-07",
+ "checked_at": "2026-11-08T03:29:13Z",
+ "user_agent": "unscheduled-name-check/0.1 (+https://github.com/mekala27-45/unscheduled)",
+ "rule": "Try the candidates in order; take the first that neither GLEIF nor EDGAR holds a name close to (the distinctive word itself, or a word with a difflib ratio of 0.85 or more). An EDGAR refusal is recorded and GLEIF decides alone.",
+ "gleif_control": {
+  "filter[fulltext]": "Siemens",
+  "http_status": 200,
+  "total": 968
+ },
+ "candidates": [
+  {
+   "name": "Velloran Systems",
+   "token": "velloran",
+   "gleif": {
+    "status": "answered",
+    "queries": [
+     {
+      "filter[fulltext]": "Velloran Systems",
+      "http_status": 200,
+      "records": 0,
+      "total": 0
+     },
+     {
+      "filter[fulltext]": "velloran",
+      "http_status": 200,
+      "records": 0,
+      "total": 0
+     },
+     {
+      "fuzzycompletions": "velloran",
+      "http_status": 200,
+      "near_names": 1,
+      "closest_word_ratio": 0.824
+     }
+    ],
+    "matches": []
+   },
+   "edgar": {
+    "status": "refused",
+    "http_status": 403,
+    "page_title": "SEC.gov | Request Rate Threshold Exceeded",
+    "note": "EDGAR refused a client that names the project and no email; GLEIF decides",
+    "matches": []
+   },
+   "verdict": "clear"
+  }
+ ],
+ "chosen": "Velloran Systems",
+ "renamed": false,
+ "edgar_refused": true,
+ "relied_on": [
+  "gleif"
+ ]
+}
