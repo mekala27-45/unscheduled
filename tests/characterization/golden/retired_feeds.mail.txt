@@ -1,0 +1,10 @@
+envelope from: secops-cron@velloran.example
+envelope to: product-security@velloran.example
+Subject: [secops] NVD report <day>: 0 CVEs
+From: secops-cron@velloran.example
+To: product-security@velloran.example
+Content-Type: multipart/mixed
+part 1: text/plain; charset=utf-8
+Attached: 0 CVEs for the watched vendors (openssl, busybox, linux, debian, apache, nodejs, golang, siemens).
+part 2: text/csv, attachment vuln_report_<day>.csv, base64
+attachment sha256: 3dd1b11e145ba2fbd56afdadd072a50e1f74e6826bb37ae453e93d915bf66d10

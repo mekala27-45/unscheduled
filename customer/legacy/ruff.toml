@@ -1,0 +1,6 @@
+# customer/legacy holds a fixture in the style of a 2019 script, kept in that style on purpose:
+# the bare except is the behavior the characterization tests pin, and the old idioms are its age.
+extend = "../../pyproject.toml"
+
+[lint]
+extend-ignore = ["E722", "UP009", "UP031", "SIM105"]

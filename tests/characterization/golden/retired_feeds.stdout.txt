@@ -1,0 +1,2 @@
+exit code 0
+wrote <reports>/vuln_report_<day>.csv with 0 rows
