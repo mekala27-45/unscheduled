@@ -1,0 +1,27 @@
+{
+ "checked_at": "2026-11-08T03:31:28+00:00",
+ "files": {
+  "json_1_1_modified_meta": {
+   "url": "https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-modified.meta",
+   "status": 403
+  },
+  "json_1_1_recent_meta": {
+   "url": "https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-recent.meta",
+   "status": 403
+  },
+  "json_1_1_year_2019": {
+   "url": "https://nvd.nist.gov/feeds/json/cve/1.1/nvdcve-1.1-2019.json.gz",
+   "status": 403
+  },
+  "json_2_0_modified_meta": {
+   "url": "https://nvd.nist.gov/feeds/json/cve/2.0/nvdcve-2.0-modified.meta",
+   "status": 206
+  },
+  "json_2_0_recent_meta": {
+   "url": "https://nvd.nist.gov/feeds/json/cve/2.0/nvdcve-2.0-recent.meta",
+   "status": 206
+  }
+ },
+ "legacy_feed_answers": false,
+ "current_feed_answers": true
+}
