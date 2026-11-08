@@ -1,0 +1,11 @@
+# Time, not chance. Windows by the date a CVE was published. Registered before any test CVE is
+# examined. Descriptive counts may cover every window; any analysis that compares labels (filer
+# against NVD, analyzed against not) uses train, development and shadow only, never test.
+windows:
+  train: {start: 1999-01-01, end: 2023-12-31}
+  development: {start: 2024-01-01, end: 2024-12-31}
+  test: {start: 2025-01-01, end: 2026-03-31}
+  gap: {start: 2026-04-01, end: 2026-04-14, note: between test and the NVD change, used by no model}
+  shadow: {start: 2026-04-15, end: open}
+nvd_change_date: 2026-04-15
+cra_reporting_date: 2026-09-11

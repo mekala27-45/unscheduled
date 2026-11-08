@@ -1,0 +1,45 @@
+# The Phase 1 analysis plan, hashed with the criteria before any result is computed.
+defaults:
+  interval: cluster bootstrap by filer, 2000 resamples, 95 percent
+  family_correction: Benjamini-Hochberg at 0.05
+questions:
+  - id: Q1
+    title: The analysis delay
+    population: CVEs published since 2020-01-01, rejected CVEs excluded
+    estimator: share reaching NVD Analyzed within 7, 30 and 90 days, by month; median days to analysis
+    prediction: the 30 day share falls after 2024 and again after 2026-04-15
+  - id: Q2
+    title: After the change
+    population: CVEs published since 2026-04-15
+    estimator: counts by NVD status; share analyzed; share of analyzed that are in KEV; hours from KEV listing to NVD analysis
+    prediction: most analyzed CVEs since the change are KEV listed or critical software
+  - id: Q3
+    title: What the filer gives instead
+    population: CVEs without NVD analysis, every window
+    estimator: share with a filer CVSS 3.x, a filer CVSS 4.0, a CWE, affected versions, a CISA ADP value; top twenty filers
+    prediction: most carry a filer CVSS score; fewer carry affected versions
+  - id: Q4
+    title: Can a filer score stand in for the NVD
+    population: CVEs scored by both the filer and the NVD, train, development and shadow windows only
+    estimator: Cohen kappa per CVSS 3.1 base metric; quadratic weighted kappa on the severity band; by filer type; direction of disagreement
+    prediction: substantial agreement on attack vector, weaker on privileges and scope
+  - id: Q5
+    title: Exploited, and when
+    population: KEV listed CVEs published since 2021-01-01
+    estimator: days from publication to listing; share with no NVD analysis at listing, as of; share with exploit code before listing
+    prediction: a large share is listed within weeks; exploit code often precedes listing
+  - id: Q6
+    title: Who files the flood
+    population: CVEs published since 2020-01-01
+    estimator: monthly share by filer and filer type; filers behind the growth
+    prediction: a few filers account for most of the growth
+  - id: Q7
+    title: The customer exposure
+    population: the six stand in SBOMs, as of the pin date and today
+    estimator: findings by NVD status, KEV listed, fix available, what a CPE matcher misses
+    prediction: a large share of findings has no NVD analysis
+  - id: Q8
+    title: How different the skipped CVEs are
+    population: CVEs published in the shadow window, held out half for scoring
+    estimator: logistic regression domain classifier on filer, filer type, CWE, month, vector presence and description TF-IDF; AUC with interval; top features
+    prediction: the classifier separates them well, so NVD labels alone would bias a model

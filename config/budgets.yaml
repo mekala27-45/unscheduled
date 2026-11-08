@@ -1,0 +1,14 @@
+# Free tier only, no card. Ceilings the build refuses to pass.
+kaggle_gpu_hours_month: 8
+actions_minutes_per_run:
+  fetch: 330
+  lake: 120
+  analysis: 60
+  exposure: 60
+neon:
+  storage_ceiling_mb: 800
+  note: 1 GB plan limit recorded on 5 November, 20 percent margin
+client_budget_per_day:
+  lookups: 2000
+  sbom_matches: 50
+sbom_upload_max_bytes: 2097152
