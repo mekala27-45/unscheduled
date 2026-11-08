@@ -15,6 +15,7 @@ gates:
 	$(PY) scripts/check_statement.py
 	$(PY) scripts/check_secrets.py
 	$(PY) scripts/check_no_model.py
+	$(PY) scripts/check_tokens.py
 	$(PY) scripts/register.py --check
 
 lint:
