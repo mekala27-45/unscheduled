@@ -1,0 +1,56 @@
+# The README skills matrix (section 18 of the Phase 1 prompt). One row per skill an AI, machine
+# learning, forward deployed or data science posting lists, and the paths that demonstrate it. The
+# README shows a row only when every one of its paths is committed, so it lists only what is built;
+# docs/ROADMAP.md holds the plan for the rest.
+rows:
+  - skill: Python and the data stack
+    paths: [packages/sources, packages/lake]
+    note: polars, DuckDB and pyarrow
+  - skill: SQL and analytics engineering
+    paths: [dbt/models, dbt/macros]
+    note: staging, intermediate and marts, and the as-of macro
+  - skill: Data quality
+    paths: [dbt/tests]
+    note: contracts on every mart and the named quarantine rules
+  - skill: Point in time correctness
+    paths: [packages/lake, tests/lake]
+    note: the as-of engine, its parity test and the planted future fact
+  - skill: Statistics
+    paths: [packages/analysis]
+    note: cluster bootstrap, Cohen and weighted kappa, Benjamini-Hochberg, the domain classifier
+  - skill: APIs
+    paths: [packages/api, openapi.json]
+    note: FastAPI over Neon, typed problem documents, the committed schema
+  - skill: API integration
+    paths: [packages/sources]
+    note: NVD, CVE List, KEV, EPSS, OSV, GitHub advisories, GLEIF and EDGAR
+  - skill: Supply chain security
+    paths: [packages/match, customer/sboms]
+    note: the matcher in code, checked by osv-scanner, with Grype as the CPE contrast
+  - skill: Legacy code
+    paths: [customer/legacy, tests/characterization, packages/legacy_adapter]
+    note: characterization tests first, then a strangler with a byte for byte contract
+  - skill: CLI
+    paths: [packages/cli]
+    note: the same services as the API
+  - skill: Modular design and trade offs
+    paths: [packages, docs/adr]
+    note: one package per concern and a record for every decision
+  - skill: Coding agents
+    paths: [AGENTS.md, CLAUDE.md, .claude/skills]
+    note: one source of rules and four skills in the Agent Skills format
+  - skill: CI and DevOps
+    paths: [.github/workflows, Dockerfile.vercel]
+    note: the gates, gitleaks, zizmor, actions pinned by commit, Vercel deploys
+  - skill: Frontend and design systems
+    paths: [web, web/styles/tokens.css, tools/hallmark]
+    note: tokens first, shadcn/ui themed through them, the palette validator
+  - skill: Accessibility and performance
+    paths: [.github/workflows/web.yml]
+    note: axe and Lighthouse in CI
+  - skill: Forward deployed discovery
+    paths: [report/discovery.md, config/criteria.yaml]
+    note: the discovery memo and the criteria the customer signed
+  - skill: Communication
+    paths: [report/backlog.md]
+    note: the backlog report and the pushback paragraph on every evidence page

@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import difflib
 import re
+import subprocess
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass
 from html import escape
@@ -80,6 +81,21 @@ def _data(path: Path) -> object:
     return json.loads(text) if path.suffix == ".json" else yaml.safe_load(text)
 
 
+def tracked(root: Path, rel: str) -> bool:
+    """Whether a path is in git (a file, or a folder with a file in it); outside a checkout, whether it exists.
+
+    A document that lists what is built asks this rather than whether a file is on the disk, so a
+    file written but not committed never changes what CI renders.
+    """
+    try:
+        listed = subprocess.run(
+            ["git", "ls-files", "--", rel], cwd=root, capture_output=True, text=True, check=True
+        ).stdout
+    except (OSError, subprocess.CalledProcessError):
+        return (root / rel).exists()
+    return bool(listed.strip())
+
+
 def _missing(section: str) -> str:
     raise ClaimGateError(f"a required section was not written: {section}")
 
@@ -108,6 +124,7 @@ def environment(template_roots: Sequence[Path], manifest: Manifest, root: Path) 
         missing=_missing,
         inline=lambda rel: (root / rel).read_text(encoding="utf-8").rstrip("\n"),
         data=lambda rel: _data(root / rel),
+        tracked=lambda rel: tracked(root, rel),
         rows=lambda key: manifest.tables[key].rows,
         done=lambda: sum(1 for r in manifest.tables["checklist"].rows if r[1] == "done"),
         open_items=lambda: [r for r in manifest.tables["checklist"].rows if r[1] != "done"],

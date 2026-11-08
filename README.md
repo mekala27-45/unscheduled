@@ -32,11 +32,21 @@ must send an early warning within 24 hours of learning that a vulnerability in i
 exploited. unscheduled measures that gap, finds it in a company SBOM, and over five phases fills,
 ranks and routes the CVEs nobody scheduled, with a person approving every plan.
 
+## The skills, and where each one is
+
+Only what is built is listed; docs/ROADMAP.md holds the plan for the rest.
+
+| Skill | Where | What it shows |
+|---|---|---|
+| API integration | packages/sources | NVD, CVE List, KEV, EPSS, OSV, GitHub advisories, GLEIF and EDGAR |
+| CI and DevOps | .github/workflows, Dockerfile.vercel | the gates, gitleaks, zizmor, actions pinned by commit, Vercel deploys |
+
 ## Where things are
 
 - AGENTS.md: setup, tests, gates and rules
+- ARCHITECTURE.md: the path from the sources to the web, and why each part is where it is
 - BUILD_STATE.md: where the build stands
 - DECISIONS.md: every decision with its source
-- config/criteria.yaml: what the customer signed
+- config/criteria.yaml and report/criteria.md: what the customer signed
 
 > unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.

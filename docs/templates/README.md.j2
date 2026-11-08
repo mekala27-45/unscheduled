@@ -21,11 +21,39 @@ must send an early warning within 24 hours of learning that a vulnerability in i
 exploited. unscheduled measures that gap, finds it in a company SBOM, and over five phases fills,
 ranks and routes the CVEs nobody scheduled, with a person approving every plan.
 
+## The skills, and where each one is
+
+{% set matrix = data("docs/skills_matrix.yaml") %}
+{% set ns = namespace(built=[]) %}
+{% for row in matrix.rows %}
+{% set ns.ok = true %}
+{% for p in row.paths %}
+{% if not tracked(p) %}
+{% set ns.ok = false %}
+{% endif %}
+{% endfor %}
+{% if ns.ok %}
+{% set ns.built = ns.built + [row] %}
+{% endif %}
+{% endfor %}
+{% if ns.built %}
+Only what is built is listed; docs/ROADMAP.md holds the plan for the rest.
+
+| Skill | Where | What it shows |
+|---|---|---|
+{% for row in ns.built %}
+| {{ row.skill }} | {{ row.paths | join(", ") }} | {{ row.note }} |
+{% endfor %}
+{% else %}
+Nothing is built yet; docs/ROADMAP.md holds the plan.
+{% endif %}
+
 ## Where things are
 
 - AGENTS.md: setup, tests, gates and rules
+- ARCHITECTURE.md: the path from the sources to the web, and why each part is where it is
 - BUILD_STATE.md: where the build stands
 - DECISIONS.md: every decision with its source
-- config/criteria.yaml: what the customer signed
+- config/criteria.yaml and report/criteria.md: what the customer signed
 
 {{ statement() }}
