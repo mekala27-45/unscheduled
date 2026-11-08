@@ -1,0 +1,16 @@
+#!/bin/sh
+# The gates before a push: the text gates, the registration check, and gitleaks over the commits
+# being pushed when gitleaks is installed (CI runs it on every push either way).
+# Install once with: make hooks
+set -e
+make --no-print-directory gates
+if command -v gitleaks >/dev/null 2>&1; then
+  zero=0000000000000000000000000000000000000000
+  while read -r _local_ref local_sha _remote_ref remote_sha; do
+    [ "$local_sha" = "$zero" ] && continue
+    if [ "$remote_sha" = "$zero" ]; then range="$local_sha"; else range="$remote_sha..$local_sha"; fi
+    gitleaks git --redact --no-banner --log-opts="$range" .
+  done
+else
+  echo "pre-push: gitleaks is not installed here; the secrets job in CI runs it"
+fi

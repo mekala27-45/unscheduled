@@ -13,6 +13,7 @@ data/bronze/
 data/silver/
 data/lake/
 data/cache/
+data/serving/
 *.duckdb
 *.duckdb.wal
 # dbt
@@ -31,3 +32,5 @@ node_modules/
 .env.*
 !.env.example
 .DS_Store
+# Pinned tool binaries, downloaded and checked by digest
+tools/bin/

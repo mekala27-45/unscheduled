@@ -1,0 +1,34 @@
+# Updates arrive grouped and rarely, so the build is never a stream of version bumps, and only once a
+# release is two weeks old. Actions are pinned by commit; Dependabot moves the pin and the comment.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 14
+    groups:
+      actions:
+        patterns: ["*"]
+    open-pull-requests-limit: 2
+  - package-ecosystem: uv
+    directory: /
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 14
+    groups:
+      python:
+        patterns: ["*"]
+    open-pull-requests-limit: 2
+  - package-ecosystem: npm
+    directory: /web
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 14
+    groups:
+      web:
+        patterns: ["*"]
+    open-pull-requests-limit: 2

@@ -1,7 +1,8 @@
 name: ci
 
-# Every push and pull request: the gates, lint and strict types, the suite with coverage, the web
-# build, and the Vercel image answering /health. No secret is used by any job.
+# Every push and pull request: the gates, lint and strict types, the suite, the claim gate, the web
+# build, the Vercel image answering /health, gitleaks over every commit and zizmor over every
+# workflow. No job holds a secret; actions are pinned by commit.
 on:
   push:
     branches: [main]
@@ -16,10 +17,11 @@ jobs:
     env:
       PYTHONHASHSEED: "0"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
-      - uses: astral-sh/setup-uv@v6
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
         with:
           python-version: "3.12"
           enable-cache: true
@@ -46,11 +48,13 @@ jobs:
       run:
         working-directory: web
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
         with:
           version: 10
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: "22"
           cache: pnpm
@@ -61,10 +65,41 @@ jobs:
   container:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
       - name: The Vercel image builds and answers /health
         run: |
           docker build -f Dockerfile.vercel -t unscheduled-api .
           docker run -d --name api -p 8080:80 unscheduled-api
           for i in $(seq 1 60); do curl -fsS http://127.0.0.1:8080/health && break; sleep 2; done
           curl -fsS http://127.0.0.1:8080/health | grep -q '"status":"ok"'
+
+  secrets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: gitleaks over every commit, the binary checked by digest
+        env:
+          GITLEAKS_VERSION: 8.30.1
+          GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+        run: |
+          base="https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}"
+          curl -sSfL -o "${RUNNER_TEMP}/gitleaks.tar.gz" "${base}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  ${RUNNER_TEMP}/gitleaks.tar.gz" | sha256sum -c -
+          tar -xzf "${RUNNER_TEMP}/gitleaks.tar.gz" -C "${RUNNER_TEMP}" gitleaks
+          "${RUNNER_TEMP}/gitleaks" git --redact --no-banner .
+
+  workflows:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: zizmor over every workflow
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: pipx run zizmor==1.32.0 --format=github .github/workflows

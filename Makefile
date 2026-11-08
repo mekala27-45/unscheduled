@@ -1,7 +1,7 @@
 # unscheduled. Every target is a step a person or the CI runs; `make help` lists them.
 PY := uv run python
 
-.PHONY: help setup gates lint types test cov manifest render check-render register probe web clean
+.PHONY: help setup gates lint types test cov manifest render check-render register probe web hooks clean
 
 help:
 	@grep -E '^[a-z-]+:' Makefile | sed 's/:.*//' | sort | tr '\n' ' '; echo
@@ -29,6 +29,9 @@ test:
 
 cov:
 	uv run pytest --cov --cov-report=term --cov-fail-under=80
+
+hooks:
+	git config core.hooksPath scripts/hooks
 
 manifest:
 	$(PY) scripts/build_manifest.py
