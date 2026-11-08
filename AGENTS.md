@@ -39,5 +39,7 @@ make lint types test         # ruff, mypy strict, pytest
 
 - results/manifest.json and every rendered document (edit the template or the query instead)
 - data/locks/*.json (written by the fetchers)
-- config/criteria.yaml and evaluation/registration.json after the registration hash (a change is a
-  dated DECISIONS.md entry with both verdicts)
+- the six registered files (config/criteria.yaml, splits.yaml, budgets.yaml, labels.yaml,
+  samples.yaml and evaluation/phase1_plan.yaml) and evaluation/registration_plan.json and
+  registration.json once hashed; `make gates` fails on any edit, and a change is a dated
+  DECISIONS.md entry with both verdicts

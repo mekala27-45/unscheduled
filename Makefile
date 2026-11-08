@@ -15,6 +15,7 @@ gates:
 	$(PY) scripts/check_statement.py
 	$(PY) scripts/check_secrets.py
 	$(PY) scripts/check_no_model.py
+	$(PY) scripts/register.py --check
 
 lint:
 	uv run ruff check .
@@ -39,7 +40,7 @@ check-render: manifest
 	$(PY) scripts/check_published_numbers.py
 
 register:
-	$(PY) scripts/register.py
+	$(PY) scripts/register.py $(STAGE)
 
 probe:
 	$(PY) scripts/probe_hosts.py

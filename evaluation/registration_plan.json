@@ -1,0 +1,43 @@
+{
+ "stage": "plan",
+ "registered_at": "2026-11-08T03:16:01+00:00",
+ "hash": "5f34f2c0b6a84bee38204d2b9c7887019d96bc713704d185f7d92ca2a6e5694a",
+ "files": {
+  "config/criteria.yaml": "576b1618fdbe3cc7f90aa5c955763a5c593412ccedaccc1e398342dee37ce444",
+  "config/splits.yaml": "c86c0590ba43b7b009cd09199a45f950f4ddb309034213ab95d5bafa0670c3f1",
+  "config/budgets.yaml": "359dce1ecf35599b96fe927eeb9d82540e164acbd1da79a69ad5935f4a4b79c0",
+  "evaluation/phase1_plan.yaml": "ad4980cf9295800a011fdbaa7f9869e4cb03c0048030fc4d5f072da463a4f123"
+ },
+ "first_committed": {
+  "config/criteria.yaml": {
+   "added_in": "91fd592d0803cf337163b9aeaec3ef99bb7d2563",
+   "added_at": "2026-11-07T21:53:53-05:00",
+   "changed_since": false
+  },
+  "config/splits.yaml": {
+   "added_in": "91fd592d0803cf337163b9aeaec3ef99bb7d2563",
+   "added_at": "2026-11-07T21:53:53-05:00",
+   "changed_since": false
+  },
+  "config/budgets.yaml": {
+   "added_in": "91fd592d0803cf337163b9aeaec3ef99bb7d2563",
+   "added_at": "2026-11-07T21:53:53-05:00",
+   "changed_since": false
+  },
+  "evaluation/phase1_plan.yaml": {
+   "added_in": "91fd592d0803cf337163b9aeaec3ef99bb7d2563",
+   "added_at": "2026-11-07T21:53:53-05:00",
+   "changed_since": false
+  }
+ },
+ "state_at_hash": {
+  "bronze_tables": [
+   "cve_metrics",
+   "cve_weaknesses",
+   "nvd_cves"
+  ],
+  "lake_file": false,
+  "result_files": []
+ },
+ "note": "hashed before the lake existed and before any result was computed"
+}
