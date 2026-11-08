@@ -1,0 +1,153 @@
+/* unscheduled tokens: hallmark Cobalt with the section 15 faces and palettes.
+ * Light on :root. Dark under prefers-color-scheme (unless the page asks for light) and again under
+ * [data-theme="dark"], so the toggle wins in both directions. No colour or font family is written
+ * anywhere else in web/; components read these names or the Tailwind bridge in app/globals.css.
+ * Hex beside an OKLCH value is the sRGB the palette validator reads (theme/palette.json). */
+
+:root {
+  color-scheme: light;
+
+  /* The scale, from the hallmark scaffold */
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px;
+  --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.875rem; --text-md: 1rem; --text-lg: 1.25rem;
+  --text-xl: 1.5625rem; --text-2xl: 1.953rem; --text-3xl: 2.441rem;
+  --text-display: clamp(2.75rem, 5vw + 1rem, 5.25rem);
+  --text-display-s: clamp(2.25rem, 4vw + 0.5rem, 3.75rem);
+  --text-section: clamp(2rem, 2.5vw + 1rem, 3.5rem);
+  --text-title: clamp(1.25rem, 0.75vw + 0.875rem, 1.625rem);
+  --text-lead: clamp(1.125rem, 0.35vw + 1rem, 1.375rem);
+  /* The console scale: fixed, ratio 8/7 from a 14px table base, nothing under 12px */
+  --app-text-xs: 0.75rem; --app-text-sm: 0.875rem; --app-text-md: 1rem; --app-text-lg: 1.143rem;
+  --app-text-xl: 1.306rem; --app-text-2xl: 1.493rem;
+  --container: 1440px; --gutter: 64px; --gap-columns: 32px;
+  --section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 120ms; --dur-short: 220ms; --dur-long: 420ms;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300;
+  --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
+
+  /* Faces: next/font sets --ff-* on html from the Fontsource files; the names are the fallback */
+  --font-display: var(--ff-display, "Rethink Sans"), system-ui, sans-serif;
+  --font-body: var(--ff-body, "Anek Latin"), system-ui, sans-serif;
+  --font-outlier: var(--ff-mono, "Mononoki"), ui-monospace, monospace;
+  --tracking-display: -0.028em; --display-weight: 600; --display-leading: 1.02;
+
+  /* Shape */
+  --radius-card: 8px; --radius-input: 6px; --cut: 8px; --cut-l: 16px; --cut-s: 4px;
+  --cell-w: 8px; --cell-h: 16px; --rule-hair: 1px;
+
+  /* Paper and ink, light */
+  --color-paper: oklch(98.6% 0.005 250);        /* #F8FBFE page ground */
+  --color-paper-2: oklch(96.2% 0.008 252);      /* #EFF3F8 sunken wells, table stripes */
+  --color-paper-3: oklch(93% 0.011 252);        /* #E3E8EF the key tray, selected rows */
+  --color-card: oklch(99.4% 0.003 250);         /* #FCFDFF key face, panels and tables */
+  --color-ink: oklch(21% 0.028 262);            /* #111825 17.04:1 on paper */
+  --color-ink-2: oklch(36% 0.022 260);          /* #363E49 10.44:1 */
+  --color-muted: oklch(50% 0.018 258);          /* #5D646E 5.76:1, labels and table heads */
+  --color-rule: oklch(90% 0.009 252);           /* #DADEE4 every hairline */
+  --color-rule-2: oklch(83% 0.012 252);         /* #C2C8CF strong hairlines, key outlines */
+  --color-accent: oklch(52% 0.19 258);          /* #0462D3 the one signal */
+  --color-accent-ink: oklch(98.6% 0.005 250);   /* text on the accent */
+  --color-accent-wash: oklch(95% 0.028 256);    /* #E4F0FF one highlighted row */
+  --color-accent-deep: oklch(43% 0.2 262);      /* #0141BA densest field cells */
+  --color-accent-edge: oklch(39% 0.16 260);     /* #013D97 bottom edge of the primary key */
+  --color-accent-2: oklch(76% 0.13 254);        /* syntax on graphite */
+  --color-focus: oklch(52% 0.19 258);
+  --color-key-face: oklch(99.4% 0.003 250);
+  --color-key-edge: oklch(80% 0.016 254);       /* #B7BEC8 bottom edge of every key */
+  --color-glyph-1: oklch(89% 0.025 254);        /* #D0DCEB the field, lightest */
+  --color-glyph-2: oklch(81% 0.045 255);        /* #AEC3DE */
+  --color-glyph-3: oklch(70% 0.085 256);        /* #7BA1D3 */
+  --color-glyph-4: oklch(60% 0.13 257);         /* #4A81CC densest tint */
+  --color-graphite: oklch(21% 0.024 262);       /* #121823 code panels, machine strips */
+  --color-graphite-2: oklch(26.5% 0.026 262);   /* #1E2532 a header strip on graphite */
+  --color-graphite-ink: oklch(93% 0.010 250);   /* #E3E8EE */
+  --color-graphite-muted: oklch(69% 0.022 256); /* #939CA9 */
+  --color-graphite-rule: oklch(33% 0.03 262);
+  --color-scrim: oklch(21% 0.028 262 / 0.32);
+
+  /* Shadows: one paper step and a hairline; only keys have an edge */
+  --shadow-card: 0 1px 2px oklch(21% 0.028 262 / 0.06);
+  --shadow-key: 0 3px 0 0 var(--color-key-edge), 0 6px 8px -4px oklch(21% 0.028 262 / 0.28), inset 0 1px 0 oklch(100% 0 0 / 0.9);
+  --shadow-key-accent: 0 3px 0 0 var(--color-accent-edge), 0 6px 8px -4px oklch(30% 0.12 260 / 0.45), inset 0 1px 0 oklch(100% 0 0 / 0.22);
+  --shadow-key-press: inset 0 1px 2px oklch(21% 0.028 262 / 0.14);
+  --shadow-pop: 0 1px 2px oklch(21% 0.028 262 / 0.08), 0 8px 24px -12px oklch(21% 0.028 262 / 0.24);
+
+  /* The chart palette, fixed order. Slot 1 cobalt: CVEs the NVD has not scheduled.
+   * 2 amber: NVD analyzed values. 3 plum: filer (CNA) values. 4 teal: CISA ADP values.
+   * 5 olive: EPSS. 6 violet: awaiting or undergoing analysis. 7 brown: exploit code seen.
+   * 8 slate: deferred, modified, received and every other status. */
+  --chart-1: #0462D3; --chart-2: #C26E12; --chart-3: #6A3C52; --chart-4: #0D9298;
+  --chart-5: #656006; --chart-6: #4F259E; --chart-7: #763B0B; --chart-8: #39798A;
+  --chart-truth: var(--color-ink);   /* KEV listings and every truth line */
+  --chart-control: var(--color-muted); /* rejected CVEs and every floor, drawn with a hatch */
+  --chart-grid: var(--color-rule);
+  /* Sequential cobalt, low to high magnitude: the severity band and magnitude */
+  --seq-1: #ACC6EC; --seq-2: #7DA6E3; --seq-3: #4D86D9; --seq-4: #1C65C8; --seq-5: #02489F;
+  /* Diverging: filer scored higher than the NVD in amber, lower in cobalt */
+  --div-1: #73480D; --div-2: #9B641A; --div-3: #BB864B; --div-4: #D2AC84; --div-mid: #E2E5E8;
+  --div-6: #9DB6DB; --div-7: #6793D5; --div-8: #3370C7; --div-9: #034DA8;
+  /* Status: a gate, a freshness alarm or a KEV listing; always with an icon and a word */
+  --status-good: #1F7A43; --status-warning: #9E6100; --status-serious: #B4400E; --status-critical: #A3182F;
+}
+
+/* The same desk at night. Derived here and not in section 15: paper-3 #2A3240 (muted text 4.65:1
+ * on it), graphite #0B1018 for code wells under a dark page, and the primary key edge #3B7BD0. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --color-paper: #121823; --color-paper-2: #272E3B; --color-paper-3: #2A3240; --color-card: #1E2532;
+    --color-ink: #E3E8EE; --color-ink-2: #B7BEC8; --color-muted: #939CA9;
+    --color-rule: #2D3645; --color-rule-2: #3E4858;
+    --color-accent: #78B4FE; --color-accent-ink: #121823; --color-accent-wash: #1A2E4C;
+    --color-accent-deep: #A7CEFE; --color-accent-edge: #3B7BD0; --color-focus: #78B4FE;
+    --color-key-face: #1E2532; --color-key-edge: #070B14;
+    --color-glyph-1: #2D3645; --color-glyph-2: #3A4B66; --color-glyph-3: #466CA5; --color-glyph-4: #598ED4;
+    --color-graphite: #0B1018; --color-graphite-2: #151B26; --color-graphite-rule: #2D3645;
+    --color-scrim: oklch(10% 0.02 262 / 0.6);
+    --shadow-card: 0 0 0 1px var(--color-rule);
+    --shadow-key: 0 3px 0 0 var(--color-key-edge), inset 0 1px 0 oklch(100% 0 0 / 0.06);
+    --shadow-key-accent: 0 3px 0 0 var(--color-accent-edge), inset 0 1px 0 oklch(100% 0 0 / 0.3);
+    --shadow-key-press: inset 0 1px 2px oklch(0% 0 0 / 0.4);
+    --shadow-pop: 0 0 0 1px var(--color-rule-2);
+    --chart-1: #78B4FE; --chart-2: #FCB452; --chart-3: #BB6886; --chart-4: #64EFF7;
+    --chart-5: #BEAC3D; --chart-6: #8565E1; --chart-7: #D48A5B; --chart-8: #91C6E4;
+    --seq-1: #104A97; --seq-2: #2466C3; --seq-3: #4885DF; --seq-4: #74A6EF; --seq-5: #A4C6F8;
+    --div-1: #EEC192; --div-2: #D29754; --div-3: #AB722D; --div-4: #82510D; --div-mid: #2E3034;
+    --div-6: #245BAB; --div-7: #4780D2; --div-8: #79A6E9; --div-9: #AFCDF9;
+    --status-good: #4CC37A; --status-warning: #EFAA3E; --status-serious: #F2804E; --status-critical: #F45F72;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --color-paper: #121823; --color-paper-2: #272E3B; --color-paper-3: #2A3240; --color-card: #1E2532;
+  --color-ink: #E3E8EE; --color-ink-2: #B7BEC8; --color-muted: #939CA9;
+  --color-rule: #2D3645; --color-rule-2: #3E4858;
+  --color-accent: #78B4FE; --color-accent-ink: #121823; --color-accent-wash: #1A2E4C;
+  --color-accent-deep: #A7CEFE; --color-accent-edge: #3B7BD0; --color-focus: #78B4FE;
+  --color-key-face: #1E2532; --color-key-edge: #070B14;
+  --color-glyph-1: #2D3645; --color-glyph-2: #3A4B66; --color-glyph-3: #466CA5; --color-glyph-4: #598ED4;
+  --color-graphite: #0B1018; --color-graphite-2: #151B26; --color-graphite-rule: #2D3645;
+  --color-scrim: oklch(10% 0.02 262 / 0.6);
+  --shadow-card: 0 0 0 1px var(--color-rule);
+  --shadow-key: 0 3px 0 0 var(--color-key-edge), inset 0 1px 0 oklch(100% 0 0 / 0.06);
+  --shadow-key-accent: 0 3px 0 0 var(--color-accent-edge), inset 0 1px 0 oklch(100% 0 0 / 0.3);
+  --shadow-key-press: inset 0 1px 2px oklch(0% 0 0 / 0.4);
+  --shadow-pop: 0 0 0 1px var(--color-rule-2);
+  --chart-1: #78B4FE; --chart-2: #FCB452; --chart-3: #BB6886; --chart-4: #64EFF7;
+  --chart-5: #BEAC3D; --chart-6: #8565E1; --chart-7: #D48A5B; --chart-8: #91C6E4;
+  --seq-1: #104A97; --seq-2: #2466C3; --seq-3: #4885DF; --seq-4: #74A6EF; --seq-5: #A4C6F8;
+  --div-1: #EEC192; --div-2: #D29754; --div-3: #AB722D; --div-4: #82510D; --div-mid: #2E3034;
+  --div-6: #245BAB; --div-7: #4780D2; --div-8: #79A6E9; --div-9: #AFCDF9;
+  --status-good: #4CC37A; --status-warning: #EFAA3E; --status-serious: #F2804E; --status-critical: #F45F72;
+}
+
+@media (max-width: 60rem) {
+  :root { --gutter: 24px; --section-gap-s: 80px; --section-gap: 96px; --section-gap-l: 120px; }
+}
+@media (max-width: 40rem) {
+  :root { --gutter: 16px; --section-gap-s: 56px; --section-gap: 72px; --section-gap-l: 96px; --gap-columns: 16px; }
+}

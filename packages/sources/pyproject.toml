@@ -1,0 +1,20 @@
+[project]
+name = "unscheduled-sources"
+version = "0.1.0"
+description = "One fetcher per public source behind one interface: fetch, lock by digest, parse to bronze"
+requires-python = ">=3.12,<3.13"
+license = "Apache-2.0"
+dependencies = [
+  "unscheduled-core",
+  "httpx>=0.28",
+  "tenacity>=9.0",
+  "polars>=1.30",
+  "pyyaml>=6.0",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/unscheduled_sources"]

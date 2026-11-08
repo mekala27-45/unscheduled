@@ -10,6 +10,9 @@ dependencies = [
   "unscheduled-core",
   "unscheduled-render",
   "unscheduled-api",
+  "unscheduled-match",
+  "unscheduled-legacy-adapter",
+  "unscheduled-sources",
   "typer>=0.15",
   "httpx>=0.28",
 ]
@@ -35,6 +38,9 @@ members = ["packages/*"]
 unscheduled-core = { workspace = true }
 unscheduled-render = { workspace = true }
 unscheduled-api = { workspace = true }
+unscheduled-match = { workspace = true }
+unscheduled-legacy-adapter = { workspace = true }
+unscheduled-sources = { workspace = true }
 
 [tool.ruff]
 line-length = 110
@@ -53,7 +59,7 @@ python_version = "3.12"
 strict = true
 files = ["packages", "scripts"]
 explicit_package_bases = true
-mypy_path = ["packages/core/src", "packages/render/src", "packages/api/src"]
+mypy_path = ["packages/core/src", "packages/render/src", "packages/api/src", "packages/sources/src", "packages/match/src", "packages/legacy_adapter/src"]
 exclude = ["/tests/", "web/", "dbt/"]
 
 [[tool.mypy.overrides]]

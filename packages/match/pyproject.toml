@@ -1,0 +1,21 @@
+[project]
+name = "unscheduled-match"
+version = "0.1.0"
+description = "Package URLs, OSV and GHSA ranges evaluated in each ecosystem's own version scheme, findings as of a date"
+requires-python = ">=3.12,<3.13"
+license = "Apache-2.0"
+dependencies = [
+  "unscheduled-core",
+  "univers==32.0.1",
+  "packageurl-python==0.17.6",
+  "cyclonedx-python-lib[json-validation]==11.12.0",
+  "httpx>=0.28",
+  "duckdb>=1.1",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/unscheduled_match"]

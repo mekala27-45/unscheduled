@@ -1,0 +1,28 @@
+{
+  "light": {
+    "surface": "#F8FBFE",
+    "raised": "#FFFFFF",
+    "hairline": "#DADEE4",
+    "ink": "#111825",
+    "ink2": "#363E49",
+    "control": "#5D646E",
+    "categorical": ["#0462D3", "#C26E12", "#6A3C52", "#0D9298", "#656006", "#4F259E", "#763B0B", "#39798A"],
+    "sequential": ["#ACC6EC", "#7DA6E3", "#4D86D9", "#1C65C8", "#02489F"],
+    "ordinal": ["#ACC6EC", "#7DA6E3", "#4D86D9", "#1C65C8", "#02489F"],
+    "diverging": ["#73480D", "#9B641A", "#BB864B", "#D2AC84", "#E2E5E8", "#9DB6DB", "#6793D5", "#3370C7", "#034DA8"],
+    "status": { "good": "#1F7A43", "warning": "#9E6100", "serious": "#B4400E", "critical": "#A3182F" }
+  },
+  "dark": {
+    "surface": "#121823",
+    "raised": "#1E2532",
+    "hairline": "#2D3645",
+    "ink": "#E3E8EE",
+    "ink2": "#B7BEC8",
+    "control": "#939CA9",
+    "categorical": ["#78B4FE", "#FCB452", "#BB6886", "#64EFF7", "#BEAC3D", "#8565E1", "#D48A5B", "#91C6E4"],
+    "sequential": ["#104A97", "#2466C3", "#4885DF", "#74A6EF", "#A4C6F8"],
+    "ordinal": ["#104A97", "#2466C3", "#4885DF", "#74A6EF", "#A4C6F8"],
+    "diverging": ["#EEC192", "#D29754", "#AB722D", "#82510D", "#2E3034", "#245BAB", "#4780D2", "#79A6E9", "#AFCDF9"],
+    "status": { "good": "#4CC37A", "warning": "#EFAA3E", "serious": "#F2804E", "critical": "#F45F72" }
+  }
+}
