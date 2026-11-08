@@ -102,3 +102,40 @@ run locally: the secrets job in CI downloads it, checks its sha256 against the r
 zizmor 1.32.0 audits every workflow in CI; to pass it, every action is pinned to the commit of its
 current release (read with git ls-remote on 8 November 2026), no checkout keeps its token, the
 release job restores no cache, and Dependabot waits two weeks after a release.
+
+## 2026-11-07: Velloran Systems kept after the name check, with its main establishment in Belgium
+
+scripts/check_name.py searched GLEIF for the first candidate and for its distinctive word, and found
+no legal entity with a close name (results/name_check.json, read 7 November 2026; a control search
+for a known company returned records, so the search works). SEC EDGAR refused the request with a 403
+and its rate threshold page, because the client sends a User-Agent naming the project and no email;
+the build never puts an email in a User-Agent, so the refusal is recorded and GLEIF decides alone,
+as the rule in that file says. The fictional main establishment is Belgium, so under Article 14 of
+the CRA its reports go to the CSIRT designated as coordinator there, the Centre for Cybersecurity
+Belgium (National CSIRT charter, version 2.0, January 2026, read 7 November 2026; the citation is in
+config/customer.yaml).
+
+## 2026-11-07: the stand ins are picked by a written rule, not by taste
+
+config/products.yaml states the rule before the search: per ecosystem, the most starred public
+repository created before 2025, not a fork, not archived, with at least 1,000 stars, a licence on
+the SPDX list marked OSI approved, a lockfile of its ecosystem at the root, pinned to its newest
+commit before 1 January 2025, ties broken by name. Applied through the GitHub search API on 7
+November 2026, it chose freeCodeCamp/freeCodeCamp (npm, BSD-3-Clause), TheAlgorithms/Python (PyPI,
+MIT, a uv.lock), avelino/awesome-go (Go, MIT), macrozheng/mall (Maven, Apache-2.0, a root pom and no
+lockfile) and rustdesk/rustdesk (crates.io, AGPL-3.0), each with its commit, stars and every
+repository passed over in that file. Some picks look little like the product they play (the Go pick
+is a curated list with a small site generator); that is the rule working as written, and the reason
+it was written first. For the Maven stand in, versions that come from a parent BOM stay unresolved,
+so two components carry no version and neither engine can match them; the exposure lists both.
+
+## 2026-11-07: the firmware stand in is the Debian slim image for arm64
+
+The door controllers run embedded Linux on ARM, so the firmware layer is played by the Docker
+Official Image of Debian in its slim variant, the last dated tag before the cutoff
+(bookworm-20241223-slim), pinned by the digest of its linux/arm64 manifest (in config/products.yaml,
+read 7 November 2026). Debian because its advisories are in OSV, which the sources fetch, so both
+engines can read them. osv-scanner reads the image as distro debian-12.8 and looks packages up by
+binary name, where OSV keys Debian advisories by release 12 and source package; those 320 pairs are
+the disagreements with a recorded reason in results/exposure/disagreements.json, and with only that
+qualifier changed the two engines agree on every pair with the same name.
