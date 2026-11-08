@@ -100,14 +100,15 @@ def lookup_osv(name: str) -> Ecosystem | None:
 def normalize_name(eco: Ecosystem, name: str) -> str:
     """The name two records must share to describe the same package in one ecosystem.
 
-    PyPI names compare by PEP 503 (case and runs of `-_.` folded). npm names are lowercase by rule.
-    crates.io treats `-` and `_` as the same crate and ignores case. Go module paths and Maven
-    coordinates are compared exactly; a Debian source package name is lowercase by policy.
+    PyPI names compare by PEP 503 (case and runs of `-_.` folded). crates.io treats `-` and `_` as
+    the same crate and ignores case. npm names fold case because the purl specification lowercases
+    them (Syft writes pkg:npm/jsonstream for JSONStream) while advisories keep the published
+    spelling. Go module paths, Maven coordinates and Debian source package names compare exactly.
     """
     if eco is PYPI:
         return _PEP503.sub("-", name).lower()
     if eco is CRATES:
         return name.replace("_", "-").lower()
-    if eco in (NPM, DEBIAN):
+    if eco is NPM:
         return name.lower()
     return name
