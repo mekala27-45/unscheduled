@@ -1,0 +1,36 @@
+{
+ "checked_at": "2026-11-12T03:49:19+00:00",
+ "driven": {
+  "/internal/sync": 200,
+  "/v1/cves/CVE-2021-44228": 503,
+  "/v1/match": 200,
+  "/v1/products": 503
+ },
+ "mode": "start-server",
+ "passed": true,
+ "problems": [],
+ "read_back": {
+  "addresses_in_clear": 0,
+  "budget": {
+   "lookups": 2,
+   "matches": 1
+  },
+  "client_hash": "260d260c",
+  "match_log": [
+   {
+    "components": 0,
+    "hashed": true,
+    "sbom_sha256": "23d32ee3f9f56933f46927dd4cc8f967ebe26d80d349d2cf66b0f84753e5eeae",
+    "status": "ok"
+   }
+  ],
+  "migration": "0001",
+  "sync_runs": [
+   "checked"
+  ]
+ },
+ "server": {
+  "health_status": "ok",
+  "pid_stopped_before_read": true
+ }
+}
