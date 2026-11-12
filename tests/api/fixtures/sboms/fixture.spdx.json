@@ -1,0 +1,17 @@
+{
+ "spdxVersion": "SPDX-2.3",
+ "dataLicense": "CC0-1.0",
+ "SPDXID": "SPDXRef-DOCUMENT",
+ "name": "fixture-edge",
+ "documentNamespace": "https://example.org/spdx/fixture-edge-1",
+ "creationInfo": {"created": "2026-11-07T00:00:00Z", "creators": ["Tool: fixture"]},
+ "packages": [
+  {"SPDXID": "SPDXRef-logkit", "name": "logkit", "versionInfo": "v1.2.0", "downloadLocation": "NOASSERTION",
+   "externalRefs": [{"referenceCategory": "PACKAGE-MANAGER", "referenceType": "purl", "referenceLocator": "pkg:golang/example.org/fixture/logkit@v1.2.0"}]},
+  {"SPDXID": "SPDXRef-etl", "name": "fixture-etl", "versionInfo": "2.0.0", "downloadLocation": "NOASSERTION",
+   "externalRefs": [{"referenceCategory": "PACKAGE_MANAGER", "referenceType": "purl", "referenceLocator": "pkg:pypi/fixture-etl@2.0.0"}]},
+  {"SPDXID": "SPDXRef-leftpad", "name": "fixture-left-pad", "versionInfo": "1.0.0", "downloadLocation": "NOASSERTION",
+   "externalRefs": [{"referenceCategory": "PACKAGE-MANAGER", "referenceType": "purl", "referenceLocator": "pkg:npm/fixture-left-pad@1.0.0"}]},
+  {"SPDXID": "SPDXRef-vendored", "name": "vendored.tar", "downloadLocation": "NOASSERTION"}
+ ]
+}

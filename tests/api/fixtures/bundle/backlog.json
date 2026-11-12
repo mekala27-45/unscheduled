@@ -1,0 +1,9 @@
+{
+ "fixture": "invented values in the shape the lake build writes, not a measurement",
+ "q1": {"share_analyzed_30d_before_change": {"value": 0.61, "fmt": "pct1"}, "share_analyzed_30d_since_change": {"value": 0.18, "fmt": "pct1"}},
+ "q2": {"cves_since_change": {"value": 6, "fmt": "int"}},
+ "q3": {"share_with_filer_cvss": {"value": 0.8, "fmt": "pct1"}},
+ "q4": {"weighted_kappa_band": {"value": 0.7, "fmt": "float2"}},
+ "q5": {"median_days_to_kev": {"value": 22, "fmt": "days1"}},
+ "q6": {"top_filer_share": {"value": 0.12, "fmt": "pct1"}}
+}

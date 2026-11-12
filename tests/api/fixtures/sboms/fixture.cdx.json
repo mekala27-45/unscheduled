@@ -1,0 +1,21 @@
+{
+ "bomFormat": "CycloneDX",
+ "specVersion": "1.6",
+ "serialNumber": "urn:uuid:3e671687-395b-41f5-a30f-a58921a69b79",
+ "version": 1,
+ "metadata": {"component": {"type": "application", "name": "fixture-edge", "bom-ref": "fixture-edge"}},
+ "components": [
+  {"type": "library", "bom-ref": "logkit", "name": "logkit", "version": "v1.2.0", "purl": "pkg:golang/example.org/fixture/logkit@v1.2.0"},
+  {
+   "type": "application",
+   "bom-ref": "etl-app",
+   "name": "etl-app",
+   "version": "0.1.0",
+   "components": [
+    {"type": "library", "bom-ref": "fixture-etl", "name": "fixture-etl", "version": "2.0.0", "purl": "pkg:pypi/fixture-etl@2.0.0"}
+   ]
+  },
+  {"type": "library", "bom-ref": "left-pad", "name": "fixture-left-pad", "version": "1.0.0", "purl": "pkg:npm/fixture-left-pad@1.0.0"},
+  {"type": "file", "bom-ref": "vendored.tar", "name": "vendored.tar"}
+ ]
+}

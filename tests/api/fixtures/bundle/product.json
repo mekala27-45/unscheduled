@@ -1,0 +1,26 @@
+[
+ {
+  "product": "go-edge-service",
+  "ecosystem": "Go",
+  "kind": "repository",
+  "repository": "fixture/edge-proxy",
+  "commit": "0123456789abcdef0123456789abcdef01234567",
+  "commit_date": "2024-12-30T18:00:00Z",
+  "licence": "Apache-2.0",
+  "stars": 1500,
+  "scope": "fixture stand in, not a real pin",
+  "date_read": "2026-11-07"
+ },
+ {
+  "product": "python-data-jobs",
+  "ecosystem": "PyPI",
+  "kind": "repository",
+  "repository": "fixture/etl-jobs",
+  "commit": "89abcdef0123456789abcdef0123456789abcdef",
+  "commit_date": "2024-12-28T09:00:00Z",
+  "licence": "MIT",
+  "stars": 2100,
+  "scope": "fixture stand in, not a real pin",
+  "date_read": "2026-11-07"
+ }
+]

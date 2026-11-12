@@ -1,0 +1,36 @@
+[
+ {
+  "id": "GO-2021-9001",
+  "aliases": ["CVE-2021-90001", "GHSA-fx01-0001-aaaa"],
+  "published": "2021-03-02T00:00:00Z",
+  "modified": "2021-12-11T00:00:00Z",
+  "summary": "Fixture advisory: remote code execution in logkit",
+  "severity": [{"type": "CVSS_V3", "score": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H"}],
+  "affected": [
+   {"package": {"ecosystem": "Go", "name": "example.org/fixture/logkit"},
+    "ranges": [{"type": "SEMVER", "events": [{"introduced": "0"}, {"fixed": "1.2.1"}]}]}
+  ]
+ },
+ {
+  "id": "PYSEC-2025-9004",
+  "aliases": ["CVE-2025-90004"],
+  "published": "2025-06-02T00:00:00Z",
+  "modified": "2025-06-03T00:00:00Z",
+  "summary": "Fixture advisory: path traversal in fixture-etl",
+  "affected": [
+   {"package": {"ecosystem": "PyPI", "name": "fixture-etl"},
+    "ranges": [{"type": "ECOSYSTEM", "events": [{"introduced": "0"}, {"fixed": "2.0.3"}]}]}
+  ]
+ },
+ {
+  "id": "GHSA-fx09-0009-zzzz",
+  "aliases": ["CVE-2020-90009"],
+  "published": "2020-01-02T00:00:00Z",
+  "modified": "2020-01-03T00:00:00Z",
+  "summary": "Fixture advisory that does not reach version 1.0.0",
+  "affected": [
+   {"package": {"ecosystem": "npm", "name": "fixture-left-pad"},
+    "ranges": [{"type": "SEMVER", "events": [{"introduced": "0"}, {"fixed": "0.9.0"}]}]}
+  ]
+ }
+]
