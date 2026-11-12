@@ -45,10 +45,11 @@ test("the report lists its documents and renders the backlog with its tables", a
 });
 
 for (const [slug, name, what] of [
+  ["as-of", "status", "the NVD status lifecycle"],
   ["adr-0002", "slice", "the tables of the slice"],
   ["adr-0007", "sync", "the sync as a sequence"],
 ] as const) {
-  test(`decision record ${slug} opens with ${what}`, async ({ page }) => {
+  test(`/docs/${slug} opens with ${what}`, async ({ page }) => {
     await mockApi(page);
     await page.goto(`/docs/${slug}`);
     const figure = page.locator(".doc-figure");

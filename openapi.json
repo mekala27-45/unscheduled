@@ -1838,7 +1838,7 @@
                 }
               }
             },
-            "description": "Successful Response"
+            "description": "Whether each part is ready, with the freshness of every source"
           },
           "500": {
             "content": {
@@ -1870,7 +1870,7 @@
                 }
               }
             },
-            "description": "Successful Response"
+            "description": "What this call did: current, more or done"
           },
           "409": {
             "content": {
@@ -1950,7 +1950,7 @@
                 }
               }
             },
-            "description": "Successful Response"
+            "description": "What this call did: current, more or done"
           },
           "409": {
             "content": {
@@ -2031,7 +2031,7 @@
                 }
               }
             },
-            "description": "Successful Response"
+            "description": "The backlog values of the loaded release"
           },
           "429": {
             "content": {
@@ -2113,6 +2113,7 @@
             }
           },
           {
+            "description": "the current NVD status, exactly as the NVD writes it",
             "in": "query",
             "name": "nvd_status",
             "required": false,
@@ -2126,6 +2127,10 @@
                 {
                   "type": "null"
                 }
+              ],
+              "description": "the current NVD status, exactly as the NVD writes it",
+              "examples": [
+                "Deferred"
               ],
               "title": "Nvd Status"
             }
@@ -2149,6 +2154,7 @@
             }
           },
           {
+            "description": "the short name of the CNA that filed it, exactly",
             "in": "query",
             "name": "filer",
             "required": false,
@@ -2163,10 +2169,12 @@
                   "type": "null"
                 }
               ],
+              "description": "the short name of the CNA that filed it, exactly",
               "title": "Filer"
             }
           },
           {
+            "description": "the filer group, by the rule in config/filers.yaml",
             "in": "query",
             "name": "filer_type",
             "required": false,
@@ -2181,10 +2189,15 @@
                   "type": "null"
                 }
               ],
+              "description": "the filer group, by the rule in config/filers.yaml",
+              "examples": [
+                "vendor"
+              ],
               "title": "Filer Type"
             }
           },
           {
+            "description": "one of its CWEs",
             "in": "query",
             "name": "cwe",
             "required": false,
@@ -2198,6 +2211,7 @@
                   "type": "null"
                 }
               ],
+              "description": "one of its CWEs",
               "examples": [
                 "CWE-79"
               ],
@@ -2261,6 +2275,7 @@
             }
           },
           {
+            "description": "next_cursor from the previous page, sent with the same filters",
             "in": "query",
             "name": "cursor",
             "required": false,
@@ -2275,15 +2290,18 @@
                   "type": "null"
                 }
               ],
+              "description": "next_cursor from the previous page, sent with the same filters",
               "title": "Cursor"
             }
           },
           {
+            "description": "CVEs per page",
             "in": "query",
             "name": "limit",
             "required": false,
             "schema": {
               "default": 50,
+              "description": "CVEs per page",
               "maximum": 100,
               "minimum": 1,
               "title": "Limit",
@@ -2300,7 +2318,7 @@
                 }
               }
             },
-            "description": "Successful Response"
+            "description": "One page of CVEs and the cursor to the next page"
           },
           "400": {
             "content": {
@@ -2374,10 +2392,12 @@
         "operationId": "get_cve_v1_cves__cve_id__get",
         "parameters": [
           {
+            "description": "the CVE id",
             "in": "path",
             "name": "cve_id",
             "required": true,
             "schema": {
+              "description": "the CVE id",
               "examples": [
                 "CVE-2021-44228"
               ],
@@ -2415,7 +2435,7 @@
                 }
               }
             },
-            "description": "Successful Response"
+            "description": "The CVE as known now, or at the end of the day asked"
           },
           "404": {
             "content": {
@@ -2479,10 +2499,12 @@
         "operationId": "get_timeline_v1_cves__cve_id__timeline_get",
         "parameters": [
           {
+            "description": "the CVE id",
             "in": "path",
             "name": "cve_id",
             "required": true,
             "schema": {
+              "description": "the CVE id",
               "examples": [
                 "CVE-2021-44228"
               ],
@@ -2501,7 +2523,7 @@
                 }
               }
             },
-            "description": "Successful Response"
+            "description": "Every dated event of the CVE"
           },
           "404": {
             "content": {
@@ -2770,7 +2792,7 @@
                 }
               }
             },
-            "description": "Successful Response"
+            "description": "The findings for the SBOM, its counts and its digest"
           },
           "400": {
             "content": {
@@ -2861,7 +2883,7 @@
                 }
               }
             },
-            "description": "Successful Response"
+            "description": "The facts this deployment serves under"
           },
           "500": {
             "content": {
@@ -2892,7 +2914,7 @@
                 }
               }
             },
-            "description": "Successful Response"
+            "description": "The stand in products"
           },
           "429": {
             "content": {
@@ -2936,10 +2958,12 @@
         "operationId": "get_exposure_v1_products__product_id__exposure_get",
         "parameters": [
           {
+            "description": "a stand in product, as GET /v1/products lists them",
             "in": "path",
             "name": "product_id",
             "required": true,
             "schema": {
+              "description": "a stand in product, as GET /v1/products lists them",
               "examples": [
                 "go-edge-service"
               ],
@@ -2977,7 +3001,7 @@
                 }
               }
             },
-            "description": "Successful Response"
+            "description": "The findings of the product on the day asked"
           },
           "404": {
             "content": {

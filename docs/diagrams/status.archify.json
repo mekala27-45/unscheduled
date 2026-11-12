@@ -1,0 +1,263 @@
+{
+ "schema_version": 3,
+ "diagram_type": "lifecycle",
+ "meta": {
+  "title": "How the lake dates an NVD status",
+  "locale": "en",
+  "output": "web/public/diagrams/status.html",
+  "quality_profile": "showcase",
+  "repository": {
+   "url": "https://github.com/mekala27-45/unscheduled",
+   "provider": "github",
+   "link_mode": "web",
+   "revision": "2485ff8bb465b0019f136507a7b9b90c342d55e4"
+  },
+  "legend": {
+   "entries": {
+    "external": {
+     "label": "Changed by a source"
+    },
+    "neutral": {
+     "label": "Not scheduled"
+    }
+   }
+  }
+ },
+ "mainPath": [
+  "received",
+  "awaiting",
+  "undergoing",
+  "analyzed"
+ ],
+ "states": [
+  {
+   "id": "received",
+   "type": "start",
+   "label": "Received",
+   "sublabel": "New CVE Received",
+   "tag": "change history",
+   "sources": [
+    {
+     "path": "config/labels.yaml",
+     "line": 13,
+     "end_line": 18,
+     "label": "meaning"
+    },
+    {
+     "path": "dbt/models/intermediate/int_obs_status.sql",
+     "line": 53,
+     "end_line": 53,
+     "label": "the event that sets it"
+    }
+   ]
+  },
+  {
+   "id": "awaiting",
+   "type": "waiting",
+   "label": "Awaiting Analysis",
+   "sublabel": "in the queue",
+   "tag": "first fetch",
+   "sources": [
+    {
+     "path": "config/labels.yaml",
+     "line": 19,
+     "end_line": 23,
+     "label": "meaning"
+    },
+    {
+     "path": "dbt/models/intermediate/int_obs_status.sql",
+     "line": 64,
+     "end_line": 79,
+     "label": "dated by the first fetch"
+    }
+   ]
+  },
+  {
+   "id": "undergoing",
+   "type": "active",
+   "label": "Undergoing Analysis",
+   "sublabel": "being analyzed",
+   "tag": "first fetch",
+   "sources": [
+    {
+     "path": "config/labels.yaml",
+     "line": 24,
+     "end_line": 28,
+     "label": "meaning"
+    },
+    {
+     "path": "dbt/models/intermediate/int_obs_status.sql",
+     "line": 64,
+     "end_line": 79,
+     "label": "dated by the first fetch"
+    }
+   ]
+  },
+  {
+   "id": "analyzed",
+   "type": "success",
+   "label": "Analyzed",
+   "sublabel": "an analysis event",
+   "tag": "change history",
+   "sources": [
+    {
+     "path": "config/labels.yaml",
+     "line": 29,
+     "end_line": 33,
+     "label": "meaning"
+    },
+    {
+     "path": "dbt/models/intermediate/int_obs_status.sql",
+     "line": 29,
+     "end_line": 29,
+     "label": "the analysis events"
+    }
+   ]
+  },
+  {
+   "id": "modified",
+   "type": "external",
+   "label": "Modified",
+   "sublabel": "changed after analysis",
+   "tag": "change history",
+   "sources": [
+    {
+     "path": "config/labels.yaml",
+     "line": 34,
+     "end_line": 39,
+     "label": "meaning"
+    },
+    {
+     "path": "dbt/models/intermediate/int_obs_status.sql",
+     "line": 55,
+     "end_line": 55,
+     "label": "the event that sets it"
+    }
+   ]
+  },
+  {
+   "id": "deferred",
+   "type": "neutral",
+   "label": "Deferred",
+   "sublabel": "not scheduled",
+   "tag": "first fetch",
+   "sources": [
+    {
+     "path": "config/labels.yaml",
+     "line": 40,
+     "end_line": 50,
+     "label": "meaning"
+    },
+    {
+     "path": "dbt/models/intermediate/int_obs_status.sql",
+     "line": 64,
+     "end_line": 79,
+     "label": "dated by the first fetch"
+    }
+   ]
+  },
+  {
+   "id": "rejected",
+   "type": "failure",
+   "label": "Rejected",
+   "sublabel": "rejected in the CVE List",
+   "tag": "change history",
+   "sources": [
+    {
+     "path": "config/labels.yaml",
+     "line": 51,
+     "end_line": 55,
+     "label": "meaning"
+    },
+    {
+     "path": "dbt/models/intermediate/int_obs_status.sql",
+     "line": 56,
+     "end_line": 58,
+     "label": "rejected and unrejected"
+    }
+   ]
+  }
+ ],
+ "transitions": [
+  {
+   "id": "t-queue",
+   "from": "received",
+   "to": "awaiting",
+   "label": "marked for analysis",
+   "variant": "dashed"
+  },
+  {
+   "id": "t-start",
+   "from": "awaiting",
+   "to": "undergoing",
+   "label": "analysis starts",
+   "variant": "dashed"
+  },
+  {
+   "id": "t-done",
+   "from": "undergoing",
+   "to": "analyzed",
+   "label": "Initial Analysis"
+  },
+  {
+   "id": "t-amend",
+   "from": "analyzed",
+   "to": "modified",
+   "label": "CVE Modified"
+  },
+  {
+   "id": "t-again",
+   "from": "modified",
+   "to": "analyzed",
+   "label": "Reanalysis"
+  },
+  {
+   "id": "t-defer",
+   "from": "received",
+   "to": "deferred",
+   "label": "not scheduled",
+   "variant": "dashed",
+   "note": "since 15 April 2026"
+  },
+  {
+   "id": "t-reject",
+   "from": "received",
+   "to": "rejected",
+   "label": "CVE Rejected"
+  },
+  {
+   "id": "t-back",
+   "from": "rejected",
+   "to": "received",
+   "label": "CVE Unrejected"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "cyan",
+   "title": "Dated by the change history",
+   "items": [
+    "Received, Analyzed, Modified and Rejected each follow an event in the NVD change history, and the lake dates them by that event",
+    "The status a record holds today is dated by the record's last modification",
+    "Reanalysis and Modified Analysis events return a Modified CVE to Analyzed, as Initial Analysis does the first time"
+   ]
+  },
+  {
+   "dot": "amber",
+   "title": "Dated by the first fetch",
+   "items": [
+    "Awaiting Analysis, Undergoing Analysis and Deferred have no event in the history; the lake sees them only in the current record and dates them by the first fetch that saw them",
+    "A dashed arrow is a move with no event in the history, so in the lake a CVE goes from Received straight to Analyzed",
+    "Since 15 April 2026 the NVD gives Deferred to the CVEs outside the KEV catalog, federal software and critical software"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "Before the history",
+   "items": [
+    "A CVE published before the change history began starts at Analyzed or Received, dated from its publication and flagged before_history",
+    "Rejected can follow any status; an unrejected CVE returns to Received, or to Modified when it was analyzed before"
+   ]
+  }
+ ]
+}

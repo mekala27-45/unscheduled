@@ -48,6 +48,15 @@ const ARCHITECTURE: DocDiagram = {
 /** Which document opens with which diagram. */
 export const DOC_DIAGRAMS: Record<string, DocDiagram> = {
   architecture: ARCHITECTURE,
+  "as-of": {
+    light: "/diagrams/status-light.svg",
+    dark: "/diagrams/status-dark.svg",
+    page: "/diagrams/status.html",
+    width: 1314,
+    height: 364,
+    alt: "The NVD statuses as a lifecycle: Received, then Awaiting Analysis, Undergoing Analysis and Analyzed, with Modified after an analysis and back by Reanalysis, Deferred and Rejected below Received; Received, Analyzed, Modified and Rejected are dated by change history events, the other three by the first fetch that saw them",
+    source: "docs/diagrams/status.archify.json",
+  },
   "adr-0002": {
     light: "/diagrams/slice-light.svg",
     dark: "/diagrams/slice-dark.svg",

@@ -283,6 +283,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
         response_model=Health,
         tags=["service"],
         summary="Whether the API, its database and its data are ready, and how fresh each source is",
+        response_description="Whether each part is ready, with the freshness of every source",
         responses=openapi.problem_responses(500),
     )
     def health() -> Health:
@@ -326,6 +327,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
         response_model=Meta,
         tags=["service"],
         summary="The lock digests, the limits, the statement, the NVD notice and the advisory attribution",
+        response_description="The facts this deployment serves under",
         responses=openapi.problem_responses(500),
     )
     def meta() -> Meta:
@@ -381,13 +383,16 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
     @app.get(
         "/v1/cves/{cve_id}",
         summary="One CVE with every field, its source and since when; with as_of, as known that day",
+        response_description="The CVE as known now, or at the end of the day asked",
         response_model=CveRecord,
         tags=["cves"],
         dependencies=looked_up,
         responses=openapi.problem_responses(*DATA_ERRORS),
     )
     def get_cve(
-        cve_id: Annotated[str, Path(pattern=cves.CVE_ID_PATTERN, examples=["CVE-2021-44228"])],
+        cve_id: Annotated[
+            str, Path(pattern=cves.CVE_ID_PATTERN, description="the CVE id", examples=["CVE-2021-44228"])
+        ],
         as_of: Annotated[
             IsoDate | None,
             Query(description="the state at the end of this day (UTC), from facts known by then"),
@@ -399,6 +404,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
     @app.get(
         "/v1/cves",
         summary="A page of CVEs, newest published first, with filters and a cursor",
+        response_description="One page of CVEs and the cursor to the next page",
         response_model=CvePage,
         tags=["cves"],
         dependencies=looked_up,
@@ -407,11 +413,36 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
     def list_cves(
         published_from: Annotated[IsoDate | None, Query(description="published on or after this day")] = None,
         published_to: Annotated[IsoDate | None, Query(description="published on or before this day")] = None,
-        nvd_status: Annotated[str | None, Query(max_length=60, pattern=cves.TEXT_PATTERN)] = None,
+        nvd_status: Annotated[
+            str | None,
+            Query(
+                max_length=60,
+                pattern=cves.TEXT_PATTERN,
+                description="the current NVD status, exactly as the NVD writes it",
+                examples=["Deferred"],
+            ),
+        ] = None,
         kev: Annotated[bool | None, Query(description="listed in CISA KEV")] = None,
-        filer: Annotated[str | None, Query(max_length=120, pattern=cves.TEXT_PATTERN)] = None,
-        filer_type: Annotated[str | None, Query(max_length=60, pattern=cves.TEXT_PATTERN)] = None,
-        cwe: Annotated[str | None, Query(pattern=cves.CWE_PATTERN, examples=["CWE-79"])] = None,
+        filer: Annotated[
+            str | None,
+            Query(
+                max_length=120,
+                pattern=cves.TEXT_PATTERN,
+                description="the short name of the CNA that filed it, exactly",
+            ),
+        ] = None,
+        filer_type: Annotated[
+            str | None,
+            Query(
+                max_length=60,
+                pattern=cves.TEXT_PATTERN,
+                description="the filer group, by the rule in config/filers.yaml",
+                examples=["vendor"],
+            ),
+        ] = None,
+        cwe: Annotated[
+            str | None, Query(pattern=cves.CWE_PATTERN, description="one of its CWEs", examples=["CWE-79"])
+        ] = None,
         has_filer_score: Annotated[
             bool | None, Query(description="the filer gave a CVSS 3.1 or 4.0 score")
         ] = None,
@@ -421,8 +452,15 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
         analyzed_from: Annotated[
             IsoDate | None, Query(description="the NVD status is Analyzed, since this day or later")
         ] = None,
-        cursor: Annotated[str | None, Query(max_length=512, pattern=r"^[A-Za-z0-9_-]+$")] = None,
-        limit: Annotated[int, Query(ge=1, le=cves.PAGE_MAX)] = cves.PAGE_DEFAULT,
+        cursor: Annotated[
+            str | None,
+            Query(
+                max_length=512,
+                pattern=r"^[A-Za-z0-9_-]+$",
+                description="next_cursor from the previous page, sent with the same filters",
+            ),
+        ] = None,
+        limit: Annotated[int, Query(ge=1, le=cves.PAGE_MAX, description="CVEs per page")] = cves.PAGE_DEFAULT,
     ) -> CvePage:
         filters = cves.CveFilters(
             published_from=published_from,
@@ -444,13 +482,16 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
     @app.get(
         "/v1/cves/{cve_id}/timeline",
         summary="The ruler events of a CVE, in time order",
+        response_description="Every dated event of the CVE",
         response_model=Timeline,
         tags=["cves"],
         dependencies=looked_up,
         responses=openapi.problem_responses(*DATA_ERRORS),
     )
     def get_timeline(
-        cve_id: Annotated[str, Path(pattern=cves.CVE_ID_PATTERN, examples=["CVE-2021-44228"])],
+        cve_id: Annotated[
+            str, Path(pattern=cves.CVE_ID_PATTERN, description="the CVE id", examples=["CVE-2021-44228"])
+        ],
     ) -> Timeline:
         with svc.connection() as conn:
             return cves.timeline(conn, cve_id, statement=svc.statement, data_version=svc.label())
@@ -460,6 +501,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
     @app.get(
         "/v1/backlog",
         summary="The backlog questions Q1 to Q6, as the release carries them",
+        response_description="The backlog values of the loaded release",
         response_model=Backlog,
         tags=["backlog"],
         dependencies=looked_up,
@@ -472,6 +514,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
     @app.get(
         "/v1/products",
         summary="The six stand in products with their pins",
+        response_description="The stand in products",
         response_model=Products,
         tags=["exposure"],
         dependencies=looked_up,
@@ -484,13 +527,21 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
     @app.get(
         "/v1/products/{product_id}/exposure",
         summary="The findings of one product at its pin or today, each CVE as known that day",
+        response_description="The findings of the product on the day asked",
         response_model=Exposure,
         tags=["exposure"],
         dependencies=looked_up,
         responses=openapi.problem_responses(*DATA_ERRORS),
     )
     def get_exposure(
-        product_id: Annotated[str, Path(pattern=PRODUCT_PATTERN, examples=["go-edge-service"])],
+        product_id: Annotated[
+            str,
+            Path(
+                pattern=PRODUCT_PATTERN,
+                description="a stand in product, as GET /v1/products lists them",
+                examples=["go-edge-service"],
+            ),
+        ],
         as_of: Annotated[
             str | None,
             Query(
@@ -509,6 +560,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
     @app.post(
         "/v1/match",
         summary="Match a CycloneDX or SPDX JSON SBOM; only its digest is kept",
+        response_description="The findings for the SBOM, its counts and its digest",
         response_model=MatchResponse,
         tags=["match"],
         responses=openapi.problem_responses(400, 413, 415, 422, 429, 500, 503),
@@ -667,6 +719,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
         tags=["sync"],
         operation_id="sync_post",
         summary="Load the next step of the newest serving release",
+        response_description="What this call did: current, more or done",
         description=sync_text,
         responses=sync_doc,
     )
@@ -679,6 +732,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
         tags=["sync"],
         operation_id="sync_get",
         summary="Load the next step of the newest serving release (the cron)",
+        response_description="What this call did: current, more or done",
         description=sync_text,
         responses=sync_doc,
     )

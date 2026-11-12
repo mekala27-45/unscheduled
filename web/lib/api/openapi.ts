@@ -766,7 +766,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Whether each part is ready, with the freshness of every source */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -795,7 +795,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description What this call did: current, more or done */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -869,7 +869,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description What this call did: current, more or done */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -943,7 +943,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description The backlog values of the loaded release */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -988,11 +988,15 @@ export interface operations {
                 published_from?: string | null;
                 /** @description published on or before this day */
                 published_to?: string | null;
+                /** @description the current NVD status, exactly as the NVD writes it */
                 nvd_status?: string | null;
                 /** @description listed in CISA KEV */
                 kev?: boolean | null;
+                /** @description the short name of the CNA that filed it, exactly */
                 filer?: string | null;
+                /** @description the filer group, by the rule in config/filers.yaml */
                 filer_type?: string | null;
+                /** @description one of its CWEs */
                 cwe?: string | null;
                 /** @description the filer gave a CVSS 3.1 or 4.0 score */
                 has_filer_score?: boolean | null;
@@ -1000,7 +1004,9 @@ export interface operations {
                 kev_added_from?: string | null;
                 /** @description the NVD status is Analyzed, since this day or later */
                 analyzed_from?: string | null;
+                /** @description next_cursor from the previous page, sent with the same filters */
                 cursor?: string | null;
+                /** @description CVEs per page */
                 limit?: number;
             };
             header?: never;
@@ -1009,7 +1015,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description One page of CVEs and the cursor to the next page */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1082,13 +1088,14 @@ export interface operations {
             };
             header?: never;
             path: {
+                /** @description the CVE id */
                 cve_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description The CVE as known now, or at the end of the day asked */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1149,13 +1156,14 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
+                /** @description the CVE id */
                 cve_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description Every dated event of the CVE */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1298,7 +1306,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Successful Response */
+            /** @description The findings for the SBOM, its counts and its digest */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1381,7 +1389,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description The facts this deployment serves under */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1410,7 +1418,7 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description The stand in products */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -1456,13 +1464,14 @@ export interface operations {
             };
             header?: never;
             path: {
+                /** @description a stand in product, as GET /v1/products lists them */
                 product_id: string;
             };
             cookie?: never;
         };
         requestBody?: never;
         responses: {
-            /** @description Successful Response */
+            /** @description The findings of the product on the day asked */
             200: {
                 headers: {
                     [name: string]: unknown;
