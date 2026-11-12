@@ -61,7 +61,7 @@ uv run python scripts/build_manifest.py
 uv run unsched render
 ```
 
-To fetch from the sources yourself instead, uv run unsched fetch all writes the raw files, their
-locks and bronze; the NVD part runs without a key, under the keyless rate limit, and resumes from
-its ledger. scripts/reset_and_rederive.py rebuilds the lake in a fresh worktree and compares every
+To fetch from the sources yourself instead, uv run unsched fetch all writes the locks, the run
+ledger and bronze; the NVD part runs without a key, under the keyless rate limit, and resumes from
+the ledger. scripts/reset_and_rederive.py rebuilds the lake in a fresh worktree and compares every
 number with the committed manifest.
