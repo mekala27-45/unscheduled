@@ -16,7 +16,8 @@ Neon             project unscheduled, free plan, ceiling 800 MB (config/budgets.
                  results/live/local_load.json
 Data versions    the committed numbers come from a lake built here, cut 2026-11-12 00:21
                  UTC; the first lake release replaces them, rederived from its bronze
-Look approval    pending: the screens were sent to Ajay, no answer yet
+Look approval    approved by Ajay on 11 November at 23:32 New York time, after the
+                 landing, docs, report and ruler screens: everything is good so far
 Checklist        13 of 18 lines done (RESULTS.md); open: 10 the API live, 11 the load
                  test, 14 the site live, 17 the live check and the rederive, 18 the release
 Next action      once lake.yml has published the serving release and the API answers
