@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 from pathlib import Path
 
 from scripts import build_serving_bundle as bundle
@@ -30,9 +31,23 @@ def test_every_finding_of_the_exposure_is_served_once() -> None:
     assert findings.filter(findings["as_of"].is_null()).height == 0
 
 
-def test_the_locks_are_summarized_by_source_without_any_secret() -> None:
-    locks = bundle.locks_summary(ROOT)
-    assert "nvd" in locks and "kev" in locks
+def test_the_locks_are_summarized_by_source_without_any_secret(tmp_path: Path) -> None:
+    # The locks ride in the lake release, not in git, so the test writes two the way the fetcher does.
+    (tmp_path / "config").mkdir()
+    shutil.copy(ROOT / "config" / "sources.yaml", tmp_path / "config" / "sources.yaml")
+    locks_dir = tmp_path / "data" / "locks"
+    locks_dir.mkdir(parents=True)
+    for name, rows in (("nvd", [2000, 1500]), ("kev", [1484])):
+        entries = [
+            {"name": f"{name}-{i}", "rows": n, "sha256": "0" * 64, "size": 10, "url": "https://example.org/x"}
+            for i, n in enumerate(rows)
+        ]
+        lock = {"lock_version": 1, "source": name, "updated_at": "2026-11-12T01:00:00Z", "entries": entries}
+        (locks_dir / f"{name}.lock.json").write_text(json.dumps(lock), encoding="utf-8")
+    locks = bundle.locks_summary(tmp_path)
+    assert set(locks) == {"nvd", "kev"}
+    assert locks["nvd"]["files"] == 2 and locks["nvd"]["rows"] == 3500 and locks["nvd"]["cadence"] == "daily"
+    assert locks["kev"]["cadence"] == "hourly"
     assert all(len(v["lock_sha256"]) == 64 for v in locks.values())
     text = json.dumps(locks)
     assert "postgres" not in text and "token" not in text.lower()
