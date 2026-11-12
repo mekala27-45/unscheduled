@@ -236,3 +236,12 @@ the site in Chromium against the live API, with nothing mocked, awake and after 
 (results/live/web_verify.json and results/live_check.json). schemathesis stays in process
 (tests/api/test_schemathesis.py), since its generated requests would spend the live budget in
 minutes.
+
+## 2026-11-12: reset and rederive starts from the release's bronze
+
+scripts/reset_and_rederive.py rebuilds the lake and every backlog number in a fresh git worktree
+from the newest lake release and compares them with the committed manifest parts. It starts from
+bronze, each archive checked against the release's SHA256SUMS, not from the raw files: those are
+several gigabytes per source and the build machine has a few gigabytes free. The DuckDB file digest
+is left out of the comparison because the file's block layout changes from run to run;
+lake.content_digest, a digest over every table's rows, is compared in its place.
