@@ -1,0 +1,96 @@
+name: exposure
+
+# The customer exposure, found twice. The pinned tools are downloaded and checked against their
+# release checksums, OSV's all.zip files and the reviewed GHSA tree are fetched, the matcher runs as of
+# each pin date and today, osv-scanner runs offline on the same SBOMs and the same files, every
+# disagreement gets its reason, and Grype gives the CPE contrast. The match, legacy and
+# characterization suites then run with the live agreement tests enabled. No secret is used.
+on:
+  workflow_dispatch:
+    inputs:
+      regenerate_sboms:
+        description: "Apply the product rule again and regenerate the SBOMs before matching"
+        type: boolean
+        default: false
+  schedule:
+    - cron: "17 5 * * 1"
+  push:
+    branches: [main]
+    paths:
+      - "packages/match/**"
+      - "packages/legacy_adapter/**"
+      - "customer/**"
+      - "config/products.yaml"
+      - "config/customer.yaml"
+      - "scripts/make_sboms.py"
+      - "scripts/run_exposure.py"
+      - "scripts/check_name.py"
+      - ".github/workflows/exposure.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: exposure
+  cancel-in-progress: false
+
+jobs:
+  exposure:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: "3.12"
+          enable-cache: true
+      - run: uv sync --frozen
+      - name: The bronze tables the exposure reads, from the newest lake release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          last="$(gh release list --repo "$REPO" --limit 30 --json tagName --jq '[.[] | select(.tagName | startswith("lake-"))][0].tagName // ""')"
+          if [ -z "$last" ]; then echo "No lake release yet; the exposure runs without KEV, status and exploit dates."; exit 0; fi
+          mkdir -p restore data/bronze
+          for t in kev nvd_cves nvd_changes cve_records cve_metrics exploit_signals; do
+            gh release download "$last" --repo "$REPO" --dir restore --pattern "bronze-$t.tar" || true
+          done
+          for t in restore/bronze-*.tar; do [ -e "$t" ] && tar -xf "$t" -C data/bronze; done
+          rm -rf restore
+          echo "Bronze restored from $last."
+      - name: Pinned tools, checksums verified
+        run: uv run python scripts/make_sboms.py tools
+      - name: The customer name against GLEIF and EDGAR
+        run: |
+          uv run python scripts/check_name.py
+          uv run python scripts/check_name.py --verify
+      - name: The stand ins and their SBOMs, applied again on request
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.regenerate_sboms }}
+        run: |
+          uv run python scripts/make_sboms.py select
+          uv run python scripts/make_sboms.py sboms
+      - name: The reviewed GHSA tree
+        run: |
+          mkdir -p data/cache/ghsa/advisory-database
+          curl -sSfL --retry 3 https://codeload.github.com/github/advisory-database/tar.gz/refs/heads/main \
+            | tar -xz -C data/cache/ghsa/advisory-database --strip-components=1 --wildcards '*/advisories/github-reviewed/*'
+      - name: Exposure, osv-scanner and Grype
+        run: uv run python scripts/run_exposure.py --ghsa-full-tree https://github.com/github/advisory-database
+      - name: Match, legacy and characterization suites, live agreement included
+        run: uv run pytest tests/match tests/legacy tests/characterization
+      - name: Keep the results
+        if: ${{ always() }}
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: exposure
+          path: |
+            results/exposure/
+            results/name_check.json
+            config/products.yaml
+            customer/sboms/
+          if-no-files-found: error
