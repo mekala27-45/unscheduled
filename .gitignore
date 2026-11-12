@@ -34,3 +34,6 @@ node_modules/
 .DS_Store
 # Pinned tool binaries, downloaded and checked by digest
 tools/bin/
+*.tsbuildinfo
+web/lighthouse/
+web/.lighthouseci/

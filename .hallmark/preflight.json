@@ -1,0 +1,12 @@
+{
+ "scanned": "2026-11-07",
+ "findings": {
+  "fonts": "none in web/ before this build; the Phase 1 plan names Rethink Sans, Anek Latin and Mononoki from Fontsource 5.3.0",
+  "palette": "none in web/ before this build; section 15 of the Phase 1 plan gives the Cobalt tokens, the chart palette, the ramps and the status colours",
+  "motion": "none",
+  "spacing": "none",
+  "framework": "Next.js 16.4.5 app router, React 19.3.1, TypeScript 7.0.2, one page with the statement"
+ },
+ "preserve": ["the statement exported to web/lib/statement.ts by scripts/export_statement.py"],
+ "introduce": ["Cobalt tokens with the section 15 faces", "shadcn/ui on Radix themed through the tokens", "the landing in the Map and Diagram shape", "the console with its four states", "sloplint and capture in tools/hallmark"]
+}

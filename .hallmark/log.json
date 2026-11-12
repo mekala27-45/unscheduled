@@ -1,0 +1,75 @@
+[
+ {
+  "date": "2026-11-07",
+  "mode": "build",
+  "scope": "page",
+  "shape": "Map / Diagram",
+  "theme": "Cobalt",
+  "deal": "2/3, seed unscheduled-vulnerability-triage-product-0601 73696e8c",
+  "dealt": [
+   "Blueprint",
+   "Cobalt",
+   "Coral"
+  ],
+  "genre": "modern-minimal",
+  "job": "try",
+  "draw": "98c863",
+  "axes": "light/grotesk-sans/cool",
+  "posture": "restrained",
+  "hero": "Settled",
+  "nav": "banner over a retracting bar",
+  "footer": "mast",
+  "imagery": "the product",
+  "photos": [],
+  "entry": "Showcase: the system map across twelve columns",
+  "skip": [
+   "Split",
+   "Band"
+  ],
+  "swaps": "the draw led the hero with the price; the product has no price, so the hero leads with the character field",
+  "fingerprint": "Hanging|Asymmetric spans|Hairline|Solid|Tightly cropped to the grid|Fade-up stagger",
+  "sections": [
+   "Hero, Settled, with the character field",
+   "Showcase, the React Flow system map",
+   "Table, the nine sources as a table that is the API",
+   "Index, four console moments, a switcher once captures exist",
+   "Mapping, two graphite panes read before and after",
+   "Close, the lookup key beside the ruler key",
+   "Footer, the mast"
+  ],
+  "signature": "the character field of the CVE stream",
+  "fonts": [
+   "Rethink Sans",
+   "Anek Latin",
+   "Mononoki"
+  ],
+  "waived": [],
+  "dismissed": [
+   "28a"
+  ],
+  "prompt": "unscheduled: a triage platform for the CVEs the NVD no longer analyzes; the landing for the Phase 1 ground truth"
+ },
+ {
+  "date": "2026-11-07",
+  "mode": "build",
+  "scope": "app",
+  "shape": "app screen",
+  "theme": "Cobalt",
+  "deal": "2/3, seed unscheduled-vulnerability-triage-product-0601 73696e8c",
+  "genre": "modern-minimal",
+  "axes": "light/grotesk-sans/cool",
+  "posture": "restrained",
+  "nav": "a sidebar of the nine built destinations, a menu under 60rem, over a top bar with the command key (Ctrl K or Cmd K) and the theme toggle",
+  "signature": "the CVE ruler: one hairline in real time, notched ticks per event, waits as dimension lines",
+  "states": "loading, empty, error, full on every region that loads data",
+  "fonts": [
+   "Rethink Sans",
+   "Anek Latin",
+   "Mononoki"
+  ],
+  "answered": [
+   "F25"
+  ],
+  "prompt": "unscheduled console: search, CVEs, backlog, products, match, data, criteria, status and limits over the Phase 1 API"
+ }
+]
