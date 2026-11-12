@@ -25,6 +25,7 @@ import fnmatch
 import hashlib
 import json
 import math
+import os
 import shutil
 import subprocess
 import sys
@@ -53,6 +54,14 @@ def steps(memory: str, threads: int) -> tuple[list[str], ...]:
         ["scripts/run_analysis.py"],
         ["scripts/backlog_charts.py"],
     )
+
+
+def step_env(tree: Path) -> dict[str, str]:
+    """The environment of a step in the worktree. The packages are imported from this checkout's
+    environment, and they find the repository root from their own location unless UNSCHED_ROOT names
+    it, so without it every step would read and write this checkout instead of the worktree. The
+    hash seed is fixed as lake.yml fixes it."""
+    return {**os.environ, "UNSCHED_ROOT": str(tree), "PYTHONHASHSEED": "0"}
 
 
 def sh(args: list[str], cwd: Path = ROOT) -> str:
@@ -217,7 +226,7 @@ def main(argv: list[str] | None = None) -> int:
         record["build_settings"] = {"memory": args.memory, "threads": args.threads}
         for step in steps(args.memory, args.threads):
             t0 = time.monotonic()
-            subprocess.run([sys.executable, *step], cwd=tree, check=True)
+            subprocess.run([sys.executable, *step], cwd=tree, env=step_env(tree), check=True)
             timings[step[0]] = round(time.monotonic() - t0, 1)
         record["step_seconds"] = timings
         parts = {}

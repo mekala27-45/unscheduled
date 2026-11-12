@@ -56,3 +56,9 @@ def test_download_keeps_matches_refetches_changes_and_drops_stale(
     assert (folder / "bronze-kev.tar").read_bytes() == b"kev, as published again"
     assert not (folder / "bronze-gone.tar").exists()
     assert not (folder / "raw-nvd-0123.tar").exists()
+
+
+def test_every_step_reads_and_writes_the_worktree_not_this_checkout(tmp_path: Path) -> None:
+    env = rd.step_env(tmp_path / "tree")
+    assert env["UNSCHED_ROOT"] == str(tmp_path / "tree")
+    assert env["PYTHONHASHSEED"] == "0"
