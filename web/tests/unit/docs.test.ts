@@ -54,3 +54,25 @@ describe("the documents in this repository", () => {
     for (const r of reports) expect(r.html).toContain("portfolio demonstration");
   });
 });
+
+describe("the API reference", () => {
+  it("lists every route of the committed schema with its parameters and answers", async () => {
+    const { openApiMarkdown } = await import("@/lib/docs");
+    const { readFileSync } = await import("node:fs");
+    const spec = JSON.parse(readFileSync(new URL("../../../openapi.json", import.meta.url), "utf8"));
+    const md = openApiMarkdown(spec);
+    for (const [route, ops] of Object.entries(spec.paths as Record<string, Record<string, unknown>>)) {
+      for (const method of Object.keys(ops).filter((m) => ["get", "post"].includes(m))) {
+        expect(md).toContain(`## ${method.toUpperCase()} ${route}`);
+      }
+    }
+    expect(md).toContain("| as_of | query | no |");
+    expect(md).toContain("| 404 |");
+  });
+
+  it("is served under /docs/api as one of the documents", () => {
+    const doc = readDoc("api");
+    expect(doc?.title).toBe("API reference");
+    expect(doc?.toc.length).toBeGreaterThan(8);
+  });
+});

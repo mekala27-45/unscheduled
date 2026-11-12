@@ -1,11 +1,13 @@
 import { expect, test } from "@playwright/test";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import { mockApi } from "./mock";
 
 test("the docs list every document by section and open each one", async ({ page }) => {
   await mockApi(page);
   await page.goto("/docs");
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Docs");
-  for (const section of ["How it is built", "Decisions", "Runbooks", "The data and the customer"]) {
+  for (const section of ["Start here", "How it is built", "Decisions", "Runbooks", "The data and the customer"]) {
     await expect(page.getByRole("heading", { level: 2, name: section })).toBeVisible();
   }
   await expect(page.locator(".doc-group").filter({ hasText: "Decisions" }).locator(".doc-list li")).toHaveCount(7);
@@ -42,11 +44,35 @@ test("the report lists its documents and renders the backlog with its tables", a
   await expect(page.getByRole("heading", { level: 2, name: /^Q1, the analysis delay/ })).toBeVisible();
 });
 
-test("the decision record on the sync opens with its sequence diagram", async ({ page }) => {
+for (const [slug, name, what] of [
+  ["adr-0002", "slice", "the tables of the slice"],
+  ["adr-0007", "sync", "the sync as a sequence"],
+] as const) {
+  test(`decision record ${slug} opens with ${what}`, async ({ page }) => {
+    await mockApi(page);
+    await page.goto(`/docs/${slug}`);
+    const figure = page.locator(".doc-figure");
+    await expect(figure).toBeVisible();
+    await expect(figure.locator("img").first()).toHaveAttribute("src", new RegExp(`/diagrams/${name}-(light|dark)\\.svg$`));
+    await expect(figure.getByRole("link", { name: "Open the diagram you can explore" })).toHaveAttribute("href", `/diagrams/${name}.html`);
+  });
+}
+
+test("the API reference lists every route, read from openapi.json", async ({ page }) => {
+  const spec = JSON.parse(readFileSync(path.join(__dirname, "..", "..", "..", "openapi.json"), "utf8")) as {
+    paths: Record<string, Record<string, unknown>>;
+  };
+  const routes = Object.entries(spec.paths).flatMap(([route, ops]) =>
+    Object.keys(ops)
+      .filter((m) => ["get", "post", "put", "patch", "delete"].includes(m))
+      .map((m) => `${m.toUpperCase()} ${route}`),
+  );
+  expect(routes.length).toBeGreaterThan(0);
   await mockApi(page);
-  await page.goto("/docs/adr-0007");
-  const figure = page.locator(".doc-figure");
-  await expect(figure).toBeVisible();
-  await expect(figure.locator("img").first()).toHaveAttribute("src", /\/diagrams\/sync-(light|dark)\.svg$/);
-  await expect(figure.getByRole("link", { name: "Open the diagram you can explore" })).toHaveAttribute("href", "/diagrams/sync.html");
+  await page.goto("/docs/api");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("API reference");
+  const headings = page.locator(".doc h2");
+  await expect(headings).toHaveCount(routes.length);
+  expect((await headings.allInnerTexts()).map((t) => t.trim()).sort()).toEqual([...routes].sort());
+  await expect(page.getByRole("heading", { level: 2, name: "GET /v1/cves/{cve_id}", exact: true })).toBeVisible();
 });

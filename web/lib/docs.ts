@@ -12,8 +12,8 @@ import { Marked, type Tokens } from "marked";
 const WEB_ROOT = existsSync(path.join(/*turbopackIgnore: true*/ process.cwd(), "next.config.ts")) ? process.cwd() : path.join(/*turbopackIgnore: true*/ process.cwd(), "web");
 const REPO_ROOT = path.resolve(/*turbopackIgnore: true*/ WEB_ROOT, "..");
 
-export type DocSection = "How it is built" | "Decisions" | "Runbooks" | "The data and the customer";
-export const DOC_SECTIONS: DocSection[] = ["How it is built", "Decisions", "Runbooks", "The data and the customer"];
+export type DocSection = "Start here" | "How it is built" | "Decisions" | "Runbooks" | "The data and the customer";
+export const DOC_SECTIONS: DocSection[] = ["Start here", "How it is built", "Decisions", "Runbooks", "The data and the customer"];
 
 /** A file the site renders; a report has no section, a document under /docs has one. */
 export type DocSource = { slug: string; file: string; section?: DocSection };
@@ -21,7 +21,11 @@ export type TocEntry = { id: string; text: string };
 export type Doc = DocSource & { title: string; lead: string; html: string; toc: TocEntry[] };
 
 const FIXED_DOCS: DocSource[] = [
+  { slug: "quickstart", file: "docs/quickstart.md", section: "Start here" },
+  { slug: "api", file: "openapi.json", section: "Start here" },
   { slug: "architecture", file: "ARCHITECTURE.md", section: "How it is built" },
+  { slug: "as-of", file: "docs/asof.md", section: "How it is built" },
+  { slug: "methods", file: "docs/methods.md", section: "How it is built" },
   { slug: "spec", file: "docs/SPEC.md", section: "How it is built" },
   { slug: "roadmap", file: "docs/ROADMAP.md", section: "How it is built" },
   { slug: "provenance", file: "data/PROVENANCE.md", section: "The data and the customer" },
@@ -44,6 +48,15 @@ const ARCHITECTURE: DocDiagram = {
 /** Which document opens with which diagram. */
 export const DOC_DIAGRAMS: Record<string, DocDiagram> = {
   architecture: ARCHITECTURE,
+  "adr-0002": {
+    light: "/diagrams/slice-light.svg",
+    dark: "/diagrams/slice-dark.svg",
+    page: "/diagrams/slice.html",
+    width: 1548,
+    height: 1178,
+    alt: "The tables of the serving slice in Neon: cve, cve_event, product and finding, copied from the serving release, and settings, client_budget, match_log and ops_run, kept by the API itself, with every column and its type; cve_event names its CVE and finding its product by value, with no foreign key declared",
+    source: "docs/diagrams/slice.archify.json",
+  },
   "adr-0007": {
     light: "/diagrams/sync-light.svg",
     dark: "/diagrams/sync-dark.svg",
@@ -173,10 +186,81 @@ export function renderMarkdown(markdown: string): { title: string | null; html: 
   return { title, html, toc };
 }
 
+type Schema = { type?: string | string[]; format?: string; enum?: unknown[]; anyOf?: Schema[]; items?: Schema; $ref?: string };
+type Parameter = { name: string; in: string; required?: boolean; description?: string; schema?: Schema };
+type Operation = {
+  summary?: string;
+  tags?: string[];
+  parameters?: Parameter[];
+  requestBody?: { content?: Record<string, unknown>; description?: string };
+  responses?: Record<string, { description?: string }>;
+};
+type OpenApi = { info: { title: string; version: string; summary?: string }; paths: Record<string, Record<string, Operation>> };
+
+const TAG_ORDER = ["service", "cves", "backlog", "exposure", "match", "legacy", "sync"];
+const METHODS = ["get", "post", "put", "patch", "delete"];
+
+function typeOf(schema: Schema | undefined): string {
+  if (!schema) return "";
+  if (schema.anyOf) return schema.anyOf.map(typeOf).filter((t) => t && t !== "null").join(" or ");
+  if (schema.enum) return schema.enum.map(String).join(", ");
+  if (schema.$ref) return schema.$ref.split("/").pop() ?? "";
+  const base = Array.isArray(schema.type) ? schema.type.filter((t) => t !== "null").join(" or ") : (schema.type ?? "");
+  return schema.format ? `${base} (${schema.format})` : base;
+}
+
+function cell(text: string): string {
+  return text.replace(/\|/g, "\\|").replace(/\s+/g, " ").trim();
+}
+
+/**
+ * The API reference as Markdown, from the committed openapi.json: every route with its summary, its
+ * parameters, its request body and the answers it documents, grouped as the API tags them.
+ */
+export function openApiMarkdown(spec: OpenApi): string {
+  const lines = [
+    "# API reference",
+    "",
+    `The API at https://unscheduled-api.vercel.app, version ${spec.info.version}, read from openapi.json at the root of the repository when this site was built. CI fails when the schema the API generates and the committed file differ, and the console's typed client is generated from the same file.`,
+    "",
+    "No key is needed. Each client has a daily budget of lookups and SBOM matches (config/budgets.yaml), and every data answer says what is left in X-Budget-Remaining. Every answer carries the statement and the data version; every error is a problem document whose type links to its entry in docs/SPEC.md.",
+    "",
+  ];
+  const operations = Object.entries(spec.paths).flatMap(([route, ops]) =>
+    METHODS.filter((m) => ops[m]).map((m) => ({ route, method: m.toUpperCase(), op: ops[m] })),
+  );
+  const rank = (op: Operation) => {
+    const i = TAG_ORDER.indexOf(op.tags?.[0] ?? "");
+    return i < 0 ? TAG_ORDER.length : i;
+  };
+  operations.sort((a, b) => rank(a.op) - rank(b.op) || a.route.localeCompare(b.route) || a.method.localeCompare(b.method));
+  for (const { route, method, op } of operations) {
+    lines.push(`## ${method} ${route}`, "", `${op.summary ?? ""}.`, "");
+    const params = op.parameters ?? [];
+    if (params.length) {
+      lines.push("| Parameter | In | Required | Type | What it means |", "|---|---|---|---|---|");
+      for (const p of params) {
+        lines.push(`| ${p.name} | ${p.in} | ${p.required ? "yes" : "no"} | ${cell(typeOf(p.schema))} | ${cell(p.description ?? "")} |`);
+      }
+      lines.push("");
+    }
+    const media = Object.keys(op.requestBody?.content ?? {});
+    if (media.length) lines.push(`Body: ${media.join(", ")}${op.requestBody?.description ? `; ${op.requestBody.description}` : ""}.`, "");
+    const answers = Object.entries(op.responses ?? {});
+    if (answers.length) {
+      lines.push("| Answer | When |", "|---|---|");
+      for (const [code, r] of answers) lines.push(`| ${code} | ${cell(r.description ?? "")} |`);
+      lines.push("");
+    }
+  }
+  return lines.join("\n");
+}
+
 function load(source: DocSource): Doc | null {
   const file = path.join(/*turbopackIgnore: true*/ REPO_ROOT, source.file);
   if (!existsSync(file)) return null;
-  const markdown = readFileSync(file, "utf8");
+  const raw = readFileSync(file, "utf8");
+  const markdown = source.file.endsWith(".json") ? openApiMarkdown(JSON.parse(raw) as OpenApi) : raw;
   const rendered = renderMarkdown(markdown);
   const lead = leadOf(markdown, source.section === "Decisions" ? "Decision" : undefined);
   return { ...source, title: rendered.title ?? source.file, lead, html: rendered.html, toc: rendered.toc };

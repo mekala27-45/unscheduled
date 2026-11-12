@@ -8,6 +8,8 @@ are generated from it and are not edited by hand.
   /docs/architecture.
 - sync.archify.json: how the API loads its data, as a sequence, shown on /docs/adr-0007. Each
   participant cites the lines of the repository that carry its part, at the revision in its meta.
+- slice.archify.json: the tables of the serving slice in Neon, every column with its type, shown on
+  /docs/adr-0002. Each table cites its definition in packages/api/src/unscheduled_api/db.py.
 
 To redraw one, from the repository root, with archify installed and Chromium on the path given in
 ARCHIFY_CHROME:
@@ -16,6 +18,8 @@ ARCHIFY_CHROME:
       web/public/diagrams/architecture.html --quality showcase --json
     node <archify>/bin/archify.mjs finalize sequence docs/diagrams/sync.archify.json \
       web/public/diagrams/sync.html --repo-root . --quality showcase --json
+    node <archify>/bin/archify.mjs finalize erd docs/diagrams/slice.archify.json \
+      web/public/diagrams/slice.html --repo-root . --quality standard --json
 
 The finalize run validates the source, renders the page, checks it, and loads it in a real browser.
 The SVG files come from the page's Export menu (SVG, Light and SVG, Dark), saved as

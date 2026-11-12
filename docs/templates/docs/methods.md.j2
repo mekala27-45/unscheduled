@@ -1,0 +1,99 @@
+{% set plan = data("evaluation/phase1_plan.yaml") %}
+{% set reg = data("evaluation/registration.json") %}
+{% set q = {} %}
+{% for item in plan.questions %}{% set _ = q.update({item.id: item}) %}{% endfor %}
+# Method notes: the backlog questions
+
+Each question was written into evaluation/phase1_plan.yaml with its population, its estimator and
+a prediction, and the plan was hashed into evaluation/registration.json (hash
+{{ reg.hash[:12] }}) before any result was computed. This page sets each registered prediction
+beside what the build measured, so a reader can see where the data agreed with the plan and where
+it did not. report/backlog.md has every question in full, with its intervals and its tables.
+
+Unless a question says otherwise, an interval is a {{ plan.defaults.interval }}, and a family of
+comparisons is corrected by {{ plan.defaults.family_correction }}. Every count says of what and in
+which window, and every share says of which base.
+
+## Q1. {{ q.Q1.title }}
+
+- Population: {{ q.Q1.population }}.
+- Estimator: {{ q.Q1.estimator }}.
+- Registered prediction: {{ q.Q1.prediction }}.
+- Measured: the share analyzed within 30 days was {{ v("backlog.q1.share_30d_before_2025") }} before
+  2025, {{ v("backlog.q1.share_30d_2025_to_change") }} from 2025 to 15 April 2026 and
+  {{ v("backlog.q1.share_30d_since_change") }} since. The first change moved it
+  {{ v("backlog.q1.change_30d_before_2025_to_2025_to_change") }} (adjusted p
+  {{ v("backlog.q1.change_30d_before_2025_to_2025_to_change_p_adjusted") }}); the second
+  {{ v("backlog.q1.change_30d_2025_to_change_to_since_change") }} (adjusted p
+  {{ v("backlog.q1.change_30d_2025_to_change_to_since_change_p_adjusted") }}).
+
+## Q2. {{ q.Q2.title }}
+
+- Population: {{ q.Q2.population }}.
+- Estimator: {{ q.Q2.estimator }}.
+- Registered prediction: {{ q.Q2.prediction }}.
+- Measured: {{ v("backlog.q2.share_analyzed") }} analyzed; KEV listed CVEs are
+  {{ v("backlog.q2.share_kev_among_analyzed") }} of everything analyzed; KEV listings met the one
+  business day goal {{ v("backlog.q2.share_met_one_business_day") }} of the time. Which software
+  NIST counts as critical is in no locked source, so that part of the prediction is not measured.
+
+## Q3. {{ q.Q3.title }}
+
+- Population: {{ q.Q3.population }}.
+- Estimator: {{ q.Q3.estimator }}.
+- Registered prediction: {{ q.Q3.prediction }}.
+- Measured: a filer CVSS score on {{ v("backlog.q3.share_filer_cvss_any") }} and affected versions on
+  {{ v("backlog.q3.share_affected_versions") }} of {{ v("backlog.q3.cves") }} CVEs.
+
+## Q4. {{ q.Q4.title }}
+
+- Population: {{ q.Q4.population }}.
+- Estimator: {{ q.Q4.estimator }}.
+- Registered prediction: {{ q.Q4.prediction }}.
+- Measured: kappa {{ v("backlog.q4.kappa_av") }} on the attack vector,
+  {{ v("backlog.q4.kappa_pr") }} on privileges required, {{ v("backlog.q4.kappa_s") }} on scope and
+  {{ v("backlog.q4.kappa_ac") }} on attack complexity; weighted kappa {{ v("backlog.q4.kappa_band") }}
+  on the band.
+
+## Q5. {{ q.Q5.title }}
+
+- Population: {{ q.Q5.population }}.
+- Estimator: {{ q.Q5.estimator }}.
+- Registered prediction: {{ q.Q5.prediction }}.
+- Measured: half were listed within {{ v("backlog.q5.median_days_to_listing") }},
+  {{ v("backlog.q5.share_listed_within_30d") }} within 30 days, and
+  {{ v("backlog.q5.share_exploit_before_listing") }} had Metasploit or Nuclei code before the listing.
+
+## Q6. {{ q.Q6.title }}
+
+- Population: {{ q.Q6.population }}.
+- Estimator: {{ q.Q6.estimator }}.
+- Registered prediction: {{ q.Q6.prediction }}.
+- Measured: the ten filers that grew most carry {{ v("backlog.q6.top10_share_of_growth") }} of the
+  growth, and {{ v("backlog.q6.filers_for_half_of_growth") }} filers carry half of it.
+
+## Q7. {{ q.Q7.title }}
+
+- Population: {{ q.Q7.population }}.
+- Estimator: {{ q.Q7.estimator }}.
+- Registered prediction: {{ q.Q7.prediction }}.
+- Measured: {{ v("exposure.contrast.share_no_nvd_analysis") }} of today's findings have no NVD
+  analysis, and a triage reading only NVD analysis could act on
+  {{ v("exposure.c9.nvd_only_usable_share") }} of them.
+
+## Q8. {{ q.Q8.title }}
+
+- Population: {{ q.Q8.population }}.
+- Estimator: {{ q.Q8.estimator }}.
+- Registered prediction: {{ q.Q8.prediction }}.
+- Measured: an AUC of {{ v("backlog.q8.auc") }} ({{ v("backlog.q8.auc_low") }} to
+  {{ v("backlog.q8.auc_high") }}) on the held out half.
+
+## When the data disagreed with the plan
+
+A prediction that did not hold stays as it was registered; the plan is not edited after a result.
+Where a question had to depart from the plan (a population narrowed, a window cut), the departure
+is written in the question's result file under results/backlog and in DECISIONS.md, with the
+reason.
+
+{{ statement() }}

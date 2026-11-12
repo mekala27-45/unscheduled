@@ -39,3 +39,5 @@ tools/bin/
 *.tsbuildinfo
 web/lighthouse/
 web/.lighthouseci/
+# archify writes a delivery receipt with local paths beside each diagram page
+web/public/diagrams/*.delivery*.json

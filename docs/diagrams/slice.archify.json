@@ -1,0 +1,542 @@
+{
+ "schema_version": 1,
+ "diagram_type": "erd",
+ "meta": {
+  "title": "The serving slice in Neon",
+  "locale": "en",
+  "output": "web/public/diagrams/slice.html",
+  "quality_profile": "standard",
+  "repository": {
+   "url": "https://github.com/mekala27-45/unscheduled",
+   "provider": "github",
+   "link_mode": "web",
+   "revision": "546001cba8c378e024366d06c3682ee2ae4553e5"
+  }
+ },
+ "layout": {
+  "mode": "grid",
+  "gapX": 56,
+  "gapY": 48
+ },
+ "entities": [
+  {
+   "id": "cve",
+   "label": "cve",
+   "sublabel": "the current state of each CVE in the slice",
+   "tag": "copied from the serving release",
+   "row": 0,
+   "col": 0,
+   "attributes": [
+    {
+     "name": "cve_id",
+     "type": "text",
+     "key": "pk"
+    },
+    {
+     "name": "state",
+     "type": "text"
+    },
+    {
+     "name": "published",
+     "type": "timestamptz"
+    },
+    {
+     "name": "last_modified",
+     "type": "timestamptz"
+    },
+    {
+     "name": "nvd_status",
+     "type": "text"
+    },
+    {
+     "name": "nvd_status_since",
+     "type": "timestamptz"
+    },
+    {
+     "name": "filer",
+     "type": "text"
+    },
+    {
+     "name": "filer_type",
+     "type": "text"
+    },
+    {
+     "name": "description",
+     "type": "text"
+    },
+    {
+     "name": "cwes",
+     "type": "text[]"
+    },
+    {
+     "name": "filer_cvss31_vector",
+     "type": "text"
+    },
+    {
+     "name": "filer_cvss31_score",
+     "type": "double precision"
+    },
+    {
+     "name": "filer_cvss31_band",
+     "type": "text"
+    },
+    {
+     "name": "filer_cvss40_vector",
+     "type": "text"
+    },
+    {
+     "name": "filer_cvss40_score",
+     "type": "double precision"
+    },
+    {
+     "name": "filer_cvss40_band",
+     "type": "text"
+    },
+    {
+     "name": "nvd_cvss31_vector",
+     "type": "text"
+    },
+    {
+     "name": "nvd_cvss31_score",
+     "type": "double precision"
+    },
+    {
+     "name": "nvd_cvss31_band",
+     "type": "text"
+    },
+    {
+     "name": "adp_cvss31_vector",
+     "type": "text"
+    },
+    {
+     "name": "adp_cvss31_score",
+     "type": "double precision"
+    },
+    {
+     "name": "adp_cvss31_band",
+     "type": "text"
+    },
+    {
+     "name": "ssvc_exploitation",
+     "type": "text"
+    },
+    {
+     "name": "ssvc_automatable",
+     "type": "text"
+    },
+    {
+     "name": "ssvc_technical_impact",
+     "type": "text"
+    },
+    {
+     "name": "kev_date_added",
+     "type": "date"
+    },
+    {
+     "name": "kev_ransomware",
+     "type": "text"
+    },
+    {
+     "name": "epss_score",
+     "type": "double precision"
+    },
+    {
+     "name": "epss_percentile",
+     "type": "double precision"
+    },
+    {
+     "name": "epss_date",
+     "type": "date"
+    },
+    {
+     "name": "exploit_first_seen",
+     "type": "date"
+    },
+    {
+     "name": "has_cpe",
+     "type": "boolean"
+    },
+    {
+     "name": "provenance",
+     "type": "jsonb"
+    },
+    {
+     "name": "row_digest",
+     "type": "text"
+    }
+   ],
+   "sources": [
+    {
+     "path": "packages/api/src/unscheduled_api/db.py",
+     "line": 37,
+     "end_line": 80,
+     "label": "cve and its indexes"
+    }
+   ],
+   "width": 284
+  },
+  {
+   "id": "cve_event",
+   "label": "cve_event",
+   "sublabel": "the ruler events",
+   "tag": "copied from the serving release",
+   "row": 0,
+   "col": 1,
+   "attributes": [
+    {
+     "name": "event_id",
+     "type": "text",
+     "key": "pk"
+    },
+    {
+     "name": "cve_id",
+     "type": "text",
+     "references": "cve.cve_id"
+    },
+    {
+     "name": "at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "kind",
+     "type": "text"
+    },
+    {
+     "name": "source",
+     "type": "text"
+    },
+    {
+     "name": "detail",
+     "type": "jsonb"
+    }
+   ],
+   "sources": [
+    {
+     "path": "packages/api/src/unscheduled_api/db.py",
+     "line": 82,
+     "end_line": 92
+    }
+   ]
+  },
+  {
+   "id": "finding",
+   "label": "finding",
+   "sublabel": "one finding per component and advisory",
+   "tag": "copied from the serving release",
+   "row": 0,
+   "col": 2,
+   "attributes": [
+    {
+     "name": "finding_id",
+     "type": "text",
+     "key": "pk"
+    },
+    {
+     "name": "product_id",
+     "type": "text",
+     "references": "product.product_id"
+    },
+    {
+     "name": "as_of",
+     "type": "date"
+    },
+    {
+     "name": "cve_ids",
+     "type": "text[]"
+    },
+    {
+     "name": "body",
+     "type": "jsonb"
+    },
+    {
+     "name": "row_digest",
+     "type": "text"
+    }
+   ],
+   "sources": [
+    {
+     "path": "packages/api/src/unscheduled_api/db.py",
+     "line": 103,
+     "end_line": 114
+    }
+   ]
+  },
+  {
+   "id": "product",
+   "label": "product",
+   "sublabel": "the six stand ins",
+   "tag": "copied from the serving release",
+   "row": 0,
+   "col": 3,
+   "attributes": [
+    {
+     "name": "product_id",
+     "type": "text",
+     "key": "pk"
+    },
+    {
+     "name": "name",
+     "type": "text"
+    },
+    {
+     "name": "body",
+     "type": "jsonb"
+    },
+    {
+     "name": "row_digest",
+     "type": "text"
+    }
+   ],
+   "sources": [
+    {
+     "path": "packages/api/src/unscheduled_api/db.py",
+     "line": 94,
+     "end_line": 101
+    }
+   ]
+  },
+  {
+   "id": "settings",
+   "label": "settings",
+   "sublabel": "the client salt, the data version, the sync cursor, the backlog values",
+   "tag": "kept by the API itself",
+   "row": 1,
+   "col": 0,
+   "attributes": [
+    {
+     "name": "key",
+     "type": "text",
+     "key": "pk"
+    },
+    {
+     "name": "value",
+     "type": "jsonb"
+    },
+    {
+     "name": "updated_at",
+     "type": "timestamptz"
+    }
+   ],
+   "sources": [
+    {
+     "path": "packages/api/src/unscheduled_api/db.py",
+     "line": 29,
+     "end_line": 35
+    }
+   ]
+  },
+  {
+   "id": "client_budget",
+   "label": "client_budget",
+   "sublabel": "lookups and matches per hashed client per day",
+   "tag": "kept by the API itself",
+   "row": 1,
+   "col": 1,
+   "attributes": [
+    {
+     "name": "client",
+     "type": "text",
+     "key": "pk"
+    },
+    {
+     "name": "day",
+     "type": "date",
+     "key": "pk"
+    },
+    {
+     "name": "kind",
+     "type": "text",
+     "key": "pk"
+    },
+    {
+     "name": "used",
+     "type": "integer"
+    }
+   ],
+   "sources": [
+    {
+     "path": "packages/api/src/unscheduled_api/db.py",
+     "line": 136,
+     "end_line": 143
+    }
+   ]
+  },
+  {
+   "id": "match_log",
+   "label": "match_log",
+   "sublabel": "the digest and counts of each match, never the SBOM",
+   "tag": "kept by the API itself",
+   "row": 1,
+   "col": 2,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "bigint",
+     "key": "pk"
+    },
+    {
+     "name": "at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "sbom_sha256",
+     "type": "text"
+    },
+    {
+     "name": "sbom_bytes",
+     "type": "integer"
+    },
+    {
+     "name": "format",
+     "type": "text"
+    },
+    {
+     "name": "spec_version",
+     "type": "text"
+    },
+    {
+     "name": "components",
+     "type": "integer"
+    },
+    {
+     "name": "components_without_purl",
+     "type": "integer"
+    },
+    {
+     "name": "findings",
+     "type": "integer"
+    },
+    {
+     "name": "distinct_cves",
+     "type": "integer"
+    },
+    {
+     "name": "duration_ms",
+     "type": "double precision"
+    },
+    {
+     "name": "status",
+     "type": "text"
+    },
+    {
+     "name": "engine",
+     "type": "text"
+    },
+    {
+     "name": "client",
+     "type": "text"
+    }
+   ],
+   "sources": [
+    {
+     "path": "packages/api/src/unscheduled_api/db.py",
+     "line": 116,
+     "end_line": 134
+    }
+   ],
+   "width": 260
+  },
+  {
+   "id": "ops_run",
+   "label": "ops_run",
+   "sublabel": "the run ledger: one row per sync call that did work",
+   "tag": "kept by the API itself",
+   "row": 1,
+   "col": 3,
+   "attributes": [
+    {
+     "name": "id",
+     "type": "bigint",
+     "key": "pk"
+    },
+    {
+     "name": "kind",
+     "type": "text"
+    },
+    {
+     "name": "started_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "finished_at",
+     "type": "timestamptz"
+    },
+    {
+     "name": "status",
+     "type": "text"
+    },
+    {
+     "name": "bundle",
+     "type": "text"
+    },
+    {
+     "name": "step",
+     "type": "text"
+    },
+    {
+     "name": "rows_in",
+     "type": "integer"
+    },
+    {
+     "name": "rows_changed",
+     "type": "integer"
+    },
+    {
+     "name": "storage_bytes",
+     "type": "bigint"
+    },
+    {
+     "name": "detail",
+     "type": "jsonb"
+    }
+   ],
+   "sources": [
+    {
+     "path": "packages/api/src/unscheduled_api/db.py",
+     "line": 145,
+     "end_line": 159
+    }
+   ]
+  }
+ ],
+ "relationships": [
+  {
+   "id": "event-of",
+   "from": "cve_event",
+   "to": "cve",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "label": "by cve_id, not enforced",
+   "identifying": false,
+   "variant": "dashed"
+  },
+  {
+   "id": "finding-of",
+   "from": "finding",
+   "to": "product",
+   "fromCardinality": "many",
+   "toCardinality": "one",
+   "label": "by product_id, not enforced",
+   "identifying": false,
+   "variant": "dashed"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "cyan",
+   "title": "Keys the code keeps",
+   "items": [
+    "The sync copies cve, cve_event, product and finding from the serving bundle: a sweep deletes the rows the new file no longer holds, then each chunk is upserted by key, and a row whose digest is unchanged is not written",
+    "cve_event.cve_id and finding.product_id name their rows by value; no foreign key is declared, and the sync loads each table on its own, in the order cve, cve_event, product, finding"
+   ]
+  },
+  {
+   "dot": "rose",
+   "title": "What is never stored",
+   "items": [
+    "An uploaded SBOM: match_log keeps its sha256 and counts",
+    "A client address in clear: client_budget and match_log keep a salted hash"
+   ]
+  }
+ ]
+}

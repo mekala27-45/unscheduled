@@ -278,7 +278,13 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
 
     # Service -------------------------------------------------------------------------------------
 
-    @app.get("/health", response_model=Health, tags=["service"], responses=openapi.problem_responses(500))
+    @app.get(
+        "/health",
+        response_model=Health,
+        tags=["service"],
+        summary="Whether the API, its database and its data are ready, and how fresh each source is",
+        responses=openapi.problem_responses(500),
+    )
     def health() -> Health:
         facts, last = svc.facts.get()
         state = svc.versions.state()
@@ -315,7 +321,13 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
             ),
         )
 
-    @app.get("/v1/meta", response_model=Meta, tags=["service"], responses=openapi.problem_responses(500))
+    @app.get(
+        "/v1/meta",
+        response_model=Meta,
+        tags=["service"],
+        summary="The lock digests, the limits, the statement, the NVD notice and the advisory attribution",
+        responses=openapi.problem_responses(500),
+    )
     def meta() -> Meta:
         state = svc.versions.state()
         loaded = state.loaded if state else None
@@ -368,6 +380,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
 
     @app.get(
         "/v1/cves/{cve_id}",
+        summary="One CVE with every field, its source and since when; with as_of, as known that day",
         response_model=CveRecord,
         tags=["cves"],
         dependencies=looked_up,
@@ -385,6 +398,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
 
     @app.get(
         "/v1/cves",
+        summary="A page of CVEs, newest published first, with filters and a cursor",
         response_model=CvePage,
         tags=["cves"],
         dependencies=looked_up,
@@ -429,6 +443,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
 
     @app.get(
         "/v1/cves/{cve_id}/timeline",
+        summary="The ruler events of a CVE, in time order",
         response_model=Timeline,
         tags=["cves"],
         dependencies=looked_up,
@@ -444,6 +459,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
 
     @app.get(
         "/v1/backlog",
+        summary="The backlog questions Q1 to Q6, as the release carries them",
         response_model=Backlog,
         tags=["backlog"],
         dependencies=looked_up,
@@ -455,6 +471,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
 
     @app.get(
         "/v1/products",
+        summary="The six stand in products with their pins",
         response_model=Products,
         tags=["exposure"],
         dependencies=looked_up,
@@ -466,6 +483,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
 
     @app.get(
         "/v1/products/{product_id}/exposure",
+        summary="The findings of one product at its pin or today, each CVE as known that day",
         response_model=Exposure,
         tags=["exposure"],
         dependencies=looked_up,
@@ -490,6 +508,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
 
     @app.post(
         "/v1/match",
+        summary="Match a CycloneDX or SPDX JSON SBOM; only its digest is kept",
         response_model=MatchResponse,
         tags=["match"],
         responses=openapi.problem_responses(400, 413, 415, 422, 429, 500, 503),
@@ -583,6 +602,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
 
     @app.get(
         "/v1/legacy/report.csv",
+        summary="The customer's legacy nightly CSV, written from the findings",
         response_class=Response,
         tags=["legacy"],
         dependencies=looked_up,

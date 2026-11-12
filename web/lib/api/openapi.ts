@@ -11,7 +11,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Health */
+        /** Whether the API, its database and its data are ready, and how fresh each source is */
         get: operations["health_health_get"];
         put?: never;
         post?: never;
@@ -52,7 +52,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Backlog */
+        /** The backlog questions Q1 to Q6, as the release carries them */
         get: operations["get_backlog_v1_backlog_get"];
         put?: never;
         post?: never;
@@ -69,7 +69,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** List Cves */
+        /** A page of CVEs, newest published first, with filters and a cursor */
         get: operations["list_cves_v1_cves_get"];
         put?: never;
         post?: never;
@@ -86,7 +86,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Cve */
+        /** One CVE with every field, its source and since when; with as_of, as known that day */
         get: operations["get_cve_v1_cves__cve_id__get"];
         put?: never;
         post?: never;
@@ -103,7 +103,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Timeline */
+        /** The ruler events of a CVE, in time order */
         get: operations["get_timeline_v1_cves__cve_id__timeline_get"];
         put?: never;
         post?: never;
@@ -120,7 +120,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Legacy Report */
+        /** The customer's legacy nightly CSV, written from the findings */
         get: operations["legacy_report_v1_legacy_report_csv_get"];
         put?: never;
         post?: never;
@@ -139,7 +139,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Match Sbom */
+        /** Match a CycloneDX or SPDX JSON SBOM; only its digest is kept */
         post: operations["match_sbom_v1_match_post"];
         delete?: never;
         options?: never;
@@ -154,7 +154,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Meta */
+        /** The lock digests, the limits, the statement, the NVD notice and the advisory attribution */
         get: operations["meta_v1_meta_get"];
         put?: never;
         post?: never;
@@ -171,7 +171,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Products */
+        /** The six stand in products with their pins */
         get: operations["get_products_v1_products_get"];
         put?: never;
         post?: never;
@@ -188,7 +188,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get Exposure */
+        /** The findings of one product at its pin or today, each CVE as known that day */
         get: operations["get_exposure_v1_products__product_id__exposure_get"];
         put?: never;
         post?: never;
