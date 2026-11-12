@@ -319,7 +319,10 @@ def finding_frame(root: Path) -> pl.DataFrame:
         data = json.loads((root / "results" / "exposure" / name).read_text(encoding="utf-8"))
         for product_id, block in sorted(data["products"].items()):
             for f in block["findings"]:
-                first = (f.get("matches") or [{}])[0]
+                matches = f.get("matches") or [{}]
+                first = matches[0]
+                published = sorted(str(m["published"]) for m in matches if m.get("published"))
+                modified = sorted(str(m["modified"]) for m in matches if m.get("modified"))
                 key = "|".join([product_id, snapshot, str(f.get("component")), str(f.get("primary_id"))])
                 rows.append(
                     {
@@ -328,6 +331,8 @@ def finding_frame(root: Path) -> pl.DataFrame:
                         "snapshot": snapshot,
                         "as_of": block.get("as_of") or f.get("as_of"),
                         "component": f.get("package"),
+                        "package": f.get("package"),
+                        "binary_package": f.get("binary_package"),
                         "version": f.get("version"),
                         "purl": f.get("purl"),
                         "ecosystem": f.get("ecosystem"),
@@ -343,15 +348,23 @@ def finding_frame(root: Path) -> pl.DataFrame:
                         ),
                         "advisory_known_from": f.get("known_from"),
                         "advisory_known_from_rule": f.get("known_from_rule"),
+                        # The first publication and the last change of the advisories matched, the
+                        # dates the legacy report prints for a CVE the serving slice does not hold.
+                        "advisory_published": published[0] if published else None,
+                        "advisory_modified": modified[-1] if modified else None,
                         "summary": f.get("summary"),
                         "severity_json": json.dumps(f.get("severity") or [], sort_keys=True),
                     }
                 )
-    schema = {
+    schema: dict[str, pl.DataType | type[pl.DataType]] = {
         "advisory_ids": pl.List(pl.String),
         "cve_aliases": pl.List(pl.String),
         "upstream_cves": pl.List(pl.String),
         "fixed": pl.List(pl.String),
+        "package": pl.String,
+        "binary_package": pl.String,
+        "advisory_published": pl.String,
+        "advisory_modified": pl.String,
     }
     frame = pl.DataFrame(rows, schema_overrides=schema)
     return frame.sort(["product_id", "snapshot", "finding_id"])

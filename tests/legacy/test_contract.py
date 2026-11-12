@@ -128,6 +128,15 @@ def test_rows_are_deduplicated_like_the_old_script() -> None:
     assert len(twice) == 1
 
 
+def test_the_row_kept_for_a_repeated_cve_does_not_depend_on_the_order() -> None:
+    plain = finding(primary_id="GHSA-aaaa-aaaa-aaaa", severity=())
+    scored = finding(primary_id="GHSA-zzzz-zzzz-zzzz")
+    forward = adapter.report([plain, scored])
+    backward = adapter.report([scored, plain])
+    assert forward == backward
+    assert rows_of(forward)[1][5] != ""
+
+
 @pytest.mark.skipif(not FINDINGS.exists(), reason="results/exposure has not been written")
 def test_every_cell_written_from_the_real_findings_keeps_the_contract() -> None:
     products = json.loads(FINDINGS.read_text(encoding="utf-8"))["products"]

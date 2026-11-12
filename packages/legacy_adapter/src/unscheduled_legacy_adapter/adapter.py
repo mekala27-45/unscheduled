@@ -109,11 +109,23 @@ def _advisory_dates(finding: Finding) -> tuple[date, date]:
     return first.date(), last.date()
 
 
+def _reading_order(finding: Finding) -> tuple[bool, str, str, str]:
+    """The order findings are read in: one with a CVSS 3 score first, then by advisory and package.
+
+    Several findings can name the same CVE for the same vendor and product (the binary packages of
+    one Debian source package, say), and the old script kept the first. Reading them in a fixed
+    order makes the row kept the same whatever order the findings arrive in, from the matcher's
+    files or from the API's tables.
+    """
+    score, _ = cvss3_of(finding)
+    return (score is None, finding.primary_id, finding.purl, finding.version)
+
+
 def rows_from_findings(
     findings: Iterable[Finding], facts: Mapping[str, CveFacts] | None = None
 ) -> list[LegacyRow]:
     rows: dict[tuple[str, str, str], LegacyRow] = {}
-    for finding in findings:
+    for finding in sorted(findings, key=_reading_order):
         vendor, product = vendor_product(finding)
         for cve in finding.cves:
             key = (cve, vendor, product)

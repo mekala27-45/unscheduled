@@ -18,7 +18,7 @@ legacy-unavailable rather than inventing a format.
 from __future__ import annotations
 
 import json
-from collections.abc import Mapping, Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from typing import Any, Protocol
 
 import sqlalchemy as sa
@@ -47,6 +47,44 @@ def _decoded(value: Any) -> Any:
     return value
 
 
+def finding_record(body: Mapping[str, Any], fields: Iterable[str]) -> dict[str, Any]:
+    """A served finding row as the matcher's Finding.
+
+    The serving bundle keeps a finding as one flat row (scripts/build_serving_bundle.py): its first
+    match's range, the fixes, the severity as JSON and the first publication and last change of the
+    advisories it matched. A row that already carries the Finding fields is taken as it is; a flat
+    row is mapped back, field by field, to the one match the adapter needs for its dates.
+    """
+    names = set(fields)
+    data = {name: _decoded(body[name]) for name in names if name in body}
+    data.setdefault("product", body.get("product_id"))
+    data.setdefault("package", body.get("package") or body.get("component"))
+    fixed = _decoded(body.get("fixed")) or []
+    data.setdefault("fixed_versions", fixed)
+    data.setdefault("severity", _decoded(body.get("severity_json")) or [])
+    known_from = body.get("known_from") or body.get("advisory_known_from")
+    rule = body.get("known_from_rule") or body.get("advisory_known_from_rule") or "unknown"
+    data.setdefault("known_from", known_from)
+    data.setdefault("known_from_rule", rule)
+    if "matches" not in data:
+        sources = [s for s in str(body.get("source") or "").split(",") if s]
+        data["matches"] = [
+            {
+                "advisory_id": body.get("primary_id"),
+                "source": sources[0] if sources else "unknown",
+                "sources": sources,
+                "via": "range" if body.get("matched_range") else "versions",
+                "matched_range": body.get("matched_range"),
+                "fixed": fixed,
+                "modified": body.get("advisory_modified") or known_from,
+                "published": body.get("advisory_published"),
+                "known_from": known_from,
+                "known_from_rule": rule,
+            }
+        ]
+    return {name: value for name, value in data.items() if name in names}
+
+
 class AdapterWriter:
     """packages/legacy_adapter, looked up when first used so a deployment without it still starts."""
 
@@ -68,8 +106,7 @@ class AdapterWriter:
 
         records = []
         for body in findings:
-            data = {name: _decoded(body[name]) for name in Finding.model_fields if name in body}
-            data.setdefault("product", body.get("product_id"))
+            data = finding_record(body, Finding.model_fields)
             try:
                 records.append(Finding.model_validate(data))
             except ValidationError as err:

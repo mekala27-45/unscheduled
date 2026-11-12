@@ -52,3 +52,45 @@ def test_without_the_adapter_the_route_says_so(make_services: Any, loaded: TestC
     client = TestClient(create_app(make_services(legacy=Missing())))
     response = client.get("/v1/legacy/report.csv")
     assert response.status_code == 503 and response.json()["type"].endswith("#problem-legacy-unavailable")
+
+
+@needs_adapter
+def test_the_rows_the_serving_bundle_writes_give_the_report_the_matcher_findings_give() -> None:
+    """The flat finding rows of the real bundle builder rebuild the same CSV as the matcher's findings.
+
+    The fixture bundle above carries whole Finding records; the bundle the build publishes carries
+    flat rows. With no CVE facts the report is made from the finding fields alone, so the two must
+    be byte for byte the same.
+    """
+    import json
+    import sys
+    from pathlib import Path
+
+    from unscheduled_legacy_adapter import adapter
+    from unscheduled_match.matcher import Finding
+
+    root = Path(__file__).resolve().parents[2]
+    sys.path.insert(0, str(root / "scripts"))
+    try:
+        import build_serving_bundle as serving
+    finally:
+        sys.path.pop(0)
+
+    flat = serving.finding_frame(root).filter(today_only()).to_dicts()
+    served = AdapterWriter().write(flat, {})
+
+    today = json.loads((root / "results" / "exposure" / "findings_today.json").read_text(encoding="utf-8"))
+    findings = [
+        Finding.model_validate({**f, "product": f.get("product") or product})
+        for product, block in sorted(today["products"].items())
+        for f in block["findings"]
+    ]
+    direct = adapter.report(findings, {})
+    assert served.splitlines()[0] == direct.splitlines()[0]
+    assert served == direct
+
+
+def today_only() -> Any:
+    import polars as pl
+
+    return pl.col("snapshot") == "today"
