@@ -54,3 +54,6 @@ rows:
   - skill: Communication
     paths: [report/backlog.md]
     note: the backlog report and the pushback paragraph on every evidence page
+  - skill: Technical writing
+    paths: [docs, docs/diagrams, CHANGELOG.md]
+    note: a quickstart, the API reference from the schema, method notes, and archify diagrams that cite the lines they draw

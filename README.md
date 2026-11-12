@@ -59,6 +59,7 @@ Only what is built is listed; docs/ROADMAP.md holds the plan for the rest.
 | Accessibility and performance | .github/workflows/web.yml | axe and Lighthouse in CI |
 | Forward deployed discovery | report/discovery.md, config/criteria.yaml | the discovery memo and the criteria the customer signed |
 | Communication | report/backlog.md | the backlog report and the pushback paragraph on every evidence page |
+| Technical writing | docs, docs/diagrams, CHANGELOG.md | a quickstart, the API reference from the schema, method notes, and archify diagrams that cite the lines they draw |
 
 ## Where things are
 
