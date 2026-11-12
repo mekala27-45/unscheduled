@@ -43,11 +43,16 @@ PARTS = ("lake.json", "backlog.json")
 # The DuckDB file itself is not byte for byte reproducible (its block layout depends on the run); the
 # content digest over every table's rows is, and that is the digest compared.
 NOT_COMPARED = {"values:lake.sha256": "the file digest; lake.content_digest is compared instead"}
-STEPS = (
-    ["scripts/build_lake.py", "--memory", "6GB", "--threads", "4"],
-    ["scripts/run_analysis.py"],
-    ["scripts/backlog_charts.py"],
-)
+
+
+def steps(memory: str, threads: int) -> tuple[list[str], ...]:
+    """The steps lake.yml runs. The DuckDB memory limit and threads are the machine's to set: lake.yml
+    gives 10GB and 4 on a 16 GB runner, and a build machine with 8 GB needs about half of that."""
+    return (
+        ["scripts/build_lake.py", "--memory", memory, "--threads", str(threads)],
+        ["scripts/run_analysis.py"],
+        ["scripts/backlog_charts.py"],
+    )
 
 
 def sh(args: list[str], cwd: Path = ROOT) -> str:
@@ -185,6 +190,8 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--release", default=None)
     parser.add_argument("--keep", action="store_true", help="keep the worktree for inspection")
+    parser.add_argument("--memory", default="3GB", help="the DuckDB memory limit of the lake build")
+    parser.add_argument("--threads", type=int, default=2, help="DuckDB and dbt threads")
     args = parser.parse_args(argv)
     if sh(["git", "status", "--porcelain", "--untracked-files=no"]).strip():
         raise SystemExit(
@@ -207,7 +214,8 @@ def main(argv: list[str] | None = None) -> int:
     try:
         record["restored"] = extract(folder, tree)
         timings = {}
-        for step in STEPS:
+        record["build_settings"] = {"memory": args.memory, "threads": args.threads}
+        for step in steps(args.memory, args.threads):
             t0 = time.monotonic()
             subprocess.run([sys.executable, *step], cwd=tree, check=True)
             timings[step[0]] = round(time.monotonic() - t0, 1)
