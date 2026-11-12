@@ -66,6 +66,15 @@ export const DOC_DIAGRAMS: Record<string, DocDiagram> = {
     alt: "The tables of the serving slice in Neon: cve, cve_event, product and finding, copied from the serving release, and settings, client_budget, match_log and ops_run, kept by the API itself, with every column and its type; cve_event names its CVE and finding its product by value, with no foreign key declared",
     source: "docs/diagrams/slice.archify.json",
   },
+  "adr-0004": {
+    light: "/diagrams/match-light.svg",
+    dark: "/diagrams/match-dark.svg",
+    page: "/diagrams/match.html",
+    width: 920,
+    height: 898,
+    alt: "A match as a sequence: the console or curl posts one SBOM, the API charges the match budget in Neon, asks the OSV API for the advisories of its package names and ecosystems, fetches each record, checks every range with packages/match, logs the digest and the counts in Neon and answers with the findings",
+    source: "docs/diagrams/match.archify.json",
+  },
   "adr-0007": {
     light: "/diagrams/sync-light.svg",
     dark: "/diagrams/sync-dark.svg",

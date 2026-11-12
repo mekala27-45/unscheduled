@@ -1,0 +1,248 @@
+{
+ "schema_version": 1,
+ "diagram_type": "sequence",
+ "meta": {
+  "title": "How a match runs",
+  "output": "web/public/diagrams/match.html",
+  "locale": "en",
+  "quality_profile": "showcase",
+  "repository": {
+   "url": "https://github.com/mekala27-45/unscheduled",
+   "provider": "github",
+   "link_mode": "web",
+   "revision": "a9382b9d53cf95d11a46a8b0474bbe36a5e74d32"
+  }
+ },
+ "participants": [
+  {
+   "id": "client",
+   "type": "frontend",
+   "label": "Console or curl",
+   "sublabel": "sends one SBOM",
+   "sources": [
+    {
+     "path": "web/lib/api/client.ts",
+     "line": 159,
+     "end_line": 165,
+     "label": "the console call"
+    },
+    {
+     "path": "customer/README.md",
+     "line": 32,
+     "end_line": 37,
+     "label": "the customer SBOMs"
+    }
+   ]
+  },
+  {
+   "id": "api",
+   "type": "backend",
+   "label": "API",
+   "sublabel": "Vercel container",
+   "sources": [
+    {
+     "path": "packages/api/src/unscheduled_api/app.py",
+     "line": 575,
+     "end_line": 640,
+     "label": "POST /v1/match"
+    },
+    {
+     "path": "packages/api/src/unscheduled_api/matching.py",
+     "line": 1,
+     "end_line": 15,
+     "label": "what leaves, what is kept"
+    }
+   ]
+  },
+  {
+   "id": "neon",
+   "type": "database",
+   "label": "Neon Postgres",
+   "sublabel": "budget and match log",
+   "sources": [
+    {
+     "path": "packages/api/src/unscheduled_api/budget.py",
+     "line": 89,
+     "end_line": 114,
+     "label": "the daily budget"
+    },
+    {
+     "path": "packages/api/src/unscheduled_api/matching.py",
+     "line": 374,
+     "end_line": 401,
+     "label": "one row per SBOM"
+    }
+   ]
+  },
+  {
+   "id": "osv",
+   "type": "external",
+   "label": "OSV API",
+   "sublabel": "api.osv.dev, no key",
+   "sources": [
+    {
+     "path": "packages/api/src/unscheduled_api/matching.py",
+     "line": 202,
+     "end_line": 277,
+     "label": "querybatch, then each record"
+    }
+   ]
+  }
+ ],
+ "segments": [
+  {
+   "from": 168,
+   "to": 370,
+   "label": "Admit"
+  },
+  {
+   "from": 378,
+   "to": 650,
+   "label": "Read the advisories"
+  },
+  {
+   "from": 658,
+   "to": 800,
+   "label": "Answer"
+  }
+ ],
+ "messages": [
+  {
+   "id": "upload",
+   "from": "client",
+   "to": "api",
+   "y": 180,
+   "label": "POST /v1/match",
+   "variant": "emphasis",
+   "note": "CycloneDX or SPDX JSON; past the upload limit it is refused before it is read whole"
+  },
+  {
+   "id": "charge",
+   "from": "api",
+   "to": "neon",
+   "y": 250,
+   "label": "charge the match budget",
+   "variant": "security",
+   "note": "one count per hashed client and day; past the limit the answer is 429"
+  },
+  {
+   "id": "allowed",
+   "from": "neon",
+   "to": "api",
+   "y": 320,
+   "label": "used and allowed",
+   "variant": "return",
+   "note": "the API parses the SBOM in memory and counts components without a package URL"
+  },
+  {
+   "id": "query",
+   "from": "api",
+   "to": "osv",
+   "y": 390,
+   "label": "querybatch",
+   "variant": "default",
+   "note": "package names and ecosystems only, never the document"
+  },
+  {
+   "id": "ids",
+   "from": "osv",
+   "to": "api",
+   "y": 460,
+   "label": "advisory ids",
+   "variant": "return",
+   "note": "with the modified time of each record"
+  },
+  {
+   "id": "fetch",
+   "from": "api",
+   "to": "osv",
+   "y": 520,
+   "label": "GET each advisory",
+   "variant": "default",
+   "note": "sixteen at a time; a record cached at the same modified time is not fetched again"
+  },
+  {
+   "id": "records",
+   "from": "osv",
+   "to": "api",
+   "y": 590,
+   "label": "advisory records",
+   "variant": "return",
+   "note": "packages/match checks every range in the ecosystem's own version scheme"
+  },
+  {
+   "id": "log",
+   "from": "api",
+   "to": "neon",
+   "y": 670,
+   "label": "log the match",
+   "variant": "emphasis",
+   "note": "sha256, size, counts, timing and the hashed client; never the SBOM"
+  },
+  {
+   "id": "findings",
+   "from": "api",
+   "to": "client",
+   "y": 740,
+   "label": "findings",
+   "variant": "return",
+   "note": "each with its ranges and fixed versions; X-Budget-Remaining in the headers"
+  }
+ ],
+ "activations": [
+  {
+   "participant": "client",
+   "from": 176,
+   "to": 790,
+   "type": "frontend"
+  },
+  {
+   "participant": "api",
+   "from": 186,
+   "to": 780,
+   "type": "backend"
+  },
+  {
+   "participant": "neon",
+   "from": 246,
+   "to": 326,
+   "type": "database"
+  },
+  {
+   "participant": "neon",
+   "from": 666,
+   "to": 690,
+   "type": "database"
+  },
+  {
+   "participant": "osv",
+   "from": 386,
+   "to": 466,
+   "type": "external"
+  },
+  {
+   "participant": "osv",
+   "from": 516,
+   "to": 596,
+   "type": "external"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "rose",
+   "title": "What never leaves or stays",
+   "items": [
+    "Only package names and ecosystems go to the OSV API; the document stays in memory",
+    "The match log keeps the digest and the counts, never the SBOM, and the client only as a salted hash"
+   ]
+  },
+  {
+   "dot": "amber",
+   "title": "When it refuses",
+   "items": [
+    "413 past the upload limit, 415 for another media type, 422 for a document that is neither CycloneDX nor SPDX, 429 when the budget for the day is spent",
+    "503 when the OSV API cannot be read; the match is logged with that status"
+   ]
+  }
+ ]
+}

@@ -47,6 +47,7 @@ test("the report lists its documents and renders the backlog with its tables", a
 for (const [slug, name, what] of [
   ["as-of", "status", "the NVD status lifecycle"],
   ["adr-0002", "slice", "the tables of the slice"],
+  ["adr-0004", "match", "a match as a sequence"],
   ["adr-0007", "sync", "the sync as a sequence"],
 ] as const) {
   test(`/docs/${slug} opens with ${what}`, async ({ page }) => {
