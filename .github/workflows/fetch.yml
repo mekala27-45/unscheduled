@@ -1,0 +1,153 @@
+name: fetch
+
+# Every public source, fetched, locked by digest and parsed to bronze by packages/sources.
+# Hourly: the CVE List deltas and KEV. Daily: the rest, in the order config/sources.yaml gives.
+# The state of the last run (bronze, the locks and the ledger) comes back from the newest lake-*
+# release, so every run resumes from its ledger; raw files go up named by their digest, and bronze,
+# the locks and the ledger as assets of the day's release lake-YYYYMMDD. The one secret it reads is
+# the optional NVD_API_KEY; without it the NVD fetch runs keyless at the documented limit.
+on:
+  schedule:
+    - cron: "17 * * * *"
+    - cron: "41 4 * * *"
+  workflow_dispatch:
+    inputs:
+      sources:
+        description: "Sources separated by spaces (cvelist kev cna_list cwe nvd epss osv ghsa vulnrichment exploits registries), or all"
+        required: false
+        default: all
+
+permissions: {}
+
+concurrency:
+  group: fetch
+  cancel-in-progress: false
+
+jobs:
+  fetch:
+    name: fetch and publish the lake
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    permissions:
+      contents: write
+    env:
+      PYTHONHASHSEED: "0"
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: "3.12"
+          enable-cache: false
+      - run: uv sync --frozen
+
+      - name: Choose the sources
+        id: pick
+        env:
+          EVENT: ${{ github.event_name }}
+          SCHEDULE: ${{ github.event.schedule }}
+          WANTED: ${{ inputs.sources }}
+        run: |
+          if [ "$EVENT" = "workflow_dispatch" ]; then
+            chosen="$WANTED"
+          elif [ "$SCHEDULE" = "17 * * * *" ]; then
+            chosen="$(uv run python -c 'import yaml; print(" ".join(yaml.safe_load(open("config/sources.yaml"))["schedules"]["hourly"]))')"
+          else
+            chosen="$(uv run python -c 'import yaml; print(" ".join(yaml.safe_load(open("config/sources.yaml"))["schedules"]["daily"]))')"
+          fi
+          if [ -z "$chosen" ] || [ "$chosen" = "all" ]; then
+            chosen="$(uv run python -c 'from unscheduled_sources.registry import SOURCES; print(" ".join(SOURCES))')"
+          fi
+          echo "sources=$chosen" >> "$GITHUB_OUTPUT"
+          echo "Fetching: $chosen"
+
+      - name: Restore the last run from the newest lake release
+        id: restore
+        run: |
+          last="$(gh release list --repo "$REPO" --limit 30 --json tagName --jq '[.[] | select(.tagName | startswith("lake-"))][0].tagName // ""')"
+          echo "last=$last" >> "$GITHUB_OUTPUT"
+          touch "$RUNNER_TEMP/fetch-start"
+          if [ -z "$last" ]; then
+            echo "No lake release yet: starting from the locks in the repository."
+            exit 0
+          fi
+          mkdir -p restore data/bronze
+          gh release download "$last" --repo "$REPO" --dir restore --pattern 'bronze-*.tar' --pattern 'locks.tar.gz' --pattern 'config.tar.gz' || true
+          for t in restore/bronze-*.tar; do [ -e "$t" ] && tar -xf "$t" -C data/bronze; done
+          [ -e restore/locks.tar.gz ] && tar -xzf restore/locks.tar.gz -C data
+          [ -e restore/config.tar.gz ] && tar -xzf restore/config.tar.gz -C config
+          rm -rf restore
+          echo "Restored from $last."
+
+      - name: Fetch
+        env:
+          SOURCES: ${{ steps.pick.outputs.sources }}
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+        run: |
+          mkdir -p data/bronze
+          others=""
+          for s in $SOURCES; do [ "$s" != "epss" ] && others="$others $s"; done
+          status=0
+          if [ -n "$others" ]; then
+            # Raw files are kept to be uploaded by digest. The NVD history stops cleanly at the budget.
+            uv run python scripts/fetch.py $others --keep-raw --budget-minutes 300 \
+              --progress-log data/locks/nvd_progress.log || status=1
+          fi
+          case " $SOURCES " in
+            *" epss "*)
+              # EPSS keeps the digest of every daily file and not the files.
+              uv run python scripts/fetch.py epss --budget-minutes 120 || status=1 ;;
+          esac
+          exit $status
+
+      - name: Publish raw by digest, bronze, the locks and the ledger
+        if: always()
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+          LAST: ${{ steps.restore.outputs.last }}
+        run: |
+          # The daily run writes a full lake release for the day. An hourly run refreshes the newest
+          # release in place with only the tables it rewrote, so every release stays complete.
+          if [ "$SCHEDULE" = "17 * * * *" ] && [ -n "$LAST" ]; then
+            tag="$LAST"; changed_only=1
+          else
+            tag="lake-$(date -u +%Y%m%d)"; changed_only=0
+            if ! gh release view "$tag" --repo "$REPO" > /dev/null 2>&1; then
+              gh release create "$tag" --repo "$REPO" --title "lake $(date -u +%Y-%m-%d)" --latest=false \
+                --notes "Raw files named by digest, bronze tables, locks and the run ledger written by fetch.yml. Every raw file is listed with its SHA-256 in locks.tar.gz."
+            fi
+          fi
+          mkdir -p out
+          if [ -d data/raw ]; then
+            for dir in data/raw/*/; do
+              [ -d "$dir" ] || continue
+              name="$(basename "$dir")"
+              [ -n "$(find "$dir" -type f -print -quit)" ] || continue
+              tar -cf "out/raw-$name.tar" --sort=name --mtime='2026-01-01 00:00Z' --owner=0 --group=0 -C data/raw "$name"
+              digest="$(sha256sum "out/raw-$name.tar" | cut -c1-16)"
+              mv "out/raw-$name.tar" "out/raw-$name-$digest.tar"
+              # A release asset holds at most 2 GiB; a larger tar goes up in numbered parts.
+              if [ "$(stat -c %s "out/raw-$name-$digest.tar")" -gt 1992294400 ]; then
+                split -b 1900m -d "out/raw-$name-$digest.tar" "out/raw-$name-$digest.tar.part"
+                rm "out/raw-$name-$digest.tar"
+              fi
+            done
+          fi
+          if [ -d data/bronze ]; then
+            for dir in data/bronze/*/; do
+              [ -d "$dir" ] || continue
+              name="$(basename "$dir")"
+              if [ "$changed_only" = 1 ] && [ -z "$(find "$dir" -type f -newer "$RUNNER_TEMP/fetch-start" -print -quit)" ]; then
+                continue
+              fi
+              tar -cf "out/bronze-$name.tar" --sort=name --mtime='2026-01-01 00:00Z' --owner=0 --group=0 -C data/bronze "$name"
+            done
+          fi
+          tar -czf out/locks.tar.gz -C data locks
+          tar -czf out/config.tar.gz -C config labels.yaml filers.yaml
+          ( cd out && sha256sum ./* > SHA256SUMS )
+          gh release upload "$tag" --repo "$REPO" --clobber out/*
+          echo "Published $(ls out | wc -l) assets to $tag."
