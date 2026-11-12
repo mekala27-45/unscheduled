@@ -269,7 +269,7 @@ class Probe:
         upload: dict[str, Any]
         if token and shutil.which("gh"):
             listed = subprocess.run(
-                ["gh", "release", "list", "--repo", REPOSITORY, "--limit", "1"],
+                ["gh", "api", f"repos/{REPOSITORY}/releases?per_page=1"],
                 capture_output=True,
                 text=True,
                 timeout=60,

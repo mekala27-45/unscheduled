@@ -3,8 +3,9 @@
     python scripts/reset_and_rederive.py [--release lake-YYYYMMDD] [--keep]
 
 1. The newest lake release (or --release): its bronze archives, locks and config, each archive checked
-   against the release's SHA256SUMS before it is opened. The downloads are kept under data/cache so a
-   second run reads them again without the network.
+   against the release's SHA256SUMS before it is opened. The downloads are kept under data/cache; the
+   sums are read again on each run, so an archive is fetched again only when the release changed it.
+   Releases are read through the REST API (gh api), which answers wherever gh is signed in.
 2. A git worktree of HEAD in a temporary folder, holding nothing of data/ but what the release holds.
 3. In the worktree, the steps lake.yml runs: scripts/build_lake.py, scripts/run_analysis.py and
    scripts/backlog_charts.py, with this checkout's environment.
@@ -20,6 +21,8 @@ they are several gigabytes and this machine holds a few, so the bronze is checke
 from __future__ import annotations
 
 import argparse
+import fnmatch
+import hashlib
 import json
 import math
 import shutil
@@ -51,25 +54,81 @@ def sh(args: list[str], cwd: Path = ROOT) -> str:
     return subprocess.run(args, cwd=cwd, check=True, capture_output=True, text=True).stdout
 
 
+WANTED = ("bronze-*.tar", "locks.tar.gz", "config.tar.gz")
+
+
+def gh_json(path: str) -> Any:
+    """One GitHub REST call through the gh command line, which reads its own credential. The REST
+    API answers in Actions and in a coding agent's session alike, where GraphQL may be closed."""
+    return json.loads(sh(["gh", "api", path]))
+
+
 def newest_lake_release() -> str:
-    tags = json.loads(
-        sh(["gh", "release", "list", "--repo", REPOSITORY, "--limit", "50", "--json", "tagName"])
-    )
-    lake = sorted((t["tagName"] for t in tags if t["tagName"].startswith("lake-")), reverse=True)
+    tags = [str(r["tag_name"]) for r in gh_json(f"repos/{REPOSITORY}/releases?per_page=50")]
+    lake = sorted((t for t in tags if t.startswith("lake-")), reverse=True)
     if not lake:
         raise SystemExit("rederive: the repository has no lake release yet")
-    return str(lake[0])
+    return lake[0]
+
+
+def sums_of(text: str) -> dict[str, str]:
+    """SHA256SUMS as written by sha256sum: digest, two spaces, the name (with ./ or * before it)."""
+    out: dict[str, str] = {}
+    for line in text.splitlines():
+        fields = line.split()
+        if len(fields) == 2:
+            out[fields[1].lstrip("*").removeprefix("./")] = fields[0]
+    return out
+
+
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1 << 20), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def fetch_asset(asset_id: int, target: Path) -> None:
+    partial = target.with_name(target.name + ".part")
+    with partial.open("wb") as out:
+        subprocess.run(
+            [
+                "gh",
+                "api",
+                "-H",
+                "Accept: application/octet-stream",
+                f"repos/{REPOSITORY}/releases/assets/{asset_id}",
+            ],
+            cwd=ROOT,
+            stdout=out,
+            check=True,
+        )
+    partial.replace(target)
 
 
 def download(tag: str) -> Path:
+    """The release's bronze, locks and config, each checked against its SHA256SUMS. The sums are read
+    again on every call, so a release republished under the same tag the same day is fetched again,
+    while an archive already here with the digest the sums give is kept."""
     folder = CACHE / tag
     folder.mkdir(parents=True, exist_ok=True)
-    patterns = ["bronze-*.tar", "locks.tar.gz", "config.tar.gz", "SHA256SUMS"]
-    if not (folder / "SHA256SUMS").exists():
-        args = ["gh", "release", "download", tag, "--repo", REPOSITORY, "--dir", str(folder), "--clobber"]
-        for p in patterns:
-            args += ["--pattern", p]
-        sh(args)
+    assets = {str(a["name"]): a for a in gh_json(f"repos/{REPOSITORY}/releases/tags/{tag}")["assets"]}
+    if "SHA256SUMS" not in assets:
+        raise SystemExit(f"rederive: {tag} has no SHA256SUMS")
+    fetch_asset(int(assets["SHA256SUMS"]["id"]), folder / "SHA256SUMS")
+    sums = sums_of((folder / "SHA256SUMS").read_text(encoding="utf-8"))
+    wanted = sorted(n for n in assets if any(fnmatch.fnmatch(n, p) for p in WANTED))
+    for name in wanted:
+        if name not in sums:
+            raise SystemExit(f"rederive: {name} in {tag} is not listed in its SHA256SUMS")
+        target = folder / name
+        if target.exists() and file_sha256(target) == sums[name]:
+            continue
+        fetch_asset(int(assets[name]["id"]), target)
+    for stale in folder.glob("bronze-*.tar"):
+        if stale.name not in wanted:
+            stale.unlink()
     sh(["sha256sum", "--check", "--ignore-missing", "--quiet", "SHA256SUMS"], cwd=folder)
     return folder
 
