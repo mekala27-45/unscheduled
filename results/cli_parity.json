@@ -1,0 +1,149 @@
+{
+ "bundle_tag": "serving-202611070500",
+ "cases": [
+  {
+   "answer_sha256": "0f166b3d6087de41d6762807a91532571c6d8741d70ae60a376cde8de7baba73",
+   "command": "unsched cve CVE-2021-90001",
+   "http_status": 200,
+   "name": "a cve",
+   "route": "GET /v1/cves/CVE-2021-90001",
+   "same": true
+  },
+  {
+   "answer_sha256": "16ec1557d68226411d9cd15c99d81c556240ebf61e33b81badae2850b477b52e",
+   "command": "unsched cve CVE-2021-90001 --as-of 2021-03-05",
+   "http_status": 200,
+   "name": "a cve as of a day",
+   "route": "GET /v1/cves/CVE-2021-90001?as_of=2021-03-05",
+   "same": true
+  },
+  {
+   "answer_sha256": "6f2f0f0f9c92a52f8177e73efb0e356616f8b037dc0670396521cb8d01543fd5",
+   "command": "unsched cve CVE-1999-0001",
+   "http_status": 404,
+   "name": "a cve not in the slice",
+   "route": "GET /v1/cves/CVE-1999-0001",
+   "same": true
+  },
+  {
+   "answer_sha256": "9f7d7790baae93722f9cebcda3724c28e68ce197da8bab16a52d214dc485312f",
+   "command": "unsched cves --cwe cwe-79",
+   "http_status": 200,
+   "name": "a cwe",
+   "route": "GET /v1/cves?cwe=cwe-79",
+   "same": true
+  },
+  {
+   "answer_sha256": "81ec3e875ee333efd04f5e6d727cf3c541f86b4a4421a633db7606c893f6c2c5",
+   "command": "unsched match fixture.cdx.json",
+   "http_status": 200,
+   "name": "a cyclonedx match",
+   "route": "POST /v1/match",
+   "same": true
+  },
+  {
+   "answer_sha256": "7bb4beb530215f3ed9c5ef074168f374e69be95814097707cb1715330f4e7f61",
+   "command": "unsched cves --kev --filer fixture-oss",
+   "http_status": 200,
+   "name": "a filtered page",
+   "route": "GET /v1/cves?kev=true&filer=fixture-oss",
+   "same": true
+  },
+  {
+   "answer_sha256": "e61df8ae935a5c887842c2fad1c88d876245af956e5a64452f303ac78af9b6b2",
+   "command": "unsched cves --limit 2",
+   "http_status": 200,
+   "name": "a page",
+   "route": "GET /v1/cves?limit=2",
+   "same": true
+  },
+  {
+   "answer_sha256": "4c53b82833d34e006e3ba1d92418266535471b239603b80116986387ae043567",
+   "command": "python -m unscheduled_cli cve CVE-2026-90005 --as-of 2026-06-01",
+   "http_status": 200,
+   "name": "a separate process",
+   "route": "GET /v1/cves/CVE-2026-90005?as_of=2026-06-01",
+   "same": true
+  },
+  {
+   "answer_sha256": "754bbb0560b983cc62ca7a1bace105a7a1f0d3ab8e7d9da21cde185c3fbaa1ff",
+   "command": "unsched timeline CVE-2021-90001",
+   "http_status": 200,
+   "name": "a timeline",
+   "route": "GET /v1/cves/CVE-2021-90001/timeline",
+   "same": true
+  },
+  {
+   "answer_sha256": "ce6c1616fa40f493fb0f1ffc1abdefee1300ccbfdf46358830b908f3da0318d9",
+   "command": "unsched match fixture.spdx.json",
+   "http_status": 200,
+   "name": "an spdx match",
+   "route": "POST /v1/match",
+   "same": true
+  },
+  {
+   "answer_sha256": "64d15b44f889b1a3b75b235b7a60d5dda2487045e0202910fd66375f78e1648b",
+   "command": "unsched exposure nothing",
+   "http_status": 404,
+   "name": "an unknown product",
+   "route": "GET /v1/products/nothing/exposure",
+   "same": true
+  },
+  {
+   "answer_sha256": "2797600336f6a2d6e5c630c78a10f40ae3413d819f164ee8effddec560110ab7",
+   "command": "unsched cve CVE-2026-90003 --as-of 2026-01-01",
+   "http_status": 200,
+   "name": "before publication",
+   "route": "GET /v1/cves/CVE-2026-90003?as_of=2026-01-01",
+   "same": true
+  },
+  {
+   "answer_sha256": "0f345cae7c09ea8ef9380ff41c661de07fb591a2b8d5afb9853291c1be572ad7",
+   "command": "unsched exposure go-edge-service --as-of pin",
+   "http_status": 200,
+   "name": "exposure at the pin",
+   "route": "GET /v1/products/go-edge-service/exposure?as_of=pin",
+   "same": true
+  },
+  {
+   "answer_sha256": "fb0967d33c09f65511cb34d7b83f1f3c1c0e441d71c5985e16f21b38714b72d9",
+   "command": "unsched exposure go-edge-service",
+   "http_status": 200,
+   "name": "exposure today",
+   "route": "GET /v1/products/go-edge-service/exposure",
+   "same": true
+  },
+  {
+   "answer_sha256": "3400039b6f11eb566057bb4c622a192334b5d91e2f26d8d1806ed06e909d3e92",
+   "command": "unsched backlog",
+   "http_status": 200,
+   "name": "the backlog",
+   "route": "GET /v1/backlog",
+   "same": true
+  },
+  {
+   "answer_sha256": "199d1b5bd8ff5d557186c5c8095fc1545317cd873a0727bd821880755fa7f34b",
+   "command": "unsched legacy-report",
+   "http_status": 200,
+   "name": "the legacy report",
+   "route": "GET /v1/legacy/report.csv",
+   "same": true
+  },
+  {
+   "answer_sha256": "40bc73c289331ad16b060805dc75e3f46055fb9deb5c0bc6815422f2b85710e7",
+   "command": "unsched products",
+   "http_status": 200,
+   "name": "the products",
+   "route": "GET /v1/products",
+   "same": true
+  }
+ ],
+ "passed": true,
+ "set_aside_by_design": [
+  "as_of",
+  "duration_ms",
+  "instance",
+  "stored"
+ ],
+ "what": "unsched and the API answered the same on the same database, case by case"
+}
