@@ -221,3 +221,18 @@ report would lose the claim gate that checks it against the manifest. The Markdo
 the server when the site is built, with marked 18.1.2, the only new dependency; there is no MDX,
 since no page needs a component inside its text. The diagram on /docs is the archify export
 already in web/public/diagrams.
+
+## 2026-11-12: the load test runs on httpx, and the live checks are scripts
+
+The plan named k6 for the load test. Its release binaries are not reachable from the machine the
+build runs on (the network policy refuses GitHub release downloads of grafana/k6), so
+scripts/load_test.py runs the same scenario with httpx: a cold pass after a stated idle time, then
+warm lookups of seeded CVE ids over a few threads, every latency kept and p50, p95 and p99 taken
+by nearest rank. It writes results/load/c8.json and the manifest part results/parts/load.json, and
+it spends about 300 of the client's 2,000 lookups a day. scripts/verify_api.py drives every route
+of section 12 against the live API and compares the release it serves with the newest serving
+release on GitHub (results/live/api_verify.json). web/scripts/live-check.mjs reads every page of
+the site in Chromium against the live API, with nothing mocked, awake and after an idle wait
+(results/live/web_verify.json and results/live_check.json). schemathesis stays in process
+(tests/api/test_schemathesis.py), since its generated requests would spend the live budget in
+minutes.

@@ -369,7 +369,9 @@ function toFinding(body: Record<string, unknown>, cveIds: string[], states: Map<
   const first = matches[0] ?? {};
   const known = cveIds.map((id) => states?.get(id)).filter((s): s is S["CveAsOf"] => Boolean(s));
   return {
-    component: text(body.component) ?? text(body.package) ?? "",
+    // The package name reads better than an SBOM's component reference, which Syft writes as a full
+    // package URL with its qualifiers; the package URL itself stays in purl.
+    component: text(body.package) ?? text(body.component) ?? "",
     version: text(body.version) ?? "",
     purl: text(body.purl),
     advisory_ids: texts(body.advisory_ids),
