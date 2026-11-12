@@ -43,3 +43,11 @@ make lint types test         # ruff, mypy strict, pytest
   samples.yaml and evaluation/phase1_plan.yaml) and evaluation/registration_plan.json and
   registration.json once hashed; `make gates` fails on any edit, and a change is a dated
   DECISIONS.md entry with both verdicts
+
+## Where to look
+
+- docs/SPEC.md: every interface and invariant; docs/adr/: the seven decisions behind the layout
+- .claude/skills/: add-a-source, add-a-criterion, explain-a-cve and cut-a-release, in the Agent
+  Skills format, for any coding agent that reads them
+- docs/runbooks/: rotating the database credential, reading the consoles again
+- BUILD_STATE.md: where the build stands and what comes next
