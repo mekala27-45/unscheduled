@@ -22,6 +22,22 @@ in it is actively exploited. unscheduled measures the gap between the two and fi
 company's SBOMs. Over five phases it fills in, ranks and routes the CVEs nobody scheduled, and a
 person approves every plan.
 
+## See it
+
+- The site, with the console, the report and the docs: https://unscheduled-triage.vercel.app
+- The API, no key needed: https://unscheduled-api.vercel.app. Every route is on the site at
+  /docs/api and in openapi.json.
+- The first finding: of the CVEs published from 2020 to 2024, {{ v("backlog.q1.share_30d_before_2025") }} were analyzed by
+  the NVD within 30 days; of those published since 15 April 2026, {{ v("backlog.q1.share_30d_since_change") }}
+  (report/backlog.md, Q1).
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="web/public/diagrams/architecture-dark.svg">
+  <img alt="The architecture: public sources fetched in Actions into raw, bronze, silver and gold layers, then the analysis, the match and the serving bundle the API pulls into Neon, and the web on top" src="web/public/diagrams/architecture-light.svg">
+</picture>
+
+The diagrams on the docs pages are drawn with archify from the sources in docs/diagrams.
+
 ## The skills, and where each one is
 
 {% set matrix = data("docs/skills_matrix.yaml") %}
