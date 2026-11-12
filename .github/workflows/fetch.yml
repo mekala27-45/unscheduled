@@ -16,6 +16,11 @@ on:
         description: "Sources separated by spaces (cvelist kev cna_list cwe nvd epss osv ghsa vulnrichment exploits registries), or all"
         required: false
         default: all
+      bootstrap:
+        description: "Start the lake from nothing when no lake release exists yet (the first run only)"
+        type: boolean
+        required: false
+        default: false
 
 permissions: {}
 
@@ -66,13 +71,23 @@ jobs:
 
       - name: Restore the last run from the newest lake release
         id: restore
+        env:
+          BOOTSTRAP: ${{ inputs.bootstrap }}
         run: |
           last="$(gh release list --repo "$REPO" --limit 30 --json tagName --jq '[.[] | select(.tagName | startswith("lake-"))][0].tagName // ""')"
           echo "last=$last" >> "$GITHUB_OUTPUT"
           touch "$RUNNER_TEMP/fetch-start"
           if [ -z "$last" ]; then
-            # The first lake (the full NVD history, fetched keyless) is published by the build;
-            # a scheduled run never starts the lake from nothing.
+            if [ "$BOOTSTRAP" = "true" ]; then
+              # The first lake: every source from nothing, the NVD history keyless at its limit,
+              # stopping cleanly at the budget; the publish step below runs either way, so the next run
+              # resumes from the ledger it wrote.
+              echo "No lake release yet: this bootstrap run starts every source from nothing."
+              mkdir -p data/bronze data/locks
+              exit 0
+            fi
+            # A scheduled run never starts the lake from nothing; the first lake comes from a
+            # bootstrap run started by hand.
             echo "No lake release yet: nothing to resume from, so this run waits for the first one."
             echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
