@@ -245,3 +245,32 @@ bronze, each archive checked against the release's SHA256SUMS, not from the raw 
 several gigabytes per source and the build machine has a few gigabytes free. The DuckDB file digest
 is left out of the comparison because the file's block layout changes from run to run;
 lake.content_digest, a digest over every table's rows, is compared in its place.
+
+## 2026-11-12: every 5xx from a source is retried
+
+The first fetch in Actions (fetch.yml with bootstrap, started by Ajay) stopped in the NVD change
+history when the API answered HTTP 522, the code the CDN in front of it sends when the origin times
+out, at start index 655,000 of the window from 15 March to 13 July 2026. The client retried only
+500, 502, 503 and 504 and counted 522 as a refusal. It now retries every 5xx with the same backoff,
+as its module already said it did, and still treats a 4xx outside its list as a refusal at once.
+Every other source finished in that run, and its release, lake-20261112, holds the ledger the next
+run resumes from, page by page.
+
+## 2026-11-12: releases are read through the REST API
+
+scripts/restore_release.py, scripts/reset_and_rederive.py and the release check in
+scripts/probe_hosts.py listed and downloaded releases with gh release, which goes through GitHub's
+GraphQL API. The coding agent session that builds this repository is refused GraphQL and answered
+by REST, so they now call gh api, which works in Actions as well. The download reads the release's
+SHA256SUMS again on every run, keeps an archive whose digest matches, fetches one that changed and
+drops one the release no longer lists, so a lake release republished under the same tag on the same
+day is never read from a stale cache.
+
+## 2026-11-12: the build state is rendered, and lake.yml publishes the lake file
+
+BUILD_STATE.md is rendered from docs/templates/BUILD_STATE.md.j2 by the claim gate, like the README,
+so the numbers of the hand off to Phase 2 (the lake digests, the registration hash, the window
+counts and their label coverage, the Q8 result and the API latency) are read from the manifest and
+committed files, never typed. The data card said the lake file was a release asset; it was not.
+lake.yml now uploads it to the serving release it fed, named by its digest, after the API has
+loaded the bundle, so a slow upload never holds the data back.
