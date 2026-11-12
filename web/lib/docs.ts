@@ -28,6 +28,7 @@ const FIXED_DOCS: DocSource[] = [
   { slug: "methods", file: "docs/methods.md", section: "How it is built" },
   { slug: "spec", file: "docs/SPEC.md", section: "How it is built" },
   { slug: "roadmap", file: "docs/ROADMAP.md", section: "How it is built" },
+  { slug: "changelog", file: "CHANGELOG.md", section: "How it is built" },
   { slug: "provenance", file: "data/PROVENANCE.md", section: "The data and the customer" },
   { slug: "customer", file: "customer/README.md", section: "The data and the customer" },
 ];

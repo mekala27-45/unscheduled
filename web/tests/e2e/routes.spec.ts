@@ -26,6 +26,7 @@ export const ROUTES = [
   "/docs/as-of",
   "/docs/methods",
   "/docs/spec",
+  "/docs/changelog",
   "/docs/adr-0002",
   "/docs/adr-0004",
   "/docs/adr-0007",
