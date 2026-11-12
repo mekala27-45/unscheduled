@@ -57,6 +57,15 @@ export const DOC_DIAGRAMS: Record<string, DocDiagram> = {
     alt: "The NVD statuses as a lifecycle: Received, then Awaiting Analysis, Undergoing Analysis and Analyzed, with Modified after an analysis and back by Reanalysis, Deferred and Rejected below Received; Received, Analyzed, Modified and Rejected are dated by change history events, the other three by the first fetch that saw them",
     source: "docs/diagrams/status.archify.json",
   },
+  methods: {
+    light: "/diagrams/lineage-light.svg",
+    dark: "/diagrams/lineage-dark.svg",
+    page: "/diagrams/lineage.html",
+    width: 1068,
+    height: 740,
+    alt: "Where every number comes from: bronze tables from the NVD, the CVE List, KEV, CISA ADP, EPSS and the exploit repositories become dated facts in silver, then cve_current and one mart per question in gold; the analysis writes the manifest the report and the site render from, the exposure run adds Q7 and the findings, and the serving bundle takes the CVE rows, the ruler events, the findings and the backlog charts",
+    source: "docs/diagrams/lineage.archify.json",
+  },
   "adr-0002": {
     light: "/diagrams/slice-light.svg",
     dark: "/diagrams/slice-dark.svg",

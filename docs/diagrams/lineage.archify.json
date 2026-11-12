@@ -1,0 +1,411 @@
+{
+ "schema_version": 1,
+ "diagram_type": "dataflow",
+ "meta": {
+  "title": "Where every number comes from",
+  "output": "web/public/diagrams/lineage.html",
+  "locale": "en",
+  "quality_profile": "showcase",
+  "repository": {
+   "url": "https://github.com/mekala27-45/unscheduled",
+   "provider": "github",
+   "link_mode": "web",
+   "revision": "e5b36d0c17f1ace55acb713ca4e423c57fa3ae1a"
+  }
+ },
+ "stages": [
+  {
+   "label": "Bronze"
+  },
+  {
+   "label": "Silver"
+  },
+  {
+   "label": "Gold"
+  },
+  {
+   "label": "Measured"
+  },
+  {
+   "label": "Published"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "s_nvd",
+   "type": "database",
+   "label": "NVD",
+   "sublabel": "nvd_cves, nvd_changes",
+   "stage": 0,
+   "row": 0,
+   "tag": "bronze",
+   "sources": [
+    {
+     "path": "dbt/models/staging/stg_nvd_changes.sql",
+     "label": "change history"
+    },
+    {
+     "path": "dbt/models/staging/stg_nvd_cves.sql",
+     "label": "current records"
+    }
+   ]
+  },
+  {
+   "id": "s_cve",
+   "type": "database",
+   "label": "CVE List V5",
+   "sublabel": "records, metrics, CWEs",
+   "stage": 0,
+   "row": 1,
+   "tag": "bronze",
+   "sources": [
+    {
+     "path": "dbt/models/staging/stg_cve_records.sql",
+     "label": "records"
+    },
+    {
+     "path": "dbt/models/staging/stg_cve_metrics.sql",
+     "label": "filer and ADP metrics"
+    }
+   ]
+  },
+  {
+   "id": "s_kev",
+   "type": "database",
+   "label": "KEV, ADP, EPSS",
+   "sublabel": "kev, vulnrichment, epss",
+   "stage": 0,
+   "row": 2,
+   "tag": "bronze",
+   "sources": [
+    {
+     "path": "dbt/models/staging/stg_kev.sql",
+     "label": "KEV"
+    },
+    {
+     "path": "dbt/models/staging/stg_vulnrichment.sql",
+     "label": "CISA ADP"
+    },
+    {
+     "path": "dbt/models/staging/stg_epss_offsets.sql",
+     "label": "EPSS offsets"
+    }
+   ]
+  },
+  {
+   "id": "s_exp",
+   "type": "database",
+   "label": "Exploit code",
+   "sublabel": "Metasploit, Nuclei",
+   "stage": 0,
+   "row": 3,
+   "tag": "bronze",
+   "sources": [
+    {
+     "path": "dbt/models/staging/stg_exploit_signals.sql",
+     "label": "first commits"
+    }
+   ]
+  },
+  {
+   "id": "s_adv",
+   "type": "database",
+   "label": "OSV and GHSA",
+   "sublabel": "advisories and ranges",
+   "stage": 0,
+   "row": 4,
+   "tag": "locked",
+   "sources": [
+    {
+     "path": "scripts/run_exposure.py",
+     "line": 1,
+     "end_line": 16,
+     "label": "read by the exposure run"
+    }
+   ]
+  },
+  {
+   "id": "fact",
+   "type": "database",
+   "label": "cve_fact",
+   "sublabel": "every value, dated",
+   "stage": 1,
+   "row": 1,
+   "tag": "silver",
+   "sources": [
+    {
+     "path": "dbt/models/silver/cve_fact.sql",
+     "label": "the dated facts"
+    },
+    {
+     "path": "dbt/models/intermediate/int_observations.sql",
+     "label": "every observation"
+    }
+   ]
+  },
+  {
+   "id": "kevev",
+   "type": "database",
+   "label": "kev_events",
+   "sublabel": "listing dates",
+   "stage": 1,
+   "row": 2,
+   "tag": "silver",
+   "sources": [
+    {
+     "path": "dbt/models/silver/kev_events.sql"
+    }
+   ]
+  },
+  {
+   "id": "expl",
+   "type": "database",
+   "label": "exploit_first_seen",
+   "sublabel": "first code per CVE",
+   "stage": 1,
+   "row": 3,
+   "tag": "silver",
+   "sources": [
+    {
+     "path": "dbt/models/silver/exploit_first_seen.sql"
+    }
+   ]
+  },
+  {
+   "id": "current",
+   "type": "database",
+   "label": "cve_current",
+   "sublabel": "the state at the cut",
+   "stage": 2,
+   "row": 1,
+   "tag": "gold",
+   "sources": [
+    {
+     "path": "dbt/models/marts/cve_current.sql"
+    }
+   ]
+  },
+  {
+   "id": "marts",
+   "type": "database",
+   "label": "backlog marts",
+   "sublabel": "one per question",
+   "stage": 2,
+   "row": 0,
+   "tag": "gold",
+   "sources": [
+    {
+     "path": "dbt/models/marts/mart_backlog_q1.sql",
+     "label": "Q1"
+    },
+    {
+     "path": "dbt/models/marts/mart_filer_vs_nvd.sql",
+     "label": "Q4"
+    },
+    {
+     "path": "dbt/models/marts/mart_domain_shift.sql",
+     "label": "Q8"
+    }
+   ]
+  },
+  {
+   "id": "analysis",
+   "type": "backend",
+   "label": "analysis",
+   "sublabel": "Q1 to Q8, the manifest",
+   "stage": 3,
+   "row": 0,
+   "tag": "Q1 to Q8",
+   "sources": [
+    {
+     "path": "scripts/run_analysis.py",
+     "line": 1,
+     "end_line": 8,
+     "label": "reads the lake read only"
+    },
+    {
+     "path": "scripts/build_manifest.py",
+     "line": 1,
+     "end_line": 10,
+     "label": "merges every part"
+    }
+   ]
+  },
+  {
+   "id": "exposure",
+   "type": "backend",
+   "label": "exposure",
+   "sublabel": "matcher, osv-scanner, Grype",
+   "stage": 3,
+   "row": 4,
+   "tag": "Q7",
+   "sources": [
+    {
+     "path": "scripts/run_exposure.py",
+     "line": 1,
+     "end_line": 16,
+     "label": "found twice"
+    }
+   ]
+  },
+  {
+   "id": "site",
+   "type": "frontend",
+   "label": "report and site",
+   "sublabel": "through the claim gate",
+   "stage": 4,
+   "row": 0,
+   "tag": "published",
+   "sources": [
+    {
+     "path": "scripts/check_published_numbers.py",
+     "label": "renders from the manifest"
+    }
+   ]
+  },
+  {
+   "id": "bundle",
+   "type": "database",
+   "label": "serving bundle",
+   "sublabel": "the release the API pulls",
+   "stage": 4,
+   "row": 2,
+   "tag": "served",
+   "sources": [
+    {
+     "path": "scripts/build_serving_bundle.py",
+     "line": 1,
+     "end_line": 21,
+     "label": "what it holds"
+    }
+   ]
+  }
+ ],
+ "flows": [
+  {
+   "id": "f-nvd",
+   "from": "s_nvd",
+   "to": "fact",
+   "label": "status, history",
+   "variant": "emphasis"
+  },
+  {
+   "id": "f-cve",
+   "from": "s_cve",
+   "to": "fact",
+   "label": "filer values",
+   "variant": "emphasis"
+  },
+  {
+   "id": "f-adp",
+   "from": "s_kev",
+   "to": "fact",
+   "label": "SSVC, EPSS"
+  },
+  {
+   "id": "f-kev",
+   "from": "s_kev",
+   "to": "kevev",
+   "label": "listings"
+  },
+  {
+   "id": "f-exp",
+   "from": "s_exp",
+   "to": "expl",
+   "label": "first commits"
+  },
+  {
+   "id": "f-cur",
+   "from": "fact",
+   "to": "current",
+   "label": "state at the cut",
+   "variant": "emphasis"
+  },
+  {
+   "id": "f-kevcur",
+   "from": "kevev",
+   "to": "current",
+   "label": "KEV dates"
+  },
+  {
+   "id": "f-expcur",
+   "from": "expl",
+   "to": "current",
+   "label": "first seen"
+  },
+  {
+   "id": "f-marts",
+   "from": "current",
+   "to": "marts",
+   "label": "per question"
+  },
+  {
+   "id": "f-analysis",
+   "from": "marts",
+   "to": "analysis",
+   "label": "Q1 to Q6, Q8",
+   "variant": "emphasis"
+  },
+  {
+   "id": "f-site",
+   "from": "analysis",
+   "to": "site",
+   "label": "manifest values",
+   "variant": "emphasis"
+  },
+  {
+   "id": "f-adv",
+   "from": "s_adv",
+   "to": "exposure",
+   "label": "ranges as known"
+  },
+  {
+   "id": "f-q7",
+   "from": "exposure",
+   "to": "analysis",
+   "label": "Q7 counts"
+  },
+  {
+   "id": "f-bcve",
+   "from": "current",
+   "to": "bundle",
+   "label": "cve rows"
+  },
+  {
+   "id": "f-bevt",
+   "from": "fact",
+   "to": "bundle",
+   "label": "ruler events"
+  },
+  {
+   "id": "f-bfind",
+   "from": "exposure",
+   "to": "bundle",
+   "label": "findings"
+  },
+  {
+   "id": "f-bback",
+   "from": "analysis",
+   "to": "bundle",
+   "label": "backlog charts"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "cyan",
+   "title": "One path for every number",
+   "items": [
+    "A number on a page is rendered from the manifest, the manifest from the parts the steps wrote, and each part from the lake or the exposure run",
+    "The serving bundle is built from the same lake file, so the API and the report read one cut"
+   ]
+  },
+  {
+   "dot": "amber",
+   "title": "What the exposure run also reads",
+   "items": [
+    "OSV all.zip and the GitHub advisory tree, locked by digest, for the ranges as each advisory version was known",
+    "Bronze KEV, exploit signals and the NVD history, to count each finding as of its time"
+   ]
+  }
+ ]
+}

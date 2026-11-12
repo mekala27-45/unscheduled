@@ -10,6 +10,9 @@ are generated from it and are not edited by hand.
   participant cites the lines of the repository that carry its part, at the revision in its meta.
 - slice.archify.json: the tables of the serving slice in Neon, every column with its type, shown on
   /docs/adr-0002. Each table cites its definition in packages/api/src/unscheduled_api/db.py.
+- lineage.archify.json: where every number comes from, bronze to the published pages and the
+  serving bundle, as a data flow, shown on /docs/methods. Each node cites the model or script that
+  makes it.
 - match.archify.json: how POST /v1/match runs, as a sequence, shown on /docs/adr-0004. Each
   participant cites the lines that carry its part: the route, the budget, the OSV reader, the log.
 - status.archify.json: the NVD statuses as a lifecycle and the rule that dates each one, shown on
@@ -29,6 +32,8 @@ ARCHIFY_CHROME:
       web/public/diagrams/status.html --repo-root . --quality showcase --json
     node <archify>/bin/archify.mjs finalize sequence docs/diagrams/match.archify.json \
       web/public/diagrams/match.html --repo-root . --quality showcase --json
+    node <archify>/bin/archify.mjs finalize dataflow docs/diagrams/lineage.archify.json \
+      web/public/diagrams/lineage.html --repo-root . --quality showcase --json
 
 The finalize run validates the source, renders the page, checks it, and loads it in a real browser.
 The SVG files come from the page's Export menu (SVG, Light and SVG, Dark), saved as
