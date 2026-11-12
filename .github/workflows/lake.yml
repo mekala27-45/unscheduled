@@ -4,7 +4,8 @@ name: lake
 # loaded into the live API. Bronze, the locks and the config come back from the release the fetch
 # wrote; the lake is built with its as-of checks; the questions are answered; the serving bundle is
 # built and published as a prerelease serving-<stamp>; then the API is asked to load it until it
-# answers done. No job holds a database credential: the API pulls the bundle itself (ADR 0007).
+# answers done, and the lake file the bundle came from goes up to the same release. No job holds
+# a database credential: the API pulls the bundle itself (ADR 0007).
 # The results it computes go up as an artifact; the committed results are written at a release.
 on:
   schedule:
@@ -76,6 +77,10 @@ jobs:
         if: steps.restore.outputs.skip != 'true'
         run: uv run python scripts/sync_api.py
 
+      - name: The lake file beside the bundle it was built from
+        if: steps.restore.outputs.skip != 'true'
+        run: uv run python scripts/publish_serving.py --lake
+
       - name: Keep the reports
         if: always() && steps.restore.outputs.skip != 'true'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -84,6 +89,9 @@ jobs:
           path: |
             results/lake
             results/backlog
+            results/parts/lake.json
+            results/parts/backlog.json
             results/live/sync.json
             data/serving/bundle_manifest.json
+            data/serving/published.json
           if-no-files-found: warn

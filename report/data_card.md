@@ -10,8 +10,9 @@ One DuckDB file built from typed Parquet: 424,534 CVE records and 6,620,931
 dated facts about them, cut at 2026-11-12. A fact is a CVE, a field, the source that
 published the value, the value, and the interval in which it was known. The gold tables answer what
 was known about any CVE on any day from those facts alone. The content digest of this build, taken
-over every table's rows, is 6a7ad73d0035; the lake file and the bronze it was
-built from are release assets named by their digests.
+over every table's rows, is 6a7ad73d0035. The bronze it was built from is a lake
+release, each archive listed with its digest in the release sums, and lake.yml publishes the lake file,
+named by its digest, beside the serving bundle it fed.
 
 ## Sources
 
