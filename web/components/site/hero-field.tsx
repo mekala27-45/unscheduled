@@ -37,8 +37,8 @@ export function HeroField({ field }: { field: Loaded<FieldData> }) {
       <figcaption className="hero-field__legend">
         {field.state === "ok" ? (
           <>
-            <strong>One character a day</strong> of new CVEs since {formatDate(field.value.from, "long")}, denser for more CVEs, deeper blue
-            for a larger share the NVD analyzed within 30 days. {field.value.source}, as of {formatDate(field.value.as_of, "long")}.
+            <strong>One character a day</strong> of new CVEs since {formatDate(field.value.from, "long")}, denser for more CVEs, a stronger
+            blue for a larger share the NVD analyzed within 30 days. {field.value.source}, as of {formatDate(field.value.as_of, "long")}.
             <span id="field-readout" className="block text-fg-2" aria-live="off" />
           </>
         ) : field.state === "unreadable" ? (
