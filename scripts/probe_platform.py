@@ -100,6 +100,31 @@ def readings(path: Path = ROOT / "data" / "console_readings.yaml") -> dict[str, 
     return data
 
 
+def fill_probe(path: Path, out: dict[str, Any]) -> None:
+    """Write the Neon and Vercel sections of results/probe.json, which scripts/probe_hosts.py leaves
+    pending for this step, so the deploy steps read one file."""
+    if not path.exists():
+        return
+    probe: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
+    consoles = out["consoles"]
+    probe["neon"] = {
+        "status": "probed",
+        "probed_at": out["probed_at"],
+        "console": consoles.get("neon"),
+        "from_the_api": out["api"].get("database"),
+    }
+    probe["vercel"] = {
+        "status": "probed",
+        "probed_at": out["probed_at"],
+        "console": consoles.get("vercel"),
+        "api": {
+            k: out["api"][k] for k in ("health_status", "first_request_ms", "warm_p50_ms", "warm_max_ms")
+        },
+        "web": out["web"],
+    }
+    path.write_text(json.dumps(probe, indent=1) + "\n", encoding="utf-8")
+
+
 def main() -> int:
     api, web = probe_api(), probe_web()
     out: dict[str, Any] = {
@@ -111,6 +136,7 @@ def main() -> int:
     path = ROOT / "results" / "probe_platform.json"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(out, indent=1) + "\n", encoding="utf-8")
+    fill_probe(ROOT / "results" / "probe.json", out)
     print(
         f"probe: api {api['health_status']} first {api['first_request_ms']} ms, warm p50 {api['warm_p50_ms']} ms; "
         f"web {web['status']}, statement {web['statement_present']}"

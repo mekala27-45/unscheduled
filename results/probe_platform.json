@@ -1,17 +1,17 @@
 {
- "probed_at": "2026-11-08T03:20:48+00:00",
+ "probed_at": "2026-11-12T00:23:39+00:00",
  "api": {
   "health_status": 200,
-  "first_request_ms": 395,
-  "warm_p50_ms": 187,
-  "warm_max_ms": 266,
+  "first_request_ms": 2213,
+  "warm_p50_ms": 169,
+  "warm_max_ms": 274,
   "version": "0.1.0.dev0",
   "database": "not yet connected",
   "cors_allows_web_origin": false
  },
  "web": {
   "status": 200,
-  "ms": 220,
+  "ms": 325,
   "statement_present": true,
   "nvd_notice_present": true
  },
@@ -51,6 +51,6 @@
    "default_token_permissions": "read and write, narrowed by every workflow to what it needs",
    "actions_may_open_pull_requests": true
   },
-  "age_days": 1
+  "age_days": 5
  }
 }

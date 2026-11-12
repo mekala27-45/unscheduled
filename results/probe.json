@@ -1,0 +1,358 @@
+{
+ "probed_at": "2026-11-08T03:51:44Z",
+ "user_agent": "unscheduled/0.1 (+https://github.com/mekala27-45/unscheduled)",
+ "summary": {
+  "sources": 16,
+  "answered": 15,
+  "refused": [
+   "edgar"
+  ],
+  "failed": []
+ },
+ "sources": {
+  "cvelist": {
+   "url": "https://github.com/CVEProject/cvelistV5/releases/download/cve_2026-11-08_0000Z/2026-11-08_all_CVEs_at_midnight.zip.zip",
+   "status": 206,
+   "ok": true,
+   "size": 655112134,
+   "date": "2026-11-08T03:00:00Z",
+   "newest_release": "cve_2026-11-08_0300Z",
+   "releases_listed": 31611
+  },
+  "nvd_cves": {
+   "url": "https://services.nvd.nist.gov/rest/json/cves/2.0?resultsPerPage=1",
+   "status": 200,
+   "ok": true,
+   "size": 2517,
+   "elapsed_s": 0.23,
+   "date": "2026-11-08T03:51:25.603",
+   "total_results": 421074,
+   "answered_keyless": true
+  },
+  "nvd_history": {
+   "url": "https://services.nvd.nist.gov/rest/json/cvehistory/2.0?resultsPerPage=1",
+   "status": 200,
+   "ok": true,
+   "size": 354,
+   "elapsed_s": 0.267,
+   "date": "2026-11-08T03:51:25.643",
+   "total_results": 2451970,
+   "answered_keyless": true
+  },
+  "kev": {
+   "url": "https://raw.githubusercontent.com/cisagov/kev-data/e5b3a9b25050a8da26c96266c5bfe438ee0bdebc/known_exploited_vulnerabilities.json",
+   "status": 200,
+   "ok": true,
+   "size": 1832349,
+   "elapsed_s": 0.349,
+   "date": "2026-11-06T19:44:45.1797Z",
+   "catalog_version": "2026.11.06",
+   "entries": 1769,
+   "head": "e5b3a9b25050a8da26c96266c5bfe438ee0bdebc"
+  },
+  "kev_cisa_feed": {
+   "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
+   "status": 200,
+   "ok": true,
+   "size": 1832349,
+   "elapsed_s": 0.481,
+   "date": "2026-11-06T19:44:45.1797Z",
+   "catalog_version": "2026.11.06"
+  },
+  "epss_daily": {
+   "url": "https://epss.empiricalsecurity.com/epss_scores-2026-11-07.csv.gz",
+   "status": 200,
+   "ok": true,
+   "size": 2817190,
+   "date": "2026-11-07T13:30:36Z",
+   "file_day": "2026-11-07"
+  },
+  "epss_api": {
+   "url": "https://api.first.org/data/v1/epss?cve=CVE-2021-44228",
+   "status": 200,
+   "ok": true,
+   "size": 203,
+   "elapsed_s": 0.563,
+   "date": "2026-11-07"
+  },
+  "osv": {
+   "npm": {
+    "url": "https://osv-vulnerabilities.storage.googleapis.com/npm/all.zip",
+    "status": 200,
+    "ok": true,
+    "size": 220052609,
+    "date": "2026-11-07T09:32:47Z"
+   },
+   "PyPI": {
+    "url": "https://osv-vulnerabilities.storage.googleapis.com/PyPI/all.zip",
+    "status": 200,
+    "ok": true,
+    "size": 37670472,
+    "date": "2026-11-08T00:48:09Z"
+   },
+   "Go": {
+    "url": "https://osv-vulnerabilities.storage.googleapis.com/Go/all.zip",
+    "status": 200,
+    "ok": true,
+    "size": 12828902,
+    "date": "2026-11-06T20:02:57Z"
+   },
+   "Maven": {
+    "url": "https://osv-vulnerabilities.storage.googleapis.com/Maven/all.zip",
+    "status": 200,
+    "ok": true,
+    "size": 10527068,
+    "date": "2026-11-06T18:17:58Z"
+   },
+   "crates.io": {
+    "url": "https://osv-vulnerabilities.storage.googleapis.com/crates.io/all.zip",
+    "status": 200,
+    "ok": true,
+    "size": 3799768,
+    "date": "2026-11-06T16:02:48Z"
+   },
+   "RubyGems": {
+    "url": "https://osv-vulnerabilities.storage.googleapis.com/RubyGems/all.zip",
+    "status": 200,
+    "ok": true,
+    "size": 5213495,
+    "date": "2026-11-04T03:33:17Z"
+   },
+   "NuGet": {
+    "url": "https://osv-vulnerabilities.storage.googleapis.com/NuGet/all.zip",
+    "status": 200,
+    "ok": true,
+    "size": 2697117,
+    "date": "2026-11-06T18:17:57Z"
+   },
+   "Packagist": {
+    "url": "https://osv-vulnerabilities.storage.googleapis.com/Packagist/all.zip",
+    "status": 200,
+    "ok": true,
+    "size": 11107565,
+    "date": "2026-11-06T19:18:11Z"
+   },
+   "Debian": {
+    "url": "https://osv-vulnerabilities.storage.googleapis.com/Debian/all.zip",
+    "status": 200,
+    "ok": true,
+    "size": 81221159,
+    "date": "2026-11-08T02:02:58Z"
+   },
+   "ok": true
+  },
+  "ghsa": {
+   "url": "https://github.com/github/advisory-database",
+   "ok": true,
+   "head": "efc1afa71527c13dbfae4f14c120451d2a818a8a",
+   "date": "2026-11-08T03:37:10+00:00",
+   "size": 50944910,
+   "size_is": "bytes of the head commit and its trees, fetched without blobs",
+   "files_at_head": 401241,
+   "elapsed_s": 7.885
+  },
+  "vulnrichment": {
+   "url": "https://github.com/cisagov/vulnrichment",
+   "ok": true,
+   "head": "17ecd8cb34c2792b6ecf5fc897a081562938fdb2",
+   "date": "2026-11-07T19:17:35+00:00",
+   "size": 5342737,
+   "size_is": "bytes of the head commit and its trees, fetched without blobs",
+   "files_at_head": 211892,
+   "elapsed_s": 1.908
+  },
+  "cwe": {
+   "url": "https://cwe.mitre.org/data/xml/cwec_latest.xml.zip",
+   "status": 200,
+   "ok": true,
+   "size": 2119263,
+   "date": "2026-10-27T19:46:06Z"
+  },
+  "metasploit": {
+   "url": "https://github.com/rapid7/metasploit-framework",
+   "ok": true,
+   "head": "7673832c30657be675656b53ece208759314bed7",
+   "date": "2026-11-07T15:22:02+00:00",
+   "size": 723836,
+   "size_is": "bytes of the head commit and its trees, fetched without blobs",
+   "files_at_head": 15132,
+   "elapsed_s": 1.505
+  },
+  "nuclei": {
+   "url": "https://github.com/projectdiscovery/nuclei-templates",
+   "ok": true,
+   "head": "789ca819727bc59f512310645d851fa57bdf91a0",
+   "date": "2026-11-08T03:11:14+00:00",
+   "size": 520484,
+   "size_is": "bytes of the head commit and its trees, fetched without blobs",
+   "files_at_head": 14570,
+   "elapsed_s": 1.282
+  },
+  "gleif": {
+   "url": "https://api.gleif.org/api/v1/lei-records?filter%5Bentity.legalName%5D=Velloran+Systems",
+   "status": 200,
+   "ok": true,
+   "size": 448,
+   "elapsed_s": 0.545,
+   "date": "2026-11-08T03:51:43Z",
+   "records_for_name": 0
+  },
+  "edgar": {
+   "url": "https://www.sec.gov/files/company_tickers.json",
+   "status": 403,
+   "ok": false,
+   "refused": true,
+   "size": 1925,
+   "date": "2026-11-08T03:51:44Z",
+   "note": "the SEC refused a client that names the project and gives no contact address; recorded as the result, not retried"
+  },
+  "cna_list": {
+   "url": "https://raw.githubusercontent.com/CVEProject/cve-website/bc4adbd39adac7adea09fb314d57e103a702d649/src/assets/data/CNAsList.json",
+   "status": 200,
+   "ok": true,
+   "size": 66568,
+   "date": "2026-11-08T03:51:44Z",
+   "head": "bc4adbd39adac7adea09fb314d57e103a702d649"
+  }
+ },
+ "nvd_limit": {
+  "documented": {
+   "keyless": {
+    "requests": 5,
+    "window_s": 30
+   },
+   "keyed": {
+    "requests": 50,
+    "window_s": 30
+   },
+   "read_on": "2026-11-08",
+   "read_from": "the NVD start here page, quoted in the pontos NVD client documentation; nvd.nist.gov answered this build with a bot challenge on the day"
+  },
+  "key_present": false,
+  "fetcher_setting": {
+   "requests": 5,
+   "window_s": 30,
+   "margin": 0.1
+  },
+  "burst": {
+   "requests": 5,
+   "answered": 5,
+   "refused": 0,
+   "statuses": [
+    200,
+    200,
+    200,
+    200,
+    200
+   ],
+   "latencies_s": [
+    0.375,
+    0.067,
+    0.083,
+    0.064,
+    0.055
+   ],
+   "elapsed_s": 0.644,
+   "measured": "5 of 5 requests sent within 0.644 s were answered; the enforced limit is at least the documented allowance",
+   "measured_at": "2026-11-08T03:39:49Z"
+  }
+ },
+ "github_release": {
+  "download": {
+   "url": "https://github.com/CVEProject/cvelistV5/releases/download/cve_2026-11-08_0000Z/2026-11-08_all_CVEs_at_midnight.zip.zip",
+   "status": 206,
+   "ok": true,
+   "size": 655112134,
+   "date": "2026-11-08T03:00:00Z",
+   "newest_release": "cve_2026-11-08_0300Z",
+   "releases_listed": 31611
+  },
+  "upload": {
+   "tested": true,
+   "can_list_releases": false,
+   "note": "fetch.yml uploads with the workflow token and contents: write"
+  }
+ },
+ "fontsource": {
+  "@fontsource/rethink-sans": {
+   "url": "https://registry.npmjs.org/@fontsource/rethink-sans",
+   "status": 200,
+   "ok": true,
+   "size": null,
+   "elapsed_s": 0.267,
+   "date": "2026-07-19T03:45:45.529Z",
+   "latest": "5.3.0",
+   "has_5.3.0": true
+  },
+  "@fontsource/anek-latin": {
+   "url": "https://registry.npmjs.org/@fontsource/anek-latin",
+   "status": 200,
+   "ok": true,
+   "size": null,
+   "elapsed_s": 0.264,
+   "date": "2026-07-19T03:36:08.045Z",
+   "latest": "5.3.0",
+   "has_5.3.0": true
+  },
+  "@fontsource/mononoki": {
+   "url": "https://registry.npmjs.org/@fontsource/mononoki",
+   "status": 200,
+   "ok": true,
+   "size": null,
+   "elapsed_s": 0.298,
+   "date": "2026-07-19T03:49:00.889Z",
+   "latest": "5.3.0",
+   "has_5.3.0": true
+  }
+ },
+ "neon": {
+  "status": "probed",
+  "probed_at": "2026-11-12T00:23:39+00:00",
+  "console": {
+   "project": "unscheduled",
+   "region": "AWS US East 1 (N. Virginia)",
+   "plan": "Free plan, 0 dollars a month",
+   "plan_limits_per_project": "1 GB storage, autoscaling to 2 CU, 100 compute hours, 10 branches",
+   "postgres_version": "18",
+   "default_compute": "0.25 to 2 CU",
+   "history_retention": "6 hours",
+   "storage_used": "0 kB",
+   "branches": 2,
+   "linked_vercel_project": "unscheduled-api"
+  },
+  "from_the_api": "not yet connected"
+ },
+ "vercel": {
+  "status": "probed",
+  "probed_at": "2026-11-12T00:23:39+00:00",
+  "console": {
+   "plan": "Hobby",
+   "api_project": "unscheduled-api",
+   "api_domain": "unscheduled-api.vercel.app",
+   "api_variable_names": [
+    "DATABASE_URL",
+    "DATABASE_URL_UNPOOLED",
+    "UNSCHED_CORS_ORIGINS"
+   ],
+   "database_variables_written_by": "the Neon integration for Vercel",
+   "web_project": "unscheduled",
+   "web_domain": "unscheduled-triage.vercel.app",
+   "web_variable_names": [
+    "NEXT_PUBLIC_API_URL"
+   ],
+   "system_variables_exposed": true
+  },
+  "api": {
+   "health_status": 200,
+   "first_request_ms": 2213,
+   "warm_p50_ms": 169,
+   "warm_max_ms": 274
+  },
+  "web": {
+   "status": 200,
+   "ms": 325,
+   "statement_present": true,
+   "nvd_notice_present": true
+  }
+ }
+}
