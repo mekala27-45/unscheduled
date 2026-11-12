@@ -1,0 +1,68 @@
+{% set customer = data("config/customer.yaml") %}
+{% set probe = data("results/legacy/feed_probe.json") %}
+# Legacy memo: the nightly report that went quiet
+
+{{ customer.name }} handed over {{ customer.legacy.handed_over }}: {{ customer.legacy.script }},
+configured by {{ customer.legacy.config }}. {{ customer.legacy.note }}
+
+## Why it went quiet
+
+The script downloads the NVD 1.1 JSON data feeds, keeps the CVEs whose CPE vendor is on a watch
+list, writes a CSV and mails it. NIST retired those feeds in 2023. Asked on
+{{ probe.checked_at[:10] }}, the addresses in the handed over config answered
+{% for name, f in probe.files.items() if "1_1" in name %}{{ f.status }}{{ ", " if not loop.last }}{% endfor %},
+while the feeds that replaced them answered
+{% for name, f in probe.files.items() if "2_0" in name %}{{ f.status }}{{ ", " if not loop.last }}{% endfor %}.
+
+The download sits inside a bare except, so a refused download is not an error: the script carries
+on with no data, writes a CSV that holds only its header, mails it, and exits with code
+{{ inline("tests/characterization/golden/retired_feeds.stdout.txt").split()[2] }}. Run on the retired
+feeds, this is all it prints:
+
+```
+{{ inline("tests/characterization/golden/retired_feeds.stdout.txt") }}
+```
+
+Every night since the feeds went away the team has received a report that looked like a quiet
+night. Nothing told them otherwise, because nothing failed.
+
+## Characterization first
+
+Before anything was changed, tests/characterization pinned what the script does today. A converter
+writes sample files in the 1.1 JSON layout from the current NVD data, and golden master tests run the
+script on them and on retired feeds, comparing the CSV, the mail and the console line byte for byte.
+The tests keep the silent failure as behavior to reproduce, not a bug to fix in place, and they
+record two things the team did not know: a CVE whose product appears only inside a configuration is
+never reported, and a CVE the NVD has not analyzed, which since April is most of them, never
+reaches the report at all, because it has no CPE to match.
+
+## The strangler
+
+packages/legacy_adapter writes the same CSV from the new API: the same columns in the same order,
+dates as DD/MM/YYYY, the same types, rows deduplicated the way the old script did. It is served at
+/v1/legacy/report.csv, so the spreadsheet downstream keeps working. Its columns, read from the
+golden master:
+
+```
+{{ inline("tests/characterization/golden/sample_feeds.csv").splitlines()[0] }}
+```
+
+A contract test compares the header byte for byte and every cell's type with the golden master,
+and a second test writes the CSV from the real findings and checks every cell against the same
+contract. Where the old report took a date or a score from the NVD, the adapter takes it from the
+record, from the filer or from CISA, and says which.
+
+## Deprecation plan
+
+- Run both for two weeks: the old script as it is, the adapter's CSV beside it, compared every
+  morning by the contract test.
+- Compare: every CVE in the old report must be in the new one; the new one may hold more, the
+  CVEs the old one could not see.
+- Switch: the cron job fetches /v1/legacy/report.csv instead of running the script.
+- Remove the script and its config, and keep the golden master as the record of what it did.
+
+The security lead would push back: the script is a fixture written for this build, in the style of
+the customer's job, so the memo describes the fixture as it behaves. The failure it shows (a
+retired feed, a bare except, a header only CSV) is the common way such jobs go quiet.
+
+{{ statement() }}

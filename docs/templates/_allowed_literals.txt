@@ -7,3 +7,60 @@ v0.1.0
 15 April 2026
 11 September 2026
 24 hours
+Q1
+Q2
+Q3
+Q4
+Q5
+Q6
+Q7
+Q8
+C1
+C2
+C3
+C4
+C5
+C6
+C7
+C8
+C9
+CVSS 3.1
+CVSS 3.0
+CVSS 4.0
+CVSS 3.x
+CVSS 2.0
+1.1 JSON
+7, 30 and 90 days
+0, 1, 7, 30 and 90 days
+one business day
+January 2020
+1 January 2021
+1 January 2017
+2019
+2020
+2021
+2022
+2023
+2024
+2025
+2026
+Phase 3
+Phase 4
+Phase 5
+95 percent
+90th percentile
+Q01
+Q02
+Q03
+Q04
+Q05
+Q06
+Q07
+Q08
+2017
+30 days
+30 day
+90 days
+90 day
+7 days
+/v1/legacy/report.csv

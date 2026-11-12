@@ -2,9 +2,8 @@
 
 Triage for the CVEs the NVD no longer analyzes.
 
-**Phase 1 of 5 is in progress.** 11 of 18 checklist lines are done. Still missing:
+**Phase 1 of 5 is in progress.** 12 of 18 checklist lines are done. Still missing:
 
-- The legacy script characterized and replaced by the adapter
 - The API live on Vercel with Neon, loaded only by the sync, verified from a separate client
 - Persistence observed independently; schemathesis green; the load test with the cold start
 - The console, the ruler, the landing, the docs and the report live on Vercel

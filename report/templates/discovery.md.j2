@@ -1,0 +1,72 @@
+{% set customer = data("config/customer.yaml") %}
+{% set crit = data("config/criteria.yaml") %}
+# Discovery memo: what the NVD change means for {{ customer.name }}
+
+{{ customer.name }} is a fictional customer: a {{ customer.business }}. Its main establishment is in
+{{ customer.main_establishment.member_state }}, and under the Cyber Resilience Act an actively
+exploited vulnerability in one of its products has to be reported with an early warning within
+24 hours of becoming aware of it, from 11 September 2026. Its security team is two engineers, one
+for the devices and one for the cloud and the integrations. Five public open source repositories
+and one container image stand in for its six products, each pinned by a written rule.
+
+## What they asked
+
+They triage new CVEs by reading the NVD's severity, and since April most new CVEs arrive without
+one. They asked whether that is a pause or the new normal, what they can read instead, and how
+much of their own exposure it touches.
+
+## What the data says
+
+It is the new normal, and it began before the announcement. The NVD analyzed
+{{ v("backlog.q1.share_30d_before_2025") }} of new CVEs within 30 days before 2025,
+{{ v("backlog.q1.share_30d_2025_to_change") }} from 2025 to 15 April 2026 and
+{{ v("backlog.q1.share_30d_since_change") }} since. Of the {{ v("backlog.q2.cves") }} CVEs published
+since the change, {{ v("backlog.q2.status_deferred") }} are Deferred: the NVD says it has no plan to
+analyze them. The CVEs it skips are not a random sample (a classifier tells the two groups apart
+with an AUC of {{ v("backlog.q8.auc") }}), so waiting for the NVD means waiting longest on the CVEs
+least like the ones it chose.
+
+There is something to read instead. For the CVEs the NVD has not analyzed, the filer gave a CVSS
+score for {{ v("backlog.q3.share_filer_cvss_any") }} and CISA an SSVC decision for
+{{ v("backlog.q3.share_adp_ssvc") }}. Filer and NVD scores agree on the attack vector (kappa
+{{ v("backlog.q4.kappa_av") }}) and much less on the band (weighted kappa {{ v("backlog.q4.kappa_band") }}),
+so a filer score is a starting point, not an answer.
+
+## What it touches in their products
+
+Matched by package URL and version range today, the six products carry
+{{ v("exposure.c9.findings_today") }} findings. A triage that reads only NVD analysis could act on
+{{ v("exposure.c9.nvd_only_usable_share") }} of them; one that reads the filer, CISA and the NVD
+together on {{ v("exposure.c9.any_source_usable_share") }}.
+
+{{ table("exposure.c9_by_product") }}
+
+osv-scanner, run on the same SBOMs with the same advisory files, agrees with the matcher on every
+finding but {{ v("exposure.disagreements.total") }}, and each of those has its reason recorded
+({{ v("exposure.disagreements.unexplained") }} unexplained). A matcher that depends on NVD CPE names
+could not have made {{ v("exposure.contrast.share_no_cpe") }} of the findings, because the NVD has
+no CPE configuration for their CVE.
+
+## What we propose
+
+A month in five phases, each with the evidence it owes. The criteria are signed in
+config/criteria.yaml and hashed before any result was computed:
+
+{% for c in crit.criteria %}
+- {{ c.id }}, {{ c.name | lower }}, phase {{ c.phase }}: {{ c.sentence }}
+{% endfor %}
+
+## What the security lead would push back on
+
+The customer is fictional and its products are stand ins, so the exposure is that of the stand
+ins, measured honestly, not of a real product line. KEV is a lower bound on exploitation. The CPE
+contrast uses Grype, not every CPE based scanner. Nothing here is an official score, and nothing is
+filed or patched without a person approving it.
+
+## What the data lead would push back on
+
+Filer scores are labels from parties with incentives. NVD labels after April 2026 are a selected
+sample, which is the point of Q8. History before 2017 is dated by rule, not by event, and EPSS is
+kept only at its registered offsets. Each of those is stated beside the number it affects.
+
+{{ statement() }}

@@ -1,0 +1,60 @@
+# Results
+
+Phase 1 of 5. Every number on this page is rendered from results/manifest.json, which the build
+writes from the parts each step saved; the claim gate in CI renders the page again and fails on any
+difference. The lake behind them was cut at {{ v("lake.data_cut")[:10] }} (lake digest
+{{ v("lake.sha256")[:12] }}).
+
+## The lake
+
+{{ v("lake.cves") }} CVE records and {{ v("lake.facts") }} dated facts about them, each with its
+source and the time it became known. The NVD change history behind the facts holds
+{{ v("lake.history.events") }} events and covers {{ v("lake.history.share_of_months") }} of the
+months since it begins. The as-of engine answered {{ v("lake.asof.frames_compared") }} frames with
+{{ v("lake.asof.parity_mismatches") }} mismatches between its two implementations, and returned
+{{ v("lake.asof.planted_facts_returned") }} of {{ v("lake.asof.planted_facts") }} facts planted after
+the time asked. dbt built {{ v("lake.dbt.models") }} models and passed {{ v("lake.dbt.tests_passed") }}
+of {{ v("lake.dbt.tests_total") }} tests. Rows that failed a named rule were held back, never dropped:
+
+{{ table("lake.quarantine") }}
+
+## The backlog
+
+report/backlog.md has every question in words. In one line each:
+
+- Q1. The NVD analyzed {{ v("backlog.q1.share_30d_before_2025") }} of new CVEs within 30 days before
+  2025, {{ v("backlog.q1.share_30d_2025_to_change") }} from 2025 to the change and
+  {{ v("backlog.q1.share_30d_since_change") }} since.
+- Q2. Of {{ v("backlog.q2.cves") }} CVEs published since 15 April 2026 it has analyzed
+  {{ v("backlog.q2.share_analyzed") }}; {{ v("backlog.q2.status_deferred") }} are Deferred; KEV
+  listings met the one business day goal {{ v("backlog.q2.share_met_one_business_day") }} of the time.
+- Q3. For CVEs it has not analyzed, the filer gave a CVSS score for
+  {{ v("backlog.q3.share_filer_cvss_any") }} and affected versions for
+  {{ v("backlog.q3.share_affected_versions") }}.
+- Q4. Filer and NVD agree on the attack vector at kappa {{ v("backlog.q4.kappa_av") }} and on the
+  band at weighted kappa {{ v("backlog.q4.kappa_band") }}.
+- Q5. Half of the KEV listed CVEs since 2021 were listed within
+  {{ v("backlog.q5.median_days_to_listing") }}; {{ v("backlog.q5.share_no_nvd_analysis_at_listing") }}
+  had no NVD analysis when listed.
+- Q6. The ten filers that grew most carry {{ v("backlog.q6.top10_share_of_growth") }} of the growth in
+  volume since 2020.
+- Q7. Across the six stand in products, {{ v("exposure.c9.findings_today") }} findings today;
+  {{ v("exposure.c9.nvd_only_usable_share") }} usable from the NVD alone,
+  {{ v("exposure.c9.any_source_usable_share") }} from any source.
+- Q8. A classifier separates the CVEs the NVD analyzed from the ones it skipped at an AUC of
+  {{ v("backlog.q8.auc") }}.
+
+## The memos
+
+- report/discovery.md, what the change means for the customer and the criteria it signed.
+- report/legacy.md, why the nightly report went quiet and how the adapter replaces it.
+- report/criteria.md, the criteria with the phase that produces the evidence for each.
+
+## The checklist
+
+Each line is done only when the file a step wrote exists, so the checklist asks whether a step
+ran, not whether its output looks right.
+
+{{ table("checklist") }}
+
+{{ statement() }}

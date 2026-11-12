@@ -76,6 +76,11 @@ items:
       - RESULTS.md
       - report/discovery.md
       - report/backlog.md
+      - report/legacy.md
+      - notebooks/01_the_first_backlog_chart.ipynb
+      - notebooks/02_kappa_on_everything.ipynb
+      - notebooks/03_the_matcher_without_schemes.ipynb
+      - results/humanizer.json
   - n: 17
     text: "The live check awake and asleep; reset and rederive reproduced every number"
     evidence:

@@ -7130,7 +7130,7 @@
    }
   },
   "build.checklist_done": {
-   "value": 11,
+   "value": 12,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/build_manifest.py",
@@ -14313,7 +14313,7 @@
     ],
     [
      9,
-     "not done",
+     "done",
      "The legacy script characterized and replaced by the adapter",
      "report/legacy.md"
     ],
@@ -14357,7 +14357,7 @@
      16,
      "not done",
      "README with the matrix, RESULTS, DECISIONS, the memos and notebooks; the humanizer pass",
-     "RESULTS.md, report/discovery.md, report/backlog.md"
+     "RESULTS.md, report/discovery.md, report/backlog.md, report/legacy.md, notebooks/01_the_first_backlog_chart.ipynb, notebooks/02_kappa_on_everything.ipynb, notebooks/03_the_matcher_without_schemes.ipynb, results/humanizer.json"
     ],
     [
      17,
