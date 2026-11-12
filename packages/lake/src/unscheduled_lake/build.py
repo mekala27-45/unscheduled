@@ -271,7 +271,39 @@ def _stats(con: duckdb.DuckDBPyConnection) -> dict[str, Any]:
         str(r[0]): int(r[1])
         for r in rows(con, "select field, count(*) from silver.cve_fact group by 1 order by 1")
     }
+    out["coverage_by_window"] = coverage_by_window(con)
     return out
+
+
+COVERAGE_COLUMNS = ("cves", "published", "nvd_band", "filer_band", "adp_band", "nvd_and_filer_band")
+
+
+def coverage_by_window(con: duckdb.DuckDBPyConnection) -> list[dict[str, Any]]:
+    """Per registered window: the CVEs in it, the published ones, and how many of those carry a CVSS
+    severity band from the NVD (3.1), from the filer (3.1, 3.0 or 4.0), from CISA ADP (3.1), and
+    from both the NVD and the filer. These are the labels Phase 2 can learn from, by window."""
+    filer = "coalesce(filer_cvss31_band, filer_cvss30_band, filer_cvss40_band)"
+    found = rows(
+        con,
+        f"""
+        select
+            split_window,
+            count(*),
+            count(*) filter (where state = 'PUBLISHED'),
+            count(*) filter (where state = 'PUBLISHED' and nvd_cvss31_band is not null),
+            count(*) filter (where state = 'PUBLISHED' and {filer} is not null),
+            count(*) filter (where state = 'PUBLISHED' and adp_cvss31_band is not null),
+            count(*) filter (where state = 'PUBLISHED' and nvd_cvss31_band is not null and {filer} is not null)
+        from gold.cve_current
+        where split_window is not null
+        group by 1
+        order by min(published), 1
+        """,
+    )
+    return [
+        {"window": str(r[0]), **dict(zip(COVERAGE_COLUMNS, (int(x) for x in r[1:]), strict=True))}
+        for r in found
+    ]
 
 
 def _write_part(
@@ -363,6 +395,29 @@ def _write_part(
         + "), never carrying a package URL, so counted apart from Q07",
         source="lake",
     )
+    windows = completeness.get("coverage_by_window", [])
+    if windows:
+        m.table(
+            "lake.coverage_by_window",
+            ["Window", "CVEs", "Published", "NVD band", "Filer band", "CISA ADP band", "NVD and filer band"],
+            ["text", "int", "int", "int", "int", "int", "int"],
+            [[w["window"], *(w[c] for c in COVERAGE_COLUMNS)] for w in windows],
+            origin=origin,
+            population="CVEs by the registered window of their publication (config/splits.yaml); a band "
+            "is counted on published CVEs only",
+            source="lake",
+        )
+        for w in windows:
+            for c in COVERAGE_COLUMNS:
+                m.value(
+                    f"lake.window.{w['window']}.{c}",
+                    w[c],
+                    "int",
+                    origin=origin,
+                    population=f"CVEs published in the {w['window']} window"
+                    + ("" if c == "cves" else ", rejected excluded"),
+                    source="lake",
+                )
     m.value(
         "lake.sbom.package_components",
         completeness["sbom_package_components"],

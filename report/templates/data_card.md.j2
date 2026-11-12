@@ -49,6 +49,14 @@ says which. CVEs published since 2017 with no history event: {{ v("lake.cves_sin
 
 Descriptive counts may cover every window. An analysis that compares labels uses train,
 development and shadow only, never test, which is held for Phase 2.
+{% if has("lake.coverage_by_window") %}
+
+How many CVEs each window holds, and how many of the published ones carry a CVSS severity band
+from the NVD, from the filer and from CISA ADP: the labels a model can learn from, window by
+window.
+
+{{ table("lake.coverage_by_window") }}
+{% endif %}
 
 ## The labels
 
