@@ -2,23 +2,23 @@
 
 Triage for the CVEs the NVD no longer analyzes.
 
-**Phase 1 of 5 is in progress.** 12 of 18 checklist lines are done. Still missing:
+Phase 1 of 5 is in progress: 13 of 18 checklist lines are done. Still missing:
 
 - The API live on Vercel with Neon, loaded only by the sync, verified from a separate client
 - Persistence observed independently; schemathesis green; the load test with the cold start
 - The console, the ruler, the landing, the docs and the report live on Vercel
-- README with the matrix, RESULTS, DECISIONS, the memos and notebooks; the humanizer pass
 - The live check awake and asleep; reset and rederive reproduced every number
 - At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2
 
 ## What it is
 
-Since 15 April 2026 the NVD enriches CVEs in the CISA KEV catalog, CVEs in software the federal
-government uses and CVEs in critical software first, and labels every other CVE lowest priority,
-not scheduled for immediate enrichment. Since 11 September 2026 a maker of a product sold in the EU
-must send an early warning within 24 hours of learning that a vulnerability in it is actively
-exploited. unscheduled measures that gap, finds it in a company SBOM, and over five phases fills,
-ranks and routes the CVEs nobody scheduled, with a person approving every plan.
+Since 15 April 2026 the NVD enriches three kinds of CVE first: those in the CISA KEV catalog, those
+in software the federal government uses and those in critical software. Every other CVE is labeled
+lowest priority, not scheduled for immediate enrichment. Since 11 September 2026 a maker of a
+product sold in the EU must send an early warning within 24 hours of learning that a vulnerability
+in it is actively exploited. unscheduled measures the gap between the two and finds it in a
+company's SBOMs. Over five phases it fills in, ranks and routes the CVEs nobody scheduled, and a
+person approves every plan.
 
 ## The skills, and where each one is
 

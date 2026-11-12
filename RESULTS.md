@@ -1,8 +1,8 @@
 # Results
 
-Phase 1 of 5. Every number on this page is rendered from results/manifest.json, which the build
-writes from the parts each step saved; the claim gate in CI renders the page again and fails on any
-difference. The lake behind them was cut at 2026-11-12 (lake digest
+Phase 1 of 5. Every number on this page comes from results/manifest.json, which the build writes
+from what each step saved, and the claim gate in CI renders the page again and fails on any
+difference. The lake behind the numbers was cut at 2026-11-12 (lake digest
 66812c5bfe50).
 
 ## The lake
@@ -29,7 +29,7 @@ of 65 tests. Rows that failed a named rule were held back, never dropped:
 
 ## The backlog
 
-report/backlog.md has every question in words. In one line each:
+report/backlog.md answers each question in full. One line for each:
 
 - Q1. The NVD analyzed 80.2% of new CVEs within 30 days before
   2025, 43.6% from 2025 to the change and
@@ -61,8 +61,8 @@ report/backlog.md has every question in words. In one line each:
 
 ## The checklist
 
-Each line is done only when the file a step wrote exists, so the checklist asks whether a step
-ran, not whether its output looks right.
+A line is marked done when the file its step writes exists, which shows that the step ran and
+says nothing about whether its output is right.
 
 | Item | Status | Line | Evidence |
 |---:|---|---|---|
@@ -81,7 +81,7 @@ ran, not whether its output looks right.
 | 13 | done | The design system in place with the palette validator green in CI | web/styles/tokens.css, results/design/palette.json |
 | 14 | not done | The console, the ruler, the landing, the docs and the report live on Vercel | results/live/web_verify.json |
 | 15 | done | sloplint, axe and Lighthouse green; the look reviewed or marked pending | results/design/gates.json |
-| 16 | not done | README with the matrix, RESULTS, DECISIONS, the memos and notebooks; the humanizer pass | RESULTS.md, report/discovery.md, report/backlog.md, report/legacy.md, notebooks/01_the_first_backlog_chart.ipynb, notebooks/02_kappa_on_everything.ipynb, notebooks/03_the_matcher_without_schemes.ipynb, results/humanizer.json |
+| 16 | done | README with the matrix, RESULTS, DECISIONS, the memos and notebooks; the humanizer pass | RESULTS.md, report/discovery.md, report/backlog.md, report/legacy.md, notebooks/01_the_first_backlog_chart.ipynb, notebooks/02_kappa_on_everything.ipynb, notebooks/03_the_matcher_without_schemes.ipynb, results/humanizer.json |
 | 17 | not done | The live check awake and asleep; reset and rederive reproduced every number | results/live_check.json, results/rederive.json |
 | 18 | not done | At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2 | results/release.json |
 

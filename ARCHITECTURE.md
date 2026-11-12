@@ -51,19 +51,19 @@ test plants a fact known after T and fails if the engine ever returns it.
 
 ## Why the parts are where they are
 
-- **DuckDB and Parquet, not a cluster.** The whole history fits on one machine; a cluster would add
-  cost and nothing else at this size (ADR 0001).
-- **Neon holds a slice, Parquet holds the history.** The API serves the current state and the ruler
-  events for recent CVEs from a free Postgres; the full history stays in the lake file (ADR 0002).
-- **Facts dated by events.** Snapshots alone cannot say when a value appeared; the change history can
-  (ADR 0003).
-- **The matcher in code, checked by a second engine.** Every finding comes from a range evaluated in
-  its own version scheme, and osv-scanner checks every one; a disagreement needs a reason (ADR 0004).
-- **The API pulls its data.** GitHub Actions holds no database credential. The build publishes a
+- DuckDB and Parquet, not a cluster: the whole history fits on one machine, and at this size a
+  cluster would add cost and nothing else (ADR 0001).
+- Neon holds a slice and Parquet the history: the API serves the current state and the ruler events
+  for recent CVEs from a free Postgres, and the full history stays in the lake file (ADR 0002).
+- Facts dated by events: snapshots alone cannot say when a value appeared, and the change history
+  can (ADR 0003).
+- The matcher in code, checked by a second engine: every finding comes from a range evaluated in its
+  own version scheme, osv-scanner checks every one, and a disagreement needs a reason (ADR 0004).
+- The API pulls its data, so GitHub Actions holds no database credential. The build publishes a
   serving bundle as a public release with a digest for every file, and the API loads it in chunks
   when asked, checking each digest, inside an advisory lock, under a storage ceiling (ADR 0007).
-- **One design source.** Every color and face on the site comes from a token in
-  web/styles/tokens.css, and the chart palette is checked by a validator in CI (ADR 0006).
+- One design source: every color and face on the site comes from a token in web/styles/tokens.css,
+  and a validator in CI checks the chart palette (ADR 0006).
 
 ## Where to read further
 

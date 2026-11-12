@@ -22,8 +22,8 @@ exit code 0
 wrote <reports>/vuln_report_<day>.csv with 0 rows
 ```
 
-Every night since the feeds went away the team has received a report that looked like a quiet
-night. Nothing told them otherwise, because nothing failed.
+Every night since the feeds went away, the team has received a report that looks like a quiet
+night, and because nothing fails, nothing has told them otherwise.
 
 ## Characterization first
 
@@ -62,6 +62,6 @@ record, from the filer or from CISA, and says which.
 
 The security lead would push back: the script is a fixture written for this build, in the style of
 the customer's job, so the memo describes the fixture as it behaves. The failure it shows (a
-retired feed, a bare except, a header only CSV) is the common way such jobs go quiet.
+retired feed, a bare except, a header only CSV) is a common way for such jobs to go quiet.
 
 > unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.

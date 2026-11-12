@@ -1,8 +1,8 @@
 # Results
 
-Phase 1 of 5. Every number on this page is rendered from results/manifest.json, which the build
-writes from the parts each step saved; the claim gate in CI renders the page again and fails on any
-difference. The lake behind them was cut at {{ v("lake.data_cut")[:10] }} (lake digest
+Phase 1 of 5. Every number on this page comes from results/manifest.json, which the build writes
+from what each step saved, and the claim gate in CI renders the page again and fails on any
+difference. The lake behind the numbers was cut at {{ v("lake.data_cut")[:10] }} (lake digest
 {{ v("lake.sha256")[:12] }}).
 
 ## The lake
@@ -20,7 +20,7 @@ of {{ v("lake.dbt.tests_total") }} tests. Rows that failed a named rule were hel
 
 ## The backlog
 
-report/backlog.md has every question in words. In one line each:
+report/backlog.md answers each question in full. One line for each:
 
 - Q1. The NVD analyzed {{ v("backlog.q1.share_30d_before_2025") }} of new CVEs within 30 days before
   2025, {{ v("backlog.q1.share_30d_2025_to_change") }} from 2025 to the change and
@@ -52,8 +52,8 @@ report/backlog.md has every question in words. In one line each:
 
 ## The checklist
 
-Each line is done only when the file a step wrote exists, so the checklist asks whether a step
-ran, not whether its output looks right.
+A line is marked done when the file its step writes exists, which shows that the step ran and
+says nothing about whether its output is right.
 
 {{ table("checklist") }}
 

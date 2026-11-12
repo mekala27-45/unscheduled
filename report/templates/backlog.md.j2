@@ -2,14 +2,14 @@
 # The backlog, in words and numbers
 
 On 15 April 2026 NIST said the NVD would analyze the CVEs it sees as the highest priority first
-and mark the rest Deferred. This report measures what that means, from the lake as it stood at
+and mark the rest Deferred. This report measures the effect, from the lake as it stood at
 {{ v("lake.data_cut")[:10] }}: {{ v("lake.cves") }} CVE records and {{ v("lake.facts") }} dated facts
-about them, every one with its source and the time it became known. Each number below is read from
-results/manifest.json when this page is rendered, so the page cannot drift from the data.
+about them, each with its source and the time it became known. Every number below is read from
+results/manifest.json when the page is rendered, so the page cannot drift from the data.
 
-Shares come with a 95 percent interval from a bootstrap that resamples filers, not CVEs, because the
-CVEs of one filer share a template, a scoring habit and an editor. A value from fewer than five
-filers is given without an interval. Where a question tests several things at once, the p-values
+Shares come with a 95 percent interval from a bootstrap that resamples filers, not CVEs, because
+the CVEs of one filer are written from one template and scored by one habit, so they do not vary
+independently. A value from fewer than five filers is given without an interval. Where a question tests several things at once, the p-values
 are adjusted with Benjamini-Hochberg over that question's family.
 
 ## Q1, the analysis delay
@@ -22,22 +22,21 @@ The NVD analyzed {{ v("backlog.q1.share_30d_before_2025") }} of new CVEs within 
 ({{ v("backlog.q1.share_30d_2025_to_change_low") }} to {{ v("backlog.q1.share_30d_2025_to_change_high") }}),
 and {{ v("backlog.q1.share_30d_since_change") }} since
 ({{ v("backlog.q1.share_30d_since_change_low") }} to {{ v("backlog.q1.share_30d_since_change_high") }}).
-The fall came before the change: from the first period to the second the 30 day share moved
-{{ v("backlog.q1.change_30d_before_2025_to_2025_to_change") }}
+The fall came before the April announcement: from the first period to the second the 30 day
+share moved {{ v("backlog.q1.change_30d_before_2025_to_2025_to_change") }}
 (adjusted p {{ v("backlog.q1.change_30d_before_2025_to_2025_to_change_p_adjusted") }}), and from the
 second to the third {{ v("backlog.q1.change_30d_2025_to_change_to_since_change") }}
-(adjusted p {{ v("backlog.q1.change_30d_2025_to_change_to_since_change_p_adjusted") }}). The
-announcement in April named what had already been happening since 2024.
+(adjusted p {{ v("backlog.q1.change_30d_2025_to_change_to_since_change_p_adjusted") }}).
 
 When the NVD does analyze a CVE it is quick: the median among those analyzed is
 {{ v("backlog.q1.median_days_analyzed_before_2025") }} before 2025 and
-{{ v("backlog.q1.median_days_analyzed_since_change") }} since the change. The delay is not slow
-work; it is work not done. A CVE is judged at k days only once k days have passed, so the newest
-months count only the CVEs old enough to judge.
+{{ v("backlog.q1.median_days_analyzed_since_change") }} since the change. The low shares come from
+the CVEs left waiting, not from slow analysis. A CVE is judged at k days only once k days have
+passed, so the newest months count only the CVEs old enough to judge.
 
 The data lead would push back: a month whose CVEs have not all had 90 days is judged on fewer of
-them, and the history before 2017 is dated by rule, not by event. Both are in the method; the
-monthly table behind the chart has the count judged at each horizon beside each share.
+them, and the history before 2017 is dated by rule, not by event. The method states both, and the
+monthly table behind the chart gives the number judged at each horizon beside each share.
 
 ## Q2, after the change
 
@@ -52,14 +51,14 @@ status, {{ v("backlog.q2.status_awaiting_analysis") }} are awaiting analysis and
 
 {{ table("backlog.q2.by_status") }}
 
-The KEV promise holds. Of the {{ v("backlog.q2.kev_listed") }} CVEs published since the change and
+The NVD has kept its promise on KEV. Of the {{ v("backlog.q2.kev_listed") }} CVEs published since the change and
 listed in KEV, {{ v("backlog.q2.share_met_one_business_day") }} had an NVD analysis within one
 business day of the listing or before it; the median from listing to analysis is
 {{ v("backlog.q2.median_hours_listing_to_analysis") }} and the 90th percentile
 {{ v("backlog.q2.p90_hours_listing_to_analysis") }}. KEV listed CVEs are
 {{ v("backlog.q2.share_kev_among_analyzed") }} of everything analyzed, so the promise covers a
-small part of the work. The plan also named software NIST counts as critical; no locked source says
-which software that is, so that part is not measured.
+small part of the work. The plan also named software NIST counts as critical, but no locked source
+says which software that is, so that part is not measured.
 
 ## Q3, what the filer gives instead
 
@@ -71,8 +70,8 @@ For the {{ v("backlog.q3.cves") }} CVEs the NVD has not analyzed, the filer gave
 {{ v("backlog.q3.share_filer_cvss_any_high") }}), a CWE for {{ v("backlog.q3.share_filer_cwe") }} and
 affected versions for {{ v("backlog.q3.share_affected_versions") }}. CISA's ADP container adds an SSVC
 decision to {{ v("backlog.q3.share_adp_ssvc") }} of them, but its own CVSS to only
-{{ v("backlog.q3.share_adp_cvss") }}. So almost every skipped CVE still comes with a score; the
-question is whose.
+{{ v("backlog.q3.share_adp_cvss") }}. Most skipped CVEs still come with a score, then, and it is
+usually the filer's.
 
 {{ table("backlog.q3.top_filers") }}
 
@@ -84,15 +83,18 @@ question is whose.
 On {{ v("backlog.q4.cves") }} CVEs scored with CVSS 3.1 by both their filer and the NVD, the two agree
 well on the attack vector (kappa {{ v("backlog.q4.kappa_av") }}, {{ v("backlog.q4.kappa_av_low") }} to
 {{ v("backlog.q4.kappa_av_high") }}) and poorly on attack complexity (kappa
-{{ v("backlog.q4.kappa_ac") }}). On the severity band the weighted kappa is
-{{ v("backlog.q4.kappa_band") }}, and filers sit lower than the NVD on average
-({{ v("backlog.q4.direction_band") }} on the band). A filer score is a usable stand in for the vector's
-reach and a weak one for its difficulty and its impact.
+{{ v("backlog.q4.kappa_ac") }}). The three impact metrics fall between, at kappa
+{{ v("backlog.q4.kappa_c") }} for confidentiality, {{ v("backlog.q4.kappa_i") }} for integrity and
+{{ v("backlog.q4.kappa_a") }} for availability. On the severity band the weighted kappa is
+{{ v("backlog.q4.kappa_band") }}, and filers score lower than the NVD on average
+({{ v("backlog.q4.direction_band") }} on the band). A filer score can stand in for the NVD on the
+attack vector, much less on attack complexity, and only in part on the impact.
 
 {{ table("backlog.q4.by_filer_type") }}
 
 The data lead would push back: a filer has reasons to score its own product low, and the NVD's
-score is itself a label made by people. The agreement is between two labels, never with a truth.
+score is also a label made by people, so the kappa measures agreement between two labels, neither
+of them the true severity.
 
 ## Q5, exploited, and when
 
@@ -109,8 +111,8 @@ CVE's publication are held back by quarantine rule Q03.
 
 {{ table("backlog.q5.by_year") }}
 
-The security lead would push back: KEV is a lower bound on exploitation. A CVE outside KEV is not
-a CVE nobody exploits; it is one CISA has not confirmed.
+The security lead would push back: KEV is a lower bound on exploitation, because a CVE outside KEV
+may be exploited without CISA having confirmed it.
 
 ## Q6, who files the flood
 
@@ -128,10 +130,10 @@ growth ({{ v("backlog.q6.top10_share_of_growth_low") }} to {{ v("backlog.q6.top1
 ## Q7, the exposure
 
 Q7 is the customer's own: the findings for the six stand in products, matched by package URL and
-version range and checked by osv-scanner. Across them today, {{ v("exposure.c9.findings_today") }}
-findings; a triage that read only NVD analysis could act on {{ v("exposure.c9.nvd_only_usable_share") }}
+version range and checked by osv-scanner. Today they carry {{ v("exposure.c9.findings_today") }}
+findings. A triage that read only NVD analysis could act on {{ v("exposure.c9.nvd_only_usable_share") }}
 of them, and one that reads every source on {{ v("exposure.c9.any_source_usable_share") }}. The
-discovery memo, report/discovery.md, sets that out product by product.
+discovery memo, report/discovery.md, gives the figures product by product.
 
 ## Q8, how different the skipped CVEs are
 
@@ -141,15 +143,16 @@ discovery memo, report/discovery.md, sets that out product by product.
 A logistic regression fitted on the earlier half of the shadow window and scored on the later half
 tells the CVEs the NVD analyzed from the ones it skipped with an AUC of {{ v("backlog.q8.auc") }}
 ({{ v("backlog.q8.auc_low") }} to {{ v("backlog.q8.auc_high") }}), on {{ v("backlog.q8.features") }}
-features. The skipped CVEs are not a random sample of the rest: they come from different filers and
-describe different software. A model trained on NVD labels alone would learn the NVD's choice of
-what to look at, which is the reason the later phases score against filer and CISA labels as well.
+features. So the skipped CVEs are not a random sample of the rest: they come from different filers
+and describe different software. A model trained on NVD labels alone would learn the NVD's choice
+of what to look at, which is why the later phases also score against filer and CISA labels.
 
 {{ table("backlog.q8.features_toward_analyzed") }}
 
 {{ table("backlog.q8.features_toward_skipped") }}
 
 The data lead would push back: the later half has had less time to be analyzed, and the month
-feature carries that. The AUC says the groups separate; it is not a model to apply.
+feature carries that. The AUC shows that the two groups can be told apart; the model is not meant
+to be applied to new CVEs.
 
 {{ statement() }}

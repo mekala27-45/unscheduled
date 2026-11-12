@@ -21,14 +21,14 @@ It is the new normal, and it began before the announcement. The NVD analyzed
 40.4% since. Of the 79,870 CVEs published
 since the change, 30,612 are Deferred: the NVD says it has no plan to
 analyze them. The CVEs it skips are not a random sample (a classifier tells the two groups apart
-with an AUC of 0.886), so waiting for the NVD means waiting longest on the CVEs
-least like the ones it chose.
+with an AUC of 0.886), so the longest waits fall on the CVEs least like the ones
+it chose.
 
-There is something to read instead. For the CVEs the NVD has not analyzed, the filer gave a CVSS
-score for 83.9% and CISA an SSVC decision for
+For the CVEs the NVD has not analyzed there is still something to read: the filer gave a CVSS
+score for 83.9% of them and CISA an SSVC decision for
 89.0%. Filer and NVD scores agree on the attack vector (kappa
 0.84) and much less on the band (weighted kappa 0.49),
-so a filer score is a starting point, not an answer.
+so a filer score is where triage starts, and a person still has to check it.
 
 ## What it touches in their products
 
@@ -54,8 +54,8 @@ no CPE configuration for their CVE.
 
 ## What we propose
 
-A month in five phases, each with the evidence it owes. The criteria are signed in
-config/criteria.yaml and hashed before any result was computed:
+A month in five phases, each owing the evidence named for it. The criteria are signed in
+config/criteria.yaml and were hashed before any result was computed:
 
 - C1, fill, phase 2: For test CVEs the NVD analyzed, the predicted severity band agrees with the NVD band at a quadratic weighted kappa of at least 0.60, beats the TF-IDF floor with the lower bound of the paired 95 percent interval above zero, and has an expected calibration error at or below 0.05.
 - C2, rank, phase 2: Scored on the day of publication, the top 5 percent by the exploitation score holds at least half of the test CVEs listed in KEV within 180 days. EPSS at days 1, 7 and 30 is reported beside it, and a difference inside the interval is a tie.
@@ -69,8 +69,8 @@ config/criteria.yaml and hashed before any result was computed:
 
 ## What the security lead would push back on
 
-The customer is fictional and its products are stand ins, so the exposure is that of the stand
-ins, measured honestly, not of a real product line. KEV is a lower bound on exploitation. The CPE
+The customer is fictional and its products are stand ins, so the exposure measured is that of the
+stand ins, not of a real product line. KEV is a lower bound on exploitation. The CPE
 contrast uses Grype, not every CPE based scanner. Nothing here is an official score, and nothing is
 filed or patched without a person approving it.
 

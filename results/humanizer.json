@@ -1,0 +1,205 @@
+{
+ "pass": "humanizer",
+ "date": "2026-11-11",
+ "skill": "humanizer (anthropic-skills), patterns from Wikipedia Signs of AI writing",
+ "rule": "keep what each sentence says, change how it reads; no fact, number or claim added that the manifest or the source does not hold",
+ "scope": "every README section, memo, method note and landing sentence before the v0.1.0 tag; the method is stated in report/templates/backlog.md.j2, so it was read there",
+ "not_in_scope": {
+  "DECISIONS.md": "a dated log; its entries are records and are not rewritten",
+  "notebooks": "records of dead ends, written by scripts/make_notebooks.py in the same pass of review"
+ },
+ "changed": [
+  {
+   "file": "docs/templates/README.md.j2",
+   "sha256_after": "0cdeda51d2c7e1cae51c54bfed0b1c0b72665410aa566fd1a444c24213d5ff9c",
+   "changes": [
+    "bold labels on the two status lines removed (pattern 19)",
+    "the three NVD priorities stated once as three kinds of CVE instead of a run of repeated openings (pattern 7)",
+    "that gap named as the gap between the NVD priorities and the 24 hour warning, and the last sentence split in two"
+   ]
+  },
+  {
+   "file": "docs/templates/RESULTS.md.j2",
+   "sha256_after": "e2c51eaf26a6e84b00fd9261755579e058e7a519bbd6b05002d1c4b9737c7391",
+   "changes": [
+    "the provenance sentence tightened, the two clauses joined with and",
+    "the fragment In one line each replaced by a sentence",
+    "the checklist caveat stated as what a written file shows and does not show (pattern 1)"
+   ]
+  },
+  {
+   "file": "report/templates/backlog.md.j2",
+   "sha256_after": "53d848d14cc72ad7077ce2a45531fc24defabf54e8ef6d183510dcef30d485c2",
+   "changes": [
+    "the forced triad a template, a scoring habit and an editor replaced by the reason the bootstrap resamples filers (pattern 6)",
+    "the closer about the April announcement cut and its point moved into the sentence before (pattern 2)",
+    "The delay is not slow work; it is work not done restated as one plain sentence; the contrast stays because it corrects a likely belief (pattern 1)",
+    "The KEV promise holds, a staged fragment, made a sentence (pattern 2)",
+    "the question is whose replaced by the claim (pattern 3); almost every corrected to most, since the filer share is short of that",
+    "the unsupported weak one for its impact replaced by the three impact kappas read from the manifest",
+    "The agreement is between two labels, never with a truth folded into the sentence before (pattern 2)",
+    "the split KEV contrast made one sentence with because (pattern 1)",
+    "the Q7 fragment Across them today made full sentences",
+    "the AUC caveat stated as a caveat (pattern 1)",
+    "kept: the Q5 and Q6 headings, because they are the titles registered in evaluation/phase1_plan.yaml"
+   ]
+  },
+  {
+   "file": "report/templates/discovery.md.j2",
+   "sha256_after": "10641d140cb368ce0bffbce7b6caed4dcccc22a4cda063fb2a06e3b22845222d",
+   "changes": [
+    "the staged opener There is something to read instead merged into the sentence it introduced (pattern 4)",
+    "a starting point, not an answer restated as what a person still has to do (pattern 1)",
+    "measured honestly removed, a claim about the writer rather than the data (pattern 13)",
+    "the waiting sentence and the proposal sentence reworded for plainness"
+   ]
+  },
+  {
+   "file": "report/templates/legacy.md.j2",
+   "sha256_after": "86be4d9b3792db3395f2c5e9c59ab7c6e832a8fad0e76956699f54f7abcd5ddc",
+   "changes": [
+    "the closer Nothing told them otherwise, because nothing failed merged into the sentence before (pattern 2)",
+    "the common way such jobs go quiet reduced to a common way, the claim the memo can support"
+   ]
+  },
+  {
+   "file": "ARCHITECTURE.md",
+   "sha256_after": "46bbfe82ec7f07d2b00c728a0cccd9522994b8b5f52eda0d29172d57ca61eac9",
+   "changes": [
+    "bold labels removed from the list of decisions; each decision still leads its line (pattern 19)"
+   ]
+  },
+  {
+   "file": "customer/README.md",
+   "sha256_after": "e9305504cebad091e2ed262ca4b49d6664ee032c5f5dda9e67b5c8e5b90a5893",
+   "changes": [
+    "the defensive closer That is the rule working as written replaced by the reason the rule was written first (patterns 2 and 5)"
+   ]
+  },
+  {
+   "file": "web/app/(site)/page.tsx",
+   "sha256_after": "631f5368012ee52ff2ca9d3079771474fe38209d7840fe857badd95e688ddbd4",
+   "changes": [
+    "the fragment row No NVD analysis, no CPE, so no finding made one causal sentence (pattern 2)",
+    "the map and screens leads written as sentences"
+   ]
+  },
+  {
+   "file": "web/components/site/screens.tsx",
+   "sha256_after": "46ab74f6ebdc7ad618ffd3f89745d87c447b290bff32387d0a490e33f400c365",
+   "changes": [
+    "the ruler caption no longer says real time, since the ruler is not live"
+   ]
+  },
+  {
+   "file": "web/components/site/ruler-key.tsx",
+   "sha256_after": "e26b02cc26671bf1dc7595ba2c1dc97fe9f15d6719a48170a97ee90203556f1e",
+   "changes": [
+    "A key, not a timeline replaced by what the key holds and leaves out (pattern 1)"
+   ]
+  },
+  {
+   "file": "web/components/site/hero-field.tsx",
+   "sha256_after": "6c94bebc122e42f116661c07b1466e710963e94041c360392f1b4d93f841f750",
+   "changes": [
+    "the empty state no longer calls the bare grid one dot per day"
+   ]
+  },
+  {
+   "file": "web/components/site/before-after.tsx",
+   "sha256_after": "bbc6bcc7c3f7b8b90f80eb9ca214fbbbd48720fd874de02ab4e870197f43ae8c",
+   "changes": [
+    "the placeholder counted at step eight replaced by the share from the manifest (exposure.contrast.share_no_cpe); the line is left out when the manifest has no value"
+   ]
+  }
+ ],
+ "read_unchanged": [
+  {
+   "file": "report/templates/criteria.md.j2",
+   "sha256": "9fe0268f7bf85fd7c91deb36f3d6f7a1c331432de18aeea1f637b6ad7702ff84",
+   "why": "plain definitions; every sentence carries a fact"
+  },
+  {
+   "file": "docs/adr/0001-duckdb-and-parquet-at-this-size.md",
+   "sha256": "e2e0149000b3a55df0e1ff0a97dbf301dded2b440c2289a97e350659848f460a",
+   "why": "the contrasts name the alternative the decision weighed, which is what a decision record is for"
+  },
+  {
+   "file": "docs/adr/0002-neon-holds-a-slice.md",
+   "sha256": "249bdb1e8981946d5c06b398dd7572673c93d019d420cce70ad94f15f85b5fe9",
+   "why": "as for 0001"
+  },
+  {
+   "file": "docs/adr/0003-facts-dated-by-events.md",
+   "sha256": "79c696fdcba1f52555b5b49aebeb69c159b5336b4cdbaf1c071e6136115cfe17",
+   "why": "as for 0001"
+  },
+  {
+   "file": "docs/adr/0004-the-matcher-in-code-with-a-second-engine.md",
+   "sha256": "49ebb437ab73328897fa5d952fb54f3bb84b602f5a032d28651b2597e7c46f3c",
+   "why": "as for 0001"
+  },
+  {
+   "file": "docs/adr/0005-vercel-containers-now.md",
+   "sha256": "9045a59af1fec63abf2029fe4d842e14ce091852b5aed6cae0c86e221afe4d78",
+   "why": "as for 0001"
+  },
+  {
+   "file": "docs/adr/0006-the-design-method.md",
+   "sha256": "c0c2afc96c82df143b21f94b7d2ab3abfe3eeb41c2019fc3637a1fca79a22dfe",
+   "why": "as for 0001"
+  },
+  {
+   "file": "docs/adr/0007-the-api-pulls-its-data.md",
+   "sha256": "aed8e1a0b95d15d99c140cd40324518bee64e42dc94f5a7778d6cd4488d368db",
+   "why": "as for 0001"
+  },
+  {
+   "file": "docs/runbooks/read-the-consoles-again.md",
+   "sha256": "bef1aa8ae33eb8a051de6fff21e951f2919ac9339e8d90e0d0b1e6ff4f5323eb",
+   "why": "procedural steps, no tells"
+  },
+  {
+   "file": "docs/runbooks/rotate-the-database-credential.md",
+   "sha256": "54233c142fa9ea80233de648e4ae29e4c04c85f933e4a9d997ea5196847414cb",
+   "why": "procedural steps; the rule lines are rules, not rhythm"
+  },
+  {
+   "file": "docs/diagrams/README.md",
+   "sha256": "fc094ab99fe12fde4633bdad6fc05d81d29378a6d333b156fd921bef9eaf2fd0",
+   "why": "procedural, no tells"
+  },
+  {
+   "file": "web/lib/system-map.ts",
+   "sha256": "32bf7ca330d87d9af30291164ade8585d24e5714e06ad506ac7cf138382ef87c",
+   "why": "node lines are labels on a diagram"
+  },
+  {
+   "file": "web/components/site/reads.tsx",
+   "sha256": "ce110e5332bde55e463e13593bcf40e9f73a96561c66a20b6e5c7bdc99162e65",
+   "why": "table labels and one sentence of fact"
+  },
+  {
+   "file": "web/components/site/mast.tsx",
+   "sha256": "790b2d497042f48a0b016c53bb28f7f19b3cf575284667e7d59b8d23ad00799c",
+   "why": "the statement is fixed text checked by scripts/check_statement.py"
+  },
+  {
+   "file": "web/components/site/lookup-form.tsx",
+   "sha256": "421688d71db7d321411e62908a63590999f8e0014ab4e32e544539f8e8fd56b7",
+   "why": "one label and one error message, both direct"
+  },
+  {
+   "file": "web/components/site/site-nav.tsx",
+   "sha256": "bf1c562ffd6a1d75bc56dbe5b731bf269420d0dc04f039702063565f745d11b9",
+   "why": "link labels only"
+  }
+ ],
+ "checks_after": [
+  "scripts/check_no_em_dash.py",
+  "scripts/check_vocabulary.py",
+  "scripts/check_published_numbers.py (the rendered documents match the manifest)",
+  "sloplint over the landing (results/design/gates.json)",
+  "web unit and end to end tests"
+ ]
+}

@@ -26,8 +26,8 @@ the rule passed over with the test it failed.
 | data jobs (Python) | `TheAlgorithms/Python` | `12b1023a9d97` |
 
 The rule is mechanical, so some stand ins look little like the product they play: the Go pick is a
-curated list whose site generator has a small module graph. That is the rule working as written,
-and the reason the rule is written down before the search instead of picks made by taste.
+curated list whose site generator has a small module graph. The rule was written down before the
+search so that taste could not choose the stand ins.
 
 ## The SBOMs
 

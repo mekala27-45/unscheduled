@@ -1,14 +1,14 @@
 # The backlog, in words and numbers
 
 On 15 April 2026 NIST said the NVD would analyze the CVEs it sees as the highest priority first
-and mark the rest Deferred. This report measures what that means, from the lake as it stood at
+and mark the rest Deferred. This report measures the effect, from the lake as it stood at
 2026-11-12: 424,534 CVE records and 6,620,931 dated facts
-about them, every one with its source and the time it became known. Each number below is read from
-results/manifest.json when this page is rendered, so the page cannot drift from the data.
+about them, each with its source and the time it became known. Every number below is read from
+results/manifest.json when the page is rendered, so the page cannot drift from the data.
 
-Shares come with a 95 percent interval from a bootstrap that resamples filers, not CVEs, because the
-CVEs of one filer share a template, a scoring habit and an editor. A value from fewer than five
-filers is given without an interval. Where a question tests several things at once, the p-values
+Shares come with a 95 percent interval from a bootstrap that resamples filers, not CVEs, because
+the CVEs of one filer are written from one template and scored by one habit, so they do not vary
+independently. A value from fewer than five filers is given without an interval. Where a question tests several things at once, the p-values
 are adjusted with Benjamini-Hochberg over that question's family.
 
 ## Q1, the analysis delay
@@ -21,22 +21,21 @@ The NVD analyzed 80.2% of new CVEs within 30 days before 2025
 (29.5% to 58.3%),
 and 40.4% since
 (29.2% to 55.6%).
-The fall came before the change: from the first period to the second the 30 day share moved
--36.6 pts
+The fall came before the April announcement: from the first period to the second the 30 day
+share moved -36.6 pts
 (adjusted p 0.002), and from the
 second to the third -3.2 pts
-(adjusted p 0.981). The
-announcement in April named what had already been happening since 2024.
+(adjusted p 0.981).
 
 When the NVD does analyze a CVE it is quick: the median among those analyzed is
 6.8 days before 2025 and
-5.2 days since the change. The delay is not slow
-work; it is work not done. A CVE is judged at k days only once k days have passed, so the newest
-months count only the CVEs old enough to judge.
+5.2 days since the change. The low shares come from
+the CVEs left waiting, not from slow analysis. A CVE is judged at k days only once k days have
+passed, so the newest months count only the CVEs old enough to judge.
 
 The data lead would push back: a month whose CVEs have not all had 90 days is judged on fewer of
-them, and the history before 2017 is dated by rule, not by event. Both are in the method; the
-monthly table behind the chart has the count judged at each horizon beside each share.
+them, and the history before 2017 is dated by rule, not by event. The method states both, and the
+monthly table behind the chart gives the number judged at each horizon beside each share.
 
 ## Q2, after the change
 
@@ -59,14 +58,14 @@ status, 11,113 are awaiting analysis and
 | Undergoing Analysis | 776 | 204 | 2 | 0 | not applicable |
 | not available | 1 | 0 | 0 | 0 | not applicable |
 
-The KEV promise holds. Of the 159 CVEs published since the change and
+The NVD has kept its promise on KEV. Of the 159 CVEs published since the change and
 listed in KEV, 96.9% had an NVD analysis within one
 business day of the listing or before it; the median from listing to analysis is
 14.0 h and the 90th percentile
 21.2 h. KEV listed CVEs are
 0.5% of everything analyzed, so the promise covers a
-small part of the work. The plan also named software NIST counts as critical; no locked source says
-which software that is, so that part is not measured.
+small part of the work. The plan also named software NIST counts as critical, but no locked source
+says which software that is, so that part is not measured.
 
 ## Q3, what the filer gives instead
 
@@ -77,8 +76,8 @@ For the 80,094 CVEs the NVD has not analyzed, the filer gave a CVSS score for
 95.5%), a CWE for 83.3% and
 affected versions for 94.3%. CISA's ADP container adds an SSVC
 decision to 89.0% of them, but its own CVSS to only
-11.6%. So almost every skipped CVE still comes with a score; the
-question is whose.
+11.6%. Most skipped CVEs still come with a score, then, and it is
+usually the filer's.
 
 | Filer | Filer type | CVEs | Filer CVSS 3.x | Filer CVSS 4.0 | Filer CWE | Affected versions | CISA ADP value |
 |---|---|---:|---:|---:|---:|---:|---:|
@@ -110,10 +109,12 @@ Agreement between the filer's CVSS 3.1 vector and the NVD's, metric by metric an
 On 47,641 CVEs scored with CVSS 3.1 by both their filer and the NVD, the two agree
 well on the attack vector (kappa 0.84, 0.79 to
 0.88) and poorly on attack complexity (kappa
-0.27). On the severity band the weighted kappa is
-0.49, and filers sit lower than the NVD on average
-(-18.5 pts on the band). A filer score is a usable stand in for the vector's
-reach and a weak one for its difficulty and its impact.
+0.27). The three impact metrics fall between, at kappa
+0.57 for confidentiality, 0.63 for integrity and
+0.52 for availability. On the severity band the weighted kappa is
+0.49, and filers score lower than the NVD on average
+(-18.5 pts on the band). A filer score can stand in for the NVD on the
+attack vector, much less on attack complexity, and only in part on the impact.
 
 | Filer type | CVEs | Filers | Kappa AV | Kappa AC | Kappa PR | Kappa UI | Kappa S | Kappa C | Kappa I | Kappa A | Weighted kappa, band |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -126,7 +127,8 @@ reach and a weak one for its difficulty and its impact.
 | vendor | 14,899 | 139 | 0.89 | 0.26 | 0.76 | 0.60 | 0.63 | 0.74 | 0.77 | 0.69 | 0.63 |
 
 The data lead would push back: a filer has reasons to score its own product low, and the NVD's
-score is itself a label made by people. The agreement is between two labels, never with a truth.
+score is also a label made by people, so the kappa measures agreement between two labels, neither
+of them the true severity.
 
 ## Q5, exploited, and when
 
@@ -149,8 +151,8 @@ CVE's publication are held back by quarantine rule Q03.
 | 2025 | 190 | 10.0 days | 62.6% | 69.5% | 25.8% |
 | 2026 | 213 | 5.0 days | 80.3% | 63.4% | 20.7% |
 
-The security lead would push back: KEV is a lower bound on exploitation. A CVE outside KEV is not
-a CVE nobody exploits; it is one CISA has not confirmed.
+The security lead would push back: KEV is a lower bound on exploitation, because a CVE outside KEV
+may be exploited without CISA having confirmed it.
 
 ## Q6, who files the flood
 
@@ -188,10 +190,10 @@ growth (61.3% to 84.2%);
 ## Q7, the exposure
 
 Q7 is the customer's own: the findings for the six stand in products, matched by package URL and
-version range and checked by osv-scanner. Across them today, 1,069
-findings; a triage that read only NVD analysis could act on 33.0%
+version range and checked by osv-scanner. Today they carry 1,069
+findings. A triage that read only NVD analysis could act on 33.0%
 of them, and one that reads every source on 90.1%. The
-discovery memo, report/discovery.md, sets that out product by product.
+discovery memo, report/discovery.md, gives the figures product by product.
 
 ## Q8, how different the skipped CVEs are
 
@@ -200,9 +202,9 @@ How well a logistic regression tells the CVEs the NVD analyzed from the ones it 
 A logistic regression fitted on the earlier half of the shadow window and scored on the later half
 tells the CVEs the NVD analyzed from the ones it skipped with an AUC of 0.886
 (0.827 to 0.928), on 30,806
-features. The skipped CVEs are not a random sample of the rest: they come from different filers and
-describe different software. A model trained on NVD labels alone would learn the NVD's choice of
-what to look at, which is the reason the later phases score against filer and CISA labels as well.
+features. So the skipped CVEs are not a random sample of the rest: they come from different filers
+and describe different software. A model trained on NVD labels alone would learn the NVD's choice
+of what to look at, which is why the later phases also score against filer and CISA labels.
 
 | Feature | Group | Coefficient |
 |---|---|---:|
@@ -241,6 +243,7 @@ what to look at, which is the reason the later phases score against filer and CI
 | filer or type: filer_OpenHarmony | filer | -2.260 |
 
 The data lead would push back: the later half has had less time to be analyzed, and the month
-feature carries that. The AUC says the groups separate; it is not a model to apply.
+feature carries that. The AUC shows that the two groups can be told apart; the model is not meant
+to be applied to new CVEs.
 
 > unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.
