@@ -1,5 +1,13 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "github": { "silent": true },
-  "ignoreCommand": "git log -1 --pretty=%B | grep -qF '[skip deploy]'"
+  "github": {
+    "silent": true
+  },
+  "ignoreCommand": "git log -1 --pretty=%B | grep -qF '[skip deploy]'",
+  "crons": [
+    {
+      "path": "/internal/sync",
+      "schedule": "23 6 * * *"
+    }
+  ]
 }
