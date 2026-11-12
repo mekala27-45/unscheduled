@@ -1,23 +1,28 @@
 import createClient, { type Client } from "openapi-fetch";
-import type { components, paths } from "./schema";
+import { toBacklog, toCve, toCveList, toExposure, toHealth, toMatch, toMeta, toProducts, toTimeline } from "./adapt";
+import type { components, paths } from "./openapi";
+import type * as View from "./view";
 
-export type Schemas = components["schemas"];
-export type Problem = Schemas["Problem"];
-export type Health = Schemas["Health"];
-export type Meta = Schemas["Meta"];
-export type Cve = Schemas["Cve"];
-export type CveSummary = Schemas["CveSummary"];
-export type CveList = Schemas["CveList"];
-export type Timeline = Schemas["Timeline"];
-export type TimelineEvent = Schemas["TimelineEvent"];
-export type Backlog = Schemas["Backlog"];
-export type BacklogQuestion = Schemas["BacklogQuestion"];
-export type ProductList = Schemas["ProductList"];
-export type Product = Schemas["Product"];
-export type Exposure = Schemas["Exposure"];
-export type Finding = Schemas["Finding"];
-export type MatchResult = Schemas["MatchResult"];
+export type Problem = View.Problem;
+export type Health = View.Health;
+export type Meta = View.Meta;
+export type Lock = View.Lock;
+export type Cve = View.Cve;
+export type CveField = View.CveField;
+export type CveSummary = View.CveSummary;
+export type CveList = View.CveList;
+export type Timeline = View.Timeline;
+export type TimelineEvent = View.TimelineEvent;
+export type Backlog = View.Backlog;
+export type BacklogQuestion = View.BacklogQuestion;
+export type ProductList = View.ProductList;
+export type Product = View.Product;
+export type Exposure = View.Exposure;
+export type Finding = View.Finding;
+export type MatchResult = View.MatchResult;
 export type CveQuery = NonNullable<paths["/v1/cves"]["get"]["parameters"]["query"]>;
+
+type S = components["schemas"];
 
 /** Why a request did not produce data; each kind has its own error state in the console. */
 export type ApiErrorKind = "not-configured" | "network" | "http" | "invalid";
@@ -65,6 +70,9 @@ function getClient(path: string): Client<paths> {
 const isRecord = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null && !Array.isArray(v);
 const hasArrays = (v: unknown, ...keys: string[]): boolean => isRecord(v) && keys.every((k) => Array.isArray(v[k]));
 const hasStrings = (v: unknown, ...keys: string[]): boolean => isRecord(v) && keys.every((k) => typeof v[k] === "string");
+const hasRecords = (v: unknown, ...keys: string[]): boolean => isRecord(v) && keys.every((k) => isRecord(v[k]));
+/** Every answer carries the data version and the statement. */
+const enveloped = (v: unknown): boolean => hasStrings(v, "data_version", "statement");
 
 function isProblem(v: unknown): v is Problem {
   return isRecord(v) && typeof v.title === "string" && typeof v.status === "number";
@@ -72,7 +80,13 @@ function isProblem(v: unknown): v is Problem {
 
 type Outcome<T> = { data?: T; error?: unknown; response: Response };
 
-async function run<T>(path: string, request: (c: Client<paths>) => Promise<Outcome<T>>, check: (v: unknown) => boolean): Promise<T> {
+/** One request: the answer checked against the contract's required fields, then adapted for the pages. */
+async function run<T, V>(
+  path: string,
+  request: (c: Client<paths>) => Promise<Outcome<T>>,
+  check: (v: unknown) => boolean,
+  adapt: (v: T) => V,
+): Promise<V> {
   const c = getClient(path);
   let outcome: Outcome<T>;
   try {
@@ -89,70 +103,66 @@ async function run<T>(path: string, request: (c: Client<paths>) => Promise<Outco
   if (!check(data)) {
     throw new ApiError("invalid", path, "The API answered with a shape this page does not read.");
   }
-  return data as T;
-}
-
-const meta = (v: unknown) => hasStrings(v, "data_version", "statement");
-
-/** The stub's /v1/meta keeps locks in an object and has no ledger yet: read what is there, an absent list as empty. */
-function normalizeMeta(v: unknown): Meta | null {
-  if (!isRecord(v) || typeof v.statement !== "string") return null;
-  const list = <T,>(x: unknown): T[] => (Array.isArray(x) ? (x as T[]) : []);
-  return {
-    data_version: typeof v.data_version === "string" ? v.data_version : typeof v.version === "string" ? v.version : "not reported",
-    statement: v.statement,
-    nvd_notice: typeof v.nvd_notice === "string" ? v.nvd_notice : "",
-    ghsa_attribution: typeof v.ghsa_attribution === "string" ? v.ghsa_attribution : "",
-    locks: list(v.locks),
-    run_ledger: list(v.run_ledger),
-    quarantine: list(v.quarantine),
-  };
+  return adapt(data as T);
 }
 
 export const api = {
   health: (signal?: AbortSignal) =>
-    run<Health>("/health", (c) => c.GET("/health", { signal }), (v) => hasStrings(v, "status", "statement")),
+    run<S["Health"], Health>(
+      "/health",
+      (c) => c.GET("/health", { signal }),
+      (v) => enveloped(v) && hasStrings(v, "status") && hasRecords(v, "database", "data", "release"),
+      toHealth,
+    ),
 
-  meta: async (signal?: AbortSignal) => {
-    const raw = await run<unknown>("/v1/meta", (c) => c.GET("/v1/meta", { signal }), (v) => normalizeMeta(v) !== null);
-    return normalizeMeta(raw) as Meta;
-  },
+  meta: (signal?: AbortSignal) =>
+    run<S["Meta"], Meta>("/v1/meta", (c) => c.GET("/v1/meta", { signal }), (v) => enveloped(v) && hasRecords(v, "locks"), toMeta),
 
   cves: (query: CveQuery, signal?: AbortSignal) =>
-    run<CveList>("/v1/cves", (c) => c.GET("/v1/cves", { params: { query }, signal }), (v) => meta(v) && hasArrays(v, "items")),
+    run<S["CvePage"], CveList>(
+      "/v1/cves",
+      (c) => c.GET("/v1/cves", { params: { query }, signal }),
+      (v) => enveloped(v) && hasArrays(v, "items"),
+      toCveList,
+    ),
 
   cve: (id: string, asOf: string | null, signal?: AbortSignal) =>
-    run<Cve>(
+    run<S["CveRecord"], Cve>(
       `/v1/cves/${id}`,
-      (c) => c.GET("/v1/cves/{id}", { params: { path: { id }, query: asOf ? { as_of: asOf } : {} }, signal }),
-      (v) => meta(v) && hasStrings(v, "id", "published") && hasArrays(v, "fields", "affected", "epss", "references"),
+      (c) => c.GET("/v1/cves/{cve_id}", { params: { path: { cve_id: id }, query: asOf ? { as_of: asOf } : {} }, signal }),
+      (v) => enveloped(v) && hasStrings(v, "cve_id") && hasRecords(v, "fields", "links"),
+      toCve,
     ),
 
   timeline: (id: string, signal?: AbortSignal) =>
-    run<Timeline>(
+    run<S["Timeline"], Timeline>(
       `/v1/cves/${id}/timeline`,
-      (c) => c.GET("/v1/cves/{id}/timeline", { params: { path: { id } }, signal }),
-      (v) => meta(v) && hasStrings(v, "id", "now") && hasArrays(v, "events"),
+      (c) => c.GET("/v1/cves/{cve_id}/timeline", { params: { path: { cve_id: id } }, signal }),
+      (v) => enveloped(v) && hasStrings(v, "cve_id") && hasArrays(v, "events"),
+      toTimeline,
     ),
 
   backlog: (signal?: AbortSignal) =>
-    run<Backlog>("/v1/backlog", (c) => c.GET("/v1/backlog", { signal }), (v) => meta(v) && hasArrays(v, "questions")),
+    run<S["Backlog"], Backlog>("/v1/backlog", (c) => c.GET("/v1/backlog", { signal }), (v) => enveloped(v) && isRecord(v) && "backlog" in v, toBacklog),
 
   products: (signal?: AbortSignal) =>
-    run<ProductList>("/v1/products", (c) => c.GET("/v1/products", { signal }), (v) => meta(v) && hasArrays(v, "items")),
+    run<S["Products"], ProductList>("/v1/products", (c) => c.GET("/v1/products", { signal }), (v) => enveloped(v) && hasArrays(v, "products"), toProducts),
 
+  /** asOf is pin, today or a day; the API answers with the snapshot on or before it. */
   exposure: (id: string, asOf: string | null, signal?: AbortSignal) =>
-    run<Exposure>(
+    run<S["Exposure"], Exposure>(
       `/v1/products/${id}/exposure`,
-      (c) => c.GET("/v1/products/{id}/exposure", { params: { path: { id }, query: asOf ? { as_of: asOf } : {} }, signal }),
-      (v) => meta(v) && hasArrays(v, "findings"),
+      (c) => c.GET("/v1/products/{product_id}/exposure", { params: { path: { product_id: id }, query: asOf ? { as_of: asOf } : {} }, signal }),
+      (v) => enveloped(v) && hasArrays(v, "findings", "cves") && hasRecords(v, "product", "summary"),
+      toExposure,
     ),
 
   match: (sbom: Record<string, unknown>, signal?: AbortSignal) =>
-    run<MatchResult>(
+    run<S["MatchResponse"], MatchResult>(
       "/v1/match",
-      (c) => c.POST("/v1/match", { body: sbom, signal }),
-      (v) => meta(v) && hasStrings(v, "sbom_digest") && hasArrays(v, "findings"),
+      (c) => c.POST("/v1/match", { body: sbom as never, signal }),
+      (v) => enveloped(v) && hasRecords(v, "sbom", "counts") && hasArrays(v, "findings"),
+      toMatch,
     ),
 };
 

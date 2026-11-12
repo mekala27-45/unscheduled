@@ -44,7 +44,7 @@ function FindingsTable({ findings }: { findings: Finding[] }) {
             </TableCell>
             <TableCell>{f.nvd_status ?? <span className="text-fg-muted">No NVD status</span>}</TableCell>
             <TableCell>{f.kev_listed ? <StatusText tone="critical">Listed</StatusText> : <span className="text-fg-muted">Not listed</span>}</TableCell>
-            <TableCell className="mono">{f.matched_range}</TableCell>
+            <TableCell className="mono">{f.matched_range ?? "listed version"}</TableCell>
             <TableCell className="mono">{f.fixed.length ? f.fixed.join(", ") : "no fix"}</TableCell>
             <TableCell>{f.source}</TableCell>
           </TableRow>
@@ -83,7 +83,7 @@ export function ProductsView() {
   const [selected, setSelected] = useQueryState("product", parseAsString);
   const [when, setWhen] = useQueryState("as_of", parseAsStringLiteral(["pin", "today"] as const).withDefault("today"));
   const product: Product | undefined = products.data?.items.find((p) => p.id === selected) ?? products.data?.items[0];
-  const exposure = useExposure(product?.id ?? null, product ? (when === "pin" ? product.pinned_on : null) : null);
+  const exposure = useExposure(product?.id ?? null, product ? (when === "pin" ? "pin" : null) : null);
 
   return (
     <>
@@ -119,17 +119,22 @@ export function ProductsView() {
                       </button>
                     </TableCell>
                     <TableCell>
-                      <a href={p.repository_url} className="mono">
-                        {p.stand_in}
-                      </a>
+                      {p.repository_url ? (
+                        <a href={p.repository_url} className="mono">
+                          {p.stand_in}
+                        </a>
+                      ) : (
+                        <span className="mono">{p.stand_in}</span>
+                      )}
                     </TableCell>
                     <TableCell>{p.ecosystem}</TableCell>
                     <TableCell className="mono">
-                      {p.commit.slice(0, 12)} <span className="text-fg-muted">({formatDate(p.pinned_on)})</span>
+                      {p.commit ? p.commit.replace(/^sha256:/, "").slice(0, 12) : "not pinned"}{" "}
+                      {p.pinned_on ? <span className="text-fg-muted">({formatDate(p.pinned_on)})</span> : null}
                     </TableCell>
-                    <TableCell>{p.licence}</TableCell>
+                    <TableCell>{p.licence ?? <span className="text-fg-muted">{p.kind === "image" ? "image, per package" : "not read"}</span>}</TableCell>
                     <TableCell className="num">
-                      {formatInt(p.stars)} <span className="text-fg-muted">({formatDate(p.read_on)})</span>
+                      {p.stars != null ? formatInt(p.stars) : ""} {p.read_on ? <span className="text-fg-muted">({formatDate(p.read_on)})</span> : null}
                     </TableCell>
                   </TableRow>
                 ))}

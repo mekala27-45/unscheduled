@@ -10,7 +10,6 @@ import { useMatch } from "@/lib/api/queries";
 import { formatBytes, formatDateTime, formatInt } from "@/lib/format";
 import { PageHead } from "./page-head";
 import { EmptyState, ErrorState, Loading, Region, SkeletonTable } from "./region";
-import { StatusText } from "./status-text";
 
 type Picked = { name: string; size: number; format: string; components: number; digest: string; body: Record<string, unknown> };
 
@@ -52,7 +51,8 @@ function Results({ r, local }: { r: MatchResult; local: Picked }) {
       <p className="mb-md text-app-sm text-fg-2">
         {formatInt(r.components)} components in {r.format}; {formatInt(r.findings.length)} findings. The API kept the digest{" "}
         <span className="mono">{r.sbom_digest}</span> and the counts, not the file
-        {r.sbom_digest.replace(/^sha256:/, "") === local.digest ? ", and it matches the digest this browser computed." : "."}
+        {r.sbom_digest.replace(/^sha256:/, "") === local.digest ? ", and it matches the digest this browser computed." : "."}{" "}
+        Each CVE opens its record, with its NVD status and its KEV listing.
       </p>
       {r.findings.length === 0 ? (
         <EmptyState title="No advisory range matched" body={`None of the ${formatInt(r.components)} components falls in an OSV or GitHub advisory range. Components without a package URL cannot be matched.`} />
@@ -63,8 +63,6 @@ function Results({ r, local }: { r: MatchResult; local: Picked }) {
               <TableHead>Component</TableHead>
               <TableHead>Version</TableHead>
               <TableHead>Advisories</TableHead>
-              <TableHead>NVD status</TableHead>
-              <TableHead>KEV</TableHead>
               <TableHead>Matched range</TableHead>
               <TableHead>Fixed in</TableHead>
               <TableHead>Advisory known since</TableHead>
@@ -88,9 +86,7 @@ function Results({ r, local }: { r: MatchResult; local: Picked }) {
                     ),
                   )}
                 </TableCell>
-                <TableCell>{f.nvd_status ?? <span className="text-fg-muted">No NVD status</span>}</TableCell>
-                <TableCell>{f.kev_listed ? <StatusText tone="critical">Listed</StatusText> : <span className="text-fg-muted">Not listed</span>}</TableCell>
-                <TableCell className="mono">{f.matched_range}</TableCell>
+                <TableCell className="mono">{f.matched_range ?? "listed version"}</TableCell>
                 <TableCell className="mono">{f.fixed.length ? f.fixed.join(", ") : "no fix"}</TableCell>
                 <TableCell>{formatDateTime(f.advisory_known_from)}</TableCell>
               </TableRow>

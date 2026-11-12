@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import { TIMELINE_FIXTURE } from "@/lib/fixtures/cve";
 import { layoutRuler } from "@/lib/ruler";
 
-// FIXTURE: the timeline below is invented in the API's shape (lib/fixtures/cve.ts); it is not a real CVE.
+// FIXTURE: the timeline is invented in the API's shape (lib/fixtures/api.ts) and adapted as the console adapts it; it is not a real CVE.
 const { events, now } = TIMELINE_FIXTURE;
 
 describe("the ruler on the fixture timeline", () => {
@@ -65,7 +65,7 @@ describe("the ruler on the fixture timeline", () => {
       byLane.set(t.lane, lane);
     }
     expect(layout.lanes).toBeLessThanOrEqual(4);
-    // the five events of the first week cannot all start at their ticks; one is led out along its lane
+    // the first four labels take the four lanes, so the next one is led out along the lane that frees first
     expect(layout.ticks.some((t) => t.left > t.x)).toBe(true);
   });
 

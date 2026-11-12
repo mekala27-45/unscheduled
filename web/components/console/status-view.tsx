@@ -1,9 +1,10 @@
 "use client";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { toFreshness } from "@/lib/api/adapt";
 import { API_BASE } from "@/lib/api/client";
-import { useHealth } from "@/lib/api/queries";
-import { formatDateTime } from "@/lib/format";
+import { useHealth, useMeta } from "@/lib/api/queries";
+import { formatBytes, formatDateTime, formatShare } from "@/lib/format";
 import { SOURCES } from "@/lib/sources";
 import { PageHead } from "./page-head";
 import { QueryRegion, Region, SkeletonLines, SkeletonTable } from "./region";
@@ -17,6 +18,7 @@ const OVERALL: Record<string, [Tone, string]> = {
 
 export function StatusView() {
   const health = useHealth(true);
+  const meta = useMeta();
   const name = (id: string) => SOURCES.find((s) => s.id === id)?.name ?? id;
   return (
     <>
@@ -45,10 +47,19 @@ export function StatusView() {
                 </dd>
                 <dt>Release served</dt>
                 <dd>{h.release ? <span className="mono">{h.release}</span> : <StatusText tone="quiet">No release loaded yet</StatusText>}</dd>
+                <dt>Bundle built</dt>
+                <dd>{h.generated_at ? formatDateTime(h.generated_at) : "No bundle loaded"}</dd>
                 <dt>Last sync</dt>
                 <dd>{h.synced_at ? formatDateTime(h.synced_at) : "Never synced"}</dd>
-                <dt>Version</dt>
-                <dd className="mono">{h.data_version ?? h.version ?? "not reported"}</dd>
+                <dt>Storage</dt>
+                <dd>
+                  {h.storage.used_bytes != null ? `${formatBytes(h.storage.used_bytes)} of ${formatBytes(h.storage.ceiling_bytes)}` : "not measured"}
+                  {h.storage.share != null ? <span className="text-fg-muted"> ({formatShare(h.storage.share)} of the ceiling)</span> : null}
+                </dd>
+                <dt>Data version</dt>
+                <dd className="mono">{h.data_version}</dd>
+                <dt>API version</dt>
+                <dd className="mono">{h.version}</dd>
               </dl>
             );
           }}
@@ -56,13 +67,13 @@ export function StatusView() {
       </Region>
       <Region id="freshness" title="Freshness per source" note="A source is stale once its last fetch is older than its cadence">
         <QueryRegion
-          query={health}
+          query={meta}
           what="The freshness readings"
           loading={<SkeletonTable rows={9} cols={3} />}
-          isEmpty={(h) => (h.sources ?? []).length === 0}
+          isEmpty={(m) => m.locks.length === 0}
           empty={{ title: "No source has a reading yet", body: "Freshness is read from the release the API serves. Until a release is loaded, there is nothing to date.", action: { label: "Open the data page", href: "/app/data" } }}
         >
-          {(h) => (
+          {(m) => (
             <Table label="Freshness per source">
               <TableHeader>
                 <TableRow>
@@ -73,7 +84,7 @@ export function StatusView() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {(h.sources ?? []).map((s) => (
+                {toFreshness(m.locks).map((s) => (
                   <TableRow key={s.source}>
                     <TableCell className="lead">{name(s.source)}</TableCell>
                     <TableCell>{s.fetched_at ? formatDateTime(s.fetched_at) : "never"}</TableCell>

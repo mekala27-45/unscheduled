@@ -1,49 +1,53 @@
 "use client";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import type { Health, Meta } from "@/lib/api/client";
-import { useHealth, useMeta } from "@/lib/api/queries";
-import { formatBytes, formatDate, formatDateTime, formatInt, shortDigest } from "@/lib/format";
+import { toFreshness } from "@/lib/api/adapt";
+import type { Meta } from "@/lib/api/client";
+import { useMeta } from "@/lib/api/queries";
+import { formatDateTime, formatInt, shortDigest } from "@/lib/format";
 import { SOURCES } from "@/lib/sources";
 import { PageHead } from "./page-head";
 import { QueryRegion, Region, SkeletonTable } from "./region";
 import { StatusText } from "./status-text";
 
-function SourcesTable({ meta, health }: { meta: Meta; health: Health | undefined }) {
+function SourcesTable({ meta }: { meta: Meta }) {
+  const fresh = toFreshness(meta.locks);
+  const known = new Set(SOURCES.map((s) => s.id as string));
+  const rows = [...SOURCES.map((s) => ({ id: s.id as string, name: s.name, publisher: s.publisher, terms: s.terms })), ...meta.locks.filter((l) => !known.has(l.source)).map((l) => ({ id: l.source, name: l.source, publisher: "", terms: "see data/PROVENANCE.md" }))];
   return (
     <Table label="Sources and locks">
       <TableHeader>
         <TableRow>
           <TableHead>Source</TableHead>
           <TableHead>Licence or terms</TableHead>
-          <TableHead>Terms read</TableHead>
+          <TableHead className="num">Raw files</TableHead>
+          <TableHead className="num">Rows</TableHead>
           <TableHead>Lock digest</TableHead>
-          <TableHead className="num">Size</TableHead>
-          <TableHead>Fetched</TableHead>
+          <TableHead>Lock written</TableHead>
           <TableHead>Freshness</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
-        {SOURCES.map((s) => {
+        {rows.map((s) => {
           const lock = meta.locks.find((l) => l.source === s.id);
-          const fresh = health?.sources?.find((f) => f.source === s.id);
+          const f = fresh.find((x) => x.source === s.id);
           return (
             <TableRow key={s.id}>
               <TableCell className="lead">
-                {s.name} <span className="text-fg-muted">({s.publisher})</span>
+                {s.name} {s.publisher ? <span className="text-fg-muted">({s.publisher})</span> : null}
               </TableCell>
-              <TableCell>{lock?.licence ?? s.terms}</TableCell>
-              <TableCell>{lock ? formatDate(lock.terms_read) : <span className="text-fg-muted">not read yet</span>}</TableCell>
+              <TableCell>{s.terms}</TableCell>
+              <TableCell className="num">{lock ? formatInt(lock.files) : ""}</TableCell>
+              <TableCell className="num">{lock ? formatInt(lock.rows) : ""}</TableCell>
               <TableCell className="mono">{lock ? shortDigest(lock.digest) : <span className="text-fg-muted">no lock</span>}</TableCell>
-              <TableCell className="num">{lock ? formatBytes(lock.size_bytes) : ""}</TableCell>
-              <TableCell>{lock ? formatDateTime(lock.fetched_at) : <span className="text-fg-muted">not fetched</span>}</TableCell>
+              <TableCell>{lock?.fetched_at ? formatDateTime(lock.fetched_at) : <span className="text-fg-muted">not fetched</span>}</TableCell>
               <TableCell>
-                {!fresh ? (
+                {!f ? (
                   <StatusText tone="quiet">No reading</StatusText>
-                ) : fresh.stale ? (
-                  <StatusText tone="warning">Stale past its cadence ({fresh.cadence})</StatusText>
+                ) : f.stale ? (
+                  <StatusText tone="warning">Older than its cadence ({f.cadence})</StatusText>
                 ) : (
-                  <StatusText tone="good">Within its cadence ({fresh.cadence})</StatusText>
+                  <StatusText tone="good">Within its cadence ({f.cadence})</StatusText>
                 )}
               </TableCell>
             </TableRow>
@@ -56,7 +60,6 @@ function SourcesTable({ meta, health }: { meta: Meta; health: Health | undefined
 
 export function DataView() {
   const meta = useMeta();
-  const health = useHealth();
   return (
     <>
       <PageHead title="Data" meta={meta.data ? <span>Data version {meta.data.data_version}</span> : undefined}>
@@ -68,9 +71,9 @@ export function DataView() {
           what="The source locks"
           loading={<SkeletonTable rows={9} cols={6} />}
           isEmpty={(m) => m.locks.length === 0}
-          empty={{ title: "No source has been fetched yet", body: "Each fetcher writes a lock with its digest, size, address and fetch time. They run at step three of the build.", action: { label: "Open the status page", href: "/status" } }}
+          empty={{ title: "No data release is loaded yet", body: "The locks of every source come with the serving bundle. Until the API has synced one, there is nothing to list.", action: { label: "Open the status page", href: "/status" } }}
         >
-          {(m) => <SourcesTable meta={m} health={health.data} />}
+          {(m) => <SourcesTable meta={m} />}
         </QueryRegion>
       </Region>
       <Region id="ledger" title="The run ledger" note="One row per fetch or build run: the window, the rows in and changed, the digest">
@@ -128,6 +131,7 @@ export function DataView() {
                   <TableHead>Rule</TableHead>
                   <TableHead>What it holds back</TableHead>
                   <TableHead className="num">Rows</TableHead>
+                  <TableHead className="num">CVEs</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -136,6 +140,7 @@ export function DataView() {
                     <TableCell className="lead mono">{q.rule}</TableCell>
                     <TableCell className="wrap">{q.description}</TableCell>
                     <TableCell className="num">{formatInt(q.rows)}</TableCell>
+                    <TableCell className="num">{q.cves == null ? "" : formatInt(q.cves)}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>

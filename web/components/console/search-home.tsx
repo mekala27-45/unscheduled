@@ -6,15 +6,16 @@ import { parseAsString, useQueryState } from "nuqs";
 import { useEffect, useMemo, useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/button";
 import type { CveQuery, CveSummary } from "@/lib/api/client";
-import { useCveList } from "@/lib/api/queries";
+import { useCveList, useHealth } from "@/lib/api/queries";
 import { normalizeCveId, normalizeCweId } from "@/lib/cve";
 import { formatDate } from "@/lib/format";
 import { PageHead } from "./page-head";
 import { QueryRegion, SkeletonLines } from "./region";
 import { StatusText } from "./status-text";
 
-function since24h(): string {
-  return new Date(Date.now() - 86_400_000).toISOString().slice(0, 19) + "Z";
+/** The UTC day n days before the given one, as YYYY-MM-DD. */
+function daysBefore(day: string, n: number): string {
+  return new Date(Date.parse(`${day}T00:00:00Z`) - n * 86_400_000).toISOString().slice(0, 10);
 }
 
 function CveList({ items, empty }: { items: CveSummary[]; empty: string }) {
@@ -57,11 +58,8 @@ export function SearchHome() {
   const [q] = useQueryState("q", parseAsString);
   const [value, setValue] = useState("");
   const [error, setError] = useState<string | null>(null);
-  const [since, setSince] = useState<string | null>(null);
-
-  useEffect(() => {
-    setSince(since24h());
-  }, []);
+  const health = useHealth();
+  const cut = health.data?.generated_at ? health.data.generated_at.slice(0, 10) : null;
 
   useEffect(() => {
     if (!q) return;
@@ -82,17 +80,16 @@ export function SearchHome() {
     setError("That is not a CVE id or a CWE. Write a CVE as CVE-YYYY-NNNNN and a CWE as CWE-79.");
   };
 
-  const queries = useMemo(
-    () =>
-      since
-        ? [
-            { title: "Newly published", query: { published_from: since }, empty: "No CVE was published in the last 24 hours." },
-            { title: "Newly listed in KEV", query: { kev_added_from: since }, empty: "CISA added no CVE to KEV in the last 24 hours." },
-            { title: "Newly analyzed by the NVD", query: { analyzed_from: since }, empty: "The NVD analyzed no CVE in the last 24 hours." },
-          ]
-        : [],
-    [since],
-  );
+  const queries = useMemo(() => {
+    if (!cut) return [];
+    const day = daysBefore(cut, 1);
+    const week = daysBefore(cut, 7);
+    return [
+      { title: `Published since ${formatDate(day)}`, query: { published_from: day }, empty: "No CVE was published in those days." },
+      { title: `Added to KEV since ${formatDate(week)}`, query: { kev_added_from: week }, empty: "CISA added no CVE to KEV in that week." },
+      { title: `Analyzed by the NVD since ${formatDate(day)}`, query: { analyzed_from: day }, empty: "The NVD analyzed no CVE in those days." },
+    ];
+  }, [cut]);
 
   return (
     <>
@@ -130,19 +127,23 @@ export function SearchHome() {
       <section className="region" aria-labelledby="last-24">
         <div className="region__head">
           <div>
-            <h2 id="last-24">The last 24 hours</h2>
-            <p>Counted from the moment this page opened, in UTC.</p>
+            <h2 id="last-24">The newest in this data release</h2>
+            <p>{cut ? `Counted back from ${formatDate(cut, "long")}, the day the release was built, in UTC.` : "Counted back from the day the data release was built, in UTC."}</p>
           </div>
         </div>
         <div className="grid grid-cols-1 gap-xl wide:grid-cols-3">
-          {queries.length === 0
-            ? ["Newly published", "Newly listed in KEV", "Newly analyzed by the NVD"].map((t) => (
-                <section key={t} className="min-w-0">
-                  <h3 className="mb-sm font-sans text-app-md font-medium tracking-normal">{t}</h3>
-                  <SkeletonLines lines={5} />
-                </section>
-              ))
-            : queries.map((c) => <Column key={c.title} title={c.title} query={c.query} empty={c.empty} />)}
+          {health.data && !cut ? (
+            <p className="text-app-sm text-fg-muted wide:col-span-3">No data release is loaded yet, so there is nothing new to list. The status page says when the API last synced.</p>
+          ) : queries.length === 0 ? (
+            ["Newly published", "Newly listed in KEV", "Newly analyzed by the NVD"].map((t) => (
+              <section key={t} className="min-w-0">
+                <h3 className="mb-sm font-sans text-app-md font-medium tracking-normal">{t}</h3>
+                <SkeletonLines lines={5} />
+              </section>
+            ))
+          ) : (
+            queries.map((c) => <Column key={c.title} title={c.title} query={c.query} empty={c.empty} />)
+          )}
         </div>
       </section>
     </>

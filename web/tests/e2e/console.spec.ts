@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { FIXTURE_ID, SUMMARY_FIXTURE } from "../../lib/fixtures/cve";
+import { API_CVE, API_SUMMARIES } from "../../lib/fixtures/api";
+import { FIXTURE_ID, FIXTURE_NOW, SUMMARY_FIXTURE } from "../../lib/fixtures/cve";
 import { cveList, json, mockApi } from "./mock";
 
 test.describe("the four states of the CVE table", () => {
@@ -27,7 +28,7 @@ test.describe("the four states of the CVE table", () => {
   });
 
   test("full draws the rows; j and k move, Enter opens", async ({ page }) => {
-    await mockApi(page, { "GET /v1/cves": (r) => json(r, cveList(SUMMARY_FIXTURE)) });
+    await mockApi(page, { "GET /v1/cves": (r) => json(r, cveList(API_SUMMARIES)) });
     await page.goto("/app/cves");
     await expect(page.getByRole("link", { name: SUMMARY_FIXTURE[0].id })).toBeVisible();
     await page.locator("main h1").click();
@@ -108,11 +109,12 @@ test.describe("the keyboard", () => {
 
 test.describe("the ruler", () => {
   test("draws every fixture event and the open NVD wait", async ({ page }) => {
+    await page.clock.setFixedTime(new Date(FIXTURE_NOW));
     await mockApi(page);
     await page.goto(`/app/cves/${FIXTURE_ID}`);
     const ruler = page.locator("figure.ruler");
     await expect(ruler).toBeVisible();
-    await expect(ruler.locator(".ruler__events li")).toHaveCount(8);
+    await expect(ruler.locator(".ruler__events li")).toHaveCount(7);
     await expect(ruler.getByRole("img")).toHaveAttribute("aria-label", /NVD, Awaiting Analysis, 249 days and counting/);
     await expect(page.getByText("Data version fixture")).toBeVisible();
   });
@@ -122,15 +124,14 @@ test.describe("the ruler", () => {
     await mockApi(page, {
       [`GET /v1/cves/${FIXTURE_ID}`]: async (r, url) => {
         asked = url.searchParams.get("as_of") ?? "";
-        const { CVE_FIXTURE } = await import("../../lib/fixtures/cve");
-        return json(r, { ...CVE_FIXTURE, as_of: asked || null });
+        return json(r, { ...API_CVE, as_of: asked || null });
       },
     });
     await page.goto(`/app/cves/${FIXTURE_ID}`);
     await page.getByLabel("As known on").fill("2026-03-10");
     await page.getByRole("button", { name: "Redraw" }).click();
     await expect(page).toHaveURL(/as_of=2026-03-10/);
-    await expect(page.locator(".ruler__events li")).toHaveCount(4);
+    await expect(page.locator(".ruler__events li")).toHaveCount(3);
     await expect.poll(() => asked).toBe("2026-03-10");
     await page.getByLabel("As known on").fill("2026-01-01");
     await page.getByRole("button", { name: "Redraw" }).click();
@@ -155,11 +156,31 @@ test.describe("the match", () => {
         return json(r, {
           data_version: "fixture",
           statement: "fixture",
-          sbom_digest: "sha256:fixture",
-          format: "CycloneDX 1.6",
-          components: 1,
+          as_of: "2026-11-07T12:00:00Z",
+          stored: "the digest and the counts",
+          engine: "unscheduled-match over fixture records",
+          duration_ms: 12.5,
+          sbom: { sha256: "sha256:fixture", format: "cyclonedx", spec_version: "1.6", bytes: 180, components: 1, with_purl: 1, without_purl: 0 },
+          counts: { findings: 1, components_matched: 1, advisories_read: 1, distinct_cves: 1 },
           findings: [
-            { component: "example-server", version: "2.4.0", purl: "pkg:npm/example-server@2.4.0", advisory_ids: ["GHSA-xxxx-xxxx-xxxx"], cve_ids: [FIXTURE_ID], matched_range: ">=2.0.0, <2.4.1", fixed: ["2.4.1"], source: "GitHub Advisory Database", advisory_known_from: "2026-03-05T09:12:00Z", nvd_status: "Awaiting Analysis", kev_listed: true },
+            {
+              product: "upload",
+              component: "example-server",
+              package: "example-server",
+              version: "2.4.0",
+              purl: "pkg:npm/example-server@2.4.0",
+              ecosystem: "npm",
+              primary_id: "GHSA-xxxx-xxxx-xxxx",
+              advisory_ids: ["GHSA-xxxx-xxxx-xxxx"],
+              cve_aliases: [FIXTURE_ID],
+              upstream_cves: [],
+              matches: [{ advisory_id: "GHSA-xxxx-xxxx-xxxx", source: "ghsa", sources: ["ghsa"], via: "range", matched_range: ">=2.0.0, <2.4.1", fixed: ["2.4.1"] }],
+              fixed_versions: ["2.4.1"],
+              fix_available: true,
+              known_from: "2026-03-05T09:12:00Z",
+              known_from_rule: "published",
+              as_of: "2026-11-07T12:00:00Z",
+            },
           ],
         });
       },

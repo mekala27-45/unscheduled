@@ -1,6 +1,5 @@
 import type { Page, Route } from "@playwright/test";
-import { CVE_FIXTURE, FIXTURE_ID, SUMMARY_FIXTURE, TIMELINE_FIXTURE } from "../../lib/fixtures/cve";
-import { STATEMENT } from "../../lib/statement";
+import { API_CVE, API_HEALTH_EMPTY, API_META_EMPTY, API_SUMMARIES, API_TIMELINE, FIXTURE_ID, apiPage } from "../../lib/fixtures/api";
 
 export const API = "http://api.unscheduled.test";
 
@@ -17,15 +16,16 @@ function isProblem(body: unknown): boolean {
   return typeof body === "object" && body !== null && "title" in body && "status" in body;
 }
 
-/** What the API stub of step one answers today: health and meta in its older shape, 404 for the rest. */
-export const STUB_HEALTH = { status: "ok", version: "0.1.0.dev0", database: "not yet connected", statement: STATEMENT };
-export const STUB_META = { version: "0.1.0.dev0", statement: STATEMENT, nvd_notice: "", attribution: [], locks: {} };
+/** The API before a bundle is loaded, in its own shape: health and meta answer, the data routes 503. */
+export const STUB_HEALTH = API_HEALTH_EMPTY;
+export const STUB_META = API_META_EMPTY;
 
 export type Handler = (route: Route, url: URL) => Promise<void> | void;
 
 /**
- * Answers every request to the test API. Overrides are matched on "METHOD /path" first; then the
- * fixture CVE (FIXTURE, not data), then the stub's own answers, then 404 as FastAPI writes it.
+ * Answers every request to the test API in the shape of openapi.json. Overrides are matched on
+ * "METHOD /path" first; then the fixture CVE (FIXTURE, not data), then health and meta, then 404 as
+ * FastAPI writes it.
  */
 export async function mockApi(page: Page, overrides: Record<string, Handler> = {}) {
   await page.route(`${API}/**`, async (route) => {
@@ -34,12 +34,12 @@ export async function mockApi(page: Page, overrides: Record<string, Handler> = {
     if (req.method() === "OPTIONS") return route.fulfill({ status: 204, headers: CORS });
     const key = `${req.method()} ${url.pathname}`;
     if (overrides[key]) return overrides[key](route, url);
-    if (url.pathname === `/v1/cves/${FIXTURE_ID}`) return json(route, CVE_FIXTURE);
-    if (url.pathname === `/v1/cves/${FIXTURE_ID}/timeline`) return json(route, TIMELINE_FIXTURE);
+    if (url.pathname === `/v1/cves/${FIXTURE_ID}`) return json(route, API_CVE);
+    if (url.pathname === `/v1/cves/${FIXTURE_ID}/timeline`) return json(route, API_TIMELINE);
     if (url.pathname === "/health") return json(route, STUB_HEALTH);
     if (url.pathname === "/v1/meta") return json(route, STUB_META);
     return json(route, { detail: "Not Found" }, 404);
   });
 }
 
-export const cveList = (items = SUMMARY_FIXTURE, next: string | null = null) => ({ data_version: "fixture", statement: STATEMENT, items, next_cursor: next });
+export const cveList = (items = API_SUMMARIES, next: string | null = null) => apiPage(items, next);

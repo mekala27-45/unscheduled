@@ -29,12 +29,13 @@ export const SOURCES: Source[] = [
 export const SBOM_FORMATS = ["CycloneDX 1.6", "SPDX JSON"];
 export const ECOSYSTEMS = ["npm", "PyPI", "Go", "Maven", "crates.io", "RubyGems", "NuGet", "Packagist", "Debian"];
 
-/** Filer types as config/filers.yaml groups them (section 7). */
+/** Filer types as config/filers.yaml groups them (section 7); the value is the group's name in the data. */
 export const FILER_TYPES = [
   { value: "vendor", label: "Vendor" },
-  { value: "open_source", label: "Open source project" },
-  { value: "research", label: "Research or bug bounty platform" },
-  { value: "national_cert", label: "National CERT" },
-  { value: "mitre", label: "MITRE" },
+  { value: "open source project", label: "Open source project" },
+  { value: "research or bug bounty platform", label: "Research or bug bounty platform" },
+  { value: "national CERT", label: "National CERT" },
+  { value: "MITRE", label: "MITRE" },
   { value: "other", label: "Other" },
+  { value: "unregistered", label: "Not in the CNA list" },
 ];
