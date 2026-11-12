@@ -41,6 +41,8 @@ Only what is built is listed; docs/ROADMAP.md holds the plan for the rest.
 | CI and DevOps | .github/workflows, Dockerfile.vercel | the gates, gitleaks, zizmor, actions pinned by commit, Vercel deploys |
 | Frontend and design systems | web, web/styles/tokens.css, tools/hallmark | tokens first, shadcn/ui themed through them, the palette validator |
 | Accessibility and performance | .github/workflows/web.yml | axe and Lighthouse in CI |
+| Forward deployed discovery | report/discovery.md, config/criteria.yaml | the discovery memo and the criteria the customer signed |
+| Communication | report/backlog.md | the backlog report and the pushback paragraph on every evidence page |
 
 ## Where things are
 
