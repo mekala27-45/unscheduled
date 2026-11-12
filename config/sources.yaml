@@ -1,0 +1,105 @@
+# Every public source unscheduled fetches: where it lives, how often it is fetched, the limit its
+# publisher states, and what is kept. Read by packages/sources. The licence and terms of each source,
+# with the date they were read, are in data/PROVENANCE.md. Every request names the project in its
+# User-Agent and carries no contact address and no secret; the one optional credential is the NVD
+# key, read from the environment variable NVD_API_KEY when it exists and never written anywhere.
+version: 1
+
+sources:
+  cvelist:
+    repo: CVEProject/cvelistV5
+    git: https://github.com/CVEProject/cvelistV5
+    release_download: https://github.com/CVEProject/cvelistV5/releases/download
+    baseline_asset: "{day}_all_CVEs_at_midnight.zip.zip"
+    delta_asset: "{day}_delta_CVEs_at_{hour}Z.zip"
+    tag: "cve_{day}_{hour}Z"
+    cadence: hourly
+
+  nvd:
+    cves_url: https://services.nvd.nist.gov/rest/json/cves/2.0
+    history_url: https://services.nvd.nist.gov/rest/json/cvehistory/2.0
+    cves_page_size: 2000
+    history_page_size: 5000
+    window_days: 120
+    history_start: "2017-01-01T00:00:00Z"
+    key_env: NVD_API_KEY
+    limit:
+      keyless: { requests: 5, window_s: 30 }
+      keyed: { requests: 50, window_s: 30 }
+      margin: 0.1
+      min_interval_s: 1.0
+    cadence: daily
+
+  kev:
+    repo: cisagov/kev-data
+    git: https://github.com/cisagov/kev-data
+    raw: https://raw.githubusercontent.com/cisagov/kev-data
+    json_file: known_exploited_vulnerabilities.json
+    csv_file: known_exploited_vulnerabilities.csv
+    cisa_feed: https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json
+    cadence: hourly
+
+  epss:
+    daily_url: "https://epss.empiricalsecurity.com/epss_scores-{day}.csv.gz"
+    api_url: https://api.first.org/data/v1/epss
+    first_day: "2021-04-14"
+    offsets: [0, 1, 7, 30, 90]
+    published_from: "2020-01-01"
+    kev_daily: true
+    concurrency: 4
+    cadence: daily
+
+  osv:
+    bucket: https://osv-vulnerabilities.storage.googleapis.com
+    ecosystems: [npm, PyPI, Go, Maven, crates.io, RubyGems, NuGet, Packagist, Debian]
+    cadence: daily
+
+  ghsa:
+    repo: github/advisory-database
+    git: https://github.com/github/advisory-database
+    path: advisories/github-reviewed
+    # The first appearance of each advisory needs the full history, a clone without blobs of
+    # several gigabytes: taken when the disk has room (auto), and stopped if it grows past the cap.
+    history: auto
+    history_min_free_gb: 8
+    history_max_clone_mb: 6000
+    cadence: daily
+
+  vulnrichment:
+    repo: cisagov/vulnrichment
+    git: https://github.com/cisagov/vulnrichment
+    cadence: daily
+
+  cwe:
+    url: https://cwe.mitre.org/data/xml/cwec_latest.xml.zip
+    parent_view: "1000"
+    cadence: daily
+
+  exploits:
+    metasploit:
+      repo: rapid7/metasploit-framework
+      git: https://github.com/rapid7/metasploit-framework
+      path: modules
+    nuclei:
+      repo: projectdiscovery/nuclei-templates
+      git: https://github.com/projectdiscovery/nuclei-templates
+    cadence: daily
+
+  registries:
+    names: ["Velloran Systems", "Velloran"]
+    gleif: https://api.gleif.org/api/v1/lei-records
+    edgar: https://www.sec.gov/files/company_tickers.json
+    cadence: daily
+
+  cna_list:
+    repo: CVEProject/cve-website
+    git: https://github.com/CVEProject/cve-website
+    branch: main
+    raw: https://raw.githubusercontent.com/CVEProject/cve-website
+    file: src/assets/data/CNAsList.json
+    cadence: daily
+
+# What the hourly and the daily schedules of .github/workflows/fetch.yml run.
+schedules:
+  hourly: [cvelist, kev]
+  daily: [cna_list, cwe, nvd, epss, osv, ghsa, vulnrichment, exploits, registries]

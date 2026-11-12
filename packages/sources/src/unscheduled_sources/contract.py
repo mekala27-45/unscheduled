@@ -22,8 +22,9 @@ Column notes, where a name alone could be read two ways:
   daily rows of a CVE listed in KEV
 - osv_advisories.source_db is the database prefix of the advisory id, which the OSV schema
   defines as the publisher of the record
-- cwe.abstraction is the Weakness_Abstraction of a weakness, or Category for a category; parents
-  are the ChildOf targets in the Research Concepts view (CWE-1000)
+- cwe.abstraction is the Weakness_Abstraction of a weakness, or the element kind (Category up to
+  CWE 4, Grouping from CWE 5.0) of an entry that gathers weaknesses; parents are the ChildOf
+  targets in the Research Concepts view (CWE-1000)
 """
 
 from __future__ import annotations
@@ -107,7 +108,16 @@ TABLES: dict[str, Table] = {
                 "origin": STR,
                 "observed_at": UTC_TS,
             },
-            key=("cve_id", "origin", "source", "source_type", "version", "vector", "base_score", "base_severity"),
+            key=(
+                "cve_id",
+                "origin",
+                "source",
+                "source_type",
+                "version",
+                "vector",
+                "base_score",
+                "base_severity",
+            ),
             partition="cve_year",
             order=("observed_at",),
         ),

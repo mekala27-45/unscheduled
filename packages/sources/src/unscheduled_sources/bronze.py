@@ -134,9 +134,11 @@ class Bronze:
                 to_write = to_write.sort(spec.sort_by, nulls_last=True, maintain_order=True)
             write_parquet(to_write, target)
             changed += fresh.height
-            self._keys[(spec.name, part)] = pl.concat(
-                [existing, fresh.select(list(spec.key))], how="vertical"
-            )
+            # The keys are read back from the file just written: a frame filtered out of a larger
+            # one holds views into its string buffers, and caching those would keep every source
+            # file a run ever parsed in memory.
+            written_keys = pl.read_parquet(target, columns=list(spec.key))
+            self._keys[(spec.name, part)] = pl.concat([existing, written_keys], how="vertical", rechunk=True)
             written.append(str(target))
         return WriteResult(spec.name, rows_in, changed, tuple(written))
 

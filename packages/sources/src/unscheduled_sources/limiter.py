@@ -16,6 +16,8 @@ from collections import deque
 from collections.abc import Callable
 from dataclasses import dataclass
 
+SLACK_S = 1e-6
+
 
 @dataclass(frozen=True)
 class Limit:
@@ -56,14 +58,18 @@ class RateLimiter:
         self.count = 0
 
     def _delay(self, now: float) -> float:
+        # Waits are measured with the same subtraction the window test uses, plus a microsecond,
+        # so a wait of exactly the window never lands one rounding step short of it.
         window = self.limit.effective_window_s
         while self._starts and now - self._starts[0] >= window:
             self._starts.popleft()
         delay = 0.0
         if len(self._starts) >= self.limit.requests:
-            delay = self._starts[0] + window - now
+            delay = window - (now - self._starts[0]) + SLACK_S
         if self._starts and self.limit.min_interval_s > 0:
-            delay = max(delay, self._starts[-1] + self.limit.min_interval_s - now)
+            gap = now - self._starts[-1]
+            if gap < self.limit.min_interval_s:
+                delay = max(delay, self.limit.min_interval_s - gap + SLACK_S)
         return max(delay, 0.0)
 
     def acquire(self) -> float:

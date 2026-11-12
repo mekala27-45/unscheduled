@@ -133,10 +133,10 @@ class Http:
 
     def _wait(self, state: RetryCallState) -> float:
         error = state.outcome.exception() if state.outcome is not None else None
-        exponential = min(self.backoff_s * (2 ** (state.attempt_number - 1)), self.max_backoff_s)
+        exponential = min(self.backoff_s * float(2 ** (state.attempt_number - 1)), self.max_backoff_s)
         if isinstance(error, Retryable) and error.retry_after is not None:
-            return min(max(error.retry_after, exponential), self.max_backoff_s * 5)
-        return exponential
+            return float(min(max(error.retry_after, exponential), self.max_backoff_s * 5))
+        return float(exponential)
 
     def _retrying(self) -> Retrying:
         return Retrying(
