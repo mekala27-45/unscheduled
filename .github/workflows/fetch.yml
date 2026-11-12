@@ -71,7 +71,10 @@ jobs:
           echo "last=$last" >> "$GITHUB_OUTPUT"
           touch "$RUNNER_TEMP/fetch-start"
           if [ -z "$last" ]; then
-            echo "No lake release yet: starting from the locks in the repository."
+            # The first lake (the full NVD history, fetched keyless) is published by the build;
+            # a scheduled run never starts the lake from nothing.
+            echo "No lake release yet: nothing to resume from, so this run waits for the first one."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           mkdir -p restore data/bronze
@@ -83,6 +86,7 @@ jobs:
           echo "Restored from $last."
 
       - name: Fetch
+        if: steps.restore.outputs.skip != 'true'
         env:
           SOURCES: ${{ steps.pick.outputs.sources }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
@@ -104,7 +108,7 @@ jobs:
           exit $status
 
       - name: Publish raw by digest, bronze, the locks and the ledger
-        if: always()
+        if: always() && steps.restore.outputs.skip != 'true'
         env:
           SCHEDULE: ${{ github.event.schedule }}
           LAST: ${{ steps.restore.outputs.last }}
