@@ -11,9 +11,7 @@ items:
   - n: 2
     text: "Every source fetched and locked by digest with licences and terms recorded"
     evidence:
-      - data/locks/nvd.lock.json
-      - data/locks/cvelist.lock.json
-      - data/locks/kev.lock.json
+      - results/lake/locks.json
       - data/PROVENANCE.md
   - n: 3
     text: "Every change to every CVE dated; the as-of engine passes parity and the planted future fact test"

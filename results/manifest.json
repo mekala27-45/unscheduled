@@ -14273,7 +14273,7 @@
      2,
      "done",
      "Every source fetched and locked by digest with licences and terms recorded",
-     "data/locks/nvd.lock.json, data/locks/cvelist.lock.json, data/locks/kev.lock.json, data/PROVENANCE.md"
+     "results/lake/locks.json, data/PROVENANCE.md"
     ],
     [
      3,

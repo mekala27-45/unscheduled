@@ -14,6 +14,7 @@ The build never edits bronze, and a rerun over the same bronze reproduces every 
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import shutil
@@ -94,6 +95,26 @@ def data_cut(con: duckdb.DuckDBPyConnection) -> datetime:
 def _write_json(path: Path, data: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(data, indent=1, sort_keys=True, default=str) + "\n", encoding="utf-8")
+
+
+def locks_report(locks_dir: Path, data_cut: str) -> dict[str, Any]:
+    """The locks the lake was built from: per source, the digest of its lock, its raw files and rows.
+
+    The locks themselves ride in the lake release, not in git; this report is the committed record
+    that every source was fetched and locked by digest when the lake was built.
+    """
+    sources: dict[str, Any] = {}
+    for path in sorted(locks_dir.glob("*.lock.json")):
+        lock = json.loads(path.read_text(encoding="utf-8"))
+        entries = lock.get("entries") or []
+        sources[path.name.removesuffix(".lock.json")] = {
+            "lock_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+            "updated_at": lock.get("updated_at"),
+            "raw_files": len(entries),
+            "rows": sum(int(e.get("rows") or 0) for e in entries),
+            "every_file_has_a_digest": all(len(str(e.get("sha256") or "")) == 64 for e in entries),
+        }
+    return {"data_cut": data_cut, "sources": sources}
 
 
 def build(s: Settings) -> dict[str, Any]:
@@ -190,6 +211,7 @@ def build(s: Settings) -> dict[str, Any]:
         "content_digest": _content_digest(digests),
     }
     _write_json(lake_dir / "lake.json", lake_report)
+    _write_json(lake_dir / "locks.json", locks_report(s.root / "data" / "locks", cut.isoformat()))
     _write_part(s, cut, lake_report, quarantine, completeness, asof_report, results)
     if not s.keep_work:
         dbt_paths.work_db.unlink(missing_ok=True)

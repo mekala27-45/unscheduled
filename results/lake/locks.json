@@ -1,0 +1,82 @@
+{
+ "data_cut": "2026-11-12T00:21:46+00:00",
+ "sources": {
+  "cna_list": {
+   "every_file_has_a_digest": true,
+   "lock_sha256": "a664ce55d9178c4b836f2c734dd2ba41bcc75ade721e230bdc1564946034043b",
+   "raw_files": 1,
+   "rows": 564,
+   "updated_at": "2026-11-08T03:33:59Z"
+  },
+  "cvelist": {
+   "every_file_has_a_digest": true,
+   "lock_sha256": "213435eed53e6cdcde6c1ae0890faa5d7644f46063f1fc40325188002f6f429f",
+   "raw_files": 4,
+   "rows": 845672,
+   "updated_at": "2026-11-12T01:07:31Z"
+  },
+  "cwe": {
+   "every_file_has_a_digest": true,
+   "lock_sha256": "2beccdeea52b94fc0ebab9633da5839b2ffb185f6015fa8441adb2f20939913f",
+   "raw_files": 1,
+   "rows": 1415,
+   "updated_at": "2026-11-08T03:45:52Z"
+  },
+  "epss": {
+   "every_file_has_a_digest": true,
+   "lock_sha256": "1064dcae3a7ce86a8442c70e2a5b551f542e730cd3d896d5b50d3c12aa2ca1cf",
+   "raw_files": 2029,
+   "rows": 460544978,
+   "updated_at": "2026-11-12T01:11:42Z"
+  },
+  "exploits": {
+   "every_file_has_a_digest": true,
+   "lock_sha256": "a03c4550fb5956fff9f43e35d0e2d4fe9d632d0f4b6a4e32c0977a76b84751bf",
+   "raw_files": 8,
+   "rows": 43620,
+   "updated_at": "2026-11-12T01:11:39Z"
+  },
+  "ghsa": {
+   "every_file_has_a_digest": true,
+   "lock_sha256": "9fe401a2a1c737e1f9bf3e4edf7a7004d30eb39768257ca404a410d726796d65",
+   "raw_files": 1,
+   "rows": 37571,
+   "updated_at": "2026-11-08T03:33:10Z"
+  },
+  "kev": {
+   "every_file_has_a_digest": true,
+   "lock_sha256": "398aa71e22cdeb5e66e40a0ce0f8edd7c06afd024dcf95a9c4d03f931c61cfe6",
+   "raw_files": 8,
+   "rows": 14198,
+   "updated_at": "2026-11-12T01:07:38Z"
+  },
+  "nvd": {
+   "every_file_has_a_digest": true,
+   "lock_sha256": "395e596a3b209b76fa0c1dd3f88e71b5baa36545bd64d426de5285d18ea24383",
+   "raw_files": 697,
+   "rows": 2755405,
+   "updated_at": "2026-11-12T01:05:19Z"
+  },
+  "osv": {
+   "every_file_has_a_digest": true,
+   "lock_sha256": "b10253dc08c8903a32e8a54024d320f77a570c579f97ae8fd67c7fbd87eede69",
+   "raw_files": 9,
+   "rows": 366878,
+   "updated_at": "2026-11-08T03:23:49Z"
+  },
+  "registries": {
+   "every_file_has_a_digest": true,
+   "lock_sha256": "40b8e892a7e0aa69b4728fa693cd53e3a5d78c6f3902ddc2da0755bcca126f94",
+   "raw_files": 4,
+   "rows": 0,
+   "updated_at": "2026-11-08T03:34:02Z"
+  },
+  "vulnrichment": {
+   "every_file_has_a_digest": true,
+   "lock_sha256": "9dd7a212c8610fbf0e13ee49780422a48d01cf9ace98fca4b7e24e6763f21e26",
+   "raw_files": 4,
+   "rows": 859182,
+   "updated_at": "2026-11-12T01:11:04Z"
+  }
+ }
+}
