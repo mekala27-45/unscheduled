@@ -44,3 +44,21 @@ def test_the_plan_is_refused_once_the_lake_exists(tmp_path: Path) -> None:
     assert register.register(tmp_path, "plan") == 1
     assert not (tmp_path / register.PLAN_OUT).exists()
     assert register.check(tmp_path) == 0
+
+
+def test_the_fetcher_counters_do_not_move_the_vocabulary_hash(tmp_path: Path) -> None:
+    _tree(tmp_path)
+    labels = tmp_path / "config" / "labels.yaml"
+    labels.write_text(
+        "nvd_vuln_status:\n  Deferred:\n    meaning: lowest priority\n    first_seen: '2026-11-08'\n"
+        "    cves_at_last_fetch: 10\n",
+        encoding="utf-8",
+    )
+    assert register.register(tmp_path, "plan") == 0
+    assert register.register(tmp_path, "data") == 0
+    labels.write_text(labels.read_text(encoding="utf-8").replace("10", "12"), encoding="utf-8")
+    assert register.check(tmp_path) == 0
+    labels.write_text(
+        labels.read_text(encoding="utf-8").replace("lowest priority", "not scheduled"), encoding="utf-8"
+    )
+    assert register.check(tmp_path) == 1

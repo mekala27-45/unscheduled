@@ -11,6 +11,11 @@ are read from the data (config/labels.yaml) or drawn from it with a fixed seed (
 before any test CVE is scored, and writes evaluation/registration.json with the hash over all six
 files. A later change is a change request, recorded in DECISIONS.md with both verdicts, never a
 silent edit.
+
+config/labels.yaml is hashed by its vocabulary: every status value with its meaning and labels.
+The three counters the fetcher moves forward on each run (first_seen, last_seen and
+cves_at_last_fetch) are observations, not commitments, so they are left out of its hash; a new
+value, a changed meaning or a changed label still fails the check.
 """
 
 from __future__ import annotations
@@ -44,13 +49,30 @@ PLAN_OUT = Path("evaluation/registration_plan.json")
 FULL_OUT = Path("evaluation/registration.json")
 
 
+COUNTERS = ("first_seen", "last_seen", "cves_at_last_fetch")
+
+
+def registered_bytes(rel: str, path: Path) -> bytes:
+    """What the hash covers: the file, or for the status vocabulary the file without its counters."""
+    if rel != "config/labels.yaml":
+        return path.read_bytes()
+    import yaml
+
+    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+    for entry in (data.get("nvd_vuln_status") or {}).values():
+        if isinstance(entry, dict):
+            for key in COUNTERS:
+                entry.pop(key, None)
+    return json.dumps(data, sort_keys=True, ensure_ascii=False, default=str).encode()
+
+
 def digests(root: Path, files: tuple[str, ...]) -> dict[str, str]:
     out: dict[str, str] = {}
     for rel in files:
         path = root / rel
         if not path.exists():
             raise FileNotFoundError(f"cannot register: {rel} does not exist yet")
-        out[rel] = hashlib.sha256(path.read_bytes()).hexdigest()
+        out[rel] = hashlib.sha256(registered_bytes(rel, path)).hexdigest()
     return out
 
 
