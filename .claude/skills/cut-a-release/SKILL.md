@@ -19,5 +19,7 @@ Run from a clean checkout of main, with nothing uncommitted.
    value in the manifest must come back the same from the published bronze.
 7. The checklist in RESULTS.md: every line done, or the README says which are not.
 8. Count the commits since the last tag; a phase tag needs at least fifty conventional commits.
-9. Tag `vX.Y.0` on the checked commit and push the tag; release.yml reruns the gates on it and
-   publishes the notes from the manifest. Update BUILD_STATE.md for the next phase.
+9. `uv run python scripts/changelog.py --next vX.Y.0` and commit CHANGELOG.md, so the changelog
+   page lists the commits the tag carries.
+10. Tag `vX.Y.0` on the checked commit and push the tag; release.yml reruns the gates on it and
+    publishes the notes from the manifest. Update BUILD_STATE.md for the next phase.
