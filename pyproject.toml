@@ -13,6 +13,7 @@ dependencies = [
   "unscheduled-match",
   "unscheduled-legacy-adapter",
   "unscheduled-sources",
+  "unscheduled-cli",
   "typer>=0.15",
   "httpx>=0.28",
 ]
@@ -25,6 +26,8 @@ dev = [
   "ruff>=0.11",
   "mypy>=1.15",
   "types-PyYAML",
+  "schemathesis>=4.33",
+  "testcontainers[postgres]>=4.15",
 ]
 
 [tool.uv]
@@ -41,6 +44,7 @@ unscheduled-api = { workspace = true }
 unscheduled-match = { workspace = true }
 unscheduled-legacy-adapter = { workspace = true }
 unscheduled-sources = { workspace = true }
+unscheduled-cli = { workspace = true }
 
 [tool.ruff]
 line-length = 110
@@ -59,7 +63,7 @@ python_version = "3.12"
 strict = true
 files = ["packages", "scripts"]
 explicit_package_bases = true
-mypy_path = ["packages/core/src", "packages/render/src", "packages/api/src", "packages/sources/src", "packages/match/src", "packages/legacy_adapter/src"]
+mypy_path = ["packages/core/src", "packages/render/src", "packages/api/src", "packages/sources/src", "packages/match/src", "packages/legacy_adapter/src", "packages/cli/src"]
 exclude = ["/tests/", "web/", "dbt/"]
 
 [[tool.mypy.overrides]]
