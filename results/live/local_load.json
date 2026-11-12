@@ -1,0 +1,528 @@
+{
+ "made_at": "2026-11-12T02:08:55+00:00",
+ "bundle_generated_at": "2026-11-12T02:07:17Z",
+ "lake_digest": "d97e191acc77695ad3e3e09e3a2822890687d4ebfd1cb4a8e6bd55b169bfc3a6",
+ "sync": {
+  "final": "done",
+  "calls": 35,
+  "seconds": 94.8
+ },
+ "database_bytes": 666665487,
+ "ceiling_mb": 5000,
+ "tables": {
+  "cve_event": {
+   "rows": 1284480,
+   "bytes": 369115136,
+   "heap_bytes": 255197184,
+   "toast_bytes": 8192,
+   "index_bytes": 113819648
+  },
+  "cve": {
+   "rows": 259317,
+   "bytes": 287268864,
+   "heap_bytes": 248414208,
+   "toast_bytes": 5283840,
+   "index_bytes": 33480704
+  },
+  "finding": {
+   "rows": 1275,
+   "bytes": 1712128,
+   "heap_bytes": 1458176,
+   "toast_bytes": 8192,
+   "index_bytes": 221184
+  },
+  "settings": {
+   "rows": -1,
+   "bytes": 376832,
+   "heap_bytes": 8192,
+   "toast_bytes": 352256,
+   "index_bytes": 16384
+  },
+  "ops_run": {
+   "rows": -1,
+   "bytes": 49152,
+   "heap_bytes": 8192,
+   "toast_bytes": 8192,
+   "index_bytes": 32768
+  },
+  "product": {
+   "rows": 6,
+   "bytes": 32768,
+   "heap_bytes": 8192,
+   "toast_bytes": 8192,
+   "index_bytes": 16384
+  },
+  "match_log": {
+   "rows": -1,
+   "bytes": 24576,
+   "heap_bytes": 0,
+   "toast_bytes": 8192,
+   "index_bytes": 16384
+  },
+  "alembic_version": {
+   "rows": -1,
+   "bytes": 24576,
+   "heap_bytes": 8192,
+   "toast_bytes": 0,
+   "index_bytes": 16384
+  },
+  "client_budget": {
+   "rows": -1,
+   "bytes": 16384,
+   "heap_bytes": 0,
+   "toast_bytes": 8192,
+   "index_bytes": 8192
+  }
+ },
+ "indexes": {
+  "cve_event_pkey": 69361664,
+  "ix_cve_event_cve_at": 44457984,
+  "ix_cve_published": 14090240,
+  "cve_pkey": 8200192,
+  "ix_cve_cwes": 4939776,
+  "ix_cve_filer": 2187264,
+  "ix_cve_nvd_status": 2113536,
+  "ix_cve_filer_type": 1875968,
+  "finding_pkey": 131072,
+  "ix_finding_cve_ids": 57344,
+  "ix_cve_kev": 49152,
+  "ix_finding_product_as_of": 32768,
+  "ix_ops_run_kind_started": 16384,
+  "settings_pkey": 16384,
+  "product_pkey": 16384,
+  "ops_run_pkey": 16384,
+  "alembic_version_pkc": 16384,
+  "client_budget_pkey": 8192,
+  "match_log_pkey": 8192,
+  "ix_match_log_at": 8192
+ },
+ "probes": [
+  {
+   "path": "/health",
+   "http": 200,
+   "ms": 15.1,
+   "bytes": 14939,
+   "sha256": "c21fd51136003c476f27712001f32c1d8fdf0b1c710f9a83a5c3aae834c164db"
+  },
+  {
+   "path": "/v1/meta",
+   "http": 200,
+   "ms": 7.5,
+   "bytes": 16753,
+   "sha256": "1cddf808c578c002512ff1410c5b842859edd9c7f31c098eb0602e08d5bc43f0"
+  },
+  {
+   "path": "/v1/cves?limit=5",
+   "http": 200,
+   "ms": 12.3,
+   "bytes": 3292,
+   "sha256": "474c8a53d651171ebbd2d3df39fb991dd805de79006c82c6dd175a99360f231f"
+  },
+  {
+   "path": "/v1/cves?kev=true&limit=5",
+   "http": 200,
+   "ms": 18.2,
+   "bytes": 3285,
+   "sha256": "c72b17e450e17abdce20a3b2388344b5a59e977c6441dcada8971f289f9d4ab1"
+  },
+  {
+   "path": "/v1/cves?nvd_status=Deferred&limit=5",
+   "http": 200,
+   "ms": 7.9,
+   "bytes": 3273,
+   "sha256": "f2516b98715b0dec407af376464824c74ae75e4c9706e126d93e167cb13c04a9"
+  },
+  {
+   "path": "/v1/cves/CVE-2021-44228",
+   "http": 200,
+   "ms": 11.0,
+   "bytes": 5371,
+   "sha256": "91667af78f5e08f914911217a1dad3b88d2109f558e0fc88688efb479b9d0f08"
+  },
+  {
+   "path": "/v1/cves/CVE-2021-44228?as_of=2021-12-12",
+   "http": 200,
+   "ms": 8.6,
+   "bytes": 4464,
+   "sha256": "222907bbc1e506e90e047b614939bd77751f4c7383dd180cce7225277a64b646"
+  },
+  {
+   "path": "/v1/cves/CVE-2021-44228/timeline",
+   "http": 200,
+   "ms": 8.0,
+   "bytes": 6103,
+   "sha256": "4ca25c0c4cb143fa1bf8ce534fd62541851dddf5442bd7acbf78955411a6275d"
+  },
+  {
+   "path": "/v1/backlog",
+   "http": 200,
+   "ms": 7.3,
+   "bytes": 16531,
+   "sha256": "f067408627208f2e9c3695a3d1fc97f35ba022f2e2537b70fb4ec16371fe3557"
+  },
+  {
+   "path": "/v1/products",
+   "http": 200,
+   "ms": 6.9,
+   "bytes": 3313,
+   "sha256": "cfcc48734a9c23c502453edfb4d229cd77e337a5aa41681987ef06cbb85ded43"
+  },
+  {
+   "path": "/v1/products/cloud-dashboard/exposure",
+   "http": 200,
+   "bytes": 505853
+  }
+ ],
+ "calls": [
+  {
+   "call": 1,
+   "http": 200,
+   "status": "more",
+   "step": "start",
+   "chunks_done": 0,
+   "chunks_total": 34,
+   "storage_bytes": null,
+   "detail": null
+  },
+  {
+   "call": 2,
+   "http": 200,
+   "status": "more",
+   "step": "sweep cve",
+   "chunks_done": 1,
+   "chunks_total": 34,
+   "storage_bytes": 19995671,
+   "detail": null
+  },
+  {
+   "call": 3,
+   "http": 200,
+   "status": "more",
+   "step": "load cve",
+   "chunks_done": 2,
+   "chunks_total": 34,
+   "storage_bytes": 49093655,
+   "detail": null
+  },
+  {
+   "call": 4,
+   "http": 200,
+   "status": "more",
+   "step": "load cve",
+   "chunks_done": 3,
+   "chunks_total": 34,
+   "storage_bytes": 70851607,
+   "detail": null
+  },
+  {
+   "call": 5,
+   "http": 200,
+   "status": "more",
+   "step": "load cve",
+   "chunks_done": 4,
+   "chunks_total": 34,
+   "storage_bytes": 93297687,
+   "detail": null
+  },
+  {
+   "call": 6,
+   "http": 200,
+   "status": "more",
+   "step": "load cve",
+   "chunks_done": 5,
+   "chunks_total": 34,
+   "storage_bytes": 113875991,
+   "detail": null
+  },
+  {
+   "call": 7,
+   "http": 200,
+   "status": "more",
+   "step": "load cve",
+   "chunks_done": 6,
+   "chunks_total": 34,
+   "storage_bytes": 138853399,
+   "detail": null
+  },
+  {
+   "call": 8,
+   "http": 200,
+   "status": "more",
+   "step": "load cve",
+   "chunks_done": 7,
+   "chunks_total": 34,
+   "storage_bytes": 158891031,
+   "detail": null
+  },
+  {
+   "call": 9,
+   "http": 200,
+   "status": "more",
+   "step": "load cve",
+   "chunks_done": 8,
+   "chunks_total": 34,
+   "storage_bytes": 181918743,
+   "detail": null
+  },
+  {
+   "call": 10,
+   "http": 200,
+   "status": "more",
+   "step": "load cve",
+   "chunks_done": 9,
+   "chunks_total": 34,
+   "storage_bytes": 203193367,
+   "detail": null
+  },
+  {
+   "call": 11,
+   "http": 200,
+   "status": "more",
+   "step": "load cve",
+   "chunks_done": 10,
+   "chunks_total": 34,
+   "storage_bytes": 225860631,
+   "detail": null
+  },
+  {
+   "call": 12,
+   "http": 200,
+   "status": "more",
+   "step": "load cve",
+   "chunks_done": 11,
+   "chunks_total": 34,
+   "storage_bytes": 247364631,
+   "detail": null
+  },
+  {
+   "call": 13,
+   "http": 200,
+   "status": "more",
+   "step": "load cve",
+   "chunks_done": 12,
+   "chunks_total": 34,
+   "storage_bytes": 272890903,
+   "detail": null
+  },
+  {
+   "call": 14,
+   "http": 200,
+   "status": "more",
+   "step": "load cve",
+   "chunks_done": 13,
+   "chunks_total": 34,
+   "storage_bytes": 295623703,
+   "detail": null
+  },
+  {
+   "call": 15,
+   "http": 200,
+   "status": "more",
+   "step": "load cve",
+   "chunks_done": 14,
+   "chunks_total": 34,
+   "storage_bytes": 316709911,
+   "detail": null
+  },
+  {
+   "call": 16,
+   "http": 200,
+   "status": "more",
+   "step": "sweep cve_event",
+   "chunks_done": 15,
+   "chunks_total": 34,
+   "storage_bytes": 363166743,
+   "detail": null
+  },
+  {
+   "call": 17,
+   "http": 200,
+   "status": "more",
+   "step": "load cve_event",
+   "chunks_done": 16,
+   "chunks_total": 34,
+   "storage_bytes": 342088727,
+   "detail": null
+  },
+  {
+   "call": 18,
+   "http": 200,
+   "status": "more",
+   "step": "load cve_event",
+   "chunks_done": 17,
+   "chunks_total": 34,
+   "storage_bytes": 370424855,
+   "detail": null
+  },
+  {
+   "call": 19,
+   "http": 200,
+   "status": "more",
+   "step": "load cve_event",
+   "chunks_done": 18,
+   "chunks_total": 34,
+   "storage_bytes": 400899095,
+   "detail": null
+  },
+  {
+   "call": 20,
+   "http": 200,
+   "status": "more",
+   "step": "load cve_event",
+   "chunks_done": 19,
+   "chunks_total": 34,
+   "storage_bytes": 428129303,
+   "detail": null
+  },
+  {
+   "call": 21,
+   "http": 200,
+   "status": "more",
+   "step": "load cve_event",
+   "chunks_done": 20,
+   "chunks_total": 34,
+   "storage_bytes": 455572503,
+   "detail": null
+  },
+  {
+   "call": 22,
+   "http": 200,
+   "status": "more",
+   "step": "load cve_event",
+   "chunks_done": 21,
+   "chunks_total": 34,
+   "storage_bytes": 486218775,
+   "detail": null
+  },
+  {
+   "call": 23,
+   "http": 200,
+   "status": "more",
+   "step": "load cve_event",
+   "chunks_done": 22,
+   "chunks_total": 34,
+   "storage_bytes": 515177495,
+   "detail": null
+  },
+  {
+   "call": 24,
+   "http": 200,
+   "status": "more",
+   "step": "load cve_event",
+   "chunks_done": 23,
+   "chunks_total": 34,
+   "storage_bytes": 542637079,
+   "detail": null
+  },
+  {
+   "call": 25,
+   "http": 200,
+   "status": "more",
+   "step": "load cve_event",
+   "chunks_done": 24,
+   "chunks_total": 34,
+   "storage_bytes": 571415575,
+   "detail": null
+  },
+  {
+   "call": 26,
+   "http": 200,
+   "status": "more",
+   "step": "load cve_event",
+   "chunks_done": 25,
+   "chunks_total": 34,
+   "storage_bytes": 602061847,
+   "detail": null
+  },
+  {
+   "call": 27,
+   "http": 200,
+   "status": "more",
+   "step": "load cve_event",
+   "chunks_done": 26,
+   "chunks_total": 34,
+   "storage_bytes": 630914071,
+   "detail": null
+  },
+  {
+   "call": 28,
+   "http": 200,
+   "status": "more",
+   "step": "load cve_event",
+   "chunks_done": 27,
+   "chunks_total": 34,
+   "storage_bytes": 660462615,
+   "detail": null
+  },
+  {
+   "call": 29,
+   "http": 200,
+   "status": "more",
+   "step": "load cve_event",
+   "chunks_done": 28,
+   "chunks_total": 34,
+   "storage_bytes": 682392599,
+   "detail": null
+  },
+  {
+   "call": 30,
+   "http": 200,
+   "status": "more",
+   "step": "sweep product",
+   "chunks_done": 29,
+   "chunks_total": 34,
+   "storage_bytes": 664992791,
+   "detail": null
+  },
+  {
+   "call": 31,
+   "http": 200,
+   "status": "more",
+   "step": "load product",
+   "chunks_done": 30,
+   "chunks_total": 34,
+   "storage_bytes": 665025559,
+   "detail": null
+  },
+  {
+   "call": 32,
+   "http": 200,
+   "status": "more",
+   "step": "sweep finding",
+   "chunks_done": 31,
+   "chunks_total": 34,
+   "storage_bytes": 665205783,
+   "detail": null
+  },
+  {
+   "call": 33,
+   "http": 200,
+   "status": "more",
+   "step": "load finding",
+   "chunks_done": 32,
+   "chunks_total": 34,
+   "storage_bytes": 668441623,
+   "detail": null
+  },
+  {
+   "call": 34,
+   "http": 200,
+   "status": "more",
+   "step": "backlog",
+   "chunks_done": 33,
+   "chunks_total": 34,
+   "storage_bytes": 666754071,
+   "detail": null
+  },
+  {
+   "call": 35,
+   "http": 200,
+   "status": "done",
+   "step": "finalize",
+   "chunks_done": 34,
+   "chunks_total": 34,
+   "storage_bytes": 666665487,
+   "detail": null
+  }
+ ]
+}

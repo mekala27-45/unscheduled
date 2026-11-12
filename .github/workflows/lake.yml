@@ -1,0 +1,89 @@
+name: lake
+
+# The lake, the backlog and the serving bundle, rebuilt every day from the newest lake release and
+# loaded into the live API. Bronze, the locks and the config come back from the release the fetch
+# wrote; the lake is built with its as-of checks; the questions are answered; the serving bundle is
+# built and published as a prerelease serving-<stamp>; then the API is asked to load it until it
+# answers done. No job holds a database credential: the API pulls the bundle itself (ADR 0007).
+# The results it computes go up as an artifact; the committed results are written at a release.
+on:
+  schedule:
+    - cron: "35 5 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: lake
+  cancel-in-progress: false
+
+jobs:
+  lake:
+    name: build the lake and load the API
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    permissions:
+      contents: write
+    env:
+      PYTHONHASHSEED: "0"
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: "3.12"
+          enable-cache: false
+      - run: uv sync --frozen
+
+      - name: Bronze, the locks and the config from the newest lake release
+        id: restore
+        run: |
+          last="$(gh release list --repo "$REPO" --limit 30 --json tagName --jq '[.[] | select(.tagName | startswith("lake-"))][0].tagName // ""')"
+          if [ -z "$last" ]; then
+            echo "No lake release yet: nothing to build."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          mkdir -p restore data/bronze
+          gh release download "$last" --repo "$REPO" --dir restore --pattern 'bronze-*.tar' --pattern 'locks.tar.gz' --pattern 'config.tar.gz' --pattern 'SHA256SUMS'
+          ( cd restore && sha256sum --check --ignore-missing SHA256SUMS )
+          for t in restore/bronze-*.tar; do tar -xf "$t" -C data/bronze; done
+          tar -xzf restore/locks.tar.gz -C data
+          tar -xzf restore/config.tar.gz -C config
+          rm -rf restore
+          echo "Restored from $last."
+
+      - name: The lake, with the as-of checks on the real facts
+        if: steps.restore.outputs.skip != 'true'
+        run: uv run python scripts/build_lake.py --memory 10GB --threads 4
+
+      - name: The backlog questions and their charts
+        if: steps.restore.outputs.skip != 'true'
+        run: |
+          uv run python scripts/run_analysis.py
+          uv run python scripts/backlog_charts.py
+
+      - name: The serving bundle, published as a prerelease
+        if: steps.restore.outputs.skip != 'true'
+        run: |
+          uv run python scripts/build_serving_bundle.py
+          uv run python scripts/publish_serving.py
+
+      - name: The API loads it, chunk by chunk, until it answers done
+        if: steps.restore.outputs.skip != 'true'
+        run: uv run python scripts/sync_api.py
+
+      - name: Keep the reports
+        if: always() && steps.restore.outputs.skip != 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: lake
+          path: |
+            results/lake
+            results/backlog
+            results/live/sync.json
+            data/serving/bundle_manifest.json
+          if-no-files-found: warn
