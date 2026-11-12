@@ -5,7 +5,8 @@ name: fetch
 # The state of the last run (bronze, the locks and the ledger) comes back from the newest lake-*
 # release, so every run resumes from its ledger; raw files go up named by their digest, and bronze,
 # the locks and the ledger as assets of the day's release lake-YYYYMMDD. The one secret it reads is
-# the optional NVD_API_KEY; without it the NVD fetch runs keyless at the documented limit.
+# the optional NVD_API_KEY; without it the NVD fetch runs keyless at the documented limit. The first
+# lake release comes from a run started by hand with bootstrap set, which then starts lake.yml.
 on:
   schedule:
     - cron: "17 * * * *"
@@ -35,6 +36,7 @@ jobs:
     timeout-minutes: 350
     permissions:
       contents: write
+      actions: write
     env:
       PYTHONHASHSEED: "0"
       GH_TOKEN: ${{ github.token }}
@@ -170,3 +172,11 @@ jobs:
           ( cd out && sha256sum ./* > SHA256SUMS )
           gh release upload "$tag" --repo "$REPO" --clobber out/*
           echo "Published $(ls out | wc -l) assets to $tag."
+
+      - name: A bootstrap run starts the first lake build
+        if: success() && inputs.bootstrap && steps.restore.outputs.skip != 'true'
+        run: |
+          # The lake, the backlog and the serving bundle are built from the release just published,
+          # so the one run started by hand ends with the live API loaded (lake.yml).
+          gh workflow run lake.yml --repo "$REPO" --ref main
+          echo "Started lake.yml on main."
