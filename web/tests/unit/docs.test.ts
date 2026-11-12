@@ -48,9 +48,9 @@ describe("the documents in this repository", () => {
     expect(doc?.lead.length).toBeGreaterThan(20);
   });
 
-  it("renders the four report documents, each ending with the statement", () => {
+  it("renders the report documents, each ending with the statement", () => {
     const reports = readReports();
-    expect(reports.map((r) => r.slug)).toEqual(["backlog", "discovery", "legacy", "criteria"]);
+    expect(reports.map((r) => r.slug)).toEqual(["backlog", "discovery", "legacy", "criteria", "data-card"]);
     for (const r of reports) expect(r.html).toContain("portfolio demonstration");
   });
 });

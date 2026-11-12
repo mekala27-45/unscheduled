@@ -31,10 +31,10 @@ test("a long document has contents that jump to its sections", async ({ page }, 
   }
 });
 
-test("the report lists the four documents and renders the backlog with its tables", async ({ page }) => {
+test("the report lists its documents and renders the backlog with its tables", async ({ page }) => {
   await mockApi(page);
   await page.goto("/report");
-  await expect(page.locator(".doc-list li")).toHaveCount(4);
+  await expect(page.locator(".doc-list li")).toHaveCount(5);
   await page.locator(".doc-list a").first().click();
   await expect(page).toHaveURL(/\/report\/backlog$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("The backlog, in words and numbers");

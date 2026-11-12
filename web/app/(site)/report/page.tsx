@@ -9,7 +9,7 @@ import { formatDate } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: "Report",
-  description: "The backlog in words and numbers, the discovery memo, the legacy memo and the signed criteria, each rendered from the manifest.",
+  description: "The backlog in words and numbers, the discovery memo, the legacy memo, the signed criteria and the data card, each rendered from the manifest.",
 };
 
 export default function ReportIndex() {

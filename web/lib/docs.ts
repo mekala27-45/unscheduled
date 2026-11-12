@@ -34,6 +34,7 @@ export const REPORT_SOURCES: DocSource[] = [
   { slug: "discovery", file: "report/discovery.md" },
   { slug: "legacy", file: "report/legacy.md" },
   { slug: "criteria", file: "report/criteria.md" },
+  { slug: "data-card", file: "report/data_card.md" },
 ];
 
 function exists(file: string): boolean {
