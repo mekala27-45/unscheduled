@@ -47,7 +47,7 @@ known_from <= t and (known_to is null or known_to > t)
 
 A day means the end of that day in UTC. The rule is written twice, as SQL for Python in
 packages/lake/src/unscheduled_lake/engine.py and as the dbt macro in dbt/macros/asof.sql, and the
-two are held to each other.
+parity test below holds them to the same answer.
 
 ## How it is tested
 

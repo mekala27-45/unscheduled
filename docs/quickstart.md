@@ -1,8 +1,7 @@
 # Quickstart
 
-Three ways in: the console, the API and the command line. All three read the same data, and the
-command line runs the same code as the API, so an answer from one is the answer from the other
-(results/cli_parity.json).
+The console, the API and the command line read the same data, and the command line runs the same
+code as the API, so an answer from one is the answer from the other (results/cli_parity.json).
 
 ## The console
 
@@ -15,7 +14,7 @@ The match page takes a CycloneDX or SPDX JSON SBOM and keeps only its digest.
 
 Every route, with its parameters and its answers, is on the API reference page and in openapi.json
 at the root of the repository. No key is needed. Each client has a daily budget of lookups and of
-SBOM matches (config/budgets.yaml), and every answer says what is left in X-Budget-Remaining.
+SBOM matches (config/budgets.yaml), and every data answer says what is left in X-Budget-Remaining.
 
 ```
 curl https://unscheduled-api.vercel.app/v1/cves/CVE-2021-44228

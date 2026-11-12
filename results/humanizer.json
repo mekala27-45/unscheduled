@@ -11,11 +11,12 @@
  "changed": [
   {
    "file": "docs/templates/README.md.j2",
-   "sha256_after": "0cdeda51d2c7e1cae51c54bfed0b1c0b72665410aa566fd1a444c24213d5ff9c",
+   "sha256_after": "cce7342d8ae8eddeab7a0c883b40aeb0b775a70f20bcc6bd6de81cacdb8ac37b",
    "changes": [
     "bold labels on the two status lines removed (pattern 19)",
     "the three NVD priorities stated once as three kinds of CVE instead of a run of repeated openings (pattern 7)",
-    "that gap named as the gap between the NVD priorities and the 24 hour warning, and the last sentence split in two"
+    "that gap named as the gap between the NVD priorities and the 24 hour warning, and the last sentence split in two",
+    "2026-11-12: the See it section, written after the first pass, read in the second; its finding line reads from the manifest and needed no change"
    ]
   },
   {
@@ -111,6 +112,21 @@
    "changes": [
     "the placeholder counted at step eight replaced by the share from the manifest (exposure.contrast.share_no_cpe); the line is left out when the manifest has no value"
    ]
+  },
+  {
+   "file": "docs/quickstart.md",
+   "sha256_after": "ac2d718e01eeb4adb79b0dd29036e6f3992d50b1771028564e67e8b3e219f759",
+   "changes": [
+    "the opener Three ways in, a staged run up before a list of three (patterns 4 and 6), replaced by the sentence it introduced",
+    "every answer narrowed to every data answer, which is what carries X-Budget-Remaining"
+   ]
+  },
+  {
+   "file": "docs/asof.md",
+   "sha256_after": "6b1235cb9ef624e30c412c91de7bea389a0e30dbdec7d02637adf31c8b7f6eb7",
+   "changes": [
+    "the two are held to each other, a vague connection (pattern 14), replaced by the test that holds them"
+   ]
   }
  ],
  "read_unchanged": [
@@ -193,6 +209,16 @@
    "file": "web/components/site/site-nav.tsx",
    "sha256": "bf1c562ffd6a1d75bc56dbe5b731bf269420d0dc04f039702063565f745d11b9",
    "why": "link labels only"
+  },
+  {
+   "file": "docs/templates/docs/methods.md.j2",
+   "sha256": "b5005f934b45aa115de854536212f24a37b78d5c776f75f8f9d49a284e5824b4",
+   "why": "every line is the registered plan or a manifest value set beside it"
+  },
+  {
+   "file": "docs/diagrams/README.md",
+   "sha256": "35e476872ccc27c27c50d8a070307248bdcccea52e55dd277cdfe906d95c3784",
+   "why": "instructions and file names; every sentence carries a fact"
   }
  ],
  "checks_after": [
@@ -201,5 +227,9 @@
   "scripts/check_published_numbers.py (the rendered documents match the manifest)",
   "sloplint over the landing (results/design/gates.json)",
   "web unit and end to end tests"
+ ],
+ "dates": [
+  "2026-11-11",
+  "2026-11-12"
  ]
 }
