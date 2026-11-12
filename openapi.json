@@ -1,0 +1,2982 @@
+{
+  "components": {
+    "schemas": {
+      "Backlog": {
+        "additionalProperties": false,
+        "properties": {
+          "backlog": {
+            "$ref": "#/components/schemas/JsonValue"
+          },
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "backlog"
+        ],
+        "title": "Backlog",
+        "type": "object"
+      },
+      "BundleFacts": {
+        "additionalProperties": false,
+        "properties": {
+          "absent_columns": {
+            "additionalProperties": {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            "title": "Absent Columns",
+            "type": "object"
+          },
+          "files": {
+            "items": {
+              "$ref": "#/components/schemas/BundleFile"
+            },
+            "title": "Files",
+            "type": "array"
+          },
+          "generated_at": {
+            "title": "Generated At",
+            "type": "string"
+          },
+          "lake_digest": {
+            "title": "Lake Digest",
+            "type": "string"
+          },
+          "manifest_sha256": {
+            "title": "Manifest Sha256",
+            "type": "string"
+          },
+          "tag": {
+            "title": "Tag",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tag",
+          "manifest_sha256",
+          "generated_at",
+          "lake_digest",
+          "files",
+          "absent_columns"
+        ],
+        "title": "BundleFacts",
+        "type": "object"
+      },
+      "BundleFile": {
+        "additionalProperties": false,
+        "properties": {
+          "file": {
+            "title": "File",
+            "type": "string"
+          },
+          "rows": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rows"
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "file",
+          "sha256",
+          "rows"
+        ],
+        "title": "BundleFile",
+        "type": "object"
+      },
+      "CveAsOf": {
+        "additionalProperties": false,
+        "description": "A CVE named by the product's findings, as it was known at the end of the snapshot day.",
+        "properties": {
+          "cve_id": {
+            "title": "Cve Id",
+            "type": "string"
+          },
+          "exploit_code_seen": {
+            "title": "Exploit Code Seen",
+            "type": "boolean"
+          },
+          "filer_cvss31_band": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filer Cvss31 Band"
+          },
+          "filer_cvss40_band": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filer Cvss40 Band"
+          },
+          "in_slice": {
+            "title": "In Slice",
+            "type": "boolean"
+          },
+          "kev_listed": {
+            "title": "Kev Listed",
+            "type": "boolean"
+          },
+          "known": {
+            "title": "Known",
+            "type": "boolean"
+          },
+          "nvd_cvss31_band": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nvd Cvss31 Band"
+          },
+          "nvd_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nvd Status"
+          }
+        },
+        "required": [
+          "cve_id",
+          "in_slice",
+          "known",
+          "nvd_status",
+          "nvd_cvss31_band",
+          "filer_cvss31_band",
+          "filer_cvss40_band",
+          "kev_listed",
+          "exploit_code_seen"
+        ],
+        "title": "CveAsOf",
+        "type": "object"
+      },
+      "CvePage": {
+        "additionalProperties": false,
+        "properties": {
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "filters": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "title": "Filters",
+            "type": "object"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/CveSummary"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "limit": {
+            "title": "Limit",
+            "type": "integer"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "items",
+          "limit",
+          "next_cursor",
+          "filters"
+        ],
+        "title": "CvePage",
+        "type": "object"
+      },
+      "CveRecord": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "As Of"
+          },
+          "cve_id": {
+            "title": "Cve Id",
+            "type": "string"
+          },
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "fields": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/FieldValue"
+            },
+            "title": "Fields",
+            "type": "object"
+          },
+          "known": {
+            "title": "Known",
+            "type": "boolean"
+          },
+          "links": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "title": "Links",
+            "type": "object"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "cve_id",
+          "as_of",
+          "known",
+          "fields",
+          "links"
+        ],
+        "title": "CveRecord",
+        "type": "object"
+      },
+      "CveSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "cve_id": {
+            "title": "Cve Id",
+            "type": "string"
+          },
+          "cwes": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Cwes",
+            "type": "array"
+          },
+          "epss_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Epss Score"
+          },
+          "exploit_first_seen": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Exploit First Seen"
+          },
+          "filer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filer"
+          },
+          "filer_cvss31_band": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filer Cvss31 Band"
+          },
+          "filer_cvss31_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filer Cvss31 Score"
+          },
+          "filer_cvss40_band": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filer Cvss40 Band"
+          },
+          "filer_cvss40_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filer Cvss40 Score"
+          },
+          "filer_type": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filer Type"
+          },
+          "has_cpe": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Has Cpe"
+          },
+          "kev_date_added": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Kev Date Added"
+          },
+          "last_modified": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Last Modified"
+          },
+          "nvd_cvss31_band": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nvd Cvss31 Band"
+          },
+          "nvd_cvss31_score": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nvd Cvss31 Score"
+          },
+          "nvd_status": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nvd Status"
+          },
+          "nvd_status_since": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Nvd Status Since"
+          },
+          "published": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published"
+          }
+        },
+        "required": [
+          "cve_id",
+          "published",
+          "last_modified",
+          "nvd_status",
+          "nvd_status_since",
+          "filer",
+          "filer_type",
+          "cwes",
+          "filer_cvss31_score",
+          "filer_cvss31_band",
+          "filer_cvss40_score",
+          "filer_cvss40_band",
+          "nvd_cvss31_score",
+          "nvd_cvss31_band",
+          "kev_date_added",
+          "epss_score",
+          "exploit_first_seen",
+          "has_cpe"
+        ],
+        "title": "CveSummary",
+        "type": "object"
+      },
+      "DataFacts": {
+        "additionalProperties": false,
+        "properties": {
+          "counts": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "integer"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Counts"
+          },
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "freshness": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/JsonValue"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Freshness"
+          },
+          "generated_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Generated At"
+          },
+          "lake_digest": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lake Digest"
+          },
+          "last_sync": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LastSync"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "loaded_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Loaded At"
+          },
+          "loading": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Loading"
+          },
+          "sources": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/JsonValue"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Sources"
+          },
+          "tag": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tag"
+          }
+        },
+        "required": [
+          "data_version",
+          "tag",
+          "generated_at",
+          "loaded_at",
+          "lake_digest",
+          "loading",
+          "counts",
+          "freshness",
+          "sources",
+          "last_sync"
+        ],
+        "title": "DataFacts",
+        "type": "object"
+      },
+      "DatabaseFacts": {
+        "additionalProperties": false,
+        "properties": {
+          "configured": {
+            "title": "Configured",
+            "type": "boolean"
+          },
+          "database_size_bytes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Database Size Bytes"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "migration": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Migration"
+          },
+          "pgvector_available": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pgvector Available"
+          },
+          "pgvector_installed": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pgvector Installed"
+          },
+          "reachable": {
+            "title": "Reachable",
+            "type": "boolean"
+          },
+          "schema_name": {
+            "title": "Schema Name",
+            "type": "string"
+          },
+          "server_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Server Version"
+          },
+          "storage_ceiling_bytes": {
+            "title": "Storage Ceiling Bytes",
+            "type": "integer"
+          },
+          "storage_ceiling_mb": {
+            "title": "Storage Ceiling Mb",
+            "type": "integer"
+          },
+          "storage_share_used": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Storage Share Used"
+          },
+          "variable": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Variable"
+          },
+          "variables_found": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Variables Found",
+            "type": "array"
+          }
+        },
+        "required": [
+          "configured",
+          "variable",
+          "variables_found",
+          "reachable",
+          "schema_name",
+          "migration",
+          "server_version",
+          "pgvector_available",
+          "pgvector_installed",
+          "database_size_bytes",
+          "storage_ceiling_mb",
+          "storage_ceiling_bytes",
+          "storage_share_used",
+          "error"
+        ],
+        "title": "DatabaseFacts",
+        "type": "object"
+      },
+      "Exposure": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of_requested": {
+            "title": "As Of Requested",
+            "type": "string"
+          },
+          "cves": {
+            "items": {
+              "$ref": "#/components/schemas/CveAsOf"
+            },
+            "title": "Cves",
+            "type": "array"
+          },
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "findings": {
+            "items": {
+              "$ref": "#/components/schemas/ExposureFinding"
+            },
+            "title": "Findings",
+            "type": "array"
+          },
+          "product": {
+            "$ref": "#/components/schemas/Product"
+          },
+          "snapshot": {
+            "format": "date",
+            "title": "Snapshot",
+            "type": "string"
+          },
+          "snapshots": {
+            "items": {
+              "format": "date",
+              "type": "string"
+            },
+            "title": "Snapshots",
+            "type": "array"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          },
+          "summary": {
+            "$ref": "#/components/schemas/ExposureSummary"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "product",
+          "as_of_requested",
+          "snapshot",
+          "snapshots",
+          "summary",
+          "findings",
+          "cves"
+        ],
+        "title": "Exposure",
+        "type": "object"
+      },
+      "ExposureFinding": {
+        "additionalProperties": false,
+        "properties": {
+          "attributes": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "title": "Attributes",
+            "type": "object"
+          },
+          "cve_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Cve Ids",
+            "type": "array"
+          },
+          "finding_id": {
+            "title": "Finding Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "finding_id",
+          "cve_ids",
+          "attributes"
+        ],
+        "title": "ExposureFinding",
+        "type": "object"
+      },
+      "ExposureSummary": {
+        "additionalProperties": false,
+        "description": "Counts of findings say findings; counts of CVEs are of the distinct CVEs the findings name.",
+        "properties": {
+          "cves_by_nvd_status": {
+            "additionalProperties": {
+              "type": "integer"
+            },
+            "title": "Cves By Nvd Status",
+            "type": "object"
+          },
+          "cves_kev_listed": {
+            "title": "Cves Kev Listed",
+            "type": "integer"
+          },
+          "cves_with_exploit_code": {
+            "title": "Cves With Exploit Code",
+            "type": "integer"
+          },
+          "distinct_cves": {
+            "title": "Distinct Cves",
+            "type": "integer"
+          },
+          "findings": {
+            "title": "Findings",
+            "type": "integer"
+          },
+          "findings_fix_available": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Findings Fix Available"
+          },
+          "findings_without_cve": {
+            "title": "Findings Without Cve",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "findings",
+          "findings_without_cve",
+          "findings_fix_available",
+          "distinct_cves",
+          "cves_by_nvd_status",
+          "cves_kev_listed",
+          "cves_with_exploit_code"
+        ],
+        "title": "ExposureSummary",
+        "type": "object"
+      },
+      "FieldError": {
+        "additionalProperties": false,
+        "properties": {
+          "location": {
+            "title": "Location",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "location",
+          "message"
+        ],
+        "title": "FieldError",
+        "type": "object"
+      },
+      "FieldValue": {
+        "additionalProperties": false,
+        "properties": {
+          "known_from": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Known From"
+          },
+          "rule": {
+            "title": "Rule",
+            "type": "string"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          },
+          "value": {
+            "$ref": "#/components/schemas/JsonValue"
+          }
+        },
+        "required": [
+          "value",
+          "source",
+          "known_from",
+          "rule"
+        ],
+        "title": "FieldValue",
+        "type": "object"
+      },
+      "Health": {
+        "additionalProperties": false,
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/DataFacts"
+          },
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "database": {
+            "$ref": "#/components/schemas/DatabaseFacts"
+          },
+          "ready": {
+            "title": "Ready",
+            "type": "boolean"
+          },
+          "release": {
+            "$ref": "#/components/schemas/ReleaseFacts"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "degraded"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "status",
+          "version",
+          "ready",
+          "database",
+          "data",
+          "release"
+        ],
+        "title": "Health",
+        "type": "object"
+      },
+      "JsonValue": {},
+      "LastSync": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "bundle": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Bundle"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "step": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Step"
+          }
+        },
+        "required": [
+          "at",
+          "status",
+          "step",
+          "bundle"
+        ],
+        "title": "LastSync",
+        "type": "object"
+      },
+      "Limits": {
+        "additionalProperties": false,
+        "properties": {
+          "lookups_per_day": {
+            "title": "Lookups Per Day",
+            "type": "integer"
+          },
+          "matches_per_day": {
+            "title": "Matches Per Day",
+            "type": "integer"
+          },
+          "page_size_max": {
+            "title": "Page Size Max",
+            "type": "integer"
+          },
+          "sbom_upload_max_bytes": {
+            "title": "Sbom Upload Max Bytes",
+            "type": "integer"
+          },
+          "storage_ceiling_mb": {
+            "title": "Storage Ceiling Mb",
+            "type": "integer"
+          },
+          "sync_calls_per_minute": {
+            "title": "Sync Calls Per Minute",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "page_size_max",
+          "sbom_upload_max_bytes",
+          "lookups_per_day",
+          "matches_per_day",
+          "sync_calls_per_minute",
+          "storage_ceiling_mb"
+        ],
+        "title": "Limits",
+        "type": "object"
+      },
+      "MatchCounts": {
+        "additionalProperties": false,
+        "properties": {
+          "advisories_read": {
+            "title": "Advisories Read",
+            "type": "integer"
+          },
+          "components_matched": {
+            "title": "Components Matched",
+            "type": "integer"
+          },
+          "distinct_cves": {
+            "title": "Distinct Cves",
+            "type": "integer"
+          },
+          "findings": {
+            "title": "Findings",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "findings",
+          "distinct_cves",
+          "components_matched",
+          "advisories_read"
+        ],
+        "title": "MatchCounts",
+        "type": "object"
+      },
+      "MatchResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "counts": {
+            "$ref": "#/components/schemas/MatchCounts"
+          },
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "duration_ms": {
+            "title": "Duration Ms",
+            "type": "number"
+          },
+          "engine": {
+            "title": "Engine",
+            "type": "string"
+          },
+          "findings": {
+            "items": {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/JsonValue"
+              },
+              "type": "object"
+            },
+            "title": "Findings",
+            "type": "array"
+          },
+          "sbom": {
+            "$ref": "#/components/schemas/SbomSummary"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          },
+          "stored": {
+            "title": "Stored",
+            "type": "string"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "sbom",
+          "engine",
+          "as_of",
+          "findings",
+          "counts",
+          "duration_ms",
+          "stored"
+        ],
+        "title": "MatchResponse",
+        "type": "object"
+      },
+      "Meta": {
+        "additionalProperties": false,
+        "properties": {
+          "attribution": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Attribution",
+            "type": "array"
+          },
+          "bundle": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/BundleFacts"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "limits": {
+            "$ref": "#/components/schemas/Limits"
+          },
+          "locks": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "title": "Locks",
+            "type": "object"
+          },
+          "nvd_notice": {
+            "title": "Nvd Notice",
+            "type": "string"
+          },
+          "repository": {
+            "title": "Repository",
+            "type": "string"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "version",
+          "nvd_notice",
+          "attribution",
+          "repository",
+          "locks",
+          "bundle",
+          "limits"
+        ],
+        "title": "Meta",
+        "type": "object"
+      },
+      "Problem": {
+        "additionalProperties": false,
+        "properties": {
+          "context": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/JsonValue"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Context"
+          },
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "errors": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/FieldError"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Errors"
+          },
+          "instance": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Instance"
+          },
+          "retry_after_s": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Retry After S"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "integer"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "title",
+          "status",
+          "detail",
+          "statement",
+          "data_version"
+        ],
+        "title": "Problem",
+        "type": "object"
+      },
+      "Product": {
+        "additionalProperties": false,
+        "properties": {
+          "attributes": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "title": "Attributes",
+            "type": "object"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "product_id": {
+            "title": "Product Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "product_id",
+          "name",
+          "attributes"
+        ],
+        "title": "Product",
+        "type": "object"
+      },
+      "Products": {
+        "additionalProperties": false,
+        "properties": {
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "products": {
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            },
+            "title": "Products",
+            "type": "array"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "products"
+        ],
+        "title": "Products",
+        "type": "object"
+      },
+      "ReleaseFacts": {
+        "additionalProperties": false,
+        "properties": {
+          "checked_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Checked At"
+          },
+          "newest": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Newest"
+          },
+          "repository": {
+            "title": "Repository",
+            "type": "string"
+          },
+          "tag_prefix": {
+            "title": "Tag Prefix",
+            "type": "string"
+          }
+        },
+        "required": [
+          "repository",
+          "tag_prefix",
+          "checked_at",
+          "newest"
+        ],
+        "title": "ReleaseFacts",
+        "type": "object"
+      },
+      "SbomSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "bytes": {
+            "title": "Bytes",
+            "type": "integer"
+          },
+          "components": {
+            "title": "Components",
+            "type": "integer"
+          },
+          "format": {
+            "enum": [
+              "cyclonedx",
+              "spdx"
+            ],
+            "title": "Format",
+            "type": "string"
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          },
+          "spec_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Spec Version"
+          },
+          "with_purl": {
+            "title": "With Purl",
+            "type": "integer"
+          },
+          "without_purl": {
+            "title": "Without Purl",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "sha256",
+          "bytes",
+          "format",
+          "spec_version",
+          "components",
+          "with_purl",
+          "without_purl"
+        ],
+        "title": "SbomSummary",
+        "type": "object"
+      },
+      "SyncChunk": {
+        "additionalProperties": false,
+        "properties": {
+          "offset": {
+            "title": "Offset",
+            "type": "integer"
+          },
+          "rows_changed": {
+            "title": "Rows Changed",
+            "type": "integer"
+          },
+          "rows_in": {
+            "title": "Rows In",
+            "type": "integer"
+          },
+          "rows_total": {
+            "title": "Rows Total",
+            "type": "integer"
+          },
+          "table": {
+            "title": "Table",
+            "type": "string"
+          }
+        },
+        "required": [
+          "table",
+          "offset",
+          "rows_in",
+          "rows_changed",
+          "rows_total"
+        ],
+        "title": "SyncChunk",
+        "type": "object"
+      },
+      "SyncResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "checked_release": {
+            "title": "Checked Release",
+            "type": "boolean"
+          },
+          "chunk": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SyncChunk"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "chunks_done": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chunks Done"
+          },
+          "chunks_total": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chunks Total"
+          },
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "detail": {
+            "title": "Detail",
+            "type": "string"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "current",
+              "more",
+              "done"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "step": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Step"
+          },
+          "step_index": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Step Index"
+          },
+          "steps": {
+            "title": "Steps",
+            "type": "integer"
+          },
+          "storage_bytes": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Storage Bytes"
+          },
+          "storage_ceiling_bytes": {
+            "title": "Storage Ceiling Bytes",
+            "type": "integer"
+          },
+          "target": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Target"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "status",
+          "detail",
+          "target",
+          "step",
+          "step_index",
+          "steps",
+          "chunk",
+          "chunks_done",
+          "chunks_total",
+          "storage_bytes",
+          "storage_ceiling_bytes",
+          "checked_release"
+        ],
+        "title": "SyncResponse",
+        "type": "object"
+      },
+      "Timeline": {
+        "additionalProperties": false,
+        "properties": {
+          "cve_id": {
+            "title": "Cve Id",
+            "type": "string"
+          },
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "events": {
+            "items": {
+              "$ref": "#/components/schemas/TimelineEvent"
+            },
+            "title": "Events",
+            "type": "array"
+          },
+          "published": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Published"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "cve_id",
+          "published",
+          "events"
+        ],
+        "title": "Timeline",
+        "type": "object"
+      },
+      "TimelineEvent": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "detail": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "title": "Detail",
+            "type": "object"
+          },
+          "event_id": {
+            "title": "Event Id",
+            "type": "string"
+          },
+          "kind": {
+            "title": "Kind",
+            "type": "string"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source"
+          }
+        },
+        "required": [
+          "event_id",
+          "at",
+          "kind",
+          "source",
+          "detail"
+        ],
+        "title": "TimelineEvent",
+        "type": "object"
+      }
+    }
+  },
+  "info": {
+    "description": "unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.\n\nEvery CVE the serving slice holds, with the source and the time each value became known; the state\nof a CVE on any past day; its ruler events; the NVD backlog values; the stand in products and their\nexposure; live matching of a CycloneDX or SPDX JSON SBOM; and the customer's legacy CSV. Every\nresponse carries the statement and the data version. Every error is a problem document\n(application/problem+json) whose type links to its explanation in docs/SPEC.md.\n\nThis product uses data from the NVD API but is not endorsed or certified by the NVD. Advisory data from the GitHub Advisory Database, licensed under CC BY 4.0 (https://github.com/github/advisory-database).",
+    "license": {
+      "identifier": "Apache-2.0",
+      "name": "Apache-2.0"
+    },
+    "summary": "Triage for the CVEs the NVD no longer analyzes",
+    "title": "unscheduled",
+    "version": "0.1.0"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Health"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          }
+        },
+        "summary": "Health",
+        "tags": [
+          "service"
+        ]
+      }
+    },
+    "/internal/sync": {
+      "get": {
+        "description": "One bounded step of loading the newest serving release of mekala27-45/unscheduled into the database. It takes no input. Call it until status is done or current; status more means call again. GET serves the Vercel cron, which only sends GET.",
+        "operationId": "sync_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SyncResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Another sync call holds the lock"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "502": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The serving bundle failed a check and nothing was loaded from it"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          },
+          "507": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Loading more would pass the storage ceiling"
+          }
+        },
+        "summary": "Load the next step of the newest serving release (the cron)",
+        "tags": [
+          "sync"
+        ]
+      },
+      "post": {
+        "description": "One bounded step of loading the newest serving release of mekala27-45/unscheduled into the database. It takes no input. Call it until status is done or current; status more means call again. GET serves the Vercel cron, which only sends GET.",
+        "operationId": "sync_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SyncResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "409": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Another sync call holds the lock"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "502": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The serving bundle failed a check and nothing was loaded from it"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          },
+          "507": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "Loading more would pass the storage ceiling"
+          }
+        },
+        "summary": "Load the next step of the newest serving release",
+        "tags": [
+          "sync"
+        ]
+      }
+    },
+    "/v1/backlog": {
+      "get": {
+        "operationId": "get_backlog_v1_backlog_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Backlog"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "Get Backlog",
+        "tags": [
+          "backlog"
+        ]
+      }
+    },
+    "/v1/cves": {
+      "get": {
+        "operationId": "list_cves_v1_cves_get",
+        "parameters": [
+          {
+            "description": "published on or after this day",
+            "in": "query",
+            "name": "published_from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "published on or after this day",
+              "title": "Published From"
+            }
+          },
+          {
+            "description": "published on or before this day",
+            "in": "query",
+            "name": "published_to",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "published on or before this day",
+              "title": "Published To"
+            }
+          },
+          {
+            "in": "query",
+            "name": "nvd_status",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 60,
+                  "pattern": "^[ -~]+$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Nvd Status"
+            }
+          },
+          {
+            "description": "listed in CISA KEV",
+            "in": "query",
+            "name": "kev",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "listed in CISA KEV",
+              "title": "Kev"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filer",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 120,
+                  "pattern": "^[ -~]+$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Filer"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filer_type",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 60,
+                  "pattern": "^[ -~]+$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Filer Type"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cwe",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^([Cc][Ww][Ee]-[0-9]{1,5}|NVD-CWE-Other|NVD-CWE-noinfo)$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "examples": [
+                "CWE-79"
+              ],
+              "title": "Cwe"
+            }
+          },
+          {
+            "description": "the filer gave a CVSS 3.1 or 4.0 score",
+            "in": "query",
+            "name": "has_filer_score",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "the filer gave a CVSS 3.1 or 4.0 score",
+              "title": "Has Filer Score"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "maxLength": 512,
+                  "pattern": "^[A-Za-z0-9_-]+$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CvePage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The body is not JSON; The cursor is not one this listing issued"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The resource does not exist"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The document is neither CycloneDX nor SPDX JSON; The request did not validate"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "List Cves",
+        "tags": [
+          "cves"
+        ]
+      }
+    },
+    "/v1/cves/{cve_id}": {
+      "get": {
+        "operationId": "get_cve_v1_cves__cve_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cve_id",
+            "required": true,
+            "schema": {
+              "examples": [
+                "CVE-2021-44228"
+              ],
+              "pattern": "^[Cc][Vv][Ee]-[0-9]{4}-[0-9]{4,12}$",
+              "title": "Cve Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "the state at the end of this day (UTC), from facts known by then",
+            "in": "query",
+            "name": "as_of",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "the state at the end of this day (UTC), from facts known by then",
+              "title": "As Of"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CveRecord"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The resource does not exist"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The document is neither CycloneDX nor SPDX JSON; The request did not validate"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "Get Cve",
+        "tags": [
+          "cves"
+        ]
+      }
+    },
+    "/v1/cves/{cve_id}/timeline": {
+      "get": {
+        "operationId": "get_timeline_v1_cves__cve_id__timeline_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "cve_id",
+            "required": true,
+            "schema": {
+              "examples": [
+                "CVE-2021-44228"
+              ],
+              "pattern": "^[Cc][Vv][Ee]-[0-9]{4}-[0-9]{4,12}$",
+              "title": "Cve Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Timeline"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The resource does not exist"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The document is neither CycloneDX nor SPDX JSON; The request did not validate"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "Get Timeline",
+        "tags": [
+          "cves"
+        ]
+      }
+    },
+    "/v1/legacy/report.csv": {
+      "get": {
+        "operationId": "legacy_report_v1_legacy_report_csv_get",
+        "responses": {
+          "200": {
+            "content": {
+              "text/csv": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "the legacy CSV, same columns, order, types and date format as the 2019 job"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "Legacy Report",
+        "tags": [
+          "legacy"
+        ]
+      }
+    },
+    "/v1/match": {
+      "post": {
+        "operationId": "match_sbom_v1_match_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "properties": {
+                      "bomFormat": {
+                        "const": "CycloneDX"
+                      },
+                      "components": {
+                        "items": {
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "specVersion": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "bomFormat",
+                      "specVersion"
+                    ],
+                    "title": "CycloneDX JSON",
+                    "type": "object"
+                  },
+                  {
+                    "properties": {
+                      "packages": {
+                        "items": {
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "spdxVersion": {
+                        "pattern": "^SPDX-2\\.[0-9]+$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "spdxVersion"
+                    ],
+                    "title": "SPDX 2 JSON",
+                    "type": "object"
+                  }
+                ]
+              }
+            },
+            "application/spdx+json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "properties": {
+                      "bomFormat": {
+                        "const": "CycloneDX"
+                      },
+                      "components": {
+                        "items": {
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "specVersion": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "bomFormat",
+                      "specVersion"
+                    ],
+                    "title": "CycloneDX JSON",
+                    "type": "object"
+                  },
+                  {
+                    "properties": {
+                      "packages": {
+                        "items": {
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "spdxVersion": {
+                        "pattern": "^SPDX-2\\.[0-9]+$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "spdxVersion"
+                    ],
+                    "title": "SPDX 2 JSON",
+                    "type": "object"
+                  }
+                ]
+              }
+            },
+            "application/vnd.cyclonedx+json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "properties": {
+                      "bomFormat": {
+                        "const": "CycloneDX"
+                      },
+                      "components": {
+                        "items": {
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "specVersion": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "bomFormat",
+                      "specVersion"
+                    ],
+                    "title": "CycloneDX JSON",
+                    "type": "object"
+                  },
+                  {
+                    "properties": {
+                      "packages": {
+                        "items": {
+                          "type": "object"
+                        },
+                        "type": "array"
+                      },
+                      "spdxVersion": {
+                        "pattern": "^SPDX-2\\.[0-9]+$",
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "spdxVersion"
+                    ],
+                    "title": "SPDX 2 JSON",
+                    "type": "object"
+                  }
+                ]
+              }
+            }
+          },
+          "description": "a CycloneDX JSON or SPDX 2 JSON document, up to the upload limit in /v1/meta",
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MatchResponse"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The body is not JSON; The cursor is not one this listing issued"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The upload is over the size limit"
+          },
+          "415": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The body is not a JSON SBOM"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The document is neither CycloneDX nor SPDX JSON; The request did not validate"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "Match Sbom",
+        "tags": [
+          "match"
+        ]
+      }
+    },
+    "/v1/meta": {
+      "get": {
+        "operationId": "meta_v1_meta_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Meta"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          }
+        },
+        "summary": "Meta",
+        "tags": [
+          "service"
+        ]
+      }
+    },
+    "/v1/products": {
+      "get": {
+        "operationId": "get_products_v1_products_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Products"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "Get Products",
+        "tags": [
+          "exposure"
+        ]
+      }
+    },
+    "/v1/products/{product_id}/exposure": {
+      "get": {
+        "operationId": "get_exposure_v1_products__product_id__exposure_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "product_id",
+            "required": true,
+            "schema": {
+              "examples": [
+                "go-edge-service"
+              ],
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$",
+              "title": "Product Id",
+              "type": "string"
+            }
+          },
+          {
+            "description": "pin, today (the default) or a date: the snapshot on or before it",
+            "in": "query",
+            "name": "as_of",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "pattern": "^(pin|today|[0-9]{4}-[0-9]{2}-[0-9]{2})$",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "pin, today (the default) or a date: the snapshot on or before it",
+              "title": "As Of"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Exposure"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The resource does not exist"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The document is neither CycloneDX nor SPDX JSON; The request did not validate"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "Get Exposure",
+        "tags": [
+          "exposure"
+        ]
+      }
+    }
+  }
+}
