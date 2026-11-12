@@ -139,3 +139,67 @@ engines can read them. osv-scanner reads the image as distro debian-12.8 and loo
 binary name, where OSV keys Debian advisories by release 12 and source package; those 320 pairs are
 the disagreements with a recorded reason in results/exposure/disagreements.json, and with only that
 qualifier changed the two engines agree on every pair with the same name.
+
+## 2026-11-12: Q02 accepts either reading of a CVSS 4.0 score with threat metrics
+
+A CVSS 4.0 vector that carries a threat metric (E:P, say) scores two ways: the base metrics alone
+(CVSS-B, what the FIRST JSON schema's baseScore names) and the vector as written (CVSS-BT). VulDB
+stores the first and most other filers the second. Q02 compared the stored score with the vector as
+written only, so it held back 10,240 rows, 9,425 of them stored base scores that were right by the
+schema (9,355 from VulDB). Q02 now fires only when the stored score is more than 0.1 from both
+readings: 815 rows on the lake of 12 November 2026, where CVSS 3.x scores dominate (a stored
+environmental score in place of the base score, or a plain miscomputation). The facts never carried
+a stored score, so no fact changed; the counts in results/lake/quarantine.json did.
+
+## 2026-11-12: the filer groups are read from config/filers.yaml as the fetcher writes them
+
+The lake read each filer's type from a `type` key while packages/sources writes the group under
+`group`, so config.filer_types was empty and every CVE was typed unregistered. The loader reads
+`group` now, with a test on the committed file; 1,834 CVEs remain unregistered (filers the CNA list
+does not hold). Every question that breaks down by filer type (Q3, Q4, Q6, Q8) was run again after
+the fix; nothing earlier was published.
+
+## 2026-11-12: three repairs in the backlog analysis before its first results
+
+`nvd_analyzed` in gold.cve_current was null for a CVE the NVD did not hold yet (one, published at
+the cut), and the Q8 AUC cast that null to an integer, which numpy does without complaint; the flag
+is false for such a CVE now, a not null test holds it, and the AUC refuses a missing label. DuckDB
+sums integers into a decimal, which JSON could not hold; values are converted where results are
+written. And a cluster bootstrap by filer over a group of one filer (MITRE) gave an interval of
+zero width: a value from fewer than five filers is written without an interval and says why.
+
+## 2026-11-12: the serving bundle speaks the API's field names, and is cut to fit the free plan
+
+The first full bundle did not load: its columns and provenance keys were the lake's names, not the
+API's contract (unscheduled_api.bundle.CVE_COLUMNS), and its events named no field they set.
+scripts/build_serving_bundle.py now writes the contract exactly, events carry `sets` with the API's
+field names (a vector sets its score and band too), and the build reads every file back through the
+API's own readers before it is published. scripts/load_local.py then loads the bundle into a local
+Postgres through the API's sync and measures it: the first contract bundle took 1,703 MB, against a
+ceiling of 800 MB (budgets.yaml). The cut, in order of what it saved:
+
+- the ruler keeps only the events the console draws or the as-of view reads: NVD statuses, the
+  filer's, the NVD's and CISA's vectors, one SSVC event per change, the KEV listing, the first
+  exploit code per source, EPSS at the registered offsets for KEV CVEs, rejection, and removals;
+  the reserved date, CWE changes, CVSS 2.0 and 3.0 vectors, the CPE flag and affected versions are
+  left in the lake (3,088,346 events to 1,284,295);
+- the API dates the publication, state, filer, its type and the description from the published
+  column, the last change from itself, EPSS from its own date, and every field an event sets by
+  that event, so provenance is kept for the CWEs and the CPE flag only;
+- an event key is 16 hex characters, an NVD status event does not repeat its time, and an event
+  dated by the NVD's own change history does not say so (the API reads the absence as that rule).
+
+The same population as section 12 asks for (every CVE published since 1 January 2021 and every
+KEV listed CVE, 259,287) now loads in 35 sync calls; the size it takes is in results/live/local_load.json.
+A Postgres storage parameter (toast_tuple_target) was tried first and changed nothing, because it
+only applies to rows over 2 kB; it was not kept.
+
+## 2026-11-12: the console reads the generated contract and adapts it
+
+web/lib/api/schema.ts was written by hand before the API existed and had drifted from it on every
+endpoint. web/lib/api/openapi.ts is now generated from openapi.json (openapi-typescript 7.13.0),
+web/lib/api/view.ts holds the shapes the pages read, and web/lib/api/adapt.ts maps one to the other,
+with unit tests and Playwright mocks in the API's own shape. The console home lists what is newest
+in the loaded release, counted back from the day it was built, since the API filters by day
+(kev_added_from and analyzed_from were added for it), and /v1/meta carries the quarantine counts
+and the newest run ledger rows of the loaded bundle for the data page.
