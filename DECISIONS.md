@@ -209,3 +209,15 @@ with unit tests and Playwright mocks in the API's own shape. The console home li
 in the loaded release, counted back from the day it was built, since the API filters by day
 (kev_added_from and analyzed_from were added for it), and /v1/meta carries the quarantine counts
 and the newest run ledger rows of the loaded bundle for the data page.
+
+## 2026-11-12: the docs and the report are the repository's own files
+
+The plan placed the docs under web/content/docs. The site renders the files the repository already
+keeps instead: ARCHITECTURE.md, docs/SPEC.md, docs/ROADMAP.md, the decision records in docs/adr, the
+runbooks, data/PROVENANCE.md and customer/README.md under /docs, and the four documents the build
+renders from the manifest (report/backlog.md, discovery.md, legacy.md and criteria.md) under
+/report. A copy under web/content would be a second text to keep in step with the first, and the
+report would lose the claim gate that checks it against the manifest. The Markdown is rendered on
+the server when the site is built, with marked 18.1.2, the only new dependency; there is no MDX,
+since no page needs a component inside its text. The diagram on /docs is the archify export
+already in web/public/diagrams.

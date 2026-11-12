@@ -46,8 +46,14 @@ const paletteRecord = {
   modes: palette.modes,
 };
 
-// 2. sloplint: the landing at genre modern-minimal, the console and /design at scope app.
+// 2. sloplint: the landing at genre modern-minimal, the docs and the report as pages of the same
+// site, the console and /design at scope app.
 const LANDING = { genre: "modern-minimal", files: ["web/styles/landing.css", "web/styles/tokens.css", "web/styles/base.css", "web/app/(site)/page.tsx", "web/components/site"], routes: ["/"] };
+const DOCS = {
+  genre: "modern-minimal",
+  files: ["web/styles/docs.css", "web/styles/landing.css", "web/styles/tokens.css", "web/styles/base.css", "web/app/(site)/docs", "web/app/(site)/report", "web/components/site/doc-view.tsx"],
+  routes: ["/docs", "/docs/architecture", "/docs/spec", "/report", "/report/backlog"],
+};
 const CONSOLE = {
   scope: "app",
   files: ["web/styles/console.css", "web/styles/tokens.css", "web/styles/base.css", "web/components/console", "web/components/ui", "web/components/ruler", "web/components/charts", "web/app/(console)", "web/app/(site)/design"],
@@ -83,7 +89,7 @@ function sloplint(set) {
   });
 }
 
-const slop = [...sloplint(LANDING), ...sloplint(CONSOLE)];
+const slop = [...sloplint(LANDING), ...sloplint(DOCS), ...sloplint(CONSOLE)];
 
 // 3. axe, from the Playwright suite: serious and critical per route and per viewport and theme.
 const axeDir = path.join(ROOT, "web", "test-results", "axe");

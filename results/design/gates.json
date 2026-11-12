@@ -20,6 +20,71 @@
     ]
    },
    {
+    "route": "/docs",
+    "genre": "modern-minimal",
+    "scope": "page",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/docs/architecture",
+    "genre": "modern-minimal",
+    "scope": "page",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/docs/spec",
+    "genre": "modern-minimal",
+    "scope": "page",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/report",
+    "genre": "modern-minimal",
+    "scope": "page",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/report/backlog",
+    "genre": "modern-minimal",
+    "scope": "page",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
     "route": "/app",
     "genre": null,
     "scope": "app",
@@ -471,6 +536,111 @@
     }
    },
    {
+    "route": "/docs/architecture",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/docs/spec",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/docs",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
     "route": "/",
     "serious": 0,
     "critical": 0,
@@ -507,6 +677,111 @@
    },
    {
     "route": "/no-such-page",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/report/backlog",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/report/discovery",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/report",
     "serious": 0,
     "critical": 0,
     "projects": {

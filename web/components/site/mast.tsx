@@ -34,6 +34,8 @@ function freshness(): string {
 
 const LINKS = [
   { href: "/app", label: "Console" },
+  { href: "/report", label: "Report" },
+  { href: "/docs", label: "Docs" },
   { href: "/status", label: "Status" },
   { href: "/app/limits", label: "Limits" },
   { href: "/design", label: "Design system" },

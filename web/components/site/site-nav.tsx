@@ -7,6 +7,8 @@ import { REPO_URL } from "@/lib/nav";
 
 const LINKS = [
   { href: "/app", label: "Console" },
+  { href: "/report", label: "Report" },
+  { href: "/docs", label: "Docs" },
   { href: "/status", label: "Status" },
   { href: "/design", label: "Design system" },
 ];

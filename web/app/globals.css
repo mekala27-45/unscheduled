@@ -6,6 +6,7 @@
 @import "@xyflow/react/dist/base.css" layer(base);
 @import "../styles/console.css" layer(components);
 @import "../styles/landing.css" layer(components);
+@import "../styles/docs.css" layer(components);
 
 @theme {
   --color-*: initial;

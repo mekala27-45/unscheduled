@@ -19,6 +19,12 @@ export const ROUTES = [
   "/app/criteria",
   "/app/limits",
   "/status",
+  "/docs",
+  "/docs/architecture",
+  "/docs/spec",
+  "/report",
+  "/report/backlog",
+  "/report/discovery",
   "/no-such-page",
 ];
 
