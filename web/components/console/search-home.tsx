@@ -52,7 +52,7 @@ function Column({ title, query, empty }: { title: string; query: CveQuery; empty
   );
 }
 
-/** The console home: a search field set large, then the last 24 hours. No greeting, no stat cards. */
+/** The console home: a search field set large, then what is newest in the loaded release. No greeting, no stat cards. */
 export function SearchHome() {
   const router = useRouter();
   const [q] = useQueryState("q", parseAsString);

@@ -68,6 +68,7 @@ export const FIELD_LABELS: [string, string][] = [
   ["kev_date_added", "Added to KEV"],
   ["kev_ransomware", "KEV ransomware use"],
   ["epss_score", "EPSS score"],
+  ["epss_percentile", "EPSS percentile"],
   ["epss_date", "EPSS score since"],
   ["exploit_first_seen", "First exploit code seen"],
   ["has_cpe", "NVD CPE configuration"],
@@ -77,6 +78,13 @@ const ORDER = new Map(FIELD_LABELS.map(([k], i) => [k, i]));
 
 export function fieldLabel(field: string): string {
   return LABEL.get(field) ?? field.replaceAll("_", " ");
+}
+
+/** The label inside a sentence: the first word in lower case unless it is an acronym (CVSS, NVD, KEV). */
+export function fieldLabelInline(field: string): string {
+  const label = fieldLabel(field);
+  const [first, ...rest] = label.split(" ");
+  return first === first.toUpperCase() ? label : [first.toLowerCase(), ...rest].join(" ");
 }
 
 export function toHealth(h: S["Health"]): Health {

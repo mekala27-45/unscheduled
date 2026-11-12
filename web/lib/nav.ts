@@ -8,7 +8,7 @@ export type Destination = {
 };
 
 export const DESTINATIONS: Destination[] = [
-  { href: "/app", label: "Search", summary: "Look up a CVE; the last 24 hours" },
+  { href: "/app", label: "Search", summary: "Look up a CVE; the newest in the release" },
   { href: "/app/cves", label: "CVEs", go: "c", summary: "Every CVE, filtered in the address bar" },
   { href: "/app/backlog", label: "Backlog", go: "b", summary: "Q1 to Q6, what the NVD no longer analyzes" },
   { href: "/app/products", label: "Products", go: "p", summary: "The stand-in products and their exposure" },

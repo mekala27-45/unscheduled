@@ -103,7 +103,7 @@ export function DataView() {
                   <TableRow key={`${r.source}-${r.finished_at}-${i}`}>
                     <TableCell>{formatDateTime(r.finished_at)}</TableCell>
                     <TableCell className="lead">{r.source}</TableCell>
-                    <TableCell className="mono">{r.window}</TableCell>
+                    <TableCell className="mono wrap">{r.window}</TableCell>
                     <TableCell className="num">{formatInt(r.rows_in)}</TableCell>
                     <TableCell className="num">{formatInt(r.rows_changed)}</TableCell>
                     <TableCell className="num">{r.duration_s.toFixed(1)}</TableCell>

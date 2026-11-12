@@ -27,6 +27,7 @@ function niceMax(max: number): number {
 
 function fmt(n: number, unit: string): string {
   if (unit === "share") return `${Math.round(n * 100)}%`;
+  if (unit === "kappa") return n.toFixed(2);
   return new Intl.NumberFormat("en-US", { maximumFractionDigits: n < 10 ? 1 : 0 }).format(n);
 }
 
@@ -84,7 +85,13 @@ export function LineChart({ q }: { q: BacklogQuestion }) {
         {ruleIndex >= 0 && q.rule ? (
           <g>
             <line className="rule-mark" x1={x(ruleIndex)} x2={x(ruleIndex)} y1={pad.top} y2={pad.top + h} />
-            <text className="rule-mark-label" x={x(ruleIndex) + 6} y={pad.top + 12}>
+            {/* The label sits on the side of the rule with room for it, so it is never cut at the edge. */}
+            <text
+              className="rule-mark-label"
+              x={x(ruleIndex) > width * 0.6 ? x(ruleIndex) - 6 : x(ruleIndex) + 6}
+              y={pad.top + 12}
+              textAnchor={x(ruleIndex) > width * 0.6 ? "end" : "start"}
+            >
               {q.rule.label}
             </text>
           </g>
