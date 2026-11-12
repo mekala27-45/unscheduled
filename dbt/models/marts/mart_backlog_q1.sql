@@ -31,10 +31,12 @@ select
     cast((epoch(c.data_cut) - epoch(b.published)) / 86400.0 as double) as followup_days,
     {% for k in [7, 30, 90] %}
     cast(
+        -- censored first: a CVE younger than k days is not judged at k days even when it was
+        -- analyzed already, or the recent months would count only their quick analyses
         case
+            when b.published + to_days({{ k }}) > c.data_cut then null
             when b.first_analysis_at is not null
              and epoch(b.first_analysis_at) - epoch(b.published) <= {{ k }} * 86400 then true
-            when b.published + to_days({{ k }}) > c.data_cut then null
             when b.nvd_analyzed and b.first_analysis_at is null then null
             else false
         end as boolean

@@ -1,14 +1,14 @@
 {
  "data_cut": "2026-11-12T00:21:46+00:00",
  "dbt_version": "1.12.6",
- "elapsed_s": 78.8,
+ "elapsed_s": 80.2,
  "nodes": [
   {
    "failures": null,
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.advisory_versions",
-   "seconds": 1.31,
+   "seconds": 1.46,
    "status": "success"
   },
   {
@@ -16,7 +16,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.cve_current",
-   "seconds": 8.02,
+   "seconds": 7.97,
    "status": "success"
   },
   {
@@ -24,7 +24,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.cve_fact",
-   "seconds": 25.28,
+   "seconds": 24.93,
    "status": "success"
   },
   {
@@ -32,7 +32,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.exploit_first_seen",
-   "seconds": 0.07,
+   "seconds": 0.09,
    "status": "success"
   },
   {
@@ -48,7 +48,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.int_cve_latest",
-   "seconds": 2.02,
+   "seconds": 2.42,
    "status": "success"
   },
   {
@@ -56,7 +56,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.int_cve_spine",
-   "seconds": 2.36,
+   "seconds": 2.8,
    "status": "success"
   },
   {
@@ -64,7 +64,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.int_cve_versions",
-   "seconds": 2.67,
+   "seconds": 2.78,
    "status": "success"
   },
   {
@@ -72,7 +72,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.int_kev_listing",
-   "seconds": 0.03,
+   "seconds": 0.04,
    "status": "success"
   },
   {
@@ -80,7 +80,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.int_metrics_checked",
-   "seconds": 0.76,
+   "seconds": 0.78,
    "status": "success"
   },
   {
@@ -88,7 +88,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.int_nvd_details",
-   "seconds": 6.07,
+   "seconds": 6.09,
    "status": "success"
   },
   {
@@ -96,7 +96,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.int_nvd_event_summary",
-   "seconds": 0.39,
+   "seconds": 0.43,
    "status": "success"
   },
   {
@@ -104,7 +104,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.int_nvd_latest",
-   "seconds": 0.35,
+   "seconds": 0.65,
    "status": "success"
   },
   {
@@ -112,7 +112,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.int_nvd_status_events",
-   "seconds": 1.5,
+   "seconds": 1.64,
    "status": "success"
   },
   {
@@ -120,7 +120,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.int_obs_current",
-   "seconds": 0.05,
+   "seconds": 0.04,
    "status": "success"
   },
   {
@@ -152,7 +152,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.int_observations",
-   "seconds": 11.56,
+   "seconds": 11.49,
    "status": "success"
   },
   {
@@ -160,7 +160,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.int_range_version_checks",
-   "seconds": 0.8,
+   "seconds": 0.73,
    "status": "success"
   },
   {
@@ -168,7 +168,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.int_vector_checks",
-   "seconds": 1.99,
+   "seconds": 1.73,
    "status": "success"
   },
   {
@@ -176,7 +176,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.int_vectors_distinct",
-   "seconds": 0.17,
+   "seconds": 0.19,
    "status": "success"
   },
   {
@@ -192,7 +192,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.mart_backlog_q1",
-   "seconds": 0.23,
+   "seconds": 0.3,
    "status": "success"
   },
   {
@@ -200,7 +200,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.mart_backlog_q2",
-   "seconds": 1.98,
+   "seconds": 1.82,
    "status": "success"
   },
   {
@@ -208,7 +208,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.mart_backlog_q3",
-   "seconds": 0.17,
+   "seconds": 0.15,
    "status": "success"
   },
   {
@@ -216,7 +216,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.mart_backlog_q6",
-   "seconds": 0.06,
+   "seconds": 0.07,
    "status": "success"
   },
   {
@@ -224,7 +224,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.mart_domain_shift",
-   "seconds": 0.95,
+   "seconds": 1.1,
    "status": "success"
   },
   {
@@ -232,7 +232,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.mart_filer_vs_nvd",
-   "seconds": 0.33,
+   "seconds": 0.5,
    "status": "success"
   },
   {
@@ -240,7 +240,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.mart_kev_timing",
-   "seconds": 0.2,
+   "seconds": 0.17,
    "status": "success"
   },
   {
@@ -248,7 +248,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.nvd_status_history",
-   "seconds": 0.54,
+   "seconds": 0.53,
    "status": "success"
   },
   {
@@ -256,7 +256,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.quarantine",
-   "seconds": 0.61,
+   "seconds": 0.85,
    "status": "success"
   },
   {
@@ -296,7 +296,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.stg_cwe",
-   "seconds": 0.03,
+   "seconds": 0.02,
    "status": "success"
   },
   {
@@ -304,7 +304,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.stg_epss_offsets",
-   "seconds": 0.03,
+   "seconds": 0.02,
    "status": "success"
   },
   {
@@ -336,7 +336,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.stg_nvd_changes",
-   "seconds": 0.03,
+   "seconds": 0.02,
    "status": "success"
   },
   {
@@ -344,7 +344,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.stg_nvd_cves",
-   "seconds": 0.04,
+   "seconds": 0.02,
    "status": "success"
   },
   {
@@ -352,7 +352,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.stg_osv_advisories",
-   "seconds": 0.03,
+   "seconds": 0.02,
    "status": "success"
   },
   {
@@ -360,7 +360,7 @@
    "kind": "model",
    "message": null,
    "node": "model.unscheduled.stg_vulnrichment",
-   "seconds": 0.03,
+   "seconds": 0.02,
    "status": "success"
   },
   {
@@ -384,7 +384,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.accepted_values_cve_fact_field__nvd_status__cvss2_vector__cvss30_vector__cvss31_vector__cvss40_vector__cvss2_score__cvss30_score__cvss31_score__cvss40_score__cvss2_severity__cvss30_severity__cvss31_severity__cvss40_severity__cwe__cpe_config__kev_listed__kev_ransomware__ssvc_exploitation__ssvc_automatable__ssvc_technical_impact__exploit_code__epss__affected_versions__cve_state__assigner.ed7ea8ff4b",
-   "seconds": 0.25,
+   "seconds": 0.24,
    "status": "pass"
   },
   {
@@ -400,7 +400,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.accepted_values_quarantine_rule_id__Q01__Q02__Q03__Q04__Q05__Q06__Q07__Q08.a01a314b4c",
-   "seconds": 0.13,
+   "seconds": 0.16,
    "status": "pass"
   },
   {
@@ -424,7 +424,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.assert_one_fact_at_a_time",
-   "seconds": 2.2,
+   "seconds": 2.32,
    "status": "pass"
   },
   {
@@ -432,7 +432,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.assert_published_before_modified",
-   "seconds": 0.06,
+   "seconds": 0.09,
    "status": "pass"
   },
   {
@@ -440,7 +440,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.assert_published_records_have_dates",
-   "seconds": 0.01,
+   "seconds": 0.03,
    "status": "pass"
   },
   {
@@ -456,7 +456,15 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.assert_vectors_parse",
-   "seconds": 0.21,
+   "seconds": 0.23,
+   "status": "pass"
+  },
+  {
+   "failures": 0,
+   "kind": "test",
+   "message": null,
+   "node": "test.unscheduled.assert_young_cves_are_not_judged",
+   "seconds": 0.06,
    "status": "pass"
   },
   {
@@ -464,7 +472,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.not_null_cve_current_cve_id.30181fdb9f",
-   "seconds": 0.02,
+   "seconds": 0.03,
    "status": "pass"
   },
   {
@@ -488,7 +496,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.not_null_cve_current_split_window.8c892882d5",
-   "seconds": 0.03,
+   "seconds": 0.02,
    "status": "pass"
   },
   {
@@ -496,7 +504,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.not_null_cve_current_state.686e1257db",
-   "seconds": 0.03,
+   "seconds": 0.02,
    "status": "pass"
   },
   {
@@ -504,7 +512,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.not_null_cve_fact_cve_id.d01f4e75ed",
-   "seconds": 0.02,
+   "seconds": 0.04,
    "status": "pass"
   },
   {
@@ -512,7 +520,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.not_null_cve_fact_dated_by.4f06986926",
-   "seconds": 0.02,
+   "seconds": 0.03,
    "status": "pass"
   },
   {
@@ -552,7 +560,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.not_null_exploit_first_seen_cve_id.d7a10696e5",
-   "seconds": 0.04,
+   "seconds": 0.06,
    "status": "pass"
   },
   {
@@ -560,7 +568,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.not_null_kev_events_cve_id.c25534f2e3",
-   "seconds": 0.02,
+   "seconds": 0.04,
    "status": "pass"
   },
   {
@@ -640,7 +648,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.not_null_mart_domain_shift_nvd_analyzed.ba4ba6014e",
-   "seconds": 0.02,
+   "seconds": 0.03,
    "status": "pass"
   },
   {
@@ -648,7 +656,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.not_null_mart_filer_vs_nvd_cve_id.3eba99c28a",
-   "seconds": 0.03,
+   "seconds": 0.02,
    "status": "pass"
   },
   {
@@ -656,7 +664,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.not_null_mart_kev_timing_cve_id.ea292f7c15",
-   "seconds": 0.03,
+   "seconds": 0.02,
    "status": "pass"
   },
   {
@@ -712,7 +720,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.relationships_cve_current_nvd_status__status__source_config_status_labels_.3d0d9c8fe5",
-   "seconds": 0.04,
+   "seconds": 0.02,
    "status": "pass"
   },
   {
@@ -752,7 +760,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.relationships_mart_filer_vs_nvd_cve_id__cve_id__ref_cve_current_.3d058f6a76",
-   "seconds": 0.06,
+   "seconds": 0.04,
    "status": "pass"
   },
   {
@@ -760,7 +768,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.relationships_mart_kev_timing_cve_id__cve_id__ref_cve_current_.72757773d9",
-   "seconds": 0.04,
+   "seconds": 0.03,
    "status": "pass"
   },
   {
@@ -776,7 +784,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.unique_combination_advisory_versions_database__advisory_id__ecosystem__known_from__modified.355a373de0",
-   "seconds": 0.09,
+   "seconds": 0.15,
    "status": "pass"
   },
   {
@@ -784,7 +792,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.unique_combination_cve_fact_cve_id__field__source__value__known_from.d7a90a25da",
-   "seconds": 1.14,
+   "seconds": 1.13,
    "status": "pass"
   },
   {
@@ -800,7 +808,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.unique_cve_current_cve_id.cd5f44cc03",
-   "seconds": 0.06,
+   "seconds": 0.05,
    "status": "pass"
   },
   {
@@ -808,7 +816,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.unique_exploit_first_seen_cve_id.e8355dd415",
-   "seconds": 0.02,
+   "seconds": 0.03,
    "status": "pass"
   },
   {
@@ -816,7 +824,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.unique_kev_events_cve_id.b71df89186",
-   "seconds": 0.02,
+   "seconds": 0.03,
    "status": "pass"
   },
   {
@@ -848,7 +856,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.unique_mart_domain_shift_cve_id.61f3412bfd",
-   "seconds": 0.04,
+   "seconds": 0.02,
    "status": "pass"
   },
   {
@@ -856,7 +864,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.unique_mart_filer_vs_nvd_cve_id.fa2910c8be",
-   "seconds": 0.04,
+   "seconds": 0.03,
    "status": "pass"
   },
   {
@@ -872,7 +880,7 @@
    "kind": "test",
    "message": null,
    "node": "test.unscheduled.unique_quarantine_counts_rule_id.3971cb5cb4",
-   "seconds": 0.04,
+   "seconds": 0.02,
    "status": "pass"
   }
  ],
@@ -881,7 +889,7 @@
    "success": 45
   },
   "test": {
-   "pass": 64
+   "pass": 65
   }
  }
 }

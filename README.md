@@ -2,23 +2,12 @@
 
 Triage for the CVEs the NVD no longer analyzes.
 
-**Phase 1 of 5 is in progress.** 0 of 18 checklist lines are done. Still missing:
+**Phase 1 of 5 is in progress.** 11 of 18 checklist lines are done. Still missing:
 
-- The setup done by the build with no typed secret; the probes ran first
-- Every source fetched and locked by digest with licences and terms recorded
-- Every change to every CVE dated; the as-of engine passes parity and the planted future fact test
-- dbt contracts and tests pass; quarantine counts in the manifest; status vocabulary registered
-- The month criteria and the Phase 1 plan hashed before any test CVE was scored
-- Q1 to Q8 answered with intervals and every chart with its table and SQL
-- The customer name checked; six stand ins pinned by rule; SBOMs committed
-- The matcher and osv-scanner agree; the CPE contrast measured
 - The legacy script characterized and replaced by the adapter
 - The API live on Vercel with Neon, loaded only by the sync, verified from a separate client
 - Persistence observed independently; schemathesis green; the load test with the cold start
-- The CLI gives the same answers as the API on the same inputs
-- The design system in place with the palette validator green in CI
 - The console, the ruler, the landing, the docs and the report live on Vercel
-- sloplint, axe and Lighthouse green; the look reviewed or marked pending
 - README with the matrix, RESULTS, DECISIONS, the memos and notebooks; the humanizer pass
 - The live check awake and asleep; reset and rederive reproduced every number
 - At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2
@@ -38,8 +27,21 @@ Only what is built is listed; docs/ROADMAP.md holds the plan for the rest.
 
 | Skill | Where | What it shows |
 |---|---|---|
+| Python and the data stack | packages/sources, packages/lake | polars, DuckDB and pyarrow |
+| SQL and analytics engineering | dbt/models, dbt/macros | staging, intermediate and marts, and the as-of macro |
+| Data quality | dbt/tests | contracts on every mart and the named quarantine rules |
+| Point in time correctness | packages/lake, tests/lake | the as-of engine, its parity test and the planted future fact |
+| Statistics | packages/analysis | cluster bootstrap, Cohen and weighted kappa, Benjamini-Hochberg, the domain classifier |
+| APIs | packages/api, openapi.json | FastAPI over Neon, typed problem documents, the committed schema |
 | API integration | packages/sources | NVD, CVE List, KEV, EPSS, OSV, GitHub advisories, GLEIF and EDGAR |
+| Supply chain security | packages/match, customer/sboms | the matcher in code, checked by osv-scanner, with Grype as the CPE contrast |
+| Legacy code | customer/legacy, tests/characterization, packages/legacy_adapter | characterization tests first, then a strangler with a byte for byte contract |
+| CLI | packages/cli | the same services as the API |
+| Modular design and trade offs | packages, docs/adr | one package per concern and a record for every decision |
+| Coding agents | AGENTS.md, CLAUDE.md, .claude/skills | one source of rules and four skills in the Agent Skills format |
 | CI and DevOps | .github/workflows, Dockerfile.vercel | the gates, gitleaks, zizmor, actions pinned by commit, Vercel deploys |
+| Frontend and design systems | web, web/styles/tokens.css, tools/hallmark | tokens first, shadcn/ui themed through them, the palette validator |
+| Accessibility and performance | .github/workflows/web.yml | axe and Lighthouse in CI |
 
 ## Where things are
 

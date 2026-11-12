@@ -238,7 +238,7 @@
     "population": "every published table",
     "source": "lake"
    },
-   "value": "9dda8f06c248bbcc41b86a7532ee0410b20bda4e2bbc60b95fd9d41f416c77cb"
+   "value": "6a7ad73d0035aeb780d2ada250bfaee01d760a547aa8aa85e86aaacd3743ff64"
   },
   "lake.cves": {
    "fmt": "int",
@@ -326,7 +326,7 @@
     "population": "dbt tests in dbt/",
     "source": "lake"
    },
-   "value": 64
+   "value": 65
   },
   "lake.dbt.tests_total": {
    "fmt": "int",
@@ -337,7 +337,7 @@
     "population": "dbt tests in dbt/",
     "source": "lake"
    },
-   "value": 64
+   "value": 65
   },
   "lake.facts": {
    "fmt": "int",
@@ -491,7 +491,7 @@
     "population": "data/lake/unscheduled.duckdb",
     "source": "lake"
    },
-   "value": "d97e191acc77695ad3e3e09e3a2822890687d4ebfd1cb4a8e6bd55b169bfc3a6"
+   "value": "66812c5bfe50d61521e75391f29ef2afc7e73549d6e628733bd90c9e5e2c4142"
   }
  }
 }

@@ -13,7 +13,7 @@
    }
   },
   "backlog.q1.change_30d_2025_to_change_to_since_change": {
-   "value": 0.008655153513977887,
+   "value": -0.03162830952050899,
    "fmt": "pts1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -24,7 +24,7 @@
    }
   },
   "backlog.q1.change_30d_2025_to_change_to_since_change_high": {
-   "value": 0.1925668473861608,
+   "value": 0.14780642248189568,
    "fmt": "pts1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -35,7 +35,7 @@
    }
   },
   "backlog.q1.change_30d_2025_to_change_to_since_change_low": {
-   "value": -0.17911203395030623,
+   "value": -0.2096382877899099,
    "fmt": "pts1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -46,7 +46,7 @@
    }
   },
   "backlog.q1.change_30d_2025_to_change_to_since_change_p_adjusted": {
-   "value": 0.9475262368815592,
+   "value": 0.9805097451274363,
    "fmt": "float3",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -101,7 +101,7 @@
    }
   },
   "backlog.q1.change_7d_2025_to_change_to_since_change": {
-   "value": 0.011689921119542535,
+   "value": 0.009261101829920626,
    "fmt": "pts1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -112,7 +112,7 @@
    }
   },
   "backlog.q1.change_7d_2025_to_change_to_since_change_high": {
-   "value": 0.12977614478080282,
+   "value": 0.1280241318341344,
    "fmt": "pts1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -123,7 +123,7 @@
    }
   },
   "backlog.q1.change_7d_2025_to_change_to_since_change_low": {
-   "value": -0.10032375813760602,
+   "value": -0.10258679097648021,
    "fmt": "pts1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -134,7 +134,7 @@
    }
   },
   "backlog.q1.change_7d_2025_to_change_to_since_change_p_adjusted": {
-   "value": 0.9475262368815592,
+   "value": 0.9805097451274363,
    "fmt": "float3",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -189,7 +189,7 @@
    }
   },
   "backlog.q1.change_90d_2025_to_change_to_since_change": {
-   "value": 0.1390227411131032,
+   "value": 0.005655837668560371,
    "fmt": "pts1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -200,7 +200,7 @@
    }
   },
   "backlog.q1.change_90d_2025_to_change_to_since_change_high": {
-   "value": 0.32297292924942256,
+   "value": 0.1931154371496655,
    "fmt": "pts1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -211,7 +211,7 @@
    }
   },
   "backlog.q1.change_90d_2025_to_change_to_since_change_low": {
-   "value": -0.06279123375892932,
+   "value": -0.19147497409126166,
    "fmt": "pts1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -222,7 +222,7 @@
    }
   },
   "backlog.q1.change_90d_2025_to_change_to_since_change_p_adjusted": {
-   "value": 0.2578710644677661,
+   "value": 0.9805097451274363,
    "fmt": "float3",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -519,7 +519,7 @@
    }
   },
   "backlog.q1.share_30d_since_change": {
-   "value": 0.44422476423606205,
+   "value": 0.4039413012015752,
    "fmt": "pct1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -530,7 +530,7 @@
    }
   },
   "backlog.q1.share_30d_since_change_high": {
-   "value": 0.6101062007969901,
+   "value": 0.5562589913425214,
    "fmt": "pct1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -541,7 +541,7 @@
    }
   },
   "backlog.q1.share_30d_since_change_low": {
-   "value": 0.3175544349946912,
+   "value": 0.292007434742665,
    "fmt": "pct1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -618,7 +618,7 @@
    }
   },
   "backlog.q1.share_7d_since_change": {
-   "value": 0.2581171479849894,
+   "value": 0.2556883286953675,
    "fmt": "pct1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -629,7 +629,7 @@
    }
   },
   "backlog.q1.share_7d_since_change_high": {
-   "value": 0.37804588813006784,
+   "value": 0.376400636026532,
    "fmt": "pct1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -640,7 +640,7 @@
    }
   },
   "backlog.q1.share_7d_since_change_low": {
-   "value": 0.1681709417310932,
+   "value": 0.16582736330557604,
    "fmt": "pct1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -717,7 +717,7 @@
    }
   },
   "backlog.q1.share_90d_since_change": {
-   "value": 0.6622664727598165,
+   "value": 0.5288995693152737,
    "fmt": "pct1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -728,7 +728,7 @@
    }
   },
   "backlog.q1.share_90d_since_change_high": {
-   "value": 0.7930899201851763,
+   "value": 0.67360940910962,
    "fmt": "pct1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -739,7 +739,7 @@
    }
   },
   "backlog.q1.share_90d_since_change_low": {
-   "value": 0.5180030300593181,
+   "value": 0.39305040555243725,
    "fmt": "pct1",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -8193,8 +8193,8 @@
      0.21457126539936364,
      12257,
      0.30749775638410703,
-     7178,
-     0.5757871273335191,
+     4689,
+     0.3506078055022393,
      4137,
      5.838947754629232,
      0
@@ -8206,8 +8206,8 @@
      0.18159287293187756,
      14929,
      0.3120101815258892,
-     4833,
-     1.0,
+     0,
+     null,
      4833,
      6.732289930554452,
      0
@@ -8217,10 +8217,10 @@
      17051,
      17051,
      0.14896487009559556,
-     8519,
-     0.5470125601596432,
-     4660,
-     1.0,
+     4883,
+     0.20970714724554576,
+     0,
+     null,
      4660,
      6.75622965277759,
      0
@@ -8228,12 +8228,12 @@
     [
      "2026-11-01",
      6653,
-     1958,
-     0.29877425944841673,
-     671,
-     1.0,
-     671,
-     1.0,
+     1718,
+     0.20081490104772992,
+     0,
+     null,
+     0,
+     null,
      671,
      3.514253773148413,
      0

@@ -1,24 +1,24 @@
 {
- "made_at": "2026-11-12T02:08:55+00:00",
+ "made_at": "2026-11-12T02:34:02+00:00",
  "bundle_generated_at": "2026-11-12T02:07:17Z",
  "lake_digest": "d97e191acc77695ad3e3e09e3a2822890687d4ebfd1cb4a8e6bd55b169bfc3a6",
  "sync": {
   "final": "done",
   "calls": 35,
-  "seconds": 94.8
+  "seconds": 88.3
  },
- "database_bytes": 666665487,
- "ceiling_mb": 5000,
+ "database_bytes": 666583567,
+ "ceiling_mb": 800,
  "tables": {
   "cve_event": {
-   "rows": 1284480,
+   "rows": 1284270,
    "bytes": 369115136,
    "heap_bytes": 255197184,
    "toast_bytes": 8192,
    "index_bytes": 113819648
   },
   "cve": {
-   "rows": 259317,
+   "rows": 259304,
    "bytes": 287268864,
    "heap_bytes": 248414208,
    "toast_bytes": 5283840,
@@ -100,70 +100,70 @@
   {
    "path": "/health",
    "http": 200,
-   "ms": 15.1,
-   "bytes": 14939,
-   "sha256": "c21fd51136003c476f27712001f32c1d8fdf0b1c710f9a83a5c3aae834c164db"
+   "ms": 12.9,
+   "bytes": 14937,
+   "sha256": "11f575136eac435baf68a319ac56fdaa4b78e9f2ed3fbd480ea3ee8c254ec2bf"
   },
   {
    "path": "/v1/meta",
    "http": 200,
-   "ms": 7.5,
-   "bytes": 16753,
-   "sha256": "1cddf808c578c002512ff1410c5b842859edd9c7f31c098eb0602e08d5bc43f0"
+   "ms": 6.7,
+   "bytes": 16752,
+   "sha256": "1f58329faa3a82e1f2d4d867db53aca9c51eed395bed6912a2781be7df135465"
   },
   {
    "path": "/v1/cves?limit=5",
    "http": 200,
-   "ms": 12.3,
+   "ms": 13.2,
    "bytes": 3292,
    "sha256": "474c8a53d651171ebbd2d3df39fb991dd805de79006c82c6dd175a99360f231f"
   },
   {
    "path": "/v1/cves?kev=true&limit=5",
    "http": 200,
-   "ms": 18.2,
+   "ms": 21.7,
    "bytes": 3285,
    "sha256": "c72b17e450e17abdce20a3b2388344b5a59e977c6441dcada8971f289f9d4ab1"
   },
   {
    "path": "/v1/cves?nvd_status=Deferred&limit=5",
    "http": 200,
-   "ms": 7.9,
+   "ms": 8.5,
    "bytes": 3273,
    "sha256": "f2516b98715b0dec407af376464824c74ae75e4c9706e126d93e167cb13c04a9"
   },
   {
    "path": "/v1/cves/CVE-2021-44228",
    "http": 200,
-   "ms": 11.0,
+   "ms": 12.7,
    "bytes": 5371,
    "sha256": "91667af78f5e08f914911217a1dad3b88d2109f558e0fc88688efb479b9d0f08"
   },
   {
    "path": "/v1/cves/CVE-2021-44228?as_of=2021-12-12",
    "http": 200,
-   "ms": 8.6,
+   "ms": 9.4,
    "bytes": 4464,
    "sha256": "222907bbc1e506e90e047b614939bd77751f4c7383dd180cce7225277a64b646"
   },
   {
    "path": "/v1/cves/CVE-2021-44228/timeline",
    "http": 200,
-   "ms": 8.0,
+   "ms": 8.9,
    "bytes": 6103,
    "sha256": "4ca25c0c4cb143fa1bf8ce534fd62541851dddf5442bd7acbf78955411a6275d"
   },
   {
    "path": "/v1/backlog",
    "http": 200,
-   "ms": 7.3,
+   "ms": 7.6,
    "bytes": 16531,
    "sha256": "f067408627208f2e9c3695a3d1fc97f35ba022f2e2537b70fb4ec16371fe3557"
   },
   {
    "path": "/v1/products",
    "http": 200,
-   "ms": 6.9,
+   "ms": 7.5,
    "bytes": 3313,
    "sha256": "cfcc48734a9c23c502453edfb4d229cd77e337a5aa41681987ef06cbb85ded43"
   },
@@ -431,7 +431,7 @@
    "step": "load cve_event",
    "chunks_done": 25,
    "chunks_total": 34,
-   "storage_bytes": 602061847,
+   "storage_bytes": 602053655,
    "detail": null
   },
   {
@@ -441,7 +441,7 @@
    "step": "load cve_event",
    "chunks_done": 26,
    "chunks_total": 34,
-   "storage_bytes": 630914071,
+   "storage_bytes": 630905879,
    "detail": null
   },
   {
@@ -451,7 +451,7 @@
    "step": "load cve_event",
    "chunks_done": 27,
    "chunks_total": 34,
-   "storage_bytes": 660462615,
+   "storage_bytes": 660388887,
    "detail": null
   },
   {
@@ -461,7 +461,7 @@
    "step": "load cve_event",
    "chunks_done": 28,
    "chunks_total": 34,
-   "storage_bytes": 682392599,
+   "storage_bytes": 682318871,
    "detail": null
   },
   {
@@ -471,7 +471,7 @@
    "step": "sweep product",
    "chunks_done": 29,
    "chunks_total": 34,
-   "storage_bytes": 664992791,
+   "storage_bytes": 664910871,
    "detail": null
   },
   {
@@ -481,7 +481,7 @@
    "step": "load product",
    "chunks_done": 30,
    "chunks_total": 34,
-   "storage_bytes": 665025559,
+   "storage_bytes": 664943639,
    "detail": null
   },
   {
@@ -491,7 +491,7 @@
    "step": "sweep finding",
    "chunks_done": 31,
    "chunks_total": 34,
-   "storage_bytes": 665205783,
+   "storage_bytes": 665123863,
    "detail": null
   },
   {
@@ -501,7 +501,7 @@
    "step": "load finding",
    "chunks_done": 32,
    "chunks_total": 34,
-   "storage_bytes": 668441623,
+   "storage_bytes": 668359703,
    "detail": null
   },
   {
@@ -511,7 +511,7 @@
    "step": "backlog",
    "chunks_done": 33,
    "chunks_total": 34,
-   "storage_bytes": 666754071,
+   "storage_bytes": 666672151,
    "detail": null
   },
   {
@@ -521,7 +521,7 @@
    "step": "finalize",
    "chunks_done": 34,
    "chunks_total": 34,
-   "storage_bytes": 666665487,
+   "storage_bytes": 666583567,
    "detail": null
   }
  ]

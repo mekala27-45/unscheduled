@@ -56,11 +56,13 @@ select
     ) as hours_listing_to_analysis,
     cast(business_day_deadline as timestamptz) as business_day_deadline,
     cast(
+        -- judged only once the deadline has passed, so a listing too recent to judge is left out
+        -- whether or not the NVD has analyzed it yet
         case
             when not kev_listed then null
+            when business_day_deadline > {{ data_cut() }} then null
             when analyzed_before_listing then true
             when analysis_after_listing_at is not null and analysis_after_listing_at <= business_day_deadline then true
-            when business_day_deadline > {{ data_cut() }} then null
             else false
         end as boolean
     ) as met_one_business_day

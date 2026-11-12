@@ -11,7 +11,7 @@
     "x": "2026-04",
     "label": "15 April 2026, the NVD changes what it analyzes"
    },
-   "title": "The NVD analyzed 80.2% of new CVEs within 30 days before 2025, 43.6% from 2025 to the change and 44.4% since",
+   "title": "The NVD analyzed 80.2% of new CVEs within 30 days before 2025, 43.6% from 2025 to the change and 40.4% since",
    "unit": "share",
    "kind": "line",
    "x": [
@@ -187,7 +187,7 @@
       0.21457126539936364,
       0.18159287293187756,
       0.14896487009559556,
-      0.29877425944841673
+      0.20081490104772992
      ]
     },
     {
@@ -276,8 +276,8 @@
       0.5021006250640434,
       0.30749775638410703,
       0.3120101815258892,
-      0.5470125601596432,
-      1.0
+      0.20970714724554576,
+      null
      ]
     },
     {
@@ -364,10 +364,10 @@
       0.5675753642002019,
       0.5513901119637691,
       0.5414489189466134,
-      0.5757871273335191,
-      1.0,
-      1.0,
-      1.0
+      0.3506078055022393,
+      null,
+      null,
+      null
      ]
     }
    ]
@@ -562,7 +562,7 @@
   {
    "id": "q6",
    "source": "results/backlog/q6.json, from the lake as of 2026-11-12",
-   "window": "every window; growth from 2020 to the twelve months 2025-11-01 to 2026-11-01 (end excluded)",
+   "window": "every window; growth from 2020 to the twelve months 2025-11-01 to 2026-11-01 (end excluded); the month of the cut, 2026-11, is left out because it is not complete",
    "sql": "-- Q6: CVEs published since 2020 by month and filer type, with each type's share of the month.\nselect\n    published_month,\n    filer_type,\n    sum(cves) as cves,\n    sum(cves) / any_value(month_total) as share_of_month\nfrom gold.mart_backlog_q6\ngroup by published_month, filer_type\norder by published_month, filer_type",
    "rule": {
     "x": "2026-04",
@@ -653,8 +653,7 @@
     "2026-07",
     "2026-08",
     "2026-09",
-    "2026-10",
-    "2026-11"
+    "2026-10"
    ],
    "series": [
     {
@@ -743,8 +742,7 @@
       344,
       483,
       520,
-      390,
-      45
+      390
      ]
     },
     {
@@ -833,8 +831,7 @@
       2053,
       1774,
       3337,
-      4112,
-      2508
+      4112
      ]
     },
     {
@@ -923,8 +920,7 @@
       5268,
       7034,
       7449,
-      7844,
-      2703
+      7844
      ]
     },
     {
@@ -1013,8 +1009,7 @@
       1775,
       2949,
       3073,
-      4570,
-      1497
+      4570
      ]
     },
     {
@@ -1103,8 +1098,7 @@
       357,
       370,
       562,
-      443,
-      139
+      443
      ]
     },
     {
@@ -1193,8 +1187,7 @@
       85,
       71,
       107,
-      101,
-      38
+      101
      ]
     },
     {
@@ -1283,8 +1276,7 @@
       26,
       40,
       27,
-      20,
-      8
+      20
      ]
     }
    ]

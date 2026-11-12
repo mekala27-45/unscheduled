@@ -213,6 +213,10 @@ def q5() -> dict[str, Any]:
 def q6() -> dict[str, Any]:
     q = load("q6")
     cols, rows = table(q, "monthly_by_filer_type")
+    # A count for the month of the cut covers only part of it, so the chart stops the month before.
+    cut_month = str(q["data_cut"])[:7]
+    keep = [i for i, m in enumerate(column(cols, rows, "Month")) if str(m)[:7] < cut_month]
+    rows = [rows[i] for i in keep]
     months = sorted({str(m)[:7] for m in column(cols, rows, "Month")})
     index = {m: i for i, m in enumerate(months)}
     present = {str(t) for t in column(cols, rows, "Filer type")}
@@ -229,6 +233,7 @@ def q6() -> dict[str, Any]:
     slot: Callable[[int], int] = lambda i: min(8, i + 1)  # noqa: E731
     return chart(
         q,
+        window=f"{q['window']}; the month of the cut, {cut_month}, is left out because it is not complete",
         title=title,
         unit="CVEs",
         kind="line",

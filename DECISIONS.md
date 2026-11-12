@@ -167,6 +167,12 @@ is false for such a CVE now, a not null test holds it, and the AUC refuses a mis
 sums integers into a decimal, which JSON could not hold; values are converted where results are
 written. And a cluster bootstrap by filer over a group of one filer (MITRE) gave an interval of
 zero width: a value from fewer than five filers is written without an interval and says why.
+Last, the k day flags of Q1 judged a CVE younger than k days as analyzed within k days whenever the
+NVD had analyzed it already, while its comment said such a CVE is not judged; the recent months
+counted only their quick analyses (October showed 100 percent at 90 days). The flags are censored
+first now, as the comment says, a dbt test holds it, and the same rule judges a KEV listing at
+one business day only once that day has passed. The 30 day share since the change moved from 44.4
+to 40.4 percent; the earlier figure was never published.
 
 ## 2026-11-12: the serving bundle speaks the API's field names, and is cut to fit the free plan
 

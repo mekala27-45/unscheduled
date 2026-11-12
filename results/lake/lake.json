@@ -1,9 +1,9 @@
 {
- "bytes": 455094272,
- "content_digest": "9dda8f06c248bbcc41b86a7532ee0410b20bda4e2bbc60b95fd9d41f416c77cb",
+ "bytes": 455356416,
+ "content_digest": "6a7ad73d0035aeb780d2ada250bfaee01d760a547aa8aa85e86aaacd3743ff64",
  "data_cut": "2026-11-12T00:21:46+00:00",
  "file": "data/lake/unscheduled.duckdb",
- "sha256": "d97e191acc77695ad3e3e09e3a2822890687d4ebfd1cb4a8e6bd55b169bfc3a6",
+ "sha256": "66812c5bfe50d61521e75391f29ef2afc7e73549d6e628733bd90c9e5e2c4142",
  "tables": {
   "config.bronze_tables": {
    "columns": [
@@ -134,7 +134,7 @@
     "analyzed_30d",
     "analyzed_90d"
    ],
-   "digest": "9fd19f39722e3962318f79e59f35a405bba31d2d91849bf457b3deabecd81be7",
+   "digest": "79957756130d3a7d8a15194e5b48d178d86a664ae83a0d282ab4964591efa0fc",
    "rows": 276958
   },
   "gold.mart_backlog_q2": {
@@ -317,7 +317,7 @@
     "dated_by",
     "pre_history"
    ],
-   "digest": "8783efeaec9234c4a101e057f4db3c3f6a08199c85e60e7c8ae505d1478b29e4",
+   "digest": "65ea06b4a8d69b95830a7bf06ce5c77c3fffa555818ae5e2caaa17975f0b19d3",
    "rows": 6620931
   },
   "silver.exploit_first_seen": {
