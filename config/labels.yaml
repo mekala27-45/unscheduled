@@ -1,0 +1,55 @@
+# The status vocabulary: every value of the NVD vulnStatus field this build has seen, registered with
+# its meaning and where that meaning was read. first_seen and last_seen are the first and the last
+# day this build saw the value in an NVD CVE API answer, and cves_at_last_fetch is how many records
+# carried it then; the fetcher keeps those three fields current and refuses any value not listed
+# here (UnregisteredStatus), so a new label fails the fetch until a person registers it.
+read_on: '2026-11-08'
+meaning_source: The NVD documents these values at https://nvd.nist.gov/vuln/vulnerability-status. On 2026-11-08
+  that page answered this build with a bot challenge, so each meaning below is written from the NVD definitions
+  as published before that day and from the NIST announcement of 15 April 2026 as SiliconANGLE reported
+  it; check them against the page when it can be read. The values themselves are read from the data, never
+  assumed.
+nvd_vuln_status:
+  Received:
+    meaning: The record was recently published to the CVE List and has been received by the NVD; no analysis
+      has started.
+    first_seen: '2026-11-08'
+    last_seen: '2026-11-08'
+    cves_at_last_fetch: 5246
+  Awaiting Analysis:
+    meaning: The record has been marked for analysis by NVD staff and is waiting in the queue.
+    first_seen: '2026-11-08'
+    last_seen: '2026-11-08'
+    cves_at_last_fetch: 9855
+  Undergoing Analysis:
+    meaning: NVD staff are analyzing the record (reference tags, CVSS, CWE and CPE applicability).
+    first_seen: '2026-11-08'
+    last_seen: '2026-11-08'
+    cves_at_last_fetch: 1074
+  Analyzed:
+    meaning: The NVD has completed its analysis and made all of its data associations.
+    first_seen: '2026-11-08'
+    last_seen: '2026-11-08'
+    cves_at_last_fetch: 78693
+  Modified:
+    meaning: A source amended the record after the NVD analyzed it, so the NVD analysis may no longer
+      match the record.
+    first_seen: '2026-11-08'
+    last_seen: '2026-11-08'
+    cves_at_last_fetch: 245640
+  Deferred:
+    meaning: The NVD has no plan to analyze or reanalyze the record. Since 15 April 2026 this is the value
+      the API gives the CVEs NIST describes as lowest priority, not scheduled for immediate enrichment
+      (every CVE outside the KEV catalog, software the federal government uses and critical software);
+      no other new value appeared in the API answers read on 2026-11-08, and CVEs published in November
+      2026 carry it minutes after publication. Before April 2026 the NVD used it for older records it
+      would not analyze.
+    april_2026_label: true
+    first_seen: '2026-11-08'
+    last_seen: '2026-11-08'
+    cves_at_last_fetch: 61425
+  Rejected:
+    meaning: The CVE was rejected in the CVE List; the NVD keeps the record but does not analyze it.
+    first_seen: '2026-11-08'
+    last_seen: '2026-11-08'
+    cves_at_last_fetch: 19141

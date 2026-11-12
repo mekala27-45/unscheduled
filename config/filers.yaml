@@ -1,0 +1,5237 @@
+# Filers grouped by type, from the CNA list as cve.org publishes it (CNAsList.json in the
+# CVEProject/cve-website repository), read on the day below and pinned by its commit and digest.
+# Written by packages/sources (scripts/fetch.py cna_list); edit the rule there, not this file.
+# A filer's group is the first rule its published CNA types meet, in the order of the rule list.
+# cves counts the records the filer assigned in the CVE List snapshot in bronze on the day read.
+# Dashes inside organization names are written as plain hyphens.
+read_on: '2026-11-08'
+source:
+  url: https://raw.githubusercontent.com/CVEProject/cve-website/bc4adbd39adac7adea09fb314d57e103a702d649/src/assets/data/CNAsList.json
+  sha256: 1306d2b2418d76c0edf13323aa52dc0c0169f946feff297524bb8afc4380a2dc
+  cnas: 564
+  reachable: true
+rule:
+- MITRE: the short name mitre
+- national CERT: CERT among the published types and Vendor not among them
+- research or bug bounty platform: Bug Bounty Provider among the types, or Researcher without Vendor
+- open source project: Open Source among the types
+- vendor: Vendor among the types
+- other: anything else; a filer the list does not hold is typed from its short name alone
+groups:
+  vendor:
+    filers: 336
+    cves: 86262
+  open source project:
+    filers: 142
+    cves: 133245
+  research or bug bounty platform:
+    filers: 61
+    cves: 60533
+  national CERT:
+    filers: 21
+    cves: 17016
+  MITRE:
+    filers: 1
+    cves: 117204
+  other:
+    filers: 64
+    cves: 6813
+filers:
+  1E:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 8
+  2N:
+    organization: 2N Telekomunikace a.s.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Czech Republic
+    listed: true
+    cves: 5
+  360ST:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 6
+  3DS:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 113
+  42Gears:
+    organization: 42Gears Mobility Systems Pvt Ltd
+    group: vendor
+    cna_types:
+    - Vendor
+    country: India
+    listed: true
+    cves: 3
+  9front:
+    organization: 9front Systems
+    group: open source project
+    cna_types:
+    - Open Source
+    country: USA
+    listed: true
+    cves: 3
+  '@huntr_ai':
+    organization: Protect AI (formerly huntr.dev)
+    group: research or bug bounty platform
+    cna_types:
+    - Bug Bounty Provider
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 886
+  '@huntrdev':
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 1610
+  ABB:
+    organization: Asea Brown Boveri Ltd. (ABB)
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Switzerland
+    listed: true
+    cves: 287
+  Absolute:
+    organization: Absolute Software
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 68
+  Acer:
+    organization: Acer Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Taiwan
+    listed: true
+    cves: 49
+  Acronis:
+    organization: Acronis International GmbH
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Switzerland
+    listed: true
+    cves: 202
+  ADI:
+    organization: Analog Devices, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  adobe:
+    organization: Adobe Systems Incorporated
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 8287
+  AHA:
+    organization: Austin Hackers Anonymous
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: USA
+    listed: true
+    cves: 48
+  airbus:
+    organization: Airbus
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: Netherlands
+    listed: true
+    cves: 49
+  Airlock:
+    organization: Airlock by Ergon
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Switzerland
+    listed: true
+    cves: 0
+  Airoha:
+    organization: Airoha Technology Corp.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Taiwan
+    listed: true
+    cves: 1
+  AISLE:
+    organization: AISLE Incorporated
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: Netherlands
+    listed: true
+    cves: 0
+  Akrites:
+    organization: Akrites SIRT
+    group: open source project
+    cna_types:
+    - Open Source
+    country: USA
+    listed: true
+    cves: 1
+  AlgoSec:
+    organization: AlgoSec
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Israel
+    listed: true
+    cves: 5
+  Alias:
+    organization: Alias Robotics S.L.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: Spain
+    listed: true
+    cves: 29
+  alibaba:
+    organization: Alibaba, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: China
+    listed: true
+    cves: 5
+  Almaviva:
+    organization: Almaviva S.p.A.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Hosted Service
+    country: Italy
+    listed: true
+    cves: 0
+  Altera:
+    organization: Altera
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 20
+  Altium:
+    organization: Altium
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 22
+  AMD:
+    organization: Advanced Micro Devices Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 642
+  AMI:
+    organization: AMI
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 57
+  Ampere:
+    organization: Ampere Computing
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  AMZN:
+    organization: Amazon
+    group: research or bug bounty platform
+    cna_types:
+    - Vendor
+    - Bug Bounty Provider
+    - Open Source
+    country: USA
+    listed: true
+    cves: 245
+  Anolis:
+    organization: OpenAnolis
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: China
+    listed: true
+    cves: 23
+  Antenna:
+    organization: Antenna
+    group: open source project
+    cna_types:
+    - Open Source
+    country: USA
+    listed: true
+    cves: 0
+  Anthropic:
+    organization: Anthropic, PBC
+    group: vendor
+    cna_types:
+    - Vendor
+    - AI Researcher (Frontier AI Researcher CVE Numbering Authorities (CNAs) Pilot)
+    country: USA
+    listed: true
+    cves: 5
+  apache:
+    organization: Apache Software Foundation
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 3183
+  AppCheck:
+    organization: AppCheck Ltd.
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: UK
+    listed: true
+    cves: 13
+  apple:
+    organization: Apple Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 9162
+  arcinfo:
+    organization: ARC Informatique
+    group: vendor
+    cna_types:
+    - Vendor
+    country: France
+    listed: true
+    cves: 14
+  ARCON:
+    organization: ARCON Techsolutions Private Limited
+    group: vendor
+    cna_types:
+    - Vendor
+    country: India
+    listed: true
+    cves: 0
+  Arista:
+    organization: Arista Networks, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 161
+  Arm:
+    organization: Arm Limited
+    group: open source project
+    cna_types:
+    - Open Source
+    - Vendor
+    country: UK
+    listed: true
+    cves: 66
+  Armis:
+    organization: Armis, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 11
+  Arteche:
+    organization: Arteche
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Spain
+    listed: true
+    cves: 0
+  ARTICA:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 10
+  Arxscan:
+    organization: Arxscan, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  ASR:
+    organization: ASR Microelectronics Co., Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 22
+  ASRG:
+    organization: Automotive Security Research Group (ASRG)
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: USA
+    listed: true
+    cves: 90
+  ASUS:
+    organization: ASUSTeK Computer Incorporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Taiwan
+    listed: true
+    cves: 88
+  ASUSTOR:
+    organization: ASUSTOR, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Taiwan
+    listed: true
+    cves: 0
+  ASUSTOR1:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 38
+  ATIS:
+    organization: ATISoluciones Diseño de Sistemas Electrónicos, S.L.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Spain
+    listed: true
+    cves: 2
+  atlassian:
+    organization: Atlassian
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Australia
+    listed: true
+    cves: 572
+  autodesk:
+    organization: Autodesk
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 365
+  Automox:
+    organization: Automox Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Hosted Service
+    country: USA
+    listed: true
+    cves: 0
+  avaya:
+    organization: Avaya, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 70
+  Axis:
+    organization: Axis Communications AB
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Sweden
+    listed: true
+    cves: 97
+  AxxonSoft:
+    organization: AxxonSoft Limited
+    group: vendor
+    cna_types:
+    - Vendor
+    - Hosted Service
+    country: Ireland
+    listed: true
+    cves: 14
+  azure-access:
+    organization: Azure Access Technology
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 39
+  B.Braun:
+    organization: B. Braun SE
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 4
+  BAE:
+    organization: BAE Systems, Inc.
+    group: other
+    cna_types:
+    - Hosted Service
+    country: USA
+    listed: true
+    cves: 0
+  Baicells:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 5
+  Baidu:
+    organization: Baidu, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: China
+    listed: true
+    cves: 40
+  Baxter:
+    organization: Baxter Healthcare
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 18
+  BCNY:
+    organization: The Browser Company of New York
+    group: research or bug bounty platform
+    cna_types:
+    - Vendor
+    - Bug Bounty Provider
+    country: USA
+    listed: true
+    cves: 9
+  bcorg:
+    organization: Legion of the Bouncy Castle Inc.
+    group: open source project
+    cna_types:
+    - Open Source
+    country: Australia
+    listed: true
+    cves: 85
+  BD:
+    organization: Becton, Dickinson and Company (BD)
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 22
+  BECDX:
+    organization: Beckman Coulter Diagnostics
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  BECLS:
+    organization: Beckman Coulter Life Sciences
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 1
+  BHV:
+    organization: Biohacking Village
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: USA
+    listed: true
+    cves: 0
+  Bitdefender:
+    organization: Bitdefender
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: Romania
+    listed: true
+    cves: 155
+  bizerba:
+    organization: Bizerba SE & Co. KG
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 10
+  blackberry:
+    organization: BlackBerry
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Canada
+    listed: true
+    cves: 71
+  BlackDuck:
+    organization: Black Duck Software, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 16
+  BLSOPS:
+    organization: Black Lantern Security
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: USA
+    listed: true
+    cves: 20
+  BombadilSystems:
+    organization: Bombadil Systems LLC
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: USA
+    listed: true
+    cves: 4
+  bosch:
+    organization: Robert Bosch GmbH
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 134
+  brocade:
+    organization: Brocade Communications Systems LLC, a Broadcom Company
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 244
+  BT:
+    organization: BeyondTrust Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 24
+  Bugcrowd:
+    organization: Bugcrowd Inc.
+    group: research or bug bounty platform
+    cna_types:
+    - Bug Bounty Provider
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 11
+  Bull:
+    organization: Bull SAS
+    group: vendor
+    cna_types:
+    - Vendor
+    country: France
+    listed: true
+    cves: 1
+  ByteDance:
+    organization: ByteDance, Ltd.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: China
+    listed: true
+    cves: 0
+  ca:
+    organization: CA Technologies - A Broadcom Company
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 80
+  Caliptra:
+    organization: Caliptra Project
+    group: open source project
+    cna_types:
+    - Open Source
+    country: USA
+    listed: true
+    cves: 5
+  Canon:
+    organization: Canon Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Japan
+    listed: true
+    cves: 49
+  Canon_EMEA:
+    organization: Canon EMEA
+    group: vendor
+    cna_types:
+    - Vendor
+    country: UK
+    listed: true
+    cves: 9
+  canonical:
+    organization: Canonical Ltd.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: UK
+    listed: true
+    cves: 606
+  Canva:
+    organization: Canva
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: Australia
+    listed: true
+    cves: 15
+  Carrier:
+    organization: Carrier Global Corporation
+    group: vendor
+    cna_types:
+    - Hosted Service
+    - Vendor
+    country: USA
+    listed: true
+    cves: 24
+  Cato:
+    organization: Cato Networks
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: Israel
+    listed: true
+    cves: 12
+  Censys:
+    organization: Censys
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 0
+  Centreon:
+    organization: Centreon
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: France
+    listed: true
+    cves: 38
+  CEP:
+    organization: Cepheid
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  CERT-In:
+    organization: Indian Computer Emergency Response Team (CERT-In)
+    group: national CERT
+    cna_types:
+    - CERT
+    country: India
+    listed: true
+    cves: 159
+  CERT-PL:
+    organization: CERT.PL
+    group: national CERT
+    cna_types:
+    - CERT
+    country: Poland
+    listed: true
+    cves: 599
+  certcc:
+    organization: CERT/CC
+    group: national CERT
+    cna_types:
+    - CERT
+    country: USA
+    listed: true
+    cves: 3528
+  CERTVDE:
+    organization: CERT@VDE
+    group: national CERT
+    cna_types:
+    - CERT
+    country: Germany
+    listed: true
+    cves: 845
+  chainguard:
+    organization: Chainguard, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Hosted Service
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 6
+  Checkmarx:
+    organization: Checkmarx
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: Israel
+    listed: true
+    cves: 34
+  Checkmk:
+    organization: Checkmk GmbH
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Germany
+    listed: true
+    cves: 105
+  checkpoint:
+    organization: Check Point Software Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: Israel
+    listed: true
+    cves: 124
+  Chrome:
+    organization: Chrome
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 7480
+  ChromeOS:
+    organization: ChromeOS Project
+    group: research or bug bounty platform
+    cna_types:
+    - Vendor
+    - Bug Bounty Provider
+    country: USA
+    listed: true
+    cves: 13
+  Ciena:
+    organization: Ciena Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 5
+  CIRCL:
+    organization: Computer Incident Response Center Luxembourg (CIRCL)
+    group: national CERT
+    cna_types:
+    - CERT
+    country: Luxembourg
+    listed: true
+    cves: 251
+  Circutor:
+    organization: Circutor
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Spain
+    listed: true
+    cves: 0
+  cirosec:
+    organization: cirosec GmbH
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Germany
+    listed: true
+    cves: 13
+  CISA:
+    organization: Cybersecurity and Infrastructure Security Agency (CISA)
+    group: other
+    cna_types:
+    - N/A
+    country: USA
+    listed: true
+    cves: 0
+  cisa-cg:
+    organization: Cybersecurity and Infrastructure Security Agency (CISA) U.S. Civilian Government
+    group: national CERT
+    cna_types:
+    - CERT
+    country: USA
+    listed: true
+    cves: 275
+  cisco:
+    organization: Cisco Systems, Inc.
+    group: open source project
+    cna_types:
+    - Hosted Service
+    - Open Source
+    - Researcher
+    - Vendor
+    country: USA
+    listed: true
+    cves: 6801
+  Citrix:
+    organization: Citrix Systems, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 74
+  ClickHouse:
+    organization: ClickHouse, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 4
+  cloudflare:
+    organization: Cloudflare, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 80
+  CODRA:
+    organization: CODRA
+    group: vendor
+    cna_types:
+    - Vendor
+    country: France
+    listed: true
+    cves: 2
+  Commvault:
+    organization: Commvault Systems Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Hosted Service
+    country: USA
+    listed: true
+    cves: 25
+  ConcreteCMS:
+    organization: Concrete CMS
+    group: open source project
+    cna_types:
+    - Open Source
+    country: USA
+    listed: true
+    cves: 138
+  ConnectWise:
+    organization: ConnectWise LLC
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 14
+  CoolKit:
+    organization: SHENZHEN CoolKit Technology CO., LTD.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 3
+  CPANSec:
+    organization: CPAN Security Group
+    group: open source project
+    cna_types:
+    - Open Source
+    country: Canada
+    listed: true
+    cves: 472
+  crafter:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 19
+  Crafter_CMS:
+    organization: Crafter CMS
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 0
+  Crestron:
+    organization: Crestron Electronics, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 8
+  Cribl:
+    organization: Cribl, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 5
+  CrowdStrike:
+    organization: CrowdStrike Holdings, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 5
+  CSA:
+    organization: Cyber Security Agency of Singapore
+    group: national CERT
+    cna_types:
+    - CERT
+    country: Singapore
+    listed: true
+    cves: 79
+  CSAI:
+    organization: Cloud Security Alliance
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  cspcert:
+    organization: null
+    group: national CERT
+    cna_types: []
+    country: null
+    listed: false
+    cves: 25
+  CSW:
+    organization: Cyber Security Works Pvt. Ltd.
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: India
+    listed: true
+    cves: 11
+  CTOne:
+    organization: CTOne Inc.
+    group: research or bug bounty platform
+    cna_types:
+    - Vendor
+    - Researcher
+    - Bug Bounty Provider
+    country: Taiwan
+    listed: true
+    cves: 0
+  curl:
+    organization: curl
+    group: open source project
+    cna_types:
+    - Open Source
+    country: Sweden
+    listed: true
+    cves: 90
+  Cybellum:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 2
+  CyberArk:
+    organization: CyberArk Labs
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: Israel
+    listed: true
+    cves: 5
+  CyberDanube:
+    organization: CyberDanube
+    group: vendor
+    cna_types:
+    - Researcher
+    - Vendor
+    country: Austria
+    listed: true
+    cves: 61
+  cygence:
+    organization: Cygence Pty Ltd
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Australia
+    listed: true
+    cves: 0
+  Cynet:
+    organization: Cynet Security Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  Cytiva:
+    organization: Cytiva
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  dahua:
+    organization: Dahua Technologies
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 58
+  Danfoss:
+    organization: Danfoss
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Denmark
+    listed: true
+    cves: 4
+  Dassault_Systemes:
+    organization: Dassault Systèmes
+    group: vendor
+    cna_types:
+    - Vendor
+    country: France
+    listed: true
+    cves: 0
+  debian:
+    organization: Debian GNU/Linux
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 805
+  DeepSurface:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 1
+  Delinea:
+    organization: Delinea, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Hosted Service
+    - Researcher
+    country: USA
+    listed: true
+    cves: 15
+  dell:
+    organization: Dell
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 2716
+  Deltaww:
+    organization: Delta Electronics, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Taiwan
+    listed: true
+    cves: 72
+  DevCycle:
+    organization: DevCycle
+    group: open source project
+    cna_types:
+    - Vendor
+    - Hosted Service
+    - Open Source
+    country: Canada
+    listed: true
+    cves: 0
+  DEVOLUTIONS:
+    organization: Devolutions Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Canada
+    listed: true
+    cves: 199
+  Dfinity:
+    organization: DFINITY Foundation
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Switzerland
+    listed: true
+    cves: 5
+  DHIS2:
+    organization: The HISP Centre at the University of Oslo
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Norway
+    listed: true
+    cves: 0
+  Digi:
+    organization: Digi International Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 6
+  directcyber:
+    organization: DirectCyber
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    - Open Source
+    country: Australia
+    listed: true
+    cves: 12
+  DIVD:
+    organization: Dutch Institute for Vulnerability Disclosure (DIVD)
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Netherlands
+    listed: true
+    cves: 116
+  Docker:
+    organization: Docker Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 70
+  Document Fdn.:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 59
+  Document_Fdn.:
+    organization: Document Foundation, The
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Germany
+    listed: true
+    cves: 0
+  dotCMS:
+    organization: dotCMS LLC
+    group: other
+    cna_types:
+    - Hosted Service
+    country: USA
+    listed: true
+    cves: 9
+  Dragos:
+    organization: Dragos, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 26
+  Dremio:
+    organization: Dremio Corporation
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 1
+  drupal:
+    organization: Drupal.org
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 585
+  DSF:
+    organization: Django Software Foundation
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 44
+  DTEX:
+    organization: DTEX Systems, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Hosted Service
+    country: USA
+    listed: true
+    cves: 0
+  DualVS:
+    organization: Dual Vipers LLC
+    group: open source project
+    cna_types:
+    - Hosted Service
+    - Open Source
+    - Researcher
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  duo:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 6
+  dwf:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 174
+  EA:
+    organization: Electronic Arts, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 2
+  Eaton:
+    organization: Eaton
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Ireland
+    listed: true
+    cves: 148
+  Echo:
+    organization: Echo Software Ltd.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: Israel
+    listed: true
+    cves: 3
+  eclipse:
+    organization: Eclipse Foundation
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Belgium
+    listed: true
+    cves: 411
+  eclypsium:
+    organization: Eclypsium, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 0
+  EDB:
+    organization: EnterpriseDB Corporation
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 13
+  Edgewatch:
+    organization: Edgewatch Security Intelligence
+    group: research or bug bounty platform
+    cna_types:
+    - Hosted Service
+    - Researcher
+    country: Spain
+    listed: true
+    cves: 1
+  EEF:
+    organization: Erlang Ecosystem Foundation
+    group: open source project
+    cna_types:
+    - Consortium
+    - Open Source
+    country: USA
+    listed: true
+    cves: 394
+  ELAN:
+    organization: ELAN Microelectronics Corp.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Taiwan
+    listed: true
+    cves: 2
+  elastic:
+    organization: Elastic
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Netherlands
+    listed: true
+    cves: 426
+  ENISA:
+    organization: EU Agency for Cybersecurity (ENISA)
+    group: other
+    cna_types:
+    - Consortium
+    country: Greece
+    listed: true
+    cves: 96
+  Entrust:
+    organization: Entrust Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    - Hosted Service
+    country: USA
+    listed: true
+    cves: 0
+  ERIC:
+    organization: Ericsson
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Sweden
+    listed: true
+    cves: 39
+  esaqa:
+    organization: esaqa GmbH
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 5
+  ESET:
+    organization: ESET, spol. s r.o.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Slovak Republic
+    listed: true
+    cves: 47
+  Esri:
+    organization: Environmental Systems Research Institute, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 181
+  Everpure:
+    organization: Everpure, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 3
+  ExtremeNetworks:
+    organization: Extreme Networks, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 8
+  F-SecureUS:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 46
+  F5:
+    organization: F5, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 984
+  facebook:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 168
+  FB:
+    organization: Fujifilm Business Innovation Corp.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Japan
+    listed: true
+    cves: 1
+  fedora:
+    organization: Fedora Project
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 351
+  FERMAX:
+    organization: Fermax Technologies SLU
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Spain
+    listed: true
+    cves: 5
+  Fidelis:
+    organization: Fidelis Security, LLC
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 13
+  flexera:
+    organization: Flexera Software LLC
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 512
+  flock:
+    organization: Flock
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 1
+  floragunn:
+    organization: floragunn GmbH
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Germany
+    listed: true
+    cves: 16
+  Fluid Attacks:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 427
+  Fluid_Attacks:
+    organization: Fluid Attacks
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Colombia
+    listed: true
+    cves: 0
+  forcepoint:
+    organization: Forcepoint
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 88
+  Forescout:
+    organization: Forescout Technologies
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 4
+  ForgeRock:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 9
+  fortinet:
+    organization: Fortinet, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 1975
+  Fortra:
+    organization: Fortra, LLC
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 45
+  Foxit:
+    organization: Foxit Software Incorporated
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 102
+  freebsd:
+    organization: FreeBSD
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 285
+  FSI:
+    organization: Financial Security Institute (FSI)
+    group: national CERT
+    cna_types:
+    - CERT
+    - Researcher
+    - Bug Bounty Provider
+    country: South Korea
+    listed: true
+    cves: 17
+  FSOFT:
+    organization: FPT Software Co., Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: Vietnam
+    listed: true
+    cves: 4
+  FTI:
+    organization: Fsas Technologies
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 2
+  FULL:
+    organization: FULL INTERNET
+    group: research or bug bounty platform
+    cna_types:
+    - Bug Bounty Provider
+    - Hosted Service
+    - Vendor
+    - Researcher
+    country: Brazil
+    listed: true
+    cves: 0
+  Gallagher:
+    organization: Gallagher Group Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: New Zealand
+    listed: true
+    cves: 118
+  GandC:
+    organization: Glyph & Cog, LLC
+    group: open source project
+    cna_types:
+    - Open Source
+    - Vendor
+    country: USA
+    listed: true
+    cves: 29
+  GE GP:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 3
+  GE_Healthcare:
+    organization: GE Healthcare
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  GE_Vernova:
+    organization: GE Vernova
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 6
+  GEHC:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 9
+  GEN:
+    organization: Gen Digital Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 24
+  Genetec:
+    organization: Genetec Inc.
+    group: vendor
+    cna_types:
+    - Hosted Service
+    - Vendor
+    country: Canada
+    listed: true
+    cves: 13
+  Gitea:
+    organization: Gitea Limited
+    group: open source project
+    cna_types:
+    - Open Source
+    - Vendor
+    country: China
+    listed: true
+    cves: 195
+  GitHub_M:
+    organization: GitHub, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 22986
+  GitHub_P:
+    organization: GitHub, Inc. (Products Only)
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 142
+  GitLab:
+    organization: GitLab Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 1853
+  glibc:
+    organization: GNU C Library
+    group: open source project
+    cna_types:
+    - Open Source
+    country: USA
+    listed: true
+    cves: 36
+  gnutls:
+    organization: GnuTLS Project
+    group: open source project
+    cna_types:
+    - Open Source
+    country: n/a
+    listed: true
+    cves: 0
+  Go:
+    organization: Go Project
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 299
+  Google:
+    organization: Google LLC
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 332
+  google_android:
+    organization: Android (associated with Google Inc. or Open Handset Alliance)
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 5491
+  Google_Devices:
+    organization: Google Devices
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 422
+  GoogleCloud:
+    organization: Google Cloud
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 60
+  GovTech CSG:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 124
+  GRAFANA:
+    organization: Grafana Labs
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 115
+  graphql-java:
+    organization: GraphQL Java
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Australia
+    listed: true
+    cves: 0
+  Grayback:
+    organization: Grayback Security
+    group: research or bug bounty platform
+    cna_types:
+    - Bug Bounty Provider
+    country: Spain
+    listed: true
+    cves: 4
+  GreenRocketSecurity:
+    organization: Green Rocket Security Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 1
+  Gridware:
+    organization: Gridware Cybersecurity
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Australia
+    listed: true
+    cves: 52
+  GV:
+    organization: GeoVision Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Taiwan
+    listed: true
+    cves: 84
+  gvision-it:
+    organization: GVision Italia S.r.l.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Italy
+    listed: true
+    cves: 0
+  hackerone:
+    organization: HackerOne
+    group: research or bug bounty platform
+    cna_types:
+    - Bug Bounty Provider
+    country: USA
+    listed: true
+    cves: 1832
+  Hackrate:
+    organization: Hackrate Kft.
+    group: research or bug bounty platform
+    cna_types:
+    - Bug Bounty Provider
+    country: Hungary
+    listed: true
+    cves: 11
+  HackRTU:
+    organization: HackRTU
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Spain
+    listed: true
+    cves: 8
+  Halborn:
+    organization: Halborn
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: USA
+    listed: true
+    cves: 3
+  Hallo_Welt:
+    organization: Hallo Welt! GmbH
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 0
+  Hanwha_Vision:
+    organization: Hanwha Vision Co., Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: South Korea
+    listed: true
+    cves: 20
+  harborist:
+    organization: Harborist
+    group: open source project
+    cna_types:
+    - Open Source
+    country: USA
+    listed: true
+    cves: 29
+  HashiCorp:
+    organization: HashiCorp Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 139
+  HCL:
+    organization: HCL Software
+    group: vendor
+    cna_types:
+    - Vendor
+    country: India
+    listed: true
+    cves: 674
+  HDFG:
+    organization: The HDF Group
+    group: open source project
+    cna_types:
+    - Open Source
+    country: USA
+    listed: true
+    cves: 18
+  HDS:
+    organization: HDS a.s.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Slovak Republic
+    listed: true
+    cves: 0
+  HemoCue:
+    organization: HemoCue AB
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Sweden
+    listed: true
+    cves: 0
+  HeroDevs:
+    organization: HeroDevs
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 42
+  HiddenLayer:
+    organization: HiddenLayer, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Hosted Service
+    - Researcher
+    country: USA
+    listed: true
+    cves: 63
+  hikvision:
+    organization: Hangzhou Hikvision Digital Technology Co., Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 48
+  Hillstone:
+    organization: Hillstone Networks Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 39
+  Hitachi:
+    organization: Hitachi, Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Japan
+    listed: true
+    cves: 109
+  Hitachi Energy:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 123
+  Hitachi_Energy:
+    organization: Hitachi Energy
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Switzerland
+    listed: true
+    cves: 0
+  Hitachi_Vantara:
+    organization: Hitachi Vantara
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  HITVAN:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 58
+  Hologic:
+    organization: Hologic, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  HONA:
+    organization: Honeywell Aerospace
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  Honeywell:
+    organization: Honeywell International Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 64
+  Honor:
+    organization: Honor Device Co., Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 52
+  hp:
+    organization: HP Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 1005
+  hpe:
+    organization: Hewlett Packard Enterprise (HPE)
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 1923
+  hsi:
+    organization: Haverford Systems, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 1
+  huawei:
+    organization: Huawei Technologies
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 2357
+  Huntress:
+    organization: Huntress Labs Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 2
+  HW:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 18
+  HYPR:
+    organization: HYPR Corp
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 22
+  ibm:
+    organization: IBM Corporation
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 9347
+  icscert:
+    organization: Cybersecurity and Infrastructure Security Agency (CISA) Industrial Control Systems (ICS)
+    group: national CERT
+    cna_types:
+    - CERT
+    country: USA
+    listed: true
+    cves: 4029
+  ICT:
+    organization: Integrated Control Technology LTD
+    group: vendor
+    cna_types:
+    - Vendor
+    country: New Zealand
+    listed: true
+    cves: 1
+  IDBS:
+    organization: ID Business Solutions
+    group: vendor
+    cna_types:
+    - Vendor
+    country: UK
+    listed: true
+    cves: 0
+  IDEMIA:
+    organization: IDEMIA
+    group: vendor
+    cna_types:
+    - Researcher
+    - Vendor
+    country: France
+    listed: true
+    cves: 7
+  IDT-DNA:
+    organization: Integrated DNA Technologies, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  Illumio:
+    organization: Illumio
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 1
+  illumos:
+    organization: The illumos project
+    group: open source project
+    cna_types:
+    - Open Source
+    country: USA
+    listed: true
+    cves: 9
+  imaginationtech:
+    organization: Imagination Technologies
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: UK
+    listed: true
+    cves: 95
+  iManage:
+    organization: iManage LLC
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 1
+  INCD:
+    organization: Israel National Cyber Directorate (INCD)
+    group: national CERT
+    cna_types:
+    - CERT
+    country: Israel
+    listed: true
+    cves: 275
+  INCIBE:
+    organization: Spanish National Cybersecurity Institute, S.A. (INCIBE)
+    group: national CERT
+    cna_types:
+    - CERT
+    country: Spain
+    listed: true
+    cves: 1231
+  Infoblox:
+    organization: Infoblox Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 1
+  Insyde:
+    organization: Insyde Software
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 24
+  intel:
+    organization: Intel Corporation
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 4386
+  Intigriti:
+    organization: Intigriti
+    group: research or bug bounty platform
+    cna_types:
+    - Bug Bounty Provider
+    - Hosted Service
+    - Vendor
+    country: Belgium
+    listed: true
+    cves: 1
+  IoT83:
+    organization: IoT83 Ltd
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  IQSIGHT:
+    organization: IQSIGHT B.V.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Netherlands
+    listed: true
+    cves: 1
+  isc:
+    organization: Internet Systems Consortium (ISC)
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 176
+  ivanti:
+    organization: Ivanti
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 214
+  JAMF:
+    organization: Jamf
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 3
+  Jaspersoft:
+    organization: Jaspersoft
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 3
+  jci:
+    organization: Johnson Controls
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 124
+  jenkins:
+    organization: Jenkins Project
+    group: open source project
+    cna_types:
+    - Open Source
+    country: USA
+    listed: true
+    cves: 1607
+  JetBrains:
+    organization: JetBrains s.r.o.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Czech Republic
+    listed: true
+    cves: 548
+  JFrog:
+    organization: JFrog
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: Israel
+    listed: true
+    cves: 184
+  Joomla:
+    organization: Joomla! Project
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 565
+  joshbressers:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 5
+  jpcert:
+    organization: JPCERT/CC
+    group: national CERT
+    cna_types:
+    - CERT
+    country: Japan
+    listed: true
+    cves: 3348
+  juniper:
+    organization: Juniper Networks, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 1207
+  JupiterOne:
+    organization: JupiterOne, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Hosted Service
+    - Researcher
+    country: USA
+    listed: true
+    cves: 0
+  Kaspersky:
+    organization: Kaspersky
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: Russia
+    listed: true
+    cves: 164
+  KCFTech:
+    organization: KCF Technologies, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Hosted Service
+    country: USA
+    listed: true
+    cves: 0
+  KeeperSecurity:
+    organization: Keeper Security, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  KNIME:
+    organization: KNIME AG
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Switzerland
+    listed: true
+    cves: 26
+  Kong:
+    organization: Kong Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 18
+  KoreLogic:
+    organization: KoreLogic Security
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: USA
+    listed: true
+    cves: 19
+  KrakenD:
+    organization: KrakenD, S.L.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Spain
+    listed: true
+    cves: 1
+  krcert:
+    organization: KrCERT/CC
+    group: national CERT
+    cna_types:
+    - CERT
+    country: South Korea
+    listed: true
+    cves: 208
+  kubernetes:
+    organization: Kubernetes
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 117
+  larry_cashdollar:
+    organization: Larry Cashdollar
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: USA
+    listed: true
+    cves: 86
+  LeicaBiosystems:
+    organization: Leica Biosystems
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  lenovo:
+    organization: Lenovo Group Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 688
+  Leonardo:
+    organization: Leonardo S.p.A.
+    group: vendor
+    cna_types:
+    - Vendor
+    - CERT
+    country: Italy
+    listed: true
+    cves: 0
+  Lexmark:
+    organization: Lexmark International Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 21
+  LGE:
+    organization: LG Electronics
+    group: vendor
+    cna_types:
+    - Vendor
+    country: South Korea
+    listed: true
+    cves: 31
+  libreswan:
+    organization: Libreswan Project
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: n/a
+    listed: true
+    cves: 10
+  Liferay:
+    organization: Liferay, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 211
+  Linaro:
+    organization: Linaro
+    group: open source project
+    cna_types:
+    - Open Source
+    country: UK
+    listed: true
+    cves: 0
+  LINE:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 10
+  linqi:
+    organization: linqi GmbH
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 4
+  Linux:
+    organization: kernel.org
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 18675
+  LMS:
+    organization: Leica Microsystems
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 0
+  Logitech:
+    organization: Logitech
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Switzerland
+    listed: true
+    cves: 7
+  LY-Corporation:
+    organization: LY Corporation
+    group: open source project
+    cna_types:
+    - Open Source
+    country: Japan
+    listed: true
+    cves: 25
+  M-Files:
+    organization: M-Files Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Finland
+    listed: true
+    cves: 0
+  M-Files Corporation:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 60
+  ManageEngine:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 57
+  Mandiant:
+    organization: Mandiant Inc.
+    group: vendor
+    cna_types:
+    - Researcher
+    - Vendor
+    country: USA
+    listed: true
+    cves: 39
+  marklogic:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 15
+  Mattermost:
+    organization: Mattermost, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 516
+  Mautic:
+    organization: Mautic
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 53
+  MediaTek:
+    organization: MediaTek, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Taiwan
+    listed: true
+    cves: 1178
+  Medtronic:
+    organization: Medtronic
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 12
+  Mend:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 196
+  Meta:
+    organization: Meta Platforms, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 23
+  MHV:
+    organization: Maritime Hacking Village
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: USA
+    listed: true
+    cves: 11
+  Microchip:
+    organization: Microchip Technology
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 25
+  microfocus:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 516
+  microsoft:
+    organization: Microsoft Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 16892
+  Milestone:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 5
+  milestonesys:
+    organization: Milestone Systems A/S
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Denmark
+    listed: true
+    cves: 0
+  MIM:
+    organization: MIM Software Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 2
+  Mirantis:
+    organization: Mirantis
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 5
+  mitre:
+    organization: MITRE Corporation
+    group: MITRE
+    cna_types:
+    - N/A
+    country: USA
+    listed: true
+    cves: 117204
+  Mitsubishi:
+    organization: Mitsubishi Electric Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Japan
+    listed: true
+    cves: 148
+  MolDev:
+    organization: Molecular Devices
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  MON-CSIRT:
+    organization: Monash University - Cyber Security Incident Response Team
+    group: national CERT
+    cna_types:
+    - CERT
+    - Open Source
+    - Researcher
+    country: Australia
+    listed: true
+    cves: 10
+  mongodb:
+    organization: MongoDB, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 356
+  Moxa:
+    organization: Moxa Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Taiwan
+    listed: true
+    cves: 83
+  mozilla:
+    organization: Mozilla Corporation
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 3314
+  MyMMT:
+    organization: Mammotome
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  N-able:
+    organization: N-able
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 18
+  naver:
+    organization: Naver Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: South Korea
+    listed: true
+    cves: 42
+  NCSC:
+    organization: NATO Cyber Security Centre
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Belgium
+    listed: true
+    cves: 10
+  NCSC-FI:
+    organization: National Cyber Security Centre Finland (NCSC-FI)
+    group: national CERT
+    cna_types:
+    - CERT
+    country: Finland
+    listed: true
+    cves: 28
+  NCSC-NL:
+    organization: National Cyber Security Centre Netherlands (NCSC-NL)
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Netherlands
+    listed: true
+    cves: 40
+  NCSC.ch:
+    organization: Switzerland National Cyber Security Centre (NCSC)
+    group: national CERT
+    cna_types:
+    - CERT
+    country: Switzerland
+    listed: true
+    cves: 243
+  NEC:
+    organization: NEC Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Japan
+    listed: true
+    cves: 67
+  Neo4j:
+    organization: Neo4j
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Sweden
+    listed: true
+    cves: 13
+  netapp:
+    organization: NetApp, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 187
+  NetDEF:
+    organization: Network Device Education Foundation
+    group: open source project
+    cna_types:
+    - Open Source
+    country: USA
+    listed: true
+    cves: 1
+  netflix:
+    organization: Netflix, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 24
+  NETGEAR:
+    organization: NETGEAR
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 55
+  NetMotion:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 2
+  NetRise:
+    organization: NetRise
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: USA
+    listed: true
+    cves: 0
+  NetScaler:
+    organization: NetScaler
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 20
+  Netskope:
+    organization: Netskope
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 21
+  NI:
+    organization: National Instruments
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 101
+  NIBEGroup:
+    organization: NIBE Group
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Sweden
+    listed: true
+    cves: 0
+  Nintendo:
+    organization: Nintendo Co., Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Japan
+    listed: true
+    cves: 1
+  Nitro:
+    organization: Nitro Software, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  NLnet Labs:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 95
+  NLnet_Labs:
+    organization: NLnet Labs
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Netherlands
+    listed: true
+    cves: 0
+  NLOK:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 32
+  nodejs:
+    organization: Node.js
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 18
+  Nokia:
+    organization: Nokia
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Finland
+    listed: true
+    cves: 37
+  Nozomi:
+    organization: Nozomi Networks Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 305
+  Nutanix:
+    organization: Nutanix
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 2
+  nvidia:
+    organization: NVIDIA Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 1267
+  NX:
+    organization: Network Optix
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 4
+  OAI:
+    organization: OpenAI
+    group: vendor
+    cna_types:
+    - Vendor
+    - AI Researcher (Frontier AI Researcher CVE Numbering Authorities (CNAs) Pilot)
+    country: USA
+    listed: true
+    cves: 7
+  OB:
+    organization: OceanBase
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 1
+  obdev:
+    organization: Objective Development Software GmbH
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Austria
+    listed: true
+    cves: 14
+  OCD:
+    organization: Orange Cyberdefense
+    group: vendor
+    cna_types:
+    - CERT
+    - Vendor
+    - Researcher
+    country: France
+    listed: true
+    cves: 3
+  Octopus:
+    organization: Octopus Deploy
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Australia
+    listed: true
+    cves: 81
+  ODA:
+    organization: Open Design Alliance
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 5
+  odoo:
+    organization: Odoo
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Belgium
+    listed: true
+    cves: 81
+  Okta:
+    organization: Okta
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 44
+  OMICRON:
+    organization: OMICRON electronics
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Austria
+    listed: true
+    cves: 3
+  Omnissa:
+    organization: Omnissa, LLC
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 10
+  OMRON:
+    organization: OMRON Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Japan
+    listed: true
+    cves: 6
+  ONEKEY:
+    organization: ONEKEY GmbH
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: Germany
+    listed: true
+    cves: 20
+  OnLogic:
+    organization: OnLogic
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  openam-jp:
+    organization: OpenAM Consortium
+    group: open source project
+    cna_types:
+    - Open Source
+    - Consortium
+    country: Japan
+    listed: true
+    cves: 1
+  OpenBMC:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 2
+  OpenCloudOS:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 1
+  openEuler:
+    organization: openEuler
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: China
+    listed: true
+    cves: 67
+  openGauss:
+    organization: openGauss Community
+    group: open source project
+    cna_types:
+    - Open Source
+    country: China
+    listed: true
+    cves: 5
+  OpenHarmony:
+    organization: OpenHarmony
+    group: open source project
+    cna_types:
+    - Open Source
+    country: China
+    listed: true
+    cves: 178
+  openjs:
+    organization: OpenJS Foundation
+    group: open source project
+    cna_types:
+    - Open Source
+    country: USA
+    listed: true
+    cves: 164
+  OpenNMS:
+    organization: The OpenNMS Group
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 23
+  openssl:
+    organization: OpenSSL Software Foundation
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 190
+  OpenText:
+    organization: OpenText (formerly Micro Focus)
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 181
+  OpenVPN:
+    organization: OpenVPN Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 71
+  Opera:
+    organization: Opera Norway AS
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Norway
+    listed: true
+    cves: 6
+  OPPO:
+    organization: OPPO Mobile Telecommunication Corp., Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 27
+  oracle:
+    organization: Oracle
+    group: open source project
+    cna_types:
+    - Hosted Service
+    - Open Source
+    - Vendor
+    country: USA
+    listed: true
+    cves: 12521
+  OS-S:
+    organization: OpenSource Security GmbH
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Germany
+    listed: true
+    cves: 0
+  OTRS:
+    organization: EasyVista-OTRS GmbH
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 91
+  OX:
+    organization: Open-Xchange
+    group: open source project
+    cna_types:
+    - Open Source
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 171
+  Paessler:
+    organization: Paessler GmbH
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 0
+  Palantir:
+    organization: Palantir Technologies
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 47
+  Pall:
+    organization: Pall Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  palo_alto:
+    organization: Palo Alto Networks, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 498
+  Panasonic Corporation:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 5
+  Panasonic_Holdings_Corporation:
+    organization: Panasonic Holdings Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Japan
+    listed: true
+    cves: 10
+  PandoraFMS:
+    organization: Pandora FMS
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Spain
+    listed: true
+    cves: 56
+  PangeaCyber:
+    organization: Pangea Cyber Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    - Hosted Service
+    - Researcher
+    country: USA
+    listed: true
+    cves: 0
+  PaperCut:
+    organization: PaperCut Software Pty Ltd
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Australia
+    listed: true
+    cves: 28
+  Patchstack:
+    organization: Patchstack
+    group: research or bug bounty platform
+    cna_types:
+    - Bug Bounty Provider
+    - Hosted Service
+    - Open Source
+    - Researcher
+    - Vendor
+    country: Estonia
+    listed: true
+    cves: 19438
+  Payara:
+    organization: Payara
+    group: open source project
+    cna_types:
+    - Open Source
+    - Vendor
+    country: UK
+    listed: true
+    cves: 10
+  Pega:
+    organization: Pegasystems Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 48
+  Pentaho:
+    organization: Pentaho Canada Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Canada
+    listed: true
+    cves: 0
+  Pentraze:
+    organization: Pentraze Cybersecurity
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Dominican Republic
+    listed: true
+    cves: 14
+  Perforce:
+    organization: Perforce
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 53
+  Philips:
+    organization: Philips
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Netherlands
+    listed: true
+    cves: 3
+  Phoenix:
+    organization: Phoenix Technologies, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 8
+  php:
+    organization: PHP Group
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 106
+  Ping Identity:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 54
+  PingCAP:
+    organization: PingCAP (US), Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Hosted Service
+    country: USA
+    listed: true
+    cves: 0
+  PingIdentity:
+    organization: Ping Identity Corporation
+    group: research or bug bounty platform
+    cna_types:
+    - Hosted Service
+    - Researcher
+    - Bug Bounty Provider
+    country: USA
+    listed: true
+    cves: 0
+  pivotal:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 160
+  PlexTrac:
+    organization: PlexTrac, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 8
+  Pointsharp:
+    organization: Pointsharp International AB
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Sweden
+    listed: true
+    cves: 0
+  POSIT:
+    organization: Posit, PBC
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Hosted Service
+    country: USA
+    listed: true
+    cves: 2
+  PostgreSQL:
+    organization: PostgreSQL
+    group: open source project
+    cna_types:
+    - Open Source
+    country: Canada
+    listed: true
+    cves: 170
+  postiz:
+    organization: Postiz
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Hosted Service
+    country: USA
+    listed: true
+    cves: 8
+  pretix:
+    organization: pretix GmbH
+    group: open source project
+    cna_types:
+    - Vendor
+    - Hosted Service
+    - Open Source
+    country: Germany
+    listed: true
+    cves: 3
+  PRJBLK:
+    organization: Project Black
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Australia
+    listed: true
+    cves: 14
+  Profelis:
+    organization: Profelis IT Consultancy
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Türkiye
+    listed: true
+    cves: 2
+  Profisee:
+    organization: Profisee Group, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 1
+  ProgressSoftware:
+    organization: Progress Software Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 338
+  Proofpoint:
+    organization: Proofpoint Inc.
+    group: vendor
+    cna_types:
+    - Hosted Service
+    - Vendor
+    country: USA
+    listed: true
+    cves: 26
+  Proton:
+    organization: Proton AG
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Switzerland
+    listed: true
+    cves: 1
+  PSF:
+    organization: Python Software Foundation
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 89
+  PTC:
+    organization: PTC Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 5
+  puppet:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 56
+  PureStorage:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 20
+  QCI:
+    organization: Quanta Computer, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Taiwan
+    listed: true
+    cves: 0
+  qnap:
+    organization: QNAP Systems, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Taiwan
+    listed: true
+    cves: 652
+  Qt:
+    organization: Qt Group
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Finland
+    listed: true
+    cves: 28
+  qualcomm:
+    organization: Qualcomm, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 3757
+  Qualys:
+    organization: Qualys, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 10
+  Radiometer:
+    organization: Radiometer Medical ApS
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Denmark
+    listed: true
+    cves: 3
+  rami.io:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 36
+  rapid7:
+    organization: Rapid7, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 365
+  RealPage:
+    organization: RealPage
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  redhat:
+    organization: Red Hat, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 13323
+  redhat-cnalr:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 18
+  Replicated:
+    organization: Replicated, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 2
+  RES:
+    organization: RedEye Security
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  Ribose:
+    organization: Ribose Limited
+    group: open source project
+    cna_types:
+    - Hosted Service
+    - Open Source
+    - Vendor
+    country: UK
+    listed: true
+    cves: 1
+  Roche:
+    organization: Roche Diagnostics
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Switzerland
+    listed: true
+    cves: 3
+  Rockwell:
+    organization: Rockwell Automation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 262
+  rt-labs:
+    organization: RT-Labs AB
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Sweden
+    listed: true
+    cves: 11
+  RTI:
+    organization: Real-Time Innovations, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 40
+  runZero:
+    organization: runZero, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Researcher
+    - Hosted Service
+    - Open Source
+    country: USA
+    listed: true
+    cves: 56
+  rust:
+    organization: The Rust Project
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 3
+  S21sec:
+    organization: S21sec Cyber Solutions by Thales
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Spain
+    listed: true
+    cves: 15
+  S4M:
+    organization: Security4Media
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Switzerland
+    listed: true
+    cves: 0
+  SafeSource:
+    organization: SafeSource Lab
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Italy
+    listed: true
+    cves: 0
+  SailPoint:
+    organization: SailPoint Technologies
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 15
+  Salesforce:
+    organization: Salesforce, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 45
+  Samsung Mobile:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 793
+  samsung.tv_appliance:
+    organization: Samsung TV & Appliance
+    group: open source project
+    cna_types:
+    - Open Source
+    - Researcher
+    - Vendor
+    country: South Korea
+    listed: true
+    cves: 108
+  Samsung_Mobile:
+    organization: Samsung Mobile
+    group: vendor
+    cna_types:
+    - Vendor
+    country: South Korea
+    listed: true
+    cves: 0
+  SamsungMobile:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 656
+  samsungsemiconductor:
+    organization: Samsung Semiconductor
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: South Korea
+    listed: true
+    cves: 35
+  sap:
+    organization: SAP SE
+    group: open source project
+    cna_types:
+    - Vendor
+    - Hosted Service
+    - Open Source
+    country: Germany
+    listed: true
+    cves: 1717
+  Saviynt:
+    organization: Saviynt Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 3
+  sba-research:
+    organization: SBA Research gGmbH
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Austria
+    listed: true
+    cves: 17
+  Scality:
+    organization: Scality SA
+    group: vendor
+    cna_types:
+    - Vendor
+    country: France
+    listed: true
+    cves: 0
+  schneider:
+    organization: Schneider Electric
+    group: vendor
+    cna_types:
+    - Vendor
+    country: France
+    listed: true
+    cves: 750
+  SCHUTZWERK:
+    organization: SCHUTZWERK GmbH
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Germany
+    listed: true
+    cves: 6
+  SCIEX:
+    organization: SCIEX
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  SDC:
+    organization: Sandisk
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  Seagate:
+    organization: Seagate Technology
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 6
+  seal:
+    organization: Seal Security
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 8
+  SEC-VLab:
+    organization: SEC Consult Vulnerability Lab
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Austria
+    listed: true
+    cves: 131
+  sec1:
+    organization: Sec1
+    group: vendor
+    cna_types:
+    - Vendor
+    country: India
+    listed: true
+    cves: 0
+  Secomea:
+    organization: Secomea A/S
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Denmark
+    listed: true
+    cves: 45
+  Secur0:
+    organization: Secur0
+    group: research or bug bounty platform
+    cna_types:
+    - Bug Bounty Provider
+    country: Spain
+    listed: true
+    cves: 46
+  securepoint:
+    organization: Securepoint GmbH
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 1
+  Securifera:
+    organization: Securifera, Inc.
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: USA
+    listed: true
+    cves: 32
+  securin:
+    organization: Securin
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 74
+  SEL:
+    organization: Schweitzer Engineering Laboratories, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 60
+  Semtech:
+    organization: Semtech Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Canada
+    listed: true
+    cves: 1
+  senhasegura:
+    organization: senhasegura
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: Brazil
+    listed: true
+    cves: 0
+  sgi:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 68
+  ShopBeat:
+    organization: Shop Beat Solutions (Pty) LTD
+    group: vendor
+    cna_types:
+    - Hosted Service
+    - Vendor
+    country: South Africa
+    listed: true
+    cves: 6
+  SICK AG:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 190
+  SICK_AG:
+    organization: SICK AG
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 0
+  siemens:
+    organization: Siemens
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 1909
+  Silabs:
+    organization: Silicon Labs
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 149
+  Silver Peak:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 8
+  Silver_Peak:
+    organization: Silver Peak Systems, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  Simplinx:
+    organization: Simplinx Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Türkiye
+    listed: true
+    cves: 0
+  sirius:
+    organization: Sirius Computer, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 1
+  SK-CERT:
+    organization: National Cyber Security Centre SK-CERT
+    group: national CERT
+    cna_types:
+    - CERT
+    country: Slovak Republic
+    listed: true
+    cves: 6
+  SmileDigitalHealth:
+    organization: Smile CDR Inc. (doing business as “Smile Digital Health”)
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Canada
+    listed: true
+    cves: 0
+  SN:
+    organization: ServiceNow
+    group: vendor
+    cna_types:
+    - Hosted Service
+    - Researcher
+    - Vendor
+    country: USA
+    listed: true
+    cves: 35
+  Snow:
+    organization: Snow Software
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Sweden
+    listed: true
+    cves: 0
+  SNOW:
+    organization: Snowflake
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 12
+  SNOWFLAKE:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 23
+  SNPS:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 46
+  snyk:
+    organization: Snyk
+    group: research or bug bounty platform
+    cna_types:
+    - Open Source
+    - Researcher
+    country: UK
+    listed: true
+    cves: 884
+  SOCRadar:
+    organization: SOCRadar Cyber Intelligence Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 0
+  Softing:
+    organization: Softing
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 9
+  SoftIron:
+    organization: SoftIron
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 7
+  SolarWinds:
+    organization: SolarWinds
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 210
+  Solidigm:
+    organization: Solidigm
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 12
+  Sonatype:
+    organization: Sonatype Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 56
+  sonicwall:
+    organization: SonicWall, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 221
+  Sophos:
+    organization: Sophos Limited
+    group: vendor
+    cna_types:
+    - Vendor
+    country: UK
+    listed: true
+    cves: 61
+  spartans-security:
+    organization: Spartans Security
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Australia
+    listed: true
+    cves: 1
+  Splunk:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 157
+  Spotfire:
+    organization: Spotfire
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 1
+  SRA:
+    organization: Security Risk Advisors (SRA)
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: USA
+    listed: true
+    cves: 15
+  Stackable:
+    organization: Stackable GmbH
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Germany
+    listed: true
+    cves: 0
+  STAR_Labs:
+    organization: STAR Labs SG Pte. Ltd.
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Singapore
+    listed: true
+    cves: 45
+  StrongDM:
+    organization: StrongDM
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 5
+  Stryker:
+    organization: Stryker Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 0
+  Supermicro:
+    organization: Super Micro Computer, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 23
+  suse:
+    organization: SUSE
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 326
+  SWI:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 59
+  Swift:
+    organization: Swift Project
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 10
+  symantec:
+    organization: Symantec - A Division of Broadcom
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 379
+  Synaptics:
+    organization: Synaptics, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 7
+  Syncro:
+    organization: Syncro Soft SRL
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Romania
+    listed: true
+    cves: 0
+  synology:
+    organization: Synology Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Taiwan
+    listed: true
+    cves: 338
+  Synopsys:
+    organization: Synopsys, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  systemd:
+    organization: The systemd project
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Germany
+    listed: true
+    cves: 3
+  Tacit:
+    organization: Tacit
+    group: vendor
+    cna_types:
+    - Hosted Service
+    - Vendor
+    country: France
+    listed: true
+    cves: 0
+  talos:
+    organization: Talos
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: USA
+    listed: true
+    cves: 2584
+  Tanium:
+    organization: Tanium Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 136
+  TCL_Smart_Terminal:
+    organization: TCL Electronics Holdings Limited
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 0
+  Tcpdump:
+    organization: Tcpdump Group
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Canada
+    listed: true
+    cves: 17
+  TCS-CERT:
+    organization: TCS-CERT (Thales Cyber Solutions Customer’s CERT)
+    group: national CERT
+    cna_types:
+    - CERT
+    country: Belgium
+    listed: true
+    cves: 13
+  TeamViewer:
+    organization: TeamViewer Germany GmbH
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 0
+  TECNOMobile:
+    organization: TECNO Mobile Limited
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 22
+  Tego_Cyber:
+    organization: Tego Cyber, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 0
+  Temporal:
+    organization: Temporal Technologies Inc.
+    group: open source project
+    cna_types:
+    - Hosted Service
+    - Open Source
+    country: USA
+    listed: true
+    cves: 23
+  tenable:
+    organization: Tenable Network Security, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 593
+  Teradici:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 56
+  THA-PSIRT:
+    organization: Thales Group
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: France
+    listed: true
+    cves: 24
+  The_Missing_Link:
+    organization: The Missing Link Australia (TML)
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Australia
+    listed: true
+    cves: 0
+  ThinkstAppliedResearch:
+    organization: Thinkst Applied Research
+    group: vendor
+    cna_types:
+    - Vendor
+    country: South Africa
+    listed: true
+    cves: 7
+  TianoCore:
+    organization: TianoCore.org
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 30
+  tibco:
+    organization: TIBCO Software Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 180
+  Tigera:
+    organization: Tigera, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 12
+  tlt_net:
+    organization: Teltonika Networks
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Lithuania
+    listed: true
+    cves: 7
+  TML:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 64
+  TMUS:
+    organization: T-Mobile US
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 0
+  Toreon:
+    organization: Toreon
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Belgium
+    listed: true
+    cves: 9
+  Toshiba:
+    organization: Toshiba Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Japan
+    listed: true
+    cves: 44
+  TPLink:
+    organization: TP-Link Systems Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Hosted Service
+    country: USA
+    listed: true
+    cves: 219
+  TQtC:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 17
+  TR-CERT:
+    organization: TR-CERT (Computer Emergency Response Team of the Republic of Türkiye)
+    group: national CERT
+    cna_types:
+    - CERT
+    country: Türkiye
+    listed: true
+    cves: 895
+  Trellix:
+    organization: Trellix
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 399
+  trendmicro:
+    organization: Trend Micro, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Japan
+    listed: true
+    cves: 506
+  Tribe29:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 25
+  TRO:
+    organization: Teradyne Robotics
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Denmark
+    listed: true
+    cves: 7
+  TuranSec:
+    organization: Turan Security
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Uzbekistan
+    listed: true
+    cves: 211
+  tuxcare:
+    organization: Tuxcare Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 0
+  TV:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 55
+  twcert:
+    organization: TWCERT/CC
+    group: national CERT
+    cna_types:
+    - CERT
+    country: Taiwan
+    listed: true
+    cves: 952
+  TXOne:
+    organization: TXOne Networks, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: Taiwan
+    listed: true
+    cves: 4
+  TYPO3:
+    organization: TYPO3 Association
+    group: open source project
+    cna_types:
+    - Open Source
+    country: Switzerland
+    listed: true
+    cves: 95
+  Ubiquiti:
+    organization: Ubiquiti, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 42
+  Unisoc:
+    organization: Unisoc (Shanghai) Technologies Co., Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 662
+  Uniview:
+    organization: Zhejiang Uniview Technologies Co., Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 0
+  upKeeper:
+    organization: upKeeper Solutions
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Sweden
+    listed: true
+    cves: 15
+  Vaadin:
+    organization: Vaadin Ltd.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: Finland
+    listed: true
+    cves: 35
+  Vantive:
+    organization: Vantive
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  VDOO:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 11
+  Velneo:
+    organization: Velneo
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Spain
+    listed: true
+    cves: 2
+  Verizon:
+    organization: Verizon
+    group: open source project
+    cna_types:
+    - Vendor
+    - Hosted Service
+    - Open Source
+    - Researcher
+    country: USA
+    listed: true
+    cves: 0
+  Vestel:
+    organization: Vestel Electronics Industry & Trade Co.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Türkiye
+    listed: true
+    cves: 1
+  Vivo:
+    organization: Vivo Mobile Communication Co., Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 26
+  vmware:
+    organization: VMware by Broadcom
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 1005
+  VulDB:
+    organization: VulDB
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Switzerland
+    listed: true
+    cves: 17986
+  VulnCheck:
+    organization: VulnCheck
+    group: research or bug bounty platform
+    cna_types:
+    - Bug Bounty Provider
+    - Researcher
+    country: USA
+    listed: true
+    cves: 11999
+  VulNow:
+    organization: VulNow
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Netherlands
+    listed: true
+    cves: 0
+  VULSec:
+    organization: VULSec Labs
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Israel
+    listed: true
+    cves: 27
+  vx:
+    organization: VotingWorks
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 0
+  watchdog:
+    organization: WatchDogDevelopment.com, LLC
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 3
+  WatchGuard:
+    organization: WatchGuard Technologies, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 139
+  WDC PSIRT:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 49
+  WDC_PSIRT:
+    organization: Western Digital
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  Westell:
+    organization: Westell Technologies, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  wibu:
+    organization: WIBU-SYSTEMS AG
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Germany
+    listed: true
+    cves: 8
+  wikimedia-foundation:
+    organization: The Wikimedia Foundation
+    group: open source project
+    cna_types:
+    - Open Source
+    country: USA
+    listed: true
+    cves: 245
+  WindRiver:
+    organization: Wind River Systems Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 8
+  Wiz:
+    organization: Wiz, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 7
+  wolfSSL:
+    organization: wolfSSL Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 120
+  Wordfence:
+    organization: Wordfence
+    group: vendor
+    cna_types:
+    - Vendor
+    - Researcher
+    country: USA
+    listed: true
+    cves: 12413
+  WPScan:
+    organization: WPScan
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: France
+    listed: true
+    cves: 6347
+  WrenSecurity:
+    organization: Wren Security
+    group: open source project
+    cna_types:
+    - Open Source
+    country: Czech Republic
+    listed: true
+    cves: 1
+  WSO2:
+    organization: WSO2 LLC
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Hosted Service
+    country: USA
+    listed: true
+    cves: 129
+  XEN:
+    organization: Xen Project
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: UK
+    listed: true
+    cves: 183
+  Xerox:
+    organization: Xerox Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 21
+  XI:
+    organization: Exodus Intelligence
+    group: research or bug bounty platform
+    cna_types:
+    - Bug Bounty Provider
+    - Researcher
+    country: USA
+    listed: true
+    cves: 37
+  Xiaomi:
+    organization: Xiaomi Technology Co., Ltd.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 56
+  XONA:
+    organization: Xona Systems
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  Xylem:
+    organization: Xylem
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 4
+  yandex:
+    organization: Yandex N.V.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Russia
+    listed: true
+    cves: 39
+  YesWeHack:
+    organization: YesWeHack
+    group: research or bug bounty platform
+    cna_types:
+    - Bug Bounty Provider
+    country: France
+    listed: true
+    cves: 3
+  Ygreky:
+    organization: Ygreky SASU
+    group: research or bug bounty platform
+    cna_types:
+    - Vendor
+    - Researcher
+    - Open Source
+    - Bug Bounty Provider
+    country: France
+    listed: true
+    cves: 0
+  YokogawaGroup:
+    organization: Yokogawa Group
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Japan
+    listed: true
+    cves: 29
+  Yugabyte:
+    organization: Yugabyte, Inc.
+    group: vendor
+    cna_types:
+    - Hosted Service
+    - Vendor
+    country: USA
+    listed: true
+    cves: 20
+  Zabbix:
+    organization: Zabbix
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Latvia
+    listed: true
+    cves: 98
+  zdi:
+    organization: Zero Day Initiative
+    group: research or bug bounty platform
+    cna_types:
+    - Bug Bounty Provider
+    - Researcher
+    country: Japan
+    listed: true
+    cves: 3490
+  Zenitel:
+    organization: Zenitel Norway AS
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Norway
+    listed: true
+    cves: 0
+  zephyr:
+    organization: Zephyr Project
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    country: USA
+    listed: true
+    cves: 370
+  ZGR:
+    organization: ZGR
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Spain
+    listed: true
+    cves: 0
+  Zohocorp:
+    organization: Zohocorp
+    group: vendor
+    cna_types:
+    - Vendor
+    country: India
+    listed: true
+    cves: 106
+  Zoom:
+    organization: Zoom Communications, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 237
+  Zowe:
+    organization: Zowe
+    group: open source project
+    cna_types:
+    - Open Source
+    country: USA
+    listed: true
+    cves: 7
+  Zscaler:
+    organization: Zscaler, Inc.
+    group: vendor
+    cna_types:
+    - Vendor
+    country: USA
+    listed: true
+    cves: 57
+  ZTE:
+    organization: ZTE Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: China
+    listed: true
+    cves: 230
+  ZUSO ART:
+    organization: null
+    group: other
+    cna_types: []
+    country: null
+    listed: false
+    cves: 50
+  ZUSO_ART:
+    organization: ZUSO Advanced Research Team (ZUSO ART)
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Taiwan
+    listed: true
+    cves: 0
+  Zyxel:
+    organization: Zyxel Corporation
+    group: vendor
+    cna_types:
+    - Vendor
+    country: Taiwan
+    listed: true
+    cves: 169
