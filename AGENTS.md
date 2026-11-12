@@ -50,4 +50,5 @@ make lint types test         # ruff, mypy strict, pytest
 - .claude/skills/: add-a-source, add-a-criterion, explain-a-cve and cut-a-release, in the Agent
   Skills format, for any coding agent that reads them
 - docs/runbooks/: rotating the database credential, reading the consoles again
-- BUILD_STATE.md: where the build stands and what comes next
+- BUILD_STATE.md: where the build stands and what comes next, rendered from
+  docs/templates/BUILD_STATE.md.j2 like the other documents: edit the template, then make render

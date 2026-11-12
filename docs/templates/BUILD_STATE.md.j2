@@ -1,0 +1,90 @@
+{% set budgets = data("config/budgets.yaml") %}
+{% set reg = data("evaluation/registration.json") %}
+{% set labels = data("config/labels.yaml") %}
+{% set splits = data("config/splits.yaml") %}
+{% set restored = data("results/lake/release.json") if tracked("results/lake/release.json") else none %}
+# Build state
+
+The hand off between sessions and phases. Every session reads it first and updates it last. It is
+rendered from its template in docs/templates by make render, so every number in it is read from
+the manifest or a committed file: edit the template, then render.
+
+## Where it stands
+
+```
+Phase            1 of 5, the ground truth
+Checklist        {{ v("build.checklist_done") }} of {{ v("build.checklist_total") }} lines done (RESULTS.md)
+Repository       public; every commit conventional; CI, web and exposure green on main
+Vercel           unscheduled-api (container) at unscheduled-api.vercel.app
+                 unscheduled (web) at unscheduled-triage.vercel.app: the landing with its
+                 character field, the console, the docs with six archify diagrams, the
+                 report, status and design
+Neon             project unscheduled, free plan, ceiling {{ budgets.neon.storage_ceiling_mb }} MB (config/budgets.yaml)
+Data             the committed numbers come from the lake cut {{ v("lake.data_cut") }}
+{% if restored %}
+                 rebuilt here from the lake release {{ restored.tag }}
+{% else %}
+                 built here; the first lake release replaces them, rebuilt from its bronze
+{% endif %}
+Look approval    approved by Ajay on the evening of 11 November, New York time, after the
+                 landing, docs, report and ruler screens: everything is good so far
+```
+
+{% if open_items() %}
+Open checklist lines:
+
+{% for row in open_items() %}
+- {{ row[2] }}
+{% endfor %}
+
+{% endif %}
+## Next action
+
+The first fetch in Actions (fetch.yml with bootstrap, started by Ajay on 12 November) publishes the
+first lake release and starts lake.yml, which builds the lake, publishes the serving release and
+loads the API. Once the API answers ready: restore the lake release bronze here
+(scripts/restore_release.py) and rebuild the lake, the backlog, the field and the manifest from it;
+then scripts/verify_api.py, scripts/load_test.py with twenty idle minutes, web/scripts/live-check.mjs
+awake and asleep, scripts/reset_and_rederive.py; then the cut-a-release skill.
+
+## Open problems
+
+- Releases come only from workflows Ajay starts: this session's automatic approvals refuse to
+  create a release, so a workflow that publishes one, and the version tag that starts release.yml,
+  need his start or his yes.
+- k6 cannot be downloaded on the build machine; the load test runs the same scenario on httpx
+  (DECISIONS.md, 12 November).
+- The legacy CSV dates a CVE outside the serving slice by its advisories, since the slice holds no
+  record for it.
+
+## The hand off to Phase 2
+
+- The lake: cut {{ v("lake.data_cut") }}, content digest {{ v("lake.content_digest") }}, file digest
+  {{ v("lake.sha256") }}{{ (", from the release " ~ restored.tag) if restored else "" }}.
+- The registration: hash {{ reg.hash }}, over {{ reg.files | join(", ") }}.
+- The splits, by the date a CVE was published (config/splits.yaml):
+{% for name, w in splits.windows.items() %}
+  - {{ name }}: {{ w.start }} to {{ w.end }}{{ (", " ~ v("lake.window." ~ name ~ ".cves") ~ " CVEs") if has("lake.window." ~ name ~ ".cves") else "" }}
+{% endfor %}
+- The status vocabulary (config/labels.yaml): {{ labels.nvd_vuln_status.keys() | join(", ") }}.
+  Since 15 April 2026 Deferred is the value the NVD gives the CVEs it does not schedule.
+{% if has("lake.coverage_by_window") %}
+- The label coverage by window: how many published CVEs carry a CVSS severity band from each
+  source.
+
+{{ table("lake.coverage_by_window") }}
+
+{% endif %}
+- Q8: the domain classifier separates the CVEs the NVD analyzed from the rest of the shadow window
+  at an AUC of {{ v("backlog.q8.auc") }} ({{ v("backlog.q8.auc_low") }} to {{ v("backlog.q8.auc_high") }}) on the held out half of {{ v("backlog.q8.cves") }} CVEs.
+  The strongest feature toward skipped is {{ rows("backlog.q8.features_toward_skipped")[0][0] }}, so part of the shift is
+  time since the change; the next ones are {% for r in rows("backlog.q8.features_toward_skipped")[1:5] %}{{ r[0] }}{{ "; " if not loop.last else "." }}{% endfor %}
+
+  Toward analyzed: {% for r in rows("backlog.q8.features_toward_analyzed")[:5] %}{{ r[0] }}{{ "; " if not loop.last else "." }}{% endfor %}
+
+{% if has("load.warm_p95_ms") %}
+- The API: the first lookup after {{ v("load.idle_minutes") }} idle took {{ v("load.cold_lookup_ms") }}; warm, p50
+  {{ v("load.warm_p50_ms") }} and p95 {{ v("load.warm_p95_ms") }} over {{ v("load.warm_lookups") }} lookups ({{ v("criteria.c8.verdict") }}).
+{% endif %}
+- The look: approved by Ajay on the evening of 11 November, New York time; he asked for no change.
+- Kaggle GPU hours: {{ budgets.kaggle_gpu_hours_month }} for the month (config/budgets.yaml), none used in Phase 1.
