@@ -7,8 +7,10 @@
 .doc-page__crumbs { margin-bottom: var(--space-md); color: var(--color-muted); font-size: var(--text-sm); }
 
 .docs__diagram { margin-bottom: var(--space-2xl); }
-.docs__diagram img { background: var(--color-card); }
-.docs__diagram figcaption { margin-top: var(--space-sm); color: var(--color-ink-2); font-size: var(--text-sm); }
+.docs__diagram img, .doc-figure img { background: var(--color-card); }
+.docs__diagram figcaption, .doc-figure figcaption { margin-top: var(--space-sm); color: var(--color-ink-2); font-size: var(--text-sm); }
+.doc-page__main { min-width: 0; }
+.doc-figure { max-width: 920px; margin-bottom: var(--space-xl); }
 
 .doc-groups { display: grid; gap: var(--space-2xl); }
 .site .doc-group h2 { max-width: none; margin-bottom: var(--space-md); font-size: var(--text-xl); line-height: 1.2; }

@@ -41,3 +41,12 @@ test("the report lists its documents and renders the backlog with its tables", a
   await expect(page.locator(".doc table").first()).toBeVisible();
   await expect(page.getByRole("heading", { level: 2, name: /^Q1, the analysis delay/ })).toBeVisible();
 });
+
+test("the decision record on the sync opens with its sequence diagram", async ({ page }) => {
+  await mockApi(page);
+  await page.goto("/docs/adr-0007");
+  const figure = page.locator(".doc-figure");
+  await expect(figure).toBeVisible();
+  await expect(figure.locator("img").first()).toHaveAttribute("src", /\/diagrams\/sync-(light|dark)\.svg$/);
+  await expect(figure.getByRole("link", { name: "Open the diagram you can explore" })).toHaveAttribute("href", "/diagrams/sync.html");
+});

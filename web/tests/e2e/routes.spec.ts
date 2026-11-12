@@ -22,6 +22,7 @@ export const ROUTES = [
   "/docs",
   "/docs/architecture",
   "/docs/spec",
+  "/docs/adr-0007",
   "/report",
   "/report/backlog",
   "/report/discovery",

@@ -1,0 +1,119 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "How the API loads its data",
+    "output": "web/public/diagrams/sync.html",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/mekala27-45/unscheduled",
+      "provider": "github",
+      "link_mode": "web",
+      "revision": "84694a75d8f78d32053d930054c71f5ed2f0e405"
+    }
+  },
+  "participants": [
+    {
+      "id": "lake",
+      "type": "cloud",
+      "label": "lake.yml",
+      "sublabel": "GitHub Actions",
+      "sources": [
+        { "path": ".github/workflows/lake.yml", "line": 69, "end_line": 77, "label": "publish, then sync" },
+        { "path": "scripts/sync_api.py", "line": 47, "end_line": 98, "label": "calls until done" }
+      ]
+    },
+    {
+      "id": "release",
+      "type": "external",
+      "label": "Serving release",
+      "sublabel": "GitHub Releases",
+      "sources": [
+        { "path": "packages/api/src/unscheduled_api/releases.py", "line": 82, "end_line": 99, "label": "newest serving release" },
+        { "path": "packages/api/src/unscheduled_api/releases.py", "line": 180, "end_line": 205, "label": "hashed as it streams" }
+      ]
+    },
+    {
+      "id": "api",
+      "type": "backend",
+      "label": "API",
+      "sublabel": "Vercel container",
+      "sources": [
+        { "path": "packages/api/src/unscheduled_api/sync.py", "line": 1, "end_line": 28, "label": "one step per call" },
+        { "path": "packages/api/src/unscheduled_api/sync.py", "line": 197, "end_line": 240, "label": "run_once" }
+      ]
+    },
+    {
+      "id": "neon",
+      "type": "database",
+      "label": "Neon Postgres",
+      "sublabel": "the serving slice",
+      "sources": [
+        { "path": "packages/api/src/unscheduled_api/sync.py", "line": 199, "end_line": 211, "label": "advisory lock" },
+        { "path": "packages/api/src/unscheduled_api/sync.py", "line": 253, "end_line": 275, "label": "storage ceiling" }
+      ]
+    },
+    {
+      "id": "cron",
+      "type": "cloud",
+      "label": "Vercel cron",
+      "sublabel": "daily backstop",
+      "sources": [
+        { "path": "vercel.json", "line": 7, "end_line": 12, "label": "the daily call" }
+      ]
+    }
+  ],
+  "segments": [
+    { "from": 155, "to": 218, "label": "Publish" },
+    { "from": 226, "to": 682, "label": "One sync call" },
+    { "from": 690, "to": 812, "label": "Until done" },
+    { "from": 820, "to": 912, "label": "Later calls" }
+  ],
+  "messages": [
+    { "id": "publish", "from": "lake", "to": "release", "y": 170, "label": "publish the bundle", "variant": "emphasis", "note": "every file listed with its sha256 in bundle_manifest.json" },
+    { "id": "first-call", "from": "lake", "to": "api", "y": 240, "label": "POST /internal/sync", "variant": "emphasis", "note": "no input: the repository and the tag prefix are fixed in code" },
+    { "id": "lock", "from": "api", "to": "neon", "y": 302, "label": "advisory lock", "variant": "security", "note": "pg_try_advisory_xact_lock; a second caller gets sync-busy at once" },
+    { "id": "list", "from": "api", "to": "release", "y": 364, "label": "newest serving release?", "variant": "default", "note": "skipped when checked within the last minute" },
+    { "id": "manifest", "from": "release", "to": "api", "y": 424, "label": "manifest and assets", "variant": "return", "note": "a new manifest digest names the target version" },
+    { "id": "download", "from": "api", "to": "release", "y": 484, "label": "download one file", "variant": "default", "note": "hashed as it streams; must equal its manifest sha256" },
+    { "id": "bytes", "from": "release", "to": "api", "y": 544, "label": "file bytes", "variant": "return" },
+    { "id": "upsert", "from": "api", "to": "neon", "y": 574, "label": "upsert one chunk", "variant": "emphasis", "note": "past the storage ceiling the call refuses and writes nothing" },
+    { "id": "more", "from": "api", "to": "lake", "y": 634, "label": "more", "variant": "return", "note": "the cursor lives in Postgres, so any instance takes the next step" },
+    { "id": "next-call", "from": "lake", "to": "api", "y": 704, "label": "POST /internal/sync", "variant": "emphasis" },
+    { "id": "finalize", "from": "api", "to": "neon", "y": 734, "label": "finalize", "variant": "emphasis", "note": "flips the data version every response carries" },
+    { "id": "done", "from": "api", "to": "lake", "y": 794, "label": "done", "variant": "return" },
+    { "id": "cron-call", "from": "cron", "to": "api", "y": 836, "label": "POST /internal/sync", "variant": "default" },
+    { "id": "current", "from": "api", "to": "cron", "y": 866, "label": "current", "variant": "return", "note": "costs the lock and one small query" }
+  ],
+  "activations": [
+    { "participant": "lake", "from": 164, "to": 800, "type": "cloud" },
+    { "participant": "release", "from": 358, "to": 430, "type": "external" },
+    { "participant": "release", "from": 478, "to": 550, "type": "external" },
+    { "participant": "api", "from": 236, "to": 640, "type": "backend" },
+    { "participant": "api", "from": 700, "to": 800, "type": "backend" },
+    { "participant": "api", "from": 832, "to": 872, "type": "backend" },
+    { "participant": "neon", "from": 296, "to": 310, "type": "database" },
+    { "participant": "neon", "from": 568, "to": 582, "type": "database" },
+    { "participant": "neon", "from": 728, "to": 742, "type": "database" },
+    { "participant": "cron", "from": 830, "to": 872, "type": "cloud" }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "No database secret in Actions",
+      "items": [
+        "Nothing pushes data in: the API pulls the newest serving release",
+        "The trigger takes no input, so a stranger can only make it check sooner, inside the rate limit"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Safe to call again",
+      "items": [
+        "Each call is one transaction; a failed call rolls back whole and a retry repeats the step",
+        "A chunk is upserted by key with a row digest, so a rerun writes nothing"
+      ]
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { DocList } from "@/components/site/doc-view";
+import { DiagramFigure, DocList } from "@/components/site/doc-view";
 import { Mast } from "@/components/site/mast";
 import { SiteNav } from "@/components/site/site-nav";
-import { DOC_SECTIONS, readDocs } from "@/lib/docs";
+import { architectureDiagram, DOC_SECTIONS, readDocs } from "@/lib/docs";
 
 export const metadata: Metadata = {
   title: "Docs",
@@ -22,25 +22,7 @@ export default function DocsIndex() {
           <h1>Docs</h1>
           <p className="lead">How unscheduled is built, the decisions behind it and how to run it.</p>
         </div>
-        <figure className="docs__diagram shot">
-          <img
-            className="shot__light"
-            src="/diagrams/architecture-light.svg"
-            width={1610}
-            height={682}
-            alt="The architecture: nine sources fetched in Actions into raw, bronze, silver and gold layers, then the analysis, the match and the serving bundle the API pulls into Neon, and the web on top"
-          />
-          <img
-            className="shot__dark"
-            src="/diagrams/architecture-dark.svg"
-            width={1610}
-            height={682}
-            alt="The architecture: nine sources fetched in Actions into raw, bronze, silver and gold layers, then the analysis, the match and the serving bundle the API pulls into Neon, and the web on top"
-          />
-          <figcaption>
-            Drawn with archify from docs/diagrams/architecture.archify.json. <a href="/diagrams/architecture.html">Open the diagram you can explore</a>
-          </figcaption>
-        </figure>
+        <DiagramFigure diagram={architectureDiagram()} className="docs__diagram" />
         <div className="doc-groups">
           {DOC_SECTIONS.map((section) => {
             const inSection = docs.filter((d) => d.section === section);

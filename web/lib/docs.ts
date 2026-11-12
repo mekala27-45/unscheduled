@@ -28,7 +28,38 @@ const FIXED_DOCS: DocSource[] = [
   { slug: "customer", file: "customer/README.md", section: "The data and the customer" },
 ];
 
-/** The four documents the build renders from the manifest, in reading order. */
+/** An archify diagram shown at the top of a document, exported light and dark from its page. */
+export type DocDiagram = { light: string; dark: string; page: string; width: number; height: number; alt: string; source: string };
+
+const ARCHITECTURE: DocDiagram = {
+  light: "/diagrams/architecture-light.svg",
+  dark: "/diagrams/architecture-dark.svg",
+  page: "/diagrams/architecture.html",
+  width: 1610,
+  height: 682,
+  alt: "The architecture: nine sources fetched in Actions into raw, bronze, silver and gold layers, then the analysis, the match and the serving bundle the API pulls into Neon, and the web on top",
+  source: "docs/diagrams/architecture.archify.json",
+};
+
+/** Which document opens with which diagram. */
+export const DOC_DIAGRAMS: Record<string, DocDiagram> = {
+  architecture: ARCHITECTURE,
+  "adr-0007": {
+    light: "/diagrams/sync-light.svg",
+    dark: "/diagrams/sync-dark.svg",
+    page: "/diagrams/sync.html",
+    width: 920,
+    height: 1010,
+    alt: "The sync as a sequence: lake.yml publishes the serving bundle, then calls the API, which takes an advisory lock in Neon, reads the newest serving release, downloads and checks one file, upserts one chunk and answers more, until a call answers done; a later call from the Vercel cron answers current",
+    source: "docs/diagrams/sync.archify.json",
+  },
+};
+
+export function architectureDiagram(): DocDiagram {
+  return ARCHITECTURE;
+}
+
+/** The documents the build renders from the manifest, in reading order. */
 export const REPORT_SOURCES: DocSource[] = [
   { slug: "backlog", file: "report/backlog.md" },
   { slug: "discovery", file: "report/discovery.md" },

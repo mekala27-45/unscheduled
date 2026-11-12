@@ -536,6 +536,41 @@
     }
    },
    {
+    "route": "/docs/adr-0007",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
     "route": "/docs/architecture",
     "serious": 0,
     "critical": 0,

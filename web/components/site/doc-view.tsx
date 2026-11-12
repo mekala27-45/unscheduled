@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Doc } from "@/lib/docs";
+import { DOC_DIAGRAMS, type Doc, type DocDiagram } from "@/lib/docs";
 import { REPO_URL } from "@/lib/nav";
 import { Mast } from "./mast";
 import { SiteNav } from "./site-nav";
@@ -32,7 +32,10 @@ export function DocView({ doc, back }: { doc: Doc; back: { href: string; label: 
               </ol>
             </nav>
           ) : null}
-          <article className="doc" dangerouslySetInnerHTML={{ __html: doc.html }} />
+          <div className="doc-page__main">
+            {DOC_DIAGRAMS[doc.slug] ? <DiagramFigure diagram={DOC_DIAGRAMS[doc.slug]} /> : null}
+            <article className="doc" dangerouslySetInnerHTML={{ __html: doc.html }} />
+          </div>
         </div>
         <p className="doc-page__source">
           Source: <a href={`${REPO_URL}/blob/main/${doc.file}`}>{doc.file}</a>
@@ -40,6 +43,19 @@ export function DocView({ doc, back }: { doc: Doc; back: { href: string; label: 
       </main>
       <Mast />
     </div>
+  );
+}
+
+/** An archify diagram in both themes, with a link to the page where it can be explored. */
+export function DiagramFigure({ diagram, className = "doc-figure" }: { diagram: DocDiagram; className?: string }) {
+  return (
+    <figure className={`${className} shot`}>
+      <img className="shot__light" src={diagram.light} width={diagram.width} height={diagram.height} alt={diagram.alt} />
+      <img className="shot__dark" src={diagram.dark} width={diagram.width} height={diagram.height} alt={diagram.alt} />
+      <figcaption>
+        Drawn with archify from {diagram.source}. <a href={diagram.page}>Open the diagram you can explore</a>
+      </figcaption>
+    </figure>
   );
 }
 
