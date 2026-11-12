@@ -50,12 +50,19 @@ jobs:
           enable-cache: true
       - run: uv sync --frozen
       - name: The bronze tables the exposure reads, from the newest lake release
+        id: restore
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
         run: |
           last="$(gh release list --repo "$REPO" --limit 30 --json tagName --jq '[.[] | select(.tagName | startswith("lake-"))][0].tagName // ""')"
-          if [ -z "$last" ]; then echo "No lake release yet; the exposure runs without KEV, status and exploit dates."; exit 0; fi
+          if [ -z "$last" ]; then
+            # Without bronze the exposure would lose its KEV, status and exploit dates, so the
+            # committed results stand and the suites below check them as they are.
+            echo "No lake release yet; the committed exposure is checked, not recomputed."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           mkdir -p restore data/bronze
           for t in kev nvd_cves nvd_changes cve_records cve_metrics exploit_signals; do
             gh release download "$last" --repo "$REPO" --dir restore --pattern "bronze-$t.tar" || true
@@ -80,6 +87,7 @@ jobs:
           curl -sSfL --retry 3 https://codeload.github.com/github/advisory-database/tar.gz/refs/heads/main \
             | tar -xz -C data/cache/ghsa/advisory-database --strip-components=1 --wildcards '*/advisories/github-reviewed/*'
       - name: Exposure, osv-scanner and Grype
+        if: steps.restore.outputs.skip != 'true'
         run: uv run python scripts/run_exposure.py --ghsa-full-tree https://github.com/github/advisory-database
       - name: Match, legacy and characterization suites, live agreement included
         run: uv run pytest tests/match tests/legacy tests/characterization
