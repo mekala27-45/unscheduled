@@ -1,0 +1,603 @@
+{
+ "date": "2026-11-12",
+ "base": "http://127.0.0.1:3210",
+ "sloplint": {
+  "result": "pass",
+  "routes": [
+   {
+    "route": "/",
+    "genre": "modern-minimal",
+    "scope": "page",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 1,
+    "answered": 0,
+    "result": "pass",
+    "findings": [
+     "DISMISSED 28a lazy-loaded first image (likely LCP)"
+    ]
+   },
+   {
+    "route": "/app",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/app/cves",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/app/cves/CVE-2099-0001",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/app/backlog",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/app/products",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/app/match",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/app/data",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/app/criteria",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/app/limits",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/status",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/design",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   }
+  ]
+ },
+ "axe": {
+  "result": "pass",
+  "source": "web/test-results/axe, written by tests/e2e/routes.spec.ts at 390 and 1440 px in both themes",
+  "routes": [
+   {
+    "route": "/app/backlog",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "heading-order (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "heading-order (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "heading-order (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "heading-order (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/app/criteria",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "landmark-unique (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "landmark-unique (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "landmark-unique (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "landmark-unique (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/app/cves/CVE-2099-0001",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "landmark-unique (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "landmark-unique (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "landmark-unique (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "landmark-unique (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/app/cves",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "heading-order (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "heading-order (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "heading-order (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "heading-order (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/app/data",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     }
+    }
+   },
+   {
+    "route": "/app/limits",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     }
+    }
+   },
+   {
+    "route": "/app/match",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     }
+    }
+   },
+   {
+    "route": "/app/products",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     }
+    }
+   },
+   {
+    "route": "/app",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     }
+    }
+   },
+   {
+    "route": "/design",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/no-such-page",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/status",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     }
+    }
+   }
+  ]
+ },
+ "lighthouse": {
+  "result": "pass",
+  "source": "web/lighthouse, written by lhci autorun with web/lighthouserc.json (desktop preset)",
+  "urls": [
+   {
+    "url": "/",
+    "runs": 3,
+    "performance": 1,
+    "accessibility": 1,
+    "cls": 0,
+    "result": "pass"
+   },
+   {
+    "url": "/app/cves/CVE-2099-0001",
+    "runs": 3,
+    "performance": 0.97,
+    "accessibility": 1,
+    "cls": 0.024956720591610474,
+    "result": "pass"
+   }
+  ]
+ },
+ "screenshots": []
+}

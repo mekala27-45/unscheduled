@@ -1,0 +1,27 @@
+{
+ "date": "2026-11-12",
+ "command": "node scripts/validate_palette.js --config web/theme/palette.json",
+ "config": "web/theme/palette.json",
+ "result": "pass",
+ "failures": 0,
+ "modes": {
+  "light": {
+   "failures": 0,
+   "worstAdjacentCvd": 18.2,
+   "worstAdjacentNormal": 19.1,
+   "worstSlotContrast": 3.62,
+   "worstCardContrast": 3.76,
+   "firstThreeAllPairsCvd": 20.9,
+   "failingChecks": []
+  },
+  "dark": {
+   "failures": 0,
+   "worstAdjacentCvd": 18.8,
+   "worstAdjacentNormal": 20.6,
+   "worstSlotContrast": 4.19,
+   "worstCardContrast": 3.62,
+   "firstThreeAllPairsCvd": 18.9,
+   "failingChecks": []
+  }
+ }
+}

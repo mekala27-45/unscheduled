@@ -1,0 +1,65 @@
+name: web
+
+# The design gates, on every pull request and every push to main that touches the site: the unit
+# tests, the build, Playwright at 390 and 1440 pixels in both themes with axe on every route,
+# sloplint over the landing and the console, the palette validator on the token file, and Lighthouse
+# on the landing and the ruler. The site is built against a stand in API address that the tests
+# answer, so no job needs the live API or any secret.
+on:
+  push:
+    branches: [main]
+    paths: ["web/**", "scripts/validate_palette.js", "tools/hallmark/**", ".github/workflows/web.yml"]
+  pull_request:
+    paths: ["web/**", "scripts/validate_palette.js", "tools/hallmark/**", ".github/workflows/web.yml"]
+
+permissions:
+  contents: read
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      NEXT_PUBLIC_API_URL: http://api.unscheduled.test
+      CI: "1"
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+        with:
+          version: 10
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: "22"
+          cache: pnpm
+          cache-dependency-path: web/pnpm-lock.yaml
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - run: pnpm build
+      - name: Chromium for Playwright
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Playwright and axe on every route, both widths, both themes
+        run: pnpm exec playwright test
+      - name: Serve the built site
+        run: |
+          nohup pnpm start -p 3210 -H 127.0.0.1 > "${RUNNER_TEMP}/web.log" 2>&1 &
+          for i in $(seq 1 60); do curl -sf -o /dev/null http://127.0.0.1:3210/ && break; sleep 1; done
+      - name: Lighthouse on the landing and the ruler
+        run: npx --yes @lhci/cli@0.15.1 autorun --config=lighthouserc.json
+      - name: sloplint, the palette, axe and Lighthouse, written as evidence
+        working-directory: .
+        run: node web/scripts/design-gates.mjs --base http://127.0.0.1:3210
+      - name: Keep the evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: design-gates
+          path: |
+            results/design
+            web/lighthouse
+            web/test-results/axe
+          if-no-files-found: warn
