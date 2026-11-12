@@ -1,0 +1,187 @@
+{
+ "as_of_today": "2026-11-08T03:40:40Z",
+ "kev_source": "data/bronze/kev",
+ "exploit_code": "data/bronze/exploit_signals",
+ "products": {
+  "cloud-dashboard": {
+   "pin": {
+    "as_of": "2024-12-30T21:42:53Z",
+    "components": 3065,
+    "findings": 104,
+    "distinct_cves": 80,
+    "findings_without_cve": 7,
+    "fix_available": 67,
+    "fix_unknown_at_as_of": 35,
+    "kev_listed_findings": 0,
+    "kev_listed_cves": 0,
+    "exploit_code_findings": 2,
+    "exploit_code_cves": 2,
+    "dated_by_rule": 35
+   },
+   "today": {
+    "as_of": "2026-11-08T03:40:40Z",
+    "components": 3065,
+    "findings": 513,
+    "distinct_cves": 338,
+    "findings_without_cve": 22,
+    "fix_available": 505,
+    "fix_unknown_at_as_of": 0,
+    "kev_listed_findings": 1,
+    "kev_listed_cves": 1,
+    "exploit_code_findings": 10,
+    "exploit_code_cves": 10,
+    "dated_by_rule": 0
+   }
+  },
+  "python-data-jobs": {
+   "pin": {
+    "as_of": "2024-12-31T02:16:32Z",
+    "components": 82,
+    "findings": 3,
+    "distinct_cves": 3,
+    "findings_without_cve": 0,
+    "fix_available": 0,
+    "fix_unknown_at_as_of": 3,
+    "kev_listed_findings": 0,
+    "kev_listed_cves": 0,
+    "exploit_code_findings": 0,
+    "exploit_code_cves": 0,
+    "dated_by_rule": 3
+   },
+   "today": {
+    "as_of": "2026-11-08T03:40:40Z",
+    "components": 82,
+    "findings": 98,
+    "distinct_cves": 97,
+    "findings_without_cve": 1,
+    "fix_available": 97,
+    "fix_unknown_at_as_of": 0,
+    "kev_listed_findings": 0,
+    "kev_listed_cves": 0,
+    "exploit_code_findings": 1,
+    "exploit_code_cves": 1,
+    "dated_by_rule": 0
+   }
+  },
+  "go-edge-service": {
+   "pin": {
+    "as_of": "2024-12-30T14:45:16Z",
+    "components": 13,
+    "findings": 1,
+    "distinct_cves": 1,
+    "findings_without_cve": 0,
+    "fix_available": 0,
+    "fix_unknown_at_as_of": 1,
+    "kev_listed_findings": 0,
+    "kev_listed_cves": 0,
+    "exploit_code_findings": 0,
+    "exploit_code_cves": 0,
+    "dated_by_rule": 1
+   },
+   "today": {
+    "as_of": "2026-11-08T03:40:40Z",
+    "components": 13,
+    "findings": 25,
+    "distinct_cves": 25,
+    "findings_without_cve": 0,
+    "fix_available": 25,
+    "fix_unknown_at_as_of": 0,
+    "kev_listed_findings": 0,
+    "kev_listed_cves": 0,
+    "exploit_code_findings": 0,
+    "exploit_code_cves": 0,
+    "dated_by_rule": 0
+   }
+  },
+  "java-integration-service": {
+   "pin": {
+    "as_of": "2024-12-26T06:50:09Z",
+    "components": 35,
+    "findings": 3,
+    "distinct_cves": 3,
+    "findings_without_cve": 0,
+    "fix_available": 1,
+    "fix_unknown_at_as_of": 0,
+    "kev_listed_findings": 0,
+    "kev_listed_cves": 0,
+    "exploit_code_findings": 0,
+    "exploit_code_cves": 0,
+    "dated_by_rule": 0
+   },
+   "today": {
+    "as_of": "2026-11-08T03:40:40Z",
+    "components": 35,
+    "findings": 7,
+    "distinct_cves": 7,
+    "findings_without_cve": 0,
+    "fix_available": 2,
+    "fix_unknown_at_as_of": 0,
+    "kev_listed_findings": 0,
+    "kev_listed_cves": 0,
+    "exploit_code_findings": 0,
+    "exploit_code_cves": 0,
+    "dated_by_rule": 0
+   }
+  },
+  "rust-cli": {
+   "pin": {
+    "as_of": "2024-12-30T03:51:36Z",
+    "components": 788,
+    "findings": 29,
+    "distinct_cves": 3,
+    "findings_without_cve": 26,
+    "fix_available": 4,
+    "fix_unknown_at_as_of": 14,
+    "kev_listed_findings": 0,
+    "kev_listed_cves": 0,
+    "exploit_code_findings": 0,
+    "exploit_code_cves": 0,
+    "dated_by_rule": 18
+   },
+   "today": {
+    "as_of": "2026-11-08T03:40:40Z",
+    "components": 788,
+    "findings": 106,
+    "distinct_cves": 25,
+    "findings_without_cve": 74,
+    "fix_available": 83,
+    "fix_unknown_at_as_of": 0,
+    "kev_listed_findings": 0,
+    "kev_listed_cves": 0,
+    "exploit_code_findings": 0,
+    "exploit_code_cves": 0,
+    "dated_by_rule": 0
+   }
+  },
+  "door-controller-firmware": {
+   "pin": {
+    "as_of": "2024-12-24T21:34:21Z",
+    "components": 88,
+    "findings": 66,
+    "distinct_cves": 32,
+    "findings_without_cve": 0,
+    "fix_available": 0,
+    "fix_unknown_at_as_of": 66,
+    "kev_listed_findings": 0,
+    "kev_listed_cves": 0,
+    "exploit_code_findings": 1,
+    "exploit_code_cves": 1,
+    "dated_by_rule": 66
+   },
+   "today": {
+    "as_of": "2026-11-08T03:40:40Z",
+    "components": 88,
+    "findings": 320,
+    "distinct_cves": 170,
+    "findings_without_cve": 0,
+    "fix_available": 105,
+    "fix_unknown_at_as_of": 0,
+    "kev_listed_findings": 0,
+    "kev_listed_cves": 0,
+    "exploit_code_findings": 1,
+    "exploit_code_cves": 1,
+    "dated_by_rule": 0
+   }
+  }
+ }
+}

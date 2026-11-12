@@ -1,0 +1,46 @@
+{
+ "status": "complete",
+ "as_of": "2026-11-08T03:40:40Z",
+ "nvd_rule": "usable from the NVD alone: an NVD CVSS 3.x base score on one of the finding's CVEs",
+ "any_rule": "usable from any source: a CVSS 3.x or 4.0 base score from the filer (CNA), the NVD or CISA ADP on one of the finding's CVEs",
+ "source": "data/bronze/cve_metrics",
+ "products": {
+  "cloud-dashboard": {
+   "findings": 513,
+   "nvd_only_usable": 176,
+   "any_source_usable": 489
+  },
+  "python-data-jobs": {
+   "findings": 98,
+   "nvd_only_usable": 60,
+   "any_source_usable": 97
+  },
+  "go-edge-service": {
+   "findings": 25,
+   "nvd_only_usable": 3,
+   "any_source_usable": 25
+  },
+  "java-integration-service": {
+   "findings": 7,
+   "nvd_only_usable": 2,
+   "any_source_usable": 7
+  },
+  "rust-cli": {
+   "findings": 106,
+   "nvd_only_usable": 10,
+   "any_source_usable": 32
+  },
+  "door-controller-firmware": {
+   "findings": 320,
+   "nvd_only_usable": 102,
+   "any_source_usable": 313
+  }
+ },
+ "all": {
+  "findings": 1069,
+  "nvd_only_usable": 353,
+  "any_source_usable": 963,
+  "nvd_only_usable_share": 0.3302151543498597,
+  "any_source_usable_share": 0.9008419083255379
+ }
+}

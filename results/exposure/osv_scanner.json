@@ -1,0 +1,3169 @@
+{
+ "as_of": "2026-11-08T03:40:40Z",
+ "version": "2.7.0",
+ "flags": [
+  "scan",
+  "source",
+  "--offline",
+  "--offline-vulnerabilities",
+  "--all-vulns",
+  "--all-packages",
+  "--format",
+  "json"
+ ],
+ "database": "the same OSV all.zip files the matcher read (osv_files in findings_today.json)",
+ "products": {
+  "cloud-dashboard": {
+   "sbom": "customer/sboms/cloud-dashboard.cdx.json",
+   "exit_code": 1,
+   "packages": [
+    {
+     "ecosystem": "npm",
+     "name": "@babel/core",
+     "version": "7.10.5",
+     "purl": "pkg:npm/%40babel/core@7.10.5",
+     "ids": [
+      "GHSA-4x5r-pxfx-6jf8"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@babel/core",
+     "version": "7.18.0",
+     "purl": "pkg:npm/%40babel/core@7.18.0",
+     "ids": [
+      "GHSA-4x5r-pxfx-6jf8"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@babel/core",
+     "version": "7.23.0",
+     "purl": "pkg:npm/%40babel/core@7.23.0",
+     "ids": [
+      "GHSA-4x5r-pxfx-6jf8"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@babel/core",
+     "version": "7.23.7",
+     "purl": "pkg:npm/%40babel/core@7.23.7",
+     "ids": [
+      "GHSA-4x5r-pxfx-6jf8"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@babel/helpers",
+     "version": "7.23.1",
+     "purl": "pkg:npm/%40babel/helpers@7.23.1",
+     "ids": [
+      "GHSA-968p-4wvh-cqc8"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@babel/helpers",
+     "version": "7.23.2",
+     "purl": "pkg:npm/%40babel/helpers@7.23.2",
+     "ids": [
+      "GHSA-968p-4wvh-cqc8"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@babel/helpers",
+     "version": "7.23.7",
+     "purl": "pkg:npm/%40babel/helpers@7.23.7",
+     "ids": [
+      "GHSA-968p-4wvh-cqc8"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@babel/plugin-transform-modules-systemjs",
+     "version": "7.23.0",
+     "purl": "pkg:npm/%40babel/plugin-transform-modules-systemjs@7.23.0",
+     "ids": [
+      "GHSA-fv7c-fp4j-7gwp"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@babel/plugin-transform-modules-systemjs",
+     "version": "7.23.3",
+     "purl": "pkg:npm/%40babel/plugin-transform-modules-systemjs@7.23.3",
+     "ids": [
+      "GHSA-fv7c-fp4j-7gwp"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@babel/runtime",
+     "version": "7.23.1",
+     "purl": "pkg:npm/%40babel/runtime@7.23.1",
+     "ids": [
+      "GHSA-968p-4wvh-cqc8"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@babel/runtime",
+     "version": "7.23.9",
+     "purl": "pkg:npm/%40babel/runtime@7.23.9",
+     "ids": [
+      "GHSA-968p-4wvh-cqc8"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@babel/traverse",
+     "version": "7.23.0",
+     "purl": "pkg:npm/%40babel/traverse@7.23.0",
+     "ids": [
+      "GHSA-67hx-6x53-jw92"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@fastify/static",
+     "version": "6.11.2",
+     "purl": "pkg:npm/%40fastify/static@6.11.2",
+     "ids": [
+      "GHSA-83w8-p2f5-377r",
+      "GHSA-8pvw-jcv7-9cmj"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@graphql-tools/utils",
+     "version": "7.10.0",
+     "purl": "pkg:npm/%40graphql-tools/utils@7.10.0",
+     "ids": [
+      "GHSA-7mx3-vvmw-hjmv"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@graphql-tools/utils",
+     "version": "9.2.1",
+     "purl": "pkg:npm/%40graphql-tools/utils@9.2.1",
+     "ids": [
+      "GHSA-7mx3-vvmw-hjmv"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@hapi/wreck",
+     "version": "18.1.0",
+     "purl": "pkg:npm/%40hapi/wreck@18.1.0",
+     "ids": [
+      "GHSA-vhjm-w67q-g75c",
+      "GHSA-x426-x7cc-3fpc"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@remix-run/router",
+     "version": "1.11.0",
+     "purl": "pkg:npm/%40remix-run/router@1.11.0",
+     "ids": [
+      "GHSA-2j2x-hqr9-3h42",
+      "GHSA-2w69-qvjg-hvjx"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@smithy/config-resolver",
+     "version": "2.1.2",
+     "purl": "pkg:npm/%40smithy/config-resolver@2.1.2",
+     "ids": [
+      "GHSA-6475-r3vj-m8vf"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@tootallnate/once",
+     "version": "1.1.2",
+     "purl": "pkg:npm/%40tootallnate/once@1.1.2",
+     "ids": [
+      "GHSA-vpq2-c234-7xj6"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "@tootallnate/once",
+     "version": "2.0.0",
+     "purl": "pkg:npm/%40tootallnate/once@2.0.0",
+     "ids": [
+      "GHSA-vpq2-c234-7xj6"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "ajv",
+     "version": "6.12.6",
+     "purl": "pkg:npm/ajv@6.12.6",
+     "ids": [
+      "GHSA-2g4f-4pwh-qvx6"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "ajv",
+     "version": "8.12.0",
+     "purl": "pkg:npm/ajv@8.12.0",
+     "ids": [
+      "GHSA-2g4f-4pwh-qvx6"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "ansi-html",
+     "version": "0.0.7",
+     "purl": "pkg:npm/ansi-html@0.0.7",
+     "ids": [
+      "GHSA-whgm-jr23-g3j9"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "aws-sdk",
+     "version": "2.1467.0",
+     "purl": "pkg:npm/aws-sdk@2.1467.0",
+     "ids": [
+      "GHSA-j965-2qgj-vjmq"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "axios",
+     "version": "0.21.4",
+     "purl": "pkg:npm/axios@0.21.4",
+     "ids": [
+      "GHSA-3g43-6gmg-66jw",
+      "GHSA-3p68-rc4w-qgx5",
+      "GHSA-43fc-jf86-j433",
+      "GHSA-5c9x-8gcm-mpgx",
+      "GHSA-62hf-57xw-28j9",
+      "GHSA-6chq-wfr3-2hj9",
+      "GHSA-7q8q-rj6j-mhjq",
+      "GHSA-898c-q2cr-xwhg",
+      "GHSA-fvcv-3m26-pcqx",
+      "GHSA-hfxv-24rg-xrqf",
+      "GHSA-j5f8-grm9-p9fc",
+      "GHSA-jr5f-v2jv-69x6",
+      "GHSA-m7pr-hjqh-92cm",
+      "GHSA-mmx7-hfxf-jppx",
+      "GHSA-p92q-9vqr-4j8v",
+      "GHSA-pf86-5x62-jrwf",
+      "GHSA-pjwm-pj3p-43mv",
+      "GHSA-pmwg-cvhr-8vh7",
+      "GHSA-vf2m-468p-8v99",
+      "GHSA-w9j2-pvgh-6h63",
+      "GHSA-wf5p-g6vw-rhxx",
+      "GHSA-xhjh-pmcv-23jw",
+      "GHSA-xx6v-rp6x-q39c"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "axios",
+     "version": "0.22.0",
+     "purl": "pkg:npm/axios@0.22.0",
+     "ids": [
+      "GHSA-3g43-6gmg-66jw",
+      "GHSA-3p68-rc4w-qgx5",
+      "GHSA-43fc-jf86-j433",
+      "GHSA-5c9x-8gcm-mpgx",
+      "GHSA-62hf-57xw-28j9",
+      "GHSA-6chq-wfr3-2hj9",
+      "GHSA-7q8q-rj6j-mhjq",
+      "GHSA-898c-q2cr-xwhg",
+      "GHSA-fvcv-3m26-pcqx",
+      "GHSA-hfxv-24rg-xrqf",
+      "GHSA-j5f8-grm9-p9fc",
+      "GHSA-jr5f-v2jv-69x6",
+      "GHSA-m7pr-hjqh-92cm",
+      "GHSA-mmx7-hfxf-jppx",
+      "GHSA-p92q-9vqr-4j8v",
+      "GHSA-pf86-5x62-jrwf",
+      "GHSA-pjwm-pj3p-43mv",
+      "GHSA-pmwg-cvhr-8vh7",
+      "GHSA-vf2m-468p-8v99",
+      "GHSA-w9j2-pvgh-6h63",
+      "GHSA-wf5p-g6vw-rhxx",
+      "GHSA-xhjh-pmcv-23jw",
+      "GHSA-xx6v-rp6x-q39c"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "basic-ftp",
+     "version": "5.0.5",
+     "purl": "pkg:npm/basic-ftp@5.0.5",
+     "ids": [
+      "GHSA-5rq4-664w-9x2c",
+      "GHSA-6v7q-wjvx-w8wg",
+      "GHSA-c475-qrg2-pj4r",
+      "GHSA-rp42-5vxx-qpwr",
+      "GHSA-rpmf-866q-6p89"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "bn.js",
+     "version": "4.12.0",
+     "purl": "pkg:npm/bn.js@4.12.0",
+     "ids": [
+      "GHSA-378v-28hj-76wf"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "bn.js",
+     "version": "5.2.1",
+     "purl": "pkg:npm/bn.js@5.2.1",
+     "ids": [
+      "GHSA-378v-28hj-76wf"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "body-parser",
+     "version": "1.20.0",
+     "purl": "pkg:npm/body-parser@1.20.0",
+     "ids": [
+      "GHSA-27r3-jxmh-p828",
+      "GHSA-qwcr-r2fm-qrc7",
+      "GHSA-v422-hmwv-36x6"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "body-parser",
+     "version": "1.20.1",
+     "purl": "pkg:npm/body-parser@1.20.1",
+     "ids": [
+      "GHSA-27r3-jxmh-p828",
+      "GHSA-qwcr-r2fm-qrc7",
+      "GHSA-v422-hmwv-36x6"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "brace-expansion",
+     "version": "1.1.11",
+     "purl": "pkg:npm/brace-expansion@1.1.11",
+     "ids": [
+      "GHSA-3jxr-9vmj-r5cp",
+      "GHSA-6j4f-fj2g-mc7p",
+      "GHSA-f886-m6hf-6m8v",
+      "GHSA-mh99-v99m-4gvg",
+      "GHSA-q2hr-2g5m-vwhr",
+      "GHSA-qhr7-859c-m2p7",
+      "GHSA-rgw5-rvv9-x895",
+      "GHSA-v6h2-p8h4-qcjw"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "brace-expansion",
+     "version": "2.0.1",
+     "purl": "pkg:npm/brace-expansion@2.0.1",
+     "ids": [
+      "GHSA-3jxr-9vmj-r5cp",
+      "GHSA-6j4f-fj2g-mc7p",
+      "GHSA-f886-m6hf-6m8v",
+      "GHSA-mh99-v99m-4gvg",
+      "GHSA-q2hr-2g5m-vwhr",
+      "GHSA-qhr7-859c-m2p7",
+      "GHSA-rgw5-rvv9-x895",
+      "GHSA-v6h2-p8h4-qcjw"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "braces",
+     "version": "2.3.2",
+     "purl": "pkg:npm/braces@2.3.2",
+     "ids": [
+      "GHSA-grv7-fg5c-xmjg"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "braces",
+     "version": "3.0.2",
+     "purl": "pkg:npm/braces@3.0.2",
+     "ids": [
+      "GHSA-grv7-fg5c-xmjg"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "browserify-sign",
+     "version": "4.2.1",
+     "purl": "pkg:npm/browserify-sign@4.2.1",
+     "ids": [
+      "GHSA-x9w5-v3q2-3rhw"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "browserslist",
+     "version": "4.14.2",
+     "purl": "pkg:npm/browserslist@4.14.2",
+     "ids": [
+      "GHSA-73wf-gq98-2v4g",
+      "GHSA-c83g-rgw3-j3cx",
+      "GHSA-w8qv-6jwh-64r5"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "browserslist",
+     "version": "4.22.1",
+     "purl": "pkg:npm/browserslist@4.22.1",
+     "ids": [
+      "GHSA-73wf-gq98-2v4g",
+      "GHSA-c83g-rgw3-j3cx"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "browserslist",
+     "version": "4.22.2",
+     "purl": "pkg:npm/browserslist@4.22.2",
+     "ids": [
+      "GHSA-73wf-gq98-2v4g",
+      "GHSA-c83g-rgw3-j3cx"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "browserslist",
+     "version": "4.23.0",
+     "purl": "pkg:npm/browserslist@4.23.0",
+     "ids": [
+      "GHSA-73wf-gq98-2v4g",
+      "GHSA-c83g-rgw3-j3cx"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "cipher-base",
+     "version": "1.0.4",
+     "purl": "pkg:npm/cipher-base@1.0.4",
+     "ids": [
+      "GHSA-cpq7-6gpm-g9rc"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "colord",
+     "version": "2.9.3",
+     "purl": "pkg:npm/colord@2.9.3",
+     "ids": [
+      "GHSA-2wm5-q62r-hmrv"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "compression",
+     "version": "1.7.3",
+     "purl": "pkg:npm/compression@1.7.3",
+     "ids": [
+      "GHSA-vc2v-76pw-4v95"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "compression",
+     "version": "1.7.4",
+     "purl": "pkg:npm/compression@1.7.4",
+     "ids": [
+      "GHSA-vc2v-76pw-4v95"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "cookie",
+     "version": "0.4.0",
+     "purl": "pkg:npm/cookie@0.4.0",
+     "ids": [
+      "GHSA-pxg6-pf52-xh8x"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "cookie",
+     "version": "0.4.1",
+     "purl": "pkg:npm/cookie@0.4.1",
+     "ids": [
+      "GHSA-pxg6-pf52-xh8x"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "cookie",
+     "version": "0.4.2",
+     "purl": "pkg:npm/cookie@0.4.2",
+     "ids": [
+      "GHSA-pxg6-pf52-xh8x"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "cookie",
+     "version": "0.5.0",
+     "purl": "pkg:npm/cookie@0.5.0",
+     "ids": [
+      "GHSA-pxg6-pf52-xh8x"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "cross-spawn",
+     "version": "6.0.5",
+     "purl": "pkg:npm/cross-spawn@6.0.5",
+     "ids": [
+      "GHSA-3xgq-45jj-v275"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "cross-spawn",
+     "version": "7.0.3",
+     "purl": "pkg:npm/cross-spawn@7.0.3",
+     "ids": [
+      "GHSA-3xgq-45jj-v275"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "debug",
+     "version": "2.2.0",
+     "purl": "pkg:npm/debug@2.2.0",
+     "ids": [
+      "GHSA-9vvw-cc9w-f27h",
+      "GHSA-gxpj-cx7g-858c"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "decode-uri-component",
+     "version": "0.2.2",
+     "purl": "pkg:npm/decode-uri-component@0.2.2",
+     "ids": [
+      "GHSA-qr28-fpjm-wq7f",
+      "GHSA-vcc3-ghjq-m6fr"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "deepmerge",
+     "version": "4.3.1",
+     "purl": "pkg:npm/deepmerge@4.3.1",
+     "ids": [
+      "GHSA-gcqx-w48m-w2h4"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "dicer",
+     "version": "0.2.5",
+     "purl": "pkg:npm/dicer@0.2.5",
+     "ids": [
+      "GHSA-wm7h-9275-46v2"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "diff",
+     "version": "4.0.2",
+     "purl": "pkg:npm/diff@4.0.2",
+     "ids": [
+      "GHSA-73rr-hh4g-fpgx"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "diff",
+     "version": "5.0.0",
+     "purl": "pkg:npm/diff@5.0.0",
+     "ids": [
+      "GHSA-73rr-hh4g-fpgx"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "diff",
+     "version": "5.1.0",
+     "purl": "pkg:npm/diff@5.1.0",
+     "ids": [
+      "GHSA-73rr-hh4g-fpgx"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "ejs",
+     "version": "2.7.4",
+     "purl": "pkg:npm/ejs@2.7.4",
+     "ids": [
+      "GHSA-ghr5-ch3p-vcr6",
+      "GHSA-phwq-j96m-2c2q"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "ejs",
+     "version": "3.1.9",
+     "purl": "pkg:npm/ejs@3.1.9",
+     "ids": [
+      "GHSA-ghr5-ch3p-vcr6"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "elliptic",
+     "version": "6.5.4",
+     "purl": "pkg:npm/elliptic@6.5.4",
+     "ids": [
+      "GHSA-434g-2637-qmqr",
+      "GHSA-49q7-c7j4-3p7m",
+      "GHSA-848j-6mx2-7j84",
+      "GHSA-977x-g7h5-7qgw",
+      "GHSA-f7q4-pwc6-w24p",
+      "GHSA-fc9h-whq2-v747",
+      "GHSA-vjh7-7g9h-fjfh"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "engine.io",
+     "version": "4.1.2",
+     "purl": "pkg:npm/engine.io@4.1.2",
+     "ids": [
+      "GHSA-r635-g3xr-vw7x",
+      "GHSA-r7qp-cfhv-p84w"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "es5-ext",
+     "version": "0.10.62",
+     "purl": "pkg:npm/es5-ext@0.10.62",
+     "ids": [
+      "GHSA-4gmj-3p3h-gm8h"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "esbuild",
+     "version": "0.18.20",
+     "purl": "pkg:npm/esbuild@0.18.20",
+     "ids": [
+      "GHSA-67mh-4wv8-2f99"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "esbuild",
+     "version": "0.23.1",
+     "purl": "pkg:npm/esbuild@0.23.1",
+     "ids": [
+      "GHSA-67mh-4wv8-2f99"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "express",
+     "version": "4.18.2",
+     "purl": "pkg:npm/express@4.18.2",
+     "ids": [
+      "GHSA-qw6h-vgh9-j6wx",
+      "GHSA-rv95-896h-c2vc"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "extract-zip",
+     "version": "2.0.1",
+     "purl": "pkg:npm/extract-zip@2.0.1",
+     "ids": [
+      "GHSA-7pqw-9j4j-h8q3",
+      "GHSA-jmr9-qjv8-65gv"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "fast-copy",
+     "version": "2.1.7",
+     "purl": "pkg:npm/fast-copy@2.1.7",
+     "ids": [
+      "GHSA-jggr-w7fw-pc2j"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "fast-copy",
+     "version": "3.0.1",
+     "purl": "pkg:npm/fast-copy@3.0.1",
+     "ids": [
+      "GHSA-jggr-w7fw-pc2j"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "fast-uri",
+     "version": "2.3.0",
+     "purl": "pkg:npm/fast-uri@2.3.0",
+     "ids": [
+      "GHSA-333x-w4r6-6crp",
+      "GHSA-7p8r-x3mc-p8w7",
+      "GHSA-hrr3-gc8f-f4qj",
+      "GHSA-q3j6-qgpj-74h6",
+      "GHSA-qw65-cvwx-89v3",
+      "GHSA-v39h-62p7-jpjc",
+      "GHSA-w74x-v6f9-j3xg",
+      "GHSA-xhq7-xmqj-769h"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "fast-xml-parser",
+     "version": "4.2.5",
+     "purl": "pkg:npm/fast-xml-parser@4.2.5",
+     "ids": [
+      "GHSA-8gc5-j5rx-235r",
+      "GHSA-fj3w-jwp8-x2g3",
+      "GHSA-gh4j-gqv2-49f6",
+      "GHSA-jmr7-xgp7-cmfj",
+      "GHSA-jp2q-39xq-3w4g",
+      "GHSA-m7jm-9gc2-mpf2"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "fastify",
+     "version": "4.26.1",
+     "purl": "pkg:npm/fastify@4.26.1",
+     "ids": [
+      "GHSA-444r-cwp2-x5xf",
+      "GHSA-4mh8-r7rc-xpvc",
+      "GHSA-667r-xxjv-c9mm",
+      "GHSA-9q9j-q6p8-xq58",
+      "GHSA-hwr6-493r-vm6h",
+      "GHSA-jx2c-rxcm-jvmq",
+      "GHSA-mrq3-vjjr-p77c",
+      "GHSA-p68q-wchp-6fh7",
+      "GHSA-w2qp-rph6-63g4"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "file-type",
+     "version": "16.5.4",
+     "purl": "pkg:npm/file-type@16.5.4",
+     "ids": [
+      "GHSA-5v7r-6r5c-r473"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "find-my-way",
+     "version": "8.1.0",
+     "purl": "pkg:npm/find-my-way@8.1.0",
+     "ids": [
+      "GHSA-c96f-x56v-gq3h",
+      "GHSA-rrr8-f88r-h8q6"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "flatted",
+     "version": "3.2.9",
+     "purl": "pkg:npm/flatted@3.2.9",
+     "ids": [
+      "GHSA-25h7-pfq9-p65f",
+      "GHSA-rf6f-7fwh-wjgh"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "follow-redirects",
+     "version": "1.15.3",
+     "purl": "pkg:npm/follow-redirects@1.15.3",
+     "ids": [
+      "GHSA-cxjh-pqwp-8mfp",
+      "GHSA-jchw-25xp-jwwc",
+      "GHSA-r4q5-vmmm-2653"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "form-data",
+     "version": "2.3.3",
+     "purl": "pkg:npm/form-data@2.3.3",
+     "ids": [
+      "GHSA-fjxv-7rqg-78g4",
+      "GHSA-hmw2-7cc7-3qxx"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "form-data",
+     "version": "3.0.1",
+     "purl": "pkg:npm/form-data@3.0.1",
+     "ids": [
+      "GHSA-fjxv-7rqg-78g4",
+      "GHSA-hmw2-7cc7-3qxx"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "form-data",
+     "version": "4.0.0",
+     "purl": "pkg:npm/form-data@4.0.0",
+     "ids": [
+      "GHSA-fjxv-7rqg-78g4",
+      "GHSA-hmw2-7cc7-3qxx"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "formidable",
+     "version": "2.1.2",
+     "purl": "pkg:npm/formidable@2.1.2",
+     "ids": [
+      "GHSA-75v8-2h7p-7m2m"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "gatsby",
+     "version": "3.15.0",
+     "purl": "pkg:npm/gatsby@3.15.0",
+     "ids": [
+      "GHSA-c6f8-8r25-c4gc"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "got",
+     "version": "9.6.0",
+     "purl": "pkg:npm/got@9.6.0",
+     "ids": [
+      "GHSA-pfrx-2q88-qq97"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "i18next-fs-backend",
+     "version": "2.3.2",
+     "purl": "pkg:npm/i18next-fs-backend@2.3.2",
+     "ids": [
+      "GHSA-2933-q333-qg83",
+      "GHSA-8847-338w-5hcj"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "immer",
+     "version": "8.0.1",
+     "purl": "pkg:npm/immer@8.0.1",
+     "ids": [
+      "GHSA-33f9-j839-rf8h",
+      "GHSA-c36v-fmgq-m8hx"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "immutable",
+     "version": "4.3.5",
+     "purl": "pkg:npm/immutable@4.3.5",
+     "ids": [
+      "GHSA-v56q-mh7h-f735",
+      "GHSA-wf6x-7x77-mvgw",
+      "GHSA-xvcm-6775-5m9r"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "ip-address",
+     "version": "9.0.5",
+     "purl": "pkg:npm/ip-address@9.0.5",
+     "ids": [
+      "GHSA-h3mg-xc3c-68pw",
+      "GHSA-j6r3-76f7-8jcv",
+      "GHSA-mwp4-54f8-5fhr",
+      "GHSA-rpw4-54j3-4h4q",
+      "GHSA-rxp7-6hxx-x8q5",
+      "GHSA-v2v4-37r5-5v8g"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "joi",
+     "version": "17.12.2",
+     "purl": "pkg:npm/joi@17.12.2",
+     "ids": [
+      "GHSA-4528-x5fx-h6hg",
+      "GHSA-6h2x-m376-mqjq",
+      "GHSA-6w3j-5fw6-r9vr",
+      "GHSA-gg4h-3hg2-grpc",
+      "GHSA-q7cg-457f-vx79",
+      "GHSA-wr44-6hxh-3jwq"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "joi",
+     "version": "17.9.2",
+     "purl": "pkg:npm/joi@17.9.2",
+     "ids": [
+      "GHSA-4528-x5fx-h6hg",
+      "GHSA-6h2x-m376-mqjq",
+      "GHSA-6w3j-5fw6-r9vr",
+      "GHSA-gg4h-3hg2-grpc",
+      "GHSA-q7cg-457f-vx79",
+      "GHSA-wr44-6hxh-3jwq"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "js-yaml",
+     "version": "3.14.1",
+     "purl": "pkg:npm/js-yaml@3.14.1",
+     "ids": [
+      "GHSA-2883-xcg3-v3hh",
+      "GHSA-52cp-r559-cp3m",
+      "GHSA-5p4m-2wfm-xmqj",
+      "GHSA-h67p-54hq-rp68",
+      "GHSA-mh29-5h37-fv8m"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "js-yaml",
+     "version": "4.0.0",
+     "purl": "pkg:npm/js-yaml@4.0.0",
+     "ids": [
+      "GHSA-2883-xcg3-v3hh",
+      "GHSA-52cp-r559-cp3m",
+      "GHSA-5p4m-2wfm-xmqj",
+      "GHSA-h67p-54hq-rp68",
+      "GHSA-mh29-5h37-fv8m"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "js-yaml",
+     "version": "4.1.0",
+     "purl": "pkg:npm/js-yaml@4.1.0",
+     "ids": [
+      "GHSA-2883-xcg3-v3hh",
+      "GHSA-52cp-r559-cp3m",
+      "GHSA-5p4m-2wfm-xmqj",
+      "GHSA-h67p-54hq-rp68",
+      "GHSA-mh29-5h37-fv8m"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "jsonwebtoken",
+     "version": "8.5.1",
+     "purl": "pkg:npm/jsonwebtoken@8.5.1",
+     "ids": [
+      "GHSA-8cf7-32gw-wr33",
+      "GHSA-hjrf-2m68-5959",
+      "GHSA-qwph-4952-7xr6"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "jws",
+     "version": "3.2.2",
+     "purl": "pkg:npm/jws@3.2.2",
+     "ids": [
+      "GHSA-869p-cjfg-cm3x"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "linkify-it",
+     "version": "5.0.0",
+     "purl": "pkg:npm/linkify-it@5.0.0",
+     "ids": [
+      "GHSA-22p9-wv53-3rq4",
+      "GHSA-v245-v573-v5vm"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "loader-utils",
+     "version": "2.0.0",
+     "purl": "pkg:npm/loader-utils@2.0.0",
+     "ids": [
+      "GHSA-3rfm-jhwj-7488",
+      "GHSA-76p3-8jx3-jpfq",
+      "GHSA-hhq3-ff78-jv3g"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "lodash",
+     "version": "4.17.21",
+     "purl": "pkg:npm/lodash@4.17.21",
+     "ids": [
+      "GHSA-r5fr-rjxr-66jc",
+      "GHSA-xxjr-mmjv-4gpg"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "lodash-es",
+     "version": "4.17.21",
+     "purl": "pkg:npm/lodash-es@4.17.21",
+     "ids": [
+      "GHSA-r5fr-rjxr-66jc",
+      "GHSA-xxjr-mmjv-4gpg"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "markdown-it",
+     "version": "14.0.0",
+     "purl": "pkg:npm/markdown-it@14.0.0",
+     "ids": [
+      "GHSA-253c-mchw-3w2r",
+      "GHSA-38c4-r59v-3vqw",
+      "GHSA-6v5v-wf23-fmfq",
+      "GHSA-r7fv-28h4-cvq7",
+      "GHSA-vfgh-jcmw-g37q"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "micromatch",
+     "version": "3.1.10",
+     "purl": "pkg:npm/micromatch@3.1.10",
+     "ids": [
+      "GHSA-952p-6rrq-rcjv"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "micromatch",
+     "version": "4.0.5",
+     "purl": "pkg:npm/micromatch@4.0.5",
+     "ids": [
+      "GHSA-952p-6rrq-rcjv"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "minimatch",
+     "version": "3.0.4",
+     "purl": "pkg:npm/minimatch@3.0.4",
+     "ids": [
+      "GHSA-23c5-xmqv-rm74",
+      "GHSA-3ppc-4f35-3m26",
+      "GHSA-7r86-cg39-jmmj",
+      "GHSA-f8q6-p94x-37v3"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "minimatch",
+     "version": "3.1.2",
+     "purl": "pkg:npm/minimatch@3.1.2",
+     "ids": [
+      "GHSA-23c5-xmqv-rm74",
+      "GHSA-3ppc-4f35-3m26",
+      "GHSA-7r86-cg39-jmmj"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "minimatch",
+     "version": "5.0.1",
+     "purl": "pkg:npm/minimatch@5.0.1",
+     "ids": [
+      "GHSA-23c5-xmqv-rm74",
+      "GHSA-3ppc-4f35-3m26",
+      "GHSA-7r86-cg39-jmmj"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "minimatch",
+     "version": "5.1.6",
+     "purl": "pkg:npm/minimatch@5.1.6",
+     "ids": [
+      "GHSA-23c5-xmqv-rm74",
+      "GHSA-3ppc-4f35-3m26",
+      "GHSA-7r86-cg39-jmmj"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "minimatch",
+     "version": "9.0.3",
+     "purl": "pkg:npm/minimatch@9.0.3",
+     "ids": [
+      "GHSA-23c5-xmqv-rm74",
+      "GHSA-3ppc-4f35-3m26",
+      "GHSA-7r86-cg39-jmmj",
+      "GHSA-g3hv-75wg-m249"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "moment",
+     "version": "2.29.3",
+     "purl": "pkg:npm/moment@2.29.3",
+     "ids": [
+      "GHSA-4p3w-j4w9-5jqw",
+      "GHSA-wc69-rhjr-hc9g"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "moment-timezone",
+     "version": "0.5.33",
+     "purl": "pkg:npm/moment-timezone@0.5.33",
+     "ids": [
+      "GHSA-56x4-j7p9-fcf9",
+      "GHSA-v78c-4p63-2j6c"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "mongodb",
+     "version": "3.6.9",
+     "purl": "pkg:npm/mongodb@3.6.9",
+     "ids": [
+      "GHSA-vxvm-qww3-2fh7"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "morgan",
+     "version": "1.10.0",
+     "purl": "pkg:npm/morgan@1.10.0",
+     "ids": [
+      "GHSA-4vj7-5mj6-jm8m",
+      "GHSA-9f6g-j8ch-79g4",
+      "GHSA-jxfw-x594-9x9m"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "ms",
+     "version": "0.7.1",
+     "purl": "pkg:npm/ms@0.7.1",
+     "ids": [
+      "GHSA-w9mr-4mfr-499f"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "msgpack5",
+     "version": "4.5.1",
+     "purl": "pkg:npm/msgpack5@4.5.1",
+     "ids": [
+      "GHSA-24ch-f2g6-9hhh",
+      "GHSA-26wq-p25c-j6fv",
+      "GHSA-5x5g-h9x8-2fh9",
+      "GHSA-8f34-f56x-9xph",
+      "GHSA-8hq7-ggx2-cc6m",
+      "GHSA-gcx5-hxj7-gpqq",
+      "GHSA-qw35-55vc-rhgj"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "msgpackr",
+     "version": "1.9.9",
+     "purl": "pkg:npm/msgpackr@1.9.9",
+     "ids": [
+      "GHSA-7hpj-7hhx-2fgx"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "multer",
+     "version": "1.4.4",
+     "purl": "pkg:npm/multer@1.4.4",
+     "ids": [
+      "GHSA-44fp-w29j-9vj5",
+      "GHSA-4pg4-qvpc-4q3h",
+      "GHSA-535w-7cp7-47q4",
+      "GHSA-5528-5vmv-3xc2",
+      "GHSA-72gw-mp4g-v24j",
+      "GHSA-fjgf-rc76-4x9p",
+      "GHSA-g5hg-p3ph-g8qg",
+      "GHSA-qvfw-j98x-7q72",
+      "GHSA-v52c-386h-88mc",
+      "GHSA-wc9g-mqfw-jrwm",
+      "GHSA-xf7r-hgr6-v32p"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "nanoid",
+     "version": "2.1.11",
+     "purl": "pkg:npm/nanoid@2.1.11",
+     "ids": [
+      "GHSA-28wg-ghj8-5hjv",
+      "GHSA-2v37-7h3g-55p8",
+      "GHSA-mwcw-c2x4-8c55",
+      "GHSA-xwg4-73v4-xw9w"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "nanoid",
+     "version": "3.3.4",
+     "purl": "pkg:npm/nanoid@3.3.4",
+     "ids": [
+      "GHSA-28wg-ghj8-5hjv",
+      "GHSA-2v37-7h3g-55p8",
+      "GHSA-mwcw-c2x4-8c55",
+      "GHSA-xwg4-73v4-xw9w"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "nanoid",
+     "version": "3.3.7",
+     "purl": "pkg:npm/nanoid@3.3.7",
+     "ids": [
+      "GHSA-28wg-ghj8-5hjv",
+      "GHSA-2v37-7h3g-55p8",
+      "GHSA-mwcw-c2x4-8c55",
+      "GHSA-xwg4-73v4-xw9w"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "nanoid",
+     "version": "4.0.2",
+     "purl": "pkg:npm/nanoid@4.0.2",
+     "ids": [
+      "GHSA-28wg-ghj8-5hjv",
+      "GHSA-2v37-7h3g-55p8",
+      "GHSA-mwcw-c2x4-8c55",
+      "GHSA-xwg4-73v4-xw9w"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "node-fetch",
+     "version": "2.6.1",
+     "purl": "pkg:npm/node-fetch@2.6.1",
+     "ids": [
+      "GHSA-r683-j2x4-v87g"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "nodemailer",
+     "version": "6.9.10",
+     "purl": "pkg:npm/nodemailer@6.9.10",
+     "ids": [
+      "GHSA-268h-hp4c-crq3",
+      "GHSA-2x7j-588g-ccc2",
+      "GHSA-39m8-27wv-hr27",
+      "GHSA-4ffr-jq9g-5ffx",
+      "GHSA-4g23-2xm8-66gc",
+      "GHSA-6vj9-mwq6-2f5v",
+      "GHSA-85x2-q946-cp5h",
+      "GHSA-8c8m-p3m8-cjg8",
+      "GHSA-8m3c-c648-2xjj",
+      "GHSA-8vvx-rff5-p5rq",
+      "GHSA-c7w3-x93f-qmm8",
+      "GHSA-g73g-hqqh-jr95",
+      "GHSA-m943-m63m-w62w",
+      "GHSA-mm7p-fcc7-pg87",
+      "GHSA-p6gq-j5cr-w38f",
+      "GHSA-r7g4-qg5f-qqm2",
+      "GHSA-rcmh-qjqh-p98v",
+      "GHSA-v53p-9fqp-m79j",
+      "GHSA-vvjj-xcjg-gr5g",
+      "GHSA-wmmp-3585-3rmp",
+      "GHSA-wqvq-jvpq-h66f"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "object-path",
+     "version": "0.11.5",
+     "purl": "pkg:npm/object-path@0.11.5",
+     "ids": [
+      "GHSA-8v63-cqqc-6r2c",
+      "GHSA-v39p-96qg-c8rf"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "on-headers",
+     "version": "1.0.2",
+     "purl": "pkg:npm/on-headers@1.0.2",
+     "ids": [
+      "GHSA-76c9-3jph-rj3q"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "parse-path",
+     "version": "4.0.4",
+     "purl": "pkg:npm/parse-path@4.0.4",
+     "ids": [
+      "GHSA-3j8f-xvm3-ffx4"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "parse-url",
+     "version": "6.0.5",
+     "purl": "pkg:npm/parse-url@6.0.5",
+     "ids": [
+      "GHSA-j9fq-vwqv-2fm2",
+      "GHSA-pqw5-jmp5-px4v"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "parseuri",
+     "version": "0.0.6",
+     "purl": "pkg:npm/parseuri@0.0.6",
+     "ids": [
+      "GHSA-6fx8-h7jm-663j"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "passport",
+     "version": "0.4.1",
+     "purl": "pkg:npm/passport@0.4.1",
+     "ids": [
+      "GHSA-v923-w3x8-wh69"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "path-to-regexp",
+     "version": "0.1.7",
+     "purl": "pkg:npm/path-to-regexp@0.1.7",
+     "ids": [
+      "GHSA-37ch-88jc-xwx2",
+      "GHSA-9wv6-86v2-598j",
+      "GHSA-rhx6-c78j-4q9w"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "path-to-regexp",
+     "version": "2.2.1",
+     "purl": "pkg:npm/path-to-regexp@2.2.1",
+     "ids": [
+      "GHSA-9wv6-86v2-598j"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "pbkdf2",
+     "version": "3.1.2",
+     "purl": "pkg:npm/pbkdf2@3.1.2",
+     "ids": [
+      "GHSA-477h-4r7f-fvrx",
+      "GHSA-h7cp-r72f-jxh6",
+      "GHSA-v62p-rq8g-8h59"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "picomatch",
+     "version": "2.3.1",
+     "purl": "pkg:npm/picomatch@2.3.1",
+     "ids": [
+      "GHSA-3v7f-55p6-f55p",
+      "GHSA-c2c7-rcm5-vvqj"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "playwright",
+     "version": "1.47.1",
+     "purl": "pkg:npm/playwright@1.47.1",
+     "ids": [
+      "GHSA-7mvr-c777-76hp"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "postcss",
+     "version": "7.0.39",
+     "purl": "pkg:npm/postcss@7.0.39",
+     "ids": [
+      "GHSA-6g55-p6wh-862q",
+      "GHSA-7fh5-64p2-3v2j",
+      "GHSA-fxqj-rqcc-2cmp",
+      "GHSA-qx2v-qp2m-jg93",
+      "GHSA-r28c-9q8g-f849"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "postcss",
+     "version": "8.4.35",
+     "purl": "pkg:npm/postcss@8.4.35",
+     "ids": [
+      "GHSA-6g55-p6wh-862q",
+      "GHSA-fxqj-rqcc-2cmp",
+      "GHSA-qx2v-qp2m-jg93",
+      "GHSA-r28c-9q8g-f849"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "postcss-selector-parser",
+     "version": "6.0.13",
+     "purl": "pkg:npm/postcss-selector-parser@6.0.13",
+     "ids": [
+      "GHSA-rj75-hqrm-r3gf"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "prismjs",
+     "version": "1.29.0",
+     "purl": "pkg:npm/prismjs@1.29.0",
+     "ids": [
+      "GHSA-x7hr-w5r2-h6wg"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "proxy-addr",
+     "version": "2.0.7",
+     "purl": "pkg:npm/proxy-addr@2.0.7",
+     "ids": [
+      "GHSA-jqcg-44mw-7w3h"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "qs",
+     "version": "6.10.3",
+     "purl": "pkg:npm/qs@6.10.3",
+     "ids": [
+      "GHSA-4mjr-xmp4-gh2g",
+      "GHSA-6pq8-jhm2-2vcw",
+      "GHSA-6rw7-vpxm-498p",
+      "GHSA-w7fw-mjwx-w883"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "qs",
+     "version": "6.11.0",
+     "purl": "pkg:npm/qs@6.11.0",
+     "ids": [
+      "GHSA-4mjr-xmp4-gh2g",
+      "GHSA-6pq8-jhm2-2vcw",
+      "GHSA-6rw7-vpxm-498p",
+      "GHSA-w7fw-mjwx-w883"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "qs",
+     "version": "6.11.2",
+     "purl": "pkg:npm/qs@6.11.2",
+     "ids": [
+      "GHSA-4mjr-xmp4-gh2g",
+      "GHSA-6pq8-jhm2-2vcw",
+      "GHSA-6rw7-vpxm-498p",
+      "GHSA-q8mj-m7cp-5q26",
+      "GHSA-w7fw-mjwx-w883"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "qs",
+     "version": "6.5.3",
+     "purl": "pkg:npm/qs@6.5.3",
+     "ids": [
+      "GHSA-4mjr-xmp4-gh2g",
+      "GHSA-6rw7-vpxm-498p"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "react-router",
+     "version": "6.18.0",
+     "purl": "pkg:npm/react-router@6.18.0",
+     "ids": [
+      "GHSA-2j2x-hqr9-3h42",
+      "GHSA-337j-9hxr-rhxg",
+      "GHSA-9jcx-v3wj-wh4m",
+      "GHSA-wrjc-x8rr-h8h6"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "request",
+     "version": "2.88.2",
+     "purl": "pkg:npm/request@2.88.2",
+     "ids": [
+      "GHSA-p8p7-x288-28g6"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "rollup",
+     "version": "3.29.4",
+     "purl": "pkg:npm/rollup@3.29.4",
+     "ids": [
+      "GHSA-gcx4-mw62-g8wm",
+      "GHSA-mw96-cpmx-2vgc"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "sanitize-html",
+     "version": "1.27.5",
+     "purl": "pkg:npm/sanitize-html@1.27.5",
+     "ids": [
+      "GHSA-cgfm-xwp7-2cvr",
+      "GHSA-cv27-6wvh-8x7j",
+      "GHSA-g8qq-57p8-ggw5",
+      "GHSA-jxwj-j7wr-gfrw",
+      "GHSA-mjxr-4v3x-q3m4",
+      "GHSA-qhxp-v273-g94h",
+      "GHSA-rjqq-98f6-6j3r",
+      "GHSA-rm97-x556-q36h",
+      "GHSA-vccv-cmxp-4j9h",
+      "GHSA-x3q4-9hxx-gx8m"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "sanitize-html",
+     "version": "2.11.0",
+     "purl": "pkg:npm/sanitize-html@2.11.0",
+     "ids": [
+      "GHSA-cv27-6wvh-8x7j",
+      "GHSA-g8qq-57p8-ggw5",
+      "GHSA-jxwj-j7wr-gfrw",
+      "GHSA-rm97-x556-q36h",
+      "GHSA-vccv-cmxp-4j9h",
+      "GHSA-x3q4-9hxx-gx8m"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "semver",
+     "version": "7.0.0",
+     "purl": "pkg:npm/semver@7.0.0",
+     "ids": [
+      "GHSA-c2qf-rxjj-qqgw"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "send",
+     "version": "0.18.0",
+     "purl": "pkg:npm/send@0.18.0",
+     "ids": [
+      "GHSA-m6fv-jmcg-4jfg"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "serialize-javascript",
+     "version": "5.0.1",
+     "purl": "pkg:npm/serialize-javascript@5.0.1",
+     "ids": [
+      "GHSA-5c6j-r48x-rmvq",
+      "GHSA-m5mm-p8h7-m29v",
+      "GHSA-qj8w-gfj5-8c6v"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "serialize-javascript",
+     "version": "6.0.0",
+     "purl": "pkg:npm/serialize-javascript@6.0.0",
+     "ids": [
+      "GHSA-5c6j-r48x-rmvq",
+      "GHSA-76p7-773f-r4q5",
+      "GHSA-m5mm-p8h7-m29v",
+      "GHSA-qj8w-gfj5-8c6v"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "serialize-javascript",
+     "version": "6.0.1",
+     "purl": "pkg:npm/serialize-javascript@6.0.1",
+     "ids": [
+      "GHSA-5c6j-r48x-rmvq",
+      "GHSA-76p7-773f-r4q5",
+      "GHSA-m5mm-p8h7-m29v",
+      "GHSA-qj8w-gfj5-8c6v"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "serve-static",
+     "version": "1.15.0",
+     "purl": "pkg:npm/serve-static@1.15.0",
+     "ids": [
+      "GHSA-cm22-4g7w-348p"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "sha.js",
+     "version": "2.4.11",
+     "purl": "pkg:npm/sha.js@2.4.11",
+     "ids": [
+      "GHSA-95m3-7q98-8xr5"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "sharp",
+     "version": "0.29.3",
+     "purl": "pkg:npm/sharp@0.29.3",
+     "ids": [
+      "GHSA-54xq-cgqr-rpm3",
+      "GHSA-f88m-g3jw-g9cj",
+      "GHSA-gp95-ppv5-3jc5",
+      "GHSA-rgj7-g3m4-5g8c",
+      "GHSA-wq5f-xc86-pv6w"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "shell-quote",
+     "version": "1.7.2",
+     "purl": "pkg:npm/shell-quote@1.7.2",
+     "ids": [
+      "GHSA-395f-4hp3-45gv",
+      "GHSA-g4rg-993r-mgx7",
+      "GHSA-w7jw-789q-3m8p"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "shell-quote",
+     "version": "1.8.1",
+     "purl": "pkg:npm/shell-quote@1.8.1",
+     "ids": [
+      "GHSA-395f-4hp3-45gv",
+      "GHSA-w7jw-789q-3m8p"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "socket.io",
+     "version": "3.1.1",
+     "purl": "pkg:npm/socket.io@3.1.1",
+     "ids": [
+      "GHSA-25hc-qcg6-38wj"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "socket.io-parser",
+     "version": "4.0.5",
+     "purl": "pkg:npm/socket.io-parser@4.0.5",
+     "ids": [
+      "GHSA-2m8v-j782-fhvr",
+      "GHSA-677m-j7p3-52f9",
+      "GHSA-cqmj-92xf-r6r9"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "source-map-js",
+     "version": "1.0.2",
+     "purl": "pkg:npm/source-map-js@1.0.2",
+     "ids": [
+      "GHSA-68fv-2mgg-jv7q"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "svgo",
+     "version": "2.8.0",
+     "purl": "pkg:npm/svgo@2.8.0",
+     "ids": [
+      "GHSA-2p49-hgcm-8545",
+      "GHSA-4vpr-x523-8j87",
+      "GHSA-w27v-7q3p-w38r",
+      "GHSA-xpqw-6gx7-v673"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "swagger-ui",
+     "version": "2.2.10",
+     "purl": "pkg:npm/swagger-ui@2.2.10",
+     "ids": [
+      "GHSA-388g-jwpg-x6j4",
+      "GHSA-4f9m-pxwh-68hg",
+      "GHSA-c427-hjc3-wrfw",
+      "GHSA-cr3q-pqgq-m8c2",
+      "GHSA-qrmm-w75w-3wpx",
+      "GHSA-x9p2-fxq6-2m5f"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "tar-fs",
+     "version": "2.1.1",
+     "purl": "pkg:npm/tar-fs@2.1.1",
+     "ids": [
+      "GHSA-8cj5-5rvv-wf4v",
+      "GHSA-pq67-2wwv-3xjx",
+      "GHSA-vj76-c3g6-qr5v"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "tar-fs",
+     "version": "3.0.5",
+     "purl": "pkg:npm/tar-fs@3.0.5",
+     "ids": [
+      "GHSA-8cj5-5rvv-wf4v",
+      "GHSA-pq67-2wwv-3xjx",
+      "GHSA-vj76-c3g6-qr5v"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "tmp",
+     "version": "0.0.33",
+     "purl": "pkg:npm/tmp@0.0.33",
+     "ids": [
+      "GHSA-52f5-9888-hmc6",
+      "GHSA-ph9p-34f9-6g65"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "tmp",
+     "version": "0.2.1",
+     "purl": "pkg:npm/tmp@0.2.1",
+     "ids": [
+      "GHSA-52f5-9888-hmc6",
+      "GHSA-ph9p-34f9-6g65"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "tough-cookie",
+     "version": "2.5.0",
+     "purl": "pkg:npm/tough-cookie@2.5.0",
+     "ids": [
+      "GHSA-72xf-g2v4-qvf3"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "trim",
+     "version": "0.0.1",
+     "purl": "pkg:npm/trim@0.0.1",
+     "ids": [
+      "GHSA-w5p7-h5w8-2hfq"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "underscore",
+     "version": "1.12.1",
+     "purl": "pkg:npm/underscore@1.12.1",
+     "ids": [
+      "GHSA-qpx9-hpmf-5gmw"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "underscore",
+     "version": "1.13.6",
+     "purl": "pkg:npm/underscore@1.13.6",
+     "ids": [
+      "GHSA-qpx9-hpmf-5gmw"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "underscore",
+     "version": "1.7.0",
+     "purl": "pkg:npm/underscore@1.7.0",
+     "ids": [
+      "GHSA-cf4h-3jhx-xvhq",
+      "GHSA-qpx9-hpmf-5gmw"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "uuid",
+     "version": "3.4.0",
+     "purl": "pkg:npm/uuid@3.4.0",
+     "ids": [
+      "GHSA-w5hq-g745-h8pq"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "uuid",
+     "version": "7.0.3",
+     "purl": "pkg:npm/uuid@7.0.3",
+     "ids": [
+      "GHSA-w5hq-g745-h8pq"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "uuid",
+     "version": "8.0.0",
+     "purl": "pkg:npm/uuid@8.0.0",
+     "ids": [
+      "GHSA-w5hq-g745-h8pq"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "uuid",
+     "version": "8.3.2",
+     "purl": "pkg:npm/uuid@8.3.2",
+     "ids": [
+      "GHSA-w5hq-g745-h8pq"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "uuid",
+     "version": "9.0.1",
+     "purl": "pkg:npm/uuid@9.0.1",
+     "ids": [
+      "GHSA-w5hq-g745-h8pq"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "validator",
+     "version": "13.11.0",
+     "purl": "pkg:npm/validator@13.11.0",
+     "ids": [
+      "GHSA-9965-vmph-33xx",
+      "GHSA-vghf-hv5q-vc2g"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "validator",
+     "version": "13.7.0",
+     "purl": "pkg:npm/validator@13.7.0",
+     "ids": [
+      "GHSA-9965-vmph-33xx",
+      "GHSA-vghf-hv5q-vc2g"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "vite",
+     "version": "4.5.2",
+     "purl": "pkg:npm/vite@4.5.2",
+     "ids": [
+      "GHSA-356w-63v5-8wf4",
+      "GHSA-4r4m-qw57-chr8",
+      "GHSA-4w7w-66w2-5vf9",
+      "GHSA-587h-7wmj-h5pm",
+      "GHSA-64vr-g452-qvp3",
+      "GHSA-698v-4r3x-3vcv",
+      "GHSA-859w-5945-r5v3",
+      "GHSA-8jhw-289h-jh2g",
+      "GHSA-93m4-6634-74q7",
+      "GHSA-9cwx-2883-4wfx",
+      "GHSA-9jrq-w75r-8gcw",
+      "GHSA-c27g-q93r-2cwf",
+      "GHSA-fx2h-pf6j-xcff",
+      "GHSA-g4jq-h2w9-997c",
+      "GHSA-jqfw-vq24-v9c3",
+      "GHSA-r825-w8mm-5pxw",
+      "GHSA-rq7h-c2jc-7f22",
+      "GHSA-v6wh-96g9-6wx3",
+      "GHSA-vg6x-rcgg-rjx6",
+      "GHSA-x574-m823-4x7w",
+      "GHSA-xcj6-pq6g-qj4x"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "webpack",
+     "version": "5.90.3",
+     "purl": "pkg:npm/webpack@5.90.3",
+     "ids": [
+      "GHSA-38r7-794h-5758",
+      "GHSA-4vvj-4cpr-p986",
+      "GHSA-8fgc-7cc6-rx7x"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "webpack-dev-middleware",
+     "version": "4.3.0",
+     "purl": "pkg:npm/webpack-dev-middleware@4.3.0",
+     "ids": [
+      "GHSA-g84c-rxfj-3j2c",
+      "GHSA-wr3j-pwj9-hqq6"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "websocket-driver",
+     "version": "0.7.4",
+     "purl": "pkg:npm/websocket-driver@0.7.4",
+     "ids": [
+      "GHSA-mp7j-qc5w-4988",
+      "GHSA-xv26-6w52-cph6"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "ws",
+     "version": "7.4.5",
+     "purl": "pkg:npm/ws@7.4.5",
+     "ids": [
+      "GHSA-3h5v-q93c-6h6q",
+      "GHSA-6fc8-4gx4-v693",
+      "GHSA-96hv-2xvq-fx4p"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "ws",
+     "version": "7.4.6",
+     "purl": "pkg:npm/ws@7.4.6",
+     "ids": [
+      "GHSA-3h5v-q93c-6h6q",
+      "GHSA-96hv-2xvq-fx4p"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "ws",
+     "version": "7.5.9",
+     "purl": "pkg:npm/ws@7.5.9",
+     "ids": [
+      "GHSA-3h5v-q93c-6h6q",
+      "GHSA-96hv-2xvq-fx4p"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "ws",
+     "version": "8.14.2",
+     "purl": "pkg:npm/ws@8.14.2",
+     "ids": [
+      "GHSA-3h5v-q93c-6h6q",
+      "GHSA-58qx-3vcg-4xpx",
+      "GHSA-96hv-2xvq-fx4p"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "ws",
+     "version": "8.18.0",
+     "purl": "pkg:npm/ws@8.18.0",
+     "ids": [
+      "GHSA-58qx-3vcg-4xpx",
+      "GHSA-96hv-2xvq-fx4p"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "xml2js",
+     "version": "0.4.23",
+     "purl": "pkg:npm/xml2js@0.4.23",
+     "ids": [
+      "GHSA-776f-qx25-q3cc"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "yaml",
+     "version": "1.10.2",
+     "purl": "pkg:npm/yaml@1.10.2",
+     "ids": [
+      "GHSA-48c2-rrv3-qjmp"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "yaml",
+     "version": "2.3.2",
+     "purl": "pkg:npm/yaml@2.3.2",
+     "ids": [
+      "GHSA-48c2-rrv3-qjmp"
+     ]
+    },
+    {
+     "ecosystem": "npm",
+     "name": "zod",
+     "version": "3.23.8",
+     "purl": "pkg:npm/zod@3.23.8",
+     "ids": [
+      "GHSA-mrhx-c7xc-m3w5"
+     ]
+    }
+   ],
+   "packages_listed": 3065
+  },
+  "python-data-jobs": {
+   "sbom": "customer/sboms/python-data-jobs.cdx.json",
+   "exit_code": 1,
+   "packages": [
+    {
+     "ecosystem": "PyPI",
+     "name": "certifi",
+     "version": "2024.8.30",
+     "purl": "pkg:pypi/certifi@2024.8.30",
+     "ids": [
+      "GHSA-6q48-6c7w-9gw2",
+      "PYSEC-2026-4320"
+     ]
+    },
+    {
+     "ecosystem": "PyPI",
+     "name": "fonttools",
+     "version": "4.55.0",
+     "purl": "pkg:pypi/fonttools@4.55.0",
+     "ids": [
+      "GHSA-768j-98cg-p3fv",
+      "PYSEC-2026-1389"
+     ]
+    },
+    {
+     "ecosystem": "PyPI",
+     "name": "idna",
+     "version": "3.10",
+     "purl": "pkg:pypi/idna@3.10",
+     "ids": [
+      "GHSA-65pc-fj4g-8rjx",
+      "PYSEC-2026-215"
+     ]
+    },
+    {
+     "ecosystem": "PyPI",
+     "name": "jinja2",
+     "version": "3.1.4",
+     "purl": "pkg:pypi/jinja2@3.1.4",
+     "ids": [
+      "GHSA-cpwx-vrp4-4pq7",
+      "GHSA-gmj6-6f8f-6699",
+      "GHSA-q2x7-8rv6-6q7h",
+      "PYSEC-2026-1471",
+      "PYSEC-2026-1472",
+      "PYSEC-2026-1475"
+     ]
+    },
+    {
+     "ecosystem": "PyPI",
+     "name": "keras",
+     "version": "3.7.0",
+     "purl": "pkg:pypi/keras@3.7.0",
+     "ids": [
+      "GHSA-26c4-7vv6-867j",
+      "GHSA-36fq-jgmw-4r9c",
+      "GHSA-36rr-ww3j-vrjv",
+      "GHSA-3m4q-jmj6-r34q",
+      "GHSA-48g7-3x6r-xfhp",
+      "GHSA-4f3f-g24h-fr8m",
+      "GHSA-58hv-7753-xmfq",
+      "GHSA-5gwj-m78q-7pq3",
+      "GHSA-74m6-m3xx-3vmj",
+      "GHSA-c9rc-mg46-23w3",
+      "GHSA-cjgq-5qmw-rcj6",
+      "GHSA-gh82-f9x8-5frx",
+      "GHSA-hjqc-jx6g-rwp9",
+      "GHSA-hqp4-2352-xf5r",
+      "GHSA-m8wh-29wm-52mv",
+      "GHSA-mgx6-5cf9-rr43",
+      "GHSA-mq84-hjqx-cwf2",
+      "GHSA-v2w2-w228-c444",
+      "PYSEC-2025-121",
+      "PYSEC-2025-122",
+      "PYSEC-2025-123",
+      "PYSEC-2026-1486",
+      "PYSEC-2026-1487",
+      "PYSEC-2026-2324",
+      "PYSEC-2026-2546",
+      "PYSEC-2026-2547",
+      "PYSEC-2026-3629",
+      "PYSEC-2026-3630",
+      "PYSEC-2026-3631",
+      "PYSEC-2026-3632",
+      "PYSEC-2026-3633",
+      "PYSEC-2026-3634",
+      "PYSEC-2026-3856",
+      "PYSEC-2026-73"
+     ]
+    },
+    {
+     "ecosystem": "PyPI",
+     "name": "lxml",
+     "version": "5.3.0",
+     "purl": "pkg:pypi/lxml@5.3.0",
+     "ids": [
+      "GHSA-vfmq-68hx-4jfw",
+      "PYSEC-2026-87"
+     ]
+    },
+    {
+     "ecosystem": "PyPI",
+     "name": "oauthlib",
+     "version": "3.2.2",
+     "purl": "pkg:pypi/oauthlib@3.2.2",
+     "ids": [
+      "GHSA-7984-qgvg-3j9c",
+      "GHSA-hj66-6f7g-4r5v",
+      "GHSA-xpv3-w29h-x7cv",
+      "PYSEC-2026-4113",
+      "PYSEC-2026-4114"
+     ]
+    },
+    {
+     "ecosystem": "PyPI",
+     "name": "pillow",
+     "version": "11.0.0",
+     "purl": "pkg:pypi/pillow@11.0.0",
+     "ids": [
+      "GHSA-22hg-r758-rrw9",
+      "GHSA-24rc-8hj2-v98c",
+      "GHSA-254f-3936-288h",
+      "GHSA-27h8-gf7j-v5hc",
+      "GHSA-332p-7hrc-92wf",
+      "GHSA-3j72-p6qg-6xp7",
+      "GHSA-4558-3h8r-v8xp",
+      "GHSA-45hq-cxwh-f6vc",
+      "GHSA-462x-pgg6-55fp",
+      "GHSA-4rm8-3hmm-39fg",
+      "GHSA-4x4j-2g7c-83w6",
+      "GHSA-58r4-6rv3-gfh8",
+      "GHSA-5x8w-8jj5-q52h",
+      "GHSA-5x94-69rx-g8h2",
+      "GHSA-5xm2-6676-qcp9",
+      "GHSA-62p4-gmf7-7g93",
+      "GHSA-65qm-jvmh-6pqg",
+      "GHSA-6r8x-57c9-28j4",
+      "GHSA-74r2-7ff9-mjj2",
+      "GHSA-7mwm-ghpf-9vrm",
+      "GHSA-8g5g-8vmr-9782",
+      "GHSA-8v84-f9pq-wr9x",
+      "GHSA-9hw9-ch79-4vh6",
+      "GHSA-9v9v-9qvf-h2hj",
+      "GHSA-c6hw-5grf-ff96",
+      "GHSA-cfh3-3jmp-rvhc",
+      "GHSA-f2g6-542v-9j58",
+      "GHSA-fc9g-5qg7-mf45",
+      "GHSA-fj7v-r99m-22gq",
+      "GHSA-g4qv-2jxx-769h",
+      "GHSA-g7cr-3p24-7wf7",
+      "GHSA-g842-9rc4-69pw",
+      "GHSA-gg2r-wvfm-q9rx",
+      "GHSA-j4m9-6w36-pw47",
+      "GHSA-jg86-v3jv-hrpm",
+      "GHSA-jjj6-mw9f-p565",
+      "GHSA-mrfp-p49p-3hf2",
+      "GHSA-p4wg-p73j-c528",
+      "GHSA-p8hx-v2p6-rp84",
+      "GHSA-pchr-8j38-3x4p",
+      "GHSA-phj9-mv4w-65pm",
+      "GHSA-pwv6-vv43-88gr",
+      "GHSA-q45j-58j2-45rg",
+      "GHSA-r73j-pqj5-w3x7",
+      "GHSA-rfgq-q3w2-pmv2",
+      "GHSA-v9pv-5gc8-w2m6",
+      "GHSA-vjc4-5qp5-m44j",
+      "GHSA-vx6w-vv9f-6gvg",
+      "GHSA-w889-685w-c8fh",
+      "GHSA-whj4-6x5x-4v2j",
+      "GHSA-wjx4-4jcj-g98j",
+      "GHSA-xgh8-jp6q-p5x8",
+      "GHSA-xj96-63gp-2gmr",
+      "GHSA-xvh5-g6gv-559v",
+      "PYSEC-2026-165",
+      "PYSEC-2026-2249",
+      "PYSEC-2026-2250",
+      "PYSEC-2026-2252",
+      "PYSEC-2026-2253",
+      "PYSEC-2026-2254",
+      "PYSEC-2026-2255",
+      "PYSEC-2026-2256",
+      "PYSEC-2026-2257",
+      "PYSEC-2026-2874",
+      "PYSEC-2026-3451",
+      "PYSEC-2026-3453",
+      "PYSEC-2026-3454",
+      "PYSEC-2026-3493",
+      "PYSEC-2026-3494",
+      "PYSEC-2026-3495",
+      "PYSEC-2026-3496",
+      "PYSEC-2026-4326",
+      "PYSEC-2026-4327",
+      "PYSEC-2026-4329",
+      "PYSEC-2026-4330",
+      "PYSEC-2026-4331",
+      "PYSEC-2026-4332",
+      "PYSEC-2026-4334",
+      "PYSEC-2026-4335",
+      "PYSEC-2026-4337",
+      "PYSEC-2026-4338",
+      "PYSEC-2026-4339",
+      "PYSEC-2026-4340",
+      "PYSEC-2026-4341",
+      "PYSEC-2026-4342",
+      "PYSEC-2026-4343"
+     ]
+    },
+    {
+     "ecosystem": "PyPI",
+     "name": "pygments",
+     "version": "2.18.0",
+     "purl": "pkg:pypi/pygments@2.18.0",
+     "ids": [
+      "GHSA-5239-wwwm-4pmq",
+      "PYSEC-2026-2987"
+     ]
+    },
+    {
+     "ecosystem": "PyPI",
+     "name": "pytest",
+     "version": "8.3.4",
+     "purl": "pkg:pypi/pytest@8.3.4",
+     "ids": [
+      "GHSA-6w46-j5rx-g56g",
+      "PYSEC-2026-1845"
+     ]
+    },
+    {
+     "ecosystem": "PyPI",
+     "name": "requests",
+     "version": "2.32.3",
+     "purl": "pkg:pypi/requests@2.32.3",
+     "ids": [
+      "GHSA-9hjg-9r4m-mvj7",
+      "GHSA-gc5v-m9x4-r6x2",
+      "PYSEC-2026-1872",
+      "PYSEC-2026-2275"
+     ]
+    },
+    {
+     "ecosystem": "PyPI",
+     "name": "soupsieve",
+     "version": "2.6",
+     "purl": "pkg:pypi/soupsieve@2.6",
+     "ids": [
+      "GHSA-2wc2-fm75-p42x",
+      "GHSA-836r-79rf-4m37",
+      "GHSA-gjv8-xp57-g29c",
+      "GHSA-j934-xhv5-fg8f",
+      "PYSEC-2026-3071",
+      "PYSEC-2026-3072",
+      "PYSEC-2026-4170",
+      "PYSEC-2026-4171"
+     ]
+    },
+    {
+     "ecosystem": "PyPI",
+     "name": "urllib3",
+     "version": "2.2.3",
+     "purl": "pkg:pypi/urllib3@2.2.3",
+     "ids": [
+      "GHSA-2xpw-w6gg-jr37",
+      "GHSA-38jv-5279-wg99",
+      "GHSA-48p4-8xcf-vxj5",
+      "GHSA-8988-9cw3-xx77",
+      "GHSA-gm62-xv2j-4w53",
+      "GHSA-pq67-6m6q-mj2v",
+      "GHSA-qccp-gfcp-xxvc",
+      "GHSA-vxq7-64xx-v4gw",
+      "PYSEC-2026-141",
+      "PYSEC-2026-1994",
+      "PYSEC-2026-1996",
+      "PYSEC-2026-1997",
+      "PYSEC-2026-1998",
+      "PYSEC-2026-1999",
+      "PYSEC-2026-4175",
+      "PYSEC-2026-4177"
+     ]
+    }
+   ],
+   "packages_listed": 82
+  },
+  "go-edge-service": {
+   "sbom": "customer/sboms/go-edge-service.cdx.json",
+   "exit_code": 1,
+   "packages": [
+    {
+     "ecosystem": "Go",
+     "name": "github.com/yuin/goldmark",
+     "version": "v1.6.0",
+     "purl": "pkg:golang/github.com/yuin/goldmark@v1.6.0",
+     "ids": [
+      "GO-2026-5320"
+     ]
+    },
+    {
+     "ecosystem": "Go",
+     "name": "golang.org/x/net",
+     "version": "v0.23.0",
+     "purl": "pkg:golang/golang.org/x/net@v0.23.0",
+     "ids": [
+      "GHSA-5cv4-jp36-h3mw",
+      "GHSA-qxp5-gwg8-xv66",
+      "GHSA-vvgc-356p-c3xw",
+      "GO-2024-3333",
+      "GO-2025-3503",
+      "GO-2025-3595",
+      "GO-2026-4440",
+      "GO-2026-4441",
+      "GO-2026-4918",
+      "GO-2026-5025",
+      "GO-2026-5026",
+      "GO-2026-5027",
+      "GO-2026-5028",
+      "GO-2026-5029",
+      "GO-2026-5030",
+      "GO-2026-5942",
+      "GO-2026-6603",
+      "GO-2026-6610",
+      "GO-2026-6611",
+      "GO-2026-6612",
+      "GO-2026-6617",
+      "GO-2026-6860",
+      "GO-2026-6866"
+     ]
+    },
+    {
+     "ecosystem": "Go",
+     "name": "golang.org/x/oauth2",
+     "version": "v0.15.0",
+     "purl": "pkg:golang/golang.org/x/oauth2@v0.15.0",
+     "ids": [
+      "GHSA-6v2p-p543-phr9",
+      "GO-2025-3488"
+     ]
+    },
+    {
+     "ecosystem": "Go",
+     "name": "golang.org/x/sys",
+     "version": "v0.18.0",
+     "purl": "pkg:golang/golang.org/x/sys@v0.18.0",
+     "ids": [
+      "GO-2026-5024"
+     ]
+    },
+    {
+     "ecosystem": "Go",
+     "name": "golang.org/x/text",
+     "version": "v0.14.0",
+     "purl": "pkg:golang/golang.org/x/text@v0.14.0",
+     "ids": [
+      "GO-2026-5970",
+      "GO-2026-6629"
+     ]
+    }
+   ],
+   "packages_listed": 13
+  },
+  "java-integration-service": {
+   "sbom": "customer/sboms/java-integration-service.cdx.json",
+   "exit_code": 1,
+   "packages": [
+    {
+     "ecosystem": "Maven",
+     "name": "cn.hutool:hutool-all",
+     "version": "5.8.9",
+     "purl": "pkg:maven/cn.hutool/hutool-all@5.8.9",
+     "ids": [
+      "GHSA-6c25-cxcc-pmc4",
+      "GHSA-77h8-5j3h-jcjf"
+     ]
+    },
+    {
+     "ecosystem": "Maven",
+     "name": "io.minio:minio",
+     "version": "8.4.5",
+     "purl": "pkg:maven/io.minio/minio@8.4.5",
+     "ids": [
+      "GHSA-h7rh-xfpj-hpcm"
+     ]
+    },
+    {
+     "ecosystem": "Maven",
+     "name": "mysql:mysql-connector-java",
+     "version": "8.0.29",
+     "purl": "pkg:maven/mysql/mysql-connector-java@8.0.29",
+     "ids": [
+      "GHSA-m6vm-37g8-gqvh"
+     ]
+    },
+    {
+     "ecosystem": "Maven",
+     "name": "org.springframework.boot:spring-boot-starter-actuator",
+     "version": "UNKNOWN",
+     "purl": "pkg:maven/org.springframework.boot/spring-boot-starter-actuator",
+     "ids": [
+      "GHSA-mgvc-8q2h-5pgc"
+     ]
+    },
+    {
+     "ecosystem": "Maven",
+     "name": "org.springframework.boot:spring-boot-starter-web",
+     "version": "UNKNOWN",
+     "purl": "pkg:maven/org.springframework.boot/spring-boot-starter-web",
+     "ids": [
+      "GHSA-36p3-wjmg-h94x"
+     ]
+    },
+    {
+     "ecosystem": "Maven",
+     "name": "org.springframework.data:spring-data-commons",
+     "version": "2.7.5",
+     "purl": "pkg:maven/org.springframework.data/spring-data-commons@2.7.5",
+     "ids": [
+      "GHSA-5m4m-73w9-8433",
+      "GHSA-5vpf-xvv7-c8vh",
+      "GHSA-9fw2-h3hf-293r"
+     ]
+    }
+   ],
+   "packages_listed": 35
+  },
+  "rust-cli": {
+   "sbom": "customer/sboms/rust-cli.cdx.json",
+   "exit_code": 1,
+   "packages": [
+    {
+     "ecosystem": "crates.io",
+     "name": "adler",
+     "version": "1.0.2",
+     "purl": "pkg:cargo/adler@1.0.2",
+     "ids": [
+      "RUSTSEC-2025-0056"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "ansi_term",
+     "version": "0.12.1",
+     "purl": "pkg:cargo/ansi_term@0.12.1",
+     "ids": [
+      "RUSTSEC-2021-0139"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "anyhow",
+     "version": "1.0.86",
+     "purl": "pkg:cargo/anyhow@1.0.86",
+     "ids": [
+      "RUSTSEC-2026-0190"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "atty",
+     "version": "0.2.14",
+     "purl": "pkg:cargo/atty@0.2.14",
+     "ids": [
+      "GHSA-g98v-hv3f-hcfr",
+      "RUSTSEC-2021-0145",
+      "RUSTSEC-2024-0375"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "bytes",
+     "version": "1.6.0",
+     "purl": "pkg:cargo/bytes@1.6.0",
+     "ids": [
+      "GHSA-434x-w66g-qw3r",
+      "RUSTSEC-2026-0007"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "crossbeam-channel",
+     "version": "0.5.13",
+     "purl": "pkg:cargo/crossbeam-channel@0.5.13",
+     "ids": [
+      "GHSA-pg9f-39pc-qf8g",
+      "RUSTSEC-2025-0024"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "crossbeam-epoch",
+     "version": "0.9.18",
+     "purl": "pkg:cargo/crossbeam-epoch@0.9.18",
+     "ids": [
+      "RUSTSEC-2026-0204"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "derivative",
+     "version": "2.2.0",
+     "purl": "pkg:cargo/derivative@2.2.0",
+     "ids": [
+      "RUSTSEC-2024-0388"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "dlopen_derive",
+     "version": "0.1.4",
+     "purl": "pkg:cargo/dlopen_derive@0.1.4",
+     "ids": [
+      "RUSTSEC-2023-0051"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "event-listener",
+     "version": "5.3.1",
+     "purl": "pkg:cargo/event-listener@5.3.1",
+     "ids": [
+      "RUSTSEC-2026-0221"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "fuser",
+     "version": "0.13.0",
+     "purl": "pkg:cargo/fuser@0.13.0",
+     "ids": [
+      "GHSA-cvmj-47v9-35m9",
+      "RUSTSEC-2021-0154"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "git2",
+     "version": "0.16.1",
+     "purl": "pkg:cargo/git2@0.16.1",
+     "ids": [
+      "GHSA-j39j-6gw9-jw6h",
+      "RUSTSEC-2026-0008",
+      "RUSTSEC-2026-0183",
+      "RUSTSEC-2026-0184"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "glib",
+     "version": "0.18.5",
+     "purl": "pkg:cargo/glib@0.18.5",
+     "ids": [
+      "GHSA-wrw7-89jp-8q8g",
+      "RUSTSEC-2024-0429"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "h2",
+     "version": "0.3.26",
+     "purl": "pkg:cargo/h2@0.3.26",
+     "ids": [
+      "RUSTSEC-2026-0258"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "idna",
+     "version": "0.5.0",
+     "purl": "pkg:cargo/idna@0.5.0",
+     "ids": [
+      "GHSA-h97m-ww89-6jmq",
+      "RUSTSEC-2024-0421"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "instant",
+     "version": "0.1.13",
+     "purl": "pkg:cargo/instant@0.1.13",
+     "ids": [
+      "RUSTSEC-2024-0384"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "libgit2-sys",
+     "version": "0.14.2+1.5.1",
+     "purl": "pkg:cargo/libgit2-sys@0.14.2%2B1.5.1",
+     "ids": [
+      "GHSA-22q8-ghmq-63vf",
+      "RUSTSEC-2024-0013"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "libz-sys",
+     "version": "1.1.18",
+     "purl": "pkg:cargo/libz-sys@1.1.18",
+     "ids": [
+      "RUSTSEC-2026-0418"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "openssl",
+     "version": "0.10.64",
+     "purl": "pkg:cargo/openssl@0.10.64",
+     "ids": [
+      "GHSA-4fcv-w3qc-ppgg",
+      "GHSA-8c75-8mhr-p7r9",
+      "GHSA-ghm9-cr32-g9qj",
+      "GHSA-hppc-g8h3-xhp3",
+      "GHSA-phqj-4mhp-q6mq",
+      "GHSA-pqf5-4pqq-29f5",
+      "GHSA-q445-7m23-qrmw",
+      "GHSA-rpmj-rpgj-qmpm",
+      "GHSA-xmgf-hq76-4vx2",
+      "GHSA-xp3w-r5p5-63rr",
+      "GHSA-xv59-967r-8726",
+      "RUSTSEC-2024-0357",
+      "RUSTSEC-2025-0004",
+      "RUSTSEC-2025-0022"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "paste",
+     "version": "1.0.15",
+     "purl": "pkg:cargo/paste@1.0.15",
+     "ids": [
+      "RUSTSEC-2024-0436"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "pin-utils",
+     "version": "0.1.0",
+     "purl": "pkg:cargo/pin-utils@0.1.0",
+     "ids": [
+      "RUSTSEC-2026-0441"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "proc-macro-error",
+     "version": "1.0.4",
+     "purl": "pkg:cargo/proc-macro-error@1.0.4",
+     "ids": [
+      "RUSTSEC-2024-0370"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "protobuf",
+     "version": "3.5.0",
+     "purl": "pkg:cargo/protobuf@3.5.0",
+     "ids": [
+      "GHSA-2gh3-rmm4-6rq5",
+      "RUSTSEC-2024-0437"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "quick-xml",
+     "version": "0.30.0",
+     "purl": "pkg:cargo/quick-xml@0.30.0",
+     "ids": [
+      "RUSTSEC-2026-0194",
+      "RUSTSEC-2026-0195"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "quick-xml",
+     "version": "0.31.0",
+     "purl": "pkg:cargo/quick-xml@0.31.0",
+     "ids": [
+      "RUSTSEC-2026-0194",
+      "RUSTSEC-2026-0195"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "quick-xml",
+     "version": "0.34.0",
+     "purl": "pkg:cargo/quick-xml@0.34.0",
+     "ids": [
+      "RUSTSEC-2026-0194",
+      "RUSTSEC-2026-0195"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "rand",
+     "version": "0.8.5",
+     "purl": "pkg:cargo/rand@0.8.5",
+     "ids": [
+      "GHSA-cq8v-f236-94qc",
+      "RUSTSEC-2026-0097"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "rand_os",
+     "version": "0.1.3",
+     "purl": "pkg:cargo/rand_os@0.1.3",
+     "ids": [
+      "RUSTSEC-2025-0124"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "ring",
+     "version": "0.17.8",
+     "purl": "pkg:cargo/ring@0.17.8",
+     "ids": [
+      "GHSA-4p46-pwfr-66x6",
+      "RUSTSEC-2025-0009"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "ringbuf",
+     "version": "0.3.3",
+     "purl": "pkg:cargo/ringbuf@0.3.3",
+     "ids": [
+      "RUSTSEC-2026-0293"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "rpassword",
+     "version": "2.1.0",
+     "purl": "pkg:cargo/rpassword@2.1.0",
+     "ids": [
+      "GHSA-2p6r-x3vv-xqm2"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "rpassword",
+     "version": "7.3.1",
+     "purl": "pkg:cargo/rpassword@7.3.1",
+     "ids": [
+      "GHSA-2p6r-x3vv-xqm2"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "rustls",
+     "version": "0.21.12",
+     "purl": "pkg:cargo/rustls@0.21.12",
+     "ids": [
+      "GHSA-c8m5-c952-6cm4",
+      "GHSA-h2v8-394m-p7vv",
+      "GHSA-w44r-93j7-qv28",
+      "RUSTSEC-2026-0346",
+      "RUSTSEC-2026-0349"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "rustls",
+     "version": "0.23.10",
+     "purl": "pkg:cargo/rustls@0.23.10",
+     "ids": [
+      "GHSA-c8m5-c952-6cm4",
+      "GHSA-h2v8-394m-p7vv",
+      "GHSA-w44r-93j7-qv28",
+      "RUSTSEC-2026-0346",
+      "RUSTSEC-2026-0348",
+      "RUSTSEC-2026-0349"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "rustls-pemfile",
+     "version": "1.0.4",
+     "purl": "pkg:cargo/rustls-pemfile@1.0.4",
+     "ids": [
+      "RUSTSEC-2025-0134"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "rustls-pemfile",
+     "version": "2.1.2",
+     "purl": "pkg:cargo/rustls-pemfile@2.1.2",
+     "ids": [
+      "RUSTSEC-2025-0134"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "rustls-webpki",
+     "version": "0.101.7",
+     "purl": "pkg:cargo/rustls-webpki@0.101.7",
+     "ids": [
+      "GHSA-82j2-j2ch-gfr8",
+      "GHSA-965h-392x-2mh5",
+      "GHSA-xgp8-3hg3-c2mh",
+      "RUSTSEC-2026-0098",
+      "RUSTSEC-2026-0099",
+      "RUSTSEC-2026-0104",
+      "RUSTSEC-2026-0382"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "rustls-webpki",
+     "version": "0.102.4",
+     "purl": "pkg:cargo/rustls-webpki@0.102.4",
+     "ids": [
+      "GHSA-82j2-j2ch-gfr8",
+      "GHSA-965h-392x-2mh5",
+      "GHSA-pwjx-qhcg-rvj4",
+      "GHSA-xgp8-3hg3-c2mh",
+      "RUSTSEC-2026-0049",
+      "RUSTSEC-2026-0098",
+      "RUSTSEC-2026-0099",
+      "RUSTSEC-2026-0104",
+      "RUSTSEC-2026-0382"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "sodiumoxide",
+     "version": "0.2.7",
+     "purl": "pkg:cargo/sodiumoxide@0.2.7",
+     "ids": [
+      "RUSTSEC-2021-0137"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "time",
+     "version": "0.1.45",
+     "purl": "pkg:cargo/time@0.1.45",
+     "ids": [
+      "GHSA-wcg3-cvx6-7396",
+      "RUSTSEC-2020-0071"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "time",
+     "version": "0.3.36",
+     "purl": "pkg:cargo/time@0.3.36",
+     "ids": [
+      "GHSA-r6v5-fh4h-64xc",
+      "RUSTSEC-2026-0009"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "tokio",
+     "version": "1.38.0",
+     "purl": "pkg:cargo/tokio@1.38.0",
+     "ids": [
+      "GHSA-rr8g-9fpq-6wmg",
+      "RUSTSEC-2025-0023",
+      "RUSTSEC-2026-0386"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "users",
+     "version": "0.10.0",
+     "purl": "pkg:cargo/users@0.10.0",
+     "ids": [
+      "GHSA-jcr6-4frq-9gjj",
+      "GHSA-m65q-v92h-cm7q",
+      "RUSTSEC-2023-0040",
+      "RUSTSEC-2023-0059",
+      "RUSTSEC-2025-0040"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "users",
+     "version": "0.11.0",
+     "purl": "pkg:cargo/users@0.11.0",
+     "ids": [
+      "GHSA-jcr6-4frq-9gjj",
+      "GHSA-m65q-v92h-cm7q",
+      "RUSTSEC-2023-0040",
+      "RUSTSEC-2023-0059",
+      "RUSTSEC-2025-0040"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "webpki-roots",
+     "version": "0.25.4",
+     "purl": "pkg:cargo/webpki-roots@0.25.4",
+     "ids": [
+      "RUSTSEC-2026-0381"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "webpki-roots",
+     "version": "0.26.3",
+     "purl": "pkg:cargo/webpki-roots@0.26.3",
+     "ids": [
+      "RUSTSEC-2026-0381"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "zbus_names",
+     "version": "2.6.1",
+     "purl": "pkg:cargo/zbus_names@2.6.1",
+     "ids": [
+      "RUSTSEC-2026-0371"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "zip",
+     "version": "0.6.6",
+     "purl": "pkg:cargo/zip@0.6.6",
+     "ids": [
+      "GHSA-8hxf-qr8p-62x4",
+      "GHSA-m665-v7pm-7grj",
+      "RUSTSEC-2026-0367",
+      "RUSTSEC-2026-0368",
+      "RUSTSEC-2026-0369",
+      "RUSTSEC-2026-0429"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "zstd-safe",
+     "version": "5.0.2+zstd.1.5.2",
+     "purl": "pkg:cargo/zstd-safe@5.0.2%2Bzstd.1.5.2",
+     "ids": [
+      "RUSTSEC-2026-0395",
+      "RUSTSEC-2026-0397",
+      "RUSTSEC-2026-0399",
+      "RUSTSEC-2026-0400",
+      "RUSTSEC-2026-0401",
+      "RUSTSEC-2026-0402",
+      "RUSTSEC-2026-0403",
+      "RUSTSEC-2026-0404",
+      "RUSTSEC-2026-0406"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "zstd-safe",
+     "version": "7.1.0",
+     "purl": "pkg:cargo/zstd-safe@7.1.0",
+     "ids": [
+      "RUSTSEC-2026-0395",
+      "RUSTSEC-2026-0397",
+      "RUSTSEC-2026-0399",
+      "RUSTSEC-2026-0400",
+      "RUSTSEC-2026-0401",
+      "RUSTSEC-2026-0402",
+      "RUSTSEC-2026-0403",
+      "RUSTSEC-2026-0404",
+      "RUSTSEC-2026-0406"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "zstd-sys",
+     "version": "2.0.11+zstd.1.5.6",
+     "purl": "pkg:cargo/zstd-sys@2.0.11%2Bzstd.1.5.6",
+     "ids": [
+      "RUSTSEC-2026-0410"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "zvariant",
+     "version": "3.15.2",
+     "purl": "pkg:cargo/zvariant@3.15.2",
+     "ids": [
+      "RUSTSEC-2026-0370"
+     ]
+    },
+    {
+     "ecosystem": "crates.io",
+     "name": "zvariant_derive",
+     "version": "3.15.2",
+     "purl": "pkg:cargo/zvariant_derive@3.15.2",
+     "ids": [
+      "RUSTSEC-2026-0372"
+     ]
+    }
+   ],
+   "packages_listed": 796
+  },
+  "door-controller-firmware": {
+   "sbom": "customer/sboms/door-controller-firmware.cdx.json",
+   "exit_code": 0,
+   "packages": [],
+   "packages_listed": 88
+  }
+ },
+ "release_normalized_probe": {
+  "door-controller-firmware": {
+   "packages": [
+    {
+     "ecosystem": "Debian:12",
+     "name": "apt",
+     "version": "2.6.1",
+     "purl": "pkg:deb/debian/apt@2.6.1?arch=arm64&distro=debian-12",
+     "ids": [
+      "DEBIAN-CVE-2011-3374",
+      "DEBIAN-CVE-2026-109518"
+     ]
+    },
+    {
+     "ecosystem": "Debian:12",
+     "name": "coreutils",
+     "version": "9.1-1",
+     "purl": "pkg:deb/debian/coreutils@9.1-1?arch=arm64&distro=debian-12",
+     "ids": [
+      "DEBIAN-CVE-2016-2781",
+      "DEBIAN-CVE-2017-18018",
+      "DEBIAN-CVE-2025-5278",
+      "DEBIAN-CVE-2026-56391",
+      "DEBIAN-CVE-2026-56392"
+     ]
+    },
+    {
+     "ecosystem": "Debian:12",
+     "name": "dash",
+     "version": "0.5.12-2",
+     "purl": "pkg:deb/debian/dash@0.5.12-2?arch=arm64&distro=debian-12",
+     "ids": [
+      "DEBIAN-CVE-2026-102473",
+      "DEBIAN-CVE-2026-102474"
+     ]
+    },
+    {
+     "ecosystem": "Debian:12",
+     "name": "diffutils",
+     "version": "1:3.8-4",
+     "purl": "pkg:deb/debian/diffutils@1:3.8-4?arch=arm64&distro=debian-12",
+     "ids": [
+      "DEBIAN-CVE-2026-53910"
+     ]
+    },
+    {
+     "ecosystem": "Debian:12",
+     "name": "dpkg",
+     "version": "1.21.22",
+     "purl": "pkg:deb/debian/dpkg@1.21.22?arch=arm64&distro=debian-12",
+     "ids": [
+      "DEBIAN-CVE-2025-6297",
+      "DEBIAN-CVE-2026-2219"
+     ]
+    },
+    {
+     "ecosystem": "Debian:12",
+     "name": "gzip",
+     "version": "1.12-1",
+     "purl": "pkg:deb/debian/gzip@1.12-1?arch=arm64&distro=debian-12",
+     "ids": [
+      "DEBIAN-CVE-2026-41991",
+      "DEBIAN-CVE-2026-41992"
+     ]
+    },
+    {
+     "ecosystem": "Debian:12",
+     "name": "libcap2",
+     "version": "1:2.66-4",
+     "purl": "pkg:deb/debian/libcap2@1:2.66-4?arch=arm64&distro=debian-12",
+     "ids": [
+      "DEBIAN-CVE-2025-1390",
+      "DEBIAN-CVE-2026-4878"
+     ]
+    },
+    {
+     "ecosystem": "Debian:12",
+     "name": "libgcrypt20",
+     "version": "1.10.1-3",
+     "purl": "pkg:deb/debian/libgcrypt20@1.10.1-3?arch=arm64&distro=debian-12",
+     "ids": [
+      "DEBIAN-CVE-2018-6829",
+      "DEBIAN-CVE-2024-2236",
+      "DEBIAN-CVE-2026-41989"
+     ]
+    },
+    {
+     "ecosystem": "Debian:12",
+     "name": "libtasn1-6",
+     "version": "4.19.0-2",
+     "purl": "pkg:deb/debian/libtasn1-6@4.19.0-2?arch=arm64&distro=debian-12",
+     "ids": [
+      "DEBIAN-CVE-2024-12133",
+      "DEBIAN-CVE-2025-13151",
+      "DSA-5863-1"
+     ]
+    },
+    {
+     "ecosystem": "Debian:12",
+     "name": "sed",
+     "version": "4.9-1",
+     "purl": "pkg:deb/debian/sed@4.9-1?arch=arm64&distro=debian-12",
+     "ids": [
+      "DEBIAN-CVE-2026-5958"
+     ]
+    },
+    {
+     "ecosystem": "Debian:12",
+     "name": "tar",
+     "version": "1.34+dfsg-1.2+deb12u1",
+     "purl": "pkg:deb/debian/tar@1.34%2Bdfsg-1.2%2Bdeb12u1?arch=arm64&distro=debian-12",
+     "ids": [
+      "DEBIAN-CVE-2005-2541",
+      "DEBIAN-CVE-2026-18477",
+      "DEBIAN-CVE-2026-18508",
+      "DEBIAN-CVE-2026-5704"
+     ]
+    },
+    {
+     "ecosystem": "Debian:12",
+     "name": "util-linux",
+     "version": "2.38.1-5+deb12u2",
+     "purl": "pkg:deb/debian/util-linux@2.38.1-5%2Bdeb12u2?arch=arm64&distro=debian-12",
+     "ids": [
+      "DEBIAN-CVE-2022-0563",
+      "DEBIAN-CVE-2025-14104",
+      "DEBIAN-CVE-2026-13595",
+      "DEBIAN-CVE-2026-27456",
+      "DEBIAN-CVE-2026-3184",
+      "DEBIAN-CVE-2026-53613",
+      "DEBIAN-CVE-2026-53615",
+      "DEBIAN-CVE-2026-78410"
+     ]
+    }
+   ]
+  }
+ }
+}

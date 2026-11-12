@@ -1,0 +1,91 @@
+{
+ "Q07": {
+  "cloud-dashboard": [],
+  "python-data-jobs": [],
+  "go-edge-service": [],
+  "java-integration-service": [],
+  "rust-cli": [
+   {
+    "rule": "Q07",
+    "bom_ref": "185d2e997fdcf23c",
+    "type": "library",
+    "name": "clipboard",
+    "version": "0.1.0",
+    "found_by": "rust-cargo-lock-cataloger",
+    "location": "/Cargo.lock"
+   },
+   {
+    "rule": "Q07",
+    "bom_ref": "84609bd969c11e47",
+    "type": "library",
+    "name": "dylib_virtual_display",
+    "version": "0.1.0",
+    "found_by": "rust-cargo-lock-cataloger",
+    "location": "/Cargo.lock"
+   },
+   {
+    "rule": "Q07",
+    "bom_ref": "f0ce560d3b5f6c68",
+    "type": "library",
+    "name": "enigo",
+    "version": "0.0.14",
+    "found_by": "rust-cargo-lock-cataloger",
+    "location": "/Cargo.lock"
+   },
+   {
+    "rule": "Q07",
+    "bom_ref": "6926f28799bdd2af",
+    "type": "library",
+    "name": "hbb_common",
+    "version": "0.1.0",
+    "found_by": "rust-cargo-lock-cataloger",
+    "location": "/Cargo.lock"
+   },
+   {
+    "rule": "Q07",
+    "bom_ref": "19cb06059d8c4027",
+    "type": "library",
+    "name": "rustdesk",
+    "version": "1.3.6",
+    "found_by": "rust-cargo-lock-cataloger",
+    "location": "/Cargo.lock"
+   },
+   {
+    "rule": "Q07",
+    "bom_ref": "bb77824c23034a07",
+    "type": "library",
+    "name": "rustdesk-portable-packer",
+    "version": "1.3.6",
+    "found_by": "rust-cargo-lock-cataloger",
+    "location": "/Cargo.lock"
+   },
+   {
+    "rule": "Q07",
+    "bom_ref": "8cc81cfc49775d45",
+    "type": "library",
+    "name": "scrap",
+    "version": "0.5.0",
+    "found_by": "rust-cargo-lock-cataloger",
+    "location": "/Cargo.lock"
+   },
+   {
+    "rule": "Q07",
+    "bom_ref": "a98935c4a77f64ba",
+    "type": "library",
+    "name": "virtual_display",
+    "version": "0.1.0",
+    "found_by": "rust-cargo-lock-cataloger",
+    "location": "/Cargo.lock"
+   }
+  ],
+  "door-controller-firmware": []
+ },
+ "Q06": {
+  "cloud-dashboard": [],
+  "python-data-jobs": [],
+  "go-edge-service": [],
+  "java-integration-service": [],
+  "rust-cli": [],
+  "door-controller-firmware": []
+ }
+}

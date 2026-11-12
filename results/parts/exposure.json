@@ -1,0 +1,1437 @@
+{
+ "as_of": "2026-11-08",
+ "values": {
+  "exposure.c9.any_source_usable": {
+   "value": 963,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "findings today, six stand in SBOMs",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "usable from any source: a CVSS 3.x or 4.0 base score from the filer (CNA), the NVD or CISA ADP on one of the finding's CVEs"
+   }
+  },
+  "exposure.c9.any_source_usable_share": {
+   "value": 0.9008419083255379,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "findings today, six stand in SBOMs",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "usable from any source: a CVSS 3.x or 4.0 base score from the filer (CNA), the NVD or CISA ADP on one of the finding's CVEs"
+   }
+  },
+  "exposure.c9.findings_today": {
+   "value": 1069,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "findings today, six stand in SBOMs",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.c9.nvd_only_usable": {
+   "value": 353,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "findings today, six stand in SBOMs",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "usable from the NVD alone: an NVD CVSS 3.x base score on one of the finding's CVEs"
+   }
+  },
+  "exposure.c9.nvd_only_usable_share": {
+   "value": 0.3302151543498597,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "findings today, six stand in SBOMs",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "usable from the NVD alone: an NVD CVSS 3.x base score on one of the finding's CVEs"
+   }
+  },
+  "exposure.cloud_dashboard.cves_pin": {
+   "value": 80,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "cloud-dashboard, stand in SBOM, as of 2024-12-30T21:42:53Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.cloud_dashboard.cves_today": {
+   "value": 338,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "cloud-dashboard, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.cloud_dashboard.exploit_cves_pin": {
+   "value": 2,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "cloud-dashboard, stand in SBOM, as of 2024-12-30T21:42:53Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.cloud_dashboard.exploit_cves_today": {
+   "value": 10,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "cloud-dashboard, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.cloud_dashboard.exploit_findings_pin": {
+   "value": 2,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "cloud-dashboard, stand in SBOM, as of 2024-12-30T21:42:53Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.cloud_dashboard.exploit_findings_today": {
+   "value": 10,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "cloud-dashboard, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.cloud_dashboard.findings_pin": {
+   "value": 104,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "cloud-dashboard, stand in SBOM, as of 2024-12-30T21:42:53Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.cloud_dashboard.findings_today": {
+   "value": 513,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "cloud-dashboard, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.cloud_dashboard.fix_available_pin": {
+   "value": 67,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "cloud-dashboard, stand in SBOM, as of 2024-12-30T21:42:53Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.cloud_dashboard.fix_available_today": {
+   "value": 505,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "cloud-dashboard, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.cloud_dashboard.kev_findings_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "cloud-dashboard, stand in SBOM, as of 2024-12-30T21:42:53Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "KEV dateAdded on or before the as of day, from bronze kev"
+   }
+  },
+  "exposure.cloud_dashboard.kev_findings_today": {
+   "value": 1,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "cloud-dashboard, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "KEV dateAdded on or before the as of day, from bronze kev"
+   }
+  },
+  "exposure.contrast.share_no_cpe": {
+   "value": 0.4752104770813845,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "findings today, six SBOMs",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.contrast.share_no_nvd_analysis": {
+   "value": 0.4761459307764266,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "findings today, six SBOMs",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.disagreements.total": {
+   "value": 322,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "matcher against osv-scanner, six SBOMs, today",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.disagreements.unexplained": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "matcher against osv-scanner, six SBOMs, today",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "criterion C3 evidence"
+   }
+  },
+  "exposure.door_controller_firmware.cves_pin": {
+   "value": 32,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "door-controller-firmware, stand in SBOM, as of 2024-12-24T21:34:21Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.door_controller_firmware.cves_today": {
+   "value": 170,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "door-controller-firmware, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.door_controller_firmware.exploit_cves_pin": {
+   "value": 1,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "door-controller-firmware, stand in SBOM, as of 2024-12-24T21:34:21Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.door_controller_firmware.exploit_cves_today": {
+   "value": 1,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "door-controller-firmware, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.door_controller_firmware.exploit_findings_pin": {
+   "value": 1,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "door-controller-firmware, stand in SBOM, as of 2024-12-24T21:34:21Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.door_controller_firmware.exploit_findings_today": {
+   "value": 1,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "door-controller-firmware, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.door_controller_firmware.findings_pin": {
+   "value": 66,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "door-controller-firmware, stand in SBOM, as of 2024-12-24T21:34:21Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.door_controller_firmware.findings_today": {
+   "value": 320,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "door-controller-firmware, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.door_controller_firmware.fix_available_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "door-controller-firmware, stand in SBOM, as of 2024-12-24T21:34:21Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.door_controller_firmware.fix_available_today": {
+   "value": 105,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "door-controller-firmware, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.door_controller_firmware.kev_findings_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "door-controller-firmware, stand in SBOM, as of 2024-12-24T21:34:21Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "KEV dateAdded on or before the as of day, from bronze kev"
+   }
+  },
+  "exposure.door_controller_firmware.kev_findings_today": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "door-controller-firmware, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "KEV dateAdded on or before the as of day, from bronze kev"
+   }
+  },
+  "exposure.go_edge_service.cves_pin": {
+   "value": 1,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "go-edge-service, stand in SBOM, as of 2024-12-30T14:45:16Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.go_edge_service.cves_today": {
+   "value": 25,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "go-edge-service, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.go_edge_service.exploit_cves_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "go-edge-service, stand in SBOM, as of 2024-12-30T14:45:16Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.go_edge_service.exploit_cves_today": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "go-edge-service, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.go_edge_service.exploit_findings_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "go-edge-service, stand in SBOM, as of 2024-12-30T14:45:16Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.go_edge_service.exploit_findings_today": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "go-edge-service, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.go_edge_service.findings_pin": {
+   "value": 1,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "go-edge-service, stand in SBOM, as of 2024-12-30T14:45:16Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.go_edge_service.findings_today": {
+   "value": 25,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "go-edge-service, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.go_edge_service.fix_available_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "go-edge-service, stand in SBOM, as of 2024-12-30T14:45:16Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.go_edge_service.fix_available_today": {
+   "value": 25,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "go-edge-service, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.go_edge_service.kev_findings_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "go-edge-service, stand in SBOM, as of 2024-12-30T14:45:16Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "KEV dateAdded on or before the as of day, from bronze kev"
+   }
+  },
+  "exposure.go_edge_service.kev_findings_today": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "go-edge-service, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "KEV dateAdded on or before the as of day, from bronze kev"
+   }
+  },
+  "exposure.java_integration_service.cves_pin": {
+   "value": 3,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "java-integration-service, stand in SBOM, as of 2024-12-26T06:50:09Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.java_integration_service.cves_today": {
+   "value": 7,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "java-integration-service, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.java_integration_service.exploit_cves_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "java-integration-service, stand in SBOM, as of 2024-12-26T06:50:09Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.java_integration_service.exploit_cves_today": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "java-integration-service, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.java_integration_service.exploit_findings_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "java-integration-service, stand in SBOM, as of 2024-12-26T06:50:09Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.java_integration_service.exploit_findings_today": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "java-integration-service, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.java_integration_service.findings_pin": {
+   "value": 3,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "java-integration-service, stand in SBOM, as of 2024-12-26T06:50:09Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.java_integration_service.findings_today": {
+   "value": 7,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "java-integration-service, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.java_integration_service.fix_available_pin": {
+   "value": 1,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "java-integration-service, stand in SBOM, as of 2024-12-26T06:50:09Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.java_integration_service.fix_available_today": {
+   "value": 2,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "java-integration-service, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.java_integration_service.kev_findings_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "java-integration-service, stand in SBOM, as of 2024-12-26T06:50:09Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "KEV dateAdded on or before the as of day, from bronze kev"
+   }
+  },
+  "exposure.java_integration_service.kev_findings_today": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "java-integration-service, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "KEV dateAdded on or before the as of day, from bronze kev"
+   }
+  },
+  "exposure.python_data_jobs.cves_pin": {
+   "value": 3,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "python-data-jobs, stand in SBOM, as of 2024-12-31T02:16:32Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.python_data_jobs.cves_today": {
+   "value": 97,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "python-data-jobs, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.python_data_jobs.exploit_cves_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "python-data-jobs, stand in SBOM, as of 2024-12-31T02:16:32Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.python_data_jobs.exploit_cves_today": {
+   "value": 1,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "python-data-jobs, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.python_data_jobs.exploit_findings_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "python-data-jobs, stand in SBOM, as of 2024-12-31T02:16:32Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.python_data_jobs.exploit_findings_today": {
+   "value": 1,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "python-data-jobs, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.python_data_jobs.findings_pin": {
+   "value": 3,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "python-data-jobs, stand in SBOM, as of 2024-12-31T02:16:32Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.python_data_jobs.findings_today": {
+   "value": 98,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "python-data-jobs, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.python_data_jobs.fix_available_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "python-data-jobs, stand in SBOM, as of 2024-12-31T02:16:32Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.python_data_jobs.fix_available_today": {
+   "value": 97,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "python-data-jobs, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.python_data_jobs.kev_findings_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "python-data-jobs, stand in SBOM, as of 2024-12-31T02:16:32Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "KEV dateAdded on or before the as of day, from bronze kev"
+   }
+  },
+  "exposure.python_data_jobs.kev_findings_today": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "python-data-jobs, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "KEV dateAdded on or before the as of day, from bronze kev"
+   }
+  },
+  "exposure.rust_cli.cves_pin": {
+   "value": 3,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "rust-cli, stand in SBOM, as of 2024-12-30T03:51:36Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.rust_cli.cves_today": {
+   "value": 25,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "rust-cli, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.rust_cli.exploit_cves_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "rust-cli, stand in SBOM, as of 2024-12-30T03:51:36Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.rust_cli.exploit_cves_today": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "rust-cli, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.rust_cli.exploit_findings_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "rust-cli, stand in SBOM, as of 2024-12-30T03:51:36Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.rust_cli.exploit_findings_today": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "rust-cli, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "a Metasploit module or Nuclei template naming the CVE first committed at or before the as of time, from bronze exploit_signals"
+   }
+  },
+  "exposure.rust_cli.findings_pin": {
+   "value": 29,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "rust-cli, stand in SBOM, as of 2024-12-30T03:51:36Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.rust_cli.findings_today": {
+   "value": 106,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "rust-cli, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.rust_cli.fix_available_pin": {
+   "value": 4,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "rust-cli, stand in SBOM, as of 2024-12-30T03:51:36Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.rust_cli.fix_available_today": {
+   "value": 83,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "rust-cli, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": null
+   }
+  },
+  "exposure.rust_cli.kev_findings_pin": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "rust-cli, stand in SBOM, as of 2024-12-30T03:51:36Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "KEV dateAdded on or before the as of day, from bronze kev"
+   }
+  },
+  "exposure.rust_cli.kev_findings_today": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "rust-cli, stand in SBOM, as of 2026-11-08T03:40:40Z",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "KEV dateAdded on or before the as of day, from bronze kev"
+   }
+  }
+ },
+ "tables": {
+  "exposure.c9_by_product": {
+   "columns": [
+    "Product",
+    "Findings",
+    "Usable from the NVD alone",
+    "Usable from any source"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "int",
+    "int"
+   ],
+   "rows": [
+    [
+     "cloud-dashboard",
+     513,
+     176,
+     489
+    ],
+    [
+     "python-data-jobs",
+     98,
+     60,
+     97
+    ],
+    [
+     "go-edge-service",
+     25,
+     3,
+     25
+    ],
+    [
+     "java-integration-service",
+     7,
+     2,
+     7
+    ],
+    [
+     "rust-cli",
+     106,
+     10,
+     32
+    ],
+    [
+     "door-controller-firmware",
+     320,
+     102,
+     313
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "findings today, six stand in SBOMs",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "C9 baseline: usable from the NVD alone: an NVD CVSS 3.x base score on one of the finding's CVEs; usable from any source: a CVSS 3.x or 4.0 base score from the filer (CNA), the NVD or CISA ADP on one of the finding's CVEs"
+   }
+  },
+  "exposure.nvd_status": {
+   "columns": [
+    "Product",
+    "When",
+    "As of",
+    "NVD status",
+    "Dated by",
+    "Findings",
+    "CVEs"
+   ],
+   "formats": [
+    "text",
+    "text",
+    "text",
+    "text",
+    "text",
+    "int",
+    "int"
+   ],
+   "rows": [
+    [
+     "cloud-dashboard",
+     "pin",
+     "2024-12-30T21:42:53Z",
+     "Analyzed",
+     "current_status_fallback",
+     4,
+     3
+    ],
+    [
+     "cloud-dashboard",
+     "pin",
+     "2024-12-30T21:42:53Z",
+     "Modified",
+     "change_history",
+     51,
+     50
+    ],
+    [
+     "cloud-dashboard",
+     "pin",
+     "2024-12-30T21:42:53Z",
+     "Modified",
+     "current_status_fallback",
+     8,
+     8
+    ],
+    [
+     "cloud-dashboard",
+     "pin",
+     "2024-12-30T21:42:53Z",
+     "Received",
+     "change_history",
+     18,
+     11
+    ],
+    [
+     "cloud-dashboard",
+     "pin",
+     "2024-12-30T21:42:53Z",
+     "Deferred",
+     "current_status_fallback",
+     16,
+     8
+    ],
+    [
+     "cloud-dashboard",
+     "pin",
+     "2024-12-30T21:42:53Z",
+     "No CVE",
+     "no_cve",
+     7,
+     0
+    ],
+    [
+     "cloud-dashboard",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Analyzed",
+     "current_record",
+     169,
+     104
+    ],
+    [
+     "cloud-dashboard",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Modified",
+     "current_record",
+     119,
+     94
+    ],
+    [
+     "cloud-dashboard",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Awaiting Analysis",
+     "current_record",
+     80,
+     58
+    ],
+    [
+     "cloud-dashboard",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Received",
+     "current_record",
+     2,
+     1
+    ],
+    [
+     "cloud-dashboard",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Deferred",
+     "current_record",
+     119,
+     79
+    ],
+    [
+     "cloud-dashboard",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Rejected",
+     "current_record",
+     2,
+     2
+    ],
+    [
+     "cloud-dashboard",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "No CVE",
+     "no_cve",
+     22,
+     0
+    ],
+    [
+     "python-data-jobs",
+     "pin",
+     "2024-12-31T02:16:32Z",
+     "Analyzed",
+     "current_status_fallback",
+     1,
+     1
+    ],
+    [
+     "python-data-jobs",
+     "pin",
+     "2024-12-31T02:16:32Z",
+     "Modified",
+     "current_status_fallback",
+     1,
+     1
+    ],
+    [
+     "python-data-jobs",
+     "pin",
+     "2024-12-31T02:16:32Z",
+     "Received",
+     "change_history",
+     1,
+     1
+    ],
+    [
+     "python-data-jobs",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Analyzed",
+     "current_record",
+     55,
+     55
+    ],
+    [
+     "python-data-jobs",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Modified",
+     "current_record",
+     25,
+     25
+    ],
+    [
+     "python-data-jobs",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Undergoing Analysis",
+     "current_record",
+     2,
+     2
+    ],
+    [
+     "python-data-jobs",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Awaiting Analysis",
+     "current_record",
+     7,
+     7
+    ],
+    [
+     "python-data-jobs",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Deferred",
+     "current_record",
+     8,
+     8
+    ],
+    [
+     "python-data-jobs",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "No CVE",
+     "no_cve",
+     1,
+     0
+    ],
+    [
+     "go-edge-service",
+     "pin",
+     "2024-12-30T14:45:16Z",
+     "Deferred",
+     "current_status_fallback",
+     1,
+     1
+    ],
+    [
+     "go-edge-service",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Analyzed",
+     "current_record",
+     9,
+     9
+    ],
+    [
+     "go-edge-service",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Modified",
+     "current_record",
+     2,
+     2
+    ],
+    [
+     "go-edge-service",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Awaiting Analysis",
+     "current_record",
+     6,
+     6
+    ],
+    [
+     "go-edge-service",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Deferred",
+     "current_record",
+     8,
+     8
+    ],
+    [
+     "java-integration-service",
+     "pin",
+     "2024-12-26T06:50:09Z",
+     "Analyzed",
+     "change_history",
+     1,
+     1
+    ],
+    [
+     "java-integration-service",
+     "pin",
+     "2024-12-26T06:50:09Z",
+     "Modified",
+     "change_history",
+     2,
+     2
+    ],
+    [
+     "java-integration-service",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Analyzed",
+     "current_record",
+     4,
+     4
+    ],
+    [
+     "java-integration-service",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Modified",
+     "current_record",
+     2,
+     2
+    ],
+    [
+     "java-integration-service",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Deferred",
+     "current_record",
+     1,
+     1
+    ],
+    [
+     "rust-cli",
+     "pin",
+     "2024-12-30T03:51:36Z",
+     "Modified",
+     "change_history",
+     1,
+     1
+    ],
+    [
+     "rust-cli",
+     "pin",
+     "2024-12-30T03:51:36Z",
+     "Not in the NVD yet",
+     "published_after",
+     2,
+     2
+    ],
+    [
+     "rust-cli",
+     "pin",
+     "2024-12-30T03:51:36Z",
+     "No CVE",
+     "no_cve",
+     26,
+     0
+    ],
+    [
+     "rust-cli",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Analyzed",
+     "current_record",
+     9,
+     9
+    ],
+    [
+     "rust-cli",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Modified",
+     "current_record",
+     1,
+     1
+    ],
+    [
+     "rust-cli",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Awaiting Analysis",
+     "current_record",
+     14,
+     8
+    ],
+    [
+     "rust-cli",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Deferred",
+     "current_record",
+     8,
+     7
+    ],
+    [
+     "rust-cli",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "No CVE",
+     "no_cve",
+     74,
+     0
+    ],
+    [
+     "door-controller-firmware",
+     "pin",
+     "2024-12-24T21:34:21Z",
+     "Modified",
+     "change_history",
+     56,
+     27
+    ],
+    [
+     "door-controller-firmware",
+     "pin",
+     "2024-12-24T21:34:21Z",
+     "Modified",
+     "current_status_fallback",
+     9,
+     4
+    ],
+    [
+     "door-controller-firmware",
+     "pin",
+     "2024-12-24T21:34:21Z",
+     "Received",
+     "change_history",
+     1,
+     1
+    ],
+    [
+     "door-controller-firmware",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Analyzed",
+     "current_record",
+     42,
+     22
+    ],
+    [
+     "door-controller-firmware",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Modified",
+     "current_record",
+     123,
+     66
+    ],
+    [
+     "door-controller-firmware",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Undergoing Analysis",
+     "current_record",
+     1,
+     1
+    ],
+    [
+     "door-controller-firmware",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Awaiting Analysis",
+     "current_record",
+     95,
+     48
+    ],
+    [
+     "door-controller-firmware",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Received",
+     "current_record",
+     2,
+     1
+    ],
+    [
+     "door-controller-firmware",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Deferred",
+     "current_record",
+     56,
+     31
+    ],
+    [
+     "door-controller-firmware",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Rejected",
+     "current_record",
+     1,
+     1
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/run_exposure.py",
+    "population": "findings of the six stand in SBOMs at each pin date and today, and their CVEs",
+    "source": "match",
+    "as_of": "2026-11-08",
+    "note": "each CVE dated by the first rule that applies: no NVD record, published after the as of time, the current record when it was fetched at or before the as of time, the newest change history status event at or before it, else the current status (the NVD change history fetched through 2024-07-22T22:15:02Z); a finding counts once, under the most advanced status among its CVEs"
+   }
+  }
+ },
+ "figures": {}
+}
