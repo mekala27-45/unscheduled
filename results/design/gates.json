@@ -246,30 +246,22 @@
      "desktop-dark": {
       "serious": 0,
       "critical": 0,
-      "other": [
-       "landmark-unique (moderate)"
-      ]
+      "other": []
      },
      "desktop-light": {
       "serious": 0,
       "critical": 0,
-      "other": [
-       "landmark-unique (moderate)"
-      ]
+      "other": []
      },
      "phone-dark": {
       "serious": 0,
       "critical": 0,
-      "other": [
-       "landmark-unique (moderate)"
-      ]
+      "other": []
      },
      "phone-light": {
       "serious": 0,
       "critical": 0,
-      "other": [
-       "landmark-unique (moderate)"
-      ]
+      "other": []
      }
     }
    },

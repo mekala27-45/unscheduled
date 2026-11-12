@@ -43,7 +43,7 @@ export function RulerKey() {
           );
         })}
       </svg>
-      <figcaption>A key, not a timeline.</figcaption>
+      <figcaption>The marks of the ruler, without dates or counts.</figcaption>
     </figure>
   );
 }

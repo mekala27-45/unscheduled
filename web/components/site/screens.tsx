@@ -5,7 +5,7 @@ import { useRef, useState, type KeyboardEvent } from "react";
 import type { Screen, ScreenName } from "@/lib/build-data";
 
 const MOMENTS: { name: ScreenName; label: string; caption: string; href: string; open: string }[] = [
-  { name: "ruler", label: "The ruler", caption: "One CVE's events in real time", href: "/app/cves", open: "Open a CVE" },
+  { name: "ruler", label: "The ruler", caption: "Every dated event for one CVE", href: "/app/cves", open: "Open a CVE" },
   { name: "backlog", label: "The backlog", caption: "Six questions, with tables and SQL", href: "/app/backlog", open: "Open the backlog" },
   { name: "exposure", label: "The exposure", caption: "Findings by NVD status", href: "/app/products", open: "Open the products" },
   { name: "match", label: "The match", caption: "An SBOM in, findings out", href: "/app/match", open: "Open the match" },

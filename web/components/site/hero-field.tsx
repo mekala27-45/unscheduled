@@ -47,7 +47,7 @@ export function HeroField({ field }: { field: Loaded<FieldData> }) {
           </>
         ) : (
           <>
-            <strong>No data release yet:</strong> one dot per day of new CVEs since 1 January 2024.
+            <strong>No data release yet</strong>, so the grid is empty. With the data, each cell is a day of new CVEs since 1 January 2024.
           </>
         )}
       </figcaption>

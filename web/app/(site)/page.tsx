@@ -59,7 +59,7 @@ export default function Landing() {
           <div className="container">
             <div className="sec__head">
               <h2 id="map-title">Nine sources in, one dated record out</h2>
-              <p className="lead">Solid is built this week; dashed comes later. Each name opens its page.</p>
+              <p className="lead">Solid boxes are built now and dashed ones come in later weeks. A linked name opens its page.</p>
             </div>
             <SystemMap />
             <ol className="map-list" aria-label="The system, in order">
@@ -96,7 +96,7 @@ export default function Landing() {
           <div className="container">
             <div className="sec__head">
               <h2 id="screens-title">Four screens from the console</h2>
-              <p className="lead">Live now; captures come with the first data.</p>
+              <p className="lead">The screens are live. A capture of each is added once the first data release is loaded.</p>
             </div>
             <Screens screens={screens} />
           </div>
@@ -106,9 +106,9 @@ export default function Landing() {
           <div className="container">
             <div className="sec__head">
               <h2 id="ba-title">What a CPE matcher cannot see</h2>
-              <p className="lead">No NVD analysis, no CPE, so no finding.</p>
+              <p className="lead">Without NVD analysis a CVE has no CPE, so a matcher that reads CPE names finds nothing.</p>
             </div>
-            <BeforeAfter />
+            <BeforeAfter manifest={manifest} />
           </div>
         </section>
 

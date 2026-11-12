@@ -13,12 +13,21 @@ test("the hero's headline, sentence and primary key are on the first screen", as
   await expect(page.locator(".hero h1")).toHaveText("The CVEs the NVD no longer analyzes");
 });
 
-test("with no field.json the field is a dot grid that says so, and draws no count", async ({ page }) => {
+test("the field draws the days in field.json and its legend names the source and the date", async ({ page }) => {
   await mockApi(page);
   await page.goto("/");
-  await expect(page.locator(".hero-field figcaption")).toContainText("No data release yet");
-  await expect(page.locator(".hero-field canvas")).toHaveCount(0);
-  await expect(page.locator(".hero-field .dotgrid")).toBeVisible();
+  await expect(page.locator(".hero-field canvas")).toHaveCount(1);
+  const legend = page.locator(".hero-field figcaption");
+  await expect(legend).toContainText("One character a day");
+  await expect(legend).toContainText("From gold.mart_backlog_q1 in the lake");
+  await expect(legend).not.toContainText("No data release yet");
+});
+
+test("the before and after count comes from the manifest", async ({ page }) => {
+  await mockApi(page);
+  await page.goto("/");
+  await expect(page.locator(".ba__count")).toContainText("have no NVD CPE configuration");
+  await expect(page.locator(".ba__count .mono")).toHaveText(/^\d+(\.\d)?%$/);
 });
 
 test("the system map draws later weeks as not built, and its nodes link to live pages", async ({ page }, info) => {
