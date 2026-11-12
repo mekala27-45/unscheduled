@@ -150,7 +150,10 @@ class Http:
     def _check(self, url: str, response: httpx.Response, body: bytes | None) -> None:
         if response.status_code < 400:
             return
-        if response.status_code in self.retry_statuses:
+        # Every 5xx is the server's trouble, not a judgement on this client, so it is retried; that
+        # includes the 52x a CDN in front of a source sends when the origin times out (the NVD
+        # history answered 522 on 12 November 2026 in the middle of a window).
+        if response.status_code in self.retry_statuses or 500 <= response.status_code <= 599:
             raise Retryable(url, response.status_code, _retry_after(response))
         excerpt = (body or b"").decode("utf-8", "replace")
         raise Refused(url, response.status_code, excerpt)
