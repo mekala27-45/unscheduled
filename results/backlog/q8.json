@@ -1,0 +1,293 @@
+{
+ "id": "Q8",
+ "title": "How different the skipped CVEs are",
+ "subtitle": "How well a logistic regression tells the CVEs the NVD analyzed from the ones it skipped, shadow window",
+ "plan": {
+  "id": "Q8",
+  "title": "How different the skipped CVEs are",
+  "population": "CVEs published in the shadow window, held out half for scoring",
+  "estimator": "logistic regression domain classifier on filer, filer type, CWE, month, vector presence and description TF-IDF; AUC with interval; top features",
+  "prediction": "the classifier separates them well, so NVD labels alone would bias a model",
+  "interval": "cluster bootstrap by filer, 2000 resamples, 95 percent",
+  "family_correction": "Benjamini-Hochberg at 0.05"
+ },
+ "population": "CVEs published in the shadow window (from 2026-04-15), rejected excluded",
+ "window": "shadow only; fitted on the earlier half by publication time, scored on the later half",
+ "data_cut": "2026-11-12T00:21:46+00:00",
+ "interval": "cluster bootstrap by filer, 2000 resamples, 95 percent",
+ "seed": 20261116,
+ "values": {
+  "cves": {
+   "value": 78243,
+   "fmt": "int",
+   "population": "CVEs published in the shadow window (from 2026-04-15), rejected excluded",
+   "unit": "CVEs"
+  },
+  "cves_fit": {
+   "value": 39121,
+   "fmt": "int",
+   "population": "CVEs in the fit half",
+   "unit": "CVEs"
+  },
+  "analyzed_fit": {
+   "value": 19631,
+   "fmt": "int",
+   "population": "CVEs in the fit half the NVD analyzed",
+   "unit": "CVEs"
+  },
+  "cves_score": {
+   "value": 39122,
+   "fmt": "int",
+   "population": "CVEs in the score half",
+   "unit": "CVEs"
+  },
+  "analyzed_score": {
+   "value": 10178,
+   "fmt": "int",
+   "population": "CVEs in the score half the NVD analyzed",
+   "unit": "CVEs"
+  },
+  "auc": {
+   "value": 0.8863511352540587,
+   "fmt": "float3",
+   "population": "CVEs in the later half of the shadow window",
+   "unit": "area under the ROC curve",
+   "n": 39122,
+   "clusters": 329,
+   "resamples": 2000,
+   "low": 0.826878787944702,
+   "high": 0.92815330860819
+  },
+  "features": {
+   "value": 30806,
+   "fmt": "int",
+   "population": "features the classifier was fitted on",
+   "unit": "features"
+  }
+ },
+ "tables": {
+  "halves": {
+   "columns": [
+    "Half",
+    "CVEs",
+    "Share analyzed",
+    "First published",
+    "Last published"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "pct1",
+    "text",
+    "text"
+   ],
+   "rows": [
+    [
+     "fit",
+     39121,
+     0.5018021011732829,
+     "2026-04-15 00:00:00+00:00",
+     "2026-08-29 06:00:23.944000+00:00"
+    ],
+    [
+     "score",
+     39122,
+     0.2601605234906191,
+     "2026-08-29 06:00:24.119000+00:00",
+     "2026-11-11 23:15:22.210000+00:00"
+    ]
+   ],
+   "population": "the two halves of the shadow window, split by publication time"
+  },
+  "features_toward_analyzed": {
+   "columns": [
+    "Feature",
+    "Group",
+    "Coefficient"
+   ],
+   "formats": [
+    "text",
+    "text",
+    "float3"
+   ],
+   "rows": [
+    [
+     "filer or type: filer_microsoft",
+     "filer",
+     5.151131542705681
+    ],
+    [
+     "filer or type: filer_Chrome",
+     "filer",
+     4.403269192857311
+    ],
+    [
+     "word: n8n",
+     "description",
+     4.109695443256889
+    ],
+    [
+     "word: flowise",
+     "description",
+     3.971297182070844
+    ],
+    [
+     "filer or type: filer_adobe",
+     "filer",
+     3.9134952512772867
+    ],
+    [
+     "filer or type: filer_oracle",
+     "filer",
+     3.9032340934146585
+    ],
+    [
+     "word: openssl_encrypt",
+     "description",
+     3.8021773051781205
+    ],
+    [
+     "filer or type: filer_ibm",
+     "filer",
+     3.6731692996317458
+    ],
+    [
+     "filer or type: filer_elastic",
+     "filer",
+     3.5495624517344577
+    ],
+    [
+     "filer or type: filer_mongodb",
+     "filer",
+     3.5377946985828506
+    ],
+    [
+     "filer or type: filer_apple",
+     "filer",
+     3.258569134861168
+    ],
+    [
+     "word: in link",
+     "description",
+     3.1614132721665835
+    ],
+    [
+     "word: openclaw",
+     "description",
+     3.1480807869592975
+    ],
+    [
+     "word: keycloak",
+     "description",
+     3.146502628715688
+    ],
+    [
+     "word: before 2026",
+     "description",
+     2.9947356419892865
+    ]
+   ],
+   "population": "the fifteen features that most raise the odds the NVD analyzed a CVE"
+  },
+  "features_toward_skipped": {
+   "columns": [
+    "Feature",
+    "Group",
+    "Coefficient"
+   ],
+   "formats": [
+    "text",
+    "text",
+    "float3"
+   ],
+   "rows": [
+    [
+     "published month (months since 2026-04)",
+     "month",
+     -5.2816704869328825
+    ],
+    [
+     "filer or type: filer_Wordfence",
+     "filer",
+     -5.050156621665716
+    ],
+    [
+     "filer or type: filer_WPScan",
+     "filer",
+     -4.213144537066904
+    ],
+    [
+     "filer or type: filer_Patchstack",
+     "filer",
+     -4.092348149233071
+    ],
+    [
+     "filer or type: filer_AMD",
+     "filer",
+     -3.5166936784252534
+    ],
+    [
+     "word: php",
+     "description",
+     -3.5144273558806267
+    ],
+    [
+     "filer or type: filer_Gitea",
+     "filer",
+     -3.3889320542572965
+    ],
+    [
+     "word: cms",
+     "description",
+     -3.17870151357265
+    ],
+    [
+     "filer or type: filer_TYPO3",
+     "filer",
+     -3.005151466996598
+    ],
+    [
+     "filer or type: filer_CPANSec",
+     "filer",
+     -2.6685314728085037
+    ],
+    [
+     "filer or type: filer_Ubiquiti",
+     "filer",
+     -2.5981187930287883
+    ],
+    [
+     "word: iotdb",
+     "description",
+     -2.4977630932197434
+    ],
+    [
+     "filer or type: filer_XEN",
+     "filer",
+     -2.470444112661089
+    ],
+    [
+     "word: apache iotdb",
+     "description",
+     -2.2725662208456523
+    ],
+    [
+     "filer or type: filer_OpenHarmony",
+     "filer",
+     -2.2596783960237206
+    ]
+   ],
+   "population": "the fifteen features that most lower the odds the NVD analyzed a CVE"
+  }
+ },
+ "family": [],
+ "prediction_check": "AUC 0.886 on the later half (95 percent interval 0.827 to 0.928); the groups separate well, so NVD labels alone would bias a model toward the CVEs the NVD chose.",
+ "method": "A logistic regression (liblinear, C = 1) on one hot filer and filer type (a filer seen fewer than three times is pooled), the filer's CWE ids, the published month as months since April 2026, whether the filer gave a CVSS 3.x and a CVSS 4.0 vector, and a TF-IDF of the description (words and word pairs seen at least five times, at most 30,000). The label is whether the NVD analyzed the CVE by the cut. The AUC is computed on the later half only, with a cluster bootstrap by filer over that half, 2,000 resamples, 95 percent. The later half has had less time to be analyzed, which the month feature carries; the AUC measures how separable the groups are, not a model to apply.",
+ "sql": "-- Q8: the shadow window, the registered features and the label, split by time into the half\n-- the classifier is fitted on and the half it is scored on.\nselect\n    half,\n    count(*) as cves,\n    avg(cast(nvd_analyzed as integer)) as share_analyzed,\n    min(published) as first_published,\n    max(published) as last_published\nfrom gold.mart_domain_shift\ngroup by half\norder by min(position)",
+ "departure": [
+  {
+   "what": "rejected CVEs",
+   "reason": "Rejected CVEs are left out of the population: the NVD never analyzes a rejected CVE, so keeping them would measure rejection, not the NVD's choice of what to analyze."
+  }
+ ]
+}

@@ -1,0 +1,93 @@
+{
+ "hash": "78bf9cdfad9dc5f3ecb7b5251055be570c1c37d0ad0b054b5861f4e31afaa30c",
+ "files": {
+  "config/criteria.yaml": "576b1618fdbe3cc7f90aa5c955763a5c593412ccedaccc1e398342dee37ce444",
+  "config/splits.yaml": "c86c0590ba43b7b009cd09199a45f950f4ddb309034213ab95d5bafa0670c3f1",
+  "config/budgets.yaml": "359dce1ecf35599b96fe927eeb9d82540e164acbd1da79a69ad5935f4a4b79c0",
+  "evaluation/phase1_plan.yaml": "ad4980cf9295800a011fdbaa7f9869e4cb03c0048030fc4d5f072da463a4f123",
+  "config/labels.yaml": "85a343114a8233ef4df60242814139a6e08cc295fcc18b70eb6ab2c5f638deb8",
+  "config/samples.yaml": "8d47a2c20b624bdca53c44919856bfe13ee38a92c91b9f81b27ebf8290b53852"
+ },
+ "stages": [
+  {
+   "stage": "plan",
+   "registered_at": "2026-11-08T03:16:01+00:00",
+   "hash": "5f34f2c0b6a84bee38204d2b9c7887019d96bc713704d185f7d92ca2a6e5694a",
+   "files": {
+    "config/criteria.yaml": "576b1618fdbe3cc7f90aa5c955763a5c593412ccedaccc1e398342dee37ce444",
+    "config/splits.yaml": "c86c0590ba43b7b009cd09199a45f950f4ddb309034213ab95d5bafa0670c3f1",
+    "config/budgets.yaml": "359dce1ecf35599b96fe927eeb9d82540e164acbd1da79a69ad5935f4a4b79c0",
+    "evaluation/phase1_plan.yaml": "ad4980cf9295800a011fdbaa7f9869e4cb03c0048030fc4d5f072da463a4f123"
+   },
+   "first_committed": {
+    "config/criteria.yaml": {
+     "added_in": "91fd592d0803cf337163b9aeaec3ef99bb7d2563",
+     "added_at": "2026-11-07T21:53:53-05:00",
+     "changed_since": false
+    },
+    "config/splits.yaml": {
+     "added_in": "91fd592d0803cf337163b9aeaec3ef99bb7d2563",
+     "added_at": "2026-11-07T21:53:53-05:00",
+     "changed_since": false
+    },
+    "config/budgets.yaml": {
+     "added_in": "91fd592d0803cf337163b9aeaec3ef99bb7d2563",
+     "added_at": "2026-11-07T21:53:53-05:00",
+     "changed_since": false
+    },
+    "evaluation/phase1_plan.yaml": {
+     "added_in": "91fd592d0803cf337163b9aeaec3ef99bb7d2563",
+     "added_at": "2026-11-07T21:53:53-05:00",
+     "changed_since": false
+    }
+   },
+   "state_at_hash": {
+    "bronze_tables": [
+     "cve_metrics",
+     "cve_weaknesses",
+     "nvd_cves"
+    ],
+    "lake_file": false,
+    "result_files": []
+   },
+   "note": "hashed before the lake existed and before any result was computed"
+  },
+  {
+   "stage": "data",
+   "registered_at": "2026-11-12T01:25:18+00:00",
+   "hash": "6c6e7c7cd3895654864c1f6d51f36890e6b9c49f9178e14491d48aa67f67a2fa",
+   "files": {
+    "config/labels.yaml": "85a343114a8233ef4df60242814139a6e08cc295fcc18b70eb6ab2c5f638deb8",
+    "config/samples.yaml": "8d47a2c20b624bdca53c44919856bfe13ee38a92c91b9f81b27ebf8290b53852"
+   },
+   "first_committed": {
+    "config/labels.yaml": {
+     "added_in": "b252b193677dd9326e89c5e829b38aa7dce56b6d",
+     "added_at": "2026-11-11T19:22:37-05:00",
+     "changed_since": true
+    },
+    "config/samples.yaml": null
+   },
+   "state_at_hash": {
+    "bronze_tables": [
+     "cve_metrics",
+     "cve_records",
+     "cve_weaknesses",
+     "cwe",
+     "epss_offsets",
+     "exploit_signals",
+     "ghsa",
+     "kev",
+     "nvd_changes",
+     "nvd_cves",
+     "osv_advisories",
+     "vulnrichment"
+    ],
+    "lake_file": true,
+    "result_files": []
+   },
+   "note": "read from the data or drawn with a fixed seed, hashed before any test CVE was scored"
+  }
+ ],
+ "note": "registered before any test CVE was scored by anything"
+}

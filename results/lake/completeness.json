@@ -1,0 +1,165 @@
+{
+ "bronze": [
+  {
+   "bytes": 64367660,
+   "files": 28,
+   "name": "cve_records",
+   "present": true,
+   "rows": 431179
+  },
+  {
+   "bytes": 4708431,
+   "files": 28,
+   "name": "cve_metrics",
+   "present": true,
+   "rows": 958139
+  },
+  {
+   "bytes": 2577009,
+   "files": 28,
+   "name": "cve_weaknesses",
+   "present": true,
+   "rows": 740233
+  },
+  {
+   "bytes": 4531597,
+   "files": 28,
+   "name": "nvd_cves",
+   "present": true,
+   "rows": 429614
+  },
+  {
+   "bytes": 197441446,
+   "files": 10,
+   "name": "nvd_changes",
+   "present": true,
+   "rows": 2325791
+  },
+  {
+   "bytes": 70997,
+   "files": 1,
+   "name": "kev",
+   "present": true,
+   "rows": 3548
+  },
+  {
+   "bytes": 12127420,
+   "files": 25,
+   "name": "epss_offsets",
+   "present": true,
+   "rows": 3419162
+  },
+  {
+   "bytes": 22139457,
+   "files": 30,
+   "name": "osv_advisories",
+   "present": true,
+   "rows": 366878
+  },
+  {
+   "bytes": 1708491,
+   "files": 1,
+   "name": "ghsa",
+   "present": true,
+   "rows": 37571
+  },
+  {
+   "bytes": 2262165,
+   "files": 28,
+   "name": "vulnrichment",
+   "present": true,
+   "rows": 217708
+  },
+  {
+   "bytes": 25687,
+   "files": 1,
+   "name": "cwe",
+   "present": true,
+   "rows": 1415
+  },
+  {
+   "bytes": 129375,
+   "files": 2,
+   "name": "exploit_signals",
+   "present": true,
+   "rows": 8206
+  }
+ ],
+ "bronze_missing": [],
+ "config_rows": {
+  "filer_types": 625,
+  "sbom_components": 4080,
+  "sbom_non_package": 7,
+  "splits": 5,
+  "status_labels": 7
+ },
+ "cves": 424534,
+ "cves_before_history": 80844,
+ "cves_in_cvelist": 424534,
+ "cves_in_nvd": 424533,
+ "cves_since_2017_without_history": 1,
+ "cves_with_history": 424533,
+ "cves_with_pre_history_facts": 79358,
+ "data_cut": "2026-11-12T00:21:46+00:00",
+ "facts_by_field": {
+  "affected_versions": 424562,
+  "assigner": 424534,
+  "cpe_config": 325848,
+  "cve_state": 424537,
+  "cvss2_score": 200657,
+  "cvss2_severity": 200494,
+  "cvss2_vector": 200665,
+  "cvss30_score": 81418,
+  "cvss30_severity": 81170,
+  "cvss30_vector": 81438,
+  "cvss31_score": 379883,
+  "cvss31_severity": 379012,
+  "cvss31_vector": 380010,
+  "cvss40_score": 47359,
+  "cvss40_severity": 47251,
+  "cvss40_vector": 47374,
+  "cwe": 564592,
+  "epss": 643987,
+  "exploit_code": 8194,
+  "kev_listed": 1779,
+  "kev_ransomware": 1779,
+  "nvd_status": 1022935,
+  "ssvc_automatable": 217151,
+  "ssvc_exploitation": 217151,
+  "ssvc_technical_impact": 217151
+ },
+ "facts_by_rule": {
+  "before_history": 480283,
+  "epss_score_date": 643987,
+  "first_fetch": 74225,
+  "git_commit": 837871,
+  "git_first_commit": 8194,
+  "kev_commit": 1036,
+  "kev_date_added": 2522,
+  "nvd_history": 3167085,
+  "nvd_last_modified": 53425,
+  "record_updated": 1352303
+ },
+ "nvd_history_data": {
+  "events": 2325791,
+  "first_event_month": "2017-01",
+  "last_event_month": "2026-11",
+  "months_expected": 119,
+  "months_missing": [],
+  "months_with_events": 119,
+  "share_of_months": 1.0
+ },
+ "nvd_history_ledger": {
+  "complete_through": "2026-11-12T00:00:00+00:00",
+  "covered_days": 3602.0,
+  "events": 2325791,
+  "pages": 481,
+  "windows_complete": 31,
+  "windows_seen": 31
+ },
+ "sbom_non_package_components": {
+  "file": 2996,
+  "operating-system": 1
+ },
+ "sbom_package_components": 4080
+}

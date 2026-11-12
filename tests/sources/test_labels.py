@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import json
-from datetime import UTC, date, datetime
+from datetime import UTC, date, datetime, timedelta
 from pathlib import Path
 
 import pytest
@@ -65,9 +65,13 @@ def test_the_registry_holds_the_april_2026_label_with_its_dates() -> None:
 def test_observe_moves_the_dates_forward_and_refuses_an_unknown_value(tmp_path: Path) -> None:
     path = tmp_path / "labels.yaml"
     labels.dump(path, labels.load(ROOT / "config" / "labels.yaml"))
-    labels.observe(path, {"Deferred": Seen(date(2026, 11, 7), date(2026, 11, 9), 12)})
+    # The committed file moves with every fetch, so the test observes a day after anything in it.
+    later = date.fromisoformat(labels.load(path)["nvd_vuln_status"]["Deferred"]["last_seen"]) + timedelta(
+        days=1
+    )
+    labels.observe(path, {"Deferred": Seen(date(2026, 11, 7), later, 12)})
     entry = labels.load(path)["nvd_vuln_status"]["Deferred"]
-    assert entry["first_seen"] <= "2026-11-07" and entry["last_seen"] == "2026-11-09"
+    assert entry["first_seen"] <= "2026-11-07" and entry["last_seen"] == later.isoformat()
     assert entry["cves_at_last_fetch"] == 12
     with pytest.raises(UnregisteredStatus):
         labels.observe(path, {"Something New": Seen(date(2026, 11, 9), date(2026, 11, 9), 1)})

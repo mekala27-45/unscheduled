@@ -1,0 +1,497 @@
+{
+ "as_of": "2026-11-12",
+ "figures": {},
+ "tables": {
+  "lake.quarantine": {
+   "columns": [
+    "Rule",
+    "What it catches",
+    "Rows",
+    "CVEs"
+   ],
+   "formats": [
+    "text",
+    "text",
+    "int",
+    "int"
+   ],
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "every rule, every row it moved",
+    "source": "lake"
+   },
+   "rows": [
+    [
+     "Q01",
+     "vector does not parse",
+     2,
+     1
+    ],
+    [
+     "Q02",
+     "score disagrees with its vector",
+     815,
+     815
+    ],
+    [
+     "Q03",
+     "KEV listing before publication",
+     62,
+     62
+    ],
+    [
+     "Q04",
+     "duplicate CVE in one snapshot",
+     0,
+     0
+    ],
+    [
+     "Q05",
+     "rejected CVE that still carries metrics",
+     6,
+     2
+    ],
+    [
+     "Q06",
+     "advisory range that does not parse in its scheme",
+     70,
+     0
+    ],
+    [
+     "Q07",
+     "SBOM component without a package URL",
+     8,
+     0
+    ],
+    [
+     "Q08",
+     "change event for an unknown CVE",
+     0,
+     0
+    ]
+   ]
+  },
+  "lake.tables": {
+   "columns": [
+    "Table",
+    "Rows"
+   ],
+   "formats": [
+    "text",
+    "int"
+   ],
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "the tables of the lake file",
+    "source": "lake"
+   },
+   "rows": [
+    [
+     "config.bronze_tables",
+     12
+    ],
+    [
+     "config.filer_types",
+     625
+    ],
+    [
+     "config.lake_build",
+     1
+    ],
+    [
+     "config.splits",
+     5
+    ],
+    [
+     "config.status_labels",
+     7
+    ],
+    [
+     "gold.cve_current",
+     424534
+    ],
+    [
+     "gold.mart_backlog_q1",
+     276958
+    ],
+    [
+     "gold.mart_backlog_q2",
+     79870
+    ],
+    [
+     "gold.mart_backlog_q3",
+     80094
+    ],
+    [
+     "gold.mart_backlog_q6",
+     9897
+    ],
+    [
+     "gold.mart_domain_shift",
+     78243
+    ],
+    [
+     "gold.mart_filer_vs_nvd",
+     47641
+    ],
+    [
+     "gold.mart_kev_timing",
+     1025
+    ],
+    [
+     "quarantine.quarantine",
+     963
+    ],
+    [
+     "quarantine.quarantine_counts",
+     8
+    ],
+    [
+     "silver.advisory_versions",
+     404449
+    ],
+    [
+     "silver.cve_fact",
+     6620931
+    ],
+    [
+     "silver.exploit_first_seen",
+     7278
+    ],
+    [
+     "silver.kev_events",
+     1779
+    ],
+    [
+     "silver.nvd_status_history",
+     1022935
+    ]
+   ]
+  }
+ },
+ "values": {
+  "lake.asof.facts_missing": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "200 sampled CVEs at 1200 times",
+    "source": "lake"
+   },
+   "value": 0
+  },
+  "lake.asof.frames_compared": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "200 sampled CVEs at 1200 times",
+    "source": "lake"
+   },
+   "value": 1200
+  },
+  "lake.asof.parity_mismatches": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "200 sampled CVEs at 1200 times",
+    "source": "lake"
+   },
+   "value": 0
+  },
+  "lake.asof.planted_facts": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "200 sampled CVEs at 1200 times",
+    "source": "lake"
+   },
+   "value": 480000
+  },
+  "lake.asof.planted_facts_returned": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "200 sampled CVEs at 1200 times",
+    "source": "lake"
+   },
+   "value": 0
+  },
+  "lake.content_digest": {
+   "fmt": "text",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "every published table",
+    "source": "lake"
+   },
+   "value": "9dda8f06c248bbcc41b86a7532ee0410b20bda4e2bbc60b95fd9d41f416c77cb"
+  },
+  "lake.cves": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "every CVE in the CVE List or the NVD, as of the data cut",
+    "source": "lake"
+   },
+   "value": 424534
+  },
+  "lake.cves_before_history": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "every CVE in the CVE List or the NVD, as of the data cut",
+    "source": "lake"
+   },
+   "value": 80844
+  },
+  "lake.cves_since_2017_without_history": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "every CVE in the CVE List or the NVD, as of the data cut",
+    "source": "lake"
+   },
+   "value": 1
+  },
+  "lake.cves_with_history": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "every CVE in the CVE List or the NVD, as of the data cut",
+    "source": "lake"
+   },
+   "value": 424533
+  },
+  "lake.cves_with_pre_history_facts": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "every CVE in the CVE List or the NVD, as of the data cut",
+    "source": "lake"
+   },
+   "value": 79358
+  },
+  "lake.data_cut": {
+   "fmt": "text",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "the newest time any source was seen",
+    "source": "lake"
+   },
+   "value": "2026-11-12T00:21:46+00:00"
+  },
+  "lake.dbt.models": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "dbt models",
+    "source": "lake"
+   },
+   "value": 45
+  },
+  "lake.dbt.tests_passed": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "dbt tests in dbt/",
+    "source": "lake"
+   },
+   "value": 64
+  },
+  "lake.dbt.tests_total": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "dbt tests in dbt/",
+    "source": "lake"
+   },
+   "value": 64
+  },
+  "lake.facts": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "silver.cve_fact rows",
+    "source": "lake"
+   },
+   "value": 6620931
+  },
+  "lake.history.events": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "NVD change history events in bronze",
+    "source": "lake"
+   },
+   "value": 2325791
+  },
+  "lake.history.share_of_months": {
+   "fmt": "pct1",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "months from 2017-01 to the data cut that carry change events",
+    "source": "lake"
+   },
+   "value": 1.0
+  },
+  "lake.quarantine.q01": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "rows quarantined by Q01, vector does not parse",
+    "source": "lake"
+   },
+   "value": 2
+  },
+  "lake.quarantine.q02": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "rows quarantined by Q02, score disagrees with its vector",
+    "source": "lake"
+   },
+   "value": 815
+  },
+  "lake.quarantine.q03": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "rows quarantined by Q03, KEV listing before publication",
+    "source": "lake"
+   },
+   "value": 62
+  },
+  "lake.quarantine.q04": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "rows quarantined by Q04, duplicate CVE in one snapshot",
+    "source": "lake"
+   },
+   "value": 0
+  },
+  "lake.quarantine.q05": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "rows quarantined by Q05, rejected CVE that still carries metrics",
+    "source": "lake"
+   },
+   "value": 6
+  },
+  "lake.quarantine.q06": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "rows quarantined by Q06, advisory range that does not parse in its scheme",
+    "source": "lake"
+   },
+   "value": 70
+  },
+  "lake.quarantine.q07": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "rows quarantined by Q07, SBOM component without a package URL",
+    "source": "lake"
+   },
+   "value": 8
+  },
+  "lake.quarantine.q07_not_packages": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "SBOM components that are not packages (file 2996, operating-system 1), never carrying a package URL, so counted apart from Q07",
+    "source": "lake"
+   },
+   "value": 2997
+  },
+  "lake.quarantine.q08": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "rows quarantined by Q08, change event for an unknown CVE",
+    "source": "lake"
+   },
+   "value": 0
+  },
+  "lake.sbom.package_components": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "package components in the six SBOMs under customer/sboms",
+    "source": "lake"
+   },
+   "value": 4080
+  },
+  "lake.sha256": {
+   "fmt": "text",
+   "provenance": {
+    "as_of": "2026-11-12",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "data/lake/unscheduled.duckdb",
+    "source": "lake"
+   },
+   "value": "d97e191acc77695ad3e3e09e3a2822890687d4ebfd1cb4a8e6bd55b169bfc3a6"
+  }
+ }
+}

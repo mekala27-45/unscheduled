@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: quarantine
+    description: >
+      Every row that failed a named rule, with the rule, the relation and the row key. Q01 a CVSS
+      vector does not parse; Q02 a stored score more than 0.1 from both its vector and its base (the
+      stored score is set aside, the vector stays, scored by the cvss library); Q03 a KEV listing
+      before publication (kept out of the KEV timing mart); Q04 a CVE twice in one CVE List
+      snapshot; Q05 a rejected CVE that still carries metrics; Q06 an advisory range version that
+      does not parse in its ecosystem's scheme; Q07 an SBOM package component (CycloneDX type
+      library, framework, application or another type that names a package, as packages/match
+      reads the SBOMs) without a package URL, where file and operating-system components, which
+      never carry one, are counted apart and not quarantined; Q08 a change event for a CVE neither
+      the CVE List nor the NVD has.
+    columns:
+      - name: rule_id
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Q01', 'Q02', 'Q03', 'Q04', 'Q05', 'Q06', 'Q07', 'Q08']
+      - name: row_key
+        data_tests: [not_null]
+  - name: quarantine_counts
+    description: Rows and CVEs per rule, every rule listed.
+    columns:
+      - name: rule_id
+        data_tests: [unique, not_null]

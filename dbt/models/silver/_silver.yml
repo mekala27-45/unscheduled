@@ -1,0 +1,85 @@
+version: 2
+
+models:
+  - name: cve_fact
+    description: >
+      Every value anyone published about a CVE: the CVE, the field, the source, the value, when it
+      became known (known_from), when it stopped being current (known_to, null while current), the
+      rule that dated it (dated_by) and whether it predates the NVD change history (pre_history).
+    columns:
+      - name: cve_id
+        data_tests: [not_null]
+      - name: field
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['nvd_status', 'cvss2_vector', 'cvss30_vector', 'cvss31_vector', 'cvss40_vector',
+                         'cvss2_score', 'cvss30_score', 'cvss31_score', 'cvss40_score',
+                         'cvss2_severity', 'cvss30_severity', 'cvss31_severity', 'cvss40_severity',
+                         'cwe', 'cpe_config', 'kev_listed', 'kev_ransomware', 'ssvc_exploitation',
+                         'ssvc_automatable', 'ssvc_technical_impact', 'exploit_code', 'epss',
+                         'affected_versions', 'cve_state', 'assigner']
+      - name: source
+        data_tests: [not_null]
+      - name: value
+        data_tests: [not_null]
+      - name: known_from
+        data_tests: [not_null]
+      - name: dated_by
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['nvd_history', 'nvd_last_modified', 'record_updated', 'first_fetch', 'before_history',
+                         'kev_commit', 'kev_date_added', 'kev_catalog_version', 'git_first_commit', 'git_commit',
+                         'epss_score_date']
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: ['cve_id', 'field', 'source', 'value', 'known_from']
+
+  - name: nvd_status_history
+    description: The NVD status of every CVE over time, the nvd_status facts as intervals.
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: cve_id
+        data_type: varchar
+        data_tests: [not_null]
+      - name: status
+        data_type: varchar
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: source('config', 'status_labels')
+                field: status
+      - name: status_from
+        data_type: timestamp with time zone
+        data_tests: [not_null]
+      - name: status_to
+        data_type: timestamp with time zone
+      - name: dated_by
+        data_type: varchar
+      - name: pre_history
+        data_type: boolean
+
+  - name: kev_events
+    columns:
+      - name: cve_id
+        data_tests: [unique, not_null]
+      - name: listed_at
+        data_tests: [not_null]
+
+  - name: exploit_first_seen
+    columns:
+      - name: cve_id
+        data_tests: [unique, not_null]
+
+  - name: advisory_versions
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: ['database', 'advisory_id', 'ecosystem', 'known_from', 'modified']

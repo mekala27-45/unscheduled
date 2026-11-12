@@ -1,0 +1,364 @@
+{
+ "bytes": 455094272,
+ "content_digest": "9dda8f06c248bbcc41b86a7532ee0410b20bda4e2bbc60b95fd9d41f416c77cb",
+ "data_cut": "2026-11-12T00:21:46+00:00",
+ "file": "data/lake/unscheduled.duckdb",
+ "sha256": "d97e191acc77695ad3e3e09e3a2822890687d4ebfd1cb4a8e6bd55b169bfc3a6",
+ "tables": {
+  "config.bronze_tables": {
+   "columns": [
+    "name",
+    "files",
+    "bytes",
+    "rows",
+    "present"
+   ],
+   "digest": "b819aad6a8b695680e8238b67b9b281ba3dc5018ec842f9d60b70b68751f7a8a",
+   "rows": 12
+  },
+  "config.filer_types": {
+   "columns": [
+    "short_name",
+    "org_id",
+    "filer_type"
+   ],
+   "digest": "3f64367fbdced40d878ea38f4b2e8ec82f099ad5ccf987554538e96c4a432cde",
+   "rows": 625
+  },
+  "config.lake_build": {
+   "columns": [
+    "data_cut"
+   ],
+   "digest": "216e3bcd7a581381658f13e217e10dc4fc88fc2469c8097378dfdce9e38b1c97",
+   "rows": 1
+  },
+  "config.splits": {
+   "columns": [
+    "window_name",
+    "start_day",
+    "end_day",
+    "note"
+   ],
+   "digest": "2afd324c04f2f3928d8bdb37c2d3c694af700d6b4c59834ac41eaf91140b7404",
+   "rows": 5
+  },
+  "config.status_labels": {
+   "columns": [
+    "status",
+    "meaning",
+    "april_2026_label"
+   ],
+   "digest": "31e2851644efa6afdbc9ca0929e939cff18952d84b344d93fb3df323b478333c",
+   "rows": 7
+  },
+  "gold.cve_current": {
+   "columns": [
+    "cve_id",
+    "published",
+    "published_day",
+    "published_month",
+    "split_window",
+    "state",
+    "filer",
+    "filer_org_id",
+    "filer_type",
+    "filer_nvd_id",
+    "date_reserved",
+    "date_updated",
+    "description",
+    "in_cvelist",
+    "in_nvd",
+    "nvd_status",
+    "nvd_status_since",
+    "nvd_status_dated_by",
+    "first_analysis_at",
+    "nvd_analyzed",
+    "nvd_last_modified",
+    "nvd_cvss31_vector",
+    "nvd_cvss31_score",
+    "nvd_cvss31_band",
+    "nvd_cvss40_vector",
+    "filer_cvss31_vector",
+    "filer_cvss31_score",
+    "filer_cvss31_band",
+    "filer_cvss30_vector",
+    "filer_cvss30_score",
+    "filer_cvss30_band",
+    "filer_cvss40_vector",
+    "filer_cvss40_score",
+    "filer_cvss40_band",
+    "adp_cvss31_vector",
+    "adp_cvss31_score",
+    "adp_cvss31_band",
+    "filer_cwes",
+    "nvd_cwes",
+    "adp_cwes",
+    "has_affected_versions",
+    "adp_cisa_present",
+    "ssvc_exploitation",
+    "ssvc_automatable",
+    "ssvc_technical_impact",
+    "kev_listed",
+    "kev_date_added",
+    "kev_listed_at",
+    "kev_ransomware",
+    "epss",
+    "epss_date",
+    "first_exploit_at",
+    "first_metasploit_at",
+    "first_nuclei_at",
+    "has_cpe",
+    "cpe_count",
+    "has_history",
+    "history_events",
+    "before_history",
+    "pre_history_facts"
+   ],
+   "digest": "ba489396c33d5ed2f8c14accee92ec5c2703940183fdd66978ef674a5b9fbcc2",
+   "rows": 424534
+  },
+  "gold.mart_backlog_q1": {
+   "columns": [
+    "cve_id",
+    "filer",
+    "filer_type",
+    "published",
+    "published_month",
+    "split_window",
+    "first_analysis_at",
+    "days_to_analysis",
+    "nvd_status",
+    "analysis_undated",
+    "followup_days",
+    "analyzed_7d",
+    "analyzed_30d",
+    "analyzed_90d"
+   ],
+   "digest": "9fd19f39722e3962318f79e59f35a405bba31d2d91849bf457b3deabecd81be7",
+   "rows": 276958
+  },
+  "gold.mart_backlog_q2": {
+   "columns": [
+    "cve_id",
+    "filer",
+    "filer_type",
+    "published",
+    "published_month",
+    "state",
+    "nvd_status",
+    "nvd_analyzed",
+    "first_analysis_at",
+    "kev_listed",
+    "kev_listed_at",
+    "analysis_after_listing_at",
+    "analyzed_before_listing",
+    "hours_listing_to_analysis",
+    "business_day_deadline",
+    "met_one_business_day"
+   ],
+   "digest": "51120836c313c2c084905ea6e1da6f74f2979a8b821ca5e3cde64eeaf7667d04",
+   "rows": 79870
+  },
+  "gold.mart_backlog_q3": {
+   "columns": [
+    "cve_id",
+    "filer",
+    "filer_type",
+    "published",
+    "split_window",
+    "nvd_status",
+    "has_filer_cvss3",
+    "has_filer_cvss40",
+    "has_filer_cwe",
+    "has_affected_versions",
+    "has_adp_cvss",
+    "has_adp_cwe",
+    "has_adp_ssvc",
+    "has_adp_value"
+   ],
+   "digest": "b426cd6b7236be0bd43b183c9b2341e72490fc379c85cbe77706ddc2d2ec9815",
+   "rows": 80094
+  },
+  "gold.mart_backlog_q6": {
+   "columns": [
+    "published_month",
+    "filer",
+    "filer_type",
+    "cves",
+    "rejected",
+    "month_total",
+    "share_of_month"
+   ],
+   "digest": "f1a5a5e5d68caee204f7a424a785d48bcd13ed337ba9545eeccd71577191b143",
+   "rows": 9897
+  },
+  "gold.mart_domain_shift": {
+   "columns": [
+    "cve_id",
+    "nvd_analyzed",
+    "filer",
+    "filer_type",
+    "filer_cwes",
+    "published",
+    "published_month",
+    "has_filer_cvss3",
+    "has_filer_cvss40",
+    "description",
+    "half",
+    "position"
+   ],
+   "digest": "5111f57d338c15d45bd0824a0684b4ad6b39b9a30b50726fce01aee4d0257246",
+   "rows": 78243
+  },
+  "gold.mart_filer_vs_nvd": {
+   "columns": [
+    "cve_id",
+    "filer",
+    "filer_type",
+    "split_window",
+    "published",
+    "nvd_vector",
+    "filer_vector",
+    "nvd_av",
+    "filer_av",
+    "nvd_ac",
+    "filer_ac",
+    "nvd_pr",
+    "filer_pr",
+    "nvd_ui",
+    "filer_ui",
+    "nvd_s",
+    "filer_s",
+    "nvd_c",
+    "filer_c",
+    "nvd_i",
+    "filer_i",
+    "nvd_a",
+    "filer_a",
+    "nvd_score",
+    "filer_score",
+    "nvd_band",
+    "filer_band",
+    "nvd_band_rank",
+    "filer_band_rank"
+   ],
+   "digest": "7cc9cf2cf954c641a37d18faac932e227c3133925934a01dbb0692a523bd2d8b",
+   "rows": 47641
+  },
+  "gold.mart_kev_timing": {
+   "columns": [
+    "cve_id",
+    "filer",
+    "filer_type",
+    "split_window",
+    "published",
+    "date_added",
+    "listed_at",
+    "listed_dated_by",
+    "days_to_listing",
+    "nvd_status_at_listing",
+    "nvd_analyzed_at_listing",
+    "first_analysis_at",
+    "first_exploit_at",
+    "exploit_before_listing",
+    "metasploit_before_listing",
+    "nuclei_before_listing"
+   ],
+   "digest": "009688bac88b7e9567d7d7d0764b8b49beb79727b4811451d4cdccf280120e88",
+   "rows": 1025
+  },
+  "quarantine.quarantine": {
+   "columns": [
+    "rule_id",
+    "rule",
+    "relation",
+    "cve_id",
+    "row_key",
+    "detail"
+   ],
+   "digest": "b461b7522ab748de150a3ea18c12a9a6c40b1915681f6a21e7c0daaf73c4b98f",
+   "rows": 963
+  },
+  "quarantine.quarantine_counts": {
+   "columns": [
+    "rule_id",
+    "rule",
+    "row_count",
+    "cve_count"
+   ],
+   "digest": "6ccf1f8f97dd51237a38403c55ff0b28d7e51b5b5a6f2f73dc9ad96e6a423b26",
+   "rows": 8
+  },
+  "silver.advisory_versions": {
+   "columns": [
+    "database",
+    "advisory_id",
+    "ecosystem",
+    "aliases",
+    "cve_ids",
+    "published",
+    "modified",
+    "withdrawn",
+    "source_db",
+    "known_from",
+    "known_to"
+   ],
+   "digest": "06584c787d41b0f93b544d39ff07ed4b9831418b875b323cdfbe5e0a066c150c",
+   "rows": 404449
+  },
+  "silver.cve_fact": {
+   "columns": [
+    "cve_id",
+    "field",
+    "source",
+    "value",
+    "known_from",
+    "known_to",
+    "dated_by",
+    "pre_history"
+   ],
+   "digest": "8783efeaec9234c4a101e057f4db3c3f6a08199c85e60e7c8ae505d1478b29e4",
+   "rows": 6620931
+  },
+  "silver.exploit_first_seen": {
+   "columns": [
+    "cve_id",
+    "first_seen",
+    "metasploit_first_seen",
+    "nuclei_first_seen",
+    "metasploit_modules",
+    "nuclei_templates"
+   ],
+   "digest": "98804473e7196a73e69f75269100f2a829890377a6d8baba10ad3aebe31c7508",
+   "rows": 7278
+  },
+  "silver.kev_events": {
+   "columns": [
+    "cve_id",
+    "date_added",
+    "listed_at",
+    "listed_dated_by",
+    "due_date",
+    "vendor_project",
+    "product",
+    "vulnerability_name",
+    "known_ransomware",
+    "first_seen_commit"
+   ],
+   "digest": "de3b5ba8a0b06d18e13c4a9edc4bf01f4785f460fd9d970ebdda943168b01775",
+   "rows": 1779
+  },
+  "silver.nvd_status_history": {
+   "columns": [
+    "cve_id",
+    "status",
+    "status_from",
+    "status_to",
+    "dated_by",
+    "pre_history"
+   ],
+   "digest": "059603c3fa29b15005de5b98dce75ee95d8b70ebde502a87567ffbc8a41dbb55",
+   "rows": 1022935
+  }
+ }
+}

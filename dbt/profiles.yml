@@ -1,0 +1,15 @@
+# One target, a local DuckDB file. packages/lake sets UNSCHED_DBT_DB to the work database it built
+# the bronze and config schemas in; nothing here is a credential. DuckDB spills to the folder beside
+# that file (unscheduled.duckdb.tmp), which DuckDB 2.0 will not let a later cursor move.
+unscheduled:
+  target: lake
+  outputs:
+    lake:
+      type: duckdb
+      path: "{{ env_var('UNSCHED_DBT_DB') }}"
+      threads: "{{ env_var('UNSCHED_DBT_THREADS', '2') | int }}"
+      settings:
+        memory_limit: "{{ env_var('UNSCHED_DUCKDB_MEMORY', '3GB') }}"
+        threads: "{{ env_var('UNSCHED_DUCKDB_THREADS', '2') }}"
+        preserve_insertion_order: "false"
+        TimeZone: "UTC"

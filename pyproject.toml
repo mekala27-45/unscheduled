@@ -13,6 +13,8 @@ dependencies = [
   "unscheduled-match",
   "unscheduled-legacy-adapter",
   "unscheduled-sources",
+  "unscheduled-lake",
+  "unscheduled-analysis",
   "unscheduled-cli",
   "typer>=0.15",
   "httpx>=0.28",
@@ -26,6 +28,8 @@ dev = [
   "ruff>=0.11",
   "mypy>=1.15",
   "types-PyYAML",
+  "scipy>=1.14",
+  "statsmodels>=0.14",
   "schemathesis>=4.33",
   "testcontainers[postgres]>=4.15",
 ]
@@ -44,6 +48,8 @@ unscheduled-api = { workspace = true }
 unscheduled-match = { workspace = true }
 unscheduled-legacy-adapter = { workspace = true }
 unscheduled-sources = { workspace = true }
+unscheduled-lake = { workspace = true }
+unscheduled-analysis = { workspace = true }
 unscheduled-cli = { workspace = true }
 
 [tool.ruff]
@@ -63,11 +69,11 @@ python_version = "3.12"
 strict = true
 files = ["packages", "scripts"]
 explicit_package_bases = true
-mypy_path = ["packages/core/src", "packages/render/src", "packages/api/src", "packages/sources/src", "packages/match/src", "packages/legacy_adapter/src", "packages/cli/src"]
+mypy_path = ["packages/core/src", "packages/render/src", "packages/api/src", "packages/sources/src", "packages/match/src", "packages/legacy_adapter/src", "packages/lake/src", "packages/analysis/src", "packages/cli/src"]
 exclude = ["/tests/", "web/", "dbt/"]
 
 [[tool.mypy.overrides]]
-module = ["yaml", "markdown_it.*"]
+module = ["yaml", "markdown_it.*", "cvss", "cvss.*", "sklearn.*", "scipy.*", "statsmodels.*", "docker", "docker.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

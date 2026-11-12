@@ -1,0 +1,23 @@
+[project]
+name = "unscheduled-analysis"
+version = "0.1.0"
+description = "The backlog measured: cluster bootstrap, kappa, Benjamini-Hochberg and the Q8 domain classifier"
+requires-python = ">=3.12,<3.13"
+license = "Apache-2.0"
+dependencies = [
+  "unscheduled-core",
+  "unscheduled-lake",
+  "numpy>=2.0",
+  "scikit-learn==1.9.1",
+  "scipy>=1.14",
+  "polars>=2.1",
+  "duckdb==2.0.0",
+  "pyyaml>=6.0",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/unscheduled_analysis"]

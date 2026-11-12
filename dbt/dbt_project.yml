@@ -1,0 +1,51 @@
+# The warehouse: bronze Parquet in, dated facts and contracted marts out, in DuckDB.
+# packages/lake runs this project (scripts/build_lake.py) after it has created the bronze and config
+# schemas in the work database, so every model reads sources it can trust the shape of.
+name: unscheduled
+version: "0.1.0"
+config-version: 2
+profile: unscheduled
+
+model-paths: ["models"]
+macro-paths: ["macros"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+snapshot-paths: ["snapshots"]
+clean-targets: ["target", "logs"]
+
+vars:
+  # The NVD change history begins on this day; facts about earlier CVEs carry a flag.
+  history_start: "2017-01-01"
+  # NIST stopped analyzing every CVE on this day (config/splits.yaml, nvd_change_date).
+  nvd_change_date: "2026-04-15"
+  # Q1 and Q6 start here; the serving bundle and Q5 start at serving_start.
+  study_start: "2020-01-01"
+  serving_start: "2021-01-01"
+  # The time the build treats as now: the newest fetch time in bronze, set by packages/lake.
+  data_cut: "2026-11-08 00:00:00+00"
+  # A KEV commit time within this many days of dateAdded gives the listing its hour.
+  kev_commit_window_days: 2
+
+models:
+  unscheduled:
+    staging:
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: table
+      +schema: intermediate
+    silver:
+      +materialized: table
+      +schema: silver
+    quarantine:
+      +materialized: table
+      +schema: quarantine
+    marts:
+      +materialized: table
+      +schema: gold
+      +contract:
+        enforced: true
+
+tests:
+  unscheduled:
+    +severity: error

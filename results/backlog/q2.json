@@ -1,0 +1,280 @@
+{
+ "id": "Q2",
+ "title": "After the change",
+ "subtitle": "New CVEs since 15 April 2026 by NVD status, and how fast the NVD analyzes the ones in KEV",
+ "plan": {
+  "id": "Q2",
+  "title": "After the change",
+  "population": "CVEs published since 2026-04-15",
+  "estimator": "counts by NVD status; share analyzed; share of analyzed that are in KEV; hours from KEV listing to NVD analysis",
+  "prediction": "most analyzed CVEs since the change are KEV listed or critical software",
+  "interval": "cluster bootstrap by filer, 2000 resamples, 95 percent",
+  "family_correction": "Benjamini-Hochberg at 0.05"
+ },
+ "population": "CVEs published since 2026-04-15",
+ "window": "the shadow window, from 2026-04-15 to the data cut",
+ "data_cut": "2026-11-12T00:21:46+00:00",
+ "interval": "cluster bootstrap by filer, 2000 resamples, 95 percent",
+ "seed": 20261110,
+ "values": {
+  "cves": {
+   "value": 79870,
+   "fmt": "int",
+   "population": "CVEs published since 2026-04-15",
+   "unit": "CVEs"
+  },
+  "rejected": {
+   "value": 1627,
+   "fmt": "int",
+   "population": "CVEs published since 2026-04-15 and since rejected",
+   "unit": "CVEs"
+  },
+  "status_deferred": {
+   "value": 30612,
+   "fmt": "int",
+   "population": "CVEs published since 2026-04-15 with NVD status Deferred",
+   "unit": "CVEs"
+  },
+  "status_analyzed": {
+   "value": 22382,
+   "fmt": "int",
+   "population": "CVEs published since 2026-04-15 with NVD status Analyzed",
+   "unit": "CVEs"
+  },
+  "status_awaiting_analysis": {
+   "value": 11113,
+   "fmt": "int",
+   "population": "CVEs published since 2026-04-15 with NVD status Awaiting Analysis",
+   "unit": "CVEs"
+  },
+  "status_modified": {
+   "value": 7223,
+   "fmt": "int",
+   "population": "CVEs published since 2026-04-15 with NVD status Modified",
+   "unit": "CVEs"
+  },
+  "status_received": {
+   "value": 6136,
+   "fmt": "int",
+   "population": "CVEs published since 2026-04-15 with NVD status Received",
+   "unit": "CVEs"
+  },
+  "status_rejected": {
+   "value": 1627,
+   "fmt": "int",
+   "population": "CVEs published since 2026-04-15 with NVD status Rejected",
+   "unit": "CVEs"
+  },
+  "status_undergoing_analysis": {
+   "value": 776,
+   "fmt": "int",
+   "population": "CVEs published since 2026-04-15 with NVD status Undergoing Analysis",
+   "unit": "CVEs"
+  },
+  "status_none": {
+   "value": 1,
+   "fmt": "int",
+   "population": "CVEs published since 2026-04-15 with NVD status None",
+   "unit": "CVEs"
+  },
+  "share_analyzed": {
+   "value": 0.37378239639414046,
+   "fmt": "pct1",
+   "population": "CVEs published since 2026-04-15",
+   "unit": "share of CVEs the NVD analyzed",
+   "n": 79870,
+   "clusters": 386,
+   "resamples": 2000,
+   "low": 0.26344546619288783,
+   "high": 0.5076484520122311
+  },
+  "analyzed": {
+   "value": 29854,
+   "fmt": "int",
+   "population": "CVEs published since 2026-04-15 the NVD analyzed",
+   "unit": "CVEs"
+  },
+  "share_kev_among_analyzed": {
+   "value": 0.005258926776981309,
+   "fmt": "pct1",
+   "population": "CVEs published since 2026-04-15 the NVD analyzed",
+   "unit": "share of analyzed CVEs that are KEV listed",
+   "n": 29854,
+   "clusters": 214,
+   "resamples": 2000,
+   "low": 0.003607820853220893,
+   "high": 0.00865839614894282
+  },
+  "kev_listed": {
+   "value": 159,
+   "fmt": "int",
+   "population": "CVEs published since 2026-04-15 and listed in KEV",
+   "unit": "CVEs"
+  },
+  "kev_analyzed_before_listing": {
+   "value": 54,
+   "fmt": "int",
+   "population": "KEV listed CVEs published since 2026-04-15 the NVD analyzed before the listing",
+   "unit": "CVEs"
+  },
+  "kev_analyzed_after_listing": {
+   "value": 147,
+   "fmt": "int",
+   "population": "KEV listed CVEs published since 2026-04-15 with an NVD analysis event (initial, reanalysis or modified analysis) at or after the listing, including CVEs first analyzed before it",
+   "unit": "CVEs"
+  },
+  "kev_not_analyzed": {
+   "value": 2,
+   "fmt": "int",
+   "population": "KEV listed CVEs published since 2026-04-15 with no NVD analysis by the cut",
+   "unit": "CVEs"
+  },
+  "median_hours_listing_to_analysis": {
+   "value": 13.974221388896307,
+   "fmt": "hours1",
+   "population": "KEV listed CVEs published since 2026-04-15 analyzed at or after the listing",
+   "unit": "hours from the KEV listing to the first NVD analysis",
+   "n": 147,
+   "clusters": 50,
+   "resamples": 2000,
+   "low": 3.273673055569331,
+   "high": 15.35890749997563
+  },
+  "p90_hours_listing_to_analysis": {
+   "value": 21.209088888896837,
+   "fmt": "hours1",
+   "population": "KEV listed CVEs published since 2026-04-15 analyzed at or after the listing",
+   "unit": "hours, 90th percentile",
+   "n": 147,
+   "clusters": 50,
+   "resamples": 2000,
+   "low": 18.874223055574628,
+   "high": 41.03811944444974
+  },
+  "share_met_one_business_day": {
+   "value": 0.9685534591194969,
+   "fmt": "pct1",
+   "population": "KEV listed CVEs published since 2026-04-15 whose one business day has passed by the cut",
+   "unit": "share analyzed within one business day of the listing (or before it)",
+   "n": 159,
+   "clusters": 53,
+   "resamples": 2000,
+   "low": 0.929566374625707,
+   "high": 0.9940484995773458
+  }
+ },
+ "tables": {
+  "by_status": {
+   "columns": [
+    "NVD status",
+    "CVEs",
+    "Analyzed",
+    "KEV listed",
+    "KEV analyzed before listing",
+    "Median hours, listing to analysis"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "int",
+    "int",
+    "int",
+    "hours1"
+   ],
+   "rows": [
+    [
+     "Deferred",
+     30612,
+     0,
+     0,
+     0,
+     null
+    ],
+    [
+     "Analyzed",
+     22382,
+     22382,
+     105,
+     37,
+     15.337411944468816
+    ],
+    [
+     "Awaiting Analysis",
+     11113,
+     0,
+     0,
+     0,
+     null
+    ],
+    [
+     "Modified",
+     7223,
+     7223,
+     52,
+     17,
+     1.9295833333333334
+    ],
+    [
+     "Received",
+     6136,
+     0,
+     0,
+     0,
+     null
+    ],
+    [
+     "Rejected",
+     1627,
+     45,
+     0,
+     0,
+     null
+    ],
+    [
+     "Undergoing Analysis",
+     776,
+     204,
+     2,
+     0,
+     null
+    ],
+    [
+     null,
+     1,
+     0,
+     0,
+     0,
+     null
+    ]
+   ],
+   "population": "CVEs published since 2026-04-15, by their NVD status at the data cut"
+  },
+  "listing_dated_by": {
+   "columns": [
+    "Listing dated by",
+    "KEV listed CVEs"
+   ],
+   "formats": [
+    "text",
+    "int"
+   ],
+   "rows": [
+    [
+     "kev_commit",
+     159
+    ]
+   ],
+   "population": "KEV listed CVEs published since 2026-04-15, by the rule that dated the listing"
+  }
+ },
+ "family": [],
+ "prediction_check": "Of the CVEs the NVD analyzed since the change, 0.005258926776981309 are KEV listed; the critical software part cannot be measured from the locked sources.",
+ "method": "The status is the NVD vulnStatus at the data cut. A CVE counts as analyzed when the NVD change history shows an analysis event or its status is Analyzed or Modified. The hours run from the KEV listing (the first kev-data commit that carried it, which gives the hour, or the start of dateAdded when no commit falls on that day) to the first analysis event at or after it. Intervals are a cluster bootstrap by filer, 2,000 resamples, 95 percent.",
+ "sql": "-- Q2: CVEs published since 2026-04-15 by NVD status, and the KEV listed among them with the\n-- hours from listing to the first NVD analysis at or after the listing.\nselect\n    nvd_status,\n    count(*) as cves,\n    count(*) filter (where nvd_analyzed) as analyzed,\n    count(*) filter (where kev_listed) as kev_listed,\n    count(*) filter (where kev_listed and analyzed_before_listing) as kev_analyzed_before_listing,\n    median(hours_listing_to_analysis) as median_hours_listing_to_analysis\nfrom gold.mart_backlog_q2\ngroup by nvd_status\norder by cves desc",
+ "departure": [
+  {
+   "what": "prediction: critical software",
+   "reason": "The prediction names KEV listed or critical software. No locked source says which software NIST counts as critical or as used by the federal government, so only the KEV share of the analyzed CVEs is measured."
+  }
+ ]
+}

@@ -1,0 +1,53 @@
+{
+ "data_cut": "2026-11-12T00:21:46+00:00",
+ "rules": [
+  {
+   "cves": 1,
+   "rows": 2,
+   "rule": "vector does not parse",
+   "rule_id": "Q01"
+  },
+  {
+   "cves": 815,
+   "rows": 815,
+   "rule": "score disagrees with its vector",
+   "rule_id": "Q02"
+  },
+  {
+   "cves": 62,
+   "rows": 62,
+   "rule": "KEV listing before publication",
+   "rule_id": "Q03"
+  },
+  {
+   "cves": 0,
+   "rows": 0,
+   "rule": "duplicate CVE in one snapshot",
+   "rule_id": "Q04"
+  },
+  {
+   "cves": 2,
+   "rows": 6,
+   "rule": "rejected CVE that still carries metrics",
+   "rule_id": "Q05"
+  },
+  {
+   "cves": 0,
+   "rows": 70,
+   "rule": "advisory range that does not parse in its scheme",
+   "rule_id": "Q06"
+  },
+  {
+   "cves": 0,
+   "rows": 8,
+   "rule": "SBOM component without a package URL",
+   "rule_id": "Q07"
+  },
+  {
+   "cves": 0,
+   "rows": 0,
+   "rule": "change event for an unknown CVE",
+   "rule_id": "Q08"
+  }
+ ]
+}

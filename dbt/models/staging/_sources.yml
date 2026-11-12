@@ -1,0 +1,41 @@
+version: 2
+
+sources:
+  - name: bronze
+    description: >
+      Bronze as packages/sources writes it, typed Parquet per table under data/bronze/<table>/.
+      packages/lake creates one view per table in the work database from the files present when the
+      build starts, and an empty table of the contract shape for a table not fetched yet, so a
+      missing table is counted in results/lake/completeness.json instead of failing the build.
+    schema: bronze
+    tables:
+      - name: cve_records
+      - name: cve_metrics
+      - name: cve_weaknesses
+      - name: nvd_cves
+      - name: nvd_changes
+      - name: kev
+      - name: epss_offsets
+      - name: osv_advisories
+      - name: ghsa
+      - name: vulnrichment
+      - name: cwe
+      - name: exploit_signals
+  - name: config
+    description: The registered configuration, loaded from config/*.yaml by packages/lake before dbt runs.
+    schema: config
+    tables:
+      - name: splits
+        description: The windows of config/splits.yaml, one row per window.
+      - name: status_labels
+        description: The NVD vulnStatus values registered in config/labels.yaml.
+      - name: filer_types
+        description: Each filer by CNA short name and organization id with its type, from config/filers.yaml.
+      - name: bronze_tables
+        description: Which bronze tables had files when the build started, with their file and row counts.
+      - name: sbom_components
+        description: >
+          Every package component of every SBOM under customer/sboms, read by packages/match,
+          with its CycloneDX type and its package URL if it has one.
+      - name: sbom_non_package
+        description: The file and operating-system components of each SBOM, by type, counted apart from Q07.

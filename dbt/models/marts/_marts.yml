@@ -1,0 +1,474 @@
+version: 2
+
+models:
+  - name: cve_current
+    description: >
+      One row per CVE: what every source holds now, beside where and when it was published, who filed it and what the NVD did.
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: cve_id
+        data_type: varchar
+        data_tests:
+          - unique
+          - not_null
+      - name: published
+        data_type: timestamp with time zone
+      - name: published_day
+        data_type: date
+      - name: published_month
+        data_type: date
+      - name: split_window
+        data_type: varchar
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['train', 'development', 'test', 'gap', 'shadow', 'outside']
+      - name: state
+        data_type: varchar
+        data_tests:
+          - not_null
+      - name: filer
+        data_type: varchar
+        data_tests:
+          - not_null
+      - name: filer_org_id
+        data_type: varchar
+      - name: filer_type
+        data_type: varchar
+      - name: filer_nvd_id
+        data_type: varchar
+      - name: date_reserved
+        data_type: timestamp with time zone
+      - name: date_updated
+        data_type: timestamp with time zone
+      - name: description
+        data_type: varchar
+      - name: in_cvelist
+        data_type: boolean
+      - name: in_nvd
+        data_type: boolean
+      - name: nvd_status
+        data_type: varchar
+        data_tests:
+          - relationships:
+              arguments:
+                to: source('config', 'status_labels')
+                field: status
+      - name: nvd_status_since
+        data_type: timestamp with time zone
+      - name: nvd_status_dated_by
+        data_type: varchar
+      - name: first_analysis_at
+        data_type: timestamp with time zone
+      - name: nvd_analyzed
+        data_type: boolean
+        data_tests:
+          - not_null
+      - name: nvd_last_modified
+        data_type: timestamp with time zone
+      - name: nvd_cvss31_vector
+        data_type: varchar
+      - name: nvd_cvss31_score
+        data_type: double
+      - name: nvd_cvss31_band
+        data_type: varchar
+      - name: nvd_cvss40_vector
+        data_type: varchar
+      - name: filer_cvss31_vector
+        data_type: varchar
+      - name: filer_cvss31_score
+        data_type: double
+      - name: filer_cvss31_band
+        data_type: varchar
+      - name: filer_cvss30_vector
+        data_type: varchar
+      - name: filer_cvss30_score
+        data_type: double
+      - name: filer_cvss30_band
+        data_type: varchar
+      - name: filer_cvss40_vector
+        data_type: varchar
+      - name: filer_cvss40_score
+        data_type: double
+      - name: filer_cvss40_band
+        data_type: varchar
+      - name: adp_cvss31_vector
+        data_type: varchar
+      - name: adp_cvss31_score
+        data_type: double
+      - name: adp_cvss31_band
+        data_type: varchar
+      - name: filer_cwes
+        data_type: varchar[]
+      - name: nvd_cwes
+        data_type: varchar[]
+      - name: adp_cwes
+        data_type: varchar[]
+      - name: has_affected_versions
+        data_type: boolean
+      - name: adp_cisa_present
+        data_type: boolean
+      - name: ssvc_exploitation
+        data_type: varchar
+      - name: ssvc_automatable
+        data_type: varchar
+      - name: ssvc_technical_impact
+        data_type: varchar
+      - name: kev_listed
+        data_type: boolean
+      - name: kev_date_added
+        data_type: date
+      - name: kev_listed_at
+        data_type: timestamp with time zone
+      - name: kev_ransomware
+        data_type: varchar
+      - name: epss
+        data_type: double
+      - name: epss_date
+        data_type: date
+      - name: first_exploit_at
+        data_type: timestamp with time zone
+      - name: first_metasploit_at
+        data_type: timestamp with time zone
+      - name: first_nuclei_at
+        data_type: timestamp with time zone
+      - name: has_cpe
+        data_type: boolean
+      - name: cpe_count
+        data_type: integer
+      - name: has_history
+        data_type: boolean
+      - name: history_events
+        data_type: bigint
+      - name: before_history
+        data_type: boolean
+      - name: pre_history_facts
+        data_type: bigint
+  - name: mart_backlog_q1
+    description: >
+      Q1: CVEs published since 2020-01-01, rejected excluded, with days to the first NVD analysis and censored 7, 30 and 90 day flags.
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: cve_id
+        data_type: varchar
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('cve_current')
+                field: cve_id
+      - name: filer
+        data_type: varchar
+      - name: filer_type
+        data_type: varchar
+      - name: published
+        data_type: timestamp with time zone
+      - name: published_month
+        data_type: date
+      - name: split_window
+        data_type: varchar
+      - name: first_analysis_at
+        data_type: timestamp with time zone
+      - name: days_to_analysis
+        data_type: double
+      - name: nvd_status
+        data_type: varchar
+      - name: analysis_undated
+        data_type: boolean
+      - name: followup_days
+        data_type: double
+      - name: analyzed_7d
+        data_type: boolean
+      - name: analyzed_30d
+        data_type: boolean
+      - name: analyzed_90d
+        data_type: boolean
+  - name: mart_backlog_q2
+    description: >
+      Q2: CVEs published since 2026-04-15 with their NVD status, analysis, KEV listing and the hours from listing to analysis.
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: cve_id
+        data_type: varchar
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('cve_current')
+                field: cve_id
+      - name: filer
+        data_type: varchar
+      - name: filer_type
+        data_type: varchar
+      - name: published
+        data_type: timestamp with time zone
+      - name: published_month
+        data_type: date
+      - name: state
+        data_type: varchar
+      - name: nvd_status
+        data_type: varchar
+      - name: nvd_analyzed
+        data_type: boolean
+        data_tests:
+          - not_null
+      - name: first_analysis_at
+        data_type: timestamp with time zone
+      - name: kev_listed
+        data_type: boolean
+      - name: kev_listed_at
+        data_type: timestamp with time zone
+      - name: analysis_after_listing_at
+        data_type: timestamp with time zone
+      - name: analyzed_before_listing
+        data_type: boolean
+      - name: hours_listing_to_analysis
+        data_type: double
+      - name: business_day_deadline
+        data_type: timestamp with time zone
+      - name: met_one_business_day
+        data_type: boolean
+  - name: mart_backlog_q3
+    description: >
+      Q3: CVEs without NVD analysis, every window, with what the filer and CISA supplied.
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: cve_id
+        data_type: varchar
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('cve_current')
+                field: cve_id
+      - name: filer
+        data_type: varchar
+      - name: filer_type
+        data_type: varchar
+      - name: published
+        data_type: timestamp with time zone
+      - name: split_window
+        data_type: varchar
+      - name: nvd_status
+        data_type: varchar
+      - name: has_filer_cvss3
+        data_type: boolean
+      - name: has_filer_cvss40
+        data_type: boolean
+      - name: has_filer_cwe
+        data_type: boolean
+      - name: has_affected_versions
+        data_type: boolean
+      - name: has_adp_cvss
+        data_type: boolean
+      - name: has_adp_cwe
+        data_type: boolean
+      - name: has_adp_ssvc
+        data_type: boolean
+      - name: has_adp_value
+        data_type: boolean
+  - name: mart_filer_vs_nvd
+    description: >
+      Q4: CVEs scored with CVSS 3.1 by both the filer and the NVD, train, development and shadow windows only.
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: cve_id
+        data_type: varchar
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('cve_current')
+                field: cve_id
+      - name: filer
+        data_type: varchar
+      - name: filer_type
+        data_type: varchar
+      - name: split_window
+        data_type: varchar
+      - name: published
+        data_type: timestamp with time zone
+      - name: nvd_vector
+        data_type: varchar
+      - name: filer_vector
+        data_type: varchar
+      - name: nvd_av
+        data_type: varchar
+      - name: filer_av
+        data_type: varchar
+      - name: nvd_ac
+        data_type: varchar
+      - name: filer_ac
+        data_type: varchar
+      - name: nvd_pr
+        data_type: varchar
+      - name: filer_pr
+        data_type: varchar
+      - name: nvd_ui
+        data_type: varchar
+      - name: filer_ui
+        data_type: varchar
+      - name: nvd_s
+        data_type: varchar
+      - name: filer_s
+        data_type: varchar
+      - name: nvd_c
+        data_type: varchar
+      - name: filer_c
+        data_type: varchar
+      - name: nvd_i
+        data_type: varchar
+      - name: filer_i
+        data_type: varchar
+      - name: nvd_a
+        data_type: varchar
+      - name: filer_a
+        data_type: varchar
+      - name: nvd_score
+        data_type: double
+      - name: filer_score
+        data_type: double
+      - name: nvd_band
+        data_type: varchar
+      - name: filer_band
+        data_type: varchar
+      - name: nvd_band_rank
+        data_type: integer
+      - name: filer_band_rank
+        data_type: integer
+  - name: mart_kev_timing
+    description: >
+      Q5: KEV listed CVEs published since 2021-01-01, the time to listing, the NVD status as of the listing and exploit code before it.
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: cve_id
+        data_type: varchar
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('cve_current')
+                field: cve_id
+      - name: filer
+        data_type: varchar
+      - name: filer_type
+        data_type: varchar
+      - name: split_window
+        data_type: varchar
+      - name: published
+        data_type: timestamp with time zone
+      - name: date_added
+        data_type: date
+      - name: listed_at
+        data_type: timestamp with time zone
+      - name: listed_dated_by
+        data_type: varchar
+      - name: days_to_listing
+        data_type: integer
+      - name: nvd_status_at_listing
+        data_type: varchar
+      - name: nvd_analyzed_at_listing
+        data_type: boolean
+      - name: first_analysis_at
+        data_type: timestamp with time zone
+      - name: first_exploit_at
+        data_type: timestamp with time zone
+      - name: exploit_before_listing
+        data_type: boolean
+      - name: metasploit_before_listing
+        data_type: boolean
+      - name: nuclei_before_listing
+        data_type: boolean
+  - name: mart_backlog_q6
+    description: >
+      Q6: CVEs published since 2020-01-01 by month and filer, with the month total and the filer share.
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: published_month
+        data_type: date
+        data_tests:
+          - not_null
+      - name: filer
+        data_type: varchar
+        data_tests:
+          - not_null
+      - name: filer_type
+        data_type: varchar
+      - name: cves
+        data_type: bigint
+        data_tests:
+          - not_null
+      - name: rejected
+        data_type: bigint
+      - name: month_total
+        data_type: bigint
+      - name: share_of_month
+        data_type: double
+    data_tests:
+      - unique_combination:
+          arguments:
+            columns: ['published_month', 'filer']
+  - name: mart_domain_shift
+    description: >
+      Q8: shadow window CVEs, rejected excluded, with the label, the registered features and the registered time split.
+    config:
+      contract:
+        enforced: true
+    columns:
+      - name: cve_id
+        data_type: varchar
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('cve_current')
+                field: cve_id
+      - name: nvd_analyzed
+        data_type: boolean
+        data_tests:
+          - not_null
+      - name: filer
+        data_type: varchar
+      - name: filer_type
+        data_type: varchar
+      - name: filer_cwes
+        data_type: varchar[]
+      - name: published
+        data_type: timestamp with time zone
+      - name: published_month
+        data_type: date
+      - name: has_filer_cvss3
+        data_type: boolean
+      - name: has_filer_cvss40
+        data_type: boolean
+      - name: description
+        data_type: varchar
+      - name: half
+        data_type: varchar
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['fit', 'score']
+      - name: position
+        data_type: bigint

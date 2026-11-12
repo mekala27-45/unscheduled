@@ -1,0 +1,26 @@
+[project]
+name = "unscheduled-lake"
+version = "0.1.0"
+description = "The lake: every change to every CVE as a dated fact, the as-of engine, and the dbt build over bronze"
+requires-python = ">=3.12,<3.13"
+license = "Apache-2.0"
+dependencies = [
+  "unscheduled-core",
+  "unscheduled-sources",
+  "unscheduled-match",
+  "duckdb==2.0.0",
+  "polars>=2.1",
+  "pyarrow>=20.0",
+  "dbt-core==1.12.6",
+  "dbt-duckdb==1.11.1",
+  "cvss==3.6",
+  "univers==32.0.1",
+  "pyyaml>=6.0",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/unscheduled_lake"]
