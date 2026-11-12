@@ -71,7 +71,7 @@ def field_events(conn: sa.Connection, cve_ids: Sequence[str]) -> dict[str, list[
     rows = conn.execute(
         sa.select(table.c.event_id, table.c.cve_id, table.c.at, table.c.kind, table.c.source, table.c.detail)
         .where(table.c.cve_id.in_(list(cve_ids)))
-        .where(table.c.detail.has_key("field"))
+        .where(sa.or_(table.c.detail.has_key("field"), table.c.detail.has_key("sets")))
     ).all()
     out: dict[str, list[Event]] = {}
     for r in rows:
@@ -97,10 +97,10 @@ def get_cve(
         raise ProblemError("not-found", f"{cve} is not in the serving slice", context={"cve_id": cve})
     provenance = row.get("provenance") or {}
     note: str | None = None
+    events = field_events(conn, [cve]).get(cve, [])
     if as_of is None:
-        known, facts = True, current_facts(row, provenance)
+        known, facts = True, current_facts(row, provenance, events)
     else:
-        events = field_events(conn, [cve]).get(cve, [])
         known, facts = facts_as_of(row, provenance, events, end_of_day(as_of))
         if not known:
             note = f"{cve} was not yet published on {as_of.isoformat()}; nothing about it was public that day"
@@ -136,6 +136,8 @@ class CveFilters:
     filer_type: str | None = None
     cwe: str | None = None
     has_filer_score: bool | None = None
+    kev_added_from: date | None = None
+    analyzed_from: date | None = None
 
     def as_dict(self) -> dict[str, Any]:
         return {k: jsonable(v) for k, v in asdict(self).items() if v is not None}
@@ -202,6 +204,14 @@ def list_cves(
     if filters.has_filer_score is not None:
         scored = sa.or_(c.filer_cvss31_score.isnot(None), c.filer_cvss40_score.isnot(None))
         query = query.where(scored if filters.has_filer_score else sa.not_(scored))
+    if filters.kev_added_from is not None:
+        query = query.where(c.kev_date_added >= filters.kev_added_from)
+    if filters.analyzed_from is not None:
+        # The NVD's current status is Analyzed and it has been since that day or later.
+        query = query.where(
+            c.nvd_status == "Analyzed",
+            c.nvd_status_since >= datetime.combine(filters.analyzed_from, time.min, tzinfo=UTC),
+        )
     if cursor:
         after_published, after_id = decode_cursor(cursor, filters)
         if after_published is None:

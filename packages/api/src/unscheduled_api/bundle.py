@@ -45,6 +45,7 @@ class ManifestFile(StrictModel):
     file: str
     sha256: str
     rows: int | None = None
+    bytes: int | None = None  # the size the lake build wrote, for the reader; the digest is the check
 
 
 class BundleManifest(StrictModel):
@@ -140,6 +141,8 @@ EVENT_COLUMNS: tuple[Column, ...] = (
 PRODUCT_KEYS: tuple[Column, ...] = ()
 FINDING_KEYS: tuple[Column, ...] = (Column("as_of", "date"),)
 PRODUCT_KEY_NAMES = ("product_id", "product")
+
+EVENT_ID_LENGTH = 16
 
 # The fields of a CVE record the API serves with a source and a known_from each.
 CVE_FIELDS: tuple[str, ...] = tuple(
@@ -376,7 +379,9 @@ def event_row(raw: Mapping[str, Any]) -> dict[str, Any]:
         "source": _text(raw.get("source"), "source"),
         "detail": jsonable(detail),
     }
-    out["event_id"] = row_digest(out)[:32]
+    # 16 hex characters, 64 bits: the key of a few million events without a collision in practice,
+    # and half the size of the primary key index of 32.
+    out["event_id"] = row_digest(out)[:EVENT_ID_LENGTH]
     return out
 
 

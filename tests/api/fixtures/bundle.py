@@ -100,6 +100,38 @@ FINDING_TYPES: dict[str, Any] = {
 }
 TYPES = {"cve": CVE_TYPES, "cve_event": EVENT_TYPES, "product": PRODUCT_TYPES, "finding": FINDING_TYPES}
 GENERATED_AT = "2026-11-07T05:00:00Z"
+# The data page's part of the manifest, invented: the lake's quarantine counts and two ledger rows.
+SOURCES: dict[str, Any] = {
+    "quarantine": {
+        "data_cut": "2026-11-07T04:00:00+00:00",
+        "rules": [
+            {"rule_id": "Q01", "rule": "vector does not parse", "rows": 1, "cves": 1},
+            {"rule_id": "Q02", "rule": "score disagrees with its vector", "rows": 3, "cves": 3},
+        ],
+    },
+    "ledger_recent": [
+        {
+            "source": "kev",
+            "window": "catalog 2026.11.06",
+            "rows_in": 1500,
+            "rows_changed": 2,
+            "digest": "0" * 64,
+            "duration_s": 1.2,
+            "status": "ok",
+            "finished_at": "2026-11-07T03:10:00Z",
+        },
+        {
+            "source": "nvd",
+            "window": "changes 2026-11-06",
+            "rows_in": 900,
+            "rows_changed": 40,
+            "digest": "1" * 64,
+            "duration_s": 30.5,
+            "status": "ok",
+            "finished_at": "2026-11-07T03:40:00Z",
+        },
+    ],
+}
 LAKE_DIGEST = "sha256:" + "0" * 64
 
 
@@ -165,6 +197,6 @@ def write_bundle(
         encoding="utf-8",
     )
     files.append({"file": backlog_path.name, "sha256": _sha256(backlog_path), "rows": None})
-    manifest = {"generated_at": generated_at, "lake_digest": lake_digest, "files": files}
+    manifest = {"generated_at": generated_at, "lake_digest": lake_digest, "files": files, "sources": SOURCES}
     (dest / "bundle_manifest.json").write_text(json.dumps(manifest, indent=1) + "\n", encoding="utf-8")
     return manifest

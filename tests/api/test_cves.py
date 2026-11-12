@@ -24,7 +24,7 @@ def test_a_cve_carries_every_field_with_its_source_and_known_from(loaded: TestCl
         "value": "Analyzed",
         "source": "nvd@nist.gov",
         "known_from": "2021-03-12T09:00:00Z",
-        "rule": "nvd change history",
+        "rule": "event nvd_status, nvd_history",
     }
     assert body["fields"]["filer_cvss31_score"]["value"] == 10.0
     assert body["fields"]["published"]["known_from"] == "2021-03-01T12:00:00Z"
@@ -146,6 +146,10 @@ def test_pages_cover_every_row_once(loaded: TestClient) -> None:
         ("cwe=cwe-79", {"CVE-2026-90003"}),
         ("has_filer_score=true", {"CVE-2021-90001", "CVE-2026-90003", "CVE-2025-90004", "CVE-2026-90005"}),
         ("has_filer_score=false", {"CVE-2019-90002", "CVE-2024-90006"}),
+        ("kev_added_from=2026-01-01", {"CVE-2026-90005"}),
+        ("kev_added_from=2021-01-01", {"CVE-2021-90001", "CVE-2026-90005"}),
+        ("analyzed_from=2025-06-01", {"CVE-2025-90004", "CVE-2026-90005"}),
+        ("analyzed_from=2026-06-03", set()),
         ("published_from=2026-04-15", {"CVE-2026-90003", "CVE-2026-90005"}),
         ("published_from=2025-06-01&published_to=2025-06-01", {"CVE-2025-90004"}),
         ("published_to=2019-12-31", {"CVE-2019-90002"}),

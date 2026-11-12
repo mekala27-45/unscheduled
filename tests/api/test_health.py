@@ -131,3 +131,14 @@ def test_meta_after_a_load_names_every_file_with_its_digest(loaded: TestClient) 
     assert all(len(f["sha256"]) == 64 for f in files.values())
     assert meta["bundle"]["tag"] == TAG
     assert meta["data_version"] == loaded.get("/health").json()["data_version"]
+
+
+def test_meta_after_a_load_carries_the_quarantine_counts_and_the_ledger(loaded: TestClient) -> None:
+    meta = loaded.get("/v1/meta").json()
+    assert [r["rule_id"] for r in meta["quarantine"]] == ["Q01", "Q02"]
+    assert [r["source"] for r in meta["run_ledger"]] == ["kev", "nvd"]
+
+
+def test_meta_before_a_load_has_no_quarantine_or_ledger(client: TestClient) -> None:
+    meta = client.get("/v1/meta").json()
+    assert meta["quarantine"] == [] and meta["run_ledger"] == []

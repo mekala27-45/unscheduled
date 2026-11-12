@@ -92,7 +92,7 @@ def test_lists_arrive_in_any_of_the_shapes_a_writer_uses() -> None:
 def test_an_event_id_is_a_digest_of_its_content() -> None:
     raw = rows("cve_event")[2]
     one, two = bnd.event_row(raw), bnd.event_row(dict(raw))
-    assert one["event_id"] == two["event_id"] and len(one["event_id"]) == 32
+    assert one["event_id"] == two["event_id"] and len(one["event_id"]) == 16
     assert bnd.event_row(dict(raw, kind="other"))["event_id"] != one["event_id"]
 
 

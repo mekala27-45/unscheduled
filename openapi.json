@@ -1264,9 +1264,29 @@
             "title": "Nvd Notice",
             "type": "string"
           },
+          "quarantine": {
+            "items": {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/JsonValue"
+              },
+              "type": "object"
+            },
+            "title": "Quarantine",
+            "type": "array"
+          },
           "repository": {
             "title": "Repository",
             "type": "string"
+          },
+          "run_ledger": {
+            "items": {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/JsonValue"
+              },
+              "type": "object"
+            },
+            "title": "Run Ledger",
+            "type": "array"
           },
           "statement": {
             "title": "Statement",
@@ -2200,6 +2220,44 @@
               ],
               "description": "the filer gave a CVSS 3.1 or 4.0 score",
               "title": "Has Filer Score"
+            }
+          },
+          {
+            "description": "added to CISA KEV on or after this day",
+            "in": "query",
+            "name": "kev_added_from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "added to CISA KEV on or after this day",
+              "title": "Kev Added From"
+            }
+          },
+          {
+            "description": "the NVD status is Analyzed, since this day or later",
+            "in": "query",
+            "name": "analyzed_from",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "format": "date",
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "the NVD status is Analyzed, since this day or later",
+              "title": "Analyzed From"
             }
           },
           {

@@ -11,7 +11,7 @@ from __future__ import annotations
 from datetime import UTC, date, datetime
 from typing import Annotated, Literal
 
-from pydantic import AfterValidator, JsonValue
+from pydantic import AfterValidator, Field, JsonValue
 from unscheduled_core.model import StrictModel
 
 
@@ -292,3 +292,7 @@ class Meta(Envelope):
     locks: dict[str, JsonValue]
     bundle: BundleFacts | None
     limits: Limits
+    # From the loaded bundle's manifest: the lake's quarantine counts by rule, and the newest rows
+    # of the fetch run ledger. Empty until a bundle is loaded.
+    quarantine: list[dict[str, JsonValue]] = Field(default_factory=list)
+    run_ledger: list[dict[str, JsonValue]] = Field(default_factory=list)

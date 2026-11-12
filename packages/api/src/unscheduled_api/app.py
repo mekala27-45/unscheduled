@@ -321,7 +321,14 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
         loaded = state.loaded if state else None
         bundle = None
         locks: dict[str, JsonValue] = local_locks(svc.settings.root)
+        quarantine: list[dict[str, JsonValue]] = []
+        run_ledger: list[dict[str, JsonValue]] = []
         if loaded:
+            sources = loaded.get("sources") or {}
+            rules = (sources.get("quarantine") or {}).get("rules") if isinstance(sources, dict) else None
+            quarantine = [r for r in rules or [] if isinstance(r, dict)]
+            ledger = sources.get("ledger_recent") if isinstance(sources, dict) else None
+            run_ledger = [r for r in ledger or [] if isinstance(r, dict)]
             bundle = BundleFacts(
                 tag=loaded["tag"],
                 manifest_sha256=loaded["manifest_sha256"],
@@ -345,6 +352,8 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
             repository=f"{OWNER}/{REPO}",
             locks=locks,
             bundle=bundle,
+            quarantine=quarantine,
+            run_ledger=run_ledger,
             limits=Limits(
                 page_size_max=cves.PAGE_MAX,
                 sbom_upload_max_bytes=budgets.sbom_upload_max_bytes,
@@ -392,6 +401,12 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
         has_filer_score: Annotated[
             bool | None, Query(description="the filer gave a CVSS 3.1 or 4.0 score")
         ] = None,
+        kev_added_from: Annotated[
+            IsoDate | None, Query(description="added to CISA KEV on or after this day")
+        ] = None,
+        analyzed_from: Annotated[
+            IsoDate | None, Query(description="the NVD status is Analyzed, since this day or later")
+        ] = None,
         cursor: Annotated[str | None, Query(max_length=512, pattern=r"^[A-Za-z0-9_-]+$")] = None,
         limit: Annotated[int, Query(ge=1, le=cves.PAGE_MAX)] = cves.PAGE_DEFAULT,
     ) -> CvePage:
@@ -404,6 +419,8 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
             filer_type=filer_type,
             cwe=cves.normalize_cwe(cwe) if cwe else None,
             has_filer_score=has_filer_score,
+            kev_added_from=kev_added_from,
+            analyzed_from=analyzed_from,
         )
         with svc.connection() as conn:
             return cves.list_cves(

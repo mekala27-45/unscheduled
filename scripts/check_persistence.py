@@ -32,6 +32,7 @@ from typing import Any
 
 import httpx
 
+HEAD_MIGRATION = "0001"  # alembic/versions, the newest revision
 ROOT = Path(__file__).resolve().parents[1]
 SBOM = b'{"bomFormat": "CycloneDX", "specVersion": "1.6", "components": []}'
 LOOKUPS = ("/v1/cves/CVE-2021-44228", "/v1/products")
@@ -151,7 +152,7 @@ def check_local(url: str, schema: str, port: int) -> dict[str, Any]:
     observed = read_back(url, schema, since)
     expected_budget = {"lookups": len(LOOKUPS), "matches": 1}
     problems = []
-    if observed["migration"] != "0001":
+    if observed["migration"] != HEAD_MIGRATION:
         problems.append(f"the migration read back is {observed['migration']}")
     if observed["budget"] != expected_budget:
         problems.append(f"the budget read back is {observed['budget']}, expected {expected_budget}")
