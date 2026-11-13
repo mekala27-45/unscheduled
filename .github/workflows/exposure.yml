@@ -55,7 +55,9 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
         run: |
-          last="$(gh release list --repo "$REPO" --limit 30 --json tagName --jq '[.[] | select(.tagName | startswith("lake-"))][0].tagName // ""')"
+          # The newest by its day: lake-YYYYMMDD sorts by date, while GitHub orders releases on the
+          # same commit in no promised order.
+          last="$(gh release list --repo "$REPO" --limit 200 --json tagName --jq '[.[].tagName | select(startswith("lake-"))] | sort | last // ""')"
           if [ -z "$last" ]; then
             # Without bronze the exposure would lose its KEV, status and exploit dates, so the
             # committed results stand and the suites below check them as they are.

@@ -42,7 +42,9 @@ jobs:
       - name: Bronze, the locks and the config from the newest lake release
         id: restore
         run: |
-          last="$(gh release list --repo "$REPO" --limit 30 --json tagName --jq '[.[] | select(.tagName | startswith("lake-"))][0].tagName // ""')"
+          # The newest by its day: lake-YYYYMMDD sorts by date, while GitHub orders releases on the
+          # same commit in no promised order.
+          last="$(gh release list --repo "$REPO" --limit 200 --json tagName --jq '[.[].tagName | select(startswith("lake-"))] | sort | last // ""')"
           if [ -z "$last" ]; then
             echo "No lake release yet: nothing to build."
             echo "skip=true" >> "$GITHUB_OUTPUT"

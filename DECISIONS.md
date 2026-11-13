@@ -274,3 +274,16 @@ counts and their label coverage, the Q8 result and the API latency) are read fro
 committed files, never typed. The data card said the lake file was a release asset; it was not.
 lake.yml now uploads it to the serving release it fed, named by its digest, after the API has
 loaded the bundle, so a slow upload never holds the data back.
+
+## 2026-11-13: the committed numbers come from a settled lake release
+
+The hourly fetch refreshes the newest lake release in place, with the CVE List and KEV tables it
+rewrote, until the daily fetch writes the next day's release. A rebuild from the newest release
+therefore reads different bronze an hour later, and a rederive next month could not read it at all.
+The release before the newest is settled: no run changes it again. scripts/restore_release.py now
+restores the newest settled release unless told another, and scripts/reset_and_rederive.py restores
+the release results/lake/release.json names and stops when that release's SHA256SUMS no longer has
+the digest recorded with it. The workflows pick the newest lake release by the day in its tag.
+GitHub dates a release by the commit it points at (lake-20261113, published on 13 November, is
+dated 12 November, the day of its commit), and gh release list sorts by that date, so two daily
+releases cut on the same commit would tie and the restore could take the older one.

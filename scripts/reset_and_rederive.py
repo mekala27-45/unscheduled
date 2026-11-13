@@ -2,10 +2,13 @@
 
     python scripts/reset_and_rederive.py [--release lake-YYYYMMDD] [--keep]
 
-1. The newest lake release (or --release): its bronze archives, locks and config, each archive checked
-   against the release's SHA256SUMS before it is opened. The downloads are kept under data/cache; the
-   sums are read again on each run, so an archive is fetched again only when the release changed it.
-   Releases are read through the REST API (gh api), which answers wherever gh is signed in.
+1. The lake release the committed numbers came from, as results/lake/release.json names it (or
+   --release; with neither, the newest settled release): its bronze archives, locks and config, each
+   archive checked against the release's SHA256SUMS before it is opened, and the SHA256SUMS against
+   the digest the record kept, so a release that changed since stops the run. The downloads are kept
+   under data/cache; the sums are read again on each run, so an archive is fetched again only when
+   the release changed it. Releases are read through the REST API (gh api), which answers wherever
+   gh is signed in.
 2. A git worktree of HEAD in a temporary folder, holding nothing of data/ but what the release holds.
 3. In the worktree, the steps lake.yml runs: scripts/build_lake.py, scripts/run_analysis.py and
    scripts/backlog_charts.py, with this checkout's environment.
@@ -77,12 +80,57 @@ def gh_json(path: str) -> Any:
     return json.loads(sh(["gh", "api", path]))
 
 
+def lake_releases() -> list[str]:
+    """Every lake release, oldest first. A tag lake-YYYYMMDD sorts by its day, which the list order
+    of GitHub does not promise."""
+    tags = [str(r["tag_name"]) for r in gh_json(f"repos/{REPOSITORY}/releases?per_page=100")]
+    return sorted(t for t in tags if t.startswith("lake-"))
+
+
 def newest_lake_release() -> str:
-    tags = [str(r["tag_name"]) for r in gh_json(f"repos/{REPOSITORY}/releases?per_page=50")]
-    lake = sorted((t for t in tags if t.startswith("lake-")), reverse=True)
+    lake = lake_releases()
     if not lake:
         raise SystemExit("rederive: the repository has no lake release yet")
-    return lake[0]
+    return lake[-1]
+
+
+def settled_lake_release() -> str:
+    """The newest lake release that no run changes any more. The hourly fetch refreshes the newest
+    release in place until the daily fetch writes the next one, so the newest is still moving and the
+    one before it is settled. Committed numbers come from a settled release, so that a rebuild next
+    month reads the same bronze (DECISIONS.md, 13 November 2026)."""
+    lake = lake_releases()
+    if len(lake) < 2:
+        raise SystemExit(
+            "rederive: no lake release has settled yet; the newest is refreshed every hour until "
+            "the next daily fetch"
+        )
+    return lake[-2]
+
+
+RECORD = ROOT / "results" / "lake" / "release.json"
+
+
+def recorded_release() -> dict[str, Any] | None:
+    """The release the committed numbers were rebuilt from, as scripts/restore_release.py wrote it."""
+    if not RECORD.exists():
+        return None
+    record: dict[str, Any] = json.loads(RECORD.read_text(encoding="utf-8"))
+    return record
+
+
+def unchanged_since_recorded(folder: Path, recorded: dict[str, Any] | None, tag: str) -> str | None:
+    """Why the release cannot stand behind the committed numbers, or None when it can: a release
+    restored again under the recorded tag must carry the same SHA256SUMS as when it was recorded."""
+    if not recorded or recorded.get("tag") != tag:
+        return None
+    now = file_sha256(folder / "SHA256SUMS")
+    if now != recorded.get("sha256sums_sha256"):
+        return (
+            f"{tag} changed after the committed numbers were rebuilt from it: its SHA256SUMS is "
+            f"{now[:12]} now and {str(recorded.get('sha256sums_sha256'))[:12]} in results/lake/release.json"
+        )
+    return None
 
 
 def sums_of(text: str) -> dict[str, str]:
@@ -207,10 +255,14 @@ def main(argv: list[str] | None = None) -> int:
             "rederive: commit first, so the worktree is the code that made the committed numbers"
         )
 
-    tag = args.release or newest_lake_release()
+    recorded = recorded_release()
+    tag = args.release or (str(recorded["tag"]) if recorded else settled_lake_release())
     commit = sh(["git", "rev-parse", "HEAD"]).strip()
     started = time.monotonic()
     folder = download(tag)
+    moved = unchanged_since_recorded(folder, recorded, tag)
+    if moved:
+        raise SystemExit(f"rederive: {moved}")
     work = Path(tempfile.mkdtemp(prefix="unscheduled-rederive-"))
     tree = work / "tree"
     sh(["git", "worktree", "add", "--detach", str(tree), commit])

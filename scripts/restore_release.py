@@ -2,6 +2,8 @@
 
     python scripts/restore_release.py [--release lake-YYYYMMDD]
 
+Without --release it restores the newest settled release: the hourly fetch refreshes the newest lake
+release in place until the next daily fetch, so the one before it is the newest that no run changes.
 The committed numbers are rebuilt from a published release this way, so that the lake a reader can
 download is the lake the numbers came from: restore, then scripts/build_lake.py,
 scripts/run_analysis.py, scripts/backlog_charts.py and scripts/build_field.py. Each archive is checked
@@ -24,14 +26,14 @@ ROOT = Path(__file__).resolve().parents[1]
 if __package__ in {None, ""}:
     sys.path.insert(0, str(ROOT))
 
-from scripts.reset_and_rederive import download, extract, newest_lake_release
+from scripts.reset_and_rederive import download, extract, settled_lake_release
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--release", default=None)
     args = parser.parse_args(argv)
-    tag = args.release or newest_lake_release()
+    tag = args.release or settled_lake_release()
     folder = download(tag)
     for stale in (ROOT / "data" / "bronze", ROOT / "data" / "locks"):
         shutil.rmtree(stale, ignore_errors=True)

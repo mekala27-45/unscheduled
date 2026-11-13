@@ -62,3 +62,37 @@ def test_every_step_reads_and_writes_the_worktree_not_this_checkout(tmp_path: Pa
     env = rd.step_env(tmp_path / "tree")
     assert env["UNSCHED_ROOT"] == str(tmp_path / "tree")
     assert env["PYTHONHASHSEED"] == "0"
+
+
+def _releases(monkeypatch: pytest.MonkeyPatch, tags: list[str]) -> None:
+    monkeypatch.setattr(rd, "gh_json", lambda path: [{"tag_name": t} for t in tags])
+
+
+def test_the_settled_release_is_the_one_before_the_newest_by_its_day(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    # GitHub lists releases on the same commit in no promised order; the day in the tag decides.
+    _releases(monkeypatch, ["lake-20261113", "serving-202611131326", "lake-20261114", "lake-20261112"])
+    assert rd.newest_lake_release() == "lake-20261114"
+    assert rd.settled_lake_release() == "lake-20261113"
+
+
+def test_no_settled_release_while_the_only_one_is_still_refreshed(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    _releases(monkeypatch, ["serving-202611121400", "lake-20261112"])
+    with pytest.raises(SystemExit, match="no lake release has settled"):
+        rd.settled_lake_release()
+
+
+def test_a_release_that_changed_since_it_was_recorded_is_named(tmp_path: Path) -> None:
+    (tmp_path / "SHA256SUMS").write_bytes(b"aa  ./bronze-kev.tar\n")
+    now = _digest(b"aa  ./bronze-kev.tar\n")
+    recorded = {"tag": "lake-20261112", "sha256sums_sha256": now}
+    assert rd.unchanged_since_recorded(tmp_path, recorded, "lake-20261112") is None
+    assert rd.unchanged_since_recorded(tmp_path, recorded, "lake-20261113") is None
+    assert rd.unchanged_since_recorded(tmp_path, None, "lake-20261112") is None
+    moved = rd.unchanged_since_recorded(
+        tmp_path, {**recorded, "sha256sums_sha256": "0" * 64}, "lake-20261112"
+    )
+    assert moved is not None and "changed after the committed numbers" in moved
