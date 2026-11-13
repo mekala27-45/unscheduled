@@ -1,0 +1,125 @@
+{
+ "awake": {
+  "phase": "awake",
+  "web": "https://unscheduled-triage.vercel.app",
+  "api": "https://unscheduled-api.vercel.app",
+  "started_at": "2026-11-13T23:57:49Z",
+  "finished_at": "2026-11-13T23:58:36Z",
+  "idle_minutes_before": 0,
+  "first_health": {
+   "status": 200,
+   "ms": 3867,
+   "data_version": "serving-202611131326+7a6e339ce211"
+  },
+  "browser": "Chromium 153.0.8010.12, headless, 1440 by 900",
+  "client": "web/scripts/live-check.mjs, a separate machine with no credential",
+  "picked": {
+   "cve": "CVE-2026-128335",
+   "before": "2026-11-12",
+   "product": "cloud-dashboard"
+  },
+  "passed": 14,
+  "total": 14,
+  "result": "pass",
+  "routes": [
+   {
+    "route": "/",
+    "status": 200,
+    "ms": 2186,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/app",
+    "status": 200,
+    "ms": 3276,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/app/cves",
+    "status": 200,
+    "ms": 2266,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/app/cves/CVE-2026-128335",
+    "status": 200,
+    "ms": 1918,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/app/cves/CVE-2026-128335?as_of=2026-11-12",
+    "status": 200,
+    "ms": 1824,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/app/backlog",
+    "status": 200,
+    "ms": 1724,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/app/products",
+    "status": 200,
+    "ms": 3053,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/app/match",
+    "status": 200,
+    "ms": 6290,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/app/data",
+    "status": 200,
+    "ms": 1628,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/app/criteria",
+    "status": 200,
+    "ms": 1827,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/app/limits",
+    "status": 200,
+    "ms": 1733,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/status",
+    "status": 200,
+    "ms": 1884,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/docs/architecture",
+    "status": 200,
+    "ms": 1518,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/report/backlog",
+    "status": 200,
+    "ms": 1714,
+    "ok": true,
+    "problems": []
+   }
+  ]
+ }
+}
