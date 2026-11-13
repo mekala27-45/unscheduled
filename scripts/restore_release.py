@@ -7,9 +7,11 @@ release in place until the next daily fetch, so the one before it is the newest 
 The committed numbers are rebuilt from a published release this way, so that the lake a reader can
 download is the lake the numbers came from: restore, then scripts/build_lake.py,
 scripts/run_analysis.py, scripts/backlog_charts.py and scripts/build_field.py. Each archive is checked
-against the release's SHA256SUMS before it is opened. data/bronze is replaced, not merged, so no
-table from an earlier local fetch survives. results/lake/release.json names the release restored and
-the digest of its SHA256SUMS, so the numbers built next say which published lake they came from.
+against the release's SHA256SUMS before it is opened, or against the digest GitHub recorded at upload
+when the sums leave it out. data/bronze is replaced, not merged, so no table from an earlier local
+fetch survives. results/lake/release.json names the release restored and the digest of every archive,
+so the numbers built next say which published bronze they came from, and a rederive can tell when a
+release changed.
 """
 
 from __future__ import annotations
@@ -26,7 +28,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if __package__ in {None, ""}:
     sys.path.insert(0, str(ROOT))
 
-from scripts.reset_and_rederive import download, extract, settled_lake_release
+from scripts.reset_and_rederive import archive_digests, download, extract, settled_lake_release
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -43,6 +45,7 @@ def main(argv: list[str] | None = None) -> int:
         "restored_at": datetime.now(UTC).replace(microsecond=0).isoformat(),
         "bronze_archives": counts["bronze_archives"],
         "sha256sums_sha256": hashlib.sha256((folder / "SHA256SUMS").read_bytes()).hexdigest(),
+        "archives": archive_digests(folder),
     }
     out = ROOT / "results" / "lake" / "release.json"
     out.parent.mkdir(parents=True, exist_ok=True)

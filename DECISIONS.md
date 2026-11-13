@@ -287,3 +287,11 @@ the digest recorded with it. The workflows pick the newest lake release by the d
 GitHub dates a release by the commit it points at (lake-20261113, published on 13 November, is
 dated 12 November, the day of its commit), and gh release list sorts by that date, so two daily
 releases cut on the same commit would tie and the restore could take the older one.
+
+The first restore of a settled release found its SHA256SUMS listing six assets: an hourly run wrote
+the sums over only the tables it uploaded and replaced the full list. lake.yml checked with
+--ignore-missing, so the archives the sums left out were opened unchecked. The fetch now merges the
+sums of its upload with the sums the release already lists, and lake.yml warns about an archive the
+sums leave out. The releases written before this change stay as they are; for an archive their sums
+leave out, the restore checks the SHA-256 GitHub recorded when the archive was uploaded, and
+results/lake/release.json keeps the digest of every archive it restored.

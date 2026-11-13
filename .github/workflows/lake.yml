@@ -53,6 +53,11 @@ jobs:
           mkdir -p restore data/bronze
           gh release download "$last" --repo "$REPO" --dir restore --pattern 'bronze-*.tar' --pattern 'locks.tar.gz' --pattern 'config.tar.gz' --pattern 'SHA256SUMS'
           ( cd restore && sha256sum --check --ignore-missing SHA256SUMS )
+          # Releases written before 13 November list only what their last hourly run uploaded.
+          ( cd restore && for f in *; do
+              [ "$f" = SHA256SUMS ] || awk -v n="./$f" '$2 == n { found = 1 } END { exit !found }' SHA256SUMS \
+                || echo "::warning::$f is not listed in the SHA256SUMS of $last"
+            done )
           for t in restore/bronze-*.tar; do tar -xf "$t" -C data/bronze; done
           tar -xzf restore/locks.tar.gz -C data
           tar -xzf restore/config.tar.gz -C config

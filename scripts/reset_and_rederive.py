@@ -4,8 +4,9 @@
 
 1. The lake release the committed numbers came from, as results/lake/release.json names it (or
    --release; with neither, the newest settled release): its bronze archives, locks and config, each
-   archive checked against the release's SHA256SUMS before it is opened, and the SHA256SUMS against
-   the digest the record kept, so a release that changed since stops the run. The downloads are kept
+   archive checked before it is opened against the release's SHA256SUMS (or, for one the sums leave
+   out, the digest GitHub recorded at upload) and against the digest the record kept, so a release
+   that changed since stops the run. The downloads are kept
    under data/cache; the sums are read again on each run, so an archive is fetched again only when
    the release changed it. Releases are read through the REST API (gh api), which answers wherever
    gh is signed in.
@@ -120,15 +121,17 @@ def recorded_release() -> dict[str, Any] | None:
 
 
 def unchanged_since_recorded(folder: Path, recorded: dict[str, Any] | None, tag: str) -> str | None:
-    """Why the release cannot stand behind the committed numbers, or None when it can: a release
-    restored again under the recorded tag must carry the same SHA256SUMS as when it was recorded."""
+    """Why the release cannot stand behind the committed numbers, or None when it can: restored again
+    under the recorded tag, every archive must have the digest results/lake/release.json kept."""
     if not recorded or recorded.get("tag") != tag:
         return None
-    now = file_sha256(folder / "SHA256SUMS")
-    if now != recorded.get("sha256sums_sha256"):
+    now = archive_digests(folder)
+    kept = dict(recorded.get("archives") or {})
+    moved = sorted(n for n in set(now) | set(kept) if now.get(n) != kept.get(n))
+    if moved:
         return (
-            f"{tag} changed after the committed numbers were rebuilt from it: its SHA256SUMS is "
-            f"{now[:12]} now and {str(recorded.get('sha256sums_sha256'))[:12]} in results/lake/release.json"
+            f"{tag} changed after the committed numbers were rebuilt from it: "
+            f"{', '.join(moved)} differ from results/lake/release.json"
         )
     return None
 
@@ -181,18 +184,49 @@ def download(tag: str) -> Path:
     fetch_asset(int(assets["SHA256SUMS"]["id"]), folder / "SHA256SUMS")
     sums = sums_of((folder / "SHA256SUMS").read_text(encoding="utf-8"))
     wanted = sorted(n for n in assets if any(fnmatch.fnmatch(n, p) for p in WANTED))
+    expected = expected_digests(assets, sums, wanted, tag)
     for name in wanted:
-        if name not in sums:
-            raise SystemExit(f"rederive: {name} in {tag} is not listed in its SHA256SUMS")
         target = folder / name
-        if target.exists() and file_sha256(target) == sums[name]:
+        if target.exists() and file_sha256(target) == expected[name]:
             continue
         fetch_asset(int(assets[name]["id"]), target)
+        if file_sha256(target) != expected[name]:
+            target.unlink()
+            raise SystemExit(f"rederive: {name} from {tag} does not have the digest {expected[name][:12]}")
     for stale in folder.glob("bronze-*.tar"):
         if stale.name not in wanted:
             stale.unlink()
-    sh(["sha256sum", "--check", "--ignore-missing", "--quiet", "SHA256SUMS"], cwd=folder)
     return folder
+
+
+def expected_digests(
+    assets: dict[str, Any], sums: dict[str, str], wanted: list[str], tag: str
+) -> dict[str, str]:
+    """The digest each archive must have: the one the release's SHA256SUMS lists or, for an archive
+    the sums leave out (an hourly run wrote sums over only what it uploaded, before 13 November), the
+    SHA-256 GitHub recorded when the archive was uploaded. Where both exist they must agree."""
+    out: dict[str, str] = {}
+    for name in wanted:
+        listed = sums.get(name)
+        recorded = str(assets[name].get("digest") or "").removeprefix("sha256:") or None
+        if listed and recorded and listed != recorded:
+            raise SystemExit(
+                f"rederive: {name} in {tag} has {listed[:12]} in SHA256SUMS and {recorded[:12]} on GitHub"
+            )
+        digest = listed or recorded
+        if not digest:
+            raise SystemExit(f"rederive: {name} in {tag} has no digest in SHA256SUMS or on GitHub")
+        out[name] = digest
+    return out
+
+
+def archive_digests(folder: Path) -> dict[str, str]:
+    """The SHA-256 of every archive a restore opens, by name."""
+    return {
+        p.name: file_sha256(p)
+        for p in sorted(folder.iterdir())
+        if any(fnmatch.fnmatch(p.name, pattern) for pattern in WANTED)
+    }
 
 
 def extract(folder: Path, work: Path) -> dict[str, int]:

@@ -171,7 +171,17 @@ jobs:
           fi
           tar -czf out/locks.tar.gz -C data locks
           tar -czf out/config.tar.gz -C config labels.yaml filers.yaml
-          ( cd out && sha256sum ./* > SHA256SUMS )
+          ( cd out && sha256sum ./* > "$RUNNER_TEMP/sums.new" )
+          # SHA256SUMS covers the whole release: the sums of this upload, and the sums the release
+          # already lists for every asset this run leaves in place (an hourly run uploads only the
+          # tables it rewrote).
+          mkdir -p "$RUNNER_TEMP/previous"
+          gh release download "$tag" --repo "$REPO" --dir "$RUNNER_TEMP/previous" --pattern SHA256SUMS --clobber 2>/dev/null || true
+          if [ -s "$RUNNER_TEMP/previous/SHA256SUMS" ]; then
+            awk 'NR == FNR { fresh[$2] = 1; print; next } !($2 in fresh)' "$RUNNER_TEMP/sums.new" "$RUNNER_TEMP/previous/SHA256SUMS" > out/SHA256SUMS
+          else
+            cp "$RUNNER_TEMP/sums.new" out/SHA256SUMS
+          fi
           gh release upload "$tag" --repo "$REPO" --clobber out/*
           echo "Published $(ls out | wc -l) assets to $tag."
 

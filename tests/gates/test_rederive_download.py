@@ -86,13 +86,35 @@ def test_no_settled_release_while_the_only_one_is_still_refreshed(
 
 
 def test_a_release_that_changed_since_it_was_recorded_is_named(tmp_path: Path) -> None:
-    (tmp_path / "SHA256SUMS").write_bytes(b"aa  ./bronze-kev.tar\n")
-    now = _digest(b"aa  ./bronze-kev.tar\n")
-    recorded = {"tag": "lake-20261112", "sha256sums_sha256": now}
+    (tmp_path / "SHA256SUMS").write_bytes(b"sums are not an archive\n")
+    (tmp_path / "bronze-kev.tar").write_bytes(b"kev")
+    (tmp_path / "locks.tar.gz").write_bytes(b"locks")
+    (tmp_path / "bronze-kev.tar.part").write_bytes(b"an interrupted download")
+    archives = {"bronze-kev.tar": _digest(b"kev"), "locks.tar.gz": _digest(b"locks")}
+    assert rd.archive_digests(tmp_path) == archives
+    recorded = {"tag": "lake-20261112", "archives": archives}
     assert rd.unchanged_since_recorded(tmp_path, recorded, "lake-20261112") is None
     assert rd.unchanged_since_recorded(tmp_path, recorded, "lake-20261113") is None
     assert rd.unchanged_since_recorded(tmp_path, None, "lake-20261112") is None
-    moved = rd.unchanged_since_recorded(
-        tmp_path, {**recorded, "sha256sums_sha256": "0" * 64}, "lake-20261112"
-    )
-    assert moved is not None and "changed after the committed numbers" in moved
+    (tmp_path / "bronze-kev.tar").write_bytes(b"kev, refreshed by an hourly run")
+    moved = rd.unchanged_since_recorded(tmp_path, recorded, "lake-20261112")
+    assert moved is not None and "bronze-kev.tar differ" in moved
+
+
+def test_an_archive_the_sums_leave_out_is_checked_by_the_digest_github_recorded() -> None:
+    assets: dict[str, Any] = {
+        "bronze-kev.tar": {"digest": "sha256:" + "a" * 64},
+        "bronze-cwe.tar": {"digest": "sha256:" + "b" * 64},
+        "locks.tar.gz": {},
+    }
+    sums = {"bronze-kev.tar": "a" * 64, "locks.tar.gz": "c" * 64}
+    wanted = sorted(assets)
+    assert rd.expected_digests(assets, sums, wanted, "lake-20261112") == {
+        "bronze-cwe.tar": "b" * 64,
+        "bronze-kev.tar": "a" * 64,
+        "locks.tar.gz": "c" * 64,
+    }
+    with pytest.raises(SystemExit, match="in SHA256SUMS and"):
+        rd.expected_digests(assets, {**sums, "bronze-cwe.tar": "d" * 64}, wanted, "lake-20261112")
+    with pytest.raises(SystemExit, match="no digest"):
+        rd.expected_digests({**assets, "config.tar.gz": {}}, sums, [*wanted, "config.tar.gz"], "x")
