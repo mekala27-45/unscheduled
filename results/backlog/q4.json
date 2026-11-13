@@ -13,7 +13,7 @@
  },
  "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded",
  "window": "train, development and shadow only (never test, never the gap)",
- "data_cut": "2026-11-12T00:21:46+00:00",
+ "data_cut": "2026-11-13T06:00:00+00:00",
  "interval": "cluster bootstrap by filer, 2000 resamples, 95 percent",
  "seed": 20261112,
  "values": {
@@ -45,7 +45,7 @@
    "worse": 0.017589891060221238,
    "milder": 0.047459121345059925,
    "n": 47641,
-   "p_adjusted": 0.05491990846681922
+   "p_adjusted": 0.05533596837944665
   },
   "kappa_ac": {
    "value": 0.2661407046861136,
@@ -69,7 +69,7 @@
    "worse": 0.010579123024285804,
    "milder": 0.1358283831153838,
    "n": 47641,
-   "p_adjusted": 0.003858934505306035
+   "p_adjusted": 0.004266558309630231
   },
   "kappa_pr": {
    "value": 0.6830406722462644,
@@ -93,7 +93,7 @@
    "worse": 0.05721962175437124,
    "milder": 0.13265884427279023,
    "n": 47641,
-   "p_adjusted": 0.0912714374520057
+   "p_adjusted": 0.09095452273863068
   },
   "kappa_ui": {
    "value": 0.7459040141798439,
@@ -117,7 +117,7 @@
    "worse": 0.046283663231250396,
    "milder": 0.06196343485653114,
    "n": 47641,
-   "p_adjusted": 0.6116941529235382
+   "p_adjusted": 0.6059234533676557
   },
   "kappa_s": {
    "value": 0.5377342552027463,
@@ -141,7 +141,7 @@
    "worse": 0.10686173673936315,
    "milder": 0.061858483239226714,
    "n": 47641,
-   "p_adjusted": 0.30134932533733133
+   "p_adjusted": 0.2943412014922771
   },
   "kappa_c": {
    "value": 0.5667073878488268,
@@ -189,7 +189,7 @@
    "worse": 0.07730736130643773,
    "milder": 0.1700216200331647,
    "n": 47641,
-   "p_adjusted": 0.16311844077961019
+   "p_adjusted": 0.1605697151424288
   },
   "kappa_a": {
    "value": 0.5201662980273328,
@@ -213,7 +213,7 @@
    "worse": 0.10507755924518797,
    "milder": 0.19420247266010368,
    "n": 47641,
-   "p_adjusted": 0.0976654529877918
+   "p_adjusted": 0.09700555127841484
   },
   "kappa_band": {
    "value": 0.48601422874342903,
@@ -237,7 +237,7 @@
    "worse": 0.11011523687580026,
    "milder": 0.29503998656619296,
    "n": 47641,
-   "p_adjusted": 0.011994002998500751
+   "p_adjusted": 0.012593703148425789
   },
   "type_mitre_kappa_av": {
    "value": 0.6824572394210875,
@@ -260,7 +260,7 @@
    "worse": 0.0075,
    "milder": 0.17166666666666666,
    "n": 1200,
-   "p_adjusted": 0.004005340453938585
+   "p_adjusted": 0.004266558309630231
   },
   "type_mitre_kappa_ac": {
    "value": 0.18410783965945376,
@@ -283,7 +283,7 @@
    "worse": 0.01,
    "milder": 0.20083333333333334,
    "n": 1200,
-   "p_adjusted": 0.004005340453938585
+   "p_adjusted": 0.004266558309630231
   },
   "type_mitre_kappa_pr": {
    "value": 0.74385485108228,
@@ -306,7 +306,7 @@
    "worse": 0.049166666666666664,
    "milder": 0.11083333333333334,
    "n": 1200,
-   "p_adjusted": 0.004005340453938585
+   "p_adjusted": 0.004266558309630231
   },
   "type_mitre_kappa_ui": {
    "value": 0.6041647966968854,
@@ -329,7 +329,7 @@
    "worse": 0.06916666666666667,
    "milder": 0.05333333333333334,
    "n": 1200,
-   "p_adjusted": 0.004005340453938585
+   "p_adjusted": 0.004266558309630231
   },
   "type_mitre_kappa_s": {
    "value": 0.22708269603344555,
@@ -352,7 +352,7 @@
    "worse": 0.24833333333333332,
    "milder": 0.0675,
    "n": 1200,
-   "p_adjusted": 0.004005340453938585
+   "p_adjusted": 0.004266558309630231
   },
   "type_mitre_kappa_c": {
    "value": 0.6315998412068281,
@@ -375,7 +375,7 @@
    "worse": 0.09416666666666666,
    "milder": 0.09916666666666667,
    "n": 1200,
-   "p_adjusted": 0.004005340453938585
+   "p_adjusted": 0.004266558309630231
   },
   "type_mitre_kappa_i": {
    "value": 0.6470982654879749,
@@ -398,7 +398,7 @@
    "worse": 0.1025,
    "milder": 0.10583333333333333,
    "n": 1200,
-   "p_adjusted": 0.004005340453938585
+   "p_adjusted": 0.004266558309630231
   },
   "type_mitre_kappa_a": {
    "value": 0.6069952939110376,
@@ -421,7 +421,7 @@
    "worse": 0.0625,
    "milder": 0.1675,
    "n": 1200,
-   "p_adjusted": 0.004005340453938585
+   "p_adjusted": 0.004266558309630231
   },
   "type_mitre_kappa_band": {
    "value": 0.5765595918588613,
@@ -444,7 +444,7 @@
    "worse": 0.17,
    "milder": 0.23583333333333334,
    "n": 1200,
-   "p_adjusted": 0.004005340453938585
+   "p_adjusted": 0.004266558309630231
   },
   "type_national_cert_kappa_av": {
    "value": 0.7498838512834145,
@@ -468,7 +468,7 @@
    "worse": 0.009279881217520415,
    "milder": 0.0801781737193764,
    "n": 2694,
-   "p_adjusted": 0.003858934505306035
+   "p_adjusted": 0.004266558309630231
   },
   "type_national_cert_kappa_ac": {
    "value": 0.2482226605303528,
@@ -492,7 +492,7 @@
    "worse": 0.008537490720118782,
    "milder": 0.062360801781737196,
    "n": 2694,
-   "p_adjusted": 0.004963035723517551
+   "p_adjusted": 0.005247376311844077
   },
   "type_national_cert_kappa_pr": {
    "value": 0.7089324461811339,
@@ -516,7 +516,7 @@
    "worse": 0.04194506310319228,
    "milder": 0.09168522642910171,
    "n": 2694,
-   "p_adjusted": 0.06827355552992734
+   "p_adjusted": 0.06852456124878736
   },
   "type_national_cert_kappa_ui": {
    "value": 0.7555545876944824,
@@ -540,7 +540,7 @@
    "worse": 0.024498886414253896,
    "milder": 0.07757980697847068,
    "n": 2694,
-   "p_adjusted": 0.003858934505306035
+   "p_adjusted": 0.004266558309630231
   },
   "type_national_cert_kappa_s": {
    "value": 0.5036629300995933,
@@ -564,7 +564,7 @@
    "worse": 0.09948032665181886,
    "milder": 0.05716406829992576,
    "n": 2694,
-   "p_adjusted": 0.35699797160243407
+   "p_adjusted": 0.35402298850574715
   },
   "type_national_cert_kappa_c": {
    "value": 0.6660874330218627,
@@ -588,7 +588,7 @@
    "worse": 0.07349665924276169,
    "milder": 0.0957683741648107,
    "n": 2694,
-   "p_adjusted": 0.6757871064467766
+   "p_adjusted": 0.688074144745809
   },
   "type_national_cert_kappa_i": {
    "value": 0.6934307168599125,
@@ -612,7 +612,7 @@
    "worse": 0.09539717891610987,
    "milder": 0.08982925018559762,
    "n": 2694,
-   "p_adjusted": 0.8686361044829698
+   "p_adjusted": 0.8693717657300382
   },
   "type_national_cert_kappa_a": {
    "value": 0.6445396134928315,
@@ -636,7 +636,7 @@
    "worse": 0.11210096510764662,
    "milder": 0.08426132145508537,
    "n": 2694,
-   "p_adjusted": 0.7458089137249556
+   "p_adjusted": 0.7556221889055472
   },
   "type_national_cert_kappa_band": {
    "value": 0.675239596553149,
@@ -660,223 +660,223 @@
    "worse": 0.12323682256867112,
    "milder": 0.17520415738678544,
    "n": 2694,
-   "p_adjusted": 0.5285633045546192
+   "p_adjusted": 0.5226386806596701
   },
   "type_open_source_project_kappa_av": {
-   "value": 0.8467354098528829,
+   "value": 0.847512483310754,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "Cohen kappa on attack vector",
-   "n": 14821,
-   "clusters": 65,
+   "n": 14986,
+   "clusters": 66,
    "resamples": 2000,
-   "low": 0.7458049493268075,
-   "high": 0.912934541248605
+   "low": 0.7490036577997027,
+   "high": 0.9135117038426632
   },
   "type_open_source_project_direction_av": {
-   "value": 0.0009446056271506646,
+   "value": 0.001000934205258241,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "share the filer rated attack vector worse less the share it rated milder",
-   "low": -0.03726712659929082,
-   "high": 0.08719851860951865,
-   "p": 0.9445277361319341,
-   "worse": 0.03515282369610687,
-   "milder": 0.03420821806895621,
-   "n": 14821,
-   "p_adjusted": 0.9445277361319341
+   "low": -0.03671725036253804,
+   "high": 0.08517825821189158,
+   "p": 0.9455272363818091,
+   "worse": 0.034899239290004005,
+   "milder": 0.03389830508474576,
+   "n": 14986,
+   "p_adjusted": 0.9455272363818091
   },
   "type_open_source_project_kappa_ac": {
-   "value": 0.2511917794500145,
+   "value": 0.2533644487137635,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "Cohen kappa on attack complexity",
-   "n": 14821,
-   "clusters": 65,
+   "n": 14986,
+   "clusters": 66,
    "resamples": 2000,
-   "low": 0.1596156966702228,
-   "high": 0.3710878433236136
+   "low": 0.1653558281784955,
+   "high": 0.3751429827221813
   },
   "type_open_source_project_direction_ac": {
-   "value": -0.17913771000607245,
+   "value": -0.17870012011210462,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "share the filer rated attack complexity worse less the share it rated milder",
-   "low": -0.24803341412341792,
-   "high": -0.07748754714954462,
+   "low": -0.24687123511163786,
+   "high": -0.0783758971126854,
    "p": 0.0009995002498750624,
-   "worse": 0.018622225220970245,
-   "milder": 0.19775993522704272,
-   "n": 14821,
-   "p_adjusted": 0.003858934505306035
+   "worse": 0.018417189376751634,
+   "milder": 0.19711730948885628,
+   "n": 14986,
+   "p_adjusted": 0.004266558309630231
   },
   "type_open_source_project_kappa_pr": {
-   "value": 0.7117282214192016,
+   "value": 0.7141018885022449,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "Cohen kappa on privileges required",
-   "n": 14821,
-   "clusters": 65,
+   "n": 14986,
+   "clusters": 66,
    "resamples": 2000,
-   "low": 0.5864388557123783,
-   "high": 0.7878179606746899
+   "low": 0.5966079255931932,
+   "high": 0.7896609587318669
   },
   "type_open_source_project_direction_pr": {
-   "value": -0.02678631671277242,
+   "value": -0.026691578806886426,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "share the filer rated privileges required worse less the share it rated milder",
-   "low": -0.07502426288454685,
-   "high": 0.08826741888374165,
-   "p": 0.5797101449275363,
-   "worse": 0.07185749949396127,
-   "milder": 0.0986438162067337,
-   "n": 14821,
-   "p_adjusted": 0.6625258799171843
+   "low": -0.07468865029047031,
+   "high": 0.08518875858036146,
+   "p": 0.5787106446776612,
+   "worse": 0.07126651541438676,
+   "milder": 0.09795809422127319,
+   "n": 14986,
+   "p_adjusted": 0.6751624187906047
   },
   "type_open_source_project_kappa_ui": {
-   "value": 0.7084331137596886,
+   "value": 0.7104015250337465,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "Cohen kappa on user interaction",
-   "n": 14821,
-   "clusters": 65,
+   "n": 14986,
+   "clusters": 66,
    "resamples": 2000,
-   "low": 0.5779933500052511,
-   "high": 0.797932277797848
+   "low": 0.5827558934894476,
+   "high": 0.8009197438571484
   },
   "type_open_source_project_direction_ui": {
-   "value": -0.06072464745968558,
+   "value": -0.06012278126251168,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "share the filer rated user interaction worse less the share it rated milder",
-   "low": -0.11304162689686653,
-   "high": -0.025434261826551476,
+   "low": -0.1111587606977749,
+   "high": -0.025190091296154203,
    "p": 0.0009995002498750624,
-   "worse": 0.021523513932933,
-   "milder": 0.08224816139261858,
-   "n": 14821,
-   "p_adjusted": 0.003858934505306035
+   "worse": 0.021286534098491926,
+   "milder": 0.0814093153610036,
+   "n": 14986,
+   "p_adjusted": 0.004266558309630231
   },
   "type_open_source_project_kappa_s": {
-   "value": 0.47694625141336366,
+   "value": 0.4789067895703156,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "Cohen kappa on scope",
-   "n": 14821,
-   "clusters": 65,
+   "n": 14986,
+   "clusters": 66,
    "resamples": 2000,
-   "low": 0.3792766319117712,
-   "high": 0.6064016754940199
+   "low": 0.38400850183170865,
+   "high": 0.6080404893762615
   },
   "type_open_source_project_direction_s": {
-   "value": 0.09081708386748533,
+   "value": 0.0896837047911384,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "share the filer rated scope worse less the share it rated milder",
-   "low": 0.058406945513502166,
-   "high": 0.1305371080722836,
+   "low": 0.05737914092390992,
+   "high": 0.12658351786363486,
    "p": 0.0009995002498750624,
-   "worse": 0.1377774779029755,
-   "milder": 0.04696039403549018,
-   "n": 14821,
-   "p_adjusted": 0.003858934505306035
+   "worse": 0.13639396770318965,
+   "milder": 0.04671026291205125,
+   "n": 14986,
+   "p_adjusted": 0.004266558309630231
   },
   "type_open_source_project_kappa_c": {
-   "value": 0.6639132723914302,
+   "value": 0.6664005308849515,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "Cohen kappa on confidentiality",
-   "n": 14821,
-   "clusters": 65,
+   "n": 14986,
+   "clusters": 66,
    "resamples": 2000,
-   "low": 0.5355367775425918,
-   "high": 0.7705215351694376
+   "low": 0.5399708198942099,
+   "high": 0.7738701164192983
   },
   "type_open_source_project_direction_c": {
-   "value": -0.00728695769516227,
+   "value": -0.0069398104897904715,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "share the filer rated confidentiality worse less the share it rated milder",
-   "low": -0.08824877680856831,
-   "high": 0.12239739032622222,
-   "p": 0.7966016991504248,
-   "worse": 0.10282706969840091,
-   "milder": 0.11011402739356319,
-   "n": 14821,
-   "p_adjusted": 0.8312365556352258
+   "low": -0.08542429950140347,
+   "high": 0.11976176865066483,
+   "p": 0.8025987006496752,
+   "worse": 0.10222874683037501,
+   "milder": 0.10916855732016549,
+   "n": 14986,
+   "p_adjusted": 0.8427286356821589
   },
   "type_open_source_project_kappa_i": {
-   "value": 0.6690710764623439,
+   "value": 0.671519550009827,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "Cohen kappa on integrity",
-   "n": 14821,
-   "clusters": 65,
+   "n": 14986,
+   "clusters": 66,
    "resamples": 2000,
-   "low": 0.530326003159488,
-   "high": 0.7867034944610031
+   "low": 0.5347065103609697,
+   "high": 0.7890413658436146
   },
   "type_open_source_project_direction_i": {
-   "value": 0.013291950610620067,
+   "value": 0.013345789403443213,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "share the filer rated integrity worse less the share it rated milder",
-   "low": -0.04915583006260624,
-   "high": 0.15184421799618578,
-   "p": 0.8565717141429285,
-   "worse": 0.11355509074961204,
-   "milder": 0.10026314013899197,
-   "n": 14821,
-   "p_adjusted": 0.8686361044829698
+   "low": -0.04702200859668236,
+   "high": 0.1509171695535101,
+   "p": 0.8545727136431784,
+   "worse": 0.11270519151207795,
+   "milder": 0.09935940210863473,
+   "n": 14986,
+   "p_adjusted": 0.8693717657300382
   },
   "type_open_source_project_kappa_a": {
-   "value": 0.666729300045632,
+   "value": 0.6688435511654784,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "Cohen kappa on availability",
-   "n": 14821,
-   "clusters": 65,
+   "n": 14986,
+   "clusters": 66,
    "resamples": 2000,
-   "low": 0.6102085772258421,
-   "high": 0.7596498052423036
+   "low": 0.6135724481315745,
+   "high": 0.7623577206893174
   },
   "type_open_source_project_direction_a": {
-   "value": -0.08332771068079077,
+   "value": -0.08267716535433071,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "share the filer rated availability worse less the share it rated milder",
-   "low": -0.11746705881701658,
-   "high": -0.0504207292793171,
+   "low": -0.11591244452658532,
+   "high": -0.04972952670473173,
    "p": 0.0009995002498750624,
-   "worse": 0.05532690101882464,
-   "milder": 0.1386546116996154,
-   "n": 14821,
-   "p_adjusted": 0.003858934505306035
+   "worse": 0.05498465234218604,
+   "milder": 0.13766181769651675,
+   "n": 14986,
+   "p_adjusted": 0.004266558309630231
   },
   "type_open_source_project_kappa_band": {
-   "value": 0.5088034650922958,
+   "value": 0.5103445735148018,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "quadratic weighted kappa on the severity band",
-   "n": 14821,
-   "clusters": 65,
+   "n": 14986,
+   "clusters": 66,
    "resamples": 2000,
-   "low": 0.3487815993770819,
-   "high": 0.6054926465193778
+   "low": 0.35552811041427357,
+   "high": 0.6071227252625018
   },
   "type_open_source_project_direction_band": {
-   "value": -0.09000742190135619,
+   "value": -0.08975043373815561,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type open source project",
    "unit": "share the filer rated severity band worse less the share it rated milder",
-   "low": -0.2216907792776869,
-   "high": 0.12163205436546294,
-   "p": 0.2658670664667666,
-   "worse": 0.1462789285473315,
-   "milder": 0.23628635044868768,
-   "n": 14821,
-   "p_adjusted": 0.36812363049244606
+   "low": -0.21814149614072526,
+   "high": 0.11676143501472301,
+   "p": 0.25987006496751625,
+   "worse": 0.14526891765647937,
+   "milder": 0.23501935139463498,
+   "n": 14986,
+   "p_adjusted": 0.3559090020207288
   },
   "type_other_kappa_av": {
    "value": 0.8362075153216028,
@@ -900,7 +900,7 @@
    "worse": 0.00935064935064935,
    "milder": 0.08363636363636363,
    "n": 1925,
-   "p_adjusted": 0.003858934505306035
+   "p_adjusted": 0.004266558309630231
   },
   "type_other_kappa_ac": {
    "value": 0.13805032472830525,
@@ -924,7 +924,7 @@
    "worse": 0.006753246753246753,
    "milder": 0.17142857142857143,
    "n": 1925,
-   "p_adjusted": 0.003858934505306035
+   "p_adjusted": 0.004266558309630231
   },
   "type_other_kappa_pr": {
    "value": 0.4289914786522463,
@@ -948,7 +948,7 @@
    "worse": 0.227012987012987,
    "milder": 0.12363636363636364,
    "n": 1925,
-   "p_adjusted": 0.5285633045546192
+   "p_adjusted": 0.5259723079636652
   },
   "type_other_kappa_ui": {
    "value": 0.6071293564334563,
@@ -972,7 +972,7 @@
    "worse": 0.033766233766233764,
    "milder": 0.1174025974025974,
    "n": 1925,
-   "p_adjusted": 0.015742128935532236
+   "p_adjusted": 0.016325170747959354
   },
   "type_other_kappa_s": {
    "value": 0.4048553340658191,
@@ -996,7 +996,7 @@
    "worse": 0.12103896103896104,
    "milder": 0.047792207792207796,
    "n": 1925,
-   "p_adjusted": 0.03398300849575212
+   "p_adjusted": 0.03453112153600619
   },
   "type_other_kappa_c": {
    "value": 0.57675556689246,
@@ -1020,7 +1020,7 @@
    "worse": 0.10077922077922077,
    "milder": 0.1651948051948052,
    "n": 1925,
-   "p_adjusted": 0.47442945194069636
+   "p_adjusted": 0.4670164917541229
   },
   "type_other_kappa_i": {
    "value": 0.5847534749997102,
@@ -1044,7 +1044,7 @@
    "worse": 0.10597402597402597,
    "milder": 0.16467532467532467,
    "n": 1925,
-   "p_adjusted": 0.5285633045546192
+   "p_adjusted": 0.5226386806596701
   },
   "type_other_kappa_a": {
    "value": 0.46529301159511116,
@@ -1068,7 +1068,7 @@
    "worse": 0.13922077922077922,
    "milder": 0.18493506493506492,
    "n": 1925,
-   "p_adjusted": 0.35699797160243407
+   "p_adjusted": 0.35402298850574715
   },
   "type_other_kappa_band": {
    "value": 0.5871856852770434,
@@ -1092,7 +1092,7 @@
    "worse": 0.14857142857142858,
    "milder": 0.2342857142857143,
    "n": 1925,
-   "p_adjusted": 0.046679363021192105
+   "p_adjusted": 0.0472263868065967
   },
   "type_research_or_bug_bounty_platform_kappa_av": {
    "value": 0.6044825166487144,
@@ -1116,7 +1116,7 @@
    "worse": 0.010579735076552554,
    "milder": 0.04309306726303114,
    "n": 11626,
-   "p_adjusted": 0.2312035471625889
+   "p_adjusted": 0.22638680659670166
   },
   "type_research_or_bug_bounty_platform_kappa_ac": {
    "value": 0.3239760385737842,
@@ -1140,7 +1140,7 @@
    "worse": 0.0015482539136418372,
    "milder": 0.05479098572165835,
    "n": 11626,
-   "p_adjusted": 0.003858934505306035
+   "p_adjusted": 0.004266558309630231
   },
   "type_research_or_bug_bounty_platform_kappa_pr": {
    "value": 0.5722682986057852,
@@ -1164,7 +1164,7 @@
    "worse": 0.01969723034577671,
    "milder": 0.24316187854808188,
    "n": 11626,
-   "p_adjusted": 0.15537685702603243
+   "p_adjusted": 0.15338484603851918
   },
   "type_research_or_bug_bounty_platform_kappa_ui": {
    "value": 0.9435534747986544,
@@ -1188,7 +1188,7 @@
    "worse": 0.01496645449853776,
    "milder": 0.012816101840701874,
    "n": 11626,
-   "p_adjusted": 0.6941759889286125
+   "p_adjusted": 0.7050224887556221
   },
   "type_research_or_bug_bounty_platform_kappa_s": {
    "value": 0.5662959157395897,
@@ -1212,7 +1212,7 @@
    "worse": 0.05332874591432995,
    "milder": 0.1234302425597798,
    "n": 11626,
-   "p_adjusted": 0.8064203192521386
+   "p_adjusted": 0.8272760171638318
   },
   "type_research_or_bug_bounty_platform_kappa_c": {
    "value": 0.22121698207959728,
@@ -1236,7 +1236,7 @@
    "worse": 0.010149664544985377,
    "milder": 0.5362119387579563,
    "n": 11626,
-   "p_adjusted": 0.01392851961116216
+   "p_adjusted": 0.014531195940491293
   },
   "type_research_or_bug_bounty_platform_kappa_i": {
    "value": 0.3392199455615803,
@@ -1260,7 +1260,7 @@
    "worse": 0.029846894890762084,
    "milder": 0.40512644073628074,
    "n": 11626,
-   "p_adjusted": 0.019626550361183045
+   "p_adjusted": 0.019541953161350357
   },
   "type_research_or_bug_bounty_platform_kappa_a": {
    "value": 0.1995329743192007,
@@ -1284,7 +1284,7 @@
    "worse": 0.20763805264063306,
    "milder": 0.4190607259590573,
    "n": 11626,
-   "p_adjusted": 0.6049856427718344
+   "p_adjusted": 0.6006227655403067
   },
   "type_research_or_bug_bounty_platform_kappa_band": {
    "value": 0.2976070860908231,
@@ -1308,430 +1308,223 @@
    "worse": 0.07250989162222604,
    "milder": 0.5605539308446585,
    "n": 11626,
-   "p_adjusted": 0.028785607196401802
-  },
-  "type_unregistered_kappa_av": {
-   "value": 0.8637386005807058,
-   "fmt": "float2",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "Cohen kappa on attack vector",
-   "n": 476,
-   "clusters": 4,
-   "resamples": 2000,
-   "no_interval": "4 filers, fewer than 5: a cluster bootstrap by filer gives no interval"
-  },
-  "type_unregistered_direction_av": {
-   "value": -0.04831932773109244,
-   "fmt": "pts1",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "share the filer rated attack vector worse less the share it rated milder",
-   "low": -0.41935483870967744,
-   "high": 0.006060606060606061,
-   "p": 0.24032586558044808,
-   "worse": 0.012605042016806723,
-   "milder": 0.06092436974789916,
-   "n": 476,
-   "p_adjusted": 0.3531318841182094
-  },
-  "type_unregistered_kappa_ac": {
-   "value": 0.26408214462821966,
-   "fmt": "float2",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "Cohen kappa on attack complexity",
-   "n": 476,
-   "clusters": 4,
-   "resamples": 2000,
-   "no_interval": "4 filers, fewer than 5: a cluster bootstrap by filer gives no interval"
-  },
-  "type_unregistered_direction_ac": {
-   "value": -0.21428571428571427,
-   "fmt": "pts1",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "share the filer rated attack complexity worse less the share it rated milder",
-   "low": -0.48936170212765956,
-   "high": -0.1393939393939394,
-   "p": 0.0010183299389002036,
-   "worse": 0.004201680672268907,
-   "milder": 0.2184873949579832,
-   "n": 476,
-   "p_adjusted": 0.003858934505306035
-  },
-  "type_unregistered_kappa_pr": {
-   "value": 0.800872332254348,
-   "fmt": "float2",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "Cohen kappa on privileges required",
-   "n": 476,
-   "clusters": 4,
-   "resamples": 2000,
-   "no_interval": "4 filers, fewer than 5: a cluster bootstrap by filer gives no interval"
-  },
-  "type_unregistered_direction_pr": {
-   "value": -0.052521008403361345,
-   "fmt": "pts1",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "share the filer rated privileges required worse less the share it rated milder",
-   "low": -0.3870967741935484,
-   "high": -0.01818181818181818,
-   "p": 0.0010183299389002036,
-   "worse": 0.037815126050420166,
-   "milder": 0.09033613445378151,
-   "n": 476,
-   "p_adjusted": 0.003858934505306035
-  },
-  "type_unregistered_kappa_ui": {
-   "value": 0.6274264245460237,
-   "fmt": "float2",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "Cohen kappa on user interaction",
-   "n": 476,
-   "clusters": 4,
-   "resamples": 2000,
-   "no_interval": "4 filers, fewer than 5: a cluster bootstrap by filer gives no interval"
-  },
-  "type_unregistered_direction_ui": {
-   "value": -0.12184873949579832,
-   "fmt": "pts1",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "share the filer rated user interaction worse less the share it rated milder",
-   "low": -0.22580645161290322,
-   "high": -0.006060606060606061,
-   "p": 0.0010183299389002036,
-   "worse": 0.012605042016806723,
-   "milder": 0.13445378151260504,
-   "n": 476,
-   "p_adjusted": 0.003858934505306035
-  },
-  "type_unregistered_kappa_s": {
-   "value": 0.3807616764023162,
-   "fmt": "float2",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "Cohen kappa on scope",
-   "n": 476,
-   "clusters": 4,
-   "resamples": 2000,
-   "no_interval": "4 filers, fewer than 5: a cluster bootstrap by filer gives no interval"
-  },
-  "type_unregistered_direction_s": {
-   "value": 0.11764705882352941,
-   "fmt": "pts1",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "share the filer rated scope worse less the share it rated milder",
-   "low": -0.0851063829787234,
-   "high": 0.24034334763948498,
-   "p": 0.4185336048879837,
-   "worse": 0.16596638655462184,
-   "milder": 0.04831932773109244,
-   "n": 476,
-   "p_adjusted": 0.5285633045546192
-  },
-  "type_unregistered_kappa_c": {
-   "value": 0.7149700598802395,
-   "fmt": "float2",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "Cohen kappa on confidentiality",
-   "n": 476,
-   "clusters": 4,
-   "resamples": 2000,
-   "no_interval": "4 filers, fewer than 5: a cluster bootstrap by filer gives no interval"
-  },
-  "type_unregistered_direction_c": {
-   "value": -0.03361344537815126,
-   "fmt": "pts1",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "share the filer rated confidentiality worse less the share it rated milder",
-   "low": -0.0967741935483871,
-   "high": 0.0425531914893617,
-   "p": 0.5427698574338086,
-   "worse": 0.07142857142857142,
-   "milder": 0.10504201680672269,
-   "n": 476,
-   "p_adjusted": 0.6303133828263583
-  },
-  "type_unregistered_kappa_i": {
-   "value": 0.7805704883618672,
-   "fmt": "float2",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "Cohen kappa on integrity",
-   "n": 476,
-   "clusters": 4,
-   "resamples": 2000,
-   "no_interval": "4 filers, fewer than 5: a cluster bootstrap by filer gives no interval"
-  },
-  "type_unregistered_direction_i": {
-   "value": -0.018907563025210083,
-   "fmt": "pts1",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "share the filer rated integrity worse less the share it rated milder",
-   "low": -0.0967741935483871,
-   "high": 0.0425531914893617,
-   "p": 0.5417515274949084,
-   "worse": 0.058823529411764705,
-   "milder": 0.07773109243697479,
-   "n": 476,
-   "p_adjusted": 0.6303133828263583
-  },
-  "type_unregistered_kappa_a": {
-   "value": 0.7448374630961621,
-   "fmt": "float2",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "Cohen kappa on availability",
-   "n": 476,
-   "clusters": 4,
-   "resamples": 2000,
-   "no_interval": "4 filers, fewer than 5: a cluster bootstrap by filer gives no interval"
-  },
-  "type_unregistered_direction_a": {
-   "value": -0.0273109243697479,
-   "fmt": "pts1",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "share the filer rated availability worse less the share it rated milder",
-   "low": -0.16129032258064516,
-   "high": -0.012875536480686695,
-   "p": 0.0010183299389002036,
-   "worse": 0.05672268907563025,
-   "milder": 0.08403361344537816,
-   "n": 476,
-   "p_adjusted": 0.003858934505306035
-  },
-  "type_unregistered_kappa_band": {
-   "value": 0.6176375404530744,
-   "fmt": "float2",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "quadratic weighted kappa on the severity band",
-   "n": 476,
-   "clusters": 4,
-   "resamples": 2000,
-   "no_interval": "4 filers, fewer than 5: a cluster bootstrap by filer gives no interval"
-  },
-  "type_unregistered_direction_band": {
-   "value": -0.11974789915966387,
-   "fmt": "pts1",
-   "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type unregistered",
-   "unit": "share the filer rated severity band worse less the share it rated milder",
-   "low": -0.41935483870967744,
-   "high": -0.06666666666666667,
-   "p": 0.0010183299389002036,
-   "worse": 0.06722689075630252,
-   "milder": 0.1869747899159664,
-   "n": 476,
-   "p_adjusted": 0.003858934505306035
+   "p_adjusted": 0.029385307346326838
   },
   "type_vendor_kappa_av": {
-   "value": 0.8915831177479174,
+   "value": 0.8902081350262316,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "Cohen kappa on attack vector",
-   "n": 14899,
-   "clusters": 139,
+   "n": 15210,
+   "clusters": 142,
    "resamples": 2000,
-   "low": 0.8400816192603229,
-   "high": 0.9154469153519037
+   "low": 0.8409969125481778,
+   "high": 0.9147196318136459
   },
   "type_vendor_direction_av": {
-   "value": -0.033894892274649306,
+   "value": -0.03477975016436555,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "share the filer rated attack vector worse less the share it rated milder",
-   "low": -0.05440145027387992,
-   "high": -0.021285420126849298,
+   "low": -0.055051213043263623,
+   "high": -0.0220186654775371,
    "p": 0.0009995002498750624,
-   "worse": 0.009128129404658031,
-   "milder": 0.043023021679307334,
-   "n": 14899,
-   "p_adjusted": 0.003858934505306035
+   "worse": 0.009204470742932281,
+   "milder": 0.04398422090729783,
+   "n": 15210,
+   "p_adjusted": 0.004266558309630231
   },
   "type_vendor_kappa_ac": {
-   "value": 0.25948037547254454,
+   "value": 0.25702123305531743,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "Cohen kappa on attack complexity",
-   "n": 14899,
-   "clusters": 139,
+   "n": 15210,
+   "clusters": 142,
    "resamples": 2000,
-   "low": 0.16946640013340172,
-   "high": 0.3560110383247534
+   "low": 0.16964715340564374,
+   "high": 0.35018569597365823
   },
   "type_vendor_direction_ac": {
-   "value": -0.12752533727095777,
+   "value": -0.13011176857330703,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "share the filer rated attack complexity worse less the share it rated milder",
-   "low": -0.17244614326295601,
-   "high": -0.09300320583465607,
+   "low": -0.17511885996713517,
+   "high": -0.095444883087786,
    "p": 0.0009995002498750624,
-   "worse": 0.010738975770185918,
-   "milder": 0.1382643130411437,
-   "n": 14899,
-   "p_adjusted": 0.003858934505306035
+   "worse": 0.010650887573964497,
+   "milder": 0.14076265614727154,
+   "n": 15210,
+   "p_adjusted": 0.004266558309630231
   },
   "type_vendor_kappa_pr": {
-   "value": 0.759554073702285,
+   "value": 0.7592715983515264,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "Cohen kappa on privileges required",
-   "n": 14899,
-   "clusters": 139,
+   "n": 15210,
+   "clusters": 142,
    "resamples": 2000,
-   "low": 0.6491983935643767,
-   "high": 0.8382116506403684
+   "low": 0.65279770716443,
+   "high": 0.8367541269023353
   },
   "type_vendor_direction_pr": {
-   "value": -0.037922008188469025,
+   "value": -0.03859303090072321,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "share the filer rated privileges required worse less the share it rated milder",
-   "low": -0.08278583238411147,
-   "high": 0.003187789914337789,
-   "p": 0.06896551724137931,
-   "worse": 0.0540304718437479,
-   "milder": 0.09195248003221693,
-   "n": 14899,
-   "p_adjusted": 0.11547714514835605
+   "low": -0.08281798456147507,
+   "high": 0.0013603744501417083,
+   "p": 0.06196901549225387,
+   "worse": 0.05391190006574622,
+   "milder": 0.09250493096646943,
+   "n": 15210,
+   "p_adjusted": 0.10273810463189458
   },
   "type_vendor_kappa_ui": {
-   "value": 0.6010489841440432,
+   "value": 0.5988597105701998,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "Cohen kappa on user interaction",
-   "n": 14899,
-   "clusters": 139,
+   "n": 15210,
+   "clusters": 142,
    "resamples": 2000,
-   "low": 0.38642623152755884,
-   "high": 0.8024985403255764
+   "low": 0.38693883959141484,
+   "high": 0.7956571886707543
   },
   "type_vendor_direction_ui": {
-   "value": 0.031612859923484796,
+   "value": 0.027218934911242602,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "share the filer rated user interaction worse less the share it rated milder",
-   "low": -0.07599367570841843,
-   "high": 0.19424914052511108,
-   "p": 0.7556221889055472,
-   "worse": 0.10014094905698369,
-   "milder": 0.06852808913349889,
-   "n": 14899,
-   "p_adjusted": 0.8064203192521386
+   "low": -0.07956048246729998,
+   "high": 0.18558967494766604,
+   "p": 0.7756121939030485,
+   "worse": 0.0984878369493754,
+   "milder": 0.07126890203813281,
+   "n": 15210,
+   "p_adjusted": 0.8281960714557974
   },
   "type_vendor_kappa_s": {
-   "value": 0.6261055775785798,
+   "value": 0.6176724851187945,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "Cohen kappa on scope",
-   "n": 14899,
-   "clusters": 139,
+   "n": 15210,
+   "clusters": 142,
    "resamples": 2000,
-   "low": 0.3893897791688673,
-   "high": 0.758125926705707
+   "low": 0.38715643840465447,
+   "high": 0.7515801878525582
   },
   "type_vendor_direction_s": {
-   "value": 0.07282367944157327,
+   "value": 0.07514792899408285,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "share the filer rated scope worse less the share it rated milder",
-   "low": 0.04942094428271748,
-   "high": 0.106462996006311,
+   "low": 0.05131414469114159,
+   "high": 0.1097284588878341,
    "p": 0.0009995002498750624,
-   "worse": 0.10410094637223975,
-   "milder": 0.031277266930666486,
-   "n": 14899,
-   "p_adjusted": 0.003858934505306035
+   "worse": 0.10703484549638395,
+   "milder": 0.03188691650230112,
+   "n": 15210,
+   "p_adjusted": 0.004266558309630231
   },
   "type_vendor_kappa_c": {
-   "value": 0.7398406590844365,
+   "value": 0.7373264374786772,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "Cohen kappa on confidentiality",
-   "n": 14899,
-   "clusters": 139,
+   "n": 15210,
+   "clusters": 142,
    "resamples": 2000,
-   "low": 0.6427773103216274,
-   "high": 0.7963059363722423
+   "low": 0.6420031342444974,
+   "high": 0.7945511477751248
   },
   "type_vendor_direction_c": {
-   "value": -0.03214980871199409,
+   "value": -0.03280736357659435,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "share the filer rated confidentiality worse less the share it rated milder",
-   "low": -0.06793328607092264,
-   "high": -0.005881720618860335,
-   "p": 0.009995002498750625,
-   "worse": 0.06094368749580509,
-   "milder": 0.09309349620779918,
-   "n": 14899,
-   "p_adjusted": 0.02116588764441309
+   "low": -0.06782038614225003,
+   "high": -0.006979048268985408,
+   "p": 0.0079960019990005,
+   "worse": 0.061406969099276794,
+   "milder": 0.09421433267587113,
+   "n": 15210,
+   "p_adjusted": 0.017991004497751123
   },
   "type_vendor_kappa_i": {
-   "value": 0.7663345875993232,
+   "value": 0.7650829318058106,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "Cohen kappa on integrity",
-   "n": 14899,
-   "clusters": 139,
+   "n": 15210,
+   "clusters": 142,
    "resamples": 2000,
-   "low": 0.6876653174923906,
-   "high": 0.8072410427972129
+   "low": 0.6873080048116769,
+   "high": 0.8061289145759643
   },
   "type_vendor_direction_i": {
-   "value": -0.009396603798912679,
+   "value": -0.009993425378040762,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "share the filer rated integrity worse less the share it rated milder",
-   "low": -0.028377752458880565,
-   "high": 0.011653060166439997,
-   "p": 0.31084457771114443,
-   "worse": 0.06987046110477213,
-   "milder": 0.0792670649036848,
-   "n": 14899,
-   "p_adjusted": 0.4222794263245736
+   "low": -0.028740675373156714,
+   "high": 0.010800028328032736,
+   "p": 0.2798600699650175,
+   "worse": 0.06988823142669297,
+   "milder": 0.07988165680473373,
+   "n": 15210,
+   "p_adjusted": 0.37513158314459794
   },
   "type_vendor_kappa_a": {
-   "value": 0.6905652835659597,
+   "value": 0.6906407354091879,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "Cohen kappa on availability",
-   "n": 14899,
-   "clusters": 139,
+   "n": 15210,
+   "clusters": 142,
    "resamples": 2000,
-   "low": 0.6104411467183135,
-   "high": 0.7324338203588685
+   "low": 0.6130960559995646,
+   "high": 0.7313920948112382
   },
   "type_vendor_direction_a": {
-   "value": -0.026914558024028458,
+   "value": -0.02695595003287311,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "share the filer rated availability worse less the share it rated milder",
-   "low": -0.060698403347514,
-   "high": 0.00944318446055081,
-   "p": 0.14392803598200898,
-   "worse": 0.0738304584200282,
-   "milder": 0.10074501644405665,
-   "n": 14899,
-   "p_adjusted": 0.2252786650153184
+   "low": -0.059921154236845825,
+   "high": 0.008658614900877427,
+   "p": 0.1329335332333833,
+   "worse": 0.07383300460223537,
+   "milder": 0.10078895463510848,
+   "n": 15210,
+   "p_adjusted": 0.20426372179763774
   },
   "type_vendor_kappa_band": {
-   "value": 0.6346744430564014,
+   "value": 0.6336200610696149,
    "fmt": "float2",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "quadratic weighted kappa on the severity band",
-   "n": 14899,
-   "clusters": 139,
+   "n": 15210,
+   "clusters": 142,
    "resamples": 2000,
-   "low": 0.5743017721680822,
-   "high": 0.6786066236426679
+   "low": 0.574057814855766,
+   "high": 0.6773221546945452
   },
   "type_vendor_direction_band": {
-   "value": -0.09134841264514397,
+   "value": -0.09250493096646943,
    "fmt": "pts1",
    "population": "CVEs scored with CVSS 3.1 by both their filer and the NVD, rejected excluded, filer type vendor",
    "unit": "share the filer rated severity band worse less the share it rated milder",
-   "low": -0.15119581873608073,
-   "high": -0.04336324235907216,
+   "low": -0.15049590787393613,
+   "high": -0.0452281898657473,
    "p": 0.0009995002498750624,
-   "worse": 0.09269078461641721,
-   "milder": 0.18403919726156118,
-   "n": 14899,
-   "p_adjusted": 0.003858934505306035
+   "worse": 0.09230769230769231,
+   "milder": 0.18481262327416173,
+   "n": 15210,
+   "p_adjusted": 0.004266558309630231
   }
  },
  "tables": {
@@ -1820,17 +1613,17 @@
     ],
     [
      "open source project",
-     14821,
-     65,
-     0.8467354098528829,
-     0.2511917794500145,
-     0.7117282214192016,
-     0.7084331137596886,
-     0.47694625141336366,
-     0.6639132723914302,
-     0.6690710764623439,
-     0.666729300045632,
-     0.5088034650922958
+     14986,
+     66,
+     0.847512483310754,
+     0.2533644487137635,
+     0.7141018885022449,
+     0.7104015250337465,
+     0.4789067895703156,
+     0.6664005308849515,
+     0.671519550009827,
+     0.6688435511654784,
+     0.5103445735148018
     ],
     [
      "other",
@@ -1861,32 +1654,18 @@
      0.2976070860908231
     ],
     [
-     "unregistered",
-     476,
-     4,
-     0.8637386005807058,
-     0.26408214462821966,
-     0.800872332254348,
-     0.6274264245460237,
-     0.3807616764023162,
-     0.7149700598802395,
-     0.7805704883618672,
-     0.7448374630961621,
-     0.6176375404530744
-    ],
-    [
      "vendor",
-     14899,
-     139,
-     0.8915831177479174,
-     0.25948037547254454,
-     0.759554073702285,
-     0.6010489841440432,
-     0.6261055775785798,
-     0.7398406590844365,
-     0.7663345875993232,
-     0.6905652835659597,
-     0.6346744430564014
+     15210,
+     142,
+     0.8902081350262316,
+     0.25702123305531743,
+     0.7592715983515264,
+     0.5988597105701998,
+     0.6176724851187945,
+     0.7373264374786772,
+     0.7650829318058106,
+     0.6906407354091879,
+     0.6336200610696149
     ]
    ],
    "population": "CVEs scored by both, by the type of their filer (groups of at least 30 CVEs)"
@@ -1921,29 +1700,29 @@
    "rows": [
     [
      "vendor",
-     14899,
-     0.9478488489160346,
-     0.8509967111886704,
-     0.8540170481240351,
-     0.8313309618095174,
-     0.8646217866970938,
-     0.8459628162963957,
-     0.850862473991543,
-     0.8254245251359151,
-     0.7232700181220216
+     15210,
+     0.9468113083497699,
+     0.848586456278764,
+     0.8535831689677843,
+     0.8302432610124918,
+     0.8610782380013149,
+     0.8443786982248521,
+     0.8502301117685733,
+     0.8253780407626562,
+     0.722879684418146
     ],
     [
      "open source project",
-     14821,
-     0.9306389582349369,
-     0.783617839551987,
-     0.8294986842993051,
-     0.8962283246744485,
-     0.8152621280615343,
-     0.7870589029080359,
-     0.786181769111396,
-     0.80601848728156,
-     0.6174347210039809
+     14986,
+     0.9312024556252503,
+     0.7844655011343921,
+     0.83077539036434,
+     0.8973041505405045,
+     0.8168957693847592,
+     0.7886026958494595,
+     0.7879354063792874,
+     0.8073535299612972,
+     0.6197117309488857
     ],
     [
      "research or bug bounty platform",
@@ -1996,19 +1775,6 @@
      0.7916666666666666,
      0.77,
      0.5941666666666666
-    ],
-    [
-     "unregistered",
-     476,
-     0.9264705882352942,
-     0.7773109243697479,
-     0.8718487394957983,
-     0.8529411764705882,
-     0.7857142857142857,
-     0.8235294117647058,
-     0.8634453781512605,
-     0.8592436974789915,
-     0.7457983193277311
     ]
    ],
    "population": "the share of CVEs on which filer and NVD give the same value"
@@ -2021,7 +1787,7 @@
    "low": -0.050496300172607776,
    "high": -0.004781748045970275,
    "p": 0.028985507246376812,
-   "p_adjusted": 0.05491990846681922,
+   "p_adjusted": 0.05533596837944665,
    "reject_at_0_05": false
   },
   {
@@ -2030,7 +1796,7 @@
    "low": -0.16918745578827743,
    "high": -0.08547626062589492,
    "p": 0.0009995002498750624,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2039,7 +1805,7 @@
    "low": -0.16020094136337257,
    "high": 5.7444852940863e-07,
    "p": 0.051974012993503245,
-   "p_adjusted": 0.0912714374520057,
+   "p_adjusted": 0.09095452273863068,
    "reject_at_0_05": false
   },
   {
@@ -2048,7 +1814,7 @@
    "low": -0.06068021384052738,
    "high": 0.051959933144411545,
    "p": 0.5097451274362819,
-   "p_adjusted": 0.6116941529235382,
+   "p_adjusted": 0.6059234533676557,
    "reject_at_0_05": false
   },
   {
@@ -2057,7 +1823,7 @@
    "low": -0.024726324598773726,
    "high": 0.09567940916600629,
    "p": 0.20089955022488756,
-   "p_adjusted": 0.30134932533733133,
+   "p_adjusted": 0.2943412014922771,
    "reject_at_0_05": false
   },
   {
@@ -2075,7 +1841,7 @@
    "low": -0.1917895850459494,
    "high": 0.013716260564450014,
    "p": 0.10194902548725637,
-   "p_adjusted": 0.16311844077961019,
+   "p_adjusted": 0.1605697151424288,
    "reject_at_0_05": false
   },
   {
@@ -2084,7 +1850,7 @@
    "low": -0.19872215502375823,
    "high": 0.001570368983271266,
    "p": 0.05697151424287856,
-   "p_adjusted": 0.0976654529877918,
+   "p_adjusted": 0.09700555127841484,
    "reject_at_0_05": false
   },
   {
@@ -2093,7 +1859,7 @@
    "low": -0.34432188453259094,
    "high": -0.05048429255775376,
    "p": 0.004997501249375313,
-   "p_adjusted": 0.011994002998500751,
+   "p_adjusted": 0.012593703148425789,
    "reject_at_0_05": true
   },
   {
@@ -2102,7 +1868,7 @@
    "low": -0.16416666666666666,
    "high": -0.16416666666666666,
    "p": 0.001557632398753894,
-   "p_adjusted": 0.004005340453938585,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2111,7 +1877,7 @@
    "low": -0.19083333333333333,
    "high": -0.19083333333333333,
    "p": 0.001557632398753894,
-   "p_adjusted": 0.004005340453938585,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2120,7 +1886,7 @@
    "low": -0.06166666666666667,
    "high": -0.06166666666666667,
    "p": 0.001557632398753894,
-   "p_adjusted": 0.004005340453938585,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2129,7 +1895,7 @@
    "low": 0.015833333333333335,
    "high": 0.015833333333333335,
    "p": 0.001557632398753894,
-   "p_adjusted": 0.004005340453938585,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2138,7 +1904,7 @@
    "low": 0.18083333333333335,
    "high": 0.18083333333333335,
    "p": 0.001557632398753894,
-   "p_adjusted": 0.004005340453938585,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2147,7 +1913,7 @@
    "low": -0.005,
    "high": -0.005,
    "p": 0.001557632398753894,
-   "p_adjusted": 0.004005340453938585,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2156,7 +1922,7 @@
    "low": -0.0033333333333333335,
    "high": -0.0033333333333333335,
    "p": 0.001557632398753894,
-   "p_adjusted": 0.004005340453938585,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2165,7 +1931,7 @@
    "low": -0.105,
    "high": -0.105,
    "p": 0.001557632398753894,
-   "p_adjusted": 0.004005340453938585,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2174,7 +1940,7 @@
    "low": -0.06583333333333333,
    "high": -0.06583333333333333,
    "p": 0.001557632398753894,
-   "p_adjusted": 0.004005340453938585,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2183,7 +1949,7 @@
    "low": -0.1424636335499845,
    "high": -0.022414437875197795,
    "p": 0.0009995002498750624,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2192,7 +1958,7 @@
    "low": -0.07420317435942436,
    "high": -0.027982740624196506,
    "p": 0.001999000499750125,
-   "p_adjusted": 0.004963035723517551,
+   "p_adjusted": 0.005247376311844077,
    "reject_at_0_05": true
   },
   {
@@ -2201,7 +1967,7 @@
    "low": -0.11439430489886504,
    "high": -0.005572595966993332,
    "p": 0.03698150924537731,
-   "p_adjusted": 0.06827355552992734,
+   "p_adjusted": 0.06852456124878736,
    "reject_at_0_05": false
   },
   {
@@ -2210,7 +1976,7 @@
    "low": -0.11314170648930208,
    "high": -0.013412874249240769,
    "p": 0.0009995002498750624,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2219,7 +1985,7 @@
    "low": -0.024499987253862987,
    "high": 0.08033178466639104,
    "p": 0.25287356321839083,
-   "p_adjusted": 0.35699797160243407,
+   "p_adjusted": 0.35402298850574715,
    "reject_at_0_05": false
   },
   {
@@ -2228,7 +1994,7 @@
    "low": -0.07441887604940654,
    "high": 0.07182289315670322,
    "p": 0.6006996501749126,
-   "p_adjusted": 0.6757871064467766,
+   "p_adjusted": 0.688074144745809,
    "reject_at_0_05": false
   },
   {
@@ -2237,7 +2003,7 @@
    "low": -0.0294828273757506,
    "high": 0.06611938083022924,
    "p": 0.8555722138930535,
-   "p_adjusted": 0.8686361044829698,
+   "p_adjusted": 0.8693717657300382,
    "reject_at_0_05": false
   },
   {
@@ -2246,7 +2012,7 @@
    "low": -0.023697187791550015,
    "high": 0.1220588960038011,
    "p": 0.6836581709145427,
-   "p_adjusted": 0.7458089137249556,
+   "p_adjusted": 0.7556221889055472,
    "reject_at_0_05": false
   },
   {
@@ -2255,88 +2021,88 @@
    "low": -0.17683748683748682,
    "high": 0.09242016855800221,
    "p": 0.4147926036981509,
-   "p_adjusted": 0.5285633045546192,
+   "p_adjusted": 0.5226386806596701,
    "reject_at_0_05": false
   },
   {
    "name": "type_open_source_project_direction_av",
-   "estimate": 0.0009446056271506646,
-   "low": -0.03726712659929082,
-   "high": 0.08719851860951865,
-   "p": 0.9445277361319341,
-   "p_adjusted": 0.9445277361319341,
+   "estimate": 0.001000934205258241,
+   "low": -0.03671725036253804,
+   "high": 0.08517825821189158,
+   "p": 0.9455272363818091,
+   "p_adjusted": 0.9455272363818091,
    "reject_at_0_05": false
   },
   {
    "name": "type_open_source_project_direction_ac",
-   "estimate": -0.17913771000607245,
-   "low": -0.24803341412341792,
-   "high": -0.07748754714954462,
+   "estimate": -0.17870012011210462,
+   "low": -0.24687123511163786,
+   "high": -0.0783758971126854,
    "p": 0.0009995002498750624,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
    "name": "type_open_source_project_direction_pr",
-   "estimate": -0.02678631671277242,
-   "low": -0.07502426288454685,
-   "high": 0.08826741888374165,
-   "p": 0.5797101449275363,
-   "p_adjusted": 0.6625258799171843,
+   "estimate": -0.026691578806886426,
+   "low": -0.07468865029047031,
+   "high": 0.08518875858036146,
+   "p": 0.5787106446776612,
+   "p_adjusted": 0.6751624187906047,
    "reject_at_0_05": false
   },
   {
    "name": "type_open_source_project_direction_ui",
-   "estimate": -0.06072464745968558,
-   "low": -0.11304162689686653,
-   "high": -0.025434261826551476,
+   "estimate": -0.06012278126251168,
+   "low": -0.1111587606977749,
+   "high": -0.025190091296154203,
    "p": 0.0009995002498750624,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
    "name": "type_open_source_project_direction_s",
-   "estimate": 0.09081708386748533,
-   "low": 0.058406945513502166,
-   "high": 0.1305371080722836,
+   "estimate": 0.0896837047911384,
+   "low": 0.05737914092390992,
+   "high": 0.12658351786363486,
    "p": 0.0009995002498750624,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
    "name": "type_open_source_project_direction_c",
-   "estimate": -0.00728695769516227,
-   "low": -0.08824877680856831,
-   "high": 0.12239739032622222,
-   "p": 0.7966016991504248,
-   "p_adjusted": 0.8312365556352258,
+   "estimate": -0.0069398104897904715,
+   "low": -0.08542429950140347,
+   "high": 0.11976176865066483,
+   "p": 0.8025987006496752,
+   "p_adjusted": 0.8427286356821589,
    "reject_at_0_05": false
   },
   {
    "name": "type_open_source_project_direction_i",
-   "estimate": 0.013291950610620067,
-   "low": -0.04915583006260624,
-   "high": 0.15184421799618578,
-   "p": 0.8565717141429285,
-   "p_adjusted": 0.8686361044829698,
+   "estimate": 0.013345789403443213,
+   "low": -0.04702200859668236,
+   "high": 0.1509171695535101,
+   "p": 0.8545727136431784,
+   "p_adjusted": 0.8693717657300382,
    "reject_at_0_05": false
   },
   {
    "name": "type_open_source_project_direction_a",
-   "estimate": -0.08332771068079077,
-   "low": -0.11746705881701658,
-   "high": -0.0504207292793171,
+   "estimate": -0.08267716535433071,
+   "low": -0.11591244452658532,
+   "high": -0.04972952670473173,
    "p": 0.0009995002498750624,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
    "name": "type_open_source_project_direction_band",
-   "estimate": -0.09000742190135619,
-   "low": -0.2216907792776869,
-   "high": 0.12163205436546294,
-   "p": 0.2658670664667666,
-   "p_adjusted": 0.36812363049244606,
+   "estimate": -0.08975043373815561,
+   "low": -0.21814149614072526,
+   "high": 0.11676143501472301,
+   "p": 0.25987006496751625,
+   "p_adjusted": 0.3559090020207288,
    "reject_at_0_05": false
   },
   {
@@ -2345,7 +2111,7 @@
    "low": -0.11126135484514986,
    "high": -0.02318158828672828,
    "p": 0.0009995002498750624,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2354,7 +2120,7 @@
    "low": -0.21492341335777995,
    "high": -0.1280963858108668,
    "p": 0.0009995002498750624,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2363,7 +2129,7 @@
    "low": -0.14188116291483138,
    "high": 0.21728443567717967,
    "p": 0.4257871064467766,
-   "p_adjusted": 0.5285633045546192,
+   "p_adjusted": 0.5259723079636652,
    "reject_at_0_05": false
   },
   {
@@ -2372,7 +2138,7 @@
    "low": -0.11983270208517731,
    "high": -0.022366258269780982,
    "p": 0.0069965017491254375,
-   "p_adjusted": 0.015742128935532236,
+   "p_adjusted": 0.016325170747959354,
    "reject_at_0_05": true
   },
   {
@@ -2381,7 +2147,7 @@
    "low": 0.01699409558896089,
    "high": 0.11399771403956617,
    "p": 0.01699150424787606,
-   "p_adjusted": 0.03398300849575212,
+   "p_adjusted": 0.03453112153600619,
    "reject_at_0_05": true
   },
   {
@@ -2390,7 +2156,7 @@
    "low": -0.12926634238027823,
    "high": 0.07271652667586193,
    "p": 0.35582208895552225,
-   "p_adjusted": 0.47442945194069636,
+   "p_adjusted": 0.4670164917541229,
    "reject_at_0_05": false
   },
   {
@@ -2399,7 +2165,7 @@
    "low": -0.1230543565493761,
    "high": 0.06655667808193819,
    "p": 0.4107946026986507,
-   "p_adjusted": 0.5285633045546192,
+   "p_adjusted": 0.5226386806596701,
    "reject_at_0_05": false
   },
   {
@@ -2408,7 +2174,7 @@
    "low": -0.10109124980209966,
    "high": 0.04000467289719624,
    "p": 0.24987506246876562,
-   "p_adjusted": 0.35699797160243407,
+   "p_adjusted": 0.35402298850574715,
    "reject_at_0_05": false
   },
   {
@@ -2417,7 +2183,7 @@
    "low": -0.13286183463314907,
    "high": -0.010800778803524477,
    "p": 0.0239880059970015,
-   "p_adjusted": 0.046679363021192105,
+   "p_adjusted": 0.0472263868065967,
    "reject_at_0_05": true
   },
   {
@@ -2426,7 +2192,7 @@
    "low": -0.06174576165645961,
    "high": 0.0023005314131152445,
    "p": 0.15092453773113443,
-   "p_adjusted": 0.2312035471625889,
+   "p_adjusted": 0.22638680659670166,
    "reject_at_0_05": false
   },
   {
@@ -2435,7 +2201,7 @@
    "low": -0.2588733812024956,
    "high": -0.027162477381840723,
    "p": 0.0009995002498750624,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
@@ -2444,7 +2210,7 @@
    "low": -0.40578743145481894,
    "high": 0.013110180260362196,
    "p": 0.09495252373813093,
-   "p_adjusted": 0.15537685702603243,
+   "p_adjusted": 0.15338484603851918,
    "reject_at_0_05": false
   },
   {
@@ -2453,7 +2219,7 @@
    "low": -0.0059545376121463035,
    "high": 0.008279683462343035,
    "p": 0.6266866566716641,
-   "p_adjusted": 0.6941759889286125,
+   "p_adjusted": 0.7050224887556221,
    "reject_at_0_05": false
   },
   {
@@ -2462,7 +2228,7 @@
    "low": -0.21992827541619167,
    "high": 0.11198567790221099,
    "p": 0.7616191904047976,
-   "p_adjusted": 0.8064203192521386,
+   "p_adjusted": 0.8272760171638318,
    "reject_at_0_05": false
   },
   {
@@ -2471,7 +2237,7 @@
    "low": -0.7774084192167665,
    "high": -0.03338329933037355,
    "p": 0.005997001499250375,
-   "p_adjusted": 0.01392851961116216,
+   "p_adjusted": 0.014531195940491293,
    "reject_at_0_05": true
   },
   {
@@ -2480,7 +2246,7 @@
    "low": -0.45787551688612455,
    "high": -0.03357017658600394,
    "p": 0.008995502248875561,
-   "p_adjusted": 0.019626550361183045,
+   "p_adjusted": 0.019541953161350357,
    "reject_at_0_05": true
   },
   {
@@ -2489,7 +2255,7 @@
    "low": -0.4821485383386442,
    "high": 0.12202989706905323,
    "p": 0.495752123938031,
-   "p_adjusted": 0.6049856427718344,
+   "p_adjusted": 0.6006227655403067,
    "reject_at_0_05": false
   },
   {
@@ -2498,169 +2264,88 @@
    "low": -0.78859817716505,
    "high": -0.12095366955937817,
    "p": 0.013993003498250875,
-   "p_adjusted": 0.028785607196401802,
-   "reject_at_0_05": true
-  },
-  {
-   "name": "type_unregistered_direction_av",
-   "estimate": -0.04831932773109244,
-   "low": -0.41935483870967744,
-   "high": 0.006060606060606061,
-   "p": 0.24032586558044808,
-   "p_adjusted": 0.3531318841182094,
-   "reject_at_0_05": false
-  },
-  {
-   "name": "type_unregistered_direction_ac",
-   "estimate": -0.21428571428571427,
-   "low": -0.48936170212765956,
-   "high": -0.1393939393939394,
-   "p": 0.0010183299389002036,
-   "p_adjusted": 0.003858934505306035,
-   "reject_at_0_05": true
-  },
-  {
-   "name": "type_unregistered_direction_pr",
-   "estimate": -0.052521008403361345,
-   "low": -0.3870967741935484,
-   "high": -0.01818181818181818,
-   "p": 0.0010183299389002036,
-   "p_adjusted": 0.003858934505306035,
-   "reject_at_0_05": true
-  },
-  {
-   "name": "type_unregistered_direction_ui",
-   "estimate": -0.12184873949579832,
-   "low": -0.22580645161290322,
-   "high": -0.006060606060606061,
-   "p": 0.0010183299389002036,
-   "p_adjusted": 0.003858934505306035,
-   "reject_at_0_05": true
-  },
-  {
-   "name": "type_unregistered_direction_s",
-   "estimate": 0.11764705882352941,
-   "low": -0.0851063829787234,
-   "high": 0.24034334763948498,
-   "p": 0.4185336048879837,
-   "p_adjusted": 0.5285633045546192,
-   "reject_at_0_05": false
-  },
-  {
-   "name": "type_unregistered_direction_c",
-   "estimate": -0.03361344537815126,
-   "low": -0.0967741935483871,
-   "high": 0.0425531914893617,
-   "p": 0.5427698574338086,
-   "p_adjusted": 0.6303133828263583,
-   "reject_at_0_05": false
-  },
-  {
-   "name": "type_unregistered_direction_i",
-   "estimate": -0.018907563025210083,
-   "low": -0.0967741935483871,
-   "high": 0.0425531914893617,
-   "p": 0.5417515274949084,
-   "p_adjusted": 0.6303133828263583,
-   "reject_at_0_05": false
-  },
-  {
-   "name": "type_unregistered_direction_a",
-   "estimate": -0.0273109243697479,
-   "low": -0.16129032258064516,
-   "high": -0.012875536480686695,
-   "p": 0.0010183299389002036,
-   "p_adjusted": 0.003858934505306035,
-   "reject_at_0_05": true
-  },
-  {
-   "name": "type_unregistered_direction_band",
-   "estimate": -0.11974789915966387,
-   "low": -0.41935483870967744,
-   "high": -0.06666666666666667,
-   "p": 0.0010183299389002036,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.029385307346326838,
    "reject_at_0_05": true
   },
   {
    "name": "type_vendor_direction_av",
-   "estimate": -0.033894892274649306,
-   "low": -0.05440145027387992,
-   "high": -0.021285420126849298,
+   "estimate": -0.03477975016436555,
+   "low": -0.055051213043263623,
+   "high": -0.0220186654775371,
    "p": 0.0009995002498750624,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
    "name": "type_vendor_direction_ac",
-   "estimate": -0.12752533727095777,
-   "low": -0.17244614326295601,
-   "high": -0.09300320583465607,
+   "estimate": -0.13011176857330703,
+   "low": -0.17511885996713517,
+   "high": -0.095444883087786,
    "p": 0.0009995002498750624,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
    "name": "type_vendor_direction_pr",
-   "estimate": -0.037922008188469025,
-   "low": -0.08278583238411147,
-   "high": 0.003187789914337789,
-   "p": 0.06896551724137931,
-   "p_adjusted": 0.11547714514835605,
+   "estimate": -0.03859303090072321,
+   "low": -0.08281798456147507,
+   "high": 0.0013603744501417083,
+   "p": 0.06196901549225387,
+   "p_adjusted": 0.10273810463189458,
    "reject_at_0_05": false
   },
   {
    "name": "type_vendor_direction_ui",
-   "estimate": 0.031612859923484796,
-   "low": -0.07599367570841843,
-   "high": 0.19424914052511108,
-   "p": 0.7556221889055472,
-   "p_adjusted": 0.8064203192521386,
+   "estimate": 0.027218934911242602,
+   "low": -0.07956048246729998,
+   "high": 0.18558967494766604,
+   "p": 0.7756121939030485,
+   "p_adjusted": 0.8281960714557974,
    "reject_at_0_05": false
   },
   {
    "name": "type_vendor_direction_s",
-   "estimate": 0.07282367944157327,
-   "low": 0.04942094428271748,
-   "high": 0.106462996006311,
+   "estimate": 0.07514792899408285,
+   "low": 0.05131414469114159,
+   "high": 0.1097284588878341,
    "p": 0.0009995002498750624,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   },
   {
    "name": "type_vendor_direction_c",
-   "estimate": -0.03214980871199409,
-   "low": -0.06793328607092264,
-   "high": -0.005881720618860335,
-   "p": 0.009995002498750625,
-   "p_adjusted": 0.02116588764441309,
+   "estimate": -0.03280736357659435,
+   "low": -0.06782038614225003,
+   "high": -0.006979048268985408,
+   "p": 0.0079960019990005,
+   "p_adjusted": 0.017991004497751123,
    "reject_at_0_05": true
   },
   {
    "name": "type_vendor_direction_i",
-   "estimate": -0.009396603798912679,
-   "low": -0.028377752458880565,
-   "high": 0.011653060166439997,
-   "p": 0.31084457771114443,
-   "p_adjusted": 0.4222794263245736,
+   "estimate": -0.009993425378040762,
+   "low": -0.028740675373156714,
+   "high": 0.010800028328032736,
+   "p": 0.2798600699650175,
+   "p_adjusted": 0.37513158314459794,
    "reject_at_0_05": false
   },
   {
    "name": "type_vendor_direction_a",
-   "estimate": -0.026914558024028458,
-   "low": -0.060698403347514,
-   "high": 0.00944318446055081,
-   "p": 0.14392803598200898,
-   "p_adjusted": 0.2252786650153184,
+   "estimate": -0.02695595003287311,
+   "low": -0.059921154236845825,
+   "high": 0.008658614900877427,
+   "p": 0.1329335332333833,
+   "p_adjusted": 0.20426372179763774,
    "reject_at_0_05": false
   },
   {
    "name": "type_vendor_direction_band",
-   "estimate": -0.09134841264514397,
-   "low": -0.15119581873608073,
-   "high": -0.04336324235907216,
+   "estimate": -0.09250493096646943,
+   "low": -0.15049590787393613,
+   "high": -0.0452281898657473,
    "p": 0.0009995002498750624,
-   "p_adjusted": 0.003858934505306035,
+   "p_adjusted": 0.004266558309630231,
    "reject_at_0_05": true
   }
  ],

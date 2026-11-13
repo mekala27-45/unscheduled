@@ -1,0 +1,278 @@
+{
+ "base_url": "https://unscheduled-api.vercel.app",
+ "checked_at": "2026-11-13T23:52:20Z",
+ "client": "scripts/verify_api.py, a separate process with no database credential",
+ "data_version": "serving-202611131326+7a6e339ce211",
+ "passed": 17,
+ "total": 17,
+ "result": "pass",
+ "checks": [
+  {
+   "name": "health, with the database and the data",
+   "route": "GET /health",
+   "ok": true,
+   "status": 200,
+   "ms": 454.9,
+   "detail": "",
+   "facts": {
+    "ready": true,
+    "data_version": "serving-202611131326+7a6e339ce211",
+    "tag": "serving-202611131326",
+    "loaded_at": "2026-11-13T13:30:45.682371Z",
+    "counts": {
+     "cve": 260100,
+     "finding": 1275,
+     "product": 6,
+     "cve_event": 1290699
+    },
+    "database_reachable": true,
+    "migration": "0001",
+    "storage_share_used": 0.8437,
+    "storage_ceiling_mb": 800
+   }
+  },
+  {
+   "name": "the data is the newest serving release",
+   "route": "GitHub releases",
+   "ok": true,
+   "status": 200,
+   "ms": null,
+   "detail": "",
+   "facts": {
+    "newest_serving_release": "serving-202611131326",
+    "published_at": "2026-11-13T13:26:57Z"
+   }
+  },
+  {
+   "name": "meta, with the notices",
+   "route": "GET /v1/meta",
+   "ok": true,
+   "status": 200,
+   "ms": 101.0,
+   "detail": "",
+   "facts": {
+    "keys": [
+     "attribution",
+     "bundle",
+     "data_version",
+     "limits",
+     "locks",
+     "nvd_notice",
+     "quarantine",
+     "repository",
+     "run_ledger",
+     "statement",
+     "version"
+    ]
+   }
+  },
+  {
+   "name": "search by NVD status and date",
+   "route": "GET /v1/cves",
+   "ok": true,
+   "status": 200,
+   "ms": 203.7,
+   "detail": "",
+   "facts": {
+    "returned": 100,
+    "limit": 100,
+    "first": "CVE-2026-128335"
+   }
+  },
+  {
+   "name": "the next page by cursor",
+   "route": "GET /v1/cves?cursor=",
+   "ok": true,
+   "status": 200,
+   "ms": 170.5,
+   "detail": "",
+   "facts": {
+    "returned": 100,
+    "overlap_with_first_page": 0
+   }
+  },
+  {
+   "name": "filters by KEV, filer type, CWE and filer score",
+   "route": "GET /v1/cves",
+   "ok": true,
+   "status": 200,
+   "ms": 133.1,
+   "detail": "",
+   "facts": {
+    "kev": 5,
+    "filer_type": 5,
+    "cwe": 5,
+    "has_filer_score": 5
+   }
+  },
+  {
+   "name": "one CVE the NVD did not schedule, every field sourced",
+   "route": "GET /v1/cves/{id}",
+   "ok": true,
+   "status": 200,
+   "ms": 126.3,
+   "detail": "",
+   "facts": {
+    "cve": "CVE-2026-128335",
+    "fields": 31,
+    "nvd_status": "Deferred"
+   }
+  },
+  {
+   "name": "the same CVE the day before its publication",
+   "route": "GET /v1/cves/{id}?as_of=",
+   "ok": true,
+   "status": 200,
+   "ms": 103.6,
+   "detail": "",
+   "facts": {
+    "cve": "CVE-2026-128335",
+    "as_of": "2026-11-12",
+    "known": false,
+    "note": "CVE-2026-128335 was not yet published on 2026-11-12; nothing about it was public that day"
+   }
+  },
+  {
+   "name": "its ruler events in time order",
+   "route": "GET /v1/cves/{id}/timeline",
+   "ok": true,
+   "status": 200,
+   "ms": 111.4,
+   "detail": "",
+   "facts": {
+    "cve": "CVE-2026-128335",
+    "events": 4
+   }
+  },
+  {
+   "name": "the backlog",
+   "route": "GET /v1/backlog",
+   "ok": true,
+   "status": 200,
+   "ms": 114.6,
+   "detail": "",
+   "facts": {
+    "questions": 6
+   }
+  },
+  {
+   "name": "the six stand ins",
+   "route": "GET /v1/products",
+   "ok": true,
+   "status": 200,
+   "ms": 170.6,
+   "detail": "",
+   "facts": {
+    "products": [
+     "cloud-dashboard",
+     "door-controller-firmware",
+     "go-edge-service",
+     "java-integration-service",
+     "python-data-jobs",
+     "rust-cli"
+    ]
+   }
+  },
+  {
+   "name": "one exposure at the pin and today",
+   "route": "GET /v1/products/{id}/exposure",
+   "ok": true,
+   "status": 200,
+   "ms": 195.3,
+   "detail": "",
+   "facts": {
+    "product": "cloud-dashboard",
+    "today": {
+     "snapshot": "2026-11-08",
+     "findings": 513
+    },
+    "pin": {
+     "snapshot": "2024-12-30",
+     "findings": 104
+    }
+   }
+  },
+  {
+   "name": "one of the six SBOMs matched",
+   "route": "POST /v1/match",
+   "ok": true,
+   "status": 200,
+   "ms": 3645.0,
+   "detail": "",
+   "facts": {
+    "sbom": "rust-cli.cdx.json",
+    "findings": 106,
+    "engine": "unscheduled-match over api.osv.dev",
+    "sbom_summary": {
+     "sha256": "dc980c258b22db1abc54bb9299c490385cd9c62a49c88e3c842813b690aee8a6",
+     "bytes": 1080362,
+     "format": "cyclonedx",
+     "spec_version": "1.6",
+     "components": 798,
+     "with_purl": 789,
+     "without_purl": 9
+    },
+    "stored": "Only the sha256 of the document, its size, the component and finding counts, the time taken and a salted hash of the client were stored. The document itself was not."
+   }
+  },
+  {
+   "name": "the legacy report with the golden header",
+   "route": "GET /v1/legacy/report.csv",
+   "ok": true,
+   "status": 200,
+   "ms": 876.4,
+   "detail": "",
+   "facts": {
+    "rows": 667,
+    "content_type": "text/csv; charset=utf-8"
+   }
+  },
+  {
+   "name": "typed problem documents",
+   "route": "errors",
+   "ok": true,
+   "status": 200,
+   "ms": null,
+   "detail": "",
+   "facts": {
+    "GET /v1/cves/CVE-1999-0000000": {
+     "status": 404,
+     "type": "https://github.com/mekala27-45/unscheduled/blob/main/docs/SPEC.md#problem-not-found"
+    },
+    "GET /v1/cves": {
+     "status": 400,
+     "type": "https://github.com/mekala27-45/unscheduled/blob/main/docs/SPEC.md#problem-invalid-cursor"
+    },
+    "POST /v1/match": {
+     "status": 415,
+     "type": "https://github.com/mekala27-45/unscheduled/blob/main/docs/SPEC.md#problem-unsupported-media-type"
+    }
+   }
+  },
+  {
+   "name": "CORS for the web origin",
+   "route": "OPTIONS /v1/cves",
+   "ok": true,
+   "status": 200,
+   "ms": 72.4,
+   "detail": "",
+   "facts": {
+    "allow_origin": "https://unscheduled-triage.vercel.app"
+   }
+  },
+  {
+   "name": "a sync call on current data",
+   "route": "POST /internal/sync",
+   "ok": true,
+   "status": 200,
+   "ms": 561.0,
+   "detail": "",
+   "facts": {
+    "status": "current",
+    "detail": "serving-202611131326 is loaded",
+    "target": "serving-202611131326+7a6e339ce211",
+    "checked_release": true
+   }
+  }
+ ]
+}

@@ -1,82 +1,82 @@
 {
- "data_cut": "2026-11-12T00:21:46+00:00",
+ "data_cut": "2026-11-13T06:00:00+00:00",
  "sources": {
   "cna_list": {
    "every_file_has_a_digest": true,
-   "lock_sha256": "a664ce55d9178c4b836f2c734dd2ba41bcc75ade721e230bdc1564946034043b",
+   "lock_sha256": "d32141c3c01ba0cc2b0e41dbf63fc6945d9c8833ce506b177c73ca274f488fea",
    "raw_files": 1,
-   "rows": 564,
-   "updated_at": "2026-11-08T03:33:59Z"
+   "rows": 567,
+   "updated_at": "2026-11-12T03:16:42Z"
   },
   "cvelist": {
    "every_file_has_a_digest": true,
-   "lock_sha256": "213435eed53e6cdcde6c1ae0890faa5d7644f46063f1fc40325188002f6f429f",
-   "raw_files": 4,
-   "rows": 845672,
-   "updated_at": "2026-11-12T01:07:31Z"
+   "lock_sha256": "6beb04cff0ca7e919c16f97f256f9b7e64004b676b3d7823bb81b7f791d3aca7",
+   "raw_files": 31,
+   "rows": 868043,
+   "updated_at": "2026-11-13T06:46:46Z"
   },
   "cwe": {
    "every_file_has_a_digest": true,
-   "lock_sha256": "2beccdeea52b94fc0ebab9633da5839b2ffb185f6015fa8441adb2f20939913f",
+   "lock_sha256": "1ee38eb0a7e8765b02d54e72e68f2333eda0262e828b7097360aa98a3bae6c54",
    "raw_files": 1,
    "rows": 1415,
-   "updated_at": "2026-11-08T03:45:52Z"
+   "updated_at": "2026-11-12T03:18:17Z"
   },
   "epss": {
    "every_file_has_a_digest": true,
-   "lock_sha256": "1064dcae3a7ce86a8442c70e2a5b551f542e730cd3d896d5b50d3c12aa2ca1cf",
+   "lock_sha256": "c921f666fa7dda28bb6fc14a4214d24aa9af17de7c77450a3dead365a596ef76",
    "raw_files": 2029,
    "rows": 460544978,
-   "updated_at": "2026-11-12T01:11:42Z"
+   "updated_at": "2026-11-12T05:19:18Z"
   },
   "exploits": {
    "every_file_has_a_digest": true,
-   "lock_sha256": "a03c4550fb5956fff9f43e35d0e2d4fe9d632d0f4b6a4e32c0977a76b84751bf",
+   "lock_sha256": "05bb4133d5cfbac15fc84976af9e0f8c8234bd6383cb6c8d787df4ba425bc7fc",
    "raw_files": 8,
-   "rows": 43620,
-   "updated_at": "2026-11-12T01:11:39Z"
+   "rows": 43683,
+   "updated_at": "2026-11-12T13:27:53Z"
   },
   "ghsa": {
    "every_file_has_a_digest": true,
-   "lock_sha256": "9fe401a2a1c737e1f9bf3e4edf7a7004d30eb39768257ca404a410d726796d65",
-   "raw_files": 1,
-   "rows": 37571,
-   "updated_at": "2026-11-08T03:33:10Z"
+   "lock_sha256": "aad5b20581af14433da5aa6b1ae1d443f3c2fd71df7eb4a90c4c31f3a7ccaff8",
+   "raw_files": 4,
+   "rows": 150894,
+   "updated_at": "2026-11-12T13:27:31Z"
   },
   "kev": {
    "every_file_has_a_digest": true,
-   "lock_sha256": "398aa71e22cdeb5e66e40a0ce0f8edd7c06afd024dcf95a9c4d03f931c61cfe6",
-   "raw_files": 8,
-   "rows": 14198,
-   "updated_at": "2026-11-12T01:07:38Z"
+   "lock_sha256": "120a429185881304e13f2f01764a6f465c86024c9821c997c1283440b0857197",
+   "raw_files": 4,
+   "rows": 7119,
+   "updated_at": "2026-11-12T03:18:15Z"
   },
   "nvd": {
    "every_file_has_a_digest": true,
-   "lock_sha256": "395e596a3b209b76fa0c1dd3f88e71b5baa36545bd64d426de5285d18ea24383",
-   "raw_files": 697,
-   "rows": 2755405,
-   "updated_at": "2026-11-12T01:05:19Z"
+   "lock_sha256": "608e20488eb954189d7af4a8b11deeb2c8f0364597f12447f5170a04134bb10b",
+   "raw_files": 695,
+   "rows": 2750760,
+   "updated_at": "2026-11-12T13:22:57Z"
   },
   "osv": {
    "every_file_has_a_digest": true,
-   "lock_sha256": "b10253dc08c8903a32e8a54024d320f77a570c579f97ae8fd67c7fbd87eede69",
+   "lock_sha256": "a398ad930aff59057989584fd6da0d36f0969dc1c9bfa6cef187df590dfdfcbb",
    "raw_files": 9,
-   "rows": 366878,
-   "updated_at": "2026-11-08T03:23:49Z"
+   "rows": 367758,
+   "updated_at": "2026-11-12T03:18:50Z"
   },
   "registries": {
    "every_file_has_a_digest": true,
-   "lock_sha256": "40b8e892a7e0aa69b4728fa693cd53e3a5d78c6f3902ddc2da0755bcca126f94",
+   "lock_sha256": "41fd842a115775fbf728c5b960dbde412aa61be128a59f761887bb043b769e30",
    "raw_files": 4,
    "rows": 0,
-   "updated_at": "2026-11-08T03:34:02Z"
+   "updated_at": "2026-11-12T03:28:28Z"
   },
   "vulnrichment": {
    "every_file_has_a_digest": true,
-   "lock_sha256": "9dd7a212c8610fbf0e13ee49780422a48d01cf9ace98fca4b7e24e6763f21e26",
-   "raw_files": 4,
-   "rows": 859182,
-   "updated_at": "2026-11-12T01:11:04Z"
+   "lock_sha256": "865d0e0cee8f9a9510fda53430a546b043f4447022da5925bd6b4f92e362d80d",
+   "raw_files": 2,
+   "rows": 438537,
+   "updated_at": "2026-11-12T03:27:57Z"
   }
  }
 }

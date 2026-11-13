@@ -1,9 +1,9 @@
 {
  "cves": 200,
- "data_cut": "2026-11-12T00:21:46+00:00",
+ "data_cut": "2026-11-13T06:00:00+00:00",
  "engine_sql_sha256": "459ea359d135cfe5e9da53c30c256c3c1b41bedbe423e8e0beaacf5b88aa5b3d",
  "examples": [],
- "facts_in_sample": 3108,
+ "facts_in_sample": 3168,
  "facts_missing": 0,
  "frames_compared": 1200,
  "macro_sql_sha256": "771adb6d153036623d50d171a1410731f075c0877c13229b47d44501b52d7349",

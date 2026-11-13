@@ -13,12 +13,12 @@
  },
  "population": "CVEs published since 2020-01-01, rejected CVEs excluded",
  "window": "every window (a descriptive count); a CVE is judged at k days only once k days have passed",
- "data_cut": "2026-11-12T00:21:46+00:00",
+ "data_cut": "2026-11-13T06:00:00+00:00",
  "interval": "cluster bootstrap by filer, 2000 resamples, 95 percent",
  "seed": 20261109,
  "values": {
   "cves": {
-   "value": 276958,
+   "value": 277391,
    "fmt": "int",
    "population": "CVEs published since 2020-01-01, rejected CVEs excluded",
    "unit": "CVEs"
@@ -142,48 +142,48 @@
    "unit": "CVEs"
   },
   "share_7d_since_change": {
-   "value": 0.2556883286953675,
+   "value": 0.2556597890627118,
    "fmt": "pct1",
    "population": "CVEs published from 2026-04-15, rejected excluded, at least 7 days old at the cut",
    "unit": "share of CVEs judged at 7 days analyzed within 7 days",
-   "n": 73308,
-   "clusters": 379,
+   "n": 73766,
+   "clusters": 381,
    "resamples": 2000,
-   "low": 0.16582736330557604,
-   "high": 0.376400636026532
+   "low": 0.1662205647819241,
+   "high": 0.37552273583166984
   },
   "share_30d_since_change": {
-   "value": 0.4039413012015752,
+   "value": 0.41418786534319996,
    "fmt": "pct1",
    "population": "CVEs published from 2026-04-15, rejected excluded, at least 30 days old at the cut",
    "unit": "share of CVEs judged at 30 days analyzed within 30 days",
-   "n": 59422,
-   "clusters": 359,
+   "n": 61757,
+   "clusters": 360,
    "resamples": 2000,
-   "low": 0.292007434742665,
-   "high": 0.5562589913425214
+   "low": 0.2945885171524205,
+   "high": 0.5749275429916606
   },
   "share_90d_since_change": {
-   "value": 0.5288995693152737,
+   "value": 0.5154842427735146,
    "fmt": "pct1",
    "population": "CVEs published from 2026-04-15, rejected excluded, at least 90 days old at the cut",
    "unit": "share of CVEs judged at 90 days analyzed within 90 days",
-   "n": 32042,
+   "n": 32969,
    "clusters": 319,
    "resamples": 2000,
-   "low": 0.39305040555243725,
-   "high": 0.67360940910962
+   "low": 0.38592033769963113,
+   "high": 0.6535044898904774
   },
   "median_days_analyzed_since_change": {
    "value": 5.248907557869399,
    "fmt": "days1",
    "population": "CVEs published from 2026-04-15 the NVD analyzed",
    "unit": "days from publication to the first analysis",
-   "n": 29809,
-   "clusters": 214,
+   "n": 29810,
+   "clusters": 215,
    "resamples": 2000,
-   "low": 3.232035213829812,
-   "high": 6.900188331886297
+   "low": 3.3495715393506136,
+   "high": 6.861132475116394
   },
   "km_median_days_since_change": {
    "value": null,
@@ -192,7 +192,7 @@
    "unit": "days from publication to the first analysis"
   },
   "cves_since_change": {
-   "value": 78243,
+   "value": 78676,
    "fmt": "int",
    "population": "CVEs published from 2026-04-15, rejected excluded",
    "unit": "CVEs"
@@ -208,14 +208,14 @@
    "p_adjusted": 0.001999000499750125
   },
   "change_7d_2025_to_change_to_since_change": {
-   "value": 0.009261101829920626,
+   "value": 0.009232562197264926,
    "fmt": "pts1",
    "population": "the 7 day share, since_change less 2025_to_change",
    "unit": "percentage points",
-   "low": -0.10258679097648021,
-   "high": 0.1280241318341344,
+   "low": -0.1026789502038368,
+   "high": 0.12734306491426356,
    "p": 0.9255372313843079,
-   "p_adjusted": 0.9805097451274363
+   "p_adjusted": 0.9255372313843079
   },
   "change_30d_before_2025_to_2025_to_change": {
    "value": -0.36602512890455025,
@@ -228,14 +228,14 @@
    "p_adjusted": 0.001999000499750125
   },
   "change_30d_2025_to_change_to_since_change": {
-   "value": -0.03162830952050899,
+   "value": -0.02138174537888421,
    "fmt": "pts1",
    "population": "the 30 day share, since_change less 2025_to_change",
    "unit": "percentage points",
-   "low": -0.2096382877899099,
-   "high": 0.14780642248189568,
-   "p": 0.6896551724137931,
-   "p_adjusted": 0.9805097451274363
+   "low": -0.20327192790551135,
+   "high": 0.16025195064463207,
+   "p": 0.7746126936531734,
+   "p_adjusted": 0.9255372313843079
   },
   "change_90d_before_2025_to_2025_to_change": {
    "value": -0.2976843916999725,
@@ -248,14 +248,14 @@
    "p_adjusted": 0.001999000499750125
   },
   "change_90d_2025_to_change_to_since_change": {
-   "value": 0.005655837668560371,
+   "value": -0.007759488873198772,
    "fmt": "pts1",
    "population": "the 90 day share, since_change less 2025_to_change",
    "unit": "percentage points",
-   "low": -0.19147497409126166,
-   "high": 0.1931154371496655,
-   "p": 0.9805097451274363,
-   "p_adjusted": 0.9805097451274363
+   "low": -0.1955298407332897,
+   "high": 0.17064432933171933,
+   "p": 0.9165417291354323,
+   "p_adjusted": 0.9255372313843079
   }
  },
  "tables": {
@@ -1321,8 +1321,8 @@
      0.21457126539936364,
      12257,
      0.30749775638410703,
-     4689,
-     0.3506078055022393,
+     5616,
+     0.30128205128205127,
      4137,
      5.838947754629232,
      0
@@ -1342,11 +1342,11 @@
     ],
     [
      "2026-10-01",
-     17051,
-     17051,
-     0.14896487009559556,
-     4883,
-     0.20970714724554576,
+     17050,
+     17050,
+     0.14897360703812318,
+     7218,
+     0.3602105846494874,
      0,
      null,
      4660,
@@ -1355,15 +1355,15 @@
     ],
     [
      "2026-11-01",
-     6653,
-     1718,
-     0.20081490104772992,
+     7087,
+     2177,
+     0.21129995406522736,
      0,
      null,
      0,
      null,
-     671,
-     3.514253773148413,
+     672,
+     3.5143046180558977,
      0
     ]
    ],
@@ -1382,11 +1382,11 @@
   },
   {
    "name": "change_7d_2025_to_change_to_since_change",
-   "estimate": 0.009261101829920626,
-   "low": -0.10258679097648021,
-   "high": 0.1280241318341344,
+   "estimate": 0.009232562197264926,
+   "low": -0.1026789502038368,
+   "high": 0.12734306491426356,
    "p": 0.9255372313843079,
-   "p_adjusted": 0.9805097451274363,
+   "p_adjusted": 0.9255372313843079,
    "reject_at_0_05": false
   },
   {
@@ -1400,11 +1400,11 @@
   },
   {
    "name": "change_30d_2025_to_change_to_since_change",
-   "estimate": -0.03162830952050899,
-   "low": -0.2096382877899099,
-   "high": 0.14780642248189568,
-   "p": 0.6896551724137931,
-   "p_adjusted": 0.9805097451274363,
+   "estimate": -0.02138174537888421,
+   "low": -0.20327192790551135,
+   "high": 0.16025195064463207,
+   "p": 0.7746126936531734,
+   "p_adjusted": 0.9255372313843079,
    "reject_at_0_05": false
   },
   {
@@ -1418,15 +1418,15 @@
   },
   {
    "name": "change_90d_2025_to_change_to_since_change",
-   "estimate": 0.005655837668560371,
-   "low": -0.19147497409126166,
-   "high": 0.1931154371496655,
-   "p": 0.9805097451274363,
-   "p_adjusted": 0.9805097451274363,
+   "estimate": -0.007759488873198772,
+   "low": -0.1955298407332897,
+   "high": 0.17064432933171933,
+   "p": 0.9165417291354323,
+   "p_adjusted": 0.9255372313843079,
    "reject_at_0_05": false
   }
  ],
- "prediction_check": "after 2024 the 30 day share fell; after 2026-04-15 it did not move outside its interval (30 day shares 0.8015947396266344, 0.43556961072208417, 0.4039413012015752 for the three periods).",
+ "prediction_check": "after 2024 the 30 day share fell; after 2026-04-15 it did not move outside its interval (30 day shares 0.8015947396266344, 0.43556961072208417, 0.41418786534319996 for the three periods).",
  "method": "The first NVD analysis is the first Initial Analysis, Reanalysis or Modified Analysis event in the NVD change history. The share within k days counts, among the CVEs published at least k days before the data cut, those whose first analysis came within k days. Intervals are a cluster bootstrap by filer, 2,000 resamples, 95 percent percentile intervals; the period differences use one shared draw and are corrected as one Benjamini-Hochberg family at 0.05. The median days to analysis is given two ways: among the CVEs the NVD did analyze, and as a Kaplan-Meier median that counts a CVE not analyzed by the cut as censored at its follow-up, which is the honest median when many are never analyzed.",
  "sql": "-- Q1: CVEs published per month since January 2020, rejected excluded, and the share the NVD\n-- analyzed within 7, 30 and 90 days among those old enough to be judged at each horizon.\nselect\n    published_month,\n    count(*) as cves,\n    count(analyzed_7d) as judged_7d,\n    avg(cast(analyzed_7d as integer)) as share_7d,\n    count(analyzed_30d) as judged_30d,\n    avg(cast(analyzed_30d as integer)) as share_30d,\n    count(analyzed_90d) as judged_90d,\n    avg(cast(analyzed_90d as integer)) as share_90d,\n    count(first_analysis_at) as analyzed,\n    median(days_to_analysis) as median_days_if_analyzed,\n    count(*) filter (where analysis_undated) as analysis_undated\nfrom gold.mart_backlog_q1\ngroup by published_month\norder by published_month"
 }

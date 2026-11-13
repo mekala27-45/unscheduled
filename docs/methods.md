@@ -17,18 +17,18 @@ which window, and every share says of which base.
 - Registered prediction: the 30 day share falls after 2024 and again after 2026-04-15.
 - Measured: the share analyzed within 30 days was 80.2% before
   2025, 43.6% from 2025 to 15 April 2026 and
-  40.4% since. The first change moved it
+  41.4% since. The first change moved it
   -36.6 pts (adjusted p
   0.002); the second
-  -3.2 pts (adjusted p
-  0.981).
+  -2.1 pts (adjusted p
+  0.926).
 
 ## Q2. After the change
 
 - Population: CVEs published since 2026-04-15.
 - Estimator: counts by NVD status; share analyzed; share of analyzed that are in KEV; hours from KEV listing to NVD analysis.
 - Registered prediction: most analyzed CVEs since the change are KEV listed or critical software.
-- Measured: 37.4% analyzed; KEV listed CVEs are
+- Measured: 37.2% analyzed; KEV listed CVEs are
   0.5% of everything analyzed; KEV listings met the one
   business day goal 96.9% of the time. Which software
   NIST counts as critical is in no locked source, so that part of the prediction is not measured.
@@ -39,7 +39,7 @@ which window, and every share says of which base.
 - Estimator: share with a filer CVSS 3.x, a filer CVSS 4.0, a CWE, affected versions, a CISA ADP value; top twenty filers.
 - Registered prediction: most carry a filer CVSS score; fewer carry affected versions.
 - Measured: a filer CVSS score on 83.9% and affected versions on
-  94.3% of 80,094 CVEs.
+  94.3% of 80,526 CVEs.
 
 ## Q4. Can a filer score stand in for the NVD
 
@@ -73,17 +73,17 @@ which window, and every share says of which base.
 - Population: the six stand in SBOMs, as of the pin date and today.
 - Estimator: findings by NVD status, KEV listed, fix available, what a CPE matcher misses.
 - Registered prediction: a large share of findings has no NVD analysis.
-- Measured: 47.6% of today's findings have no NVD
+- Measured: 47.4% of today's findings have no NVD
   analysis, and a triage reading only NVD analysis could act on
-  33.0% of them.
+  33.2% of them.
 
 ## Q8. How different the skipped CVEs are
 
 - Population: CVEs published in the shadow window, held out half for scoring.
 - Estimator: logistic regression domain classifier on filer, filer type, CWE, month, vector presence and description TF-IDF; AUC with interval; top features.
 - Registered prediction: the classifier separates them well, so NVD labels alone would bias a model.
-- Measured: an AUC of 0.886 (0.827 to
-  0.928) on the held out half.
+- Measured: an AUC of 0.887 (0.824 to
+  0.927) on the held out half.
 
 ## When the data disagreed with the plan
 

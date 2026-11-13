@@ -1,7 +1,90 @@
 {
- "as_of": "2026-11-12",
+ "as_of": "2026-11-13",
  "figures": {},
  "tables": {
+  "lake.coverage_by_window": {
+   "columns": [
+    "Window",
+    "CVEs",
+    "Published",
+    "NVD band",
+    "Filer band",
+    "CISA ADP band",
+    "NVD and filer band"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "int",
+    "int",
+    "int",
+    "int",
+    "int"
+   ],
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs by the registered window of their publication (config/splits.yaml); a band is counted on published CVEs only",
+    "source": "lake"
+   },
+   "rows": [
+    [
+     "train",
+     234630,
+     220803,
+     101427,
+     46113,
+     11981,
+     39128
+    ],
+    [
+     "development",
+     40675,
+     39924,
+     23272,
+     27947,
+     10339,
+     16732
+    ],
+    [
+     "test",
+     66229,
+     63304,
+     22453,
+     49497,
+     11388,
+     18161
+    ],
+    [
+     "gap",
+     3130,
+     3101,
+     1017,
+     2623,
+     699,
+     905
+    ],
+    [
+     "shadow",
+     80312,
+     78676,
+     7782,
+     60973,
+     13548,
+     5818
+    ],
+    [
+     "outside",
+     2,
+     0,
+     0,
+     0,
+     0,
+     0
+    ]
+   ]
+  },
   "lake.quarantine": {
    "columns": [
     "Rule",
@@ -16,7 +99,7 @@
     "int"
    ],
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "every rule, every row it moved",
@@ -50,7 +133,7 @@
     [
      "Q05",
      "rejected CVE that still carries metrics",
-     6,
+     4,
      2
     ],
     [
@@ -83,7 +166,7 @@
     "int"
    ],
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "the tables of the lake file",
@@ -96,7 +179,7 @@
     ],
     [
      "config.filer_types",
-     625
+     634
     ],
     [
      "config.lake_build",
@@ -112,27 +195,27 @@
     ],
     [
      "gold.cve_current",
-     424534
+     424978
     ],
     [
      "gold.mart_backlog_q1",
-     276958
+     277391
     ],
     [
      "gold.mart_backlog_q2",
-     79870
+     80312
     ],
     [
      "gold.mart_backlog_q3",
-     80094
+     80526
     ],
     [
      "gold.mart_backlog_q6",
-     9897
+     9909
     ],
     [
      "gold.mart_domain_shift",
-     78243
+     78676
     ],
     [
      "gold.mart_filer_vs_nvd",
@@ -144,7 +227,7 @@
     ],
     [
      "quarantine.quarantine",
-     963
+     961
     ],
     [
      "quarantine.quarantine_counts",
@@ -152,11 +235,11 @@
     ],
     [
      "silver.advisory_versions",
-     404449
+     405474
     ],
     [
      "silver.cve_fact",
-     6620931
+     6629800
     ],
     [
      "silver.exploit_first_seen",
@@ -168,7 +251,7 @@
     ],
     [
      "silver.nvd_status_history",
-     1022935
+     1023092
     ]
    ]
   }
@@ -177,7 +260,7 @@
   "lake.asof.facts_missing": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "200 sampled CVEs at 1200 times",
@@ -188,7 +271,7 @@
   "lake.asof.frames_compared": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "200 sampled CVEs at 1200 times",
@@ -199,7 +282,7 @@
   "lake.asof.parity_mismatches": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "200 sampled CVEs at 1200 times",
@@ -210,7 +293,7 @@
   "lake.asof.planted_facts": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "200 sampled CVEs at 1200 times",
@@ -221,7 +304,7 @@
   "lake.asof.planted_facts_returned": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "200 sampled CVEs at 1200 times",
@@ -232,29 +315,29 @@
   "lake.content_digest": {
    "fmt": "text",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "every published table",
     "source": "lake"
    },
-   "value": "6a7ad73d0035aeb780d2ada250bfaee01d760a547aa8aa85e86aaacd3743ff64"
+   "value": "197f0e3bd87fed737086f544c5b9c7f0647970207e9fb80b4e55981914321814"
   },
   "lake.cves": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "every CVE in the CVE List or the NVD, as of the data cut",
     "source": "lake"
    },
-   "value": 424534
+   "value": 424978
   },
   "lake.cves_before_history": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "every CVE in the CVE List or the NVD, as of the data cut",
@@ -265,29 +348,29 @@
   "lake.cves_since_2017_without_history": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "every CVE in the CVE List or the NVD, as of the data cut",
     "source": "lake"
    },
-   "value": 1
+   "value": 312
   },
   "lake.cves_with_history": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "every CVE in the CVE List or the NVD, as of the data cut",
     "source": "lake"
    },
-   "value": 424533
+   "value": 424664
   },
   "lake.cves_with_pre_history_facts": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "every CVE in the CVE List or the NVD, as of the data cut",
@@ -298,18 +381,18 @@
   "lake.data_cut": {
    "fmt": "text",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "the newest time any source was seen",
     "source": "lake"
    },
-   "value": "2026-11-12T00:21:46+00:00"
+   "value": "2026-11-13T06:00:00+00:00"
   },
   "lake.dbt.models": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "dbt models",
@@ -320,7 +403,7 @@
   "lake.dbt.tests_passed": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "dbt tests in dbt/",
@@ -331,7 +414,7 @@
   "lake.dbt.tests_total": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "dbt tests in dbt/",
@@ -342,29 +425,29 @@
   "lake.facts": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "silver.cve_fact rows",
     "source": "lake"
    },
-   "value": 6620931
+   "value": 6629800
   },
   "lake.history.events": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "NVD change history events in bronze",
     "source": "lake"
    },
-   "value": 2325791
+   "value": 2326025
   },
   "lake.history.share_of_months": {
    "fmt": "pct1",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "months from 2017-01 to the data cut that carry change events",
@@ -375,7 +458,7 @@
   "lake.quarantine.q01": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "rows quarantined by Q01, vector does not parse",
@@ -386,7 +469,7 @@
   "lake.quarantine.q02": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "rows quarantined by Q02, score disagrees with its vector",
@@ -397,7 +480,7 @@
   "lake.quarantine.q03": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "rows quarantined by Q03, KEV listing before publication",
@@ -408,7 +491,7 @@
   "lake.quarantine.q04": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "rows quarantined by Q04, duplicate CVE in one snapshot",
@@ -419,18 +502,18 @@
   "lake.quarantine.q05": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "rows quarantined by Q05, rejected CVE that still carries metrics",
     "source": "lake"
    },
-   "value": 6
+   "value": 4
   },
   "lake.quarantine.q06": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "rows quarantined by Q06, advisory range that does not parse in its scheme",
@@ -441,7 +524,7 @@
   "lake.quarantine.q07": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "rows quarantined by Q07, SBOM component without a package URL",
@@ -452,7 +535,7 @@
   "lake.quarantine.q07_not_packages": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "SBOM components that are not packages (file 2996, operating-system 1), never carrying a package URL, so counted apart from Q07",
@@ -463,7 +546,7 @@
   "lake.quarantine.q08": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "rows quarantined by Q08, change event for an unknown CVE",
@@ -474,7 +557,7 @@
   "lake.sbom.package_components": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "package components in the six SBOMs under customer/sboms",
@@ -485,13 +568,409 @@
   "lake.sha256": {
    "fmt": "text",
    "provenance": {
-    "as_of": "2026-11-12",
+    "as_of": "2026-11-13",
     "note": null,
     "origin": "scripts/build_lake.py",
     "population": "data/lake/unscheduled.duckdb",
     "source": "lake"
    },
-   "value": "66812c5bfe50d61521e75391f29ef2afc7e73549d6e628733bd90c9e5e2c4142"
+   "value": "0d50798827c71b0f7959994f5472eae9c1c530e05710f16d1b128c6e5df6bfba"
+  },
+  "lake.window.development.adp_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the development window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 10339
+  },
+  "lake.window.development.cves": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the development window",
+    "source": "lake"
+   },
+   "value": 40675
+  },
+  "lake.window.development.filer_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the development window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 27947
+  },
+  "lake.window.development.nvd_and_filer_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the development window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 16732
+  },
+  "lake.window.development.nvd_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the development window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 23272
+  },
+  "lake.window.development.published": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the development window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 39924
+  },
+  "lake.window.gap.adp_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the gap window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 699
+  },
+  "lake.window.gap.cves": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the gap window",
+    "source": "lake"
+   },
+   "value": 3130
+  },
+  "lake.window.gap.filer_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the gap window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 2623
+  },
+  "lake.window.gap.nvd_and_filer_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the gap window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 905
+  },
+  "lake.window.gap.nvd_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the gap window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 1017
+  },
+  "lake.window.gap.published": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the gap window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 3101
+  },
+  "lake.window.outside.adp_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the outside window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 0
+  },
+  "lake.window.outside.cves": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the outside window",
+    "source": "lake"
+   },
+   "value": 2
+  },
+  "lake.window.outside.filer_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the outside window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 0
+  },
+  "lake.window.outside.nvd_and_filer_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the outside window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 0
+  },
+  "lake.window.outside.nvd_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the outside window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 0
+  },
+  "lake.window.outside.published": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the outside window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 0
+  },
+  "lake.window.shadow.adp_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the shadow window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 13548
+  },
+  "lake.window.shadow.cves": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the shadow window",
+    "source": "lake"
+   },
+   "value": 80312
+  },
+  "lake.window.shadow.filer_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the shadow window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 60973
+  },
+  "lake.window.shadow.nvd_and_filer_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the shadow window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 5818
+  },
+  "lake.window.shadow.nvd_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the shadow window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 7782
+  },
+  "lake.window.shadow.published": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the shadow window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 78676
+  },
+  "lake.window.test.adp_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the test window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 11388
+  },
+  "lake.window.test.cves": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the test window",
+    "source": "lake"
+   },
+   "value": 66229
+  },
+  "lake.window.test.filer_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the test window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 49497
+  },
+  "lake.window.test.nvd_and_filer_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the test window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 18161
+  },
+  "lake.window.test.nvd_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the test window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 22453
+  },
+  "lake.window.test.published": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the test window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 63304
+  },
+  "lake.window.train.adp_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the train window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 11981
+  },
+  "lake.window.train.cves": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the train window",
+    "source": "lake"
+   },
+   "value": 234630
+  },
+  "lake.window.train.filer_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the train window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 46113
+  },
+  "lake.window.train.nvd_and_filer_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the train window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 39128
+  },
+  "lake.window.train.nvd_band": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the train window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 101427
+  },
+  "lake.window.train.published": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-13",
+    "note": null,
+    "origin": "scripts/build_lake.py",
+    "population": "CVEs published in the train window, rejected excluded",
+    "source": "lake"
+   },
+   "value": 220803
   }
  }
 }

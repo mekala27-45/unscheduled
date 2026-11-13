@@ -1,7 +1,7 @@
 {
  "status": "complete",
- "note": "each CVE dated by the first rule that applies: no NVD record, published after the as of time, the current record when it was fetched at or before the as of time, the newest change history status event at or before it, else the current status (the NVD change history fetched through 2024-07-22T22:15:02Z); a finding counts once, under the most advanced status among its CVEs",
- "history_through": "2024-07-22T22:15:02Z",
+ "note": "each CVE dated by the first rule that applies: no NVD record, published after the as of time, the current record when it was fetched at or before the as of time, the newest change history status event at or before it, else the current status (the NVD change history fetched through 2026-11-12T12:18:26Z); a finding counts once, under the most advanced status among its CVEs",
+ "history_through": "2026-11-12T12:18:26Z",
  "rules": {
   "no_nvd_record": "the CVE is not in bronze nvd_cves",
   "published_after": "the NVD published the CVE after the as of time",
@@ -28,9 +28,9 @@
    "pin",
    "2024-12-30T21:42:53Z",
    "Analyzed",
-   "current_status_fallback",
-   4,
-   3
+   "change_history",
+   6,
+   5
   ],
   [
    "cloud-dashboard",
@@ -38,17 +38,8 @@
    "2024-12-30T21:42:53Z",
    "Modified",
    "change_history",
-   51,
-   50
-  ],
-  [
-   "cloud-dashboard",
-   "pin",
-   "2024-12-30T21:42:53Z",
-   "Modified",
-   "current_status_fallback",
-   8,
-   8
+   54,
+   53
   ],
   [
    "cloud-dashboard",
@@ -56,17 +47,8 @@
    "2024-12-30T21:42:53Z",
    "Received",
    "change_history",
-   18,
-   11
-  ],
-  [
-   "cloud-dashboard",
-   "pin",
-   "2024-12-30T21:42:53Z",
-   "Deferred",
-   "current_status_fallback",
-   16,
-   8
+   37,
+   22
   ],
   [
    "cloud-dashboard",
@@ -82,52 +64,34 @@
    "today",
    "2026-11-08T03:40:40Z",
    "Analyzed",
-   "current_record",
-   169,
-   104
+   "change_history",
+   57,
+   38
   ],
   [
    "cloud-dashboard",
    "today",
    "2026-11-08T03:40:40Z",
    "Modified",
-   "current_record",
-   119,
-   94
-  ],
-  [
-   "cloud-dashboard",
-   "today",
-   "2026-11-08T03:40:40Z",
-   "Awaiting Analysis",
-   "current_record",
-   80,
-   58
+   "change_history",
+   231,
+   160
   ],
   [
    "cloud-dashboard",
    "today",
    "2026-11-08T03:40:40Z",
    "Received",
-   "current_record",
-   2,
-   1
-  ],
-  [
-   "cloud-dashboard",
-   "today",
-   "2026-11-08T03:40:40Z",
-   "Deferred",
-   "current_record",
-   119,
-   79
+   "change_history",
+   201,
+   138
   ],
   [
    "cloud-dashboard",
    "today",
    "2026-11-08T03:40:40Z",
    "Rejected",
-   "current_record",
+   "change_history",
    2,
    2
   ],
@@ -144,73 +108,37 @@
    "python-data-jobs",
    "pin",
    "2024-12-31T02:16:32Z",
-   "Analyzed",
-   "current_status_fallback",
-   1,
-   1
-  ],
-  [
-   "python-data-jobs",
-   "pin",
-   "2024-12-31T02:16:32Z",
-   "Modified",
-   "current_status_fallback",
-   1,
-   1
-  ],
-  [
-   "python-data-jobs",
-   "pin",
-   "2024-12-31T02:16:32Z",
    "Received",
    "change_history",
-   1,
-   1
+   3,
+   3
   ],
   [
    "python-data-jobs",
    "today",
    "2026-11-08T03:40:40Z",
    "Analyzed",
-   "current_record",
-   55,
-   55
+   "change_history",
+   37,
+   37
   ],
   [
    "python-data-jobs",
    "today",
    "2026-11-08T03:40:40Z",
    "Modified",
-   "current_record",
-   25,
-   25
+   "change_history",
+   43,
+   43
   ],
   [
    "python-data-jobs",
    "today",
    "2026-11-08T03:40:40Z",
-   "Undergoing Analysis",
-   "current_record",
-   2,
-   2
-  ],
-  [
-   "python-data-jobs",
-   "today",
-   "2026-11-08T03:40:40Z",
-   "Awaiting Analysis",
-   "current_record",
-   7,
-   7
-  ],
-  [
-   "python-data-jobs",
-   "today",
-   "2026-11-08T03:40:40Z",
-   "Deferred",
-   "current_record",
-   8,
-   8
+   "Received",
+   "change_history",
+   17,
+   17
   ],
   [
    "python-data-jobs",
@@ -225,55 +153,28 @@
    "go-edge-service",
    "pin",
    "2024-12-30T14:45:16Z",
-   "Deferred",
-   "current_status_fallback",
+   "Received",
+   "change_history",
    1,
    1
-  ],
-  [
-   "go-edge-service",
-   "today",
-   "2026-11-08T03:40:40Z",
-   "Analyzed",
-   "current_record",
-   9,
-   9
   ],
   [
    "go-edge-service",
    "today",
    "2026-11-08T03:40:40Z",
    "Modified",
-   "current_record",
-   2,
-   2
-  ],
-  [
-   "go-edge-service",
-   "today",
-   "2026-11-08T03:40:40Z",
-   "Awaiting Analysis",
-   "current_record",
-   6,
-   6
-  ],
-  [
-   "go-edge-service",
-   "today",
-   "2026-11-08T03:40:40Z",
-   "Deferred",
-   "current_record",
-   8,
-   8
-  ],
-  [
-   "java-integration-service",
-   "pin",
-   "2024-12-26T06:50:09Z",
-   "Analyzed",
    "change_history",
-   1,
-   1
+   11,
+   11
+  ],
+  [
+   "go-edge-service",
+   "today",
+   "2026-11-08T03:40:40Z",
+   "Received",
+   "change_history",
+   14,
+   14
   ],
   [
    "java-integration-service",
@@ -281,33 +182,33 @@
    "2024-12-26T06:50:09Z",
    "Modified",
    "change_history",
-   2,
-   2
+   3,
+   3
   ],
   [
    "java-integration-service",
    "today",
    "2026-11-08T03:40:40Z",
    "Analyzed",
-   "current_record",
-   4,
-   4
+   "change_history",
+   3,
+   3
   ],
   [
    "java-integration-service",
    "today",
    "2026-11-08T03:40:40Z",
    "Modified",
-   "current_record",
-   2,
-   2
+   "change_history",
+   3,
+   3
   ],
   [
    "java-integration-service",
    "today",
    "2026-11-08T03:40:40Z",
-   "Deferred",
-   "current_record",
+   "Received",
+   "change_history",
    1,
    1
   ],
@@ -343,36 +244,27 @@
    "today",
    "2026-11-08T03:40:40Z",
    "Analyzed",
-   "current_record",
-   9,
-   9
+   "change_history",
+   5,
+   5
   ],
   [
    "rust-cli",
    "today",
    "2026-11-08T03:40:40Z",
    "Modified",
-   "current_record",
-   1,
-   1
+   "change_history",
+   5,
+   5
   ],
   [
    "rust-cli",
    "today",
    "2026-11-08T03:40:40Z",
-   "Awaiting Analysis",
-   "current_record",
-   14,
-   8
-  ],
-  [
-   "rust-cli",
-   "today",
-   "2026-11-08T03:40:40Z",
-   "Deferred",
-   "current_record",
-   8,
-   7
+   "Received",
+   "change_history",
+   22,
+   15
   ],
   [
    "rust-cli",
@@ -387,9 +279,18 @@
    "door-controller-firmware",
    "pin",
    "2024-12-24T21:34:21Z",
+   "Analyzed",
+   "change_history",
+   1,
+   1
+  ],
+  [
+   "door-controller-firmware",
+   "pin",
+   "2024-12-24T21:34:21Z",
    "Modified",
    "change_history",
-   56,
+   59,
    27
   ],
   [
@@ -398,8 +299,8 @@
    "2024-12-24T21:34:21Z",
    "Modified",
    "current_status_fallback",
-   9,
-   4
+   5,
+   3
   ],
   [
    "door-controller-firmware",
@@ -415,61 +316,43 @@
    "today",
    "2026-11-08T03:40:40Z",
    "Analyzed",
-   "current_record",
-   42,
-   22
+   "change_history",
+   9,
+   9
   ],
   [
    "door-controller-firmware",
    "today",
    "2026-11-08T03:40:40Z",
    "Modified",
-   "current_record",
-   123,
-   66
+   "change_history",
+   152,
+   77
   ],
   [
    "door-controller-firmware",
    "today",
    "2026-11-08T03:40:40Z",
-   "Undergoing Analysis",
-   "current_record",
-   1,
-   1
-  ],
-  [
-   "door-controller-firmware",
-   "today",
-   "2026-11-08T03:40:40Z",
-   "Awaiting Analysis",
-   "current_record",
-   95,
-   48
+   "Modified",
+   "current_status_fallback",
+   5,
+   3
   ],
   [
    "door-controller-firmware",
    "today",
    "2026-11-08T03:40:40Z",
    "Received",
-   "current_record",
-   2,
-   1
-  ],
-  [
-   "door-controller-firmware",
-   "today",
-   "2026-11-08T03:40:40Z",
-   "Deferred",
-   "current_record",
-   56,
-   31
+   "change_history",
+   153,
+   80
   ],
   [
    "door-controller-firmware",
    "today",
    "2026-11-08T03:40:40Z",
    "Rejected",
-   "current_record",
+   "change_history",
    1,
    1
   ]
@@ -684,8 +567,8 @@
       "rule": "change_history"
      },
      "CVE-2024-21538": {
-      "status": "Deferred",
-      "rule": "current_status_fallback"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-27088": {
       "status": "Received",
@@ -728,76 +611,76 @@
       "rule": "change_history"
      },
      "CVE-2024-42459": {
-      "status": "Modified",
-      "rule": "current_status_fallback"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-42460": {
-      "status": "Modified",
-      "rule": "current_status_fallback"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-42461": {
-      "status": "Modified",
-      "rule": "current_status_fallback"
+      "status": "Analyzed",
+      "rule": "change_history"
      },
      "CVE-2024-43788": {
       "status": "Modified",
-      "rule": "current_status_fallback"
+      "rule": "change_history"
      },
      "CVE-2024-43796": {
       "status": "Analyzed",
-      "rule": "current_status_fallback"
+      "rule": "change_history"
      },
      "CVE-2024-43799": {
-      "status": "Modified",
-      "rule": "current_status_fallback"
+      "status": "Analyzed",
+      "rule": "change_history"
      },
      "CVE-2024-43800": {
       "status": "Analyzed",
-      "rule": "current_status_fallback"
+      "rule": "change_history"
      },
      "CVE-2024-45296": {
-      "status": "Deferred",
-      "rule": "current_status_fallback"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-45590": {
       "status": "Analyzed",
-      "rule": "current_status_fallback"
+      "rule": "change_history"
      },
      "CVE-2024-45811": {
-      "status": "Deferred",
-      "rule": "current_status_fallback"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-45812": {
-      "status": "Deferred",
-      "rule": "current_status_fallback"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-45813": {
-      "status": "Deferred",
-      "rule": "current_status_fallback"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-47068": {
       "status": "Modified",
-      "rule": "current_status_fallback"
+      "rule": "change_history"
      },
      "CVE-2024-47764": {
-      "status": "Deferred",
-      "rule": "current_status_fallback"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-48948": {
-      "status": "Modified",
-      "rule": "current_status_fallback"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-48949": {
       "status": "Modified",
-      "rule": "current_status_fallback"
+      "rule": "change_history"
      },
      "CVE-2024-52798": {
-      "status": "Deferred",
-      "rule": "current_status_fallback"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-55565": {
-      "status": "Deferred",
-      "rule": "current_status_fallback"
+      "status": "Received",
+      "rule": "change_history"
      }
     }
    },
@@ -806,1355 +689,1355 @@
     "cves": {
      "CVE-2017-16137": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2017-20162": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2017-20165": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2018-25031": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2019-17495": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2019-25225": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2020-7753": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2021-23358": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2021-23364": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2021-23424": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2021-23434": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2021-23436": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2021-26539": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2021-26540": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2021-32050": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2021-32640": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2021-3757": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2021-3805": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2021-42740": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-0235": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-0624": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-23539": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-23540": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-23541": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-24434": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-25883": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2022-25887": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-25896": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-2900": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-29078": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-29256": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-31129": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-3224": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-33987": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-3517": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-37599": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-37601": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-37603": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-41940": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-0842": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-26136": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-26159": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-28155": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-32695": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-34238": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-44270": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-45133": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-45857": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-46234": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2023-52079": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-54404": {
       "status": "Rejected",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2024-11831": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-12905": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-21501": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2024-21538": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-27088": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2024-28849": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2024-29041": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2024-29180": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2024-31207": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-33883": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-36751": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-37890": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-38355": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-4067": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2024-4068": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2024-42459": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2024-42460": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2024-42461": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2024-43788": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2024-43796": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2024-43799": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2024-43800": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2024-45296": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-45590": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2024-45811": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-45812": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-45813": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-47068": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2024-47764": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-48948": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2024-48949": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2024-52011": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-52798": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-53382": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2024-55565": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-12758": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-13033": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-13465": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-14505": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-14874": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-15284": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-24010": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-27152": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-27789": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-30208": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-31125": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-31486": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-32395": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-46565": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-46653": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-47935": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-47944": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-48387": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-48997": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-54798": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-56200": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-58751": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-58752": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-5889": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-59288": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-59343": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-62522": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-62718": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-64718": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-6545": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-6547": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-65945": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-68157": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-68458": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-68470": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-69873": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-7338": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-7339": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-7783": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-9287": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-9288": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-100700": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-100701": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-100702": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-101911": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-101912": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-101913": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-102276": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-102277": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-102278": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-102414": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-102990": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-104844": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-104852": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-107296": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-107297": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-107298": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-107299": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-107300": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-107301": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-107302": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-110095": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-110306": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-110725": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-110816": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-110869": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-110870": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-110871": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-110872": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-111181": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-111759": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-111766": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-111997": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-112942": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-112943": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-112944": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-112945": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-112946": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-113654": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-113661": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-114111": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-114112": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-114113": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-115754": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-115897": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-118664": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-118764": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-118772": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-121424": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-121425": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-121426": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-12143": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-122131": {
       "status": "Received",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-12590": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-13149": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-13311": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-14257": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-15074": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-15603": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-17495": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-18446": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-18504": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-19693": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-22029": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-2327": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-2359": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-2391": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-24001": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-25223": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-25224": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-25639": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-25896": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-26278": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-26996": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-2739": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-27601": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-27606": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-27699": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-27903": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-27904": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-27942": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-29063": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-29074": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-31808": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-32141": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-33036": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-3304": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-33151": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-33228": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-33349": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-33532": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-33671": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-33672": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-33750": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-34043": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-3449": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-3520": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-3635": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-39365": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-40175": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-40181": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-40895": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-41305": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-41324": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-41650": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-41693": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-41907": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-41988": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-42033": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-42034": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-42035": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-42036": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-42038": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-42039": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-42040": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-42041": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-42042": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-42043": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-42338": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-44240": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-44486": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-44487": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-44490": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-44492": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-44495": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-44496": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-44705": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-44728": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-44979": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-45623": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-45736": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-45822": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-47219": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-4800": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-48022": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-48038": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-4867": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-48713": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-48779": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-48801": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-48988": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-49356": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-5078": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-5079": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-53550": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-53571": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-53606": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-53632": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-53666": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-53669": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-54466": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-54490": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-56876": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-59725": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-59869": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-59879": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-59880": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-59887": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-6321": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-6322": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-63670": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-67213": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-67214": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-67316": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-67319": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-69152": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-69153": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-69185": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-69192": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-7120": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-73086": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-73088": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-73089": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-73646": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-73650": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-76169": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-76844": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-77063": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-77078": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-82333": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-82417": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-82659": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-82660": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-82661": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-82662": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-82853": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-82854": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-84292": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-84367": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-84368": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-84369": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-84370": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-84371": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-84375": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-84428": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-84469": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-84504": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-85062": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-86472": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-8723": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-87776": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-87859": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-90711": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-90771": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-92081": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-92595": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-92596": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-92598": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-92599": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-9277": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-93749": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-93753": {
       "status": "Rejected",
-      "rule": "current_record"
+      "rule": "change_history"
      }
     }
    }
@@ -2168,12 +2051,12 @@
       "rule": "change_history"
      },
      "CVE-2024-56201": {
-      "status": "Analyzed",
-      "rule": "current_status_fallback"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-56326": {
-      "status": "Modified",
-      "rule": "current_status_fallback"
+      "status": "Received",
+      "rule": "change_history"
      }
     }
    },
@@ -2181,392 +2064,392 @@
     "as_of": "2026-11-08T03:40:40Z",
     "cves": {
      "CVE-2024-47081": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-55459": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2024-56201": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2024-56326": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-12058": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-12060": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-1550": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-27516": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-50181": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-50182": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-66034": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-66418": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-66471": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-71176": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-8747": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-9905": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-9906": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-0897": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112390": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112391": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112392": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112393": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112394": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112395": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112397": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112398": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112399": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112400": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112401": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112402": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112403": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112404": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112406": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112891": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112892": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112893": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112894": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112895": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112896": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112897": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112898": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112899": {
-      "status": "Undergoing Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-112900": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112901": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-112902": {
-      "status": "Undergoing Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-11816": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-118669": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-12479": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-12480": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-12481": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-12482": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-12484": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-12570": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-1462": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-1669": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-21441": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-25645": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-25990": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-40192": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-41066": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-42308": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-42310": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-42311": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-44431": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-4539": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-45409": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-49264": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-49265": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-49476": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-49477": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-54058": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-54059": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-54060": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-55379": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-55380": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-55798": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-59197": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-59198": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-59199": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-59200": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-59204": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-59205": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-85999": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-86000": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-9335": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-96636": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-96637": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-96638": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-96639": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-96640": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-96641": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-96642": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-96643": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-96644": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-96778": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-97687": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-97689": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      }
     }
    }
@@ -2576,8 +2459,8 @@
     "as_of": "2024-12-30T14:45:16Z",
     "cves": {
      "CVE-2024-45338": {
-      "status": "Deferred",
-      "rule": "current_status_fallback"
+      "status": "Received",
+      "rule": "change_history"
      }
     }
    },
@@ -2585,104 +2468,104 @@
     "as_of": "2026-11-08T03:40:40Z",
     "cves": {
      "CVE-2024-45338": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-22868": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-22870": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-22872": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-47911": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-58190": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-25680": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-25681": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-27136": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-33814": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-39821": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-39824": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-42502": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-42506": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-46600": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-5160": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-56851": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-56852": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-78659": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-78660": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-78661": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-78663": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-78669": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-97032": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-97045": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      }
     }
    }
@@ -2700,7 +2583,7 @@
       "rule": "change_history"
      },
      "CVE-2023-24163": {
-      "status": "Analyzed",
+      "status": "Modified",
       "rule": "change_history"
      }
     }
@@ -2710,31 +2593,31 @@
     "cves": {
      "CVE-2023-22102": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-24162": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-24163": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-59952": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-41711": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-41716": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-41721": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      }
     }
    }
@@ -2762,103 +2645,103 @@
     "cves": {
      "CVE-2020-26235": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2024-12224": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-24898": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-4432": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-4574": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-53605": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-5791": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-111943": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-115905": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-115906": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-115909": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-25541": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-25727": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-41676": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-41677": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-41678": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-41681": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-41898": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-42327": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-44662": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-45784": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-93599": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-93600": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-93601": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-93602": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      }
     }
    }
@@ -2972,7 +2855,7 @@
       "rule": "change_history"
      },
      "CVE-2023-45853": {
-      "status": "Modified",
+      "status": "Analyzed",
       "rule": "change_history"
      },
      "CVE-2023-4641": {
@@ -2985,7 +2868,7 @@
      },
      "CVE-2024-10041": {
       "status": "Modified",
-      "rule": "current_status_fallback"
+      "rule": "change_history"
      },
      "CVE-2024-2236": {
       "status": "Received",
@@ -3002,683 +2885,683 @@
     "cves": {
      "CVE-2005-2541": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "current_status_fallback"
      },
      "CVE-2007-5686": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "current_status_fallback"
      },
      "CVE-2010-4756": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "current_status_fallback"
      },
      "CVE-2011-3374": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2011-3389": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2011-4116": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2013-4392": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2016-2781": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2017-18018": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2018-20796": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2018-6829": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2019-1010022": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2019-1010023": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2019-1010024": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2019-1010025": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2019-9192": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-0563": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-27943": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2022-3219": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-29383": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-31437": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-31438": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-31439": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-31484": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-31486": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-4039": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-45853": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-4641": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2023-50495": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2024-10041": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2024-12133": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-12243": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-2236": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2024-22365": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2024-56406": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2024-56433": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-0395": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-13151": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-1390": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-14104": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-14831": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-15281": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-15649": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-30258": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-31115": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-32988": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-32989": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-32990": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-40909": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-4598": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-4802": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-5278": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-6020": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-6141": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-6297": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-6395": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-68972": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2025-68973": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-69720": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2025-8058": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-8941": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2025-9820": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-0861": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-0915": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-102010": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-102473": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-102474": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-103111": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-105712": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-109518": {
       "status": "Received",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-114690": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-114691": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-115456": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-12087": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-13221": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-13595": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-13757": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-15059": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-15534": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-16742": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-18374": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-18477": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-18508": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-18938": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-19487": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-19499": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-19542": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-2219": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-27171": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-27456": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-29111": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-3184": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-33845": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-33846": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-34743": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-3833": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-40225": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-40226": {
-      "status": "Analyzed",
-      "rule": "current_record"
+      "status": "Modified",
+      "rule": "change_history"
      },
      "CVE-2026-40228": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-4046": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-4105": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-41989": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-41991": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-41992": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-42009": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-42010": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-42011": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-42012": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-42013": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-42014": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-42015": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-42250": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-42496": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-42497": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-4437": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-4438": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-4878": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-48959": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-48962": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-5260": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-53613": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-53615": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-53910": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-5419": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-5435": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-54369": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-54370": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-54371": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-54411": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-5450": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-56391": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-56392": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-5704": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-57062": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-57432": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-57433": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-5928": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-5958": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-6238": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-6368": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-67693": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-6791": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-7010": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-7017": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-76844": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-77117": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-78410": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-80489": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-82560": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-8376": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-84243": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-85091": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-86145": {
-      "status": "Deferred",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-8674": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-86805": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-88647": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-88648": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-89092": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-89156": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-89157": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-89158": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-89160": {
       "status": "Analyzed",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-89161": {
-      "status": "Undergoing Analysis",
-      "rule": "current_record"
+      "status": "Analyzed",
+      "rule": "change_history"
      },
      "CVE-2026-95184": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-95209": {
       "status": "Rejected",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-95210": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-9538": {
       "status": "Modified",
-      "rule": "current_record"
+      "rule": "change_history"
      },
      "CVE-2026-95619": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-95818": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      },
      "CVE-2026-97399": {
-      "status": "Awaiting Analysis",
-      "rule": "current_record"
+      "status": "Received",
+      "rule": "change_history"
      }
     }
    }

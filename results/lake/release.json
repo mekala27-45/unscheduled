@@ -1,0 +1,22 @@
+{
+ "tag": "lake-20261112",
+ "restored_at": "2026-11-13T23:52:05+00:00",
+ "bronze_archives": 12,
+ "sha256sums_sha256": "7760cd7169b299ec773e7c73c2642ee4a03b8ab217d92830d70c209b45105af1",
+ "archives": {
+  "bronze-cve_metrics.tar": "edf9e8ebab9a14ed386363a134513cf42e12cb0edfd0dc1d08b8ad697912dda0",
+  "bronze-cve_records.tar": "a962ef33d5e2704bb0f82ae52299cd8b715b75d2a723c04553244195353fef6a",
+  "bronze-cve_weaknesses.tar": "f500283fe4827d94026023cb3a76ab7d082d7582dbcb518a490d2c7be3081250",
+  "bronze-cwe.tar": "8c406c3fa35336171c1f00d8c555cc61408a63f9f0b96e167fa5593220a7ccfb",
+  "bronze-epss_offsets.tar": "fb548d3c8382aca4e62d2bff7f31bf36c01eef22459a7d09fe566e9a7ea5c423",
+  "bronze-exploit_signals.tar": "c8d6313b3cca0d4d29dff36034b913463fd393072137038cd8e4cd5f127bbfc3",
+  "bronze-ghsa.tar": "7e3bb708129c381738d63edcf4ceea78f0f478078aeb77f719513660aae6c07a",
+  "bronze-kev.tar": "d5f52607ecb31dcc27e53122054bb2b5e89c944fdeb42b8be44b1a5e3996f82f",
+  "bronze-nvd_changes.tar": "791bd60f406ff07656bb64ea695da7ee9f70a1ca24470c781aad05132d15cec5",
+  "bronze-nvd_cves.tar": "a0e38a30c1d7238ced49ceab2a5e0a185b739cfb00b4e79fb454a9bc90dea4d2",
+  "bronze-osv_advisories.tar": "5b78e6037bd79d94b7a7c1f3a05d1467459bdb77a3aad59e29b0c6068ebf88b1",
+  "bronze-vulnrichment.tar": "610ce95be4694907b29f1d8a05d6d373f25aa84b19c9bdf60ec1cb8ee1ee6306",
+  "config.tar.gz": "cc9eff6e4d757ff2f53bc1fadee32343860ffbb1645f1bea7cc3a60a9ae48cb9",
+  "locks.tar.gz": "cec206836986e2d6be5e91a9718b410322eb9610520af0b5a29b1fd09a100999"
+ }
+}

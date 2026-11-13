@@ -2,7 +2,7 @@
 
 On 15 April 2026 NIST said the NVD would analyze the CVEs it sees as the highest priority first
 and mark the rest Deferred. This report measures the effect, from the lake as it stood at
-2026-11-12: 424,534 CVE records and 6,620,931 dated facts
+2026-11-13: 424,978 CVE records and 6,629,800 dated facts
 about them, each with its source and the time it became known. Every number below is read from
 results/manifest.json when the page is rendered, so the page cannot drift from the data.
 
@@ -19,13 +19,13 @@ The NVD analyzed 80.2% of new CVEs within 30 days before 2025
 (72.7% to 85.5%),
 43.6% from 2025 to the change
 (29.5% to 58.3%),
-and 40.4% since
-(29.2% to 55.6%).
+and 41.4% since
+(29.5% to 57.5%).
 The fall came before the April announcement: from the first period to the second the 30 day
 share moved -36.6 pts
 (adjusted p 0.002), and from the
-second to the third -3.2 pts
-(adjusted p 0.981).
+second to the third -2.1 pts
+(adjusted p 0.926).
 
 When the NVD does analyze a CVE it is quick: the median among those analyzed is
 6.8 days before 2025 and
@@ -41,28 +41,28 @@ monthly table behind the chart gives the number judged at each horizon beside ea
 
 New CVEs since 15 April 2026 by NVD status, and how fast the NVD analyzes the ones in KEV.
 
-Of 79,870 CVEs published since 15 April 2026, the NVD has analyzed
-37.4% (26.3% to
-50.8%). 30,612 carry the Deferred
-status, 11,113 are awaiting analysis and
-6,136 have only been received.
+Of 80,312 CVEs published since 15 April 2026, the NVD has analyzed
+37.2% (26.3% to
+50.1%). 30,632 carry the Deferred
+status, 10,735 are awaiting analysis and
+6,238 have only been received.
 
 | NVD status | CVEs | Analyzed | KEV listed | KEV analyzed before listing | Median hours, listing to analysis |
 |---|---:|---:|---:|---:|---:|
-| Deferred | 30,612 | 0 | 0 | 0 | not applicable |
-| Analyzed | 22,382 | 22,382 | 105 | 37 | 15.3 h |
-| Awaiting Analysis | 11,113 | 0 | 0 | 0 | not applicable |
-| Modified | 7,223 | 7,223 | 52 | 17 | 1.9 h |
-| Received | 6,136 | 0 | 0 | 0 | not applicable |
-| Rejected | 1,627 | 45 | 0 | 0 | not applicable |
-| Undergoing Analysis | 776 | 204 | 2 | 0 | not applicable |
-| not available | 1 | 0 | 0 | 0 | not applicable |
+| Deferred | 30,632 | 0 | 0 | 0 | not applicable |
+| Analyzed | 22,378 | 22,378 | 106 | 37 | 15.3 h |
+| Awaiting Analysis | 10,735 | 0 | 0 | 0 | not applicable |
+| Modified | 7,220 | 7,220 | 52 | 17 | 1.9 h |
+| Received | 6,238 | 0 | 0 | 0 | not applicable |
+| Rejected | 1,633 | 45 | 0 | 0 | not applicable |
+| Undergoing Analysis | 1,164 | 212 | 1 | 0 | not applicable |
+| not available | 312 | 0 | 0 | 0 | not applicable |
 
 The NVD has kept its promise on KEV. Of the 159 CVEs published since the change and
 listed in KEV, 96.9% had an NVD analysis within one
 business day of the listing or before it; the median from listing to analysis is
 14.0 h and the 90th percentile
-21.2 h. KEV listed CVEs are
+21.7 h. KEV listed CVEs are
 0.5% of everything analyzed, so the promise covers a
 small part of the work. The plan also named software NIST counts as critical, but no locked source
 says which software that is, so that part is not measured.
@@ -71,36 +71,36 @@ says which software that is, so that part is not measured.
 
 For CVEs the NVD has not analyzed: the share with a filer CVSS, a CWE, affected versions or a CISA ADP value.
 
-For the 80,094 CVEs the NVD has not analyzed, the filer gave a CVSS score for
-83.9% (66.7% to
-95.5%), a CWE for 83.3% and
+For the 80,526 CVEs the NVD has not analyzed, the filer gave a CVSS score for
+83.9% (66.8% to
+95.5%), a CWE for 83.4% and
 affected versions for 94.3%. CISA's ADP container adds an SSVC
-decision to 89.0% of them, but its own CVSS to only
-11.6%. Most skipped CVEs still come with a score, then, and it is
+decision to 90.4% of them, but its own CVSS to only
+11.7%. Most skipped CVEs still come with a score, then, and it is
 usually the filer's.
 
 | Filer | Filer type | CVEs | Filer CVSS 3.x | Filer CVSS 4.0 | Filer CWE | Affected versions | CISA ADP value |
 |---|---|---:|---:|---:|---:|---:|---:|
-| Patchstack | research or bug bounty platform | 14,422 | 99.9% | 0.1% | 100.0% | 100.0% | 99.4% |
-| VulnCheck | research or bug bounty platform | 7,906 | 93.6% | 99.8% | 100.0% | 99.0% | 94.7% |
-| GitHub_M | open source project | 7,717 | 68.8% | 31.3% | 100.0% | 100.0% | 96.5% |
-| Wordfence | vendor | 7,509 | 100.0% | 0.0% | 99.9% | 100.0% | 99.8% |
+| Patchstack | research or bug bounty platform | 14,426 | 99.9% | 0.1% | 100.0% | 100.0% | 99.4% |
+| VulnCheck | research or bug bounty platform | 7,941 | 93.6% | 99.8% | 100.0% | 99.0% | 96.2% |
+| GitHub_M | open source project | 7,774 | 68.9% | 31.2% | 100.0% | 100.0% | 97.2% |
+| Wordfence | vendor | 7,513 | 100.0% | 0.0% | 99.9% | 100.0% | 99.7% |
 | Linux | open source project | 6,392 | 37.9% | 0.0% | 0.0% | 100.0% | 20.6% |
-| VulDB | research or bug bounty platform | 5,871 | 100.0% | 99.0% | 100.0% | 99.7% | 98.4% |
-| mitre | MITRE | 4,783 | 17.8% | 1.9% | 16.8% | 16.8% | 99.7% |
-| WPScan | open source project | 2,336 | 9.9% | 0.0% | 100.0% | 100.0% | 99.9% |
-| redhat | open source project | 1,317 | 99.5% | 0.1% | 99.7% | 66.5% | 95.1% |
-| microsoft | vendor | 1,204 | 100.0% | 0.0% | 99.6% | 99.1% | 9.1% |
-| oracle | open source project | 783 | 100.0% | 0.0% | 0.0% | 100.0% | 99.9% |
-| icscert | national CERT | 684 | 89.3% | 93.4% | 100.0% | 99.9% | 99.7% |
-| TR-CERT | national CERT | 585 | 96.6% | 3.4% | 99.8% | 100.0% | 98.5% |
-| apache | open source project | 581 | 13.9% | 27.2% | 95.0% | 100.0% | 82.1% |
-| jpcert | national CERT | 579 | 84.6% | 64.6% | 85.7% | 100.0% | 99.1% |
+| VulDB | research or bug bounty platform | 5,893 | 100.0% | 99.0% | 100.0% | 99.7% | 98.7% |
+| mitre | MITRE | 4,783 | 17.8% | 1.9% | 16.8% | 16.8% | 99.9% |
+| WPScan | open source project | 2,375 | 9.7% | 0.0% | 100.0% | 100.0% | 99.2% |
+| redhat | open source project | 1,337 | 99.6% | 0.1% | 99.7% | 67.8% | 95.4% |
+| microsoft | vendor | 1,204 | 100.0% | 0.0% | 100.0% | 99.1% | 75.2% |
+| oracle | open source project | 783 | 100.0% | 0.0% | 0.0% | 100.0% | 100.0% |
+| icscert | national CERT | 684 | 89.3% | 93.4% | 100.0% | 99.9% | 100.0% |
+| TR-CERT | national CERT | 589 | 96.6% | 3.4% | 99.8% | 100.0% | 98.0% |
+| apache | open source project | 583 | 13.9% | 27.1% | 95.0% | 100.0% | 88.0% |
+| jpcert | national CERT | 581 | 84.7% | 64.7% | 85.7% | 100.0% | 98.8% |
 | intel | open source project | 564 | 75.4% | 89.5% | 100.0% | 100.0% | 81.7% |
-| ibm | open source project | 436 | 97.0% | 0.0% | 98.6% | 100.0% | 79.1% |
-| sap | open source project | 415 | 100.0% | 0.0% | 99.5% | 100.0% | 89.9% |
+| ibm | open source project | 436 | 97.0% | 0.0% | 98.6% | 100.0% | 83.3% |
+| sap | open source project | 415 | 100.0% | 0.0% | 99.5% | 100.0% | 97.3% |
 | CERT-PL | national CERT | 399 | 0.8% | 97.5% | 100.0% | 100.0% | 100.0% |
-| INCIBE | national CERT | 386 | 18.9% | 81.3% | 98.7% | 100.0% | 97.9% |
+| INCIBE | national CERT | 387 | 18.9% | 81.4% | 98.7% | 100.0% | 99.2% |
 
 ## Q4, can a filer score stand in for the NVD
 
@@ -120,11 +120,10 @@ attack vector, much less on attack complexity, and only in part on the impact.
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | MITRE | 1,200 | 1 | 0.68 | 0.18 | 0.74 | 0.60 | 0.23 | 0.63 | 0.65 | 0.61 | 0.58 |
 | national CERT | 2,694 | 14 | 0.75 | 0.25 | 0.71 | 0.76 | 0.50 | 0.67 | 0.69 | 0.64 | 0.68 |
-| open source project | 14,821 | 65 | 0.85 | 0.25 | 0.71 | 0.71 | 0.48 | 0.66 | 0.67 | 0.67 | 0.51 |
+| open source project | 14,986 | 66 | 0.85 | 0.25 | 0.71 | 0.71 | 0.48 | 0.67 | 0.67 | 0.67 | 0.51 |
 | other | 1,925 | 46 | 0.84 | 0.14 | 0.43 | 0.61 | 0.40 | 0.58 | 0.58 | 0.47 | 0.59 |
 | research or bug bounty platform | 11,626 | 25 | 0.60 | 0.32 | 0.57 | 0.94 | 0.57 | 0.22 | 0.34 | 0.20 | 0.30 |
-| unregistered | 476 | 4 | 0.86 | 0.26 | 0.80 | 0.63 | 0.38 | 0.71 | 0.78 | 0.74 | 0.62 |
-| vendor | 14,899 | 139 | 0.89 | 0.26 | 0.76 | 0.60 | 0.63 | 0.74 | 0.77 | 0.69 | 0.63 |
+| vendor | 15,210 | 142 | 0.89 | 0.26 | 0.76 | 0.60 | 0.62 | 0.74 | 0.77 | 0.69 | 0.63 |
 
 The data lead would push back: a filer has reasons to score its own product low, and the NVD's
 score is also a label made by people, so the kappa measures agreement between two labels, neither
@@ -158,7 +157,7 @@ may be exploited without CISA having confirmed it.
 
 Monthly CVE volume by filer and filer type since 2020, and the filers behind the growth.
 
-288,482 CVEs since 2020 came from 508 filers. The volume of
+288,924 CVEs since 2020 came from 508 filers. The volume of
 the last twelve months is 101,079 against 19,362
 in 2020, and the ten filers that grew most carry 76.7% of that
 growth (61.3% to 84.2%);
@@ -191,7 +190,7 @@ growth (61.3% to 84.2%);
 
 Q7 is the customer's own: the findings for the six stand in products, matched by package URL and
 version range and checked by osv-scanner. Today they carry 1,069
-findings. A triage that read only NVD analysis could act on 33.0%
+findings. A triage that read only NVD analysis could act on 33.2%
 of them, and one that reads every source on 90.1%. The
 discovery memo, report/discovery.md, gives the figures product by product.
 
@@ -200,47 +199,47 @@ discovery memo, report/discovery.md, gives the figures product by product.
 How well a logistic regression tells the CVEs the NVD analyzed from the ones it skipped, shadow window.
 
 A logistic regression fitted on the earlier half of the shadow window and scored on the later half
-tells the CVEs the NVD analyzed from the ones it skipped with an AUC of 0.886
-(0.827 to 0.928), on 30,806
+tells the CVEs the NVD analyzed from the ones it skipped with an AUC of 0.887
+(0.824 to 0.927), on 30,805
 features. So the skipped CVEs are not a random sample of the rest: they come from different filers
 and describe different software. A model trained on NVD labels alone would learn the NVD's choice
 of what to look at, which is why the later phases also score against filer and CISA labels.
 
 | Feature | Group | Coefficient |
 |---|---|---:|
-| filer or type: filer_microsoft | filer | 5.151 |
-| filer or type: filer_Chrome | filer | 4.403 |
-| word: n8n | description | 4.110 |
-| word: flowise | description | 3.971 |
-| filer or type: filer_adobe | filer | 3.913 |
-| filer or type: filer_oracle | filer | 3.903 |
-| word: openssl_encrypt | description | 3.802 |
-| filer or type: filer_ibm | filer | 3.673 |
-| filer or type: filer_elastic | filer | 3.550 |
-| filer or type: filer_mongodb | filer | 3.538 |
-| filer or type: filer_apple | filer | 3.259 |
-| word: in link | description | 3.161 |
-| word: openclaw | description | 3.148 |
-| word: keycloak | description | 3.147 |
-| word: before 2026 | description | 2.995 |
+| filer or type: filer_microsoft | filer | 5.149 |
+| filer or type: filer_Chrome | filer | 4.389 |
+| word: n8n | description | 4.124 |
+| word: flowise | description | 3.987 |
+| filer or type: filer_adobe | filer | 3.911 |
+| filer or type: filer_oracle | filer | 3.885 |
+| word: openssl_encrypt | description | 3.829 |
+| filer or type: filer_ibm | filer | 3.652 |
+| filer or type: filer_elastic | filer | 3.551 |
+| filer or type: filer_mongodb | filer | 3.525 |
+| filer or type: filer_apple | filer | 3.253 |
+| word: openclaw | description | 3.165 |
+| word: in link | description | 3.149 |
+| word: keycloak | description | 3.123 |
+| word: before 2026 | description | 3.011 |
 
 | Feature | Group | Coefficient |
 |---|---|---:|
-| published month (months since 2026-04) | month | -5.282 |
-| filer or type: filer_Wordfence | filer | -5.050 |
-| filer or type: filer_WPScan | filer | -4.213 |
-| filer or type: filer_Patchstack | filer | -4.092 |
-| filer or type: filer_AMD | filer | -3.517 |
+| published month (months since 2026-04) | month | -5.308 |
+| filer or type: filer_Wordfence | filer | -5.058 |
+| filer or type: filer_WPScan | filer | -4.239 |
+| filer or type: filer_Patchstack | filer | -4.077 |
+| filer or type: filer_AMD | filer | -3.523 |
 | word: php | description | -3.514 |
-| filer or type: filer_Gitea | filer | -3.389 |
-| word: cms | description | -3.179 |
-| filer or type: filer_TYPO3 | filer | -3.005 |
-| filer or type: filer_CPANSec | filer | -2.669 |
-| filer or type: filer_Ubiquiti | filer | -2.598 |
+| filer or type: filer_Gitea | filer | -3.410 |
+| word: cms | description | -3.186 |
+| filer or type: filer_TYPO3 | filer | -3.024 |
+| filer or type: filer_CPANSec | filer | -2.696 |
+| filer or type: filer_Ubiquiti | filer | -2.595 |
 | word: iotdb | description | -2.498 |
-| filer or type: filer_XEN | filer | -2.470 |
+| filer or type: filer_XEN | filer | -2.489 |
 | word: apache iotdb | description | -2.273 |
-| filer or type: filer_OpenHarmony | filer | -2.260 |
+| filer or type: filer_OpenHarmony | filer | -2.273 |
 
 The data lead would push back: the later half has had less time to be analyzed, and the month
 feature carries that. The AUC shows that the two groups can be told apart; the model is not meant

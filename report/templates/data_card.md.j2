@@ -41,6 +41,8 @@ The NVD change history dates what the NVD and the filers changed from 1 January 
 since it begins. {{ v("lake.cves_with_history") }} CVEs have dated history. {{ v("lake.cves_before_history") }}
 were published before the history begins; their values are dated by a named rule, and each such row
 says which. CVEs published since 2017 with no history event: {{ v("lake.cves_since_2017_without_history") }}.
+The CVE List is fetched every hour and the NVD history once a day, so the newest records, published
+around or after the last daily fetch, have no history event until the next one.
 
 ## The windows
 

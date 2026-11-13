@@ -40,24 +40,25 @@ Open checklist lines:
 {% endif %}
 ## Next action
 
-The first fetch in Actions (fetch.yml with bootstrap, started by Ajay on 12 November) fetched every
-source and stopped in the NVD change history, two windows from the end, on a server error from the
-NVD's network. The lake release it wrote holds the ledger, so the next run resumes from that page,
-and every server error is now retried. Ajay starts fetch.yml again with sources nvd and bootstrap
-set; it publishes the full lake release and starts lake.yml, which builds the lake, publishes the
-serving release and loads the API. Once the API answers ready: restore the lake release bronze here
-(scripts/restore_release.py) and rebuild the lake, the backlog, the field and the manifest from it;
-then scripts/verify_api.py, scripts/load_test.py with twenty idle minutes, web/scripts/live-check.mjs
-awake and asleep, scripts/reset_and_rederive.py; then the cut-a-release skill.
+The scheduled daily fetch finished the NVD change history on 12 November, and lake.yml has loaded
+the live API from the newest lake release each day since. The committed numbers are rebuilt here
+from the settled lake release named above (scripts/restore_release.py), and scripts/verify_api.py
+passes against the live API. Next: web/scripts/live-check.mjs awake, scripts/load_test.py with
+twenty idle minutes, the live check asleep, scripts/reset_and_rederive.py, the web suite and the
+design gates; then the cut-a-release skill, and Ajay pushes the tag.
 
 ## Open problems
 
 - Releases come only from workflows Ajay starts: this session's automatic approvals refuse to
   create a release, so a workflow that publishes one, and the version tag that starts release.yml,
   need his start or his yes.
-- No scheduled run has fired in the repository yet, so the hourly and daily refresh is not running:
-  the one fetch so far was started by hand. A commit Ajay makes himself to a workflow file, or
-  turning the workflow off and on in the Actions tab, usually brings the schedule back.
+- The schedules fire hours late and less often than they ask: the hourly fetch has run a few times
+  a day since 12 November, and the daily fetch and lake build several hours after their times. The
+  newest lake release changes with each hourly run until the next daily one, so the committed
+  numbers come from the release before it (DECISIONS.md, 13 November).
+- config/filers.yaml, as the first fetch wrote it, holds the listed filers without their record
+  counts. The lake types the other assigners from the CVE List bronze, and the fetcher writes the
+  counts again when the CNA list next changes (DECISIONS.md, 13 November).
 - k6 cannot be downloaded on the build machine; the load test runs the same scenario on httpx
   (DECISIONS.md, 12 November).
 - The legacy CSV dates a CVE outside the serving slice by its advisories, since the slice holds no

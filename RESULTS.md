@@ -2,14 +2,14 @@
 
 Phase 1 of 5. Every number on this page comes from results/manifest.json, which the build writes
 from what each step saved, and the claim gate in CI renders the page again and fails on any
-difference. The lake behind the numbers was cut at 2026-11-12 (lake digest
-66812c5bfe50).
+difference. The lake behind the numbers was cut at 2026-11-13 (lake digest
+0d50798827c7).
 
 ## The lake
 
-424,534 CVE records and 6,620,931 dated facts about them, each with its
+424,978 CVE records and 6,629,800 dated facts about them, each with its
 source and the time it became known. The NVD change history behind the facts holds
-2,325,791 events and covers 100.0% of the
+2,326,025 events and covers 100.0% of the
 months since it begins. The as-of engine answered 1,200 frames with
 0 mismatches between its two implementations, and returned
 0 of 480,000 facts planted after
@@ -22,7 +22,7 @@ of 65 tests. Rows that failed a named rule were held back, never dropped:
 | Q02 | score disagrees with its vector | 815 | 815 |
 | Q03 | KEV listing before publication | 62 | 62 |
 | Q04 | duplicate CVE in one snapshot | 0 | 0 |
-| Q05 | rejected CVE that still carries metrics | 6 | 2 |
+| Q05 | rejected CVE that still carries metrics | 4 | 2 |
 | Q06 | advisory range that does not parse in its scheme | 70 | 0 |
 | Q07 | SBOM component without a package URL | 8 | 0 |
 | Q08 | change event for an unknown CVE | 0 | 0 |
@@ -33,9 +33,9 @@ report/backlog.md answers each question in full. One line for each:
 
 - Q1. The NVD analyzed 80.2% of new CVEs within 30 days before
   2025, 43.6% from 2025 to the change and
-  40.4% since.
-- Q2. Of 79,870 CVEs published since 15 April 2026 it has analyzed
-  37.4%; 30,612 are Deferred; KEV
+  41.4% since.
+- Q2. Of 80,312 CVEs published since 15 April 2026 it has analyzed
+  37.2%; 30,632 are Deferred; KEV
   listings met the one business day goal 96.9% of the time.
 - Q3. For CVEs it has not analyzed, the filer gave a CVSS score for
   83.9% and affected versions for
@@ -48,10 +48,10 @@ report/backlog.md answers each question in full. One line for each:
 - Q6. The ten filers that grew most carry 76.7% of the growth in
   volume since 2020.
 - Q7. Across the six stand in products, 1,069 findings today;
-  33.0% usable from the NVD alone,
+  33.2% usable from the NVD alone,
   90.1% from any source.
 - Q8. A classifier separates the CVEs the NVD analyzed from the ones it skipped at an AUC of
-  0.886.
+  0.887.
 
 ## The memos
 
@@ -76,7 +76,7 @@ says nothing about whether its output is right.
 | 7 | done | The customer name checked; six stand ins pinned by rule; SBOMs committed | results/name_check.json, config/products.yaml |
 | 8 | done | The matcher and osv-scanner agree; the CPE contrast measured | results/exposure/disagreements.json, results/exposure/summary.json |
 | 9 | done | The legacy script characterized and replaced by the adapter | report/legacy.md |
-| 10 | not done | The API live on Vercel with Neon, loaded only by the sync, verified from a separate client | results/live/api_verify.json |
+| 10 | done | The API live on Vercel with Neon, loaded only by the sync, verified from a separate client | results/live/api_verify.json |
 | 11 | not done | Persistence observed independently; schemathesis green; the load test with the cold start | results/load/c8.json |
 | 12 | done | The CLI gives the same answers as the API on the same inputs | results/cli_parity.json |
 | 13 | done | The design system in place with the palette validator green in CI | web/styles/tokens.css, results/design/palette.json |

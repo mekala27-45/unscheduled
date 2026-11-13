@@ -13,7 +13,7 @@
  },
  "population": "KEV listed CVEs published since 2021-01-01, listings dated before publication (Q03) excluded",
  "window": "every window (a descriptive count)",
- "data_cut": "2026-11-12T00:21:46+00:00",
+ "data_cut": "2026-11-13T06:00:00+00:00",
  "interval": "cluster bootstrap by filer, 2000 resamples, 95 percent",
  "seed": 20261113,
  "values": {
@@ -226,7 +226,7 @@
     ],
     [
      "Received",
-     317
+     319
     ],
     [
      "Modified",
@@ -235,10 +235,6 @@
     [
      "not yet in the NVD",
      151
-    ],
-    [
-     "Undergoing Analysis",
-     2
     ]
    ],
    "population": "KEV listed CVEs by the NVD status as of their listing"

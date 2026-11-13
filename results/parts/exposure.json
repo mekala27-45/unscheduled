@@ -35,7 +35,7 @@
    }
   },
   "exposure.c9.nvd_only_usable": {
-   "value": 353,
+   "value": 355,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/run_exposure.py",
@@ -46,7 +46,7 @@
    }
   },
   "exposure.c9.nvd_only_usable_share": {
-   "value": 0.3302151543498597,
+   "value": 0.33208606173994387,
    "fmt": "pct1",
    "provenance": {
     "origin": "scripts/run_exposure.py",
@@ -189,7 +189,7 @@
    }
   },
   "exposure.contrast.share_no_cpe": {
-   "value": 0.4752104770813845,
+   "value": 0.47333956969130025,
    "fmt": "pct1",
    "provenance": {
     "origin": "scripts/run_exposure.py",
@@ -200,7 +200,7 @@
    }
   },
   "exposure.contrast.share_no_nvd_analysis": {
-   "value": 0.4761459307764266,
+   "value": 0.47427502338634236,
    "fmt": "pct1",
    "provenance": {
     "origin": "scripts/run_exposure.py",
@@ -917,7 +917,7 @@
     [
      "python-data-jobs",
      98,
-     60,
+     62,
      97
     ],
     [
@@ -978,9 +978,9 @@
      "pin",
      "2024-12-30T21:42:53Z",
      "Analyzed",
-     "current_status_fallback",
-     4,
-     3
+     "change_history",
+     6,
+     5
     ],
     [
      "cloud-dashboard",
@@ -988,17 +988,8 @@
      "2024-12-30T21:42:53Z",
      "Modified",
      "change_history",
-     51,
-     50
-    ],
-    [
-     "cloud-dashboard",
-     "pin",
-     "2024-12-30T21:42:53Z",
-     "Modified",
-     "current_status_fallback",
-     8,
-     8
+     54,
+     53
     ],
     [
      "cloud-dashboard",
@@ -1006,17 +997,8 @@
      "2024-12-30T21:42:53Z",
      "Received",
      "change_history",
-     18,
-     11
-    ],
-    [
-     "cloud-dashboard",
-     "pin",
-     "2024-12-30T21:42:53Z",
-     "Deferred",
-     "current_status_fallback",
-     16,
-     8
+     37,
+     22
     ],
     [
      "cloud-dashboard",
@@ -1032,52 +1014,34 @@
      "today",
      "2026-11-08T03:40:40Z",
      "Analyzed",
-     "current_record",
-     169,
-     104
+     "change_history",
+     57,
+     38
     ],
     [
      "cloud-dashboard",
      "today",
      "2026-11-08T03:40:40Z",
      "Modified",
-     "current_record",
-     119,
-     94
-    ],
-    [
-     "cloud-dashboard",
-     "today",
-     "2026-11-08T03:40:40Z",
-     "Awaiting Analysis",
-     "current_record",
-     80,
-     58
+     "change_history",
+     231,
+     160
     ],
     [
      "cloud-dashboard",
      "today",
      "2026-11-08T03:40:40Z",
      "Received",
-     "current_record",
-     2,
-     1
-    ],
-    [
-     "cloud-dashboard",
-     "today",
-     "2026-11-08T03:40:40Z",
-     "Deferred",
-     "current_record",
-     119,
-     79
+     "change_history",
+     201,
+     138
     ],
     [
      "cloud-dashboard",
      "today",
      "2026-11-08T03:40:40Z",
      "Rejected",
-     "current_record",
+     "change_history",
      2,
      2
     ],
@@ -1094,73 +1058,37 @@
      "python-data-jobs",
      "pin",
      "2024-12-31T02:16:32Z",
-     "Analyzed",
-     "current_status_fallback",
-     1,
-     1
-    ],
-    [
-     "python-data-jobs",
-     "pin",
-     "2024-12-31T02:16:32Z",
-     "Modified",
-     "current_status_fallback",
-     1,
-     1
-    ],
-    [
-     "python-data-jobs",
-     "pin",
-     "2024-12-31T02:16:32Z",
      "Received",
      "change_history",
-     1,
-     1
+     3,
+     3
     ],
     [
      "python-data-jobs",
      "today",
      "2026-11-08T03:40:40Z",
      "Analyzed",
-     "current_record",
-     55,
-     55
+     "change_history",
+     37,
+     37
     ],
     [
      "python-data-jobs",
      "today",
      "2026-11-08T03:40:40Z",
      "Modified",
-     "current_record",
-     25,
-     25
+     "change_history",
+     43,
+     43
     ],
     [
      "python-data-jobs",
      "today",
      "2026-11-08T03:40:40Z",
-     "Undergoing Analysis",
-     "current_record",
-     2,
-     2
-    ],
-    [
-     "python-data-jobs",
-     "today",
-     "2026-11-08T03:40:40Z",
-     "Awaiting Analysis",
-     "current_record",
-     7,
-     7
-    ],
-    [
-     "python-data-jobs",
-     "today",
-     "2026-11-08T03:40:40Z",
-     "Deferred",
-     "current_record",
-     8,
-     8
+     "Received",
+     "change_history",
+     17,
+     17
     ],
     [
      "python-data-jobs",
@@ -1175,55 +1103,28 @@
      "go-edge-service",
      "pin",
      "2024-12-30T14:45:16Z",
-     "Deferred",
-     "current_status_fallback",
+     "Received",
+     "change_history",
      1,
      1
-    ],
-    [
-     "go-edge-service",
-     "today",
-     "2026-11-08T03:40:40Z",
-     "Analyzed",
-     "current_record",
-     9,
-     9
     ],
     [
      "go-edge-service",
      "today",
      "2026-11-08T03:40:40Z",
      "Modified",
-     "current_record",
-     2,
-     2
-    ],
-    [
-     "go-edge-service",
-     "today",
-     "2026-11-08T03:40:40Z",
-     "Awaiting Analysis",
-     "current_record",
-     6,
-     6
-    ],
-    [
-     "go-edge-service",
-     "today",
-     "2026-11-08T03:40:40Z",
-     "Deferred",
-     "current_record",
-     8,
-     8
-    ],
-    [
-     "java-integration-service",
-     "pin",
-     "2024-12-26T06:50:09Z",
-     "Analyzed",
      "change_history",
-     1,
-     1
+     11,
+     11
+    ],
+    [
+     "go-edge-service",
+     "today",
+     "2026-11-08T03:40:40Z",
+     "Received",
+     "change_history",
+     14,
+     14
     ],
     [
      "java-integration-service",
@@ -1231,33 +1132,33 @@
      "2024-12-26T06:50:09Z",
      "Modified",
      "change_history",
-     2,
-     2
+     3,
+     3
     ],
     [
      "java-integration-service",
      "today",
      "2026-11-08T03:40:40Z",
      "Analyzed",
-     "current_record",
-     4,
-     4
+     "change_history",
+     3,
+     3
     ],
     [
      "java-integration-service",
      "today",
      "2026-11-08T03:40:40Z",
      "Modified",
-     "current_record",
-     2,
-     2
+     "change_history",
+     3,
+     3
     ],
     [
      "java-integration-service",
      "today",
      "2026-11-08T03:40:40Z",
-     "Deferred",
-     "current_record",
+     "Received",
+     "change_history",
      1,
      1
     ],
@@ -1293,36 +1194,27 @@
      "today",
      "2026-11-08T03:40:40Z",
      "Analyzed",
-     "current_record",
-     9,
-     9
+     "change_history",
+     5,
+     5
     ],
     [
      "rust-cli",
      "today",
      "2026-11-08T03:40:40Z",
      "Modified",
-     "current_record",
-     1,
-     1
+     "change_history",
+     5,
+     5
     ],
     [
      "rust-cli",
      "today",
      "2026-11-08T03:40:40Z",
-     "Awaiting Analysis",
-     "current_record",
-     14,
-     8
-    ],
-    [
-     "rust-cli",
-     "today",
-     "2026-11-08T03:40:40Z",
-     "Deferred",
-     "current_record",
-     8,
-     7
+     "Received",
+     "change_history",
+     22,
+     15
     ],
     [
      "rust-cli",
@@ -1337,9 +1229,18 @@
      "door-controller-firmware",
      "pin",
      "2024-12-24T21:34:21Z",
+     "Analyzed",
+     "change_history",
+     1,
+     1
+    ],
+    [
+     "door-controller-firmware",
+     "pin",
+     "2024-12-24T21:34:21Z",
      "Modified",
      "change_history",
-     56,
+     59,
      27
     ],
     [
@@ -1348,8 +1249,8 @@
      "2024-12-24T21:34:21Z",
      "Modified",
      "current_status_fallback",
-     9,
-     4
+     5,
+     3
     ],
     [
      "door-controller-firmware",
@@ -1365,61 +1266,43 @@
      "today",
      "2026-11-08T03:40:40Z",
      "Analyzed",
-     "current_record",
-     42,
-     22
+     "change_history",
+     9,
+     9
     ],
     [
      "door-controller-firmware",
      "today",
      "2026-11-08T03:40:40Z",
      "Modified",
-     "current_record",
-     123,
-     66
+     "change_history",
+     152,
+     77
     ],
     [
      "door-controller-firmware",
      "today",
      "2026-11-08T03:40:40Z",
-     "Undergoing Analysis",
-     "current_record",
-     1,
-     1
-    ],
-    [
-     "door-controller-firmware",
-     "today",
-     "2026-11-08T03:40:40Z",
-     "Awaiting Analysis",
-     "current_record",
-     95,
-     48
+     "Modified",
+     "current_status_fallback",
+     5,
+     3
     ],
     [
      "door-controller-firmware",
      "today",
      "2026-11-08T03:40:40Z",
      "Received",
-     "current_record",
-     2,
-     1
-    ],
-    [
-     "door-controller-firmware",
-     "today",
-     "2026-11-08T03:40:40Z",
-     "Deferred",
-     "current_record",
-     56,
-     31
+     "change_history",
+     153,
+     80
     ],
     [
      "door-controller-firmware",
      "today",
      "2026-11-08T03:40:40Z",
      "Rejected",
-     "current_record",
+     "change_history",
      1,
      1
     ]
@@ -1429,7 +1312,7 @@
     "population": "findings of the six stand in SBOMs at each pin date and today, and their CVEs",
     "source": "match",
     "as_of": "2026-11-08",
-    "note": "each CVE dated by the first rule that applies: no NVD record, published after the as of time, the current record when it was fetched at or before the as of time, the newest change history status event at or before it, else the current status (the NVD change history fetched through 2024-07-22T22:15:02Z); a finding counts once, under the most advanced status among its CVEs"
+    "note": "each CVE dated by the first rule that applies: no NVD record, published after the as of time, the current record when it was fetched at or before the as of time, the newest change history status event at or before it, else the current status (the NVD change history fetched through 2026-11-12T12:18:26Z); a finding counts once, under the most advanced status among its CVEs"
    }
   }
  },

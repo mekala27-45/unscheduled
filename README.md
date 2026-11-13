@@ -2,9 +2,8 @@
 
 Triage for the CVEs the NVD no longer analyzes.
 
-Phase 1 of 5 is in progress: 13 of 18 checklist lines are done. Still missing:
+Phase 1 of 5 is in progress: 14 of 18 checklist lines are done. Still missing:
 
-- The API live on Vercel with Neon, loaded only by the sync, verified from a separate client
 - Persistence observed independently; schemathesis green; the load test with the cold start
 - The console, the ruler, the landing, the docs and the report live on Vercel
 - The live check awake and asleep; reset and rederive reproduced every number
@@ -26,7 +25,7 @@ person approves every plan.
 - The API, no key needed: https://unscheduled-api.vercel.app. Every route is on the site at
   /docs/api and in openapi.json.
 - The first finding: of the CVEs published from 2020 to 2024, 80.2% were analyzed by
-  the NVD within 30 days; of those published since 15 April 2026, 40.4%
+  the NVD within 30 days; of those published since 15 April 2026, 41.4%
   (report/backlog.md, Q1).
 
 <picture>

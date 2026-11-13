@@ -18,15 +18,15 @@ much of their own exposure it touches.
 It is the new normal, and it began before the announcement. The NVD analyzed
 80.2% of new CVEs within 30 days before 2025,
 43.6% from 2025 to 15 April 2026 and
-40.4% since. Of the 79,870 CVEs published
-since the change, 30,612 are Deferred: the NVD says it has no plan to
+41.4% since. Of the 80,312 CVEs published
+since the change, 30,632 are Deferred: the NVD says it has no plan to
 analyze them. The CVEs it skips are not a random sample (a classifier tells the two groups apart
-with an AUC of 0.886), so the longest waits fall on the CVEs least like the ones
+with an AUC of 0.887), so the longest waits fall on the CVEs least like the ones
 it chose.
 
 For the CVEs the NVD has not analyzed there is still something to read: the filer gave a CVSS
 score for 83.9% of them and CISA an SSVC decision for
-89.0%. Filer and NVD scores agree on the attack vector (kappa
+90.4%. Filer and NVD scores agree on the attack vector (kappa
 0.84) and much less on the band (weighted kappa 0.49),
 so a filer score is where triage starts, and a person still has to check it.
 
@@ -34,13 +34,13 @@ so a filer score is where triage starts, and a person still has to check it.
 
 Matched by package URL and version range today, the six products carry
 1,069 findings. A triage that reads only NVD analysis could act on
-33.0% of them; one that reads the filer, CISA and the NVD
+33.2% of them; one that reads the filer, CISA and the NVD
 together on 90.1%.
 
 | Product | Findings | Usable from the NVD alone | Usable from any source |
 |---|---:|---:|---:|
 | cloud-dashboard | 513 | 176 | 489 |
-| python-data-jobs | 98 | 60 | 97 |
+| python-data-jobs | 98 | 62 | 97 |
 | go-edge-service | 25 | 3 | 25 |
 | java-integration-service | 7 | 2 | 7 |
 | rust-cli | 106 | 10 | 32 |
@@ -49,7 +49,7 @@ together on 90.1%.
 osv-scanner, run on the same SBOMs with the same advisory files, agrees with the matcher on every
 finding but 322, and each of those has its reason recorded
 (0 unexplained). A matcher that depends on NVD CPE names
-could not have made 47.5% of the findings, because the NVD has
+could not have made 47.3% of the findings, because the NVD has
 no CPE configuration for their CVE.
 
 ## What we propose

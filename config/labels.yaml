@@ -15,12 +15,12 @@ nvd_vuln_status:
       has started.
     first_seen: '2026-11-08'
     last_seen: '2026-11-12'
-    cves_at_last_fetch: 1284
+    cves_at_last_fetch: 110
   Awaiting Analysis:
     meaning: The record has been marked for analysis by NVD staff and is waiting in the queue.
     first_seen: '2026-11-08'
     last_seen: '2026-11-12'
-    cves_at_last_fetch: 2218
+    cves_at_last_fetch: 25
   Undergoing Analysis:
     meaning: NVD staff are analyzing the record (reference tags, CVSS, CWE and CPE applicability).
     first_seen: '2026-11-08'
@@ -30,13 +30,13 @@ nvd_vuln_status:
     meaning: The NVD has completed its analysis and made all of its data associations.
     first_seen: '2026-11-08'
     last_seen: '2026-11-12'
-    cves_at_last_fetch: 1981
+    cves_at_last_fetch: 1
   Modified:
     meaning: A source amended the record after the NVD analyzed it, so the NVD analysis may no longer
       match the record.
     first_seen: '2026-11-08'
     last_seen: '2026-11-12'
-    cves_at_last_fetch: 1234
+    cves_at_last_fetch: 6
   Deferred:
     meaning: The NVD has no plan to analyze or reanalyze the record. Since 15 April 2026 this is the value
       the API gives the CVEs NIST describes as lowest priority, not scheduled for immediate enrichment
@@ -47,9 +47,9 @@ nvd_vuln_status:
     april_2026_label: true
     first_seen: '2026-11-08'
     last_seen: '2026-11-12'
-    cves_at_last_fetch: 1295
+    cves_at_last_fetch: 21
   Rejected:
     meaning: The CVE was rejected in the CVE List; the NVD keeps the record but does not analyze it.
     first_seen: '2026-11-08'
     last_seen: '2026-11-12'
-    cves_at_last_fetch: 273
+    cves_at_last_fetch: 6

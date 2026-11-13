@@ -13,114 +13,114 @@
  },
  "population": "CVEs without NVD analysis, rejected CVEs excluded, every window",
  "window": "every window (a descriptive count)",
- "data_cut": "2026-11-12T00:21:46+00:00",
+ "data_cut": "2026-11-13T06:00:00+00:00",
  "interval": "cluster bootstrap by filer, 2000 resamples, 95 percent",
  "seed": 20261111,
  "values": {
   "cves": {
-   "value": 80094,
+   "value": 80526,
    "fmt": "int",
    "population": "CVEs without NVD analysis, rejected CVEs excluded, every window",
    "unit": "CVEs"
   },
   "share_filer_cvss3": {
-   "value": 0.7336754313681424,
+   "value": 0.7335394779325932,
    "fmt": "pct1",
    "population": "CVEs without NVD analysis, rejected CVEs excluded, every window",
    "unit": "share of CVEs with a filer CVSS 3.x vector",
-   "n": 80094,
+   "n": 80526,
    "clusters": 455,
    "resamples": 2000,
-   "low": 0.5420781318228308,
-   "high": 0.8621359612281199
+   "low": 0.5421679669010316,
+   "high": 0.8618584426981317
   },
   "share_filer_cvss40": {
-   "value": 0.3092616175993208,
+   "value": 0.3094404291781536,
    "fmt": "pct1",
    "population": "CVEs without NVD analysis, rejected CVEs excluded, every window",
    "unit": "share of CVEs with a filer CVSS 4.0 vector",
-   "n": 80094,
+   "n": 80526,
    "clusters": 455,
    "resamples": 2000,
-   "low": 0.13092031388038303,
-   "high": 0.5505320887933118
+   "low": 0.13112232272668575,
+   "high": 0.5492841975918562
   },
   "share_filer_cwe": {
-   "value": 0.8334831572901841,
+   "value": 0.8342274544867496,
    "fmt": "pct1",
    "population": "CVEs without NVD analysis, rejected CVEs excluded, every window",
    "unit": "share of CVEs with a filer CWE",
-   "n": 80094,
+   "n": 80526,
    "clusters": 455,
    "resamples": 2000,
-   "low": 0.61821311822852,
-   "high": 0.969857229037962
+   "low": 0.6202075763284386,
+   "high": 0.97002088994521
   },
   "share_affected_versions": {
-   "value": 0.9427173071640822,
+   "value": 0.9431612150113007,
    "fmt": "pct1",
    "population": "CVEs without NVD analysis, rejected CVEs excluded, every window",
    "unit": "share of CVEs with affected versions in the filer record",
-   "n": 80094,
+   "n": 80526,
    "clusters": 455,
    "resamples": 2000,
-   "low": 0.819963594865874,
-   "high": 0.9986235231462393
+   "low": 0.8210456125498407,
+   "high": 0.9986321907335385
   },
   "share_adp_value": {
-   "value": 0.8933752840412515,
+   "value": 0.9076944092591213,
    "fmt": "pct1",
    "population": "CVEs without NVD analysis, rejected CVEs excluded, every window",
    "unit": "share of CVEs with a CISA ADP value (CVSS, CWE or SSVC)",
-   "n": 80094,
+   "n": 80526,
    "clusters": 455,
    "resamples": 2000,
-   "low": 0.7507236421796875,
-   "high": 0.9730663837089567
+   "low": 0.7723361614705815,
+   "high": 0.9776433736294764
   },
   "share_adp_cvss": {
-   "value": 0.11553924139136515,
+   "value": 0.1173782380845938,
    "fmt": "pct1",
    "population": "CVEs without NVD analysis, rejected CVEs excluded, every window",
    "unit": "share of CVEs with a CISA ADP CVSS vector",
-   "n": 80094,
+   "n": 80526,
    "clusters": 455,
    "resamples": 2000,
-   "low": 0.03596566031067919,
-   "high": 0.25868085732943386
+   "low": 0.037541110751799944,
+   "high": 0.26112842766650124
   },
   "share_adp_cwe": {
-   "value": 0.11154393587534647,
+   "value": 0.11207560291086109,
    "fmt": "pct1",
    "population": "CVEs without NVD analysis, rejected CVEs excluded, every window",
    "unit": "share of CVEs with a CISA ADP CWE",
-   "n": 80094,
+   "n": 80526,
    "clusters": 455,
    "resamples": 2000,
-   "low": 0.027730005438468153,
-   "high": 0.2639205017536026
+   "low": 0.02826139420704762,
+   "high": 0.2641569646115329
   },
   "share_adp_ssvc": {
-   "value": 0.8901415836392239,
+   "value": 0.9040682512480441,
    "fmt": "pct1",
    "population": "CVEs without NVD analysis, rejected CVEs excluded, every window",
    "unit": "share of CVEs with a CISA SSVC decision",
-   "n": 80094,
+   "n": 80526,
    "clusters": 455,
    "resamples": 2000,
-   "low": 0.7461703704794923,
-   "high": 0.9698956673056911
+   "low": 0.7681672546409395,
+   "high": 0.9742992308622008
   },
   "share_filer_cvss_any": {
-   "value": 0.838914275726022,
+   "value": 0.8391823758785982,
    "fmt": "pct1",
    "population": "CVEs without NVD analysis, rejected CVEs excluded, every window",
    "unit": "share of CVEs with a filer CVSS 3.x or 4.0 vector",
-   "n": 80094,
+   "n": 80526,
    "clusters": 455,
    "resamples": 2000,
-   "low": 0.667094224477777,
-   "high": 0.9547808062535702
+   "low": 0.6680610595630444,
+   "high": 0.9549932958577724
   }
  },
  "tables": {
@@ -149,42 +149,42 @@
     [
      "Patchstack",
      "research or bug bounty platform",
-     14422,
-     0.9991679378726945,
-     0.0006933851060879212,
-     0.9997226459575649,
+     14426,
+     0.9991681685845002,
+     0.0006931928462498268,
+     0.9997227228615001,
      1.0,
-     0.993967549577035
+     0.9942464993761264
     ],
     [
      "VulnCheck",
      "research or bug bounty platform",
-     7906,
-     0.9356185175815837,
-     0.9977232481659499,
-     0.9996205413609917,
-     0.989501644320769,
-     0.9471287629648368
+     7941,
+     0.9359022793099105,
+     0.9977332829618436,
+     0.9996222138269739,
+     0.9895479158796121,
+     0.9622213826973933
     ],
     [
      "GitHub_M",
      "open source project",
-     7717,
-     0.6877024750550732,
-     0.3128158610859142,
+     7774,
+     0.6887059428865449,
+     0.3118085927450476,
      1.0,
      1.0,
-     0.965401062589089
+     0.9718291741703113
     ],
     [
      "Wordfence",
      "vendor",
-     7509,
+     7513,
      1.0,
      0.0,
-     0.999334132374484,
+     0.9993344868893917,
      1.0,
-     0.9977360500732454
+     0.9974710501796885
     ],
     [
      "Linux",
@@ -199,12 +199,12 @@
     [
      "VulDB",
      "research or bug bounty platform",
-     5871,
-     0.9998296712655425,
-     0.9899506046670074,
+     5893,
+     0.9998303071440693,
+     0.9899881215000849,
      1.0,
-     0.9974450689831375,
-     0.9841594276954522
+     0.9974546071610385,
+     0.9874427286611234
     ],
     [
      "mitre",
@@ -214,27 +214,27 @@
      0.019234789880827934,
      0.1683044114572444,
      0.1683044114572444,
-     0.9974911143633702
+     0.9987455571816851
     ],
     [
      "WPScan",
      "open source project",
-     2336,
-     0.09888698630136987,
+     2375,
+     0.09726315789473684,
      0.0,
-     0.9995719178082192,
+     0.999578947368421,
      1.0,
-     0.9991438356164384
+     0.992
     ],
     [
      "redhat",
      "open source project",
-     1317,
-     0.9954441913439636,
-     0.0007593014426727411,
-     0.996962794229309,
-     0.6651480637813212,
-     0.9514047076689446
+     1337,
+     0.9955123410620793,
+     0.0007479431563201197,
+     0.9970082273747195,
+     0.6783844427823486,
+     0.9543754674644727
     ],
     [
      "microsoft",
@@ -242,9 +242,9 @@
      1204,
      1.0,
      0.0,
-     0.9958471760797342,
+     1.0,
      0.9908637873754153,
-     0.09136212624584718
+     0.7516611295681063
     ],
     [
      "oracle",
@@ -254,7 +254,7 @@
      0.0,
      0.0,
      1.0,
-     0.9987228607918263
+     1.0
     ],
     [
      "icscert",
@@ -264,37 +264,37 @@
      0.9342105263157895,
      1.0,
      0.9985380116959064,
-     0.9970760233918129
+     1.0
     ],
     [
      "TR-CERT",
      "national CERT",
-     585,
-     0.9658119658119658,
-     0.03418803418803419,
-     0.9982905982905983,
+     589,
+     0.966044142614601,
+     0.03395585738539898,
+     0.99830220713073,
      1.0,
-     0.9846153846153847
+     0.9796264855687606
     ],
     [
      "apache",
      "open source project",
-     581,
-     0.13941480206540446,
-     0.2719449225473322,
-     0.9500860585197934,
+     583,
+     0.13893653516295026,
+     0.27101200686106347,
+     0.9502572898799314,
      1.0,
-     0.8209982788296041
+     0.8799313893653516
     ],
     [
      "jpcert",
      "national CERT",
-     579,
-     0.846286701208981,
-     0.6459412780656304,
-     0.8566493955094991,
+     581,
+     0.846815834767642,
+     0.6471600688468159,
+     0.8571428571428571,
      1.0,
-     0.9913644214162349
+     0.9879518072289156
     ],
     [
      "intel",
@@ -314,7 +314,7 @@
      0.0,
      0.9862385321100917,
      1.0,
-     0.7912844036697247
+     0.8325688073394495
     ],
     [
      "sap",
@@ -324,7 +324,7 @@
      0.0,
      0.9951807228915662,
      1.0,
-     0.8987951807228916
+     0.9734939759036144
     ],
     [
      "CERT-PL",
@@ -339,12 +339,12 @@
     [
      "INCIBE",
      "national CERT",
-     386,
-     0.18911917098445596,
-     0.8134715025906736,
-     0.9870466321243523,
+     387,
+     0.18863049095607234,
+     0.813953488372093,
+     0.9870801033591732,
      1.0,
-     0.9792746113989638
+     0.9922480620155039
     ]
    ],
    "population": "the twenty filers with the most CVEs the NVD has not analyzed"
@@ -401,18 +401,18 @@
     ],
     [
      "shadow",
-     48434,
-     0.8137465416855928,
-     0.8150885741421315,
-     0.9543708964776809,
-     0.8484535656770038
+     48866,
+     0.8144108378013343,
+     0.8164777145663652,
+     0.9549993860762084,
+     0.8724471002332911
     ]
    ],
    "population": "CVEs without NVD analysis by the window of config/splits.yaml they were published in"
   }
  },
  "family": [],
- "prediction_check": "A filer CVSS is on 0.838914275726022 of them (most); affected versions on 0.9427173071640822 (not fewer).",
+ "prediction_check": "A filer CVSS is on 0.8391823758785982 of them (most); affected versions on 0.9431612150113007 (not fewer).",
  "method": "A CVE is without NVD analysis when the change history shows no analysis event and its NVD status is not Analyzed or Modified. What the filer gave is read from the facts current at the cut: its own CVSS 3.0 or 3.1 vector, its CVSS 4.0 vector, a CWE id it named (not an NVD placeholder), affected versions in its record; CISA's from the ADP container and Vulnrichment. Intervals are a cluster bootstrap by filer, 2,000 resamples, 95 percent.",
  "sql": "-- Q3: for CVEs the NVD has not analyzed, what the filer and CISA supplied, for the twenty filers\n-- with the most such CVEs.\nselect\n    filer,\n    any_value(filer_type) as filer_type,\n    count(*) as cves,\n    avg(cast(has_filer_cvss3 as integer)) as filer_cvss3,\n    avg(cast(has_filer_cvss40 as integer)) as filer_cvss40,\n    avg(cast(has_filer_cwe as integer)) as filer_cwe,\n    avg(cast(has_affected_versions as integer)) as affected_versions,\n    avg(cast(has_adp_value as integer)) as cisa_adp_value\nfrom gold.mart_backlog_q3\ngroup by filer\norder by cves desc, filer\nlimit 20"
 }

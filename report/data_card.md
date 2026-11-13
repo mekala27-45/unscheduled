@@ -6,11 +6,11 @@ rendered.
 
 ## What it is
 
-One DuckDB file built from typed Parquet: 424,534 CVE records and 6,620,931
-dated facts about them, cut at 2026-11-12. A fact is a CVE, a field, the source that
+One DuckDB file built from typed Parquet: 424,978 CVE records and 6,629,800
+dated facts about them, cut at 2026-11-13. A fact is a CVE, a field, the source that
 published the value, the value, and the interval in which it was known. The gold tables answer what
 was known about any CVE on any day from those facts alone. The content digest of this build, taken
-over every table's rows, is 6a7ad73d0035. The bronze it was built from is a lake
+over every table's rows, is 197f0e3bd87f. The bronze it was built from is a lake
 release, each archive listed with its digest in the release sums, and lake.yml publishes the lake file,
 named by its digest, beside the serving bundle it fed.
 
@@ -34,10 +34,12 @@ results/lake/locks.json lists the locks behind this cut.
 ## How a fact is dated
 
 The NVD change history dates what the NVD and the filers changed from 1 January 2017 on:
-2,325,791 events, covering 100.0% of the months
-since it begins. 424,533 CVEs have dated history. 80,844
+2,326,025 events, covering 100.0% of the months
+since it begins. 424,664 CVEs have dated history. 80,844
 were published before the history begins; their values are dated by a named rule, and each such row
-says which. CVEs published since 2017 with no history event: 1.
+says which. CVEs published since 2017 with no history event: 312.
+The CVE List is fetched every hour and the NVD history once a day, so the newest records, published
+around or after the last daily fetch, have no history event until the next one.
 
 ## The windows
 
@@ -49,6 +51,19 @@ says which. CVEs published since 2017 with no history event: 1.
 
 Descriptive counts may cover every window. An analysis that compares labels uses train,
 development and shadow only, never test, which is held for Phase 2.
+
+How many CVEs each window holds, and how many of the published ones carry a CVSS severity band
+from the NVD, from the filer and from CISA ADP: the labels a model can learn from, window by
+window.
+
+| Window | CVEs | Published | NVD band | Filer band | CISA ADP band | NVD and filer band |
+|---|---:|---:|---:|---:|---:|---:|
+| train | 234,630 | 220,803 | 101,427 | 46,113 | 11,981 | 39,128 |
+| development | 40,675 | 39,924 | 23,272 | 27,947 | 10,339 | 16,732 |
+| test | 66,229 | 63,304 | 22,453 | 49,497 | 11,388 | 18,161 |
+| gap | 3,130 | 3,101 | 1,017 | 2,623 | 699 | 905 |
+| shadow | 80,312 | 78,676 | 7,782 | 60,973 | 13,548 | 5,818 |
+| outside | 2 | 0 | 0 | 0 | 0 | 0 |
 
 ## The labels
 
@@ -67,7 +82,7 @@ dropped:
 | Q02 | score disagrees with its vector | 815 | 815 |
 | Q03 | KEV listing before publication | 62 | 62 |
 | Q04 | duplicate CVE in one snapshot | 0 | 0 |
-| Q05 | rejected CVE that still carries metrics | 6 | 2 |
+| Q05 | rejected CVE that still carries metrics | 4 | 2 |
 | Q06 | advisory range that does not parse in its scheme | 70 | 0 |
 | Q07 | SBOM component without a package URL | 8 | 0 |
 | Q08 | change event for an unknown CVE | 0 | 0 |
@@ -77,25 +92,25 @@ dropped:
 | Table | Rows |
 |---|---:|
 | config.bronze_tables | 12 |
-| config.filer_types | 625 |
+| config.filer_types | 634 |
 | config.lake_build | 1 |
 | config.splits | 5 |
 | config.status_labels | 7 |
-| gold.cve_current | 424,534 |
-| gold.mart_backlog_q1 | 276,958 |
-| gold.mart_backlog_q2 | 79,870 |
-| gold.mart_backlog_q3 | 80,094 |
-| gold.mart_backlog_q6 | 9,897 |
-| gold.mart_domain_shift | 78,243 |
+| gold.cve_current | 424,978 |
+| gold.mart_backlog_q1 | 277,391 |
+| gold.mart_backlog_q2 | 80,312 |
+| gold.mart_backlog_q3 | 80,526 |
+| gold.mart_backlog_q6 | 9,909 |
+| gold.mart_domain_shift | 78,676 |
 | gold.mart_filer_vs_nvd | 47,641 |
 | gold.mart_kev_timing | 1,025 |
-| quarantine.quarantine | 963 |
+| quarantine.quarantine | 961 |
 | quarantine.quarantine_counts | 8 |
-| silver.advisory_versions | 404,449 |
-| silver.cve_fact | 6,620,931 |
+| silver.advisory_versions | 405,474 |
+| silver.cve_fact | 6,629,800 |
 | silver.exploit_first_seen | 7,278 |
 | silver.kev_events | 1,779 |
-| silver.nvd_status_history | 1,022,935 |
+| silver.nvd_status_history | 1,023,092 |
 
 ## What the data cannot tell you
 

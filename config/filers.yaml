@@ -4,11 +4,11 @@
 # A filer's group is the first rule its published CNA types meet, in the order of the rule list.
 # cves counts the records the filer assigned in the CVE List snapshot in bronze on the day read.
 # Dashes inside organization names are written as plain hyphens.
-read_on: '2026-11-08'
+read_on: '2026-11-12'
 source:
-  url: https://raw.githubusercontent.com/CVEProject/cve-website/bc4adbd39adac7adea09fb314d57e103a702d649/src/assets/data/CNAsList.json
-  sha256: 1306d2b2418d76c0edf13323aa52dc0c0169f946feff297524bb8afc4380a2dc
-  cnas: 564
+  url: https://raw.githubusercontent.com/CVEProject/cve-website/45144483c9deec52a9b07dcd43f41f4581cc43bd/src/assets/data/CNAsList.json
+  sha256: e1646e0631d0857e52bd606d78bf9251664f11fe871fbcadb1abb8dda884ca81
+  cnas: 567
   reachable: true
 rule:
 - MITRE: the short name mitre
@@ -20,30 +20,23 @@ rule:
 groups:
   vendor:
     filers: 336
-    cves: 86262
+    cves: 0
   open source project:
-    filers: 142
-    cves: 133245
+    filers: 144
+    cves: 0
   research or bug bounty platform:
-    filers: 61
-    cves: 60533
+    filers: 62
+    cves: 0
   national CERT:
-    filers: 21
-    cves: 17016
+    filers: 20
+    cves: 0
   MITRE:
     filers: 1
-    cves: 117204
+    cves: 0
   other:
-    filers: 64
-    cves: 6813
+    filers: 4
+    cves: 0
 filers:
-  1E:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 8
   2N:
     organization: 2N Telekomunikace a.s.
     group: vendor
@@ -51,21 +44,7 @@ filers:
     - Vendor
     country: Czech Republic
     listed: true
-    cves: 5
-  360ST:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 6
-  3DS:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 113
+    cves: 0
   42Gears:
     organization: 42Gears Mobility Systems Pvt Ltd
     group: vendor
@@ -73,7 +52,7 @@ filers:
     - Vendor
     country: India
     listed: true
-    cves: 3
+    cves: 0
   9front:
     organization: 9front Systems
     group: open source project
@@ -81,7 +60,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 3
+    cves: 0
   '@huntr_ai':
     organization: Protect AI (formerly huntr.dev)
     group: research or bug bounty platform
@@ -91,14 +70,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 886
-  '@huntrdev':
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 1610
+    cves: 0
   ABB:
     organization: Asea Brown Boveri Ltd. (ABB)
     group: vendor
@@ -106,7 +78,7 @@ filers:
     - Vendor
     country: Switzerland
     listed: true
-    cves: 287
+    cves: 0
   Absolute:
     organization: Absolute Software
     group: vendor
@@ -114,7 +86,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 68
+    cves: 0
   Acer:
     organization: Acer Inc.
     group: vendor
@@ -122,7 +94,7 @@ filers:
     - Vendor
     country: Taiwan
     listed: true
-    cves: 49
+    cves: 0
   Acronis:
     organization: Acronis International GmbH
     group: vendor
@@ -130,7 +102,7 @@ filers:
     - Vendor
     country: Switzerland
     listed: true
-    cves: 202
+    cves: 0
   ADI:
     organization: Analog Devices, Inc.
     group: vendor
@@ -146,7 +118,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 8287
+    cves: 0
   AHA:
     organization: Austin Hackers Anonymous
     group: research or bug bounty platform
@@ -154,7 +126,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 48
+    cves: 0
   airbus:
     organization: Airbus
     group: vendor
@@ -163,7 +135,7 @@ filers:
     - Researcher
     country: Netherlands
     listed: true
-    cves: 49
+    cves: 0
   Airlock:
     organization: Airlock by Ergon
     group: vendor
@@ -179,7 +151,7 @@ filers:
     - Vendor
     country: Taiwan
     listed: true
-    cves: 1
+    cves: 0
   AISLE:
     organization: AISLE Incorporated
     group: vendor
@@ -196,7 +168,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 1
+    cves: 0
   AlgoSec:
     organization: AlgoSec
     group: vendor
@@ -204,7 +176,7 @@ filers:
     - Vendor
     country: Israel
     listed: true
-    cves: 5
+    cves: 0
   Alias:
     organization: Alias Robotics S.L.
     group: vendor
@@ -213,7 +185,7 @@ filers:
     - Researcher
     country: Spain
     listed: true
-    cves: 29
+    cves: 0
   alibaba:
     organization: Alibaba, Inc.
     group: open source project
@@ -222,7 +194,7 @@ filers:
     - Open Source
     country: China
     listed: true
-    cves: 5
+    cves: 0
   Almaviva:
     organization: Almaviva S.p.A.
     group: vendor
@@ -239,7 +211,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 20
+    cves: 0
   Altium:
     organization: Altium
     group: vendor
@@ -247,7 +219,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 22
+    cves: 0
   AMD:
     organization: Advanced Micro Devices Inc.
     group: vendor
@@ -255,7 +227,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 642
+    cves: 0
   AMI:
     organization: AMI
     group: open source project
@@ -265,7 +237,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 57
+    cves: 0
   Ampere:
     organization: Ampere Computing
     group: vendor
@@ -283,7 +255,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 245
+    cves: 0
   Anolis:
     organization: OpenAnolis
     group: open source project
@@ -292,7 +264,7 @@ filers:
     - Open Source
     country: China
     listed: true
-    cves: 23
+    cves: 0
   Antenna:
     organization: Antenna
     group: open source project
@@ -309,7 +281,7 @@ filers:
     - AI Researcher (Frontier AI Researcher CVE Numbering Authorities (CNAs) Pilot)
     country: USA
     listed: true
-    cves: 5
+    cves: 0
   apache:
     organization: Apache Software Foundation
     group: open source project
@@ -318,7 +290,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 3183
+    cves: 0
   AppCheck:
     organization: AppCheck Ltd.
     group: research or bug bounty platform
@@ -326,7 +298,7 @@ filers:
     - Researcher
     country: UK
     listed: true
-    cves: 13
+    cves: 0
   apple:
     organization: Apple Inc.
     group: vendor
@@ -334,7 +306,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 9162
+    cves: 0
   arcinfo:
     organization: ARC Informatique
     group: vendor
@@ -342,7 +314,7 @@ filers:
     - Vendor
     country: France
     listed: true
-    cves: 14
+    cves: 0
   ARCON:
     organization: ARCON Techsolutions Private Limited
     group: vendor
@@ -358,7 +330,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 161
+    cves: 0
   Arm:
     organization: Arm Limited
     group: open source project
@@ -367,7 +339,7 @@ filers:
     - Vendor
     country: UK
     listed: true
-    cves: 66
+    cves: 0
   Armis:
     organization: Armis, Inc.
     group: vendor
@@ -376,7 +348,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 11
+    cves: 0
   Arteche:
     organization: Arteche
     group: vendor
@@ -385,13 +357,6 @@ filers:
     country: Spain
     listed: true
     cves: 0
-  ARTICA:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 10
   Arxscan:
     organization: Arxscan, Inc.
     group: vendor
@@ -407,7 +372,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 22
+    cves: 0
   ASRG:
     organization: Automotive Security Research Group (ASRG)
     group: research or bug bounty platform
@@ -415,7 +380,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 90
+    cves: 0
   ASUS:
     organization: ASUSTeK Computer Incorporation
     group: vendor
@@ -423,7 +388,7 @@ filers:
     - Vendor
     country: Taiwan
     listed: true
-    cves: 88
+    cves: 0
   ASUSTOR:
     organization: ASUSTOR, Inc.
     group: vendor
@@ -432,13 +397,6 @@ filers:
     country: Taiwan
     listed: true
     cves: 0
-  ASUSTOR1:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 38
   ATIS:
     organization: ATISoluciones Diseño de Sistemas Electrónicos, S.L.
     group: vendor
@@ -446,7 +404,7 @@ filers:
     - Vendor
     country: Spain
     listed: true
-    cves: 2
+    cves: 0
   atlassian:
     organization: Atlassian
     group: open source project
@@ -455,7 +413,7 @@ filers:
     - Open Source
     country: Australia
     listed: true
-    cves: 572
+    cves: 0
   autodesk:
     organization: Autodesk
     group: vendor
@@ -463,7 +421,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 365
+    cves: 0
   Automox:
     organization: Automox Inc.
     group: vendor
@@ -480,7 +438,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 70
+    cves: 0
   Axis:
     organization: Axis Communications AB
     group: vendor
@@ -488,7 +446,7 @@ filers:
     - Vendor
     country: Sweden
     listed: true
-    cves: 97
+    cves: 0
   AxxonSoft:
     organization: AxxonSoft Limited
     group: vendor
@@ -497,7 +455,7 @@ filers:
     - Hosted Service
     country: Ireland
     listed: true
-    cves: 14
+    cves: 0
   azure-access:
     organization: Azure Access Technology
     group: vendor
@@ -505,7 +463,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 39
+    cves: 0
   B.Braun:
     organization: B. Braun SE
     group: vendor
@@ -513,7 +471,7 @@ filers:
     - Vendor
     country: Germany
     listed: true
-    cves: 4
+    cves: 0
   BAE:
     organization: BAE Systems, Inc.
     group: other
@@ -522,13 +480,6 @@ filers:
     country: USA
     listed: true
     cves: 0
-  Baicells:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 5
   Baidu:
     organization: Baidu, Inc.
     group: open source project
@@ -537,7 +488,7 @@ filers:
     - Open Source
     country: China
     listed: true
-    cves: 40
+    cves: 0
   Baxter:
     organization: Baxter Healthcare
     group: vendor
@@ -545,7 +496,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 18
+    cves: 0
   BCNY:
     organization: The Browser Company of New York
     group: research or bug bounty platform
@@ -554,7 +505,7 @@ filers:
     - Bug Bounty Provider
     country: USA
     listed: true
-    cves: 9
+    cves: 0
   bcorg:
     organization: Legion of the Bouncy Castle Inc.
     group: open source project
@@ -562,7 +513,7 @@ filers:
     - Open Source
     country: Australia
     listed: true
-    cves: 85
+    cves: 0
   BD:
     organization: Becton, Dickinson and Company (BD)
     group: vendor
@@ -570,7 +521,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 22
+    cves: 0
   BECDX:
     organization: Beckman Coulter Diagnostics
     group: vendor
@@ -586,7 +537,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 1
+    cves: 0
   BHV:
     organization: Biohacking Village
     group: research or bug bounty platform
@@ -603,7 +554,7 @@ filers:
     - Researcher
     country: Romania
     listed: true
-    cves: 155
+    cves: 0
   bizerba:
     organization: Bizerba SE & Co. KG
     group: vendor
@@ -611,7 +562,7 @@ filers:
     - Vendor
     country: Germany
     listed: true
-    cves: 10
+    cves: 0
   blackberry:
     organization: BlackBerry
     group: vendor
@@ -619,7 +570,7 @@ filers:
     - Vendor
     country: Canada
     listed: true
-    cves: 71
+    cves: 0
   BlackDuck:
     organization: Black Duck Software, Inc.
     group: vendor
@@ -628,7 +579,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 16
+    cves: 0
   BLSOPS:
     organization: Black Lantern Security
     group: research or bug bounty platform
@@ -636,7 +587,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 20
+    cves: 0
   BombadilSystems:
     organization: Bombadil Systems LLC
     group: research or bug bounty platform
@@ -644,7 +595,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 4
+    cves: 0
   bosch:
     organization: Robert Bosch GmbH
     group: vendor
@@ -652,7 +603,7 @@ filers:
     - Vendor
     country: Germany
     listed: true
-    cves: 134
+    cves: 0
   brocade:
     organization: Brocade Communications Systems LLC, a Broadcom Company
     group: vendor
@@ -660,7 +611,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 244
+    cves: 0
   BT:
     organization: BeyondTrust Inc.
     group: vendor
@@ -668,7 +619,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 24
+    cves: 0
   Bugcrowd:
     organization: Bugcrowd Inc.
     group: research or bug bounty platform
@@ -678,7 +629,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 11
+    cves: 0
   Bull:
     organization: Bull SAS
     group: vendor
@@ -686,7 +637,7 @@ filers:
     - Vendor
     country: France
     listed: true
-    cves: 1
+    cves: 0
   ByteDance:
     organization: ByteDance, Ltd.
     group: open source project
@@ -697,13 +648,13 @@ filers:
     listed: true
     cves: 0
   ca:
-    organization: CA Technologies - A Broadcom Company
+    organization: Broadcom
     group: vendor
     cna_types:
     - Vendor
     country: USA
     listed: true
-    cves: 80
+    cves: 0
   Caliptra:
     organization: Caliptra Project
     group: open source project
@@ -711,7 +662,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 5
+    cves: 0
   Canon:
     organization: Canon Inc.
     group: vendor
@@ -719,7 +670,7 @@ filers:
     - Vendor
     country: Japan
     listed: true
-    cves: 49
+    cves: 0
   Canon_EMEA:
     organization: Canon EMEA
     group: vendor
@@ -727,7 +678,7 @@ filers:
     - Vendor
     country: UK
     listed: true
-    cves: 9
+    cves: 0
   canonical:
     organization: Canonical Ltd.
     group: open source project
@@ -736,7 +687,7 @@ filers:
     - Open Source
     country: UK
     listed: true
-    cves: 606
+    cves: 0
   Canva:
     organization: Canva
     group: open source project
@@ -746,7 +697,7 @@ filers:
     - Researcher
     country: Australia
     listed: true
-    cves: 15
+    cves: 0
   Carrier:
     organization: Carrier Global Corporation
     group: vendor
@@ -755,7 +706,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 24
+    cves: 0
   Cato:
     organization: Cato Networks
     group: vendor
@@ -764,7 +715,7 @@ filers:
     - Researcher
     country: Israel
     listed: true
-    cves: 12
+    cves: 0
   Censys:
     organization: Censys
     group: vendor
@@ -782,7 +733,7 @@ filers:
     - Open Source
     country: France
     listed: true
-    cves: 38
+    cves: 0
   CEP:
     organization: Cepheid
     group: vendor
@@ -798,7 +749,7 @@ filers:
     - CERT
     country: India
     listed: true
-    cves: 159
+    cves: 0
   CERT-PL:
     organization: CERT.PL
     group: national CERT
@@ -806,7 +757,7 @@ filers:
     - CERT
     country: Poland
     listed: true
-    cves: 599
+    cves: 0
   certcc:
     organization: CERT/CC
     group: national CERT
@@ -814,7 +765,7 @@ filers:
     - CERT
     country: USA
     listed: true
-    cves: 3528
+    cves: 0
   CERTVDE:
     organization: CERT@VDE
     group: national CERT
@@ -822,7 +773,7 @@ filers:
     - CERT
     country: Germany
     listed: true
-    cves: 845
+    cves: 0
   chainguard:
     organization: Chainguard, Inc.
     group: open source project
@@ -833,7 +784,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 6
+    cves: 0
   Checkmarx:
     organization: Checkmarx
     group: open source project
@@ -843,7 +794,7 @@ filers:
     - Researcher
     country: Israel
     listed: true
-    cves: 34
+    cves: 0
   Checkmk:
     organization: Checkmk GmbH
     group: open source project
@@ -852,7 +803,7 @@ filers:
     - Open Source
     country: Germany
     listed: true
-    cves: 105
+    cves: 0
   checkpoint:
     organization: Check Point Software Ltd.
     group: vendor
@@ -861,7 +812,7 @@ filers:
     - Researcher
     country: Israel
     listed: true
-    cves: 124
+    cves: 0
   Chrome:
     organization: Chrome
     group: open source project
@@ -871,7 +822,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 7480
+    cves: 0
   ChromeOS:
     organization: ChromeOS Project
     group: research or bug bounty platform
@@ -880,7 +831,7 @@ filers:
     - Bug Bounty Provider
     country: USA
     listed: true
-    cves: 13
+    cves: 0
   Ciena:
     organization: Ciena Corporation
     group: vendor
@@ -888,7 +839,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 5
+    cves: 0
   CIRCL:
     organization: Computer Incident Response Center Luxembourg (CIRCL)
     group: national CERT
@@ -896,7 +847,7 @@ filers:
     - CERT
     country: Luxembourg
     listed: true
-    cves: 251
+    cves: 0
   Circutor:
     organization: Circutor
     group: vendor
@@ -912,7 +863,7 @@ filers:
     - Researcher
     country: Germany
     listed: true
-    cves: 13
+    cves: 0
   CISA:
     organization: Cybersecurity and Infrastructure Security Agency (CISA)
     group: other
@@ -928,7 +879,7 @@ filers:
     - CERT
     country: USA
     listed: true
-    cves: 275
+    cves: 0
   cisco:
     organization: Cisco Systems, Inc.
     group: open source project
@@ -939,7 +890,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 6801
+    cves: 0
   Citrix:
     organization: Citrix Systems, Inc.
     group: vendor
@@ -947,7 +898,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 74
+    cves: 0
   ClickHouse:
     organization: ClickHouse, Inc.
     group: open source project
@@ -956,7 +907,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 4
+    cves: 0
   cloudflare:
     organization: Cloudflare, Inc.
     group: vendor
@@ -964,7 +915,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 80
+    cves: 0
   CODRA:
     organization: CODRA
     group: vendor
@@ -972,7 +923,7 @@ filers:
     - Vendor
     country: France
     listed: true
-    cves: 2
+    cves: 0
   Commvault:
     organization: Commvault Systems Inc.
     group: vendor
@@ -981,7 +932,7 @@ filers:
     - Hosted Service
     country: USA
     listed: true
-    cves: 25
+    cves: 0
   ConcreteCMS:
     organization: Concrete CMS
     group: open source project
@@ -989,7 +940,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 138
+    cves: 0
   ConnectWise:
     organization: ConnectWise LLC
     group: vendor
@@ -998,7 +949,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 14
+    cves: 0
   CoolKit:
     organization: SHENZHEN CoolKit Technology CO., LTD.
     group: vendor
@@ -1006,7 +957,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 3
+    cves: 0
   CPANSec:
     organization: CPAN Security Group
     group: open source project
@@ -1014,14 +965,7 @@ filers:
     - Open Source
     country: Canada
     listed: true
-    cves: 472
-  crafter:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 19
+    cves: 0
   Crafter_CMS:
     organization: Crafter CMS
     group: open source project
@@ -1038,7 +982,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 8
+    cves: 0
   Cribl:
     organization: Cribl, Inc.
     group: vendor
@@ -1046,7 +990,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 5
+    cves: 0
   CrowdStrike:
     organization: CrowdStrike Holdings, Inc.
     group: vendor
@@ -1054,7 +998,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 5
+    cves: 0
   CSA:
     organization: Cyber Security Agency of Singapore
     group: national CERT
@@ -1062,7 +1006,7 @@ filers:
     - CERT
     country: Singapore
     listed: true
-    cves: 79
+    cves: 0
   CSAI:
     organization: Cloud Security Alliance
     group: vendor
@@ -1071,13 +1015,6 @@ filers:
     country: USA
     listed: true
     cves: 0
-  cspcert:
-    organization: null
-    group: national CERT
-    cna_types: []
-    country: null
-    listed: false
-    cves: 25
   CSW:
     organization: Cyber Security Works Pvt. Ltd.
     group: research or bug bounty platform
@@ -1085,7 +1022,7 @@ filers:
     - Researcher
     country: India
     listed: true
-    cves: 11
+    cves: 0
   CTOne:
     organization: CTOne Inc.
     group: research or bug bounty platform
@@ -1103,14 +1040,7 @@ filers:
     - Open Source
     country: Sweden
     listed: true
-    cves: 90
-  Cybellum:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 2
+    cves: 0
   CyberArk:
     organization: CyberArk Labs
     group: vendor
@@ -1119,7 +1049,7 @@ filers:
     - Researcher
     country: Israel
     listed: true
-    cves: 5
+    cves: 0
   CyberDanube:
     organization: CyberDanube
     group: vendor
@@ -1128,7 +1058,7 @@ filers:
     - Vendor
     country: Austria
     listed: true
-    cves: 61
+    cves: 0
   cygence:
     organization: Cygence Pty Ltd
     group: research or bug bounty platform
@@ -1153,6 +1083,14 @@ filers:
     country: USA
     listed: true
     cves: 0
+  CYVIATION:
+    organization: CYVIATION Ltd.
+    group: research or bug bounty platform
+    cna_types:
+    - Researcher
+    country: Israel
+    listed: true
+    cves: 0
   dahua:
     organization: Dahua Technologies
     group: vendor
@@ -1160,7 +1098,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 58
+    cves: 0
   Danfoss:
     organization: Danfoss
     group: vendor
@@ -1168,7 +1106,7 @@ filers:
     - Vendor
     country: Denmark
     listed: true
-    cves: 4
+    cves: 0
   Dassault_Systemes:
     organization: Dassault Systèmes
     group: vendor
@@ -1185,14 +1123,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 805
-  DeepSurface:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 1
+    cves: 0
   Delinea:
     organization: Delinea, Inc.
     group: vendor
@@ -1202,7 +1133,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 15
+    cves: 0
   dell:
     organization: Dell
     group: vendor
@@ -1210,7 +1141,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 2716
+    cves: 0
   Deltaww:
     organization: Delta Electronics, Inc.
     group: vendor
@@ -1218,7 +1149,7 @@ filers:
     - Vendor
     country: Taiwan
     listed: true
-    cves: 72
+    cves: 0
   DevCycle:
     organization: DevCycle
     group: open source project
@@ -1237,7 +1168,7 @@ filers:
     - Open Source
     country: Canada
     listed: true
-    cves: 199
+    cves: 0
   Dfinity:
     organization: DFINITY Foundation
     group: open source project
@@ -1246,7 +1177,7 @@ filers:
     - Open Source
     country: Switzerland
     listed: true
-    cves: 5
+    cves: 0
   DHIS2:
     organization: The HISP Centre at the University of Oslo
     group: open source project
@@ -1263,7 +1194,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 6
+    cves: 0
   directcyber:
     organization: DirectCyber
     group: research or bug bounty platform
@@ -1272,7 +1203,7 @@ filers:
     - Open Source
     country: Australia
     listed: true
-    cves: 12
+    cves: 0
   DIVD:
     organization: Dutch Institute for Vulnerability Disclosure (DIVD)
     group: research or bug bounty platform
@@ -1280,7 +1211,7 @@ filers:
     - Researcher
     country: Netherlands
     listed: true
-    cves: 116
+    cves: 0
   Docker:
     organization: Docker Inc.
     group: open source project
@@ -1289,14 +1220,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 70
-  Document Fdn.:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 59
+    cves: 0
   Document_Fdn.:
     organization: Document Foundation, The
     group: open source project
@@ -1313,7 +1237,7 @@ filers:
     - Hosted Service
     country: USA
     listed: true
-    cves: 9
+    cves: 0
   Dragos:
     organization: Dragos, Inc.
     group: vendor
@@ -1322,7 +1246,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 26
+    cves: 0
   Dremio:
     organization: Dremio Corporation
     group: open source project
@@ -1331,7 +1255,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 1
+    cves: 0
   drupal:
     organization: Drupal.org
     group: open source project
@@ -1340,7 +1264,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 585
+    cves: 0
   DSF:
     organization: Django Software Foundation
     group: open source project
@@ -1349,7 +1273,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 44
+    cves: 0
   DTEX:
     organization: DTEX Systems, Inc.
     group: vendor
@@ -1370,20 +1294,6 @@ filers:
     country: USA
     listed: true
     cves: 0
-  duo:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 6
-  dwf:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 174
   EA:
     organization: Electronic Arts, Inc.
     group: vendor
@@ -1391,7 +1301,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 2
+    cves: 0
   Eaton:
     organization: Eaton
     group: vendor
@@ -1399,7 +1309,7 @@ filers:
     - Vendor
     country: Ireland
     listed: true
-    cves: 148
+    cves: 0
   Echo:
     organization: Echo Software Ltd.
     group: open source project
@@ -1409,7 +1319,7 @@ filers:
     - Researcher
     country: Israel
     listed: true
-    cves: 3
+    cves: 0
   eclipse:
     organization: Eclipse Foundation
     group: open source project
@@ -1418,7 +1328,7 @@ filers:
     - Open Source
     country: Belgium
     listed: true
-    cves: 411
+    cves: 0
   eclypsium:
     organization: Eclypsium, Inc.
     group: vendor
@@ -1436,7 +1346,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 13
+    cves: 0
   Edgewatch:
     organization: Edgewatch Security Intelligence
     group: research or bug bounty platform
@@ -1445,7 +1355,7 @@ filers:
     - Researcher
     country: Spain
     listed: true
-    cves: 1
+    cves: 0
   EEF:
     organization: Erlang Ecosystem Foundation
     group: open source project
@@ -1454,7 +1364,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 394
+    cves: 0
   ELAN:
     organization: ELAN Microelectronics Corp.
     group: vendor
@@ -1462,7 +1372,7 @@ filers:
     - Vendor
     country: Taiwan
     listed: true
-    cves: 2
+    cves: 0
   elastic:
     organization: Elastic
     group: vendor
@@ -1470,7 +1380,7 @@ filers:
     - Vendor
     country: Netherlands
     listed: true
-    cves: 426
+    cves: 0
   ENISA:
     organization: EU Agency for Cybersecurity (ENISA)
     group: other
@@ -1478,7 +1388,7 @@ filers:
     - Consortium
     country: Greece
     listed: true
-    cves: 96
+    cves: 0
   Entrust:
     organization: Entrust Corporation
     group: vendor
@@ -1495,7 +1405,7 @@ filers:
     - Vendor
     country: Sweden
     listed: true
-    cves: 39
+    cves: 0
   esaqa:
     organization: esaqa GmbH
     group: vendor
@@ -1503,7 +1413,7 @@ filers:
     - Vendor
     country: Germany
     listed: true
-    cves: 5
+    cves: 0
   ESET:
     organization: ESET, spol. s r.o.
     group: vendor
@@ -1511,7 +1421,7 @@ filers:
     - Vendor
     country: Slovak Republic
     listed: true
-    cves: 47
+    cves: 0
   Esri:
     organization: Environmental Systems Research Institute, Inc.
     group: vendor
@@ -1519,7 +1429,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 181
+    cves: 0
   Everpure:
     organization: Everpure, Inc.
     group: vendor
@@ -1527,7 +1437,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 3
+    cves: 0
   ExtremeNetworks:
     organization: Extreme Networks, Inc.
     group: vendor
@@ -1535,14 +1445,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 8
-  F-SecureUS:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 46
+    cves: 0
   F5:
     organization: F5, Inc.
     group: open source project
@@ -1551,14 +1454,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 984
-  facebook:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 168
+    cves: 0
   FB:
     organization: Fujifilm Business Innovation Corp.
     group: vendor
@@ -1566,7 +1462,7 @@ filers:
     - Vendor
     country: Japan
     listed: true
-    cves: 1
+    cves: 0
   fedora:
     organization: Fedora Project
     group: open source project
@@ -1575,7 +1471,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 351
+    cves: 0
   FERMAX:
     organization: Fermax Technologies SLU
     group: vendor
@@ -1583,7 +1479,7 @@ filers:
     - Vendor
     country: Spain
     listed: true
-    cves: 5
+    cves: 0
   Fidelis:
     organization: Fidelis Security, LLC
     group: vendor
@@ -1591,7 +1487,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 13
+    cves: 0
   flexera:
     organization: Flexera Software LLC
     group: open source project
@@ -1601,7 +1497,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 512
+    cves: 0
   flock:
     organization: Flock
     group: vendor
@@ -1609,7 +1505,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 1
+    cves: 0
   floragunn:
     organization: floragunn GmbH
     group: open source project
@@ -1618,14 +1514,7 @@ filers:
     - Open Source
     country: Germany
     listed: true
-    cves: 16
-  Fluid Attacks:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 427
+    cves: 0
   Fluid_Attacks:
     organization: Fluid Attacks
     group: research or bug bounty platform
@@ -1641,7 +1530,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 88
+    cves: 0
   Forescout:
     organization: Forescout Technologies
     group: vendor
@@ -1650,14 +1539,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 4
-  ForgeRock:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 9
+    cves: 0
   fortinet:
     organization: Fortinet, Inc.
     group: vendor
@@ -1665,7 +1547,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 1975
+    cves: 0
   Fortra:
     organization: Fortra, LLC
     group: vendor
@@ -1674,7 +1556,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 45
+    cves: 0
   Foxit:
     organization: Foxit Software Incorporated
     group: vendor
@@ -1682,7 +1564,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 102
+    cves: 0
   freebsd:
     organization: FreeBSD
     group: open source project
@@ -1691,7 +1573,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 285
+    cves: 0
   FSI:
     organization: Financial Security Institute (FSI)
     group: national CERT
@@ -1701,7 +1583,7 @@ filers:
     - Bug Bounty Provider
     country: South Korea
     listed: true
-    cves: 17
+    cves: 0
   FSOFT:
     organization: FPT Software Co., Ltd.
     group: vendor
@@ -1710,7 +1592,7 @@ filers:
     - Researcher
     country: Vietnam
     listed: true
-    cves: 4
+    cves: 0
   FTI:
     organization: Fsas Technologies
     group: vendor
@@ -1718,7 +1600,7 @@ filers:
     - Vendor
     country: Germany
     listed: true
-    cves: 2
+    cves: 0
   FULL:
     organization: FULL INTERNET
     group: research or bug bounty platform
@@ -1737,7 +1619,7 @@ filers:
     - Vendor
     country: New Zealand
     listed: true
-    cves: 118
+    cves: 0
   GandC:
     organization: Glyph & Cog, LLC
     group: open source project
@@ -1746,14 +1628,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 29
-  GE GP:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 3
+    cves: 0
   GE_Healthcare:
     organization: GE Healthcare
     group: vendor
@@ -1769,14 +1644,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 6
-  GEHC:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 9
+    cves: 0
   GEN:
     organization: Gen Digital Inc.
     group: vendor
@@ -1784,7 +1652,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 24
+    cves: 0
   Genetec:
     organization: Genetec Inc.
     group: vendor
@@ -1793,7 +1661,7 @@ filers:
     - Vendor
     country: Canada
     listed: true
-    cves: 13
+    cves: 0
   Gitea:
     organization: Gitea Limited
     group: open source project
@@ -1802,7 +1670,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 195
+    cves: 0
   GitHub_M:
     organization: GitHub, Inc.
     group: open source project
@@ -1812,7 +1680,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 22986
+    cves: 0
   GitHub_P:
     organization: GitHub, Inc. (Products Only)
     group: vendor
@@ -1820,7 +1688,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 142
+    cves: 0
   GitLab:
     organization: GitLab Inc.
     group: vendor
@@ -1829,7 +1697,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 1853
+    cves: 0
   glibc:
     organization: GNU C Library
     group: open source project
@@ -1837,7 +1705,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 36
+    cves: 0
   gnutls:
     organization: GnuTLS Project
     group: open source project
@@ -1854,7 +1722,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 299
+    cves: 0
   Google:
     organization: Google LLC
     group: open source project
@@ -1864,7 +1732,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 332
+    cves: 0
   google_android:
     organization: Android (associated with Google Inc. or Open Handset Alliance)
     group: open source project
@@ -1874,7 +1742,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 5491
+    cves: 0
   Google_Devices:
     organization: Google Devices
     group: vendor
@@ -1882,7 +1750,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 422
+    cves: 0
   GoogleCloud:
     organization: Google Cloud
     group: vendor
@@ -1890,14 +1758,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 60
-  GovTech CSG:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 124
+    cves: 0
   GRAFANA:
     organization: Grafana Labs
     group: open source project
@@ -1906,7 +1767,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 115
+    cves: 0
   graphql-java:
     organization: GraphQL Java
     group: open source project
@@ -1923,7 +1784,7 @@ filers:
     - Bug Bounty Provider
     country: Spain
     listed: true
-    cves: 4
+    cves: 0
   GreenRocketSecurity:
     organization: Green Rocket Security Inc.
     group: vendor
@@ -1931,7 +1792,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 1
+    cves: 0
   Gridware:
     organization: Gridware Cybersecurity
     group: research or bug bounty platform
@@ -1939,7 +1800,7 @@ filers:
     - Researcher
     country: Australia
     listed: true
-    cves: 52
+    cves: 0
   GV:
     organization: GeoVision Inc.
     group: vendor
@@ -1947,7 +1808,7 @@ filers:
     - Vendor
     country: Taiwan
     listed: true
-    cves: 84
+    cves: 0
   gvision-it:
     organization: GVision Italia S.r.l.
     group: vendor
@@ -1963,7 +1824,7 @@ filers:
     - Bug Bounty Provider
     country: USA
     listed: true
-    cves: 1832
+    cves: 0
   Hackrate:
     organization: Hackrate Kft.
     group: research or bug bounty platform
@@ -1971,7 +1832,7 @@ filers:
     - Bug Bounty Provider
     country: Hungary
     listed: true
-    cves: 11
+    cves: 0
   HackRTU:
     organization: HackRTU
     group: research or bug bounty platform
@@ -1979,7 +1840,7 @@ filers:
     - Researcher
     country: Spain
     listed: true
-    cves: 8
+    cves: 0
   Halborn:
     organization: Halborn
     group: research or bug bounty platform
@@ -1987,7 +1848,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 3
+    cves: 0
   Hallo_Welt:
     organization: Hallo Welt! GmbH
     group: vendor
@@ -2003,7 +1864,7 @@ filers:
     - Vendor
     country: South Korea
     listed: true
-    cves: 20
+    cves: 0
   harborist:
     organization: Harborist
     group: open source project
@@ -2011,7 +1872,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 29
+    cves: 0
   HashiCorp:
     organization: HashiCorp Inc.
     group: vendor
@@ -2019,7 +1880,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 139
+    cves: 0
   HCL:
     organization: HCL Software
     group: vendor
@@ -2027,7 +1888,7 @@ filers:
     - Vendor
     country: India
     listed: true
-    cves: 674
+    cves: 0
   HDFG:
     organization: The HDF Group
     group: open source project
@@ -2035,7 +1896,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 18
+    cves: 0
   HDS:
     organization: HDS a.s.
     group: vendor
@@ -2061,7 +1922,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 42
+    cves: 0
   HiddenLayer:
     organization: HiddenLayer, Inc.
     group: vendor
@@ -2071,7 +1932,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 63
+    cves: 0
   hikvision:
     organization: Hangzhou Hikvision Digital Technology Co., Ltd.
     group: vendor
@@ -2079,7 +1940,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 48
+    cves: 0
   Hillstone:
     organization: Hillstone Networks Inc.
     group: vendor
@@ -2087,7 +1948,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 39
+    cves: 0
   Hitachi:
     organization: Hitachi, Ltd.
     group: vendor
@@ -2095,14 +1956,7 @@ filers:
     - Vendor
     country: Japan
     listed: true
-    cves: 109
-  Hitachi Energy:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 123
+    cves: 0
   Hitachi_Energy:
     organization: Hitachi Energy
     group: vendor
@@ -2119,13 +1973,6 @@ filers:
     country: USA
     listed: true
     cves: 0
-  HITVAN:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 58
   Hologic:
     organization: Hologic, Inc.
     group: vendor
@@ -2149,7 +1996,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 64
+    cves: 0
   Honor:
     organization: Honor Device Co., Ltd.
     group: vendor
@@ -2157,7 +2004,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 52
+    cves: 0
   hp:
     organization: HP Inc.
     group: vendor
@@ -2165,7 +2012,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 1005
+    cves: 0
   hpe:
     organization: Hewlett Packard Enterprise (HPE)
     group: vendor
@@ -2173,7 +2020,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 1923
+    cves: 0
   hsi:
     organization: Haverford Systems, Inc.
     group: vendor
@@ -2182,7 +2029,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 1
+    cves: 0
   huawei:
     organization: Huawei Technologies
     group: vendor
@@ -2190,7 +2037,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 2357
+    cves: 0
   Huntress:
     organization: Huntress Labs Inc.
     group: vendor
@@ -2199,14 +2046,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 2
-  HW:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 18
+    cves: 0
   HYPR:
     organization: HYPR Corp
     group: vendor
@@ -2214,7 +2054,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 22
+    cves: 0
   ibm:
     organization: IBM Corporation
     group: open source project
@@ -2223,7 +2063,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 9347
+    cves: 0
   icscert:
     organization: Cybersecurity and Infrastructure Security Agency (CISA) Industrial Control Systems (ICS)
     group: national CERT
@@ -2231,7 +2071,7 @@ filers:
     - CERT
     country: USA
     listed: true
-    cves: 4029
+    cves: 0
   ICT:
     organization: Integrated Control Technology LTD
     group: vendor
@@ -2239,7 +2079,7 @@ filers:
     - Vendor
     country: New Zealand
     listed: true
-    cves: 1
+    cves: 0
   IDBS:
     organization: ID Business Solutions
     group: vendor
@@ -2256,12 +2096,22 @@ filers:
     - Vendor
     country: France
     listed: true
-    cves: 7
+    cves: 0
   IDT-DNA:
     organization: Integrated DNA Technologies, Inc.
     group: vendor
     cna_types:
     - Vendor
+    country: USA
+    listed: true
+    cves: 0
+  iFAX:
+    organization: iFAX Solutions, Inc.
+    group: open source project
+    cna_types:
+    - Vendor
+    - Open Source
+    - Researcher
     country: USA
     listed: true
     cves: 0
@@ -2272,7 +2122,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 1
+    cves: 0
   illumos:
     organization: The illumos project
     group: open source project
@@ -2280,7 +2130,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 9
+    cves: 0
   imaginationtech:
     organization: Imagination Technologies
     group: open source project
@@ -2289,7 +2139,7 @@ filers:
     - Open Source
     country: UK
     listed: true
-    cves: 95
+    cves: 0
   iManage:
     organization: iManage LLC
     group: vendor
@@ -2297,7 +2147,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 1
+    cves: 0
   INCD:
     organization: Israel National Cyber Directorate (INCD)
     group: national CERT
@@ -2305,7 +2155,7 @@ filers:
     - CERT
     country: Israel
     listed: true
-    cves: 275
+    cves: 0
   INCIBE:
     organization: Spanish National Cybersecurity Institute, S.A. (INCIBE)
     group: national CERT
@@ -2313,7 +2163,7 @@ filers:
     - CERT
     country: Spain
     listed: true
-    cves: 1231
+    cves: 0
   Infoblox:
     organization: Infoblox Inc.
     group: vendor
@@ -2321,7 +2171,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 1
+    cves: 0
   Insyde:
     organization: Insyde Software
     group: vendor
@@ -2330,7 +2180,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 24
+    cves: 0
   intel:
     organization: Intel Corporation
     group: open source project
@@ -2339,7 +2189,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 4386
+    cves: 0
   Intigriti:
     organization: Intigriti
     group: research or bug bounty platform
@@ -2349,7 +2199,7 @@ filers:
     - Vendor
     country: Belgium
     listed: true
-    cves: 1
+    cves: 0
   IoT83:
     organization: IoT83 Ltd
     group: vendor
@@ -2365,7 +2215,7 @@ filers:
     - Vendor
     country: Netherlands
     listed: true
-    cves: 1
+    cves: 0
   isc:
     organization: Internet Systems Consortium (ISC)
     group: open source project
@@ -2374,7 +2224,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 176
+    cves: 0
   ivanti:
     organization: Ivanti
     group: vendor
@@ -2382,7 +2232,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 214
+    cves: 0
   JAMF:
     organization: Jamf
     group: open source project
@@ -2391,7 +2241,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 3
+    cves: 0
   Jaspersoft:
     organization: Jaspersoft
     group: vendor
@@ -2399,7 +2249,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 3
+    cves: 0
   jci:
     organization: Johnson Controls
     group: vendor
@@ -2407,7 +2257,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 124
+    cves: 0
   jenkins:
     organization: Jenkins Project
     group: open source project
@@ -2415,7 +2265,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 1607
+    cves: 0
   JetBrains:
     organization: JetBrains s.r.o.
     group: open source project
@@ -2424,7 +2274,7 @@ filers:
     - Open Source
     country: Czech Republic
     listed: true
-    cves: 548
+    cves: 0
   JFrog:
     organization: JFrog
     group: vendor
@@ -2433,7 +2283,7 @@ filers:
     - Researcher
     country: Israel
     listed: true
-    cves: 184
+    cves: 0
   Joomla:
     organization: Joomla! Project
     group: open source project
@@ -2442,14 +2292,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 565
-  joshbressers:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 5
+    cves: 0
   jpcert:
     organization: JPCERT/CC
     group: national CERT
@@ -2457,7 +2300,7 @@ filers:
     - CERT
     country: Japan
     listed: true
-    cves: 3348
+    cves: 0
   juniper:
     organization: Juniper Networks, Inc.
     group: open source project
@@ -2466,7 +2309,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 1207
+    cves: 0
   JupiterOne:
     organization: JupiterOne, Inc.
     group: vendor
@@ -2485,7 +2328,7 @@ filers:
     - Researcher
     country: Russia
     listed: true
-    cves: 164
+    cves: 0
   KCFTech:
     organization: KCF Technologies, Inc.
     group: vendor
@@ -2503,6 +2346,14 @@ filers:
     country: USA
     listed: true
     cves: 0
+  Kludex:
+    organization: Marcelo Trylesinski
+    group: open source project
+    cna_types:
+    - Open Source
+    country: Netherlands
+    listed: true
+    cves: 0
   KNIME:
     organization: KNIME AG
     group: vendor
@@ -2510,7 +2361,7 @@ filers:
     - Vendor
     country: Switzerland
     listed: true
-    cves: 26
+    cves: 0
   Kong:
     organization: Kong Inc.
     group: vendor
@@ -2518,7 +2369,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 18
+    cves: 0
   KoreLogic:
     organization: KoreLogic Security
     group: research or bug bounty platform
@@ -2526,7 +2377,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 19
+    cves: 0
   KrakenD:
     organization: KrakenD, S.L.
     group: open source project
@@ -2535,7 +2386,7 @@ filers:
     - Open Source
     country: Spain
     listed: true
-    cves: 1
+    cves: 0
   krcert:
     organization: KrCERT/CC
     group: national CERT
@@ -2543,7 +2394,7 @@ filers:
     - CERT
     country: South Korea
     listed: true
-    cves: 208
+    cves: 0
   kubernetes:
     organization: Kubernetes
     group: open source project
@@ -2552,7 +2403,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 117
+    cves: 0
   larry_cashdollar:
     organization: Larry Cashdollar
     group: research or bug bounty platform
@@ -2560,7 +2411,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 86
+    cves: 0
   LeicaBiosystems:
     organization: Leica Biosystems
     group: vendor
@@ -2576,7 +2427,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 688
+    cves: 0
   Leonardo:
     organization: Leonardo S.p.A.
     group: vendor
@@ -2593,7 +2444,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 21
+    cves: 0
   LGE:
     organization: LG Electronics
     group: vendor
@@ -2601,7 +2452,7 @@ filers:
     - Vendor
     country: South Korea
     listed: true
-    cves: 31
+    cves: 0
   libreswan:
     organization: Libreswan Project
     group: open source project
@@ -2610,7 +2461,7 @@ filers:
     - Open Source
     country: n/a
     listed: true
-    cves: 10
+    cves: 0
   Liferay:
     organization: Liferay, Inc.
     group: vendor
@@ -2618,7 +2469,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 211
+    cves: 0
   Linaro:
     organization: Linaro
     group: open source project
@@ -2627,13 +2478,6 @@ filers:
     country: UK
     listed: true
     cves: 0
-  LINE:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 10
   linqi:
     organization: linqi GmbH
     group: vendor
@@ -2641,7 +2485,7 @@ filers:
     - Vendor
     country: Germany
     listed: true
-    cves: 4
+    cves: 0
   Linux:
     organization: kernel.org
     group: open source project
@@ -2650,7 +2494,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 18675
+    cves: 0
   LMS:
     organization: Leica Microsystems
     group: vendor
@@ -2666,7 +2510,7 @@ filers:
     - Vendor
     country: Switzerland
     listed: true
-    cves: 7
+    cves: 0
   LY-Corporation:
     organization: LY Corporation
     group: open source project
@@ -2674,7 +2518,7 @@ filers:
     - Open Source
     country: Japan
     listed: true
-    cves: 25
+    cves: 0
   M-Files:
     organization: M-Files Corporation
     group: vendor
@@ -2683,20 +2527,6 @@ filers:
     country: Finland
     listed: true
     cves: 0
-  M-Files Corporation:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 60
-  ManageEngine:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 57
   Mandiant:
     organization: Mandiant Inc.
     group: vendor
@@ -2705,14 +2535,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 39
-  marklogic:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 15
+    cves: 0
   Mattermost:
     organization: Mattermost, Inc.
     group: vendor
@@ -2721,7 +2544,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 516
+    cves: 0
   Mautic:
     organization: Mautic
     group: open source project
@@ -2730,7 +2553,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 53
+    cves: 0
   MediaTek:
     organization: MediaTek, Inc.
     group: vendor
@@ -2738,7 +2561,7 @@ filers:
     - Vendor
     country: Taiwan
     listed: true
-    cves: 1178
+    cves: 0
   Medtronic:
     organization: Medtronic
     group: vendor
@@ -2746,14 +2569,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 12
-  Mend:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 196
+    cves: 0
   Meta:
     organization: Meta Platforms, Inc.
     group: open source project
@@ -2763,7 +2579,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 23
+    cves: 0
   MHV:
     organization: Maritime Hacking Village
     group: research or bug bounty platform
@@ -2771,7 +2587,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 11
+    cves: 0
   Microchip:
     organization: Microchip Technology
     group: vendor
@@ -2779,14 +2595,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 25
-  microfocus:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 516
+    cves: 0
   microsoft:
     organization: Microsoft Corporation
     group: vendor
@@ -2794,14 +2603,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 16892
-  Milestone:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 5
+    cves: 0
   milestonesys:
     organization: Milestone Systems A/S
     group: vendor
@@ -2817,7 +2619,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 2
+    cves: 0
   Mirantis:
     organization: Mirantis
     group: open source project
@@ -2827,7 +2629,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 5
+    cves: 0
   mitre:
     organization: MITRE Corporation
     group: MITRE
@@ -2835,7 +2637,7 @@ filers:
     - N/A
     country: USA
     listed: true
-    cves: 117204
+    cves: 0
   Mitsubishi:
     organization: Mitsubishi Electric Corporation
     group: vendor
@@ -2843,7 +2645,7 @@ filers:
     - Vendor
     country: Japan
     listed: true
-    cves: 148
+    cves: 0
   MolDev:
     organization: Molecular Devices
     group: vendor
@@ -2861,7 +2663,7 @@ filers:
     - Researcher
     country: Australia
     listed: true
-    cves: 10
+    cves: 0
   mongodb:
     organization: MongoDB, Inc.
     group: open source project
@@ -2870,7 +2672,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 356
+    cves: 0
   Moxa:
     organization: Moxa Inc.
     group: vendor
@@ -2878,7 +2680,7 @@ filers:
     - Vendor
     country: Taiwan
     listed: true
-    cves: 83
+    cves: 0
   mozilla:
     organization: Mozilla Corporation
     group: open source project
@@ -2887,7 +2689,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 3314
+    cves: 0
   MyMMT:
     organization: Mammotome
     group: vendor
@@ -2903,7 +2705,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 18
+    cves: 0
   naver:
     organization: Naver Corporation
     group: vendor
@@ -2911,7 +2713,7 @@ filers:
     - Vendor
     country: South Korea
     listed: true
-    cves: 42
+    cves: 0
   NCSC:
     organization: NATO Cyber Security Centre
     group: research or bug bounty platform
@@ -2919,7 +2721,7 @@ filers:
     - Researcher
     country: Belgium
     listed: true
-    cves: 10
+    cves: 0
   NCSC-FI:
     organization: National Cyber Security Centre Finland (NCSC-FI)
     group: national CERT
@@ -2927,7 +2729,7 @@ filers:
     - CERT
     country: Finland
     listed: true
-    cves: 28
+    cves: 0
   NCSC-NL:
     organization: National Cyber Security Centre Netherlands (NCSC-NL)
     group: vendor
@@ -2935,7 +2737,7 @@ filers:
     - Vendor
     country: Netherlands
     listed: true
-    cves: 40
+    cves: 0
   NCSC.ch:
     organization: Switzerland National Cyber Security Centre (NCSC)
     group: national CERT
@@ -2943,7 +2745,7 @@ filers:
     - CERT
     country: Switzerland
     listed: true
-    cves: 243
+    cves: 0
   NEC:
     organization: NEC Corporation
     group: vendor
@@ -2951,7 +2753,7 @@ filers:
     - Vendor
     country: Japan
     listed: true
-    cves: 67
+    cves: 0
   Neo4j:
     organization: Neo4j
     group: open source project
@@ -2960,7 +2762,7 @@ filers:
     - Open Source
     country: Sweden
     listed: true
-    cves: 13
+    cves: 0
   netapp:
     organization: NetApp, Inc.
     group: vendor
@@ -2968,7 +2770,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 187
+    cves: 0
   NetDEF:
     organization: Network Device Education Foundation
     group: open source project
@@ -2976,7 +2778,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 1
+    cves: 0
   netflix:
     organization: Netflix, Inc.
     group: open source project
@@ -2985,7 +2787,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 24
+    cves: 0
   NETGEAR:
     organization: NETGEAR
     group: vendor
@@ -2993,14 +2795,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 55
-  NetMotion:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 2
+    cves: 0
   NetRise:
     organization: NetRise
     group: research or bug bounty platform
@@ -3016,7 +2811,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 20
+    cves: 0
   Netskope:
     organization: Netskope
     group: vendor
@@ -3024,7 +2819,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 21
+    cves: 0
   NI:
     organization: National Instruments
     group: vendor
@@ -3032,7 +2827,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 101
+    cves: 0
   NIBEGroup:
     organization: NIBE Group
     group: vendor
@@ -3048,7 +2843,7 @@ filers:
     - Vendor
     country: Japan
     listed: true
-    cves: 1
+    cves: 0
   Nitro:
     organization: Nitro Software, Inc.
     group: vendor
@@ -3057,13 +2852,6 @@ filers:
     country: USA
     listed: true
     cves: 0
-  NLnet Labs:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 95
   NLnet_Labs:
     organization: NLnet Labs
     group: open source project
@@ -3073,13 +2861,6 @@ filers:
     country: Netherlands
     listed: true
     cves: 0
-  NLOK:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 32
   nodejs:
     organization: Node.js
     group: open source project
@@ -3088,7 +2869,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 18
+    cves: 0
   Nokia:
     organization: Nokia
     group: vendor
@@ -3096,7 +2877,7 @@ filers:
     - Vendor
     country: Finland
     listed: true
-    cves: 37
+    cves: 0
   Nozomi:
     organization: Nozomi Networks Inc.
     group: vendor
@@ -3105,7 +2886,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 305
+    cves: 0
   Nutanix:
     organization: Nutanix
     group: vendor
@@ -3113,7 +2894,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 2
+    cves: 0
   nvidia:
     organization: NVIDIA Corporation
     group: vendor
@@ -3121,7 +2902,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 1267
+    cves: 0
   NX:
     organization: Network Optix
     group: open source project
@@ -3130,7 +2911,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 4
+    cves: 0
   OAI:
     organization: OpenAI
     group: vendor
@@ -3139,7 +2920,7 @@ filers:
     - AI Researcher (Frontier AI Researcher CVE Numbering Authorities (CNAs) Pilot)
     country: USA
     listed: true
-    cves: 7
+    cves: 0
   OB:
     organization: OceanBase
     group: vendor
@@ -3147,7 +2928,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 1
+    cves: 0
   obdev:
     organization: Objective Development Software GmbH
     group: vendor
@@ -3155,7 +2936,7 @@ filers:
     - Vendor
     country: Austria
     listed: true
-    cves: 14
+    cves: 0
   OCD:
     organization: Orange Cyberdefense
     group: vendor
@@ -3165,7 +2946,7 @@ filers:
     - Researcher
     country: France
     listed: true
-    cves: 3
+    cves: 0
   Octopus:
     organization: Octopus Deploy
     group: open source project
@@ -3174,7 +2955,7 @@ filers:
     - Open Source
     country: Australia
     listed: true
-    cves: 81
+    cves: 0
   ODA:
     organization: Open Design Alliance
     group: vendor
@@ -3182,7 +2963,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 5
+    cves: 0
   odoo:
     organization: Odoo
     group: vendor
@@ -3190,7 +2971,7 @@ filers:
     - Vendor
     country: Belgium
     listed: true
-    cves: 81
+    cves: 0
   Okta:
     organization: Okta
     group: vendor
@@ -3198,7 +2979,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 44
+    cves: 0
   OMICRON:
     organization: OMICRON electronics
     group: vendor
@@ -3206,7 +2987,7 @@ filers:
     - Vendor
     country: Austria
     listed: true
-    cves: 3
+    cves: 0
   Omnissa:
     organization: Omnissa, LLC
     group: vendor
@@ -3214,7 +2995,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 10
+    cves: 0
   OMRON:
     organization: OMRON Corporation
     group: vendor
@@ -3222,7 +3003,7 @@ filers:
     - Vendor
     country: Japan
     listed: true
-    cves: 6
+    cves: 0
   ONEKEY:
     organization: ONEKEY GmbH
     group: vendor
@@ -3231,7 +3012,7 @@ filers:
     - Researcher
     country: Germany
     listed: true
-    cves: 20
+    cves: 0
   OnLogic:
     organization: OnLogic
     group: vendor
@@ -3248,21 +3029,7 @@ filers:
     - Consortium
     country: Japan
     listed: true
-    cves: 1
-  OpenBMC:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 2
-  OpenCloudOS:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 1
+    cves: 0
   openEuler:
     organization: openEuler
     group: open source project
@@ -3271,7 +3038,7 @@ filers:
     - Open Source
     country: China
     listed: true
-    cves: 67
+    cves: 0
   openGauss:
     organization: openGauss Community
     group: open source project
@@ -3279,7 +3046,7 @@ filers:
     - Open Source
     country: China
     listed: true
-    cves: 5
+    cves: 0
   OpenHarmony:
     organization: OpenHarmony
     group: open source project
@@ -3287,7 +3054,7 @@ filers:
     - Open Source
     country: China
     listed: true
-    cves: 178
+    cves: 0
   openjs:
     organization: OpenJS Foundation
     group: open source project
@@ -3295,7 +3062,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 164
+    cves: 0
   OpenNMS:
     organization: The OpenNMS Group
     group: open source project
@@ -3304,7 +3071,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 23
+    cves: 0
   openssl:
     organization: OpenSSL Software Foundation
     group: open source project
@@ -3313,7 +3080,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 190
+    cves: 0
   OpenText:
     organization: OpenText (formerly Micro Focus)
     group: vendor
@@ -3321,7 +3088,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 181
+    cves: 0
   OpenVPN:
     organization: OpenVPN Inc.
     group: open source project
@@ -3330,7 +3097,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 71
+    cves: 0
   Opera:
     organization: Opera Norway AS
     group: open source project
@@ -3339,7 +3106,7 @@ filers:
     - Open Source
     country: Norway
     listed: true
-    cves: 6
+    cves: 0
   OPPO:
     organization: OPPO Mobile Telecommunication Corp., Ltd.
     group: vendor
@@ -3347,7 +3114,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 27
+    cves: 0
   oracle:
     organization: Oracle
     group: open source project
@@ -3357,7 +3124,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 12521
+    cves: 0
   OS-S:
     organization: OpenSource Security GmbH
     group: research or bug bounty platform
@@ -3373,7 +3140,7 @@ filers:
     - Vendor
     country: Germany
     listed: true
-    cves: 91
+    cves: 0
   OX:
     organization: Open-Xchange
     group: open source project
@@ -3382,7 +3149,7 @@ filers:
     - Vendor
     country: Germany
     listed: true
-    cves: 171
+    cves: 0
   Paessler:
     organization: Paessler GmbH
     group: vendor
@@ -3398,7 +3165,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 47
+    cves: 0
   Pall:
     organization: Pall Corporation
     group: vendor
@@ -3415,14 +3182,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 498
-  Panasonic Corporation:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 5
+    cves: 0
   Panasonic_Holdings_Corporation:
     organization: Panasonic Holdings Corporation
     group: vendor
@@ -3430,7 +3190,7 @@ filers:
     - Vendor
     country: Japan
     listed: true
-    cves: 10
+    cves: 0
   PandoraFMS:
     organization: Pandora FMS
     group: vendor
@@ -3438,7 +3198,7 @@ filers:
     - Vendor
     country: Spain
     listed: true
-    cves: 56
+    cves: 0
   PangeaCyber:
     organization: Pangea Cyber Corporation
     group: vendor
@@ -3456,7 +3216,7 @@ filers:
     - Vendor
     country: Australia
     listed: true
-    cves: 28
+    cves: 0
   Patchstack:
     organization: Patchstack
     group: research or bug bounty platform
@@ -3468,7 +3228,7 @@ filers:
     - Vendor
     country: Estonia
     listed: true
-    cves: 19438
+    cves: 0
   Payara:
     organization: Payara
     group: open source project
@@ -3477,7 +3237,7 @@ filers:
     - Vendor
     country: UK
     listed: true
-    cves: 10
+    cves: 0
   Pega:
     organization: Pegasystems Inc.
     group: vendor
@@ -3485,7 +3245,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 48
+    cves: 0
   Pentaho:
     organization: Pentaho Canada Inc.
     group: vendor
@@ -3501,7 +3261,7 @@ filers:
     - Researcher
     country: Dominican Republic
     listed: true
-    cves: 14
+    cves: 0
   Perforce:
     organization: Perforce
     group: open source project
@@ -3510,7 +3270,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 53
+    cves: 0
   Philips:
     organization: Philips
     group: vendor
@@ -3518,7 +3278,7 @@ filers:
     - Vendor
     country: Netherlands
     listed: true
-    cves: 3
+    cves: 0
   Phoenix:
     organization: Phoenix Technologies, Inc.
     group: vendor
@@ -3527,7 +3287,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 8
+    cves: 0
   php:
     organization: PHP Group
     group: open source project
@@ -3536,14 +3296,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 106
-  Ping Identity:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 54
+    cves: 0
   PingCAP:
     organization: PingCAP (US), Inc.
     group: open source project
@@ -3564,13 +3317,6 @@ filers:
     country: USA
     listed: true
     cves: 0
-  pivotal:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 160
   PlexTrac:
     organization: PlexTrac, Inc.
     group: vendor
@@ -3578,7 +3324,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 8
+    cves: 0
   Pointsharp:
     organization: Pointsharp International AB
     group: vendor
@@ -3596,7 +3342,7 @@ filers:
     - Hosted Service
     country: USA
     listed: true
-    cves: 2
+    cves: 0
   PostgreSQL:
     organization: PostgreSQL
     group: open source project
@@ -3604,7 +3350,7 @@ filers:
     - Open Source
     country: Canada
     listed: true
-    cves: 170
+    cves: 0
   postiz:
     organization: Postiz
     group: open source project
@@ -3614,7 +3360,7 @@ filers:
     - Hosted Service
     country: USA
     listed: true
-    cves: 8
+    cves: 0
   pretix:
     organization: pretix GmbH
     group: open source project
@@ -3624,7 +3370,7 @@ filers:
     - Open Source
     country: Germany
     listed: true
-    cves: 3
+    cves: 0
   PRJBLK:
     organization: Project Black
     group: research or bug bounty platform
@@ -3632,7 +3378,7 @@ filers:
     - Researcher
     country: Australia
     listed: true
-    cves: 14
+    cves: 0
   Profelis:
     organization: Profelis IT Consultancy
     group: vendor
@@ -3640,7 +3386,7 @@ filers:
     - Vendor
     country: Türkiye
     listed: true
-    cves: 2
+    cves: 0
   Profisee:
     organization: Profisee Group, Inc.
     group: vendor
@@ -3648,7 +3394,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 1
+    cves: 0
   ProgressSoftware:
     organization: Progress Software Corporation
     group: vendor
@@ -3656,7 +3402,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 338
+    cves: 0
   Proofpoint:
     organization: Proofpoint Inc.
     group: vendor
@@ -3665,7 +3411,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 26
+    cves: 0
   Proton:
     organization: Proton AG
     group: vendor
@@ -3673,7 +3419,7 @@ filers:
     - Vendor
     country: Switzerland
     listed: true
-    cves: 1
+    cves: 0
   PSF:
     organization: Python Software Foundation
     group: open source project
@@ -3682,7 +3428,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 89
+    cves: 0
   PTC:
     organization: PTC Inc.
     group: vendor
@@ -3690,21 +3436,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 5
-  puppet:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 56
-  PureStorage:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 20
+    cves: 0
   QCI:
     organization: Quanta Computer, Inc.
     group: vendor
@@ -3720,7 +3452,7 @@ filers:
     - Vendor
     country: Taiwan
     listed: true
-    cves: 652
+    cves: 0
   Qt:
     organization: Qt Group
     group: vendor
@@ -3728,7 +3460,7 @@ filers:
     - Vendor
     country: Finland
     listed: true
-    cves: 28
+    cves: 0
   qualcomm:
     organization: Qualcomm, Inc.
     group: vendor
@@ -3736,7 +3468,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 3757
+    cves: 0
   Qualys:
     organization: Qualys, Inc.
     group: vendor
@@ -3745,7 +3477,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 10
+    cves: 0
   Radiometer:
     organization: Radiometer Medical ApS
     group: vendor
@@ -3753,14 +3485,7 @@ filers:
     - Vendor
     country: Denmark
     listed: true
-    cves: 3
-  rami.io:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 36
+    cves: 0
   rapid7:
     organization: Rapid7, Inc.
     group: open source project
@@ -3770,7 +3495,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 365
+    cves: 0
   RealPage:
     organization: RealPage
     group: vendor
@@ -3787,14 +3512,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 13323
-  redhat-cnalr:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 18
+    cves: 0
   Replicated:
     organization: Replicated, Inc.
     group: vendor
@@ -3802,7 +3520,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 2
+    cves: 0
   RES:
     organization: RedEye Security
     group: vendor
@@ -3820,7 +3538,7 @@ filers:
     - Vendor
     country: UK
     listed: true
-    cves: 1
+    cves: 0
   Roche:
     organization: Roche Diagnostics
     group: vendor
@@ -3828,7 +3546,7 @@ filers:
     - Vendor
     country: Switzerland
     listed: true
-    cves: 3
+    cves: 0
   Rockwell:
     organization: Rockwell Automation
     group: vendor
@@ -3836,7 +3554,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 262
+    cves: 0
   rt-labs:
     organization: RT-Labs AB
     group: open source project
@@ -3845,7 +3563,7 @@ filers:
     - Open Source
     country: Sweden
     listed: true
-    cves: 11
+    cves: 0
   RTI:
     organization: Real-Time Innovations, Inc.
     group: vendor
@@ -3853,7 +3571,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 40
+    cves: 0
   runZero:
     organization: runZero, Inc.
     group: open source project
@@ -3864,7 +3582,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 56
+    cves: 0
   rust:
     organization: The Rust Project
     group: open source project
@@ -3873,7 +3591,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 3
+    cves: 0
   S21sec:
     organization: S21sec Cyber Solutions by Thales
     group: research or bug bounty platform
@@ -3881,7 +3599,7 @@ filers:
     - Researcher
     country: Spain
     listed: true
-    cves: 15
+    cves: 0
   S4M:
     organization: Security4Media
     group: research or bug bounty platform
@@ -3905,7 +3623,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 15
+    cves: 0
   Salesforce:
     organization: Salesforce, Inc.
     group: vendor
@@ -3913,14 +3631,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 45
-  Samsung Mobile:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 793
+    cves: 0
   samsung.tv_appliance:
     organization: Samsung TV & Appliance
     group: open source project
@@ -3930,7 +3641,7 @@ filers:
     - Vendor
     country: South Korea
     listed: true
-    cves: 108
+    cves: 0
   Samsung_Mobile:
     organization: Samsung Mobile
     group: vendor
@@ -3939,13 +3650,6 @@ filers:
     country: South Korea
     listed: true
     cves: 0
-  SamsungMobile:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 656
   samsungsemiconductor:
     organization: Samsung Semiconductor
     group: open source project
@@ -3954,7 +3658,7 @@ filers:
     - Open Source
     country: South Korea
     listed: true
-    cves: 35
+    cves: 0
   sap:
     organization: SAP SE
     group: open source project
@@ -3964,7 +3668,7 @@ filers:
     - Open Source
     country: Germany
     listed: true
-    cves: 1717
+    cves: 0
   Saviynt:
     organization: Saviynt Inc.
     group: vendor
@@ -3972,7 +3676,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 3
+    cves: 0
   sba-research:
     organization: SBA Research gGmbH
     group: research or bug bounty platform
@@ -3980,7 +3684,7 @@ filers:
     - Researcher
     country: Austria
     listed: true
-    cves: 17
+    cves: 0
   Scality:
     organization: Scality SA
     group: vendor
@@ -3996,7 +3700,7 @@ filers:
     - Vendor
     country: France
     listed: true
-    cves: 750
+    cves: 0
   SCHUTZWERK:
     organization: SCHUTZWERK GmbH
     group: research or bug bounty platform
@@ -4004,7 +3708,7 @@ filers:
     - Researcher
     country: Germany
     listed: true
-    cves: 6
+    cves: 0
   SCIEX:
     organization: SCIEX
     group: vendor
@@ -4030,7 +3734,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 6
+    cves: 0
   seal:
     organization: Seal Security
     group: open source project
@@ -4039,7 +3743,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 8
+    cves: 0
   SEC-VLab:
     organization: SEC Consult Vulnerability Lab
     group: research or bug bounty platform
@@ -4047,7 +3751,7 @@ filers:
     - Researcher
     country: Austria
     listed: true
-    cves: 131
+    cves: 0
   sec1:
     organization: Sec1
     group: vendor
@@ -4063,7 +3767,7 @@ filers:
     - Vendor
     country: Denmark
     listed: true
-    cves: 45
+    cves: 0
   Secur0:
     organization: Secur0
     group: research or bug bounty platform
@@ -4071,7 +3775,7 @@ filers:
     - Bug Bounty Provider
     country: Spain
     listed: true
-    cves: 46
+    cves: 0
   securepoint:
     organization: Securepoint GmbH
     group: vendor
@@ -4079,7 +3783,7 @@ filers:
     - Vendor
     country: Germany
     listed: true
-    cves: 1
+    cves: 0
   Securifera:
     organization: Securifera, Inc.
     group: research or bug bounty platform
@@ -4087,7 +3791,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 32
+    cves: 0
   securin:
     organization: Securin
     group: open source project
@@ -4097,7 +3801,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 74
+    cves: 0
   SEL:
     organization: Schweitzer Engineering Laboratories, Inc.
     group: vendor
@@ -4105,7 +3809,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 60
+    cves: 0
   Semtech:
     organization: Semtech Corporation
     group: vendor
@@ -4113,7 +3817,7 @@ filers:
     - Vendor
     country: Canada
     listed: true
-    cves: 1
+    cves: 0
   senhasegura:
     organization: senhasegura
     group: vendor
@@ -4123,13 +3827,6 @@ filers:
     country: Brazil
     listed: true
     cves: 0
-  sgi:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 68
   ShopBeat:
     organization: Shop Beat Solutions (Pty) LTD
     group: vendor
@@ -4138,14 +3835,7 @@ filers:
     - Vendor
     country: South Africa
     listed: true
-    cves: 6
-  SICK AG:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 190
+    cves: 0
   SICK_AG:
     organization: SICK AG
     group: vendor
@@ -4161,7 +3851,7 @@ filers:
     - Vendor
     country: Germany
     listed: true
-    cves: 1909
+    cves: 0
   Silabs:
     organization: Silicon Labs
     group: vendor
@@ -4169,14 +3859,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 149
-  Silver Peak:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 8
+    cves: 0
   Silver_Peak:
     organization: Silver Peak Systems, Inc.
     group: vendor
@@ -4200,7 +3883,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 1
+    cves: 0
   SK-CERT:
     organization: National Cyber Security Centre SK-CERT
     group: national CERT
@@ -4208,7 +3891,7 @@ filers:
     - CERT
     country: Slovak Republic
     listed: true
-    cves: 6
+    cves: 0
   SmileDigitalHealth:
     organization: Smile CDR Inc. (doing business as “Smile Digital Health”)
     group: open source project
@@ -4227,7 +3910,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 35
+    cves: 0
   Snow:
     organization: Snow Software
     group: vendor
@@ -4243,21 +3926,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 12
-  SNOWFLAKE:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 23
-  SNPS:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 46
+    cves: 0
   snyk:
     organization: Snyk
     group: research or bug bounty platform
@@ -4266,7 +3935,7 @@ filers:
     - Researcher
     country: UK
     listed: true
-    cves: 884
+    cves: 0
   SOCRadar:
     organization: SOCRadar Cyber Intelligence Inc.
     group: vendor
@@ -4283,7 +3952,7 @@ filers:
     - Vendor
     country: Germany
     listed: true
-    cves: 9
+    cves: 0
   SoftIron:
     organization: SoftIron
     group: vendor
@@ -4291,7 +3960,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 7
+    cves: 0
   SolarWinds:
     organization: SolarWinds
     group: vendor
@@ -4299,7 +3968,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 210
+    cves: 0
   Solidigm:
     organization: Solidigm
     group: vendor
@@ -4307,7 +3976,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 12
+    cves: 0
   Sonatype:
     organization: Sonatype Inc.
     group: vendor
@@ -4316,7 +3985,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 56
+    cves: 0
   sonicwall:
     organization: SonicWall, Inc.
     group: vendor
@@ -4324,7 +3993,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 221
+    cves: 0
   Sophos:
     organization: Sophos Limited
     group: vendor
@@ -4332,7 +4001,7 @@ filers:
     - Vendor
     country: UK
     listed: true
-    cves: 61
+    cves: 0
   spartans-security:
     organization: Spartans Security
     group: research or bug bounty platform
@@ -4340,14 +4009,7 @@ filers:
     - Researcher
     country: Australia
     listed: true
-    cves: 1
-  Splunk:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 157
+    cves: 0
   Spotfire:
     organization: Spotfire
     group: vendor
@@ -4355,7 +4017,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 1
+    cves: 0
   SRA:
     organization: Security Risk Advisors (SRA)
     group: research or bug bounty platform
@@ -4363,7 +4025,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 15
+    cves: 0
   Stackable:
     organization: Stackable GmbH
     group: open source project
@@ -4380,7 +4042,7 @@ filers:
     - Researcher
     country: Singapore
     listed: true
-    cves: 45
+    cves: 0
   StrongDM:
     organization: StrongDM
     group: vendor
@@ -4388,7 +4050,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 5
+    cves: 0
   Stryker:
     organization: Stryker Corporation
     group: vendor
@@ -4405,7 +4067,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 23
+    cves: 0
   suse:
     organization: SUSE
     group: open source project
@@ -4415,14 +4077,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 326
-  SWI:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 59
+    cves: 0
   Swift:
     organization: Swift Project
     group: open source project
@@ -4431,7 +4086,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 10
+    cves: 0
   symantec:
     organization: Symantec - A Division of Broadcom
     group: vendor
@@ -4440,7 +4095,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 379
+    cves: 0
   Synaptics:
     organization: Synaptics, Inc.
     group: vendor
@@ -4448,7 +4103,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 7
+    cves: 0
   Syncro:
     organization: Syncro Soft SRL
     group: vendor
@@ -4464,7 +4119,7 @@ filers:
     - Vendor
     country: Taiwan
     listed: true
-    cves: 338
+    cves: 0
   Synopsys:
     organization: Synopsys, Inc.
     group: vendor
@@ -4481,7 +4136,7 @@ filers:
     - Open Source
     country: Germany
     listed: true
-    cves: 3
+    cves: 0
   Tacit:
     organization: Tacit
     group: vendor
@@ -4498,7 +4153,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 2584
+    cves: 0
   Tanium:
     organization: Tanium Inc.
     group: vendor
@@ -4506,7 +4161,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 136
+    cves: 0
   TCL_Smart_Terminal:
     organization: TCL Electronics Holdings Limited
     group: vendor
@@ -4523,7 +4178,7 @@ filers:
     - Open Source
     country: Canada
     listed: true
-    cves: 17
+    cves: 0
   TCS-CERT:
     organization: TCS-CERT (Thales Cyber Solutions Customer’s CERT)
     group: national CERT
@@ -4531,7 +4186,7 @@ filers:
     - CERT
     country: Belgium
     listed: true
-    cves: 13
+    cves: 0
   TeamViewer:
     organization: TeamViewer Germany GmbH
     group: vendor
@@ -4547,7 +4202,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 22
+    cves: 0
   Tego_Cyber:
     organization: Tego Cyber, Inc.
     group: vendor
@@ -4565,7 +4220,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 23
+    cves: 0
   tenable:
     organization: Tenable Network Security, Inc.
     group: vendor
@@ -4573,14 +4228,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 593
-  Teradici:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 56
+    cves: 0
   THA-PSIRT:
     organization: Thales Group
     group: vendor
@@ -4589,7 +4237,7 @@ filers:
     - Researcher
     country: France
     listed: true
-    cves: 24
+    cves: 0
   The_Missing_Link:
     organization: The Missing Link Australia (TML)
     group: research or bug bounty platform
@@ -4605,7 +4253,7 @@ filers:
     - Vendor
     country: South Africa
     listed: true
-    cves: 7
+    cves: 0
   TianoCore:
     organization: TianoCore.org
     group: open source project
@@ -4614,7 +4262,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 30
+    cves: 0
   tibco:
     organization: TIBCO Software Inc.
     group: vendor
@@ -4622,7 +4270,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 180
+    cves: 0
   Tigera:
     organization: Tigera, Inc.
     group: open source project
@@ -4631,7 +4279,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 12
+    cves: 0
   tlt_net:
     organization: Teltonika Networks
     group: vendor
@@ -4639,14 +4287,7 @@ filers:
     - Vendor
     country: Lithuania
     listed: true
-    cves: 7
-  TML:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 64
+    cves: 0
   TMUS:
     organization: T-Mobile US
     group: vendor
@@ -4663,7 +4304,7 @@ filers:
     - Researcher
     country: Belgium
     listed: true
-    cves: 9
+    cves: 0
   Toshiba:
     organization: Toshiba Corporation
     group: vendor
@@ -4671,7 +4312,7 @@ filers:
     - Vendor
     country: Japan
     listed: true
-    cves: 44
+    cves: 0
   TPLink:
     organization: TP-Link Systems Inc.
     group: vendor
@@ -4680,14 +4321,7 @@ filers:
     - Hosted Service
     country: USA
     listed: true
-    cves: 219
-  TQtC:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 17
+    cves: 0
   TR-CERT:
     organization: TR-CERT (Computer Emergency Response Team of the Republic of Türkiye)
     group: national CERT
@@ -4695,7 +4329,7 @@ filers:
     - CERT
     country: Türkiye
     listed: true
-    cves: 895
+    cves: 0
   Trellix:
     organization: Trellix
     group: vendor
@@ -4704,7 +4338,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 399
+    cves: 0
   trendmicro:
     organization: Trend Micro, Inc.
     group: vendor
@@ -4712,14 +4346,7 @@ filers:
     - Vendor
     country: Japan
     listed: true
-    cves: 506
-  Tribe29:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 25
+    cves: 0
   TRO:
     organization: Teradyne Robotics
     group: vendor
@@ -4727,7 +4354,7 @@ filers:
     - Vendor
     country: Denmark
     listed: true
-    cves: 7
+    cves: 0
   TuranSec:
     organization: Turan Security
     group: research or bug bounty platform
@@ -4735,7 +4362,7 @@ filers:
     - Researcher
     country: Uzbekistan
     listed: true
-    cves: 211
+    cves: 0
   tuxcare:
     organization: Tuxcare Inc.
     group: open source project
@@ -4745,13 +4372,6 @@ filers:
     country: USA
     listed: true
     cves: 0
-  TV:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 55
   twcert:
     organization: TWCERT/CC
     group: national CERT
@@ -4759,7 +4379,7 @@ filers:
     - CERT
     country: Taiwan
     listed: true
-    cves: 952
+    cves: 0
   TXOne:
     organization: TXOne Networks, Inc.
     group: vendor
@@ -4768,7 +4388,7 @@ filers:
     - Researcher
     country: Taiwan
     listed: true
-    cves: 4
+    cves: 0
   TYPO3:
     organization: TYPO3 Association
     group: open source project
@@ -4776,7 +4396,7 @@ filers:
     - Open Source
     country: Switzerland
     listed: true
-    cves: 95
+    cves: 0
   Ubiquiti:
     organization: Ubiquiti, Inc.
     group: vendor
@@ -4784,7 +4404,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 42
+    cves: 0
   Unisoc:
     organization: Unisoc (Shanghai) Technologies Co., Ltd.
     group: vendor
@@ -4792,7 +4412,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 662
+    cves: 0
   Uniview:
     organization: Zhejiang Uniview Technologies Co., Ltd.
     group: vendor
@@ -4808,7 +4428,7 @@ filers:
     - Vendor
     country: Sweden
     listed: true
-    cves: 15
+    cves: 0
   Vaadin:
     organization: Vaadin Ltd.
     group: open source project
@@ -4817,7 +4437,7 @@ filers:
     - Open Source
     country: Finland
     listed: true
-    cves: 35
+    cves: 0
   Vantive:
     organization: Vantive
     group: vendor
@@ -4826,13 +4446,6 @@ filers:
     country: USA
     listed: true
     cves: 0
-  VDOO:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 11
   Velneo:
     organization: Velneo
     group: vendor
@@ -4840,7 +4453,7 @@ filers:
     - Vendor
     country: Spain
     listed: true
-    cves: 2
+    cves: 0
   Verizon:
     organization: Verizon
     group: open source project
@@ -4859,7 +4472,7 @@ filers:
     - Vendor
     country: Türkiye
     listed: true
-    cves: 1
+    cves: 0
   Vivo:
     organization: Vivo Mobile Communication Co., Ltd.
     group: vendor
@@ -4867,7 +4480,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 26
+    cves: 0
   vmware:
     organization: VMware by Broadcom
     group: open source project
@@ -4876,7 +4489,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 1005
+    cves: 0
   VulDB:
     organization: VulDB
     group: research or bug bounty platform
@@ -4884,7 +4497,7 @@ filers:
     - Researcher
     country: Switzerland
     listed: true
-    cves: 17986
+    cves: 0
   VulnCheck:
     organization: VulnCheck
     group: research or bug bounty platform
@@ -4893,7 +4506,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 11999
+    cves: 0
   VulNow:
     organization: VulNow
     group: research or bug bounty platform
@@ -4909,7 +4522,7 @@ filers:
     - Researcher
     country: Israel
     listed: true
-    cves: 27
+    cves: 0
   vx:
     organization: VotingWorks
     group: open source project
@@ -4926,7 +4539,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 3
+    cves: 0
   WatchGuard:
     organization: WatchGuard Technologies, Inc.
     group: vendor
@@ -4934,14 +4547,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 139
-  WDC PSIRT:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 49
+    cves: 0
   WDC_PSIRT:
     organization: Western Digital
     group: vendor
@@ -4965,7 +4571,7 @@ filers:
     - Vendor
     country: Germany
     listed: true
-    cves: 8
+    cves: 0
   wikimedia-foundation:
     organization: The Wikimedia Foundation
     group: open source project
@@ -4973,7 +4579,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 245
+    cves: 0
   WindRiver:
     organization: Wind River Systems Inc.
     group: vendor
@@ -4981,7 +4587,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 8
+    cves: 0
   Wiz:
     organization: Wiz, Inc.
     group: vendor
@@ -4990,7 +4596,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 7
+    cves: 0
   wolfSSL:
     organization: wolfSSL Inc.
     group: open source project
@@ -4999,7 +4605,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 120
+    cves: 0
   Wordfence:
     organization: Wordfence
     group: vendor
@@ -5008,7 +4614,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 12413
+    cves: 0
   WPScan:
     organization: WPScan
     group: open source project
@@ -5017,7 +4623,7 @@ filers:
     - Open Source
     country: France
     listed: true
-    cves: 6347
+    cves: 0
   WrenSecurity:
     organization: Wren Security
     group: open source project
@@ -5025,7 +4631,7 @@ filers:
     - Open Source
     country: Czech Republic
     listed: true
-    cves: 1
+    cves: 0
   WSO2:
     organization: WSO2 LLC
     group: open source project
@@ -5035,7 +4641,7 @@ filers:
     - Hosted Service
     country: USA
     listed: true
-    cves: 129
+    cves: 0
   XEN:
     organization: Xen Project
     group: open source project
@@ -5044,7 +4650,7 @@ filers:
     - Open Source
     country: UK
     listed: true
-    cves: 183
+    cves: 0
   Xerox:
     organization: Xerox Corporation
     group: vendor
@@ -5052,7 +4658,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 21
+    cves: 0
   XI:
     organization: Exodus Intelligence
     group: research or bug bounty platform
@@ -5061,7 +4667,7 @@ filers:
     - Researcher
     country: USA
     listed: true
-    cves: 37
+    cves: 0
   Xiaomi:
     organization: Xiaomi Technology Co., Ltd.
     group: vendor
@@ -5069,7 +4675,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 56
+    cves: 0
   XONA:
     organization: Xona Systems
     group: vendor
@@ -5085,7 +4691,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 4
+    cves: 0
   yandex:
     organization: Yandex N.V.
     group: vendor
@@ -5093,7 +4699,7 @@ filers:
     - Vendor
     country: Russia
     listed: true
-    cves: 39
+    cves: 0
   YesWeHack:
     organization: YesWeHack
     group: research or bug bounty platform
@@ -5101,7 +4707,7 @@ filers:
     - Bug Bounty Provider
     country: France
     listed: true
-    cves: 3
+    cves: 0
   Ygreky:
     organization: Ygreky SASU
     group: research or bug bounty platform
@@ -5120,7 +4726,7 @@ filers:
     - Vendor
     country: Japan
     listed: true
-    cves: 29
+    cves: 0
   Yugabyte:
     organization: Yugabyte, Inc.
     group: vendor
@@ -5129,7 +4735,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 20
+    cves: 0
   Zabbix:
     organization: Zabbix
     group: vendor
@@ -5137,7 +4743,7 @@ filers:
     - Vendor
     country: Latvia
     listed: true
-    cves: 98
+    cves: 0
   zdi:
     organization: Zero Day Initiative
     group: research or bug bounty platform
@@ -5146,7 +4752,7 @@ filers:
     - Researcher
     country: Japan
     listed: true
-    cves: 3490
+    cves: 0
   Zenitel:
     organization: Zenitel Norway AS
     group: vendor
@@ -5163,7 +4769,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 370
+    cves: 0
   ZGR:
     organization: ZGR
     group: vendor
@@ -5179,7 +4785,7 @@ filers:
     - Vendor
     country: India
     listed: true
-    cves: 106
+    cves: 0
   Zoom:
     organization: Zoom Communications, Inc.
     group: vendor
@@ -5187,7 +4793,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 237
+    cves: 0
   Zowe:
     organization: Zowe
     group: open source project
@@ -5195,7 +4801,7 @@ filers:
     - Open Source
     country: USA
     listed: true
-    cves: 7
+    cves: 0
   Zscaler:
     organization: Zscaler, Inc.
     group: vendor
@@ -5203,7 +4809,7 @@ filers:
     - Vendor
     country: USA
     listed: true
-    cves: 57
+    cves: 0
   ZTE:
     organization: ZTE Corporation
     group: vendor
@@ -5211,14 +4817,7 @@ filers:
     - Vendor
     country: China
     listed: true
-    cves: 230
-  ZUSO ART:
-    organization: null
-    group: other
-    cna_types: []
-    country: null
-    listed: false
-    cves: 50
+    cves: 0
   ZUSO_ART:
     organization: ZUSO Advanced Research Team (ZUSO ART)
     group: research or bug bounty platform
@@ -5234,4 +4833,4 @@ filers:
     - Vendor
     country: Taiwan
     listed: true
-    cves: 169
+    cves: 0

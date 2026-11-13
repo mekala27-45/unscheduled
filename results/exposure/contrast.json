@@ -29,18 +29,17 @@
    "findings_without_cve": 1,
    "cves": 97,
    "cves_in_nvd_table": 97,
-   "cves_with_cpe_configuration": 80,
+   "cves_with_cpe_configuration": 82,
    "cves_by_nvd_status": {
-    "Analyzed": 55,
+    "Analyzed": 57,
     "Awaiting Analysis": 7,
     "Deferred": 8,
-    "Modified": 25,
-    "Undergoing Analysis": 2
+    "Modified": 25
    },
-   "findings_a_cpe_matcher_could_make": 80,
-   "share_a_cpe_matcher_could_not_make": 0.1836734693877551,
-   "findings_with_nvd_analysis": 80,
-   "share_without_nvd_analysis": 0.1836734693877551
+   "findings_a_cpe_matcher_could_make": 82,
+   "share_a_cpe_matcher_could_not_make": 0.16326530612244897,
+   "findings_with_nvd_analysis": 82,
+   "share_without_nvd_analysis": 0.16326530612244897
   },
   "go-edge-service": {
    "findings": 25,
@@ -99,10 +98,10 @@
    "cves_in_nvd_table": 170,
    "cves_with_cpe_configuration": 89,
    "cves_by_nvd_status": {
-    "Analyzed": 22,
+    "Analyzed": 21,
     "Awaiting Analysis": 48,
     "Deferred": 31,
-    "Modified": 66,
+    "Modified": 67,
     "Received": 1,
     "Rejected": 1,
     "Undergoing Analysis": 1
@@ -118,20 +117,20 @@
   "findings_without_cve": 97,
   "cves": 661,
   "cves_in_nvd_table": 661,
-  "cves_with_cpe_configuration": 394,
+  "cves_with_cpe_configuration": 396,
   "cves_by_nvd_status": {
-   "Analyzed": 203,
+   "Analyzed": 204,
    "Awaiting Analysis": 127,
    "Deferred": 133,
-   "Modified": 190,
+   "Modified": 191,
    "Received": 2,
    "Rejected": 3,
-   "Undergoing Analysis": 3
+   "Undergoing Analysis": 1
   },
-  "findings_a_cpe_matcher_could_make": 561,
-  "share_a_cpe_matcher_could_not_make": 0.4752104770813845,
-  "findings_with_nvd_analysis": 560,
-  "share_without_nvd_analysis": 0.4761459307764266
+  "findings_a_cpe_matcher_could_make": 563,
+  "share_a_cpe_matcher_could_not_make": 0.47333956969130025,
+  "findings_with_nvd_analysis": 562,
+  "share_without_nvd_analysis": 0.47427502338634236
  },
  "grype": {
   "cloud-dashboard": {

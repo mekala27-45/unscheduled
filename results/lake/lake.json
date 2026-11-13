@@ -1,9 +1,9 @@
 {
- "bytes": 455356416,
- "content_digest": "6a7ad73d0035aeb780d2ada250bfaee01d760a547aa8aa85e86aaacd3743ff64",
- "data_cut": "2026-11-12T00:21:46+00:00",
+ "bytes": 456142848,
+ "content_digest": "197f0e3bd87fed737086f544c5b9c7f0647970207e9fb80b4e55981914321814",
+ "data_cut": "2026-11-13T06:00:00+00:00",
  "file": "data/lake/unscheduled.duckdb",
- "sha256": "66812c5bfe50d61521e75391f29ef2afc7e73549d6e628733bd90c9e5e2c4142",
+ "sha256": "0d50798827c71b0f7959994f5472eae9c1c530e05710f16d1b128c6e5df6bfba",
  "tables": {
   "config.bronze_tables": {
    "columns": [
@@ -13,7 +13,7 @@
     "rows",
     "present"
    ],
-   "digest": "b819aad6a8b695680e8238b67b9b281ba3dc5018ec842f9d60b70b68751f7a8a",
+   "digest": "8479bd0baf997961ee322782fd50b35a2fbe9fd0b6f703be8e7d92dbddfef18d",
    "rows": 12
   },
   "config.filer_types": {
@@ -22,14 +22,14 @@
     "org_id",
     "filer_type"
    ],
-   "digest": "3f64367fbdced40d878ea38f4b2e8ec82f099ad5ccf987554538e96c4a432cde",
-   "rows": 625
+   "digest": "2792ddaaeb972ab03928b6c500292c3a24d57d422be34874541598fa7c49e557",
+   "rows": 634
   },
   "config.lake_build": {
    "columns": [
     "data_cut"
    ],
-   "digest": "216e3bcd7a581381658f13e217e10dc4fc88fc2469c8097378dfdce9e38b1c97",
+   "digest": "04e7ea009595e483406cd1c0280e00a1f46279bbf48ccdf47e09bf1f1ecd2b54",
    "rows": 1
   },
   "config.splits": {
@@ -114,8 +114,8 @@
     "before_history",
     "pre_history_facts"
    ],
-   "digest": "ba489396c33d5ed2f8c14accee92ec5c2703940183fdd66978ef674a5b9fbcc2",
-   "rows": 424534
+   "digest": "8a572e0d9775d04582fd42203bbd10d307c3b9b8f301d077de0e9235f4c7c0c1",
+   "rows": 424978
   },
   "gold.mart_backlog_q1": {
    "columns": [
@@ -134,8 +134,8 @@
     "analyzed_30d",
     "analyzed_90d"
    ],
-   "digest": "79957756130d3a7d8a15194e5b48d178d86a664ae83a0d282ab4964591efa0fc",
-   "rows": 276958
+   "digest": "7203c2db1c84a3848453c8ca0c4372a85c41253bcdac115edf5f4b41ae02b65d",
+   "rows": 277391
   },
   "gold.mart_backlog_q2": {
    "columns": [
@@ -156,8 +156,8 @@
     "business_day_deadline",
     "met_one_business_day"
    ],
-   "digest": "51120836c313c2c084905ea6e1da6f74f2979a8b821ca5e3cde64eeaf7667d04",
-   "rows": 79870
+   "digest": "a8f907cc3b39241f8296644ccb2fa512088ce87dab14667a400432009a995d7b",
+   "rows": 80312
   },
   "gold.mart_backlog_q3": {
    "columns": [
@@ -176,8 +176,8 @@
     "has_adp_ssvc",
     "has_adp_value"
    ],
-   "digest": "b426cd6b7236be0bd43b183c9b2341e72490fc379c85cbe77706ddc2d2ec9815",
-   "rows": 80094
+   "digest": "5e9b963b23453f570e1912884f4800fac2992556003d8cb8bcf7a2dae021e917",
+   "rows": 80526
   },
   "gold.mart_backlog_q6": {
    "columns": [
@@ -189,8 +189,8 @@
     "month_total",
     "share_of_month"
    ],
-   "digest": "f1a5a5e5d68caee204f7a424a785d48bcd13ed337ba9545eeccd71577191b143",
-   "rows": 9897
+   "digest": "53b9951358f1b0a47537d02e70abd02f4500354808ae2fb692c949055a4dc714",
+   "rows": 9909
   },
   "gold.mart_domain_shift": {
    "columns": [
@@ -207,8 +207,8 @@
     "half",
     "position"
    ],
-   "digest": "5111f57d338c15d45bd0824a0684b4ad6b39b9a30b50726fce01aee4d0257246",
-   "rows": 78243
+   "digest": "d6998afe5b8be2172fc7e35e28eab997c083baf0235d594de7e02e4024754898",
+   "rows": 78676
   },
   "gold.mart_filer_vs_nvd": {
    "columns": [
@@ -242,7 +242,7 @@
     "nvd_band_rank",
     "filer_band_rank"
    ],
-   "digest": "7cc9cf2cf954c641a37d18faac932e227c3133925934a01dbb0692a523bd2d8b",
+   "digest": "9770a3dba8917e2e0c0128d9edbb0f6803a972c472496b938304a4d18c9fc6b2",
    "rows": 47641
   },
   "gold.mart_kev_timing": {
@@ -264,7 +264,7 @@
     "metasploit_before_listing",
     "nuclei_before_listing"
    ],
-   "digest": "009688bac88b7e9567d7d7d0764b8b49beb79727b4811451d4cdccf280120e88",
+   "digest": "ea020124c1ad9644a349c73bf75e5209c45aca447525ca8395ebbe281c4311ba",
    "rows": 1025
   },
   "quarantine.quarantine": {
@@ -276,8 +276,8 @@
     "row_key",
     "detail"
    ],
-   "digest": "b461b7522ab748de150a3ea18c12a9a6c40b1915681f6a21e7c0daaf73c4b98f",
-   "rows": 963
+   "digest": "3fe10618c86409a7fcf54f0cc911aeb7ba4e850b3efdb746d15df2fbe0efbf3a",
+   "rows": 961
   },
   "quarantine.quarantine_counts": {
    "columns": [
@@ -286,7 +286,7 @@
     "row_count",
     "cve_count"
    ],
-   "digest": "6ccf1f8f97dd51237a38403c55ff0b28d7e51b5b5a6f2f73dc9ad96e6a423b26",
+   "digest": "a062e07fd6e889dd56d82633adfcfa01b186e92d5da6100bda16aaee3c6d552f",
    "rows": 8
   },
   "silver.advisory_versions": {
@@ -303,8 +303,8 @@
     "known_from",
     "known_to"
    ],
-   "digest": "06584c787d41b0f93b544d39ff07ed4b9831418b875b323cdfbe5e0a066c150c",
-   "rows": 404449
+   "digest": "e4c9d11b53d88ea53da93f1e4e17998e4e3060cdc82c9575e8cd41bd9ad6b227",
+   "rows": 405474
   },
   "silver.cve_fact": {
    "columns": [
@@ -317,8 +317,8 @@
     "dated_by",
     "pre_history"
    ],
-   "digest": "65ea06b4a8d69b95830a7bf06ce5c77c3fffa555818ae5e2caaa17975f0b19d3",
-   "rows": 6620931
+   "digest": "c9756f5c457990a9b44547a2d46c5e965eee8f41fbeee57106b50ee5cf7acff6",
+   "rows": 6629800
   },
   "silver.exploit_first_seen": {
    "columns": [
@@ -357,8 +357,8 @@
     "dated_by",
     "pre_history"
    ],
-   "digest": "059603c3fa29b15005de5b98dce75ee95d8b70ebde502a87567ffbc8a41dbb55",
-   "rows": 1022935
+   "digest": "1d52244c5547b81cf724b87e54045bbe183bbd4ff9266031b51a62d58344192a",
+   "rows": 1023092
   }
  }
 }

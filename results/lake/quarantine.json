@@ -1,5 +1,5 @@
 {
- "data_cut": "2026-11-12T00:21:46+00:00",
+ "data_cut": "2026-11-13T06:00:00+00:00",
  "rules": [
   {
    "cves": 1,
@@ -27,7 +27,7 @@
   },
   {
    "cves": 2,
-   "rows": 6,
+   "rows": 4,
    "rule": "rejected CVE that still carries metrics",
    "rule_id": "Q05"
   },
