@@ -2,7 +2,8 @@
 
 config.splits       the windows of config/splits.yaml
 config.status_labels the NVD vulnStatus values registered in config/labels.yaml
-config.filer_types  every filer with its type, from config/filers.yaml
+config.filer_types  every filer with its type, from config/filers.yaml, and every other assigner the
+                    CVE List bronze names, typed by the rule for a filer the CNA list does not hold
 config.sbom_components every component of every SBOM in customer/sboms, as packages/match reads it
                     (quarantine rule Q07 counts the packages among them with no package URL)
 
@@ -12,6 +13,7 @@ report, so a filer list or an SBOM still to come is visible instead of silently 
 
 from __future__ import annotations
 
+from collections.abc import Iterable
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -19,6 +21,7 @@ from typing import Any
 import duckdb
 import polars as pl
 import yaml
+from unscheduled_sources.cna_list import group_by_name
 
 from unscheduled_lake.db import put, run
 
@@ -74,28 +77,55 @@ def status_labels(path: Path) -> pl.DataFrame:
     return pl.DataFrame(rows, schema=LABEL_SCHEMA).sort("status")
 
 
-def filer_types(path: Path) -> pl.DataFrame:
+def filer_types(path: Path, assigners: Iterable[str] = ()) -> pl.DataFrame:
     """Filers by short name and organization id, with the group config/filers.yaml gives each.
 
     packages/sources writes the file with the filers under `filers`, a mapping from short name to
     an entry whose `group` is the filer type; a list of entries with `short_name` and `type` is
     read too. A filer without a group is left out, so the spine types it as unregistered.
+
+    `assigners` are the short names the CVE List gives as assigners. One the file does not hold is
+    added: with the group of a listed filer whose name differs only in case, or else by the rule for
+    a filer the CNA list does not hold (packages/sources, cna_list.group_by_name). The file carries
+    such filers too, but only when the CVE List bronze existed when it was written, which a first
+    fetch from nothing does not promise (DECISIONS.md, 13 November 2026).
     """
-    if not path.exists():
-        return pl.DataFrame(schema=FILER_SCHEMA)
-    data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    entries = data.get("filers") or []
     rows: list[dict[str, Any]] = []
-    if isinstance(entries, dict):
-        entries = [{"short_name": k, **(v or {})} for k, v in entries.items()]
-    for entry in entries:
-        name = entry.get("short_name") or entry.get("name")
-        kind = entry.get("group") or entry.get("type") or entry.get("filer_type")
-        if not name or not kind:
+    if path.exists():
+        data = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
+        entries = data.get("filers") or []
+        if isinstance(entries, dict):
+            entries = [{"short_name": k, **(v or {})} for k, v in entries.items()]
+        for entry in entries:
+            name = entry.get("short_name") or entry.get("name")
+            kind = entry.get("group") or entry.get("type") or entry.get("filer_type")
+            if not name or not kind:
+                continue
+            rows.append({"short_name": str(name), "org_id": entry.get("org_id"), "filer_type": str(kind)})
+    known = {r["short_name"] for r in rows}
+    by_lower = {str(r["short_name"]).lower(): r["filer_type"] for r in rows}
+    for name in sorted({str(a) for a in assigners if a}):
+        if name in known:
             continue
-        rows.append({"short_name": str(name), "org_id": entry.get("org_id"), "filer_type": str(kind)})
+        rows.append(
+            {
+                "short_name": name,
+                "org_id": None,
+                "filer_type": by_lower.get(name.lower()) or group_by_name(name),
+            }
+        )
     frame = pl.DataFrame(rows, schema=FILER_SCHEMA)
     return frame.unique(subset=["short_name", "org_id"], keep="first", maintain_order=True).sort("short_name")
+
+
+def bronze_assigners(bronze: Path) -> list[str]:
+    """Every short name the CVE List bronze gives as a record's assigner."""
+    folder = bronze / "cve_records"
+    files = sorted(str(p) for p in folder.rglob("*.parquet")) if folder.exists() else []
+    if not files:
+        return []
+    names = pl.scan_parquet(files).select("assigner_short_name").unique().collect()
+    return sorted(str(v) for v in names.get_column("assigner_short_name").drop_nulls().to_list())
 
 
 def sbom_components(folder: Path) -> pl.DataFrame:
@@ -152,7 +182,9 @@ def load(con: duckdb.DuckDBPyConnection, root: Path) -> dict[str, int]:
     frames = {
         "splits": splits(root / "config" / "splits.yaml"),
         "status_labels": status_labels(root / "config" / "labels.yaml"),
-        "filer_types": filer_types(root / "config" / "filers.yaml"),
+        "filer_types": filer_types(
+            root / "config" / "filers.yaml", bronze_assigners(root / "data" / "bronze")
+        ),
         "sbom_components": sbom_components(root / "customer" / "sboms"),
         "sbom_non_package": sbom_non_package(root / "customer" / "sboms"),
     }

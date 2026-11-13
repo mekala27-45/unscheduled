@@ -295,3 +295,13 @@ sums of its upload with the sums the release already lists, and lake.yml warns a
 sums leave out. The releases written before this change stay as they are; for an archive their sums
 leave out, the restore checks the SHA-256 GitHub recorded when the archive was uploaded, and
 results/lake/release.json keeps the digest of every archive it restored.
+
+## 2026-11-13: the lake types every assigner the CVE List names
+
+A run of every source took the CNA list first, so the first fetch from nothing counted each filer's
+records before any CVE List bronze existed. The filer file it wrote holds the 567 listed filers with
+no counts and none of the assigners the CNA list does not hold, and the daily runs since kept it, so
+61 assigners named by 6,739 records in lake-20261112 fell to unregistered in the lake. A run of every
+source now fetches the CVE List and KEV before the CNA list, and the lake build adds every assigner
+the CVE List bronze names that the file does not hold: with the group of a listed filer whose name
+differs only in case, or else by the rule the fetcher applies to a filer the list does not hold.

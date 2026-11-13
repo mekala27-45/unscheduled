@@ -16,10 +16,12 @@ from unscheduled_sources.bronze import Bronze
 
 # Source name to the module and class that fetch it, in the order a full run takes them: the CVE
 # List and KEV first, because EPSS keeps its offsets from their publication dates and KEV list.
+# The order a run of every source takes. The CNA list counts each filer's records in the CVE List
+# bronze, so it comes after the CVE List: a first fetch from nothing has no bronze before it.
 SOURCES: dict[str, tuple[str, str]] = {
-    "cna_list": ("unscheduled_sources.cna_list", "CnaList"),
     "cvelist": ("unscheduled_sources.cvelist", "CveList"),
     "kev": ("unscheduled_sources.kev", "Kev"),
+    "cna_list": ("unscheduled_sources.cna_list", "CnaList"),
     "cwe": ("unscheduled_sources.cwe", "Cwe"),
     "osv": ("unscheduled_sources.osv", "Osv"),
     "ghsa": ("unscheduled_sources.ghsa", "Ghsa"),
