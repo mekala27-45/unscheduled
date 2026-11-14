@@ -66,23 +66,32 @@ numbers are committed runs with the numeric pins (AGENTS.md).
 
 ## Open problems
 
-- Releases and tags come only from Ajay: this session cannot create a release or start a workflow
-  that creates one, and its git access cannot push a tag, so v0.2.0 is pushed from his machine.
+{% if has("models.test.c1.verdict") %}
+- C1 and C2 are {{ v("models.test.c1.verdict") }} and {{ v("models.test.c2.verdict") }}, scored once (the hand off below has the numbers). The fill model is
+  the CPU fallback, behind its TF-IDF floor on development and on test; the exploitation model ties
+  its floor and EPSS on day 1. Test cannot be scored again without a change request that keeps both
+  results (evaluation/phase2_plan.yaml), so a better model is judged in a later phase, against the
+  same floors.
+{% endif %}
 - Kaggle and Databricks secrets are not set. Step eight took its CPU fallback (DECISIONS.md, step
   eight takes the fallback), and KAGGLE_USERNAME with KAGGLE_KEY would let ModernBERT run; without
   the Databricks pair, the registry uses the file store.
-- The CPE dictionary is fetched daily; the product models wait for the first lake release that
-  carries it. No daily fetch had finished since cpe joined its schedule when this was written, and
-  this session may not start one, so Ajay was asked to start fetch.yml by hand with the source cpe.
 - The exploitation search picks its trees on noise: over four runs on the same rows, LightGBM's
   development recall in the top five percent moved by more than twenty points while the floor held
   within one. The numeric kernels are now pinned, so a run reproduces on any processor
   (DECISIONS.md, the pinned exploitation run reproduces, and is the model), but a reproducible draw
   is still one draw; a search that averages over seeds or folds is a change for a later phase.
-- The schedules fire hours late and less often than they ask: the hourly fetch has run a few times
-  a day since 12 November, and the daily fetch and lake build several hours after their times. The
-  newest lake release changes with each hourly run until the next daily one, so the committed
-  numbers come from the release before it (DECISIONS.md, 13 November).
+- Vercel's Hobby plan refused deployments for part of 14 November after many pushes (the commit
+  statuses read: Deployment rate limited). A commit that needs no deploy now carries [skip deploy],
+  so only the last commit of a batch builds, and a change reaches the site only once a deploy of it
+  succeeds.
+- Releases and tags come only from Ajay: this session cannot create a release or start a workflow
+  that creates one, and its git access cannot push a tag, so v0.2.0 is pushed from his machine.
+- The schedules fire hours late and less often than they ask: on 14 November the daily fetch ran
+  about seven hours after its time and the lake build too, before the batch existed, so the live
+  API gets new predictions only from a lake run after they are committed. The newest lake release
+  changes with each hourly run until the next daily one, so the committed numbers come from the
+  release before it (DECISIONS.md, 13 November).
 - config/filers.yaml, as the first fetch wrote it, holds the listed filers without their record
   counts. The lake types the other assigners from the CVE List bronze, and the fetcher writes the
   counts again when the CNA list next changes (DECISIONS.md, 13 November).

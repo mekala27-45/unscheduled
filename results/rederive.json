@@ -1,19 +1,47 @@
 {
  "release": "lake-20261112",
- "commit": "5914c0275c808a7f28053afa1c4c5bb83d39df63",
- "started_at": "2026-11-14T04:58:33Z",
+ "commit": "1fe03edb63956744f0201352368c0ca863e92be9",
+ "started_at": "2026-11-14T13:24:55Z",
  "inputs": "the release's bronze, locks and config, each archive checked against its SHA256SUMS",
  "restored": {
   "bronze_archives": 12
  },
  "build_settings": {
-  "memory": "4GB",
-  "threads": 2
+  "memory": "3GB",
+  "threads": 2,
+  "processor": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+  "numeric_pins": {
+   "OPENBLAS_CORETYPE": "Haswell",
+   "OPENBLAS_NUM_THREADS": "1",
+   "NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR"
+  }
  },
  "step_seconds": {
-  "scripts/build_lake.py": 161.6,
-  "scripts/run_analysis.py": 42.8,
-  "scripts/backlog_charts.py": 0.0
+  "scripts/build_lake.py": 198.4,
+  "scripts/run_analysis.py": 53.4,
+  "scripts/backlog_charts.py": 0.0,
+  "scripts/build_sets.py": 60.7,
+  "scripts/train_survival.py": 1158.4,
+  "scripts/train_rank.py": 1882.1,
+  "scripts/score_test.py --recheck": 719.9
+ },
+ "not_refit": {
+  "floors": "about two and a half hours on a four CPU runner; their test predictions are checked by digest",
+  "fallback": "hours of embedding on a runner; its test predictions are checked by digest",
+  "product": "reads the embeddings too; its test candidates are checked by digest"
+ },
+ "test_recheck": {
+  "checked_at": "2026-11-14T14:32:50+00:00",
+  "inputs": "the test prediction files the operating points froze, checked by content digest",
+  "compared": [
+   "c1.json",
+   "c2.json",
+   "test_scoring.json without scored_at"
+  ],
+  "differences": [],
+  "difference_count": 0,
+  "result": "pass",
+  "exit": 0
  },
  "parts": {
   "lake.json": {
@@ -29,13 +57,30 @@
    "differ": [],
    "missing": [],
    "extra": []
+  },
+  "survival.json": {
+   "compared": 6,
+   "equal": 6,
+   "differ": [],
+   "missing": [],
+   "extra": []
+  },
+  "rank.json": {
+   "compared": 14,
+   "equal": 14,
+   "differ": [],
+   "missing": [],
+   "extra": []
   }
  },
  "not_compared": {
-  "values:lake.sha256": "the file digest; lake.content_digest is compared instead"
+  "values:lake.sha256": "the file digest; lake.content_digest is compared instead",
+  "values:models.survival.r_check.concordance_difference": "R is not on this machine; the models workflow ran the check",
+  "values:models.survival.r_check.max_coefficient_difference": "R is not on this machine; the models workflow ran the check",
+  "values:models.survival.r_check.result": "R is not on this machine; the models workflow ran the check"
  },
- "compared": 693,
- "equal": 693,
+ "compared": 713,
+ "equal": 713,
  "result": "pass",
- "seconds": 206.8
+ "seconds": 4093.0
 }
