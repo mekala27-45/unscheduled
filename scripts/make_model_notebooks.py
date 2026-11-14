@@ -222,11 +222,14 @@ print("median days to listing:", float(np.median(days)))""",
     ),
     (
         "markdown",
-        "Every CVE KEV lists in its first 30 days was already listed, often widely exploited, when EPSS "
-        "was read on day 30, so EPSS at day 30 is partly reading the label. The registered C2 reports "
-        "EPSS at days 1, 7 and 30 beside the model and calls a difference whose interval holds zero a "
-        "tie, and the report says which days have seen more than the model; it never ranks the model "
-        "against day 30 as if the two had seen the same days.",
+        "On development, 90 of the 127 listings came within 30 days of publication and the median "
+        "came after five days, so EPSS read on day 30, and on day 7 for most of them, was read after "
+        "the listing it is scored against. Its lead over the model there is the label arriving early, "
+        "not a better ranking on the day of publication. EPSS at day 1 is the nearest to a fair "
+        "comparison, and on development it is ahead of the model too. The registered C2 reports EPSS "
+        "at days 1, 7 and 30 beside the model, calls a difference whose interval holds zero a tie, "
+        "and says which days have seen more than the model; it never ranks the model against day 30 "
+        "as if the two had seen the same days.",
     ),
 ]
 
