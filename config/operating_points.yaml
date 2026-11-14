@@ -1,0 +1,62 @@
+# The operating points of Phase 2, frozen and hashed into evaluation/registration.json before test is
+# scored. Written by scripts/choose_operating_points.py; a change after the hash is a change request.
+frozen_for: Phase 2, before scripts/score_test.py scores test once
+primary:
+  fill: fallback
+  fill_design: joint
+  fill_comparator: floors
+  exploitation: exploit_lgbm
+  exploitation_comparator: exploit_floor
+temperatures:
+  floors:
+    band: 0.875785
+    metric_AV: 0.759802
+    metric_AC: 0.863884
+    metric_PR: 1.19348
+    metric_UI: 1.016534
+    metric_S: 1.02366
+    metric_C: 0.920417
+    metric_I: 0.936739
+    metric_A: 1.08108
+    cwe: 0.745433
+  fallback:
+    band: 1.158389
+    metric_AV: 1.062589
+    metric_AC: 0.853446
+    metric_PR: 1.204252
+    metric_UI: 0.925021
+    metric_S: 0.983578
+    metric_C: 1.146813
+    metric_I: 1.286932
+    metric_A: 1.120276
+    cwe: 1.040001
+isotonic_maps_sha256:
+  exploit_lgbm: ed5d70be5c57ff40953b526b2559b98364608ad3d5950c72a8990f4d7e447780
+  exploit_floor: 83b462bbdde333375ce0e807d246c9b293ae2fa6234e5087fd3a0011efc209cd
+conformal:
+  target: 0.9
+  cutoffs:
+    band: 0.889958276
+    metric_AV: 0.900638302
+    metric_AC: 0.899941834
+    metric_PR: 0.897836989
+    metric_UI: 0.899933876
+    metric_S: 0.894753624
+    metric_C: 0.899478262
+    metric_I: 0.897900591
+    metric_A: 0.90074845
+  floor_band_cutoff: 0.890758109
+c2:
+  top_share: 0.05
+  rank_by: the raw exploit_lgbm score, ties by position in CVE id order
+  population: test window CVEs, Q03 left out
+reweighting:
+  clip: 20.0
+product_floor_threshold: 90
+test_predictions:
+  floors: 59759d135b2f711ca9e4f440675899cff35d000432e3bcc847b4299e6b15b12f
+  fallback: e933f39a38b4a922c4e4a09169b0b586a94c14a2cee498f9f0a12d675b93ecaa
+  fallback_text: 5a81ee90370f2791217236ae00e9f0918b23aba261f4aa59edf808d3cf216c97
+  rank: b1fa92dd23c24d66a2e209e0545b64052d72e5cc40cb981fa031d2e88a14f692
+  survival: b18d563d5b752fb1a56b42ae76e0486d409564311da5cd1296f35f1a8db89d3a
+  product: 89756c61e09eceffa51d657d3d37360e8779b81dace30b8436831bfec6c0953a

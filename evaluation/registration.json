@@ -137,6 +137,66 @@
    },
    "note": "the Phase 2 plan and the pinned weights, hashed before any model saw a test CVE",
    "model_results_at_hash": []
+  },
+  {
+   "stage": "operating_points",
+   "registered_at": "2026-11-14T13:04:41+00:00",
+   "hash": "406e8887f350c506e1519710c164f715c436c495253ba0ca2c827dba4ced4588",
+   "files": {
+    "config/operating_points.yaml": "66dd2146f0ef5a2490b45e25f53cccf0df1ea7b7267ee9679f63b2bb67377278"
+   },
+   "first_committed": {
+    "config/operating_points.yaml": null
+   },
+   "state_at_hash": {
+    "bronze_tables": [
+     "cpe_names",
+     "cve_metrics",
+     "cve_records",
+     "cve_weaknesses",
+     "cwe",
+     "epss_offsets",
+     "exploit_signals",
+     "ghsa",
+     "kev",
+     "nvd_changes",
+     "nvd_cves",
+     "osv_advisories",
+     "vulnrichment"
+    ],
+    "lake_file": true,
+    "result_files": [
+     "charts.json",
+     "q1.json",
+     "q2.json",
+     "q3.json",
+     "q4.json",
+     "q5.json",
+     "q6.json",
+     "q8.json"
+    ]
+   },
+   "note": "the operating points chosen on development, hashed before test was scored",
+   "model_results_at_hash": [
+    "calibration.json",
+    "conformal.json",
+    "fallback.json",
+    "fallback_first.json",
+    "floors.json",
+    "misses.json",
+    "onnx.json",
+    "onnx_refit.json",
+    "product.json",
+    "rank.json",
+    "rank_refit.json",
+    "rank_reproduction.json",
+    "rank_rerun.json",
+    "rank_unpinned.json",
+    "reweighting.json",
+    "sets.json",
+    "survival.json",
+    "taxonomy.json"
+   ]
   }
  ],
  "note": "registered before any test CVE was scored by anything"
