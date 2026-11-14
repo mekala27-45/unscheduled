@@ -2172,11 +2172,14 @@ version = "0.2.0"
 source = { editable = "packages/models" }
 dependencies = [
     { name = "duckdb" },
+    { name = "joblib" },
     { name = "numpy" },
     { name = "pandas" },
     { name = "polars" },
     { name = "pyarrow" },
     { name = "pyyaml" },
+    { name = "scikit-learn" },
+    { name = "scipy" },
     { name = "unscheduled-core" },
     { name = "unscheduled-lake" },
 ]
@@ -2184,11 +2187,14 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "duckdb", specifier = "==2.0.0" },
+    { name = "joblib", specifier = ">=1.4" },
     { name = "numpy", specifier = ">=2.0" },
     { name = "pandas", specifier = ">=2.2" },
     { name = "polars", specifier = ">=2.1" },
     { name = "pyarrow", specifier = ">=20.0" },
     { name = "pyyaml", specifier = ">=6.0" },
+    { name = "scikit-learn", specifier = "==1.9.1" },
+    { name = "scipy", specifier = ">=1.14" },
     { name = "unscheduled-core", editable = "packages/core" },
     { name = "unscheduled-lake", editable = "packages/lake" },
 ]

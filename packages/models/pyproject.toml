@@ -13,6 +13,9 @@ dependencies = [
   "pyarrow>=20.0",
   "duckdb==2.0.0",
   "pyyaml>=6.0",
+  "scikit-learn==1.9.1",
+  "scipy>=1.14",
+  "joblib>=1.4",
 ]
 
 [build-system]
