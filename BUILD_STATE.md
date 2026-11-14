@@ -7,15 +7,13 @@ the manifest or a committed file: edit the template, then render.
 ## Where it stands
 
 ```
-Phase            2 of 5, the models: the probes and the scoped model gate, the plan hashed as the
-                 models stage 8e72e6298a18, the point in time sets, the floors, the fallback
-                 text model (behind its floor), the exploitation models (the run with the numeric
-                 kernels pinned, reproduced on a second processor), the survival models checked in
-                 R, the ONNX exports at parity, calibration and conformal sets on development, the
-                 shadow window weighted, and the misses read are in; the method notes, the six model
-                 cards and ADRs 0008 to 0010 are written, read for AI tells, and fill in as results
-                 land; the product models wait for a lake release with the CPE dictionary; the
-                 prompt is claude/unscheduled-phase-2-prompt.md in the Project
+Phase            2 of 5, the models: every model step is in, from the probes and the plan hashed
+                 as the models stage 8e72e6298a18 to the product models, the operating points
+                 frozen as the stage 406e8887f350, the registry, test scored once (C1 not met, C2
+                 not met), the prediction batch with its serving measures, the load test
+                 with /v1/predict, and reset and rederive with the test recheck; the open
+                 checklist lines below are what is left; the prompt is
+                 claude/unscheduled-phase-2-prompt.md in the Project
 Phase 1          the ground truth, tagged v0.1.0 on the commit that adds the release record;
                  its checklist 18 of 18 lines done (RESULTS.md)
 Repository       public; every commit conventional; CI, web and exposure green on main
@@ -26,9 +24,17 @@ Vercel           unscheduled-api (container) at unscheduled-api.vercel.app
 Neon             project unscheduled, free plan, ceiling 800 MB (config/budgets.yaml)
 Data             the committed numbers come from the lake cut 2026-11-13T06:00:00+00:00
                  rebuilt here from the lake release lake-20261112
-Look approval    approved by Ajay on the evening of 11 November, New York time, after the
-                 landing, docs, report and ruler screens: everything is good so far
+Look approval    Phase 1: approved by Ajay on the evening of 11 November, New York time, after
+                 the landing, docs, report and ruler screens: everything is good so far
+                 Phase 2: the CVE page with predictions and /app/models wait for his review
 ```
+
+Open checklist lines, Phase 2 (14 of 18 done):
+
+- 14. The predictions in the serving bundle and the API; /v1/predict live; Neon under its ceiling
+- 15. The console shows every prediction with its model, version and uncertainty; design gates green; the look reviewed by Ajay
+- 17. The live check awake and asleep; reset and rederive reproduced every CPU model number
+- 18. At least fifty conventional commits; the release record passing; v0.2.0 pushed by Ajay; BUILD_STATE.md written for Phase 3
 
 ## Next action
 
@@ -40,11 +46,21 @@ LightGBM holds 49.6% of the development listings in its top five percent and the
 40.9%, from the run with the numeric kernels pinned, the one of 4 runs that reproduced
 on a second processor; the survival models, checked in R (pass); the ONNX exports
 (pass); calibration, conformal sets and the shadow weights on development; the misses read; the
-humanizer pass; the predict scenario of the load test, written and waiting for the batch. Waiting: the product models (step five), for the
-first lake release that carries the CPE dictionary; the daily fetch carries it from its next run.
-Next, in order: the product step in the models workflow with that release, then the operating
-points frozen and hashed, the registry, test scored once, the batch and its serving measures, the
-live check, reset and rederive with the test recheck, and the release record. Every script whose
+humanizer pass; the product models, where the floor at its threshold finds, on average,
+42.1% of a development CVE's labeled products among its first ten candidates and the
+retrieval 34.5%; the operating points frozen and hashed; the registry; test scored once;
+the batch of 181,904 predictions with its serving measures; the load test with /v1/predict;
+reset and rederive, 713 of 713 values equal (pass), with the test recheck
+(pass).
+
+Waiting: the live database holds no predictions yet. The lake build carries the batch in the
+serving bundle and its sync loads it into Neon, but the last lake run started before the batch was
+committed. Ajay can start one (gh workflow run lake.yml), or the next daily run does; this session
+starts no workflow that creates a release.
+
+Next, in order: the API verify with the predictions; the live check awake, then asleep after
+twenty idle minutes; the screens of a CVE page with predictions and of /app/models to Ajay for his
+look review; the changelog and the release record; then Ajay pushes v0.2.0. Every script whose
 numbers are committed runs with the numeric pins (AGENTS.md).
 
 ## Open problems

@@ -99,3 +99,6 @@ ADR 0007
 15 GB
 /v1/predict
 ADRs 0008 to 0010
+14 November
+95th percentile
+results/load/c8.json

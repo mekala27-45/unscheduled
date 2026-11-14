@@ -3,6 +3,12 @@
 {% set labels = data("config/labels.yaml") %}
 {% set splits = data("config/splits.yaml") %}
 {% set restored = data("results/lake/release.json") if tracked("results/lake/release.json") else none %}
+{% set registry = data("results/registry/registry.json") if tracked("results/registry/registry.json") else none %}
+{% set points = data("config/operating_points.yaml") if tracked("config/operating_points.yaml") else none %}
+{% set verify = data("results/live/api_verify.json") if tracked("results/live/api_verify.json") else none %}
+{% set look = data("results/design/look_review.json") if tracked("results/design/look_review.json") else none %}
+{% set rederive = data("results/rederive.json") if tracked("results/rederive.json") else none %}
+{% set live_predictions = verify is not none and verify.get("predictions") is not none %}
 # Build state
 
 The hand off between sessions and phases. Every session reads it first and updates it last. It is
@@ -12,15 +18,17 @@ the manifest or a committed file: edit the template, then render.
 ## Where it stands
 
 ```
-Phase            2 of 5, the models: the probes and the scoped model gate, the plan hashed as the
-                 models stage {{ (reg.stages | selectattr("stage", "equalto", "models") | first).hash[:12] }}, the point in time sets, the floors, the fallback
-                 text model (behind its floor), the exploitation models (the run with the numeric
-                 kernels pinned, reproduced on a second processor), the survival models checked in
-                 R, the ONNX exports at parity, calibration and conformal sets on development, the
-                 shadow window weighted, and the misses read are in; the method notes, the six model
-                 cards and ADRs 0008 to 0010 are written, read for AI tells, and fill in as results
-                 land; the product models wait for a lake release with the CPE dictionary; the
-                 prompt is claude/unscheduled-phase-2-prompt.md in the Project
+Phase            2 of 5, the models: every model step is in, from the probes and the plan hashed
+                 as the models stage {{ (reg.stages | selectattr("stage", "equalto", "models") | first).hash[:12] }} to the product models, the operating points
+{% if points %}
+                 frozen as the stage {{ (reg.stages | selectattr("stage", "equalto", "operating_points") | first).hash[:12] }}, the registry, test scored once (C1 {{ v("models.test.c1.verdict") }}, C2
+                 {{ v("models.test.c2.verdict") }}), the prediction batch with its serving measures, the load test
+                 with /v1/predict, and reset and rederive with the test recheck; the open
+                 checklist lines below are what is left; the prompt is
+                 claude/unscheduled-phase-2-prompt.md in the Project
+{% else %}
+                 wait to be frozen; the prompt is claude/unscheduled-phase-2-prompt.md in the Project
+{% endif %}
 Phase 1          the ground truth, tagged v0.1.0 on the commit that adds the release record;
                  its checklist {{ v("build.checklist_done") }} of {{ v("build.checklist_total") }} lines done (RESULTS.md)
 Repository       public; every commit conventional; CI, web and exposure green on main
@@ -35,11 +43,31 @@ Data             the committed numbers come from the lake cut {{ v("lake.data_cu
 {% else %}
                  built here; the first lake release replaces them, rebuilt from its bronze
 {% endif %}
-Look approval    approved by Ajay on the evening of 11 November, New York time, after the
-                 landing, docs, report and ruler screens: everything is good so far
+Look approval    Phase 1: approved by Ajay on the evening of 11 November, New York time, after
+                 the landing, docs, report and ruler screens: everything is good so far
+{% if look %}
+                 Phase 2: {{ look.summary }}
+{% else %}
+                 Phase 2: the CVE page with predictions and /app/models wait for his review
+{% endif %}
 ```
 
-{% if open_items() %}
+{% set p2 = namespace(open=[]) %}
+{% if has("checklist.phase2") %}
+{% for row in rows("checklist.phase2") %}
+{% if row[1] != "done" %}
+{% set p2.open = p2.open + [row] %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if p2.open %}
+Open checklist lines, Phase 2 ({{ v("build.phase2.checklist_done") }} of {{ v("build.phase2.checklist_total") }} done):
+
+{% for row in p2.open %}
+- {{ row[0] }}. {{ row[2] }}
+{% endfor %}
+
+{% elif open_items() %}
 Open checklist lines:
 
 {% for row in open_items() %}
@@ -57,12 +85,29 @@ LightGBM holds {{ v("models.rank.lgbm.dev_recall_at_top5") }} of the development
 {{ v("models.rank.floor.dev_recall_at_top5") }}{% if has("models.rank.runs.count") %}, from the run with the numeric kernels pinned, the one of {{ v("models.rank.runs.count") }} runs that reproduced
 on a second processor{% endif %}; the survival models, checked in R ({{ v("models.survival.r_check.result") }}); the ONNX exports
 ({{ v("models.onnx.parity") }}); calibration, conformal sets and the shadow weights on development; the misses read; the
-humanizer pass; the predict scenario of the load test, written and waiting for the batch. Waiting: the product models (step five), for the
-first lake release that carries the CPE dictionary; the daily fetch carries it from its next run.
-Next, in order: the product step in the models workflow with that release, then the operating
-points frozen and hashed, the registry, test scored once, the batch and its serving measures, the
-live check, reset and rederive with the test recheck, and the release record. Every script whose
+humanizer pass{% if has("models.product.floor.threshold") %}; the product models, where the floor at its threshold finds, on average,
+{{ v("models.product.floor_at_threshold.dev_recall_at_10") }} of a development CVE's labeled products among its first ten candidates and the
+retrieval {{ v("models.product.retrieval.dev_recall_at_10") }}{% endif %}{% if points %}; the operating points frozen and hashed; the registry; test scored once{% endif %}{% if has("models.predictions.batch") %};
+the batch of {{ v("models.predictions.rows") }} predictions with its serving measures{% endif %}{% if has("load.predict_requests") %}; the load test with /v1/predict{% endif %}{% if rederive %};
+reset and rederive, {{ rederive.equal }} of {{ rederive.compared }} values equal ({{ rederive.result }}), with the test recheck
+({{ rederive.test_recheck.result }}){% endif %}.
+{% if has("models.predictions.batch") and not live_predictions %}
+
+Waiting: the live database holds no predictions yet. The lake build carries the batch in the
+serving bundle and its sync loads it into Neon, but the last lake run started before the batch was
+committed. Ajay can start one (gh workflow run lake.yml), or the next daily run does; this session
+starts no workflow that creates a release.
+{% endif %}
+
+{% if look and tracked("results/release.json") %}
+Next: Ajay pushes v0.2.0 from his machine, and the Phase 3 prompt is written from the repository
+as it stands then.
+{% else %}
+Next, in order: the API verify with the predictions; the live check awake, then asleep after
+twenty idle minutes; the screens of a CVE page with predictions and of /app/models to Ajay for his
+look review; the changelog and the release record; then Ajay pushes v0.2.0. Every script whose
 numbers are committed runs with the numeric pins (AGENTS.md).
+{% endif %}
 
 ## Open problems
 
@@ -72,6 +117,11 @@ numbers are committed runs with the numeric pins (AGENTS.md).
   its floor and EPSS on day 1. Test cannot be scored again without a change request that keeps both
   results (evaluation/phase2_plan.yaml), so a better model is judged in a later phase, against the
   same floors.
+{% endif %}
+{% if has("load.predict_alone_p95_ms") %}
+- Under load the prediction route waits: with {{ v("load.predict_workers") }} clients at once its 95th percentile was
+  {{ v("load.predict_p95_ms") }}, against {{ v("load.predict_alone_p95_ms") }} for one client alone, and scoring is a few milliseconds of each call
+  (ADR 0008). The API records no server timing yet, so where the calls wait is open for Phase 4.
 {% endif %}
 - Kaggle and Databricks secrets are not set. Step eight took its CPU fallback (DECISIONS.md, step
   eight takes the fallback), and KAGGLE_USERNAME with KAGGLE_KEY would let ModernBERT run; without
@@ -134,10 +184,6 @@ numbers are committed runs with the numeric pins (AGENTS.md).
 
 ## The hand off to Phase 3
 
-{% set registry = data("results/registry/registry.json") if tracked("results/registry/registry.json") else none %}
-{% set points = data("config/operating_points.yaml") if tracked("config/operating_points.yaml") else none %}
-{% set verify = data("results/live/api_verify.json") if tracked("results/live/api_verify.json") else none %}
-{% set look = data("results/design/look_review.json") if tracked("results/design/look_review.json") else none %}
 {% if registry %}
 - The models the API and the console serve, each the chosen version of its registered model, with
   its model file's digest (results/registry/registry.json):
