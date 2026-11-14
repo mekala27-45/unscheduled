@@ -8,7 +8,7 @@ the manifest or a committed file: edit the template, then render.
 
 ```
 Phase            1 of 5, the ground truth
-Checklist        16 of 18 lines done (RESULTS.md)
+Checklist        17 of 18 lines done (RESULTS.md)
 Repository       public; every commit conventional; CI, web and exposure green on main
 Vercel           unscheduled-api (container) at unscheduled-api.vercel.app
                  unscheduled (web) at unscheduled-triage.vercel.app: the landing with its
@@ -23,7 +23,6 @@ Look approval    approved by Ajay on the evening of 11 November, New York time, 
 
 Open checklist lines:
 
-- The live check awake and asleep; reset and rederive reproduced every number
 - At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2
 
 ## Next action

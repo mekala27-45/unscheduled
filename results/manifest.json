@@ -6635,7 +6635,7 @@
    }
   },
   "build.checklist_done": {
-   "value": 16,
+   "value": 17,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/build_manifest.py",
@@ -13838,7 +13838,7 @@
     ],
     [
      17,
-     "not done",
+     "done",
      "The live check awake and asleep; reset and rederive reproduced every number",
      "results/live_check.json, results/rederive.json"
     ],

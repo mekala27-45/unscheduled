@@ -7,6 +7,8 @@ scripts/changelog.py from the history before each tag. A subject reads as it was
 
 ### Added
 
+- results: every committed number rebuilt from the lake release lake-20261112 (c283232)
+- lake: each window's size and label coverage in the manifest (fd842b7)
 - web: the docs and the report, rendered from the repository (49e3096)
 - web: the hero field draws the lake, the CPE contrast reads the manifest (9e3cd77)
 - report: the backlog, in words and numbers, and the discovery and legacy memos (cc90650)
@@ -45,6 +47,16 @@ scripts/changelog.py from the history before each tag. A subject reads as it was
 
 ### Fixed
 
+- scripts: the live persistence check sends both lookups over one connection (f2a8e5e)
+- results: the lake digests taken again with exact sums (4809b8b)
+- lake: the content digest sums its row hashes exactly (31488bc)
+- lake: type every assigner the CVE List names, and fetch it before the CNA list (6e05f1c)
+- fetch: SHA256SUMS covers the whole lake release after an hourly run (b5d7c0a)
+- release: rebuild from a settled lake release, picked by its day (0bd68ac)
+- scripts: the rederive builds in its worktree, not in this checkout (5620e6b)
+- scripts: the rederive takes the build memory the machine can give (079d02b)
+- scripts: read releases through the REST API, and never from a stale cache (40f8f4d)
+- sources: retry every server error, a CDN's 522 included (2b35937)
 - api: the legacy report reads the rows the serving bundle writes (971e109)
 - lake: the locks the lake was built from are recorded in a committed report (8561107)
 - web: what the first look on real data showed (afca9c2)
@@ -56,6 +68,12 @@ scripts/changelog.py from the history before each tag. A subject reads as it was
 
 ### Documents
 
+- build-state: the fetch resumes from its ledger, and no schedule has fired yet (ba45aa4)
+- technical writing joins the skills matrix (2e0e30e)
+- the decisions of 12 November, with their reasons (2260ffc)
+- the build state rendered from the manifest, with the hand off to Phase 2 (c575cb3)
+- the humanizer pass over the new pages (55c8ec8)
+- a changelog written from the conventional commits (38bea6b)
 - the method notes open with where every number comes from (8163cb9)
 - the README links the live site and the API and shows the architecture (e5b36d0)
 - the quickstart names what the fetch command writes (53e31f4)
@@ -84,6 +102,10 @@ scripts/changelog.py from the history before each tag. A subject reads as it was
 
 ### Tests
 
+- load: the cold start and three hundred warm lookups on the live API, C8 met (d7755a7)
+- web: the design gates on the built site, with the rebuilt numbers (010f184)
+- rederive: every committed number rebuilt again in a fresh worktree, 693 of 693 equal (ab2c1a1)
+- live: the site read in a browser against the live API, awake (31be87d)
 - api: persistence read back from an independent connection (9de3ede)
 - api: the live verifier, the load test and the live check (0d8e147)
 - serving: the lock summary is tested on locks the test writes (dd46497)
@@ -91,6 +113,7 @@ scripts/changelog.py from the history before each tag. A subject reads as it was
 
 ### Continuous integration
 
+- lake: the lake file published beside the bundle it fed, after the load (db58b93)
 - fetch: a bootstrap run hands over to the lake build (c19c2eb)
 - exposure: without a lake release the committed exposure is checked, not recomputed (cab134d)
 - fetch: a bootstrap run starts the first lake release from nothing (836bc80)
@@ -106,6 +129,7 @@ scripts/changelog.py from the history before each tag. A subject reads as it was
 
 ### Chores
 
+- agents: the release skill writes the changelog before the tag (2b1f3ea)
 - restore a lake release into the checkout, as lake.yml does (d6b39f1)
 - the phase gate writes its record (b04986d)
 - reset and rederive in a worktree, from the lake release (d040300)
