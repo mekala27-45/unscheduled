@@ -8361,6 +8361,446 @@
     "note": null
    }
   },
+  "models.floors.band.C": {
+   "value": "0.3",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "the regularization the Severity band floor chose on development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.band.dev": {
+   "value": 0.669081,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Severity band, quadratic weighted kappa",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.band.dev_accuracy": {
+   "value": 0.72323,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: the severity band, share predicted exactly",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.band.dev_rows": {
+   "value": 23272,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Severity band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.cwe.C": {
+   "value": "1",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "the regularization the Weakness (CWE) floor chose on development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.cwe.dev": {
+   "value": 0.527481,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Weakness (CWE), macro F1",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.cwe.dev_accuracy": {
+   "value": 0.710181,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: the CWE, share with the label first",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.cwe.dev_rows": {
+   "value": 19350,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Weakness (CWE)",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.cwe.dev_top5_accuracy": {
+   "value": 0.940982,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: the CWE, share with the label first or in the first five",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_A.C": {
+   "value": "3",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "the regularization the Availability floor chose on development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_A.dev": {
+   "value": 0.816913,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Availability, Cohen kappa",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_A.dev_rows": {
+   "value": 23272,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Availability",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_AC.C": {
+   "value": "3",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "the regularization the Attack complexity floor chose on development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_AC.dev": {
+   "value": 0.529358,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Attack complexity, Cohen kappa",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_AC.dev_rows": {
+   "value": 23272,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Attack complexity",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_AV.C": {
+   "value": "1",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "the regularization the Attack vector floor chose on development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_AV.dev": {
+   "value": 0.848687,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Attack vector, Cohen kappa",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_AV.dev_rows": {
+   "value": 23272,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Attack vector",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_C.C": {
+   "value": "1",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "the regularization the Confidentiality floor chose on development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_C.dev": {
+   "value": 0.774992,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Confidentiality, Cohen kappa",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_C.dev_rows": {
+   "value": 23272,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Confidentiality",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_I.C": {
+   "value": "1",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "the regularization the Integrity floor chose on development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_I.dev": {
+   "value": 0.792783,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Integrity, Cohen kappa",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_I.dev_rows": {
+   "value": 23272,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Integrity",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_PR.C": {
+   "value": "3",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "the regularization the Privileges required floor chose on development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_PR.dev": {
+   "value": 0.60692,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Privileges required, Cohen kappa",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_PR.dev_rows": {
+   "value": 23272,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Privileges required",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_S.C": {
+   "value": "3",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "the regularization the Scope floor chose on development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_S.dev": {
+   "value": 0.913013,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Scope, Cohen kappa",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_S.dev_rows": {
+   "value": 23272,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: Scope",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_UI.C": {
+   "value": "3",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "the regularization the User interaction floor chose on development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_UI.dev": {
+   "value": 0.912597,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: User interaction, Cohen kappa",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metric_UI.dev_rows": {
+   "value": 23272,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: User interaction",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.metrics.mean_kappa": {
+   "value": 0.774407875,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label: the mean Cohen kappa of the eight base metric floors",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.reference.filer_qwk": {
+   "value": 0.475908,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with both bands: the filer band against the NVD band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.reference.filer_rows": {
+   "value": 13970,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with an NVD band and a filer band at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.reference.floor_qwk_with_filer": {
+   "value": 0.719153,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with both bands: the band floor against the NVD band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.reference.floor_qwk_without_filer": {
+   "value": 0.574212,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with no filer band: the band floor against the NVD band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.reference.without_rows": {
+   "value": 9302,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with an NVD band and no filer band at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.representation": {
+   "value": "word and character grams",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "the text representation the band floor chose on development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
   "models.sets.cwe_classes": {
    "value": 51,
    "fmt": "int",
@@ -15429,6 +15869,184 @@
     "origin": "scripts/build_lake.py",
     "population": "the tables of the lake file",
     "source": "lake",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.band_search": {
+   "columns": [
+    "Text",
+    "C",
+    "Development kappa"
+   ],
+   "formats": [
+    "text",
+    "text",
+    "float3"
+   ],
+   "rows": [
+    [
+     "word grams",
+     "0.1",
+     0.639596
+    ],
+    [
+     "word grams",
+     "0.3",
+     0.660914
+    ],
+    [
+     "word grams",
+     "1",
+     0.66812
+    ],
+    [
+     "word grams",
+     "3",
+     0.661702
+    ],
+    [
+     "word grams",
+     "10",
+     0.654143
+    ],
+    [
+     "word and character grams",
+     "0.1",
+     0.664346
+    ],
+    [
+     "word and character grams",
+     "0.3",
+     0.669081
+    ],
+    [
+     "word and character grams",
+     "1",
+     0.663872
+    ],
+    [
+     "word and character grams",
+     "3",
+     0.659232
+    ],
+    [
+     "word and character grams",
+     "10",
+     0.649654
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with an NVD band: the band floor grid",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.floors.chosen": {
+   "columns": [
+    "Task",
+    "Chosen by",
+    "C",
+    "Development score",
+    "Train rows",
+    "Development rows"
+   ],
+   "formats": [
+    "text",
+    "text",
+    "text",
+    "float3",
+    "int",
+    "int"
+   ],
+   "rows": [
+    [
+     "Severity band",
+     "quadratic weighted kappa",
+     "0.3",
+     0.669081,
+     101427,
+     23272
+    ],
+    [
+     "Attack vector",
+     "Cohen kappa",
+     "1",
+     0.848687,
+     101427,
+     23272
+    ],
+    [
+     "Attack complexity",
+     "Cohen kappa",
+     "3",
+     0.529358,
+     101427,
+     23272
+    ],
+    [
+     "Privileges required",
+     "Cohen kappa",
+     "3",
+     0.60692,
+     101427,
+     23272
+    ],
+    [
+     "User interaction",
+     "Cohen kappa",
+     "3",
+     0.912597,
+     101427,
+     23272
+    ],
+    [
+     "Scope",
+     "Cohen kappa",
+     "3",
+     0.913013,
+     101427,
+     23272
+    ],
+    [
+     "Confidentiality",
+     "Cohen kappa",
+     "1",
+     0.774992,
+     101427,
+     23272
+    ],
+    [
+     "Integrity",
+     "Cohen kappa",
+     "1",
+     0.792783,
+     101427,
+     23272
+    ],
+    [
+     "Availability",
+     "Cohen kappa",
+     "3",
+     0.816913,
+     101427,
+     23272
+    ],
+    [
+     "Weakness (CWE)",
+     "macro F1",
+     "1",
+     0.527481,
+     206430,
+     19350
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/train_floors.py",
+    "population": "development window CVEs with the label",
+    "source": "models",
     "as_of": "2026-11-13",
     "note": null
    }
