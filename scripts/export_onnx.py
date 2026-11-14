@@ -32,7 +32,6 @@ import lightgbm as lgb
 import numpy as np
 import onnx
 import polars as pl
-from unscheduled_core.featurize import FloorFeatures
 from unscheduled_core.manifest import ManifestBuilder
 from unscheduled_models import embed, export, rank, sets
 
@@ -85,6 +84,22 @@ def manifest_part(record: dict[str, Any], as_of: str) -> dict[str, Any]:
             population=f"the ONNX file of {name}",
             source="models",
         )
+    for key, name in (
+        ("projection_against_the_exploitation_run", "projection_gap"),
+        ("lgbm_score_against_the_exploitation_run", "score_gap"),
+    ):
+        if record["parity"].get(key) is not None:
+            m.value(
+                f"models.onnx.{name}",
+                float(record["parity"][key]),
+                "float4",
+                origin=ORIGIN,
+                population=(
+                    f"{record['parity']['band_floor']['rows']} development CVEs: the committed band floor "
+                    "against the refit the exploitation run used, largest absolute difference"
+                ),
+                source="models",
+            )
     m.value(
         "models.onnx.parity",
         record["verdict"],
@@ -115,11 +130,14 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     out = root / SERVING
     out.mkdir(parents=True, exist_ok=True)
     spec = export.floor_spec(features)
-    classes = [str(c) for c in band.classes_]
-    if classes != list(sets.BANDS):
-        # The API reads the columns in BANDS order, as the projection does.
-        raise SystemExit(f"export: the band floor's classes are {classes}, not {list(sets.BANDS)}")
-    floor_graph = export.linear_onnx(band.estimators_, classes, spec["width"], "band_floor")
+    # scikit-learn keeps the classes sorted by name; the API and LightGBM's projection read the
+    # columns in BANDS order, so the graph is written with its estimators in that order.
+    fitted = [str(c) for c in band.classes_]
+    if sorted(fitted) != sorted(sets.BANDS):
+        raise SystemExit(f"export: the band floor's classes are {fitted}, not {list(sets.BANDS)}")
+    classes = list(sets.BANDS)
+    estimators = [band.estimators_[fitted.index(b)] for b in classes]
+    floor_graph = export.linear_onnx(estimators, classes, spec["width"], "band_floor")
     day0 = export.day0_spec(design)
     width = len(design.names())
     lgbm_graph = export.lgbm_onnx(booster, width)
@@ -135,21 +153,20 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     sample = dev.sample(n=min(args.rows, dev.height), seed=seed, shuffle=False).sort("cve_id")
     floor_result = export.floor_parity(band, features, sample, spec, floor_graph)
     # LightGBM's projection comes from the ONNX floor, as the API computes it.
-    built = FloorFeatures(spec)
-    dense = np.zeros((sample.height, built.width), dtype=np.float32)
-    for i, row in enumerate(sample.to_dicts()):
-        for j, v in built.transform(row).items():
-            dense[i, j] = v
-    projection = export.session(floor_graph).run(None, {"features": dense})[0]
+    projection = export.floor_onnx_proba(floor_graph, spec, sample)
     with_projection = rank.with_projection(sample, projection.astype(np.float64))
     lgbm_result = export.lgbm_parity(booster, design, with_projection, day0, lgbm_graph)
+    # The exploitation run refit the band floor for its projection; the API uses the committed
+    # floor. Both gaps are kept: in the projection, and in LightGBM's score on these rows.
     scores_file = args.models / "rank" / "development_scores.parquet"
-    projection_gap = None
+    projection_gap = score_gap = None
     if scores_file.exists():
         trained = sample.select("cve_id").join(pl.read_parquet(scores_file), on="cve_id", how="left")
         projection_gap = float(
             np.max(np.abs(trained.select(list(rank.PROJECTION)).to_numpy() - projection.astype(np.float64)))
         )
+        served = np.asarray(booster.predict(design.dense(with_projection)), dtype=np.float64)
+        score_gap = float(np.max(np.abs(trained.get_column("exploit_lgbm").to_numpy() - served)))
     worst = max(floor_result["max_probability_difference"], lgbm_result["max_probability_difference"])
     record = {
         "tolerance": export.TOLERANCE,
@@ -167,6 +184,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
             "band_floor": floor_result,
             "exploit_lgbm": lgbm_result,
             "projection_against_the_exploitation_run": projection_gap,
+            "lgbm_score_against_the_exploitation_run": score_gap,
         },
         "verdict": "pass" if worst <= export.TOLERANCE else "fail",
         "environment": {"onnx": onnx.__version__, "onnxruntime": embed.runtime_version()},
@@ -179,7 +197,8 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     (root / "results" / "parts" / "onnx.json").write_text(json.dumps(part, indent=1) + "\n", encoding="utf-8")
     print(
         f"export: floor {floor_result['max_probability_difference']:.2e}, LightGBM "
-        f"{lgbm_result['max_probability_difference']:.2e}, projection gap {projection_gap}: {record['verdict']}"
+        f"{lgbm_result['max_probability_difference']:.2e}, projection gap {projection_gap}, score gap "
+        f"{score_gap}: {record['verdict']}"
     )
     return 0 if record["verdict"] == "pass" else 1
 

@@ -18,6 +18,7 @@ import numpy as np
 import onnx
 import polars as pl
 from onnx import TensorProto, helper, numpy_helper
+from scipy import sparse
 from unscheduled_core.featurize import DayZeroRow, FloorFeatures
 
 from unscheduled_models.features import MULTI, Features
@@ -162,24 +163,56 @@ def rows_of(frame: pl.DataFrame) -> list[dict[str, Any]]:
     return frame.to_dicts()
 
 
-def floor_parity(
-    model: Any, features: Features, frame: pl.DataFrame, spec: dict[str, Any], graph: onnx.ModelProto
-) -> dict[str, float | int]:
-    """The native floor against its spec and graph on the same rows: the largest difference in any
-    feature and in any probability."""
-    native_x = features.transform(frame)
-    native = model.predict_proba(native_x)
+BATCH = 100
+
+
+def floor_dense(spec: dict[str, Any], frame: pl.DataFrame) -> np.ndarray:
+    """Rows built the API's way, as one dense float32 block. The floor is hundreds of thousands of
+    columns wide, so callers pass a batch of rows, never a whole window."""
     built = FloorFeatures(spec)
     dense = np.zeros((frame.height, built.width), dtype=np.float32)
     for i, row in enumerate(rows_of(frame)):
         for j, v in built.transform(row).items():
             dense[i, j] = v
-    feature_gap = float(np.max(np.abs(native_x.toarray() - dense))) if frame.height else 0.0
-    onnx_proba = session(graph).run(None, {"features": dense})[0]
+    return dense
+
+
+def floor_onnx_proba(graph: onnx.ModelProto, spec: dict[str, Any], frame: pl.DataFrame) -> np.ndarray:
+    """The graph's probabilities on rows built the API's way, a batch at a time."""
+    run = session(graph)
+    parts = [
+        run.run(None, {"features": floor_dense(spec, frame.slice(start, BATCH))})[0]
+        for start in range(0, frame.height, BATCH)
+    ]
+    width = len({p.key: p.value for p in graph.metadata_props}["classes"].split(","))
+    return np.vstack(parts) if parts else np.zeros((0, width), dtype=np.float32)
+
+
+def floor_parity(
+    model: Any, features: Features, frame: pl.DataFrame, spec: dict[str, Any], graph: onnx.ModelProto
+) -> dict[str, float | int]:
+    """The native floor against its spec and graph on the same rows: the largest difference in any
+    feature and in any probability, the native columns put in the graph's class order. Rows go a
+    batch at a time, and the feature difference is taken on the sparse matrices."""
+    fitted = [str(c) for c in model.classes_]
+    graph_classes = {p.key: p.value for p in graph.metadata_props}["classes"].split(",")
+    order = [fitted.index(c) for c in graph_classes]
+    run = session(graph)
+    feature_gap, probability_gap = 0.0, 0.0
+    for start in range(0, frame.height, BATCH):
+        chunk = frame.slice(start, BATCH)
+        native_x = features.transform(chunk).tocsr()
+        dense = floor_dense(spec, chunk)
+        diff = (native_x - sparse.csr_matrix(dense)).tocsr()
+        if diff.nnz:
+            feature_gap = max(feature_gap, float(np.max(np.abs(diff.data))))
+        native = model.predict_proba(native_x)[:, order]
+        onnx_proba = run.run(None, {"features": dense})[0]
+        probability_gap = max(probability_gap, float(np.max(np.abs(native - onnx_proba))))
     return {
         "rows": frame.height,
         "max_feature_difference": feature_gap,
-        "max_probability_difference": float(np.max(np.abs(native - onnx_proba))) if frame.height else 0.0,
+        "max_probability_difference": probability_gap,
     }
 
 

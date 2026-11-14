@@ -75,6 +75,14 @@ def test_the_linear_graph_equals_the_floor_for_many_classes_and_two() -> None:
         result = export.floor_parity(model, features, dev, spec, graph)
         assert result["max_feature_difference"] < 1e-6
         assert result["max_probability_difference"] < export.TOLERANCE
+        if len(classes) > 2:
+            # A graph written in another class order, as the band floor is written in BANDS order,
+            # is compared column by column under its own class names.
+            order = list(reversed(classes))
+            estimators = [model.estimators_[classes.index(c)] for c in order]
+            moved = export.linear_onnx(estimators, order, x.shape[1], label)
+            moved_result = export.floor_parity(model, features, dev, spec, moved)
+            assert moved_result["max_probability_difference"] < export.TOLERANCE
 
 
 def test_the_lightgbm_graph_equals_the_booster() -> None:
