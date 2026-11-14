@@ -9,7 +9,9 @@ data loaded any other way than by the sync shows as a mismatch. The record goes 
 results/live/api_verify.json (or --out); the exit code is 1 when any check fails.
 
 Every /v1 data route counts against this client's daily budget; one run spends about thirty
-lookups and one SBOM match.
+lookups and one SBOM match. Phase 2 adds the registry export, a CVE found by its predicted band with
+its predictions block, and one scored description; the record's predictions entry is written only
+when all three pass, which the Phase 2 checklist reads.
 """
 
 from __future__ import annotations
@@ -37,6 +39,15 @@ SBOM = ROOT / "customer" / "sboms" / "rust-cli.cdx.json"
 GOLDEN_HEADER = ROOT / "tests" / "characterization" / "golden" / "sample_feeds.csv"
 PROBLEM_BASE = f"https://github.com/{REPOSITORY}/blob/main/docs/SPEC.md#problem-"
 USER_AGENT = f"unscheduled-verify/0.1 (+https://github.com/{REPOSITORY})"
+REGISTERED = (
+    "unscheduled-band",
+    "unscheduled-metrics",
+    "unscheduled-cwe",
+    "unscheduled-exploit",
+    "unscheduled-survival",
+    "unscheduled-product",
+)
+PREDICTION_ROUTES = ("GET /v1/models", "GET /v1/cves?predicted_band=", "POST /v1/predict")
 
 
 @dataclass
@@ -353,6 +364,65 @@ def run(base: str) -> dict[str, Any]:
             if body.get("status") != "current":
                 r.detail = f"a sync call on loaded data answered {body.get('status')}, not current"
 
+        def models(r: Check) -> None:
+            body = v.json_of(r, "GET", "/v1/models")
+            registry = body.get("models") or {}
+            names = sorted(str(m.get("name")) for m in registry.get("models", []) if isinstance(m, dict))
+            r.facts = {"models": names, "batch": registry.get("batch")}
+            missing = sorted(set(REGISTERED) - set(names))
+            if missing:
+                r.detail = f"the registry export lacks {missing}"
+
+        def predicted(r: Check) -> None:
+            page = v.json_of(r, "GET", "/v1/cves", params={"predicted_band": "CRITICAL", "limit": 5})
+            items = page.get("items") or []
+            if not items:
+                r.detail = "no CVE has a predicted band of CRITICAL"
+                return
+            cve = items[0]["cve_id"]
+            body = v.json_of(r, "GET", f"/v1/cves/{cve}")
+            block = body.get("predictions") or {}
+            values = {p["field"]: p for p in block.get("values", [])}
+            band = values.get("band") or {}
+            state["batch"] = block.get("batch")
+            r.facts = {
+                "cve_id": cve,
+                "batch": block.get("batch"),
+                "fields": sorted(values),
+                "band": band.get("value"),
+            }
+            if band.get("value") != "CRITICAL":
+                r.detail = (
+                    f"{cve} was listed by its predicted band CRITICAL but its block says {band.get('value')}"
+                )
+            elif not band.get("model") or band.get("version") is None or not band.get("set"):
+                r.detail = "the band prediction lacks its model, its version or its set"
+            elif "never NVD values" not in str(block.get("note", "")) and "not NVD values" not in str(
+                block.get("note", "")
+            ):
+                r.detail = "the predictions block does not say its values are not NVD values"
+            elif abs(sum((band.get("probabilities") or {}).values()) - 1.0) > 1e-3:
+                r.detail = "the band probabilities do not sum to one"
+
+        def predict(r: Check) -> None:
+            body = v.json_of(
+                r,
+                "POST",
+                "/v1/predict",
+                json={
+                    "description": "A crafted request to the upload handler of the web console lets an "
+                    "unauthenticated attacker run commands as the service account.",
+                    "cvss31_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+                    "cwes": ["CWE-78"],
+                },
+            )
+            values = {p["field"]: p for p in body.get("values", [])}
+            r.facts = {"fields": sorted(values), "band": (values.get("band") or {}).get("value")}
+            if set(values) != {"band", "exploitation"}:
+                r.detail = f"/v1/predict answered {sorted(values)}, not the band and the exploitation score"
+            elif not 0.0 <= float(values["exploitation"]["value"]) <= 1.0:
+                r.detail = "the exploitation probability is outside zero to one"
+
         steps: list[tuple[str, str, Callable[[Check], None]]] = [
             ("health, with the database and the data", "GET /health", health),
             ("the data is the newest serving release", "GitHub releases", release),
@@ -371,6 +441,13 @@ def run(base: str) -> dict[str, Any]:
             ("typed problem documents", "errors", problems),
             ("CORS for the web origin", "OPTIONS /v1/cves", cors),
             ("a sync call on current data", "POST /internal/sync", sync),
+            ("the registry export with its evidence", "GET /v1/models", models),
+            (
+                "a CVE found by its predicted band, its predictions labeled",
+                "GET /v1/cves?predicted_band=",
+                predicted,
+            ),
+            ("a submitted description scored on request", "POST /v1/predict", predict),
         ]
         for name, route, fn in steps:
             if name != "the data is the newest serving release" and state.get("halt"):
@@ -380,6 +457,7 @@ def run(base: str) -> dict[str, Any]:
                 state["halt"] = True
 
     passed = sum(c.ok for c in v.checks)
+    prediction_checks = [c for c in v.checks if c.route in PREDICTION_ROUTES]
     return {
         "base_url": base,
         "checked_at": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
@@ -389,6 +467,13 @@ def run(base: str) -> dict[str, Any]:
         "total": len(v.checks),
         "result": "pass" if passed == len(v.checks) and len(v.checks) == len(steps) else "fail",
         "checks": [c.__dict__ for c in v.checks],
+        # The Phase 2 lines of the checklist read this: present only when every prediction check ran
+        # and passed.
+        **(
+            {"predictions": {"batch": state.get("batch"), "checks": len(prediction_checks)}}
+            if len(prediction_checks) == len(PREDICTION_ROUTES) and all(c.ok for c in prediction_checks)
+            else {}
+        ),
     }
 
 
