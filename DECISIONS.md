@@ -314,3 +314,13 @@ answers for the largest tables. DuckDB sums the 128 bit row hashes, a UHUGEINT, 
 rounding followed the order the threads added the rows in. Each 64 bit half is now cast to HUGEINT
 before the sum, which is exact, and a test rebuilds a digest from the row hashes summed in Python.
 Every content digest changes once with this; the lake built before it is rebuilt.
+
+## 2026-11-14: the live persistence check keeps one connection
+
+The first load test against the live API met C8 (cold health 601 ms, warm p95 296 ms over 300 of
+300 lookups) and failed only its persistence step: the two lookups reported 1999 and 1939 budget
+remaining. The API keys the budget by the client address, and the proxy in front of the build
+machine sent the two connections out from two addresses, one of which had carried sixty of the warm
+lookups. Eight lookups over one connection counted down by one each. scripts/check_persistence.py
+--base-url now sends both lookups over one connection, and the load test ran again from the start,
+twenty quiet minutes included.

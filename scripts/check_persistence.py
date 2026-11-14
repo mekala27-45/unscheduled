@@ -179,8 +179,12 @@ def check_local(url: str, schema: str, port: int) -> dict[str, Any]:
 
 def check_live(base: str) -> dict[str, Any]:
     wait_for(base, 120.0)
-    first = httpx.get(f"{base}/v1/products", timeout=60.0)
-    second = httpx.get(f"{base}/v1/products", timeout=60.0)
+    # One connection for both requests. The API keys the budget by the client address, and a proxy in
+    # front of this machine can send two connections out from two addresses, which the API rightly
+    # counts as two clients (DECISIONS.md, 14 November 2026).
+    with httpx.Client(timeout=60.0) as client:
+        first = client.get(f"{base}/v1/products")
+        second = client.get(f"{base}/v1/products")
     versions = {first.headers.get("x-data-version"), second.headers.get("x-data-version")}
     problems = []
     remaining = [r.headers.get("x-budget-remaining") for r in (first, second)]
