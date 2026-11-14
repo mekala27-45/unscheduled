@@ -8,8 +8,8 @@ The plan names ModernBERT, fine tuned on a GPU, as the deep fill model, and a CP
 the Kaggle secrets are absent: frozen sentence embeddings of the joined text with a logistic head per
 task. Either one costs more than the floor, a TF-IDF logistic regression on the same rows: a GPU or
 hours of CPU to fit, a larger artifact, and an answer that cannot be computed inside the API on a
-request. A deep model that does not beat the floor is cost without a result, and a reader cannot tell
-from the model's name whether it did.
+request. A deep model that does not beat the floor adds those costs and no accuracy, and its name
+does not tell a reader whether it beat the floor.
 
 ## Decision
 

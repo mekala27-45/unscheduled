@@ -156,10 +156,12 @@ Hours used: 0.0 of 8.0 this month.
 
 ## What a data lead would push back on
 
-NVD labels are a selected sample; the filer score as a feature favors filers who score; KEV is a
-lower bound on exploitation; EPSS at day 7 and day 30 has seen more days than the model; one seed is
-one draw. The weighted view, the floor on the same rows, the ties named in C2 and the misses read by
-hand are what the build did about each, and the limits in each model card say what none of them
-fixes.
+The NVD's labels are a selected sample, so the shadow view is shown weighted beside plain. The
+filer's score is a feature, which favors the filers who score, so the floor's kappa is shown with and
+without a filer band and the slices by filer show the model's. KEV is a lower bound on exploitation,
+and nothing here fixes that; the exploitation card says so. EPSS at day 7 and day 30 has seen more
+days than the model, so C2 names those days and calls a difference whose interval holds zero a tie.
+One seed is one draw: the intervals carry the sampling error of test, not the variation between
+seeds, and each card's limits say so.
 
 > unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.
