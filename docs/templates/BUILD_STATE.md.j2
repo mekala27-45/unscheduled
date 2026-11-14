@@ -12,7 +12,7 @@ the manifest or a committed file: edit the template, then render.
 ## Where it stands
 
 ```
-Phase            1 of 5, the ground truth
+Phase            1 of 5, the ground truth, tagged v0.1.0 on the commit that adds the release record
 Checklist        {{ v("build.checklist_done") }} of {{ v("build.checklist_total") }} lines done (RESULTS.md)
 Repository       public; every commit conventional; CI, web and exposure green on main
 Vercel           unscheduled-api (container) at unscheduled-api.vercel.app
@@ -40,13 +40,11 @@ Open checklist lines:
 {% endif %}
 ## Next action
 
-Phase 1 is built and checked. The committed numbers are rebuilt from the settled lake release named
-above, and every checklist line holds its evidence. The release record, results/release.json,
-passes: the gates, ruff, mypy, pytest, the manifest and the claim gate on a clean checkout, with the
-live API check, the load test, the live check awake and asleep, the reset and rederive and the
-design gates as its evidence. Next: Ajay pushes the tag v0.1.0 on the commit that adds the release
-record, or replies yes, push the v0.1.0 tag; release.yml reruns the gates on the tag and publishes
-the notes. Then the Phase 2 prompt is written from this repository as it stands.
+Phase 1 is tagged v0.1.0. Ajay pushed the tag on the commit that adds the release record, and
+release.yml reran the gates and the claim gate on it and published the release with the manifest
+and the plan registration attached. The committed numbers are rebuilt from the settled lake release
+named above, and every checklist line holds its evidence. Next: Phase 2, the models, from a prompt
+written from this repository as it stands, when Ajay asks for it. It starts from the hand off below.
 
 ## Open problems
 
