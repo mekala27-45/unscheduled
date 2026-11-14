@@ -105,7 +105,7 @@ Live p95 at or below 1,500 ms for lookups and 30 s for a triage run, zero spend,
 - Compared with: none
 - Evidence file: results/load/c8.json
 - Phase that produces it: 1 for lookups, 4 for the rest
-- Verdict so far: lookups met (p95 265 ms against 1,500 ms); the triage run is measured in Phase 4
+- Verdict so far: lookups met (p95 553 ms against 1,500 ms); the triage run is measured in Phase 4
 
 ## C9, value
 
