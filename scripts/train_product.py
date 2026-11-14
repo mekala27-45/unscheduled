@@ -6,9 +6,10 @@
 Checks the set files it reads against results/models/sets.json, builds the vendor and product pairs
 of the CPE dictionary from bronze cpe_names (restored from a lake release with restore_release.py
 --table cpe_names, whose note it copies into the record), runs the string floor and the embedding
-retrieval of unscheduled_models.product for development and test, chooses the floor's threshold by
-F1 at 1 on development, and measures recall and hit rate at 1, 5 and 10 on development. Test gets
-the ranked candidates for every CVE and is judged once by scripts/score_test.py. Writes the
+retrieval of unscheduled_models.product for development, test and shadow, chooses the floor's
+threshold by F1 at 1 on development, and measures recall and hit rate at 1, 5 and 10 on development.
+Test gets the ranked candidates for every CVE and is judged once by scripts/score_test.py; shadow
+gets them for the batch the API serves, with no accuracy claim. Writes the
 candidates to --out (never committed) and commits results/models/product.json and the manifest part
 results/parts/product.json. Runs in the models workflow as the product step.
 """
@@ -38,7 +39,9 @@ from unscheduled_models import embed, product, sets
 from scripts.train_floors import file_sha256, models_stage_hash, plan_seed, verify_sets
 
 ORIGIN = "scripts/train_product.py"
-SPLITS = ("development", "test")
+# Shadow gets candidates too: the batch serves its five most likely products for every CVE of the
+# development, test and shadow windows (scripts/predict_serving.py), and shadow has no label here.
+SPLITS = ("development", "test", "shadow")
 READ = (
     *(sets.inputs_name(s) for s in SPLITS),
     *(sets.product_inputs_name(s) for s in SPLITS),

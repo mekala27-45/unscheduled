@@ -160,7 +160,7 @@ def test_the_script_writes_the_record(tmp_path: Path, monkeypatch: pytest.Monkey
     folder.mkdir(parents=True)
     files: dict[str, Any] = {}
     published = [datetime(2024, 6, 1, 12, tzinfo=UTC), datetime(2024, 6, 3, tzinfo=UTC)]
-    for split in ("development", "test"):
+    for split in ("development", "test", "shadow"):
         inputs = pl.DataFrame(
             {
                 "cve_id": ["CVE-1", "CVE-2"],
@@ -211,3 +211,5 @@ def test_the_script_writes_the_record(tmp_path: Path, monkeypatch: pytest.Monkey
     assert record["dictionary"]["pairs"] == len(NAMES)
     part = json.loads((root / "results" / "parts" / "product.json").read_text(encoding="utf-8"))
     assert "models.product.retrieval.dev_recall_at_10" in part["values"]
+    assert set(record["predictions"]) == {"development", "test", "shadow"}
+    assert (root / "data" / "models" / "product" / "shadow_candidates.parquet").exists()
