@@ -69,7 +69,7 @@
   },
   "models.survival.r_check.max_coefficient_difference": {
    "value": 7.204714913555677e-08,
-   "fmt": "float4",
+   "fmt": "sci1",
    "provenance": {
     "origin": "scripts/train_survival.py",
     "population": "the train population: lifelines without a penalty against R's coxph on the same matrix",

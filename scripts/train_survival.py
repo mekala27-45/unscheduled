@@ -105,7 +105,7 @@ def manifest_part(record: dict[str, Any], as_of: str) -> dict[str, Any]:
         m.value(
             "models.survival.r_check.max_coefficient_difference",
             float(check["max_coefficient_difference"]),
-            "float4",
+            "sci1",
             origin=ORIGIN,
             population="the train population: lifelines without a penalty against R's coxph on the same matrix",
             source="models",
