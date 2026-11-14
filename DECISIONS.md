@@ -468,3 +468,25 @@ that KEV listed before their publication, which the rank population leaves out a
 population is 67,520 CVEs, with the same 278 listed within 180 days. Test and shadow get scores for
 every CVE, Q03 included, since whether a test CVE was listed before publication is a label;
 scripts/score_test.py leaves those out when it scores.
+
+## 2026-11-14: the survival models, as built
+
+The plan fits both survival models on "the day 0 features without the text", and the Cox model again
+without a penalty for the R check. A Cox fit without a penalty cannot estimate a column no listing
+touches, nor separate two columns that move together, and the train population holds 393 listings.
+So the survival design keeps the numbers and the flags, and the low cardinality filer and CISA values
+one hot against a reference category, and leaves out a column that fewer than 5 listings touch and a
+column correlated at 0.9 or more with one kept before it; each column left out is named with its
+reason in results/models/survival.json. The filer name, the three vectors and the CWE lists, whose
+one hot columns would number in the hundreds with a listing or none each, are left out for the same
+reason, their content reaching the models through the filer type, band and base metrics. The
+exploitation models keep them.
+
+The time is the days from publication to the listing plus one, so the 44 train CVEs listed on the day
+they were published count at one day and every time is positive; the probabilities of a listing by
+30, 90 and 180 days are read at those days plus one. lifelines takes half Newton steps: its default
+steps overflowed on the long tail of the affected entries in a sample of train, and since the
+likelihood is concave the optimum is the same.
+
+lifelines 0.30.3 requires pandas below 3, so the workspace now resolves pandas 2.3.3 instead of
+3.1.1. Nothing outside packages/models imports pandas, and statsmodels uses it only in tests.

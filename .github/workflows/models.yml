@@ -14,6 +14,7 @@ on:
         options:
           - floors
           - exploitation
+          - survival
         default: floors
 
 permissions: {}
@@ -68,6 +69,19 @@ jobs:
         if: env.STEP == 'exploitation'
         run: uv run python scripts/train_rank.py --jobs 4
 
+      - name: R with the survival package, for the Cox check
+        if: env.STEP == 'survival'
+        uses: r-lib/actions/setup-r@f9a764fea8d5c63df6ef9a5c7795bf7deb5d7e05 # v2.14.0
+        with:
+          r-version: release
+          use-public-rspm: true
+
+      - name: The survival models, checked in R
+        if: env.STEP == 'survival'
+        run: |
+          Rscript -e 'if (!requireNamespace("survival", quietly = TRUE)) install.packages("survival", repos = "https://cloud.r-project.org")'
+          uv run python scripts/train_survival.py --jobs 4 --r-check
+
       - name: Gather what the step wrote
         if: always()
         run: |
@@ -75,6 +89,7 @@ jobs:
           case "$STEP" in
             floors) files="results/models/floors.json results/parts/floors.json data/models/floors" ;;
             exploitation) files="results/models/rank.json results/parts/rank.json data/models/rank" ;;
+            survival) files="results/models/survival.json results/parts/survival.json data/models/survival" ;;
             *) files="" ;;
           esac
           for f in $files; do

@@ -18,6 +18,8 @@ dependencies = [
   "joblib>=1.4",
   "lightgbm==4.7.0",
   "optuna==5.0.0",
+  "lifelines==0.30.3",
+  "scikit-survival==0.28.0",
 ]
 
 [build-system]
