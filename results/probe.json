@@ -1,5 +1,5 @@
 {
- "probed_at": "2026-11-08T03:51:44Z",
+ "probed_at": "2026-11-14T03:40:22Z",
  "user_agent": "unscheduled/0.1 (+https://github.com/mekala27-45/unscheduled)",
  "summary": {
   "sources": 16,
@@ -11,22 +11,22 @@
  },
  "sources": {
   "cvelist": {
-   "url": "https://github.com/CVEProject/cvelistV5/releases/download/cve_2026-11-08_0000Z/2026-11-08_all_CVEs_at_midnight.zip.zip",
+   "url": "https://github.com/CVEProject/cvelistV5/releases/download/cve_2026-11-14_0000Z/2026-11-14_all_CVEs_at_midnight.zip.zip",
    "status": 206,
    "ok": true,
-   "size": 655112134,
-   "date": "2026-11-08T03:00:00Z",
-   "newest_release": "cve_2026-11-08_0300Z",
-   "releases_listed": 31611
+   "size": 663341831,
+   "date": "2026-11-14T03:00:00Z",
+   "newest_release": "cve_2026-11-14_0300Z",
+   "releases_listed": 31753
   },
   "nvd_cves": {
    "url": "https://services.nvd.nist.gov/rest/json/cves/2.0?resultsPerPage=1",
    "status": 200,
    "ok": true,
    "size": 2517,
-   "elapsed_s": 0.23,
-   "date": "2026-11-08T03:51:25.603",
-   "total_results": 421074,
+   "elapsed_s": 9.17,
+   "date": "2026-11-14T03:39:55.076",
+   "total_results": 425693,
    "answered_keyless": true
   },
   "nvd_history": {
@@ -34,132 +34,132 @@
    "status": 200,
    "ok": true,
    "size": 354,
-   "elapsed_s": 0.267,
-   "date": "2026-11-08T03:51:25.643",
-   "total_results": 2451970,
+   "elapsed_s": 12.181,
+   "date": "2026-11-14T03:40:07.517",
+   "total_results": 2467641,
    "answered_keyless": true
   },
   "kev": {
-   "url": "https://raw.githubusercontent.com/cisagov/kev-data/e5b3a9b25050a8da26c96266c5bfe438ee0bdebc/known_exploited_vulnerabilities.json",
+   "url": "https://raw.githubusercontent.com/cisagov/kev-data/a795af4c4afc47df12906b4c04e656156cf06493/known_exploited_vulnerabilities.json",
    "status": 200,
    "ok": true,
-   "size": 1832349,
-   "elapsed_s": 0.349,
-   "date": "2026-11-06T19:44:45.1797Z",
-   "catalog_version": "2026.11.06",
-   "entries": 1769,
-   "head": "e5b3a9b25050a8da26c96266c5bfe438ee0bdebc"
+   "size": 1854379,
+   "elapsed_s": 0.284,
+   "date": "2026-11-13T20:24:18.3008Z",
+   "catalog_version": "2026.11.13",
+   "entries": 1781,
+   "head": "a795af4c4afc47df12906b4c04e656156cf06493"
   },
   "kev_cisa_feed": {
    "url": "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json",
    "status": 200,
    "ok": true,
-   "size": 1832349,
-   "elapsed_s": 0.481,
-   "date": "2026-11-06T19:44:45.1797Z",
-   "catalog_version": "2026.11.06"
+   "size": 1854379,
+   "elapsed_s": 0.56,
+   "date": "2026-11-13T20:24:18.3008Z",
+   "catalog_version": "2026.11.13"
   },
   "epss_daily": {
-   "url": "https://epss.empiricalsecurity.com/epss_scores-2026-11-07.csv.gz",
+   "url": "https://epss.empiricalsecurity.com/epss_scores-2026-11-13.csv.gz",
    "status": 200,
    "ok": true,
-   "size": 2817190,
-   "date": "2026-11-07T13:30:36Z",
-   "file_day": "2026-11-07"
+   "size": 2845761,
+   "date": "2026-11-13T13:30:36Z",
+   "file_day": "2026-11-13"
   },
   "epss_api": {
    "url": "https://api.first.org/data/v1/epss?cve=CVE-2021-44228",
    "status": 200,
    "ok": true,
    "size": 203,
-   "elapsed_s": 0.563,
-   "date": "2026-11-07"
+   "elapsed_s": 0.554,
+   "date": "2026-11-13"
   },
   "osv": {
    "npm": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/npm/all.zip",
     "status": 200,
     "ok": true,
-    "size": 220052609,
-    "date": "2026-11-07T09:32:47Z"
+    "size": 221443172,
+    "date": "2026-11-14T03:33:06Z"
    },
    "PyPI": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/PyPI/all.zip",
     "status": 200,
     "ok": true,
-    "size": 37670472,
-    "date": "2026-11-08T00:48:09Z"
+    "size": 37909150,
+    "date": "2026-11-14T03:02:50Z"
    },
    "Go": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/Go/all.zip",
     "status": 200,
     "ok": true,
-    "size": 12828902,
-    "date": "2026-11-06T20:02:57Z"
+    "size": 12934640,
+    "date": "2026-11-13T23:17:54Z"
    },
    "Maven": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/Maven/all.zip",
     "status": 200,
     "ok": true,
-    "size": 10527068,
-    "date": "2026-11-06T18:17:58Z"
+    "size": 10540008,
+    "date": "2026-11-12T18:33:08Z"
    },
    "crates.io": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/crates.io/all.zip",
     "status": 200,
     "ok": true,
-    "size": 3799768,
-    "date": "2026-11-06T16:02:48Z"
+    "size": 3914513,
+    "date": "2026-11-14T03:02:50Z"
    },
    "RubyGems": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/RubyGems/all.zip",
     "status": 200,
     "ok": true,
-    "size": 5213495,
-    "date": "2026-11-04T03:33:17Z"
+    "size": 5329206,
+    "date": "2026-11-13T19:19:22Z"
    },
    "NuGet": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/NuGet/all.zip",
     "status": 200,
     "ok": true,
-    "size": 2697117,
-    "date": "2026-11-06T18:17:57Z"
+    "size": 2804226,
+    "date": "2026-11-13T19:33:10Z"
    },
    "Packagist": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/Packagist/all.zip",
     "status": 200,
     "ok": true,
-    "size": 11107565,
-    "date": "2026-11-06T19:18:11Z"
+    "size": 11144090,
+    "date": "2026-11-14T03:02:50Z"
    },
    "Debian": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/Debian/all.zip",
     "status": 200,
     "ok": true,
-    "size": 81221159,
-    "date": "2026-11-08T02:02:58Z"
+    "size": 82035854,
+    "date": "2026-11-14T02:02:45Z"
    },
    "ok": true
   },
   "ghsa": {
    "url": "https://github.com/github/advisory-database",
    "ok": true,
-   "head": "efc1afa71527c13dbfae4f14c120451d2a818a8a",
-   "date": "2026-11-08T03:37:10+00:00",
-   "size": 50944910,
+   "head": "21efe5eaa20b8cef01c13876237426387565a6d3",
+   "date": "2026-11-14T00:37:03+00:00",
+   "size": 51506543,
    "size_is": "bytes of the head commit and its trees, fetched without blobs",
-   "files_at_head": 401241,
-   "elapsed_s": 7.885
+   "files_at_head": 405652,
+   "elapsed_s": 6.218
   },
   "vulnrichment": {
    "url": "https://github.com/cisagov/vulnrichment",
    "ok": true,
-   "head": "17ecd8cb34c2792b6ecf5fc897a081562938fdb2",
-   "date": "2026-11-07T19:17:35+00:00",
-   "size": 5342737,
+   "head": "12068c70ac2b3a7d371213a5509f59809ac1d99c",
+   "date": "2026-11-12T21:17:55+00:00",
+   "size": 5542879,
    "size_is": "bytes of the head commit and its trees, fetched without blobs",
-   "files_at_head": 211892,
-   "elapsed_s": 1.908
+   "files_at_head": 219905,
+   "elapsed_s": 1.634
   },
   "cwe": {
    "url": "https://cwe.mitre.org/data/xml/cwec_latest.xml.zip",
@@ -171,30 +171,30 @@
   "metasploit": {
    "url": "https://github.com/rapid7/metasploit-framework",
    "ok": true,
-   "head": "7673832c30657be675656b53ece208759314bed7",
-   "date": "2026-11-07T15:22:02+00:00",
-   "size": 723836,
+   "head": "bea1fb069e79cb610fe3981f16b8697790369c63",
+   "date": "2026-11-13T16:53:40+00:00",
+   "size": 724437,
    "size_is": "bytes of the head commit and its trees, fetched without blobs",
-   "files_at_head": 15132,
-   "elapsed_s": 1.505
+   "files_at_head": 15152,
+   "elapsed_s": 1.41
   },
   "nuclei": {
    "url": "https://github.com/projectdiscovery/nuclei-templates",
    "ok": true,
-   "head": "789ca819727bc59f512310645d851fa57bdf91a0",
-   "date": "2026-11-08T03:11:14+00:00",
-   "size": 520484,
+   "head": "1cb2d50b4f0f5cbdb600165b0afe556b4623f29a",
+   "date": "2026-11-14T03:11:08+00:00",
+   "size": 521993,
    "size_is": "bytes of the head commit and its trees, fetched without blobs",
-   "files_at_head": 14570,
-   "elapsed_s": 1.282
+   "files_at_head": 14626,
+   "elapsed_s": 0.931
   },
   "gleif": {
    "url": "https://api.gleif.org/api/v1/lei-records?filter%5Bentity.legalName%5D=Velloran+Systems",
    "status": 200,
    "ok": true,
    "size": 448,
-   "elapsed_s": 0.545,
-   "date": "2026-11-08T03:51:43Z",
+   "elapsed_s": 0.543,
+   "date": "2026-11-14T03:40:21Z",
    "records_for_name": 0
   },
   "edgar": {
@@ -202,17 +202,17 @@
    "status": 403,
    "ok": false,
    "refused": true,
-   "size": 1925,
-   "date": "2026-11-08T03:51:44Z",
+   "size": 1924,
+   "date": "2026-11-14T03:40:21Z",
    "note": "the SEC refused a client that names the project and gives no contact address; recorded as the result, not retried"
   },
   "cna_list": {
-   "url": "https://raw.githubusercontent.com/CVEProject/cve-website/bc4adbd39adac7adea09fb314d57e103a702d649/src/assets/data/CNAsList.json",
+   "url": "https://raw.githubusercontent.com/CVEProject/cve-website/45144483c9deec52a9b07dcd43f41f4581cc43bd/src/assets/data/CNAsList.json",
    "status": 200,
    "ok": true,
-   "size": 66568,
-   "date": "2026-11-08T03:51:44Z",
-   "head": "bc4adbd39adac7adea09fb314d57e103a702d649"
+   "size": 66892,
+   "date": "2026-11-14T03:40:22Z",
+   "head": "45144483c9deec52a9b07dcd43f41f4581cc43bd"
   }
  },
  "nvd_limit": {
@@ -259,17 +259,17 @@
  },
  "github_release": {
   "download": {
-   "url": "https://github.com/CVEProject/cvelistV5/releases/download/cve_2026-11-08_0000Z/2026-11-08_all_CVEs_at_midnight.zip.zip",
+   "url": "https://github.com/CVEProject/cvelistV5/releases/download/cve_2026-11-14_0000Z/2026-11-14_all_CVEs_at_midnight.zip.zip",
    "status": 206,
    "ok": true,
-   "size": 655112134,
-   "date": "2026-11-08T03:00:00Z",
-   "newest_release": "cve_2026-11-08_0300Z",
-   "releases_listed": 31611
+   "size": 663341831,
+   "date": "2026-11-14T03:00:00Z",
+   "newest_release": "cve_2026-11-14_0300Z",
+   "releases_listed": 31753
   },
   "upload": {
    "tested": true,
-   "can_list_releases": false,
+   "can_list_releases": true,
    "note": "fetch.yml uploads with the workflow token and contents: write"
   }
  },
@@ -279,7 +279,7 @@
    "status": 200,
    "ok": true,
    "size": null,
-   "elapsed_s": 0.267,
+   "elapsed_s": 0.191,
    "date": "2026-07-19T03:45:45.529Z",
    "latest": "5.3.0",
    "has_5.3.0": true
@@ -289,7 +289,7 @@
    "status": 200,
    "ok": true,
    "size": null,
-   "elapsed_s": 0.264,
+   "elapsed_s": 0.351,
    "date": "2026-07-19T03:36:08.045Z",
    "latest": "5.3.0",
    "has_5.3.0": true
@@ -299,10 +299,238 @@
    "status": 200,
    "ok": true,
    "size": null,
-   "elapsed_s": 0.298,
+   "elapsed_s": 0.146,
    "date": "2026-07-19T03:49:00.889Z",
    "latest": "5.3.0",
    "has_5.3.0": true
+  }
+ },
+ "phase2": {
+  "libraries": {
+   "torch": {
+    "url": "https://pypi.org/pypi/torch/json",
+    "status": 200,
+    "ok": true,
+    "size": 895766,
+    "elapsed_s": 0.058,
+    "date": "2026-11-14T03:40:24Z",
+    "latest": "2.15.0",
+    "released": "2026-10-28",
+    "requires_python": ">=3.11"
+   },
+   "transformers": {
+    "url": "https://pypi.org/pypi/transformers/json",
+    "status": 200,
+    "ok": true,
+    "size": 428549,
+    "elapsed_s": 0.037,
+    "date": "2026-11-14T03:40:24Z",
+    "latest": "5.23.0",
+    "released": "2026-11-13",
+    "requires_python": ">=3.11.0"
+   },
+   "sentence-transformers": {
+    "url": "https://pypi.org/pypi/sentence-transformers/json",
+    "status": 200,
+    "ok": true,
+    "size": 123748,
+    "elapsed_s": 0.036,
+    "date": "2026-11-14T03:40:24Z",
+    "latest": "6.3.0",
+    "released": "2026-11-11",
+    "requires_python": ">=3.10"
+   },
+   "optimum": {
+    "url": "https://pypi.org/pypi/optimum/json",
+    "status": 200,
+    "ok": true,
+    "size": 128638,
+    "elapsed_s": 0.036,
+    "date": "2026-11-14T03:40:24Z",
+    "latest": "2.3.0",
+    "released": "2026-08-04",
+    "requires_python": ">=3.9.0"
+   },
+   "onnx": {
+    "url": "https://pypi.org/pypi/onnx/json",
+    "status": 200,
+    "ok": true,
+    "size": 1016708,
+    "elapsed_s": 0.039,
+    "date": "2026-11-14T03:40:24Z",
+    "latest": "1.23.2",
+    "released": "2026-10-06",
+    "requires_python": ">=3.10"
+   },
+   "onnxruntime": {
+    "url": "https://pypi.org/pypi/onnxruntime/json",
+    "status": 200,
+    "ok": true,
+    "size": 1123855,
+    "elapsed_s": 0.04,
+    "date": "2026-11-14T03:40:25Z",
+    "latest": "1.32.0",
+    "released": "2026-11-13",
+    "requires_python": ">=3.11"
+   },
+   "skl2onnx": {
+    "url": "https://pypi.org/pypi/skl2onnx/json",
+    "status": 200,
+    "ok": true,
+    "size": 54092,
+    "elapsed_s": 0.067,
+    "date": "2026-11-14T03:40:25Z",
+    "latest": "1.20.0",
+    "released": "2026-01-30",
+    "requires_python": ">=3.8"
+   },
+   "onnxmltools": {
+    "url": "https://pypi.org/pypi/onnxmltools/json",
+    "status": 200,
+    "ok": true,
+    "size": 39970,
+    "elapsed_s": 0.036,
+    "date": "2026-11-14T03:40:25Z",
+    "latest": "1.16.0",
+    "released": "2026-01-30",
+    "requires_python": ">=3.9"
+   },
+   "lightgbm": {
+    "url": "https://pypi.org/pypi/lightgbm/json",
+    "status": 200,
+    "ok": true,
+    "size": 168622,
+    "elapsed_s": 0.036,
+    "date": "2026-11-14T03:40:25Z",
+    "latest": "4.7.0",
+    "released": "2026-07-18",
+    "requires_python": ">=3.10"
+   },
+   "optuna": {
+    "url": "https://pypi.org/pypi/optuna/json",
+    "status": 200,
+    "ok": true,
+    "size": 113678,
+    "elapsed_s": 0.036,
+    "date": "2026-11-14T03:40:25Z",
+    "latest": "5.0.0",
+    "released": "2026-09-07",
+    "requires_python": ">=3.9"
+   },
+   "lifelines": {
+    "url": "https://pypi.org/pypi/lifelines/json",
+    "status": 200,
+    "ok": true,
+    "size": 310804,
+    "elapsed_s": 0.037,
+    "date": "2026-11-14T03:40:25Z",
+    "latest": "0.30.3",
+    "released": "2026-03-05",
+    "requires_python": ">=3.11"
+   },
+   "scikit-survival": {
+    "url": "https://pypi.org/pypi/scikit-survival/json",
+    "status": 200,
+    "ok": true,
+    "size": 269180,
+    "elapsed_s": 0.066,
+    "date": "2026-11-14T03:40:25Z",
+    "latest": "0.28.0",
+    "released": "2026-07-05",
+    "requires_python": ">=3.11"
+   },
+   "mapie": {
+    "url": "https://pypi.org/pypi/mapie/json",
+    "status": 200,
+    "ok": true,
+    "size": 77516,
+    "elapsed_s": 0.068,
+    "date": "2026-11-14T03:40:25Z",
+    "latest": "1.6.0",
+    "released": "2026-10-19",
+    "requires_python": ">=3.10"
+   },
+   "mlflow": {
+    "url": "https://pypi.org/pypi/mlflow/json",
+    "status": 200,
+    "ok": true,
+    "size": 350589,
+    "elapsed_s": 0.037,
+    "date": "2026-11-14T03:40:25Z",
+    "latest": "3.18.0",
+    "released": "2026-11-03",
+    "requires_python": ">=3.10"
+   },
+   "faiss-cpu": {
+    "url": "https://pypi.org/pypi/faiss-cpu/json",
+    "status": 200,
+    "ok": true,
+    "size": 527691,
+    "elapsed_s": 0.037,
+    "date": "2026-11-14T03:40:25Z",
+    "latest": "1.16.0",
+    "released": "2026-11-10",
+    "requires_python": ">=3.10"
+   },
+   "kaggle": {
+    "url": "https://pypi.org/pypi/kaggle/json",
+    "status": 200,
+    "ok": true,
+    "size": 104480,
+    "elapsed_s": 0.065,
+    "date": "2026-11-14T03:40:25Z",
+    "latest": "2.2.5",
+    "released": "2026-10-22",
+    "requires_python": ">=3.11"
+   }
+  },
+  "weights": {
+   "modernbert": {
+    "url": "https://huggingface.co/api/models/answerdotai/ModernBERT-base/revision/8949b909ec900327062f0ebf497f51aef5e6f0c8?blobs=true",
+    "status": 200,
+    "ok": true,
+    "size": 7298,
+    "elapsed_s": 0.194,
+    "date": "2026-11-14T03:40:25Z",
+    "id": "answerdotai/ModernBERT-base",
+    "pinned": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+    "resolved": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
+    "last_modified": "2025-01-15T20:11:48.000Z",
+    "license": "apache-2.0",
+    "bytes": 3134313772
+   },
+   "embedding": {
+    "url": "https://huggingface.co/api/models/BAAI/bge-small-en-v1.5/revision/5c38ec7c405ec4b44b94cc5a9bb96e735b38267a?blobs=true",
+    "status": 200,
+    "ok": true,
+    "size": 150350,
+    "elapsed_s": 0.087,
+    "date": "2026-11-14T03:40:25Z",
+    "id": "BAAI/bge-small-en-v1.5",
+    "pinned": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+    "resolved": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+    "last_modified": "2024-02-22T03:36:23.000Z",
+    "license": "mit",
+    "bytes": 401109346
+   }
+  },
+  "kaggle": {
+   "ok": true,
+   "token_present": false,
+   "note": "KAGGLE_USERNAME and KAGGLE_KEY are not set; step 8 takes its CPU fallback"
+  },
+  "databricks": {
+   "ok": true,
+   "token_present": false,
+   "note": "DATABRICKS_HOST and DATABRICKS_TOKEN are not set; the registry uses the file store"
+  },
+  "r": {
+   "ok": false,
+   "note": "Rscript is not on this machine; models.yml installs R in Actions"
+  },
+  "image": {
+   "status": "pending",
+   "note": "measured at step 13 from a build of Dockerfile.vercel with onnxruntime added"
   }
  },
  "neon": {

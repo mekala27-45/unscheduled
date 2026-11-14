@@ -331,3 +331,16 @@ scripts/build_manifest.py marked a checklist line done when its evidence files e
 empty, so a record of a failed run, or a live check with only its awake phase, counted. A line is
 now done when every file of its evidence exists, every JSON record that states a result states a
 pass, and results/live_check.json holds a pass for the site awake and asleep.
+
+## 2026-11-14: Phase 2 opens with a scoped model gate and two pinned weights
+
+The Phase 1 gate refused every model library. Phase 2 trains and serves models, so the gate is now
+scoped: torch, transformers, sentence-transformers and optimum may be imported only under
+packages/models and kaggle/, the ONNX runtime only under packages/models and packages/api, and
+every model provider client and agent framework stays refused everywhere until Phase 3. The weights
+are pinned in config/models.yaml to the revisions the Hugging Face Hub resolved on 14 November:
+answerdotai/ModernBERT-base at 8949b909ec90 (Apache 2.0) for the fill model, and
+BAAI/bge-small-en-v1.5 at 5c38ec7c405e (MIT) for the product retrieval and the CPU fallback. The
+probe gained a phase2 section that reads the libraries from PyPI, the weights from the Hub, and the
+Kaggle and Databricks accounts only when their secrets exist, writing whether each answered and
+never a value.

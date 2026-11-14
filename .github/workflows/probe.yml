@@ -3,7 +3,8 @@ name: probe
 # Every host the build depends on, probed daily and on demand: every source answers with a size and
 # a date, the NVD answers keyless (and with the optional key) and a burst within the documented
 # allowance measures the limit it enforces, release downloads are checked, and the Fontsource
-# packages are looked up. results/probe.json is uploaded as an artifact for the deploy steps.
+# packages are looked up; for Phase 2 the libraries, the model weights, Kaggle, Databricks and R.
+# results/probe.json is uploaded as an artifact for the deploy steps.
 on:
   schedule:
     - cron: "23 5 * * *"
@@ -35,6 +36,11 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+          # Phase 2: read only to learn whether the accounts answer; no value is written anywhere.
+          KAGGLE_USERNAME: ${{ secrets.KAGGLE_USERNAME }}
+          KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
+          DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
+          DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
         run: uv run python scripts/probe_hosts.py
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:

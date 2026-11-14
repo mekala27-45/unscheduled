@@ -84,19 +84,41 @@ def test_secret_gate_refuses_nothing(tmp_path: Path) -> None:
         check_secrets.check(tmp_path, [])
 
 
-def test_no_model_gate_passes_data_code(tmp_path: Path) -> None:
-    f = tmp_path / "a.py"
-    f.write_text(
-        "import polars as pl\nfrom sklearn.linear_model import LogisticRegression\n", encoding="utf-8"
-    )
-    assert check_no_model.check(tmp_path, [f]) == 1
+def _module(root: Path, where: str, text: str) -> Path:
+    path = root / where
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(text, encoding="utf-8")
+    return path
 
 
-def test_no_model_gate_catches_a_model_import(tmp_path: Path) -> None:
-    f = tmp_path / "a.py"
-    f.write_text("from transformers import AutoModel\n", encoding="utf-8")
-    with pytest.raises(ValueError, match="no model gate failed"):
-        check_no_model.check(tmp_path, [f])
+def test_no_model_gate_passes_data_code_and_scoped_model_code(tmp_path: Path) -> None:
+    files = [
+        _module(
+            tmp_path,
+            "packages/analysis/a.py",
+            "import polars as pl\nfrom sklearn.linear_model import LogisticRegression\n",
+        ),
+        _module(tmp_path, "packages/models/train.py", "import torch\nfrom transformers import AutoModel\n"),
+        _module(tmp_path, "kaggle/kernel.py", "from sentence_transformers import SentenceTransformer\n"),
+        _module(tmp_path, "packages/api/serve.py", "import onnxruntime as ort\n"),
+    ]
+    assert check_no_model.check(tmp_path, files) == 4
+
+
+@pytest.mark.parametrize(
+    ("where", "text"),
+    [
+        ("packages/api/a.py", "from transformers import AutoModel\n"),
+        ("scripts/train.py", "import torch\n"),
+        ("packages/analysis/a.py", "import onnxruntime\n"),
+        ("packages/models/a.py", "import openai\n"),
+        ("kaggle/kernel.py", "from langgraph.graph import StateGraph\n"),
+        ("packages/models_extra/a.py", "import torch\n"),
+    ],
+)
+def test_no_model_gate_catches_a_model_import_out_of_place(tmp_path: Path, where: str, text: str) -> None:
+    with pytest.raises(ValueError, match="model gate failed"):
+        check_no_model.check(tmp_path, [_module(tmp_path, where, text)])
 
 
 def test_no_model_gate_refuses_nothing(tmp_path: Path) -> None:

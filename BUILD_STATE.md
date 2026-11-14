@@ -7,8 +7,10 @@ the manifest or a committed file: edit the template, then render.
 ## Where it stands
 
 ```
-Phase            1 of 5, the ground truth, tagged v0.1.0 on the commit that adds the release record
-Checklist        18 of 18 lines done (RESULTS.md)
+Phase            2 of 5, the models: the first of eighteen steps done (the probes and the scoped
+                 model gate); the prompt is claude/unscheduled-phase-2-prompt.md in the Project
+Phase 1          the ground truth, tagged v0.1.0 on the commit that adds the release record;
+                 its checklist 18 of 18 lines done (RESULTS.md)
 Repository       public; every commit conventional; CI, web and exposure green on main
 Vercel           unscheduled-api (container) at unscheduled-api.vercel.app
                  unscheduled (web) at unscheduled-triage.vercel.app: the landing with its
@@ -23,17 +25,19 @@ Look approval    approved by Ajay on the evening of 11 November, New York time, 
 
 ## Next action
 
-Phase 1 is tagged v0.1.0. Ajay pushed the tag on the commit that adds the release record, and
-release.yml reran the gates and the claim gate on it and published the release with the manifest
-and the plan registration attached. The committed numbers are rebuilt from the settled lake release
-named above, and every checklist line holds its evidence. Next: Phase 2, the models, from a prompt
-written from this repository as it stands, when Ajay asks for it. It starts from the hand off below.
+Phase 2 has started from the hand off below. Step one is done: results/probe.json now carries a
+section for Phase 2 (the libraries on PyPI, the two pinned weights in config/models.yaml, Kaggle and
+Databricks answered or not, R with the survival package), and the model gate is scoped: model
+libraries only under packages/models and kaggle/, the ONNX runtime also under packages/api, and no
+model provider client or agent framework anywhere. Next: step two, evaluation/phase2_plan.yaml
+hashed into evaluation/registration.json as stage two, before any model sees a test CVE.
 
 ## Open problems
 
-- Releases come only from workflows Ajay starts: this session's automatic approvals refuse to
-  create a release, so a workflow that publishes one, and the version tag that starts release.yml,
-  need his start or his yes.
+- Releases and tags come only from Ajay: this session cannot create a release or start a workflow
+  that creates one, and its git access cannot push a tag, so v0.2.0 is pushed from his machine.
+- Kaggle and Databricks secrets are not set yet. Without the Kaggle pair, step eight takes its CPU
+  fallback; without the Databricks pair, the registry uses the file store.
 - The schedules fire hours late and less often than they ask: the hourly fetch has run a few times
   a day since 12 November, and the daily fetch and lake build several hours after their times. The
   newest lake release changes with each hourly run until the next daily one, so the committed

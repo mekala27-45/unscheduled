@@ -303,6 +303,114 @@ class Probe:
         return out
 
 
+def phase2(probe: Probe, root: Path) -> dict[str, Any]:
+    """What Phase 2 needs before it starts: the libraries on PyPI, the weights on the Hugging Face
+    Hub, the Kaggle and Databricks accounts when their secrets exist (answered or not, never a
+    value), R with the survival package, and the image size, measured at the serving step."""
+    import yaml
+
+    cfg = yaml.safe_load((root / "config" / "models.yaml").read_text(encoding="utf-8"))
+    libraries: dict[str, Any] = {}
+    for name in cfg["libraries"]:
+
+        def lib(n: str = name) -> dict[str, Any]:
+            result, body = probe.get_json(f"https://pypi.org/pypi/{n}/json")
+            if body is not None:
+                info = body.get("info") or {}
+                latest = str(info.get("version"))
+                files = (body.get("releases") or {}).get(latest) or []
+                result["latest"] = latest
+                result["released"] = (files[0].get("upload_time_iso_8601") or "")[:10] if files else None
+                result["requires_python"] = info.get("requires_python")
+            return result
+
+        libraries[name] = guarded(lib)
+    weights: dict[str, Any] = {}
+    for key, weight in cfg["weights"].items():
+
+        def hub(w: dict[str, Any] = weight) -> dict[str, Any]:
+            revision = w.get("revision") or "main"
+            result, body = probe.get_json(
+                f"https://huggingface.co/api/models/{w['id']}/revision/{revision}?blobs=true"
+            )
+            if body is not None:
+                result["id"] = w["id"]
+                result["pinned"] = w.get("revision")
+                result["resolved"] = body.get("sha")
+                result["last_modified"] = body.get("lastModified")
+                result["license"] = (body.get("cardData") or {}).get("license")
+                result["bytes"] = sum(int(s.get("size") or 0) for s in body.get("siblings") or [])
+            return result
+
+        weights[key] = guarded(hub)
+    return {
+        "libraries": libraries,
+        "weights": weights,
+        "kaggle": guarded(lambda: secret_gated_kaggle(probe)),
+        "databricks": guarded(lambda: secret_gated_databricks(probe)),
+        "r": guarded(r_survival),
+        "image": {
+            "status": "pending",
+            "note": "measured at step 13 from a build of Dockerfile.vercel with onnxruntime added",
+        },
+    }
+
+
+def secret_gated_kaggle(probe: Probe) -> dict[str, Any]:
+    """The Kaggle API answers for the account, read with the two secrets when they exist. Nothing is
+    pushed, and neither the username nor the key is written anywhere."""
+    user, key = os.environ.get("KAGGLE_USERNAME"), os.environ.get("KAGGLE_KEY")
+    if not user or not key:
+        return {
+            "ok": True,
+            "token_present": False,
+            "note": "KAGGLE_USERNAME and KAGGLE_KEY are not set; step 8 takes its CPU fallback",
+        }
+    response = probe.client.get(
+        "https://www.kaggle.com/api/v1/kernels/list",
+        params={"user": user, "pageSize": 1},
+        auth=(user, key),
+    )
+    return {"ok": response.status_code == 200, "token_present": True, "status": response.status_code}
+
+
+def secret_gated_databricks(probe: Probe) -> dict[str, Any]:
+    """The workspace MLflow answers, read with the two secrets when they exist. The host is not
+    written either: only whether it answered."""
+    host, token = os.environ.get("DATABRICKS_HOST"), os.environ.get("DATABRICKS_TOKEN")
+    if not host or not token:
+        return {
+            "ok": True,
+            "token_present": False,
+            "note": "DATABRICKS_HOST and DATABRICKS_TOKEN are not set; the registry uses the file store",
+        }
+    response = probe.client.get(
+        f"{host.rstrip('/')}/api/2.0/mlflow/experiments/search",
+        params={"max_results": 1},
+        headers={"Authorization": f"Bearer {token}"},
+    )
+    return {"ok": response.status_code == 200, "token_present": True, "status": response.status_code}
+
+
+def r_survival() -> dict[str, Any]:
+    """R and its survival package on this machine, for the Cox cross check."""
+    rscript = shutil.which("Rscript")
+    if rscript is None:
+        return {"ok": False, "note": "Rscript is not on this machine; models.yml installs R in Actions"}
+    version = subprocess.run([rscript, "--version"], capture_output=True, text=True, check=False)
+    survival = subprocess.run(
+        [rscript, "-e", 'cat(as.character(packageVersion("survival")))'],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    return {
+        "ok": survival.returncode == 0,
+        "r": (version.stdout or version.stderr).strip().splitlines()[0][:120],
+        "survival": survival.stdout.strip() or None,
+    }
+
+
 def run(skip_burst: bool) -> dict[str, Any]:
     probe = Probe()
     nvd_cfg = probe.cfg["nvd"]
@@ -368,6 +476,7 @@ def run(skip_burst: bool) -> dict[str, Any]:
         "nvd_limit": nvd_limit,
         "github_release": guarded(probe.github_release),
         "fontsource": probe.fontsource(),
+        "phase2": phase2(probe, paths.root()),
     }
 
 
