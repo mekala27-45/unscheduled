@@ -1,0 +1,76 @@
+name: models
+
+# The Phase 2 fits too large for a laptop, run on demand from the committed sets and nothing else.
+# The lake release results/lake/release.json names is restored with every archive checked against
+# the digests that record kept; the lake is rebuilt; the sets are rebuilt and must match the content
+# digests in results/models/sets.json before anything is fit. The outputs go up as an artifact, and
+# the records under results/ are committed from it. No job writes to the repository or a release.
+on:
+  workflow_dispatch:
+    inputs:
+      step:
+        description: The Phase 2 step to run
+        type: choice
+        options:
+          - floors
+        default: floors
+
+permissions: {}
+
+concurrency:
+  group: models
+  cancel-in-progress: false
+
+jobs:
+  fit:
+    name: fit from the committed sets
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    permissions:
+      contents: read
+    env:
+      PYTHONHASHSEED: "0"
+      GH_TOKEN: ${{ github.token }}
+      STEP: ${{ inputs.step }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: "3.12"
+          enable-cache: false
+      - run: uv sync --frozen
+
+      - name: The recorded lake release, every archive unchanged
+        run: uv run python scripts/restore_release.py --recorded
+
+      - name: The lake, beside the content digest committed for it
+        run: |
+          uv run python scripts/build_lake.py --memory 10GB --threads 4
+          committed="$(git show HEAD:results/lake/lake.json | jq -r .content_digest)"
+          built="$(jq -r .content_digest results/lake/lake.json)"
+          if [ "$committed" = "$built" ]; then
+            echo "The lake content digest matches the committed one: $built"
+          else
+            echo "::warning::The lake content digest $built differs from the committed $committed; the sets check below decides"
+          fi
+
+      - name: The sets, which must match results/models/sets.json
+        run: uv run python scripts/build_sets.py --check
+
+      - name: The fill floors
+        if: env.STEP == 'floors'
+        run: uv run python scripts/train_floors.py --jobs 4 --heavy 2
+
+      - name: Keep the outputs
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: ${{ inputs.step }}
+          path: |
+            results/models/floors.json
+            results/parts/floors.json
+            data/models/floors
+          retention-days: 30
+          if-no-files-found: warn

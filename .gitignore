@@ -15,6 +15,7 @@ data/lake/
 data/cache/
 data/serving/
 data/sets/
+data/models/
 # The locks and the run ledger ride in each lake release (fetch.yml), not in git
 data/locks/
 *.duckdb

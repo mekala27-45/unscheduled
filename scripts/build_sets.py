@@ -8,6 +8,12 @@ and commits what describes them: results/models/sets.json (rows, label coverage,
 and the exact content digest of every file, with the lake digests and the lake release they came
 from) and the manifest part results/parts/models.json. The test labels sit in a file of their own
 that only scripts/score_test.py opens.
+
+    uv run python scripts/build_sets.py --check
+
+rebuilds the sets and compares the content digest of every file with results/models/sets.json,
+writing nothing that is committed: the models workflow runs it before it fits anything, so a model
+is fit on the committed sets or not at all.
 """
 
 from __future__ import annotations
@@ -101,12 +107,30 @@ def manifest_part(record: dict[str, Any]) -> dict[str, Any]:
     return m.dump()
 
 
+def check(record: dict[str, Any]) -> int:
+    """Every rebuilt file against the committed record: the same files, the same content digests."""
+    committed = json.loads((ROOT / "results" / "models" / "sets.json").read_text(encoding="utf-8"))["files"]
+    built = {name: entry["content_digest"] for name, entry in record["files"].items()}
+    expected = {name: entry["content_digest"] for name, entry in committed.items()}
+    differ = sorted(name for name in expected.keys() | built.keys() if built.get(name) != expected.get(name))
+    if differ:
+        print("sets: differ from results/models/sets.json: " + ", ".join(differ))
+        return 1
+    print(f"sets: all {len(built)} files match results/models/sets.json")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--out", type=Path, default=ROOT / "data" / "sets")
+    parser.add_argument(
+        "--check", action="store_true", help="compare with results/models/sets.json, write no result"
+    )
     args = parser.parse_args(argv)
     started = time.monotonic()
     record = sets.build(ROOT / "data" / "lake" / "unscheduled.duckdb", ROOT / "data" / "bronze", args.out)
+    if args.check:
+        return check(record)
     record.update(lake_identity())
     record["seconds"] = round(time.monotonic() - started, 1)
     out = ROOT / "results" / "models" / "sets.json"

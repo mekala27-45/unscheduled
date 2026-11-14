@@ -11,7 +11,8 @@ against the release's SHA256SUMS before it is opened, or against the digest GitH
 when the sums leave it out. data/bronze is replaced, not merged, so no table from an earlier local
 fetch survives. results/lake/release.json names the release restored and the digest of every archive,
 so the numbers built next say which published bronze they came from, and a rederive can tell when a
-release changed.
+release changed. With --recorded it restores the release that record names instead, fails when any
+archive's digest moved since, and leaves the record as it is: the models workflow starts this way.
 """
 
 from __future__ import annotations
@@ -28,18 +29,42 @@ ROOT = Path(__file__).resolve().parents[1]
 if __package__ in {None, ""}:
     sys.path.insert(0, str(ROOT))
 
-from scripts.reset_and_rederive import archive_digests, download, extract, settled_lake_release
+from scripts.reset_and_rederive import (
+    archive_digests,
+    download,
+    extract,
+    recorded_release,
+    settled_lake_release,
+    unchanged_since_recorded,
+)
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--release", default=None)
+    parser.add_argument(
+        "--recorded",
+        action="store_true",
+        help="restore the release results/lake/release.json names, fail if an archive changed since, keep the record",
+    )
     args = parser.parse_args(argv)
-    tag = args.release or settled_lake_release()
+    recorded = recorded_release() if args.recorded else None
+    if args.recorded and not recorded:
+        raise SystemExit("restore: results/lake/release.json names no release to restore")
+    tag = str(recorded["tag"]) if recorded else args.release or settled_lake_release()
     folder = download(tag)
+    if recorded:
+        problem = unchanged_since_recorded(folder, recorded, tag)
+        if problem:
+            raise SystemExit(f"restore: {problem}")
     for stale in (ROOT / "data" / "bronze", ROOT / "data" / "locks"):
         shutil.rmtree(stale, ignore_errors=True)
     counts = extract(folder, ROOT)
+    if recorded:
+        print(
+            f"restore: {tag} as recorded, every archive unchanged, {counts['bronze_archives']} bronze archives"
+        )
+        return 0
     record = {
         "tag": tag,
         "restored_at": datetime.now(UTC).replace(microsecond=0).isoformat(),
