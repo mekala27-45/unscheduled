@@ -9,12 +9,17 @@ at the lake cut. EPSS, KEV and every NVD value are never features (evaluation/ph
 Inputs and labels go to separate files per split. The test labels sit in a file of their own,
 TEST_LABELS, that only scripts/score_test.py opens: scripts/check_test_labels.py fails on any other
 reference to it, and load_labels refuses the test split unless the caller unseals it.
+
+The affected product labels go to files of their own, the test file TEST_PRODUCT_LABELS sealed the
+same way: the vendor and product pairs the NVD marks vulnerable in its CPE configurations at the
+lake cut, rebuilt from the configuration events of the NVD change history.
 """
 
 from __future__ import annotations
 
 import hashlib
 import json
+import re
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -28,6 +33,14 @@ BANDS = ("LOW", "MEDIUM", "HIGH", "CRITICAL")
 METRICS = ("AV", "AC", "PR", "UI", "S", "C", "I", "A")
 CWE_CLASSES = 50
 TEST_LABELS = "test_labels.parquet"
+TEST_PRODUCT_LABELS = "test_product_labels.parquet"
+PRODUCT_COLUMNS = ("cve_id", "split", "nvd_products", "nvd_cpe_matches", "nvd_cpe_count")
+PRODUCT_INPUT_COLUMNS = ("cve_id", "split", "filer_pairs")
+# A vulnerable match in a configuration the NVD change history writes as text: an asterisk, then a
+# CPE 2.3 name whose vendor and product may quote a character with a backslash. A platform match
+# (the system a vulnerable application runs on) carries no asterisk and is not a label.
+VULNERABLE = re.compile(r"\*cpe:2\.3:[aoh]:((?:\\.|[^:\\])*):((?:\\.|[^:\\])*):")
+ANY_CPE = re.compile(r"cpe:2\.3:")
 DAY0_FIELDS = (
     "cvss31_vector",
     "cvss30_vector",
@@ -118,6 +131,21 @@ def labels_name(split: str) -> str:
 
 def inputs_name(split: str) -> str:
     return f"{split}_inputs.parquet"
+
+
+def product_inputs_name(split: str) -> str:
+    return f"{split}_product_inputs.parquet"
+
+
+def product_labels_name(split: str) -> str:
+    return TEST_PRODUCT_LABELS if split == "test" else f"{split}_product_labels.parquet"
+
+
+def load_product_labels(folder: Path, split: str, *, unsealed: bool = False) -> pl.DataFrame:
+    """The affected product labels of a split, sealed for test as load_labels seals the others."""
+    if split == "test" and not unsealed:
+        raise PermissionError("the test labels are read once, by scripts/score_test.py")
+    return pl.read_parquet(folder / product_labels_name(split))
 
 
 def load_labels(folder: Path, split: str, *, unsealed: bool = False) -> pl.DataFrame:
@@ -417,6 +445,130 @@ def empty_columns(frame: pl.DataFrame) -> list[str]:
     return problems
 
 
+PRODUCT_SQL = """
+select e.cve_id, e.details_json
+from nvd_changes_bronze as e
+join set_cves as c using (cve_id)
+where e.details_json like '%CPE Configuration%'
+    and e.created <= cast($cut as timestamptz)
+order by e.cve_id, e.created, e.cve_change_id
+"""
+
+
+PRODUCT_INPUT_SQL = """
+with latest as (
+    select cve_id, affected_json
+    from cve_records_bronze
+    where cve_id in (select cve_id from set_cves)
+    qualify row_number() over (partition by cve_id order by snapshot_at desc, record_digest desc) = 1
+),
+entries as (
+    select
+        l.cve_id,
+        nullif(trim(coalesce(u.a.vendor, '')), 'n/a') as vendor,
+        nullif(trim(coalesce(u.a.product, '')), 'n/a') as product
+    from latest as l,
+        unnest(from_json(coalesce(l.affected_json, '[]'), '[{"vendor":"VARCHAR","product":"VARCHAR"}]')) as u(a)
+)
+select
+    c.cve_id,
+    c.split,
+    list(distinct {'vendor': coalesce(e.vendor, ''), 'product': coalesce(e.product, '')})
+        filter (where coalesce(e.vendor, '') <> '' or coalesce(e.product, '') <> '') as filer_pairs
+from set_cves as c
+left join entries as e using (cve_id)
+group by c.cve_id, c.split
+order by c.cve_id
+"""
+
+
+def product_inputs(con: duckdb.DuckDBPyConnection) -> pl.DataFrame:
+    """Per set CVE, the vendor and product pairs of the filer's affected block, from the CVE List
+    record as the products input reads it (affected_rule current), with the pairs sorted so the file
+    is the same on every build. The connection must hold set_cves and the bronze views."""
+    frame: pl.DataFrame = con.sql(PRODUCT_INPUT_SQL).pl()
+    pairs = [
+        sorted(values, key=lambda v: (v["vendor"], v["product"])) if values else None
+        for values in frame.get_column("filer_pairs").to_list()
+    ]
+    dtype = pl.List(pl.Struct({"vendor": pl.String, "product": pl.String}))
+    return frame.with_columns(pl.Series("filer_pairs", pairs, dtype=dtype))
+
+
+def configuration_pairs(nodes: list[str]) -> tuple[list[str], int]:
+    """The vulnerable vendor and product pairs of a set of configuration nodes, as vendor:product,
+    and the number of CPE matches they hold, vulnerable or not."""
+    pairs = sorted({f"{vendor}:{product}" for node in nodes for vendor, product in VULNERABLE.findall(node)})
+    return pairs, sum(len(ANY_CPE.findall(node)) for node in nodes)
+
+
+def apply_configuration_events(details: list[dict[str, Any]], nodes: Counter[str]) -> None:
+    """One change event applied to the configuration nodes of a CVE: an added node counts once
+    more, a removed node once less, and a changed node is the old one removed and the new one
+    added. A node the history never added is not removed."""
+    for d in details:
+        if d.get("type") != "CPE Configuration":
+            continue
+        action, old, new = d.get("action"), d.get("oldValue") or "", d.get("newValue") or ""
+        if action in ("Removed", "Changed") and old and nodes[old] > 0:
+            nodes[old] -= 1
+        if action in ("Added", "Changed") and new:
+            nodes[new] += 1
+
+
+def product_labels(con: duckdb.DuckDBPyConnection, cut: str) -> pl.DataFrame:
+    """Per set CVE, the vulnerable vendor and product pairs of its NVD configurations at the cut,
+    rebuilt event by event from the change history, beside the number of CPE matches the rebuilt
+    configurations hold and the number the NVD record held when fetched (a check of the rebuild).
+    The connection must hold set_cves (build_frame) and the bronze views (attach_bronze)."""
+    state: dict[str, Counter[str]] = {}
+    cursor = con.execute(PRODUCT_SQL, {"cut": cut})
+    while rows := cursor.fetchmany(5000):
+        for cve_id, details in rows:
+            apply_configuration_events(json.loads(details), state.setdefault(str(cve_id), Counter()))
+    spine = con.sql(
+        "select c.cve_id, c.split, g.cpe_count from set_cves as c join gold.cve_current as g using (cve_id) "
+        "order by c.cve_id"
+    ).fetchall()
+    rows_out: dict[str, list[Any]] = {name: [] for name in PRODUCT_COLUMNS}
+    for cve_id, split, cpe_count in spine:
+        nodes = [node for node, n in state.get(str(cve_id), Counter()).items() if n > 0]
+        pairs, matches = configuration_pairs(nodes)
+        rows_out["cve_id"].append(cve_id)
+        rows_out["split"].append(split)
+        rows_out["nvd_products"].append(pairs or None)
+        rows_out["nvd_cpe_matches"].append(matches)
+        rows_out["nvd_cpe_count"].append(int(cpe_count) if cpe_count is not None else None)
+    return pl.DataFrame(
+        rows_out,
+        schema={
+            "cve_id": pl.String,
+            "split": pl.String,
+            "nvd_products": pl.List(pl.String),
+            "nvd_cpe_matches": pl.Int64,
+            "nvd_cpe_count": pl.Int64,
+        },
+    )
+
+
+def product_coverage(products: pl.DataFrame) -> dict[str, dict[str, Any]]:
+    """Per split: the CVEs with a product label, and how often the rebuilt configurations hold as
+    many CPE matches as the NVD record did, among the CVEs whose record held any."""
+    out: dict[str, dict[str, Any]] = {}
+    for split in SPLITS:
+        part = products.filter(pl.col("split") == split)
+        with_record = part.filter(pl.col("nvd_cpe_count").fill_null(0) > 0)
+        agree = with_record.filter(pl.col("nvd_cpe_matches") == pl.col("nvd_cpe_count")).height
+        out[split] = {
+            "rows": part.height,
+            "with_products": int(part.get_column("nvd_products").is_not_null().sum()),
+            "record_with_cpe": with_record.height,
+            "rebuild_agrees": agree,
+            "rebuild_agreement": round(agree / with_record.height, 6) if with_record.height else None,
+        }
+    return out
+
+
 def write(frame: pl.DataFrame, out: Path) -> dict[str, Any]:
     """Inputs and labels per split, each sorted by CVE id, with their exact content digests."""
     out.mkdir(parents=True, exist_ok=True)
@@ -430,23 +582,43 @@ def write(frame: pl.DataFrame, out: Path) -> dict[str, Any]:
     return files
 
 
+def write_products(products: pl.DataFrame, inputs: pl.DataFrame, out: Path) -> dict[str, Any]:
+    """The affected product inputs and labels per split, apart from the other sets files."""
+    out.mkdir(parents=True, exist_ok=True)
+    files: dict[str, Any] = {}
+    for split in SPLITS:
+        for name, frame, columns in (
+            (product_inputs_name(split), inputs, PRODUCT_INPUT_COLUMNS),
+            (product_labels_name(split), products, PRODUCT_COLUMNS),
+        ):
+            part = frame.filter(pl.col("split") == split).sort("cve_id")
+            path = out / name
+            part.select(columns).write_parquet(path, compression="zstd", statistics=True)
+            files[name] = {"rows": part.height, "content_digest": content_digest(path)}
+    return files
+
+
 def build(lake_file: Path, bronze: Path, out: Path) -> dict[str, Any]:
     con = duckdb.connect(str(lake_file), read_only=True)
     try:
         attach_bronze(con, bronze)
         cut = lake_cut(con)
         frame = build_frame(con)
+        products = product_labels(con, cut)
+        affected = product_inputs(con)
     finally:
         con.close()
     problems = empty_columns(frame)
     if problems:
         raise ValueError("a feature column is empty for a whole window: " + ", ".join(problems))
     files = write(frame, out)
+    files.update(write_products(products, affected, out))
     record = {
         "lake_cut": cut,
         "scoring_time": "day 0, the end of the publication day in UTC",
         "files": files,
         "coverage": coverage(frame),
+        "product_coverage": product_coverage(products),
         "cwe_classes": sorted(v for v in frame.get_column("cwe").unique().to_list() if v is not None),
     }
     (out / "manifest.json").write_text(json.dumps(record, indent=1, sort_keys=True) + "\n", encoding="utf-8")

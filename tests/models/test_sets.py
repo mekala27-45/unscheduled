@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+from collections import Counter
 from datetime import UTC, datetime, timedelta
 from pathlib import Path
 
@@ -121,6 +122,50 @@ def test_the_test_labels_are_sealed(tmp_path: Path) -> None:
     assert sets.load_labels(tmp_path, "test", unsealed=True).height == 1
 
 
+def test_the_test_product_labels_are_sealed(tmp_path: Path) -> None:
+    pl.DataFrame({"cve_id": ["CVE-2025-0001"]}).write_parquet(tmp_path / sets.product_labels_name("test"))
+    with pytest.raises(PermissionError):
+        sets.load_product_labels(tmp_path, "test")
+    assert sets.load_product_labels(tmp_path, "test", unsealed=True).height == 1
+
+
+QUALCOMM = (
+    "AND\n     OR\n          *cpe:2.3:o:qualcomm:snapdragon_8\\+_gen_1_firmware:-:*:*:*:*:*:*:*\n"
+    "     OR\n          cpe:2.3:h:qualcomm:snapdragon_8\\+_gen_1:-:*:*:*:*:*:*:*"
+)
+ADOBE = "OR\n     *cpe:2.3:a:adobe:indesign:*:*:*:*:*:*:*:* versions up to (including) 18.5.4"
+
+
+def test_only_vulnerable_matches_are_labels_and_quoting_is_kept() -> None:
+    pairs, matches = sets.configuration_pairs([QUALCOMM, ADOBE])
+    assert pairs == ["adobe:indesign", "qualcomm:snapdragon_8\\+_gen_1_firmware"]
+    assert matches == 3
+
+
+def test_configuration_events_rebuild_the_state_at_the_cut() -> None:
+    nodes: Counter[str] = Counter()
+    sets.apply_configuration_events(
+        [
+            {"type": "CPE Configuration", "action": "Added", "newValue": ADOBE},
+            {"type": "CPE Configuration", "action": "Added", "newValue": QUALCOMM},
+            {"type": "Description", "action": "Added", "newValue": "not a configuration"},
+        ],
+        nodes,
+    )
+    changed = ADOBE.replace("18.5.4", "18.5.5")
+    sets.apply_configuration_events(
+        [
+            {"type": "CPE Configuration", "action": "Changed", "oldValue": ADOBE, "newValue": changed},
+            {"type": "CPE Configuration", "action": "Removed", "oldValue": QUALCOMM},
+            {"type": "CPE Configuration", "action": "Removed", "oldValue": "a node never added"},
+        ],
+        nodes,
+    )
+    live = [node for node, n in nodes.items() if n > 0]
+    assert live == [changed]
+    assert sets.configuration_pairs(live) == (["adobe:indesign"], 1)
+
+
 def test_an_input_column_empty_for_a_whole_window_is_named() -> None:
     frame = pl.DataFrame(
         {c: [None] for c in sets.INPUT_COLUMNS}, schema={c: pl.String for c in sets.INPUT_COLUMNS}
@@ -172,6 +217,8 @@ def test_the_test_label_gate_catches_another_reader(tmp_path: Path) -> None:
         "x = 'test_labels.parquet'\n",
         "from sets import TEST_LABELS\n",
         "load_labels(f, 'test', unsealed=True)\n",
+        "x = 'test_product_labels.parquet'\n",
+        "from sets import TEST_PRODUCT_LABELS\n",
     ):
         path = _module(tmp_path, "packages/models/src/unscheduled_models/floors.py", text)
         with pytest.raises(ValueError, match="test label gate failed"):

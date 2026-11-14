@@ -171,12 +171,28 @@
    "content_digest": "11557f3eac96874ca61d671a23384a65141cd451e32c383966baa730a19efe24",
    "rows": 39924
   },
+  "development_product_inputs.parquet": {
+   "content_digest": "3b3ce31f812e111db20c806e7e1ea42b86196fc921eba6d4461e989c9fe6e8d8",
+   "rows": 39924
+  },
+  "development_product_labels.parquet": {
+   "content_digest": "40c36716791347bed0081d1fea8df45273bf2d82335244e597d0cc733abf0fe3",
+   "rows": 39924
+  },
   "shadow_inputs.parquet": {
    "content_digest": "02f16e2bf88c3d019016a5400c1d7c6f0c00bb704123db8dd119e9e8eea51388",
    "rows": 78676
   },
   "shadow_labels.parquet": {
    "content_digest": "4334470fc17f8927619ec6b7baaed7eb687aa75c023f00aa94953549251c728f",
+   "rows": 78676
+  },
+  "shadow_product_inputs.parquet": {
+   "content_digest": "a42a15f74111446509013e2a8d353cf36bf5d722ca30bee1e8933f43f62c1be9",
+   "rows": 78676
+  },
+  "shadow_product_labels.parquet": {
+   "content_digest": "5ad582a834a8c356fbde47e507ec9ac2149f7413d577415f9b33255c8b0f5d76",
    "rows": 78676
   },
   "test_inputs.parquet": {
@@ -187,6 +203,14 @@
    "content_digest": "b09cd43038a3e6cec04c5ea0539549fdd10154c3004076916c9a3edbf04239af",
    "rows": 63304
   },
+  "test_product_inputs.parquet": {
+   "content_digest": "a5c71b0f1eb1096d6fd5fbabfdede44609beee8440ab14ffc089c2343619a4f4",
+   "rows": 63304
+  },
+  "test_product_labels.parquet": {
+   "content_digest": "cedda46502f1a0480dc88a956a088fd10bc64bab83c44c48131da3a49a30d712",
+   "rows": 63304
+  },
   "train_inputs.parquet": {
    "content_digest": "3e04aed74e3c3012eb5bc5cadafbd23951e33c3ae36aca1c2773a0a669d8978a",
    "rows": 220803
@@ -194,12 +218,50 @@
   "train_labels.parquet": {
    "content_digest": "17cc373ba4994c04e642fba1211267f4538c6f456680f8476d2dcfdec6584991",
    "rows": 220803
+  },
+  "train_product_inputs.parquet": {
+   "content_digest": "ca5d63346daeff45da521aed524981a011937a4985f3f9b465b2e26a7510b56f",
+   "rows": 220803
+  },
+  "train_product_labels.parquet": {
+   "content_digest": "86f9b6c9ceb295d0e2c4ad4cd923dd69ca5feac5f1994b44e80cccc3adedb74b",
+   "rows": 220803
   }
  },
  "lake_content_digest": "5ab8ce6d373349773d0fe1abdcfd89cf16f1e5fe46a70bc0470f8f55a3c34af4",
  "lake_cut": "2026-11-13 01:00:00-05",
  "lake_release": "lake-20261112",
  "lake_sha256": "123744560127a8589e2be77c566ad62b1a78d02a2c0b2b4451a22cded00f6aaf",
+ "product_coverage": {
+  "development": {
+   "rebuild_agreement": 0.970492,
+   "rebuild_agrees": 31212,
+   "record_with_cpe": 32161,
+   "rows": 39924,
+   "with_products": 32161
+  },
+  "shadow": {
+   "rebuild_agreement": 0.997115,
+   "rebuild_agrees": 29722,
+   "record_with_cpe": 29808,
+   "rows": 78676,
+   "with_products": 29812
+  },
+  "test": {
+   "rebuild_agreement": 0.984651,
+   "rebuild_agrees": 39646,
+   "record_with_cpe": 40264,
+   "rows": 63304,
+   "with_products": 40264
+  },
+  "train": {
+   "rebuild_agreement": 0.608222,
+   "rebuild_agrees": 134220,
+   "record_with_cpe": 220676,
+   "rows": 220803,
+   "with_products": 153147
+  }
+ },
  "scoring_time": "day 0, the end of the publication day in UTC",
- "seconds": 21.4
+ "seconds": 47.0
 }

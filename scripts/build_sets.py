@@ -6,8 +6,8 @@ Reads data/lake/unscheduled.duckdb with the NVD change history and the CVE List 
 data/bronze, writes one inputs file and one labels file per split to data/sets (never committed),
 and commits what describes them: results/models/sets.json (rows, label coverage, feature coverage
 and the exact content digest of every file, with the lake digests and the lake release they came
-from) and the manifest part results/parts/models.json. The test labels sit in a file of their own
-that only scripts/score_test.py opens.
+from) and the manifest part results/parts/models.json. The test labels and the test product labels
+sit in files of their own that only scripts/score_test.py opens.
 
     uv run python scripts/build_sets.py --check
 
@@ -96,6 +96,25 @@ def manifest_part(record: dict[str, Any]) -> dict[str, Any]:
         population=population,
         source="models",
     )
+    for split, cov in record.get("product_coverage", {}).items():
+        m.value(
+            f"models.sets.{split}.with_products",
+            int(cov["with_products"]),
+            "int",
+            origin=ORIGIN,
+            population=f"{population}: {split}, with a vulnerable product in the NVD configurations at the cut",
+            source="models",
+        )
+        if cov["rebuild_agreement"] is not None:
+            m.value(
+                f"models.sets.{split}.product_rebuild_agreement",
+                float(cov["rebuild_agreement"]),
+                "pct1",
+                origin=ORIGIN,
+                population=f"{population}: {split}, whose NVD record held CPE matches, the share whose "
+                "configurations rebuilt from the change history hold as many",
+                source="models",
+            )
     m.value(
         "models.sets.cwe_classes",
         len(record["cwe_classes"]),

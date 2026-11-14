@@ -8405,6 +8405,17 @@
     "note": null
    }
   },
+  "models.sets.development.product_rebuild_agreement": {
+   "value": 0.970492,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development, whose NVD record held CPE matches, the share whose configurations rebuilt from the change history hold as many",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
   "models.sets.development.rows": {
    "value": 39924,
    "fmt": "int",
@@ -8548,6 +8559,17 @@
     "note": null
    }
   },
+  "models.sets.development.with_products": {
+   "value": 32161,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development, with a vulnerable product in the NVD configurations at the cut",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
   "models.sets.shadow.description_from_history": {
    "value": 76794,
    "fmt": "int",
@@ -8576,6 +8598,17 @@
    "provenance": {
     "origin": "scripts/build_sets.py",
     "population": "published CVEs, rejected excluded, by the window of their publication date: shadow",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.product_rebuild_agreement": {
+   "value": 0.997115,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow, whose NVD record held CPE matches, the share whose configurations rebuilt from the change history hold as many",
     "source": "models",
     "as_of": "2026-11-13",
     "note": null
@@ -8724,6 +8757,17 @@
     "note": null
    }
   },
+  "models.sets.shadow.with_products": {
+   "value": 29812,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow, with a vulnerable product in the NVD configurations at the cut",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
   "models.sets.test.description_from_history": {
    "value": 61921,
    "fmt": "int",
@@ -8752,6 +8796,17 @@
    "provenance": {
     "origin": "scripts/build_sets.py",
     "population": "published CVEs, rejected excluded, by the window of their publication date: test",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.product_rebuild_agreement": {
+   "value": 0.984651,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test, whose NVD record held CPE matches, the share whose configurations rebuilt from the change history hold as many",
     "source": "models",
     "as_of": "2026-11-13",
     "note": null
@@ -8900,6 +8955,17 @@
     "note": null
    }
   },
+  "models.sets.test.with_products": {
+   "value": 40264,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test, with a vulnerable product in the NVD configurations at the cut",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
   "models.sets.train.description_from_history": {
    "value": 7068,
    "fmt": "int",
@@ -8928,6 +8994,17 @@
    "provenance": {
     "origin": "scripts/build_sets.py",
     "population": "published CVEs, rejected excluded, by the window of their publication date: train",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.product_rebuild_agreement": {
+   "value": 0.608222,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train, whose NVD record held CPE matches, the share whose configurations rebuilt from the change history hold as many",
     "source": "models",
     "as_of": "2026-11-13",
     "note": null
@@ -9071,6 +9148,17 @@
    "provenance": {
     "origin": "scripts/build_sets.py",
     "population": "published CVEs, rejected excluded, by the window of their publication date: train",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.with_products": {
+   "value": 153147,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train, with a vulnerable product in the NVD configurations at the cut",
     "source": "models",
     "as_of": "2026-11-13",
     "note": null
