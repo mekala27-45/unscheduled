@@ -114,7 +114,10 @@ test.describe("the ruler", () => {
     await page.goto(`/app/cves/${FIXTURE_ID}`);
     const ruler = page.locator("figure.ruler");
     await expect(ruler).toBeVisible();
-    await expect(ruler.locator(".ruler__events li")).toHaveCount(7);
+    // Seven fixture events and the predicted band, drawn at publication because the model reads the
+    // record as known that day.
+    await expect(ruler.locator(".ruler__events li")).toHaveCount(8);
+    await expect(ruler.locator(".ruler__events li", { hasText: "Predicted CRITICAL" })).toHaveCount(1);
     await expect(ruler.getByRole("img")).toHaveAttribute("aria-label", /NVD, Awaiting Analysis, 249 days and counting/);
     await expect(page.getByText("Data version fixture")).toBeVisible();
   });
@@ -131,7 +134,7 @@ test.describe("the ruler", () => {
     await page.getByLabel("As known on").fill("2026-03-10");
     await page.getByRole("button", { name: "Redraw" }).click();
     await expect(page).toHaveURL(/as_of=2026-03-10/);
-    await expect(page.locator(".ruler__events li")).toHaveCount(3);
+    await expect(page.locator(".ruler__events li")).toHaveCount(4);
     await expect.poll(() => asked).toBe("2026-03-10");
     await page.getByLabel("As known on").fill("2026-01-01");
     await page.getByRole("button", { name: "Redraw" }).click();
