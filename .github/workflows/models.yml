@@ -68,6 +68,14 @@ jobs:
           enable-cache: false
       - run: uv sync --frozen
 
+      # Floating point sums can differ in the last bits between processor families, and a search
+      # can amplify that, so the log names the processor every fit ran on.
+      - name: The machine, for the record
+        run: |
+          grep -m1 "model name" /proc/cpuinfo
+          echo "CPUs: $(nproc)"
+          if grep -q -m1 avx512f /proc/cpuinfo; then echo "AVX-512: yes"; else echo "AVX-512: no"; fi
+
       - name: The recorded lake release, every archive unchanged
         run: uv run python scripts/restore_release.py --recorded
 
