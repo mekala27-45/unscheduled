@@ -9274,6 +9274,72 @@
     "note": null
    }
   },
+  "models.predictions.batch": {
+   "value": "df00a8d7e396",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "the first twelve characters of the SHA-256 over the operating points and the chosen versions",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.predictions.development.rows": {
+   "value": 39924,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "development window CVEs with a prediction",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.predictions.megabytes": {
+   "value": 12.6,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "models/serving/predictions.parquet",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.predictions.rows": {
+   "value": 181904,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "development, test and shadow window CVEs, one row each",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.predictions.shadow.rows": {
+   "value": 78676,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "shadow window CVEs with a prediction",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.predictions.test.rows": {
+   "value": 63304,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "test window CVEs with a prediction",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
   "models.product.dev_cves": {
    "value": 32161,
    "fmt": "int",
@@ -9720,6 +9786,72 @@
    "provenance": {
     "origin": "scripts/choose_operating_points.py",
     "population": "shadow CVEs the NVD analyzed with a band: weighted toward the skipped",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.serving.embedding_megabytes": {
+   "value": 133.8,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_serving.py",
+    "population": "the pinned embedding model and tokenizer the text model would need on a request",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.serving.environment_megabytes": {
+   "value": 497.6,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_serving.py",
+    "population": "the API's virtual environment as Dockerfile.vercel builds it",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.serving.first_ms": {
+   "value": 5,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_serving.py",
+    "population": "the first prediction after loading, median of 5, on 2 CPUs, Linux-6.18.44-fc-v470-x86_64-with-glibc2.39",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.serving.load_ms": {
+   "value": 594,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_serving.py",
+    "population": "loading the two ONNX sessions and the floor's spec in a fresh process, median of 5, on 2 CPUs, Linux-6.18.44-fc-v470-x86_64-with-glibc2.39",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.serving.predict_megabytes": {
+   "value": 10.0,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_serving.py",
+    "population": "the files POST /v1/predict reads from models/serving",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.serving.warm_p50_ms": {
+   "value": 2.0,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_serving.py",
+    "population": "50 warm predictions in one process, the median, on 2 CPUs, Linux-6.18.44-fc-v470-x86_64-with-glibc2.39",
     "source": "models",
     "as_of": "2026-11-13",
     "note": null
@@ -18960,6 +19092,77 @@
    "provenance": {
     "origin": "scripts/train_floors.py",
     "population": "development window CVEs with the label",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.predictions.shadow_bands": {
+   "columns": [
+    "Predicted band",
+    "Filer LOW",
+    "Filer MEDIUM",
+    "Filer HIGH",
+    "Filer CRITICAL",
+    "Filer NONE",
+    "No filer band",
+    "All"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "int",
+    "int",
+    "int",
+    "int",
+    "int",
+    "int"
+   ],
+   "rows": [
+    [
+     "LOW",
+     491,
+     73,
+     21,
+     4,
+     2,
+     177,
+     768
+    ],
+    [
+     "MEDIUM",
+     1612,
+     13356,
+     2715,
+     203,
+     10,
+     12940,
+     30836
+    ],
+    [
+     "HIGH",
+     131,
+     4956,
+     15570,
+     1526,
+     7,
+     14386,
+     36576
+    ],
+    [
+     "CRITICAL",
+     91,
+     1782,
+     2874,
+     3086,
+     1,
+     2662,
+     10496
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "shadow window CVEs: the primary model's band against the filer band at day 0, counts only",
     "source": "models",
     "as_of": "2026-11-13",
     "note": null

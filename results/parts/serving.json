@@ -1,0 +1,73 @@
+{
+ "as_of": "2026-11-13",
+ "values": {
+  "models.serving.embedding_megabytes": {
+   "value": 133.8,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_serving.py",
+    "population": "the pinned embedding model and tokenizer the text model would need on a request",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.serving.environment_megabytes": {
+   "value": 497.6,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_serving.py",
+    "population": "the API's virtual environment as Dockerfile.vercel builds it",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.serving.first_ms": {
+   "value": 5,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_serving.py",
+    "population": "the first prediction after loading, median of 5, on 2 CPUs, Linux-6.18.44-fc-v470-x86_64-with-glibc2.39",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.serving.load_ms": {
+   "value": 594,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_serving.py",
+    "population": "loading the two ONNX sessions and the floor's spec in a fresh process, median of 5, on 2 CPUs, Linux-6.18.44-fc-v470-x86_64-with-glibc2.39",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.serving.predict_megabytes": {
+   "value": 10.0,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_serving.py",
+    "population": "the files POST /v1/predict reads from models/serving",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.serving.warm_p50_ms": {
+   "value": 2.0,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_serving.py",
+    "population": "50 warm predictions in one process, the median, on 2 CPUs, Linux-6.18.44-fc-v470-x86_64-with-glibc2.39",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  }
+ },
+ "tables": {},
+ "figures": {}
+}

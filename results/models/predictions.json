@@ -1,0 +1,139 @@
+{
+ "batch": "df00a8d7e396",
+ "made_on": "2026-11-14",
+ "rows": 181904,
+ "windows": {
+  "development": 39924,
+  "test": 63304,
+  "shadow": 78676
+ },
+ "columns": [
+  "cve_id",
+  "window",
+  "band",
+  "band_p_low",
+  "band_p_medium",
+  "band_p_high",
+  "band_p_critical",
+  "band_set",
+  "metric_AV",
+  "metric_AV_p",
+  "metric_AV_set",
+  "metric_AC",
+  "metric_AC_p",
+  "metric_AC_set",
+  "metric_PR",
+  "metric_PR_p",
+  "metric_PR_set",
+  "metric_UI",
+  "metric_UI_p",
+  "metric_UI_set",
+  "metric_S",
+  "metric_S_p",
+  "metric_S_set",
+  "metric_C",
+  "metric_C_p",
+  "metric_C_set",
+  "metric_I",
+  "metric_I_p",
+  "metric_I_set",
+  "metric_A",
+  "metric_A_p",
+  "metric_A_set",
+  "cwe",
+  "cwe_p",
+  "cwe_top",
+  "exploit_score",
+  "exploit_p",
+  "listed_by_30",
+  "listed_by_90",
+  "listed_by_180",
+  "products",
+  "exploit_pct",
+  "batch"
+ ],
+ "versions": {
+  "unscheduled-band": {
+   "version": 3,
+   "run_name": "band model",
+   "role": "model"
+  },
+  "unscheduled-metrics": {
+   "version": 3,
+   "run_name": "metrics model",
+   "role": "model"
+  },
+  "unscheduled-cwe": {
+   "version": 3,
+   "run_name": "cwe model",
+   "role": "model"
+  },
+  "unscheduled-exploit": {
+   "version": 2,
+   "run_name": "exploitation model",
+   "role": "model"
+  },
+  "unscheduled-survival": {
+   "version": 1,
+   "run_name": "survival Cox",
+   "role": "floor"
+  },
+  "unscheduled-product": {
+   "version": 1,
+   "run_name": "product floor",
+   "role": "floor"
+  }
+ },
+ "survival_model": "cox",
+ "product_model": "floor",
+ "product_threshold": 90.0,
+ "rule": "development, test and shadow window CVEs; train window CVEs carry none since the models were fit on them",
+ "shadow_bands": [
+  [
+   "LOW",
+   491,
+   73,
+   21,
+   4,
+   2,
+   177,
+   768
+  ],
+  [
+   "MEDIUM",
+   1612,
+   13356,
+   2715,
+   203,
+   10,
+   12940,
+   30836
+  ],
+  [
+   "HIGH",
+   131,
+   4956,
+   15570,
+   1526,
+   7,
+   14386,
+   36576
+  ],
+  [
+   "CRITICAL",
+   91,
+   1782,
+   2874,
+   3086,
+   1,
+   2662,
+   10496
+  ]
+ ],
+ "file": {
+  "path": "models/serving/predictions.parquet",
+  "bytes": 12552409,
+  "sha256": "452616212f47d3741d31600edfaa6a89b0c51f32e9a36e574094e3a5944ea908",
+  "content_digest": "88b761b204822d10173b2fa16ffd44cfe0f70d2a9279c05d6da875046a533137"
+ }
+}

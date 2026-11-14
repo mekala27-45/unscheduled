@@ -1,0 +1,145 @@
+{
+ "as_of": "2026-11-13",
+ "values": {
+  "models.predictions.batch": {
+   "value": "df00a8d7e396",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "the first twelve characters of the SHA-256 over the operating points and the chosen versions",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.predictions.development.rows": {
+   "value": 39924,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "development window CVEs with a prediction",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.predictions.megabytes": {
+   "value": 12.6,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "models/serving/predictions.parquet",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.predictions.rows": {
+   "value": 181904,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "development, test and shadow window CVEs, one row each",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.predictions.shadow.rows": {
+   "value": 78676,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "shadow window CVEs with a prediction",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.predictions.test.rows": {
+   "value": 63304,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "test window CVEs with a prediction",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  }
+ },
+ "tables": {
+  "models.predictions.shadow_bands": {
+   "columns": [
+    "Predicted band",
+    "Filer LOW",
+    "Filer MEDIUM",
+    "Filer HIGH",
+    "Filer CRITICAL",
+    "Filer NONE",
+    "No filer band",
+    "All"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "int",
+    "int",
+    "int",
+    "int",
+    "int",
+    "int"
+   ],
+   "rows": [
+    [
+     "LOW",
+     491,
+     73,
+     21,
+     4,
+     2,
+     177,
+     768
+    ],
+    [
+     "MEDIUM",
+     1612,
+     13356,
+     2715,
+     203,
+     10,
+     12940,
+     30836
+    ],
+    [
+     "HIGH",
+     131,
+     4956,
+     15570,
+     1526,
+     7,
+     14386,
+     36576
+    ],
+    [
+     "CRITICAL",
+     91,
+     1782,
+     2874,
+     3086,
+     1,
+     2662,
+     10496
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "shadow window CVEs: the primary model's band against the filer band at day 0, counts only",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  }
+ },
+ "figures": {}
+}

@@ -40,7 +40,14 @@ and the batch already holds a prediction for every CVE the API serves; a request
 not a CVE yet, where the floor's answer is labeled as the floor's.
 
 ## What was measured
-The serving measurements are taken once the batch is written.
+The API's environment, built as Dockerfile.vercel builds it, is 497.6
+MB, and the files /v1/predict reads add 10.0 MB.
+The embedding model and tokenizer the text model would need add 133.8
+MB more.
+On the build machine a fresh process loads the two ONNX sessions and the floor's spec in
+594 ms and answers its first prediction in 5
+ms; a warm prediction takes 2.0 ms at the median. The live check
+measures the same on the deployed API.
 
 Vercel's container registry allows a compressed layer of 2 GB and an image of 15 GB (its documentation,
 read 14 November 2026), so size alone would not keep the text model off the request path. Its cost
