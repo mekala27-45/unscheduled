@@ -287,6 +287,9 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
             "population": "test window CVEs, Q03 left out",
         },
         "reweighting": {"clip": reweight.CLIP},
+        "product_floor_threshold": json.loads((out / "product.json").read_text(encoding="utf-8"))["floor"][
+            "threshold"
+        ],
         "test_predictions": {
             name: sets.content_digest(args.models / path) for name, path in TEST_FILES.items()
         },
