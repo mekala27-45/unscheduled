@@ -478,6 +478,11 @@ def manifest_part(
                 population=f"{pop2}: the model's recall less EPSS at day {d}'s, paired",
                 source="models",
             )
+    # The criteria memo reads each criterion's verdict under criteria.<id>.verdict, as Phase 1 wrote C8's.
+    for cid, verdict, population in (("c1", c1r["verdict"], pop1), ("c2", c2r["verdict"], pop2)):
+        m.value(
+            f"criteria.{cid}.verdict", verdict, "text", origin=ORIGIN, population=population, source="models"
+        )
     if record is not None:
         secondary_values(m, record)
     return m.dump()

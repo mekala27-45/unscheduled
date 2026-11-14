@@ -212,6 +212,7 @@ def test_the_scorer_runs_end_to_end_once(tmp_path: Path, monkeypatch) -> None:  
     part = json.loads((tmp_path / "results/parts/test.json").read_text(encoding="utf-8"))
     assert "models.test.c1.kappa" in part["values"] and "models.test.slices.fill.filer" in part["tables"]
     assert "models.test.fill.fallback_text.band.qwk" in part["values"]
+    assert part["values"]["criteria.c1.verdict"]["value"] == c1["verdict"]
     # A second run is refused: test is scored once.
     try:
         score_test.main(args, root=tmp_path)
