@@ -13,6 +13,7 @@ on:
         type: choice
         options:
           - floors
+          - exploitation
         default: floors
 
 permissions: {}
@@ -63,14 +64,28 @@ jobs:
         if: env.STEP == 'floors'
         run: uv run python scripts/train_floors.py --jobs 4 --heavy 2
 
+      - name: The exploitation models, on the committed band floor
+        if: env.STEP == 'exploitation'
+        run: uv run python scripts/train_rank.py --jobs 4
+
+      - name: Gather what the step wrote
+        if: always()
+        run: |
+          mkdir -p out
+          case "$STEP" in
+            floors) files="results/models/floors.json results/parts/floors.json data/models/floors" ;;
+            exploitation) files="results/models/rank.json results/parts/rank.json data/models/rank" ;;
+            *) files="" ;;
+          esac
+          for f in $files; do
+            if [ -e "$f" ]; then cp -r --parents "$f" out/; fi
+          done
+
       - name: Keep the outputs
         if: always()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ${{ inputs.step }}
-          path: |
-            results/models/floors.json
-            results/parts/floors.json
-            data/models/floors
+          path: out
           retention-days: 30
           if-no-files-found: warn

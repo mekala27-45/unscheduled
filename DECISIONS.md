@@ -446,3 +446,25 @@ the digest is the same in New York, UTC and Kolkata. Digested again under UTC, t
 digest. The lake was rebuilt here, the four input files of the sets (the files with a time column)
 took new digests, the label files kept theirs, and no count moved. Earlier records that name the old
 lake digest 8d97104c0ad0 describe the same rows.
+
+## 2026-11-14: the exploitation models, as built
+
+The plan gives the exploitation floor and LightGBM "the day 0 features and the band floor text
+projection". The projection is the band floor's four band probabilities. A train CVE with an NVD
+band is one the band floor was fit on, and its fitted probabilities are surer than any a new CVE
+gets, so for those CVEs the projection comes out of five folds: the band floor's representation and
+C refit on four fifths and scored on the fifth, the folds drawn with the default seed. Every other
+CVE gets the band floor fit on all of them, the model step four chose.
+
+The plan names no grid for the exploitation floor's C, so it searches the five values of the fill
+floors by average precision on development, a tie going to the smaller C. LightGBM weights the
+positive class by the ratio of negatives to positives in the rows it is fit on, as the prompt asks
+for class weights; the plan's space and trial count are unchanged. The final model is fit on the
+whole train population with the best trial's parameters and the mean of its three folds' best tree
+counts.
+
+The change request counted 67,566 train CVEs published from 7 May 2021. That count holds the 46
+that KEV listed before their publication, which the rank population leaves out as Q03, so the train
+population is 67,520 CVEs, with the same 278 listed within 180 days. Test and shadow get scores for
+every CVE, Q03 included, since whether a test CVE was listed before publication is a label;
+scripts/score_test.py leaves those out when it scores.
