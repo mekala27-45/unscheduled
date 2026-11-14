@@ -91,7 +91,7 @@ numbers are committed runs with the numeric pins (AGENTS.md).
 - The legacy CSV dates a CVE outside the serving slice by its advisories, since the slice holds no
   record for it.
 
-## The hand off to Phase 2
+## The ground truth Phase 1 handed on
 
 - The lake: cut {{ v("lake.data_cut") }}, content digest {{ v("lake.content_digest") }}, file digest
   {{ v("lake.sha256") }}{{ (", from the release " ~ restored.tag) if restored else "" }}.
@@ -122,3 +122,63 @@ numbers are committed runs with the numeric pins (AGENTS.md).
 {% endif %}
 - The look: approved by Ajay on the evening of 11 November, New York time; he asked for no change.
 - Kaggle GPU hours: {{ budgets.kaggle_gpu_hours_month }} for the month (config/budgets.yaml), none used in Phase 1.
+
+## The hand off to Phase 3
+
+{% set registry = data("results/registry/registry.json") if tracked("results/registry/registry.json") else none %}
+{% set points = data("config/operating_points.yaml") if tracked("config/operating_points.yaml") else none %}
+{% set verify = data("results/live/api_verify.json") if tracked("results/live/api_verify.json") else none %}
+{% set look = data("results/design/look_review.json") if tracked("results/design/look_review.json") else none %}
+{% if registry %}
+- The models the API and the console serve, each the chosen version of its registered model, with
+  its model file's digest (results/registry/registry.json):
+{% for m in registry.models %}
+{% for ver in m.versions %}
+{% if ver.chosen %}
+  - {{ m.name }}, version {{ ver.version }} ({{ ver.run_name }}): {{ ver.description }};
+    {{ ("model file " ~ ver.model_file_sha256[:12] ~ ", ") if ver.model_file_sha256 else "no model file, " }}from {{ ver.record }}{{ (", Actions run " ~ ver.github_run_id) if ver.github_run_id else "" }}
+{% endif %}
+{% endfor %}
+{% endfor %}
+- The registry: MLflow's SQLite store, packed as results/registry/{{ registry.archive.file }} and attached to
+  the release; results/registry/registry.json is the export the API and the console read, and
+  scripts/build_registry.py --check holds it to the run records.
+{% endif %}
+{% if has("models.test.c1.verdict") %}
+- C1 is {{ v("models.test.c1.verdict") }}: the band's test kappa is {{ v("models.test.c1.kappa") }} ({{ v("models.test.c1.kappa_low") }} to {{ v("models.test.c1.kappa_high") }}), the floor's
+  {{ v("models.test.c1.floor_kappa") }}, the paired difference {{ v("models.test.c1.difference") }} ({{ v("models.test.c1.difference_low") }} to {{ v("models.test.c1.difference_high") }}), and the calibration error
+  {{ v("models.test.c1.ece") }}.
+- C2 is {{ v("models.test.c2.verdict") }}: the top five percent holds {{ v("models.test.c2.recall") }} ({{ v("models.test.c2.recall_low") }} to {{ v("models.test.c2.recall_high") }}) of the {{ v("models.test.c2.positives") }} test
+  listings, the floor {{ v("models.test.c2.floor") }} ({{ v("models.test.c2.reading_floor") }}); EPSS holds {{ v("models.test.c2.epss_day_1") }} on day 1 ({{ v("models.test.c2.reading_day_1") }}),
+  {{ v("models.test.c2.epss_day_7") }} on day 7 ({{ v("models.test.c2.reading_day_7") }}) and {{ v("models.test.c2.epss_day_30") }} on day 30 ({{ v("models.test.c2.reading_day_30") }}).
+{% endif %}
+{% if points %}
+- The operating points: config/operating_points.yaml, hashed as the operating_points stage
+  {{ (reg.stages | selectattr("stage", "equalto", "operating_points") | first).hash[:12] }}. The fill model is {{ points.primary.fill }} ({{ points.primary.fill_design }} design) beside {{ points.primary.fill_comparator }}, the
+  exploitation model {{ points.primary.exploitation }} beside {{ points.primary.exploitation_comparator }}; the conformal sets aim at {{ points.conformal.target }} coverage,
+  and the product floor's threshold is {{ points.product_floor_threshold }}.
+{% endif %}
+{% if has("models.predictions.batch") %}
+- How predictions are served: the batch {{ v("models.predictions.batch") }}, {{ v("models.predictions.rows") }} rows in
+  models/serving/predictions.parquet, travels in the serving bundle and the sync loads it with the
+  rest; POST /v1/predict scores a submitted description with the ONNX band floor and LightGBM, and
+  a known CVE's answer always comes from the batch (ADR 0008).
+{% endif %}
+{% if verify %}
+{% for c in verify.checks %}
+{% if c.facts and c.facts.get("storage_share_used") is not none %}
+- Neon: {{ "%.1f" | format(c.facts.storage_share_used * 100) }} percent of the ceiling of {{ c.facts.storage_ceiling_mb }} MB in use when the API was
+  checked at {{ verify.checked_at }}, holding {{ verify.data_version }} (results/live/api_verify.json).
+{% endif %}
+{% endfor %}
+{% endif %}
+{% if has("models.gpu.hours_left") %}
+- Kaggle GPU hours this month: {{ v("models.gpu.hours_used") }} used and {{ v("models.gpu.hours_left") }} left of {{ v("models.gpu.hours_month") }} (requests/gpu/).
+{% endif %}
+{% if look %}
+- The look: {{ look.summary }}
+{% else %}
+- The look: the Phase 2 screens wait for Ajay's review.
+{% endif %}
+- The open problems, in order, are the list above.
+

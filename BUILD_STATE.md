@@ -74,7 +74,7 @@ numbers are committed runs with the numeric pins (AGENTS.md).
 - The legacy CSV dates a CVE outside the serving slice by its advisories, since the slice holds no
   record for it.
 
-## The hand off to Phase 2
+## The ground truth Phase 1 handed on
 
 - The lake: cut 2026-11-13T06:00:00+00:00, content digest a49849f7ff75e3dfc19e73701b189cbea8ad7d37b79de233268f709bff1e4a78, file digest
   97ad3bce0c4bf0c19460db803a6b8ac67a82219a83125c8965a7fb1f7130f683, from the release lake-20261112.
@@ -108,3 +108,43 @@ numbers are committed runs with the numeric pins (AGENTS.md).
   95 ms and p95 265 ms over 300 lookups (lookups met (p95 265 ms against 1,500 ms); the triage run is measured in Phase 4).
 - The look: approved by Ajay on the evening of 11 November, New York time; he asked for no change.
 - Kaggle GPU hours: 8 for the month (config/budgets.yaml), none used in Phase 1.
+
+## The hand off to Phase 3
+
+- The models the API and the console serve, each the chosen version of its registered model, with
+  its model file's digest (results/registry/registry.json):
+  - unscheduled-band, version 3 (band model): frozen bge-small embeddings beside the filer and CISA block, logistic regression;
+    model file 4a881a3821fb, from results/models/fallback.json, Actions run 43580024886
+  - unscheduled-metrics, version 3 (metrics model): frozen bge-small embeddings beside the filer and CISA block, logistic regression;
+    model file 4a881a3821fb, from results/models/fallback.json, Actions run 43580024886
+  - unscheduled-cwe, version 3 (cwe model): frozen bge-small embeddings beside the filer and CISA block, logistic regression;
+    model file 4a881a3821fb, from results/models/fallback.json, Actions run 43580024886
+  - unscheduled-exploit, version 2 (exploitation model): LightGBM on the same features, tuned by Optuna on time ordered folds;
+    model file 5a1143b352a2, from results/models/rank.json, Actions run 43590255274
+  - unscheduled-survival, version 1 (survival Cox): lifelines Cox proportional hazards on the day 0 features without the text;
+    model file 0e97cd191606, from results/models/survival.json, Actions run 43563265777
+  - unscheduled-product, version 1 (product floor): normalized vendor and product strings, an exact match, then a token set ratio;
+    no model file, from results/models/product.json, Actions run 43595717893
+- The registry: MLflow's SQLite store, packed as results/registry/registry-27093b0cce17.tar.gz and attached to
+  the release; results/registry/registry.json is the export the API and the console read, and
+  scripts/build_registry.py --check holds it to the run records.
+- C1 is not met: the band's test kappa is 0.591 (0.364 to 0.693), the floor's
+  0.649, the paired difference -0.057 (-0.108 to -0.019), and the calibration error
+  0.053.
+- C2 is not met: the top five percent holds 43.6% (36.6% to 50.0%) of the 211 test
+  listings, the floor 41.7% (tie); EPSS holds 41.7% on day 1 (tie),
+  66.8% on day 7 (behind) and 75.8% on day 30 (behind).
+- The operating points: config/operating_points.yaml, hashed as the operating_points stage
+  406e8887f350. The fill model is fallback (joint design) beside floors, the
+  exploitation model exploit_lgbm beside exploit_floor; the conformal sets aim at 0.9 coverage,
+  and the product floor's threshold is 90.
+- How predictions are served: the batch df00a8d7e396, 181,904 rows in
+  models/serving/predictions.parquet, travels in the serving bundle and the sync loads it with the
+  rest; POST /v1/predict scores a submitted description with the ONNX band floor and LightGBM, and
+  a known CVE's answer always comes from the batch (ADR 0008).
+- Neon: 84.4 percent of the ceiling of 800 MB in use when the API was
+  checked at 2026-11-13T23:52:20Z, holding serving-202611131326+7a6e339ce211 (results/live/api_verify.json).
+- Kaggle GPU hours this month: 0.0 used and 8.0 left of 8.0 (requests/gpu/).
+- The look: the Phase 2 screens wait for Ajay's review.
+- The open problems, in order, are the list above.
+
