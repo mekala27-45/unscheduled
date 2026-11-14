@@ -1,0 +1,174 @@
+{
+ "plan": "evaluation/phase2_plan.yaml",
+ "models_stage_hash": "8e72e6298a18ef8efc7dba65d26ee84f3780d59c7668e83fa401950d93113898",
+ "sample": null,
+ "sets": {
+  "development_inputs.parquet": "dbe09cbe8e103fc92ce21260eb5b78428af4547a8b9b5afb72f35f6a04b9f0f2",
+  "test_inputs.parquet": "812411333cdc1685180e31ba91d60205241aea0e4eff771077eaa457ccbb785f",
+  "shadow_inputs.parquet": "02f16e2bf88c3d019016a5400c1d7c6f0c00bb704123db8dd119e9e8eea51388",
+  "development_product_inputs.parquet": "3b3ce31f812e111db20c806e7e1ea42b86196fc921eba6d4461e989c9fe6e8d8",
+  "test_product_inputs.parquet": "a5c71b0f1eb1096d6fd5fbabfdede44609beee8440ab14ffc089c2343619a4f4",
+  "shadow_product_inputs.parquet": "a42a15f74111446509013e2a8d353cf36bf5d722ca30bee1e8933f43f62c1be9",
+  "development_product_labels.parquet": "40c36716791347bed0081d1fea8df45273bf2d82335244e597d0cc733abf0fe3"
+ },
+ "lake_release": "lake-20261112",
+ "cpe_release": {
+  "tag": "lake-20261114",
+  "archive": "bronze-cpe_names.tar",
+  "sha256": "6264511b515d4b0fc44b9867a26e78b6d73ad5c5d9f9c024020efca9d5f49e4d"
+ },
+ "dictionary": {
+  "pairs": 153543,
+  "names": 1873730,
+  "vendors": 25169,
+  "all_deprecated_pairs": 3064,
+  "first_created": "2007-08-23 21:05:57.937000+00:00",
+  "last_created": "2026-11-13 21:01:11.220000+00:00",
+  "content_digest": "5a064581e1c7ee9e1983758f85ed82bf3085d196e1fb349be34bde11b3bda59a",
+  "rule": "a CVE is offered only the pairs the NVD had created a name for by the end of its publication day"
+ },
+ "floor": {
+  "normalize": "lower case, the CPE quoting undone, punctuation to spaces, trailing company suffixes dropped",
+  "suffixes": [
+   "ab",
+   "ag",
+   "bv",
+   "co",
+   "company",
+   "corp",
+   "corporation",
+   "gmbh",
+   "inc",
+   "incorporated",
+   "limited",
+   "llc",
+   "ltd",
+   "oy",
+   "plc",
+   "project",
+   "pty",
+   "pvt",
+   "sa",
+   "srl"
+  ],
+  "vendor_neighbours": 3,
+  "threshold": 90,
+  "threshold_search": [
+   {
+    "threshold": 50,
+    "precision_at_1": 0.3073453877312398,
+    "recall_at_1": 0.19795117891069713,
+    "f1_at_1": 0.2408066306030384,
+    "named": 23947
+   },
+   {
+    "threshold": 60,
+    "precision_at_1": 0.3293906810035842,
+    "recall_at_1": 0.19774907076729364,
+    "f1_at_1": 0.24713257108402098,
+    "named": 22320
+   },
+   {
+    "threshold": 70,
+    "precision_at_1": 0.3446053993039225,
+    "recall_at_1": 0.19697173175420324,
+    "f1_at_1": 0.2506661318587222,
+    "named": 21262
+   },
+   {
+    "threshold": 80,
+    "precision_at_1": 0.3677969522656171,
+    "recall_at_1": 0.1958368167950913,
+    "f1_at_1": 0.2555850565116744,
+    "named": 19818
+   },
+   {
+    "threshold": 90,
+    "precision_at_1": 0.39714651953408014,
+    "recall_at_1": 0.19087739389157463,
+    "f1_at_1": 0.25783404691877015,
+    "named": 17943
+   },
+   {
+    "threshold": 100,
+    "precision_at_1": 0.40015058496467043,
+    "recall_at_1": 0.18432348950691926,
+    "f1_at_1": 0.2523881053769759,
+    "named": 17266
+   }
+  ],
+  "seconds": 515.0
+ },
+ "retrieval": {
+  "embedding": {
+   "id": "BAAI/bge-small-en-v1.5",
+   "revision": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a"
+  },
+  "queries": {
+   "development": "the fallback's embeddings",
+   "test": "the fallback's embeddings",
+   "shadow": "the fallback's embeddings"
+  },
+  "pool": 300,
+  "seconds": 752.6
+ },
+ "dev": {
+  "floor": {
+   "cves": 32161,
+   "recall_at_1": 0.19795117891069713,
+   "hit_at_1": 0.22884860545381053,
+   "recall_at_5": 0.4205098019644051,
+   "hit_at_5": 0.46739840179098907,
+   "recall_at_10": 0.4391838803032336,
+   "hit_at_10": 0.4750163241192749
+  },
+  "floor_at_threshold": {
+   "cves": 32161,
+   "recall_at_1": 0.19087739389157463,
+   "hit_at_1": 0.22157271229128447,
+   "recall_at_5": 0.4056483214986213,
+   "hit_at_5": 0.4554273809893971,
+   "recall_at_10": 0.42063385553393423,
+   "hit_at_10": 0.4599981343863686
+  },
+  "retrieval": {
+   "cves": 32161,
+   "recall_at_1": 0.19241444601586394,
+   "hit_at_1": 0.21768601722583253,
+   "recall_at_5": 0.3077537168522606,
+   "hit_at_5": 0.3495538074064861,
+   "recall_at_10": 0.34518617306513494,
+   "hit_at_10": 0.39041074593451697
+  }
+ },
+ "metric": "recall at k: per CVE with a label, the share of its pairs among the first k, averaged; hit at k: the share of those CVEs with any of its pairs among the first k",
+ "predictions": {
+  "development": {
+   "rows": 39924,
+   "content_digest": "0b38870e576383b65678762dfa6c47ecd92381ec61b63fc7f3c59aae12d3cea6"
+  },
+  "test": {
+   "rows": 63304,
+   "content_digest": "89756c61e09eceffa51d657d3d37360e8779b81dace30b8436831bfec6c0953a"
+  },
+  "shadow": {
+   "rows": 78676,
+   "content_digest": "d0a3310d0b23de9ff0980c2bc8748baa92c145aadc395988e0ec0208d73a3e0f"
+  }
+ },
+ "environment": {
+  "python": "3.12.16",
+  "numpy": "2.5.4",
+  "machine": "x86_64",
+  "cpus": 4,
+  "threads": 4,
+  "github_run_id": "43595717893",
+  "github_sha": "370de123265353c8fda776bd4d042bb05fa255ff"
+ },
+ "trained_at": "2026-11-14T13:02:08+00:00",
+ "seconds": 1282.8,
+ "weights_sha256": {
+  "onnx/model.onnx": "828e1496d7fabb79cfa4dcd84fa38625c0d3d21da474a00f08db0f559940cf35",
+  "tokenizer.json": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66"
+ }
+}

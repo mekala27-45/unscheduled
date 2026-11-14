@@ -152,6 +152,15 @@ The floor normalizes the filer's vendor and product strings and matches them to 
 exactly and then by a token set ratio; the retrieval ranks every CPE vendor and product by cosine to
 the CVE's joined text. A CVE is offered only the names the NVD had created by its day 0.
 
+The floor's threshold is chosen by the F1 of each CVE's first candidate on development (DECISIONS.md,
+the change request on the product floor's threshold), and it is 90.
+On the 32,161 development CVEs with a labeled product, the share of their
+labeled pairs found in the first ten candidates is 43.9% for
+the floor without its threshold, 42.1% with it,
+and 34.5% for the retrieval.
+At ten candidates, the depth the registry chooses by, the retrieval is behind the floor with its
+threshold: the filer's own strings, normalized, name the product more often than the embedding of the
+description finds it.
 
 ## Calibration and conformal sets
 

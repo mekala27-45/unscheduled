@@ -151,6 +151,11 @@ On the {{ v("models.product.dev_cves") }} development CVEs with a labeled produc
 labeled pairs found in the first ten candidates is {{ v("models.product.floor.dev_recall_at_10") }} for
 the floor without its threshold, {{ v("models.product.floor_at_threshold.dev_recall_at_10") }} with it,
 and {{ v("models.product.retrieval.dev_recall_at_10") }} for the retrieval.
+{% if raw("models.product.retrieval.dev_recall_at_10") < raw("models.product.floor_at_threshold.dev_recall_at_10") %}
+At ten candidates, the depth the registry chooses by, the retrieval is behind the floor with its
+threshold: the filer's own strings, normalized, name the product more often than the embedding of the
+description finds it.
+{% endif %}
 {% endif %}
 
 ## Calibration and conformal sets

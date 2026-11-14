@@ -260,14 +260,15 @@
    },
    {
     "file": "docs/templates/docs/models.md.j2",
-    "sha256_after": "37e7282cac22d68237b44a1213319cd9147b7248cbe4461ef719bb53b2e19a84",
+    "sha256_after": "d4665d6c7664d4b1b5918d73a37b96e26cdc46a75b6155a1fa87202bf159b0dc",
     "changes": [
      "the label Never a feature, a fragment, made a sentence (pattern 2)",
      "split conformal sets with adaptive sets, which said sets twice and named neither, made split conformal with adaptive prediction sets",
      "Not scored yet, twice, made a sentence (pattern 2)",
      "Hours used, a label with a colon, made a sentence (pattern 19)",
      "the data lead's one seed objection now names training runs, as the cards' limits do",
-     "2026-11-14: the paragraph on the first exploitation run replaced by the runs table and its reading, written after the pass and read the same way"
+     "2026-11-14: the paragraph on the first exploitation run replaced by the runs table and its reading, written after the pass and read the same way",
+     "2026-11-14: one sentence on where the retrieval stands against the floor at ten candidates, written after the pass and read the same way"
     ]
    },
    {
@@ -335,9 +336,10 @@
    },
    {
     "file": "report/templates/models/product.md.j2",
-    "sha256_after": "65c53867342738a5089576b060427dee0f48675c4397dcc66d0f25d17d5896c5",
+    "sha256_after": "46374d0bf2b49e89118a05183a5a52f32807f6ca129dfb46743fdd00adf4a19f",
     "changes": [
-     "One seed, one draw was wrong here: neither the string floor nor the retrieval is trained with a seed; replaced by the day 0 limit that applies"
+     "One seed, one draw was wrong here: neither the string floor nor the retrieval is trained with a seed; replaced by the day 0 limit that applies",
+     "2026-11-14: one sentence on where the retrieval stands against the floor at ten candidates, written after the pass and read the same way"
     ]
    },
    {

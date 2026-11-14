@@ -26,17 +26,31 @@ The labels are the vendor and product pairs in the NVD's configurations, so only
 them. A CVE is offered only the pairs the NVD had created a CPE name for by the end of its
 publication day, since the NVD often creates the name while it analyzes the CVE, which would put the
 answer among the candidates (DECISIONS.md, the change request on the product floor's threshold).
+The dictionary holds 153,543 vendor and product pairs at the lake
+cut.
 
 ## The metrics, with intervals
 
 Recall at a depth is, per CVE with a label, the share of its labeled pairs among that many first
 candidates, averaged over the CVEs.
-The development result is not in the manifest yet.
+
+| On development | First candidate | First five | First ten |
+|---|---:|---:|---:|
+| The floor | 19.8% | 42.1% | 43.9% |
+| The floor at its threshold | 19.1% | 40.6% | 42.1% |
+| The retrieval | 19.2% | 30.8% | 34.5% |
+
+These are over the 32,161 development CVEs with a labeled product.
 
 ## Against the floor
 
 The string floor is the comparator the retrieval has to beat, on the same CVEs and the same
 dictionary as of each CVE's day 0.
+The floor's threshold on the token set ratio is 90, chosen on
+development by the F1 of each CVE's first candidate.
+At ten candidates, the depth the registry chooses by, the retrieval is behind the floor with its
+threshold: the filer's own strings, normalized, name the product more often than the embedding of the
+description finds it.
 
 ## The calibration
 

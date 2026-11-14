@@ -61,6 +61,11 @@ dictionary as of each CVE's day 0.
 {% if has("models.product.floor.threshold") %}
 The floor's threshold on the token set ratio is {{ v("models.product.floor.threshold") }}, chosen on
 development by the F1 of each CVE's first candidate.
+{% if raw("models.product.retrieval.dev_recall_at_10") < raw("models.product.floor_at_threshold.dev_recall_at_10") %}
+At ten candidates, the depth the registry chooses by, the retrieval is behind the floor with its
+threshold: the filer's own strings, normalized, name the product more often than the embedding of the
+description finds it.
+{% endif %}
 {% endif %}
 
 ## The calibration

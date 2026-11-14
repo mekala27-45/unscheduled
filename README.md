@@ -7,11 +7,10 @@ per task, because the Kaggle secrets are absent; ModernBERT waits for them. The 
 MLflow's SQLite store, written from the committed run records, because no Databricks workspace is
 connected.
 
-Phase 1 is complete and tagged v0.1.0. Phase 2 of 5, the models, is in progress: 7 of
+Phase 1 is complete and tagged v0.1.0. Phase 2 of 5, the models, is in progress: 8 of
 18 checklist lines are done. Still missing:
 
 - Every model has a floor trained on the same rows; every comparison has a paired interval
-- The affected product retrieval measured against the NVD CPE configurations
 - Calibration and conformal sets fit on development, with coverage on test
 - MLflow runs and the registry; the model cards rendered from the manifest
 - Test scored once by scripts/score_test.py; C1 and C2 evidence with their verdicts

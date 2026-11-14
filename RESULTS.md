@@ -88,7 +88,7 @@ says nothing about whether its output is right.
 
 ## The Phase 2 checklist
 
-7 of the 18 lines are done. A line is done
+8 of the 18 lines are done. A line is done
 only when its evidence says pass, and a file an earlier phase wrote counts here only with what Phase 2
 writes into it.
 
@@ -98,7 +98,7 @@ writes into it.
 | 2 | done | The Phase 2 plan hashed as registration stage two before any model saw a test CVE | evaluation/registration.json |
 | 3 | done | The training sets built point in time, the leakage test passing, the sets published by digest | results/models/sets.json |
 | 4 | not done | Every model has a floor trained on the same rows; every comparison has a paired interval | results/models/floors.json, results/models/c1.json, results/models/c2.json |
-| 5 | not done | The affected product retrieval measured against the NVD CPE configurations | results/models/product.json |
+| 5 | done | The affected product retrieval measured against the NVD CPE configurations | results/models/product.json |
 | 6 | done | The exploitation model tuned on time ordered folds; the survival model checked in R | results/models/rank.json, results/models/survival.json |
 | 7 | done | ModernBERT run on Kaggle by a committed request inside the GPU budget, or its fallback named; ONNX parity passing | results/parts/gpu.json, results/models/fallback.json, results/models/onnx.json |
 | 8 | not done | Calibration and conformal sets fit on development, with coverage on test | results/models/calibration.json, results/models/conformal.json, results/models/test_scoring.json |

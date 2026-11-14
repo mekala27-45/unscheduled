@@ -1,0 +1,139 @@
+{
+ "as_of": "2026-11-13",
+ "values": {
+  "models.product.dev_cves": {
+   "value": 32161,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_product.py",
+    "population": "development window CVEs with a vulnerable product in their NVD configurations",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.product.dictionary_pairs": {
+   "value": 153543,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_product.py",
+    "population": "the vendor and product pairs of the NVD CPE dictionary",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.product.floor.dev_recall_at_1": {
+   "value": 0.19795117891069713,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_product.py",
+    "population": "development window CVEs with a vulnerable product in their NVD configurations: the string floor, share of a CVE's pairs among the first 1",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.product.floor.dev_recall_at_10": {
+   "value": 0.4391838803032336,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_product.py",
+    "population": "development window CVEs with a vulnerable product in their NVD configurations: the string floor, share of a CVE's pairs among the first 10",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.product.floor.dev_recall_at_5": {
+   "value": 0.4205098019644051,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_product.py",
+    "population": "development window CVEs with a vulnerable product in their NVD configurations: the string floor, share of a CVE's pairs among the first 5",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.product.floor.threshold": {
+   "value": 90,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_product.py",
+    "population": "the token set ratio the string floor chose on development by F1 at 1",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.product.floor_at_threshold.dev_recall_at_1": {
+   "value": 0.19087739389157463,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_product.py",
+    "population": "development window CVEs with a vulnerable product in their NVD configurations: the string floor at its threshold, share of a CVE's pairs among the first 1",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.product.floor_at_threshold.dev_recall_at_10": {
+   "value": 0.42063385553393423,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_product.py",
+    "population": "development window CVEs with a vulnerable product in their NVD configurations: the string floor at its threshold, share of a CVE's pairs among the first 10",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.product.floor_at_threshold.dev_recall_at_5": {
+   "value": 0.4056483214986213,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_product.py",
+    "population": "development window CVEs with a vulnerable product in their NVD configurations: the string floor at its threshold, share of a CVE's pairs among the first 5",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.product.retrieval.dev_recall_at_1": {
+   "value": 0.19241444601586394,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_product.py",
+    "population": "development window CVEs with a vulnerable product in their NVD configurations: the retrieval, share of a CVE's pairs among the first 1",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.product.retrieval.dev_recall_at_10": {
+   "value": 0.34518617306513494,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_product.py",
+    "population": "development window CVEs with a vulnerable product in their NVD configurations: the retrieval, share of a CVE's pairs among the first 10",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.product.retrieval.dev_recall_at_5": {
+   "value": 0.3077537168522606,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_product.py",
+    "population": "development window CVEs with a vulnerable product in their NVD configurations: the retrieval, share of a CVE's pairs among the first 5",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  }
+ },
+ "tables": {},
+ "figures": {}
+}
