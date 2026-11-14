@@ -305,3 +305,12 @@ no counts and none of the assigners the CNA list does not hold, and the daily ru
 source now fetches the CVE List and KEV before the CNA list, and the lake build adds every assigner
 the CVE List bronze names that the file does not hold: with the group of a listed filer whose name
 differs only in case, or else by the rule the fetcher applies to a filer the list does not hold.
+
+## 2026-11-13: the table digest sums its row hashes as integers
+
+The first reset and rederive from a settled release matched 692 of 693 entries; the lake content
+digest was the one that differed, and recomputing the digest of the same lake file twice gave two
+answers for the largest tables. DuckDB sums the 128 bit row hashes, a UHUGEINT, as a DOUBLE, so the
+rounding followed the order the threads added the rows in. Each 64 bit half is now cast to HUGEINT
+before the sum, which is exact, and a test rebuilds a digest from the row hashes summed in Python.
+Every content digest changes once with this; the lake built before it is rebuilt.

@@ -31,10 +31,13 @@ def table_digest(con: duckdb.DuckDBPyConnection, qualified: str) -> dict[str, ob
     if not cols:
         raise ValueError(f"{qualified} has no columns")
     cells = ", ".join(f"coalesce(cast({_q(c)} as varchar), chr(0))" for c in cols)
+    # md5_number gives a UHUGEINT, and DuckDB sums a UHUGEINT as a DOUBLE, whose rounding depends on
+    # the order the threads add the rows in. Each 64 bit half is cast to HUGEINT first, so the sums
+    # are exact and the digest is the same on every run (DECISIONS.md, 13 November 2026).
     count, xor, high, low = one(
         con,
-        f"select count(*), cast(bit_xor(h) as varchar), cast(sum(h >> 64) as varchar), "
-        f"cast(sum(h & 18446744073709551615) as varchar) "
+        f"select count(*), cast(bit_xor(h) as varchar), cast(sum(cast(h >> 64 as hugeint)) as varchar), "
+        f"cast(sum(cast(h & 18446744073709551615 as hugeint)) as varchar) "
         f"from (select md5_number(concat_ws(chr(31), {cells})) as h from {qualified})",
     )
     return {
