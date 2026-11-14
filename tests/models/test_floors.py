@@ -257,3 +257,24 @@ def test_the_floors_never_name_the_test_labels() -> None:
     root = Path(__file__).resolve().parents[2]
     files = [root / "scripts" / "train_floors.py", root / "packages/models/src/unscheduled_models/floors.py"]
     assert check_test_labels.check(root, files) == 2
+
+
+def test_the_band_from_the_predicted_metrics() -> None:
+    values = {
+        "AV": ["N", "L"],
+        "AC": ["L", "H"],
+        "PR": ["N", "H"],
+        "UI": ["N", "R"],
+        "S": ["U", "C"],
+        "C": ["H", "N"],
+        "I": ["H", "N"],
+        "A": ["H", "N"],
+    }
+    columns: dict[str, list[float]] = {"cve_id": ["CVE-1", "CVE-2"]}  # type: ignore[dict-item]
+    for metric, (first, second) in values.items():
+        columns[f"metric_{metric}__{first}"] = [0.9, 0.2]
+        columns[f"metric_{metric}__{second}"] = [0.1, 0.8]
+    rated = floors.band_from_metrics(pl.DataFrame(columns))
+    # AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H scores 9.8; no impact at all scores 0.0.
+    assert rated == ["CRITICAL", "NONE"]
+    assert floors.score("qwk", ["CRITICAL", "LOW", "HIGH"], ["CRITICAL", "NONE", "HIGH"]) < 1.0

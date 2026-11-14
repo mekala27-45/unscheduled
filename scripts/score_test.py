@@ -178,6 +178,14 @@ def secondary(
                     np.mean([truth[i] in {classes[j] for j in top5[i]} for i in range(len(keep))])
                 )
             per[task.name] = entry
+        # The band computed from the eight predicted metrics, beside the band head, never primary.
+        bands = joined.get_column("band").cast(pl.String).to_list()
+        rated = floors.band_from_metrics(joined)
+        keep = [i for i, v in enumerate(bands) if v in sets.BANDS]
+        per["band_from_metrics"] = {
+            "rows": len(keep),
+            "qwk": floors.score("qwk", [bands[i] for i in keep], [rated[i] for i in keep]),
+        }
         out["fill"][model] = per
     calibration = json.loads((root / "results" / "models" / "calibration.json").read_text(encoding="utf-8"))
     population = rank.population(test)

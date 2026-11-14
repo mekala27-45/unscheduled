@@ -59,7 +59,8 @@ HEAVY_TASKS = frozenset({"cwe"})
 
 def score(metric: str, truth: list[str], predicted: list[str]) -> float:
     if metric == "qwk":
-        order = {b: i for i, b in enumerate(BANDS)}
+        # NONE sits below LOW: no band head predicts it, but a band rated from predicted metrics can.
+        order = {"NONE": -1, **{b: i for i, b in enumerate(BANDS)}}
         return float(
             cohen_kappa_score([order[t] for t in truth], [order[p] for p in predicted], weights="quadratic")
         )
@@ -380,6 +381,40 @@ def band_from(proba: pl.DataFrame) -> list[str]:
     """The band with the highest probability in a probabilities frame."""
     matrix = proba.select([f"band__{b}" for b in BANDS]).to_numpy()
     return [BANDS[i] for i in np.argmax(matrix, axis=1)]
+
+
+def severity(score: float) -> str:
+    """The CVSS 3.1 qualitative rating of a base score."""
+    if score >= 9.0:
+        return "CRITICAL"
+    if score >= 7.0:
+        return "HIGH"
+    if score >= 4.0:
+        return "MEDIUM"
+    return "LOW" if score > 0.0 else "NONE"
+
+
+def band_from_metrics(proba: pl.DataFrame) -> list[str]:
+    """The plan's band_from_metrics: the most probable value of each of the eight base metric heads
+    written as a CVSS 3.1 vector, scored by the cvss library and rated. Reported beside the band
+    head, never the primary (evaluation/phase2_plan.yaml)."""
+    from unscheduled_lake.cvss import check
+
+    values = []
+    for m in METRICS:
+        columns = [c for c in proba.columns if c.startswith(f"metric_{m}__")]
+        classes = [c.split("__", 1)[1] for c in columns]
+        best = np.argmax(proba.select(columns).to_numpy(), axis=1)
+        values.append([classes[i] for i in best])
+    cache: dict[str, str] = {}
+    out = []
+    for row in zip(*values, strict=True):
+        vector = "CVSS:3.1/" + "/".join(f"{m}:{v}" for m, v in zip(METRICS, row, strict=True))
+        if vector not in cache:
+            result = check("3.1", vector)
+            cache[vector] = severity(result.base_score) if result.base_score is not None else "NONE"
+        out.append(cache[vector])
+    return out
 
 
 def reference(dev: pl.DataFrame, dev_proba: pl.DataFrame) -> dict[str, Any]:

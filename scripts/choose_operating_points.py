@@ -226,15 +226,26 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     dev = dev_labels.join(dev_inputs, on="cve_id")
     fill: dict[str, Any] = {}
     calibrated: dict[str, np.ndarray] = {}
+    from_metrics: dict[str, Any] = {}
     for model in FILL_MODELS:
         proba = pl.read_parquet(args.models / model / "development_probabilities.parquet")
         fill[model], cal = calibrate_fill(proba, dev, seed)
         if model == PRIMARY_FILL:
             calibrated = cal
+        # The plan's band_from_metrics, reported beside the band head and never the primary.
+        banded = dev.join(proba, on="cve_id", how="inner")
+        truth = banded.get_column("band").cast(pl.String).to_list()
+        rated = floors.band_from_metrics(banded)
+        keep = [i for i, v in enumerate(truth) if v in sets.BANDS]
+        from_metrics[model] = {
+            "rows": len(keep),
+            "dev_qwk": floors.score("qwk", [truth[i] for i in keep], [rated[i] for i in keep]),
+        }
     exploit = calibrate_exploit(pl.read_parquet(args.models / "rank" / "development_scores.parquet"), dev)
     calibration = {
         "seed": seed,
         "fill": fill,
+        "band_from_metrics": from_metrics,
         "exploitation": exploit,
         "primary_fill": PRIMARY_FILL,
         "primary_exploitation": PRIMARY_EXPLOIT,
