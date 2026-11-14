@@ -12,7 +12,7 @@ import numpy as np
 import polars as pl
 import pytest
 from unscheduled_models import floors, sets
-from unscheduled_models.features import CATEGORICAL, MIN_FREQUENCY, MULTI, Features
+from unscheduled_models.features import CATEGORICAL, MIN_FREQUENCY, MULTI, Features, Structured
 
 from scripts import check_test_labels, train_floors
 
@@ -61,6 +61,23 @@ def test_features_fit_transform_equals_transform() -> None:
     assert fitted.shape == again.shape
     assert (fitted != again).nnz == 0
     assert fitted.has_canonical_format
+
+
+def test_the_structured_block_is_the_floors_own_and_old_floors_load() -> None:
+    train, dev = frame(300, 1), frame(40, 2, "development")
+    features = Features("word")
+    matrix = features.fit_transform(train)
+    block = Structured().fit(train)
+    start = len(features.word.vocabulary_)
+    assert (matrix[:, start:] != block.transform(train)).nnz == 0
+    assert len(block.names()) == matrix.shape[1] - start
+    # A floor saved before the block had a class of its own kept its encoders on itself.
+    state = dict(features.__dict__)
+    kept = state.pop("structured")
+    state["onehot"], state["multi"] = kept.onehot, kept.multi
+    old = Features.__new__(Features)
+    old.__setstate__(state)
+    assert (old.transform(dev) != features.transform(dev)).nnz == 0
 
 
 def test_a_value_train_never_held_encodes_as_zeros() -> None:

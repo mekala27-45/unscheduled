@@ -23,6 +23,13 @@ on:
         type: string
         required: false
         default: ""
+      embeddings_run:
+        description: >-
+          A models run whose fallback artifact holds the text embeddings, read again by the fallback
+          and product steps where their rows match (empty to embed every row)
+        type: string
+        required: false
+        default: ""
 
 permissions: {}
 
@@ -38,6 +45,8 @@ jobs:
     timeout-minutes: 340
     permissions:
       contents: read
+      # To download the artifact of an earlier run when embeddings_run names one.
+      actions: read
     env:
       PYTHONHASHSEED: "0"
       GH_TOKEN: ${{ github.token }}
@@ -90,6 +99,23 @@ jobs:
           Rscript -e 'if (!requireNamespace("survival", quietly = TRUE)) install.packages("survival", repos = "https://cloud.r-project.org")'
           uv run python scripts/train_survival.py --jobs 4 --r-check
 
+      - name: The text embeddings of an earlier fallback run, when one is named
+        if: inputs.embeddings_run != '' && (env.STEP == 'fallback' || env.STEP == 'product')
+        env:
+          EMBEDDINGS_RUN: ${{ inputs.embeddings_run }}
+          REPO: ${{ github.repository }}
+        run: |
+          case "$EMBEDDINGS_RUN" in
+            *[!0-9]*) echo "::error::embeddings_run must be a run id"; exit 1 ;;
+          esac
+          gh run download "$EMBEDDINGS_RUN" --repo "$REPO" --name fallback --dir reuse
+          mkdir -p data/models/fallback
+          cp reuse/data/models/fallback/*_embeddings.npz data/models/fallback/
+          rm -rf reuse
+          # The scripts check each file's CVE ids against the rows they embed and embed again on a
+          # mismatch, so a stale file is never read.
+          ls -l data/models/fallback
+
       - name: The ModernBERT fallback, frozen embeddings with a head per task
         if: env.STEP == 'fallback'
         run: uv run python scripts/train_fallback.py --jobs 4
@@ -107,7 +133,12 @@ jobs:
 
       - name: The affected product models
         if: env.STEP == 'product'
-        run: uv run python scripts/train_product.py --jobs 4
+        run: |
+          args=(--jobs 4)
+          if compgen -G "data/models/fallback/*_embeddings.npz" > /dev/null; then
+            args+=(--embeddings data/models/fallback)
+          fi
+          uv run python scripts/train_product.py "${args[@]}"
 
       - name: Gather what the step wrote
         if: always()

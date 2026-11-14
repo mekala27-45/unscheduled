@@ -48,6 +48,8 @@ PRIMARY_EXPLOIT = "exploit_lgbm"
 TEST_FILES = {
     "floors": "floors/test_probabilities.parquet",
     "fallback": "fallback/test_probabilities.parquet",
+    # The fallback's text alone, the ablation the scorer reports beside the model (DECISIONS.md).
+    "fallback_text": "fallback/test_text_probabilities.parquet",
     "rank": "rank/test_scores.parquet",
     "survival": "survival/test_survival.parquet",
     "product": "product/test_candidates.parquet",

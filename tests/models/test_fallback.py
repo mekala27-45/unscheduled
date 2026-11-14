@@ -123,7 +123,17 @@ def test_the_fallback_writes_its_record(tmp_path: Path, monkeypatch: pytest.Monk
         *(f"metric_{m}" for m in ["AV", "AC", "PR", "UI", "S", "C", "I", "A"]),
     }
     assert record["predictions"]["test"]["rows"] == 50
+    # The model reads the embedding beside the floors' structured block; the text alone is kept.
+    joint, text = record["designs"]["joint"], record["designs"]["text"]
+    assert record["primary"] == "joint" and record["chosen"] == joint["chosen"]
+    assert text["width"] == 32 and joint["width"] == 32 + record["structured"]["columns"] > 32
+    assert {r["design"] for r in record["search"]} == {"joint", "text"}
+    folder = root / "data" / "models" / "fallback"
+    for split in ("development", "test", "shadow"):
+        assert (folder / f"{split}_probabilities.parquet").exists()
+        assert (folder / f"{split}_text_probabilities.parquet").exists()
     part = json.loads((root / "results" / "parts" / "fallback.json").read_text(encoding="utf-8"))
     assert "models.fallback.band.dev" in part["values"]
+    assert "models.fallback.text.band.dev" in part["values"]
     # A second run reads the embeddings back instead of embedding again.
     assert (root / "data" / "models" / "fallback" / "train_embeddings.npz").exists()

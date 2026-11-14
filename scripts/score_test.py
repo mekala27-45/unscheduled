@@ -153,9 +153,11 @@ def c2(
 def secondary(
     test: pl.DataFrame, points: dict[str, Any], models: Path, folder: Path, root: Path
 ) -> dict[str, Any]:
+    from scripts.choose_operating_points import TEST_FILES
+
     out: dict[str, Any] = {"fill": {}, "exploitation": {}, "survival": {}, "product": {}, "conformal": {}}
-    for model in ("fallback", "floors"):
-        proba = pl.read_parquet(models / model / "test_probabilities.parquet")
+    for model in ("fallback", "fallback_text", "floors"):
+        proba = pl.read_parquet(models / TEST_FILES[model])
         joined = test.join(proba, on="cve_id", how="inner")
         per: dict[str, Any] = {}
         for task in floors.TASKS:

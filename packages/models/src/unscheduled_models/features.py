@@ -10,6 +10,8 @@ MIN_FREQUENCY times. The plan gives the floors the text and the filer and CISA f
 affected entries, the exploit code signal and the publication time are left to the exploitation
 models of step six. Train holds no CISA value at day 0 (CISA began adding them in 2024), so the
 floors learn nothing from those columns, and a CISA value seen first after train encodes as zeros.
+The filer and CISA block is a class of its own (Structured), so the text model reads the same block
+beside its embedding and the comparison with the floor measures the text representation alone.
 """
 
 from __future__ import annotations
@@ -56,8 +58,82 @@ def _stack(blocks: list[Any]) -> sparse.csr_matrix:
     return matrix
 
 
+class Structured:
+    """The filer and CISA values one hot and the CWE lists, the block every fill model reads beside
+    its text: the floors beside TF-IDF, the text model beside its embedding. Fit on train once."""
+
+    def __init__(self) -> None:
+        self.onehot = OneHotEncoder(
+            handle_unknown="infrequent_if_exist",
+            min_frequency=MIN_FREQUENCY,
+            sparse_output=True,
+            dtype=np.float32,
+        )
+        self.multi: dict[str, MultiLabelBinarizer] = {}
+
+    @staticmethod
+    def _categories(frame: pl.DataFrame) -> pd.DataFrame:
+        """The categorical columns as strings for the encoder (pandas, as scikit-learn takes it),
+        a missing or empty value as one category of its own."""
+        cats = frame.select([pl.col(c).cast(pl.String).fill_null(NONE) for c in CATEGORICAL])
+        return cats.with_columns(pl.all().replace("", NONE)).to_pandas()
+
+    def _lists(self, frame: pl.DataFrame) -> list[Any]:
+        blocks: list[Any] = []
+        for column in MULTI:
+            binarizer = self.multi[column]
+            kept = set(binarizer.classes_)
+            lists = [
+                [v for v in (values or []) if v in kept] for values in frame.get_column(column).to_list()
+            ]
+            blocks.append(sparse.csr_matrix(binarizer.transform(lists), dtype=np.float32))
+        return blocks
+
+    def fit_blocks(self, frame: pl.DataFrame) -> list[Any]:
+        """Fit on train and return its blocks, one hot first, then one block per CWE list."""
+        blocks: list[Any] = [self.onehot.fit_transform(self._categories(frame))]
+        for column in MULTI:
+            counts: dict[str, int] = {}
+            for values in frame.get_column(column).to_list():
+                for v in values or []:
+                    counts[v] = counts.get(v, 0) + 1
+            kept = sorted(v for v, n in counts.items() if n >= MIN_FREQUENCY)
+            self.multi[column] = MultiLabelBinarizer(classes=kept, sparse_output=True)
+            self.multi[column].fit([kept])
+        blocks.extend(self._lists(frame))
+        return blocks
+
+    def blocks(self, frame: pl.DataFrame) -> list[Any]:
+        with warnings.catch_warnings():
+            # A CISA value train never held encodes as zeros, which the module docstring states.
+            warnings.filterwarnings("ignore", message="Found unknown categories")
+            onehot = self.onehot.transform(self._categories(frame))
+        return [onehot, *self._lists(frame)]
+
+    def fit(self, frame: pl.DataFrame) -> Structured:
+        self.fit_blocks(frame)
+        return self
+
+    def fit_transform(self, frame: pl.DataFrame) -> sparse.csr_matrix:
+        return _stack(self.fit_blocks(frame))
+
+    def transform(self, frame: pl.DataFrame) -> sparse.csr_matrix:
+        return _stack(self.blocks(frame))
+
+    def names(self) -> list[str]:
+        onehot = [str(n) for n in self.onehot.get_feature_names_out()]
+        return onehot + [f"{column}={v}" for column in MULTI for v in self.multi[column].classes_]
+
+    def size(self) -> dict[str, int]:
+        return {
+            "onehot": len(self.onehot.get_feature_names_out()),
+            "cwe_lists": int(sum(len(b.classes_) for b in self.multi.values())),
+        }
+
+
 class Features:
-    """Fit on train once, then transform every split the same way."""
+    """Fit on train once, then transform every split the same way: the text blocks, then the
+    structured block."""
 
     def __init__(self, variant: str = "word") -> None:
         if variant not in VARIANTS:
@@ -82,35 +158,29 @@ class Features:
             if variant == "word_char"
             else None
         )
-        self.onehot = OneHotEncoder(
-            handle_unknown="infrequent_if_exist",
-            min_frequency=MIN_FREQUENCY,
-            sparse_output=True,
-            dtype=np.float32,
-        )
-        self.multi: dict[str, MultiLabelBinarizer] = {}
+        self.structured = Structured()
+
+    @property
+    def onehot(self) -> OneHotEncoder:
+        return self.structured.onehot
+
+    @property
+    def multi(self) -> dict[str, MultiLabelBinarizer]:
+        return self.structured.multi
+
+    def __setstate__(self, state: dict[str, Any]) -> None:
+        """A Features pickled before the structured block had a class of its own kept the encoder
+        and the binarizers on itself; they move into the block, so every saved floor still loads."""
+        if "structured" not in state and "onehot" in state:
+            block = Structured()
+            block.onehot = state.pop("onehot")
+            block.multi = state.pop("multi")
+            state["structured"] = block
+        self.__dict__.update(state)
 
     @staticmethod
     def _text(frame: pl.DataFrame) -> list[str]:
         return [str(t) for t in frame.get_column("text").fill_null("").to_list()]
-
-    @staticmethod
-    def _categories(frame: pl.DataFrame) -> pd.DataFrame:
-        """The categorical columns as strings for the encoder (pandas, as scikit-learn takes it),
-        a missing or empty value as one category of its own."""
-        cats = frame.select([pl.col(c).cast(pl.String).fill_null(NONE) for c in CATEGORICAL])
-        return cats.with_columns(pl.all().replace("", NONE)).to_pandas()
-
-    def _lists(self, frame: pl.DataFrame) -> list[Any]:
-        blocks: list[Any] = []
-        for column in MULTI:
-            binarizer = self.multi[column]
-            kept = set(binarizer.classes_)
-            lists = [
-                [v for v in (values or []) if v in kept] for values in frame.get_column(column).to_list()
-            ]
-            blocks.append(sparse.csr_matrix(binarizer.transform(lists), dtype=np.float32))
-        return blocks
 
     def fit_transform(self, frame: pl.DataFrame) -> sparse.csr_matrix:
         """Fit on train and return the train matrix, without counting the text twice."""
@@ -118,16 +188,7 @@ class Features:
         blocks: list[Any] = [self.word.fit_transform(text)]
         if self.char is not None:
             blocks.append(self.char.fit_transform(text))
-        blocks.append(self.onehot.fit_transform(self._categories(frame)))
-        for column in MULTI:
-            counts: dict[str, int] = {}
-            for values in frame.get_column(column).to_list():
-                for v in values or []:
-                    counts[v] = counts.get(v, 0) + 1
-            kept = sorted(v for v, n in counts.items() if n >= MIN_FREQUENCY)
-            self.multi[column] = MultiLabelBinarizer(classes=kept, sparse_output=True)
-            self.multi[column].fit([kept])
-        blocks.extend(self._lists(frame))
+        blocks.extend(self.structured.fit_blocks(frame))
         return _stack(blocks)
 
     def fit(self, frame: pl.DataFrame) -> Features:
@@ -139,17 +200,12 @@ class Features:
         blocks: list[Any] = [self.word.transform(text)]
         if self.char is not None:
             blocks.append(self.char.transform(text))
-        with warnings.catch_warnings():
-            # A CISA value train never held encodes as zeros, which the module docstring states.
-            warnings.filterwarnings("ignore", message="Found unknown categories")
-            blocks.append(self.onehot.transform(self._categories(frame)))
-        blocks.extend(self._lists(frame))
+        blocks.extend(self.structured.blocks(frame))
         return _stack(blocks)
 
     def size(self) -> dict[str, int]:
         return {
             "word": len(self.word.vocabulary_),
             "char": len(self.char.vocabulary_) if self.char is not None else 0,
-            "onehot": len(self.onehot.get_feature_names_out()),
-            "cwe_lists": int(sum(len(b.classes_) for b in self.multi.values())),
+            **self.structured.size(),
         }
