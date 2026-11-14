@@ -52,7 +52,7 @@ const LANDING = { genre: "modern-minimal", files: ["web/styles/landing.css", "we
 const DOCS = {
   genre: "modern-minimal",
   files: ["web/styles/docs.css", "web/styles/landing.css", "web/styles/tokens.css", "web/styles/base.css", "web/app/(site)/docs", "web/app/(site)/report", "web/components/site/doc-view.tsx"],
-  routes: ["/docs", "/docs/architecture", "/docs/spec", "/report", "/report/backlog"],
+  routes: ["/docs", "/docs/architecture", "/docs/spec", "/docs/models", "/report", "/report/backlog", "/report/models"],
 };
 const CONSOLE = {
   scope: "app",

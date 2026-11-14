@@ -59,6 +59,19 @@
     "findings": []
    },
    {
+    "route": "/docs/models",
+    "genre": "modern-minimal",
+    "scope": "page",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
     "route": "/report",
     "genre": "modern-minimal",
     "scope": "page",
@@ -73,6 +86,19 @@
    },
    {
     "route": "/report/backlog",
+    "genre": "modern-minimal",
+    "scope": "page",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/report/models",
     "genre": "modern-minimal",
     "scope": "page",
     "render": true,
@@ -164,6 +190,19 @@
    },
    {
     "route": "/app/data",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/app/models",
     "genre": null,
     "scope": "app",
     "render": true,
@@ -233,308 +272,6 @@
   "result": "pass",
   "source": "web/test-results/axe, written by tests/e2e/routes.spec.ts at 390 and 1440 px in both themes",
   "routes": [
-   {
-    "route": "/app/backlog",
-    "serious": 0,
-    "critical": 0,
-    "projects": {
-     "desktop-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "heading-order (moderate)"
-      ]
-     },
-     "desktop-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "heading-order (moderate)"
-      ]
-     },
-     "phone-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "heading-order (moderate)"
-      ]
-     },
-     "phone-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "heading-order (moderate)"
-      ]
-     }
-    }
-   },
-   {
-    "route": "/app/criteria",
-    "serious": 0,
-    "critical": 0,
-    "projects": {
-     "desktop-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "landmark-unique (moderate)"
-      ]
-     },
-     "desktop-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "landmark-unique (moderate)"
-      ]
-     },
-     "phone-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "landmark-unique (moderate)"
-      ]
-     },
-     "phone-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "landmark-unique (moderate)"
-      ]
-     }
-    }
-   },
-   {
-    "route": "/app/cves/CVE-2099-0001",
-    "serious": 0,
-    "critical": 0,
-    "projects": {
-     "desktop-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "desktop-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "phone-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "phone-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     }
-    }
-   },
-   {
-    "route": "/app/cves",
-    "serious": 0,
-    "critical": 0,
-    "projects": {
-     "desktop-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "heading-order (moderate)"
-      ]
-     },
-     "desktop-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "heading-order (moderate)"
-      ]
-     },
-     "phone-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "heading-order (moderate)"
-      ]
-     },
-     "phone-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "heading-order (moderate)"
-      ]
-     }
-    }
-   },
-   {
-    "route": "/app/data",
-    "serious": 0,
-    "critical": 0,
-    "projects": {
-     "desktop-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "desktop-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "phone-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "phone-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     }
-    }
-   },
-   {
-    "route": "/app/limits",
-    "serious": 0,
-    "critical": 0,
-    "projects": {
-     "desktop-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "desktop-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "phone-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "phone-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     }
-    }
-   },
-   {
-    "route": "/app/match",
-    "serious": 0,
-    "critical": 0,
-    "projects": {
-     "desktop-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "desktop-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "phone-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "phone-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     }
-    }
-   },
-   {
-    "route": "/app/products",
-    "serious": 0,
-    "critical": 0,
-    "projects": {
-     "desktop-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "desktop-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "phone-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "phone-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     }
-    }
-   },
-   {
-    "route": "/app",
-    "serious": 0,
-    "critical": 0,
-    "projects": {
-     "desktop-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "desktop-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "phone-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     },
-     "phone-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": []
-     }
-    }
-   },
-   {
-    "route": "/design",
-    "serious": 0,
-    "critical": 0,
-    "projects": {
-     "desktop-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "region (moderate)"
-      ]
-     },
-     "desktop-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "region (moderate)"
-      ]
-     },
-     "phone-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "region (moderate)"
-      ]
-     },
-     "phone-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "region (moderate)"
-      ]
-     }
-    }
-   },
    {
     "route": "/docs/adr-0002",
     "serious": 0,
@@ -607,6 +344,111 @@
    },
    {
     "route": "/docs/adr-0007",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/docs/adr-0008",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/docs/adr-0009",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/docs/adr-0010",
     "serious": 0,
     "critical": 0,
     "projects": {
@@ -816,6 +658,41 @@
     }
    },
    {
+    "route": "/docs/models",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
     "route": "/docs/quickstart",
     "serious": 0,
     "critical": 0,
@@ -921,76 +798,6 @@
     }
    },
    {
-    "route": "/",
-    "serious": 0,
-    "critical": 0,
-    "projects": {
-     "desktop-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "region (moderate)"
-      ]
-     },
-     "desktop-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "region (moderate)"
-      ]
-     },
-     "phone-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "region (moderate)"
-      ]
-     },
-     "phone-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "region (moderate)"
-      ]
-     }
-    }
-   },
-   {
-    "route": "/no-such-page",
-    "serious": 0,
-    "critical": 0,
-    "projects": {
-     "desktop-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "region (moderate)"
-      ]
-     },
-     "desktop-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "region (moderate)"
-      ]
-     },
-     "phone-dark": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "region (moderate)"
-      ]
-     },
-     "phone-light": {
-      "serious": 0,
-      "critical": 0,
-      "other": [
-       "region (moderate)"
-      ]
-     }
-    }
-   },
-   {
     "route": "/report/backlog",
     "serious": 0,
     "critical": 0,
@@ -1061,7 +868,7 @@
     }
    },
    {
-    "route": "/report",
+    "route": "/report/model-band",
     "serious": 0,
     "critical": 0,
     "projects": {
@@ -1096,29 +903,72 @@
     }
    },
    {
-    "route": "/status",
+    "route": "/report/models",
     "serious": 0,
     "critical": 0,
     "projects": {
      "desktop-dark": {
       "serious": 0,
       "critical": 0,
-      "other": []
+      "other": [
+       "region (moderate)"
+      ]
      },
      "desktop-light": {
       "serious": 0,
       "critical": 0,
-      "other": []
+      "other": [
+       "region (moderate)"
+      ]
      },
      "phone-dark": {
       "serious": 0,
       "critical": 0,
-      "other": []
+      "other": [
+       "region (moderate)"
+      ]
      },
      "phone-light": {
       "serious": 0,
       "critical": 0,
-      "other": []
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/report",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
      }
     }
    }
