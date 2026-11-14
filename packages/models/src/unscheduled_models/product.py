@@ -158,9 +158,7 @@ class Floor:
                     if s > scores.get(i, -1.0):
                         scores[i] = s
             else:
-                for _, s, i in process.extract(
-                    product, self.products, scorer=RATIO, limit=POOL
-                ):
+                for _, s, i in process.extract(product, self.products, scorer=RATIO, limit=POOL):
                     if s > scores.get(i, -1.0):
                         scores[i] = s
         live = [(i, s) for i, s in scores.items() if self.created[i] <= t0]
