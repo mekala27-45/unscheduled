@@ -44,6 +44,19 @@ SURVIVAL_COLUMNS = {"unscheduled-survival": {1: "cox", 2: "forest"}}
 PRODUCT_COLUMNS = {1: "floor", 2: "retrieval"}
 
 
+def product_keys(cands: pl.DataFrame, model: str, threshold: float | None) -> list[list[str]]:
+    """Each row's ranked candidate keys from the chosen product version: the retrieval's as ranked,
+    the floor's only where its token set ratio reaches the frozen threshold."""
+    keys = [list(k or []) for k in cands.get_column(f"{model}_keys").to_list()]
+    if threshold is None:
+        return keys
+    scores = [list(s or []) for s in cands.get_column(f"{model}_scores").to_list()]
+    return [
+        [k for k, s in zip(ks, ss, strict=True) if s >= threshold]
+        for ks, ss in zip(keys, scores, strict=True)
+    ]
+
+
 def head(proba: pl.DataFrame, task: str) -> tuple[np.ndarray, list[str]]:
     columns = [c for c in proba.columns if c.startswith(f"{task}__")]
     return proba.select(columns).to_numpy().astype(np.float64), [c.split("__", 1)[1] for c in columns]
@@ -231,6 +244,9 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     versions = chosen_versions(registry)
     survival_model = SURVIVAL_COLUMNS["unscheduled-survival"][versions["unscheduled-survival"]["version"]]
     product_model = PRODUCT_COLUMNS[versions["unscheduled-product"]["version"]]
+    # The registered floor version is the floor at its frozen threshold, so it serves only the
+    # candidates whose ratio reaches it; the retrieval has no threshold.
+    product_threshold = float(points["product_floor_threshold"]) if product_model == "floor" else None
     iso = calibration["exploitation"][points["primary"]["exploitation"]]["map"]
     isotonic = calibrate.Isotonic(np.asarray(iso["x"]), np.asarray(iso["y"]))
     frames: list[pl.DataFrame] = []
@@ -261,8 +277,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
             pl.read_parquet(args.models / "product" / f"{split}_candidates.parquet"), on="cve_id", how="left"
         )
         columns["products"] = [
-            "|".join((keys or [])[:TOP_PRODUCTS])
-            for keys in cands.get_column(f"{product_model}_keys").to_list()
+            "|".join(keys[:TOP_PRODUCTS]) for keys in product_keys(cands, product_model, product_threshold)
         ]
         frames.append(pl.DataFrame(columns))
         windows[split] = fill.height
@@ -287,6 +302,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         "versions": versions,
         "survival_model": survival_model,
         "product_model": product_model,
+        "product_threshold": product_threshold,
         "rule": "development, test and shadow window CVEs; train window CVEs carry none since the models were fit on them",
         "shadow_bands": shadow_bands(table, args.sets),
         "file": {

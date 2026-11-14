@@ -68,10 +68,16 @@ def write_root(root: Path) -> None:
         pl.DataFrame(surv).write_parquet(root / f"data/models/survival/{split}_survival.parquet")
         keys = [[f"acme:door{k}" for k in range(i % 7)] for i in range(n)]
         pl.DataFrame(
-            {"cve_id": ids, "floor_keys": keys, "retrieval_keys": [list(reversed(k)) for k in keys]},
+            {
+                "cve_id": ids,
+                "floor_keys": keys,
+                "floor_scores": [[100.0 - 10 * j for j in range(len(k))] for k in keys],
+                "retrieval_keys": [list(reversed(k)) for k in keys],
+            },
             schema={
                 "cve_id": pl.String,
                 "floor_keys": pl.List(pl.String),
+                "floor_scores": pl.List(pl.Float64),
                 "retrieval_keys": pl.List(pl.String),
             },
         ).write_parquet(root / f"data/models/product/{split}_candidates.parquet")
@@ -84,6 +90,7 @@ def write_root(root: Path) -> None:
             "cutoffs": {h: 0.8 for h in heads if h != "cwe"},
             "floor_band_cutoff": 0.85,
         },
+        "product_floor_threshold": 90,
     }
     (root / "config/operating_points.yaml").write_text(yaml.safe_dump(points), encoding="utf-8")
     models = [
@@ -154,3 +161,15 @@ def test_every_window_row_gets_a_prediction_from_the_chosen_versions(tmp_path: P
         ["--models", str(tmp_path / "data/models"), "--sets", str(tmp_path / "data/sets")], root=tmp_path
     )
     assert (tmp_path / predict_serving.TARGET).read_bytes() == first
+
+
+def test_the_floor_version_serves_only_candidates_at_its_threshold() -> None:
+    cands = pl.DataFrame(
+        {
+            "floor_keys": [["a:x", "a:y", "a:z"], [], None],
+            "floor_scores": [[100.0, 90.0, 80.0], [], None],
+            "retrieval_keys": [["b:x"], ["b:y"], None],
+        }
+    )
+    assert predict_serving.product_keys(cands, "floor", 90.0) == [["a:x", "a:y"], [], []]
+    assert predict_serving.product_keys(cands, "retrieval", None) == [["b:x"], ["b:y"], []]
