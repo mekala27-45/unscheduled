@@ -12,8 +12,10 @@ the manifest or a committed file: edit the template, then render.
 ## Where it stands
 
 ```
-Phase            2 of 5, the models: three of eighteen steps done (the probes, the scoped model
-                 gate, the point in time sets, and the plan hashed as the models stage {{ (reg.stages | selectattr("stage", "equalto", "models") | first).hash[:12] }});
+Phase            2 of 5, the models: four of eighteen steps done (the probes and the scoped model
+                 gate, the plan hashed as the models stage {{ (reg.stages | selectattr("stage", "equalto", "models") | first).hash[:12] }}, the point in
+                 time sets, the survival models checked in R); the floors, the fallback, the
+                 exploitation and the product models are written and run in the models workflow;
                  the prompt is claude/unscheduled-phase-2-prompt.md in the Project
 Phase 1          the ground truth, tagged v0.1.0 on the commit that adds the release record;
                  its checklist {{ v("build.checklist_done") }} of {{ v("build.checklist_total") }} lines done (RESULTS.md)
@@ -43,30 +45,27 @@ Open checklist lines:
 {% endif %}
 ## Next action
 
-Phase 2 has started from the hand off below. Step one: results/probe.json carries a section for
-Phase 2 (the libraries on PyPI, the two weights pinned in config/models.yaml, Kaggle and Databricks
-answered or not, R with the survival package), and the model gate is scoped: model libraries only
-under packages/models and kaggle/, the ONNX runtime also under packages/api, and no model provider
-client or agent framework anywhere. Step two: evaluation/phase2_plan.yaml and config/models.yaml are
-hashed into evaluation/registration.json as the models stage, after the Phase 1 stages and without
-moving their hash, before any model exists. Next: step three, the training set builder on the as-of
-engine, with the leakage test on the sets. Step three: scripts/build_sets.py writes the sets
-(data/sets, rebuilt from the lake, never committed) and results/models/sets.json with their digests:
-{{ v("models.sets.train.rows") }} train, {{ v("models.sets.development.rows") }} development, {{ v("models.sets.test.rows") }} test and {{ v("models.sets.shadow.rows") }} shadow rows. The change
-request that starts the exploitation population when KEV could first list a CVE within 180 days is
-in DECISIONS.md. Step four, the fill floors: unscheduled_models.floors and scripts/train_floors.py
-fit them, one logistic regression per class against the rest by liblinear (DECISIONS.md, the floor
-solver), and the full search runs in the models workflow, which restores the recorded release,
-rebuilds the lake and the sets, and fits only when the sets match their committed digests. Next:
-commit results/models/floors.json from that run, then step five, the CPE dictionary and the product
-model.
+Phase 2 runs from the hand off below, and DECISIONS.md holds every choice made on the way. Done: the
+probes and the scoped model gate; the plan hashed as the models stage; the sets, {{ v("models.sets.train.rows") }} train,
+{{ v("models.sets.development.rows") }} development, {{ v("models.sets.test.rows") }} test and {{ v("models.sets.shadow.rows") }} shadow rows with the affected product inputs and labels; the
+survival models, where the Cox model reaches a development concordance of {{ v("models.survival.cox.dev_concordance") }} and R's coxph
+agrees with lifelines on the same matrix (the check: {{ v("models.survival.r_check.result") }}). Running in the models workflow, from
+the recorded release and the sets checked against their digests: the fill floors (step four) and the
+ModernBERT fallback (step eight, since the Kaggle secrets are unset). Waiting: the exploitation models
+(step six) read the band floor from the committed floors record, and the product models (step five)
+read the CPE dictionary from the first lake release that carries it, which the next daily fetch
+writes. Next: commit each run's record from its artifact, then calibration, conformal sets and the
+operating points (step nine).
 
 ## Open problems
 
 - Releases and tags come only from Ajay: this session cannot create a release or start a workflow
   that creates one, and its git access cannot push a tag, so v0.2.0 is pushed from his machine.
-- Kaggle and Databricks secrets are not set yet. Without the Kaggle pair, step eight takes its CPU
-  fallback; without the Databricks pair, the registry uses the file store.
+- Kaggle and Databricks secrets are not set. Step eight took its CPU fallback (DECISIONS.md, step
+  eight takes the fallback), and KAGGLE_USERNAME with KAGGLE_KEY would let ModernBERT run; without
+  the Databricks pair, the registry uses the file store.
+- The CPE dictionary is fetched daily from the next run of the fetch on; the product models wait for
+  the first lake release that carries it.
 - The schedules fire hours late and less often than they ask: the hourly fetch has run a few times
   a day since 12 November, and the daily fetch and lake build several hours after their times. The
   newest lake release changes with each hourly run until the next daily one, so the committed
