@@ -732,3 +732,19 @@ and the method notes and the exploitation card show all four. The ONNX export, n
 calibration draft are rebuilt from the new model, all with the pins, and the scripts whose numbers
 are committed (the exploitation fit, the operating points, the test scoring and the batch) now
 refuse to start without them.
+
+## 2026-11-14: the lake build pins the numeric kernels too
+
+Reset and rederive, run on this machine with the models after the pins came in, rebuilt every value
+of the lake and the models and five of the backlog differently: Q8's area under the curve and its
+interval, and its two tables of coefficients. Q8 fits a logistic regression, the domain classifier,
+and the rederive now sets the pins for every step, while the committed backlog numbers were built
+here before the pins, on this processor's own OpenBLAS kernels. The AUC moves from 0.8866007 to
+0.8865878, so the documents still read 0.887 (0.824 to 0.927), and the largest coefficient moves in
+its third decimal.
+
+So the lake workflow sets the same pins as the models workflow, a test holds both workflows to
+unscheduled_models.numerics, and results/backlog/q8.json with the backlog part are replaced by the
+answers rebuilt with the pins from the recorded release. Every other backlog value was equal. The
+lake, the survival models and the exploitation models were equal in the same run, 708 of 713 values
+in all before this change.

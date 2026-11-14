@@ -6558,7 +6558,7 @@
    }
   },
   "backlog.q8.auc": {
-   "value": 0.8866006551153528,
+   "value": 0.8865878481007882,
    "fmt": "float3",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -6569,7 +6569,7 @@
    }
   },
   "backlog.q8.auc_high": {
-   "value": 0.9272767206227494,
+   "value": 0.9272697519634171,
    "fmt": "float3",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -6580,7 +6580,7 @@
    }
   },
   "backlog.q8.auc_low": {
-   "value": 0.824126636092865,
+   "value": 0.824114263071788,
    "fmt": "float3",
    "provenance": {
     "origin": "scripts/run_analysis.py",
@@ -11783,77 +11783,77 @@
     [
      "filer or type: filer_microsoft",
      "filer",
-     5.149148526796135
+     5.150762677902064
     ],
     [
      "filer or type: filer_Chrome",
      "filer",
-     4.38905938476378
+     4.389996333876655
     ],
     [
      "word: n8n",
      "description",
-     4.124171708962091
+     4.123957810207497
     ],
     [
      "word: flowise",
      "description",
-     3.9866763275170536
+     3.9877022267569253
     ],
     [
      "filer or type: filer_adobe",
      "filer",
-     3.9109353910958133
+     3.9097807176419592
     ],
     [
      "filer or type: filer_oracle",
      "filer",
-     3.8845601516805455
+     3.885335804903653
     ],
     [
      "word: openssl_encrypt",
      "description",
-     3.8293833373479775
+     3.8299622068428194
     ],
     [
      "filer or type: filer_ibm",
      "filer",
-     3.6524026861701233
+     3.6537999684219464
     ],
     [
      "filer or type: filer_elastic",
      "filer",
-     3.5505858169235256
+     3.550366949914899
     ],
     [
      "filer or type: filer_mongodb",
      "filer",
-     3.5248754059538046
+     3.525639871354843
     ],
     [
      "filer or type: filer_apple",
      "filer",
-     3.253022337011055
+     3.25264802010906
     ],
     [
      "word: openclaw",
      "description",
-     3.1653112115455584
+     3.167271959809396
     ],
     [
      "word: in link",
      "description",
-     3.1490794857508266
+     3.1502103637811065
     ],
     [
      "word: keycloak",
      "description",
-     3.1226960954584415
+     3.1213247854853647
     ],
     [
      "word: before 2026",
      "description",
-     3.0105551196395766
+     3.0073587005500855
     ]
    ],
    "provenance": {
@@ -11879,77 +11879,77 @@
     [
      "published month (months since 2026-04)",
      "month",
-     -5.307850810791778
+     -5.307434080434269
     ],
     [
      "filer or type: filer_Wordfence",
      "filer",
-     -5.05764751728983
+     -5.058089782886223
     ],
     [
      "filer or type: filer_WPScan",
      "filer",
-     -4.238782915676397
+     -4.2382913176972945
     ],
     [
      "filer or type: filer_Patchstack",
      "filer",
-     -4.076652048279117
+     -4.075921887192351
     ],
     [
      "filer or type: filer_AMD",
      "filer",
-     -3.5229752506481513
+     -3.522667759736438
     ],
     [
      "word: php",
      "description",
-     -3.5141218231851177
+     -3.5174026985330022
     ],
     [
      "filer or type: filer_Gitea",
      "filer",
-     -3.4103204628006933
+     -3.410294654582184
     ],
     [
      "word: cms",
      "description",
-     -3.1859051926904636
+     -3.183342198357979
     ],
     [
      "filer or type: filer_TYPO3",
      "filer",
-     -3.0243500837894333
+     -3.0245750737082684
     ],
     [
      "filer or type: filer_CPANSec",
      "filer",
-     -2.696003899704394
+     -2.697098502272613
     ],
     [
      "filer or type: filer_Ubiquiti",
      "filer",
-     -2.5947631148381274
+     -2.5949296767394903
     ],
     [
      "word: iotdb",
      "description",
-     -2.4982274500656985
+     -2.498747600824793
     ],
     [
      "filer or type: filer_XEN",
      "filer",
-     -2.48856011719659
-    ],
-    [
-     "word: apache iotdb",
-     "description",
-     -2.272676256369221
+     -2.4889996239350634
     ],
     [
      "filer or type: filer_OpenHarmony",
      "filer",
-     -2.272653753209438
+     -2.273211824712815
+    ],
+    [
+     "word: apache iotdb",
+     "description",
+     -2.273131572023017
     ]
    ],
    "provenance": {

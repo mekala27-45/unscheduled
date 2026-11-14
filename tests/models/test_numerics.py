@@ -14,9 +14,10 @@ from scripts import reset_and_rederive, train_rank
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def test_the_models_workflow_sets_exactly_the_pins() -> None:
-    workflow = yaml.safe_load((ROOT / ".github" / "workflows" / "models.yml").read_text(encoding="utf-8"))
-    env = workflow["jobs"]["fit"]["env"]
+@pytest.mark.parametrize(("workflow", "job"), [("models.yml", "fit"), ("lake.yml", "lake")])
+def test_the_workflows_that_fit_set_exactly_the_pins(workflow: str, job: str) -> None:
+    spec = yaml.safe_load((ROOT / ".github" / "workflows" / workflow).read_text(encoding="utf-8"))
+    env = spec["jobs"][job]["env"]
     assert {name: str(env.get(name)) for name in numerics.PINS} == numerics.PINS
 
 

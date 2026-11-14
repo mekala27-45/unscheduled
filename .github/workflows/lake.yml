@@ -29,6 +29,11 @@ jobs:
       PYTHONHASHSEED: "0"
       GH_TOKEN: ${{ github.token }}
       REPO: ${{ github.repository }}
+      # The numeric kernels the analysis fits with (Q8's domain classifier), as the models workflow
+      # pins them (unscheduled_models.numerics), so its numbers are the same on any processor.
+      OPENBLAS_CORETYPE: Haswell
+      OPENBLAS_NUM_THREADS: "1"
+      NPY_DISABLE_CPU_FEATURES: X86_V4 AVX512_ICL AVX512_SPR
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

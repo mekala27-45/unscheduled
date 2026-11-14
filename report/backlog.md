@@ -207,39 +207,39 @@ of what to look at, which is why the later phases also score against filer and C
 
 | Feature | Group | Coefficient |
 |---|---|---:|
-| filer or type: filer_microsoft | filer | 5.149 |
-| filer or type: filer_Chrome | filer | 4.389 |
+| filer or type: filer_microsoft | filer | 5.151 |
+| filer or type: filer_Chrome | filer | 4.390 |
 | word: n8n | description | 4.124 |
-| word: flowise | description | 3.987 |
-| filer or type: filer_adobe | filer | 3.911 |
+| word: flowise | description | 3.988 |
+| filer or type: filer_adobe | filer | 3.910 |
 | filer or type: filer_oracle | filer | 3.885 |
-| word: openssl_encrypt | description | 3.829 |
-| filer or type: filer_ibm | filer | 3.652 |
-| filer or type: filer_elastic | filer | 3.551 |
-| filer or type: filer_mongodb | filer | 3.525 |
+| word: openssl_encrypt | description | 3.830 |
+| filer or type: filer_ibm | filer | 3.654 |
+| filer or type: filer_elastic | filer | 3.550 |
+| filer or type: filer_mongodb | filer | 3.526 |
 | filer or type: filer_apple | filer | 3.253 |
-| word: openclaw | description | 3.165 |
-| word: in link | description | 3.149 |
-| word: keycloak | description | 3.123 |
-| word: before 2026 | description | 3.011 |
+| word: openclaw | description | 3.167 |
+| word: in link | description | 3.150 |
+| word: keycloak | description | 3.121 |
+| word: before 2026 | description | 3.007 |
 
 | Feature | Group | Coefficient |
 |---|---|---:|
-| published month (months since 2026-04) | month | -5.308 |
+| published month (months since 2026-04) | month | -5.307 |
 | filer or type: filer_Wordfence | filer | -5.058 |
-| filer or type: filer_WPScan | filer | -4.239 |
-| filer or type: filer_Patchstack | filer | -4.077 |
+| filer or type: filer_WPScan | filer | -4.238 |
+| filer or type: filer_Patchstack | filer | -4.076 |
 | filer or type: filer_AMD | filer | -3.523 |
-| word: php | description | -3.514 |
+| word: php | description | -3.517 |
 | filer or type: filer_Gitea | filer | -3.410 |
-| word: cms | description | -3.186 |
-| filer or type: filer_TYPO3 | filer | -3.024 |
-| filer or type: filer_CPANSec | filer | -2.696 |
+| word: cms | description | -3.183 |
+| filer or type: filer_TYPO3 | filer | -3.025 |
+| filer or type: filer_CPANSec | filer | -2.697 |
 | filer or type: filer_Ubiquiti | filer | -2.595 |
-| word: iotdb | description | -2.498 |
+| word: iotdb | description | -2.499 |
 | filer or type: filer_XEN | filer | -2.489 |
-| word: apache iotdb | description | -2.273 |
 | filer or type: filer_OpenHarmony | filer | -2.273 |
+| word: apache iotdb | description | -2.273 |
 
 The data lead would push back: the later half has had less time to be analyzed, and the month
 feature carries that. The AUC shows that the two groups can be told apart; the model is not meant
