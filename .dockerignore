@@ -1,0 +1,5 @@
+# What Dockerfile.vercel's COPY lines would carry into the API image without being read there. The
+# batch predictions reach the API through the serving bundle and the sync, not the image.
+models/serving/predictions.parquet
+**/__pycache__
+**/.pytest_cache
