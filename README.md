@@ -7,14 +7,9 @@ per task, because the Kaggle secrets are absent; ModernBERT waits for them. The 
 MLflow's SQLite store, written from the committed run records, because no Databricks workspace is
 connected.
 
-Phase 1 is complete and tagged v0.1.0. Phase 2 of 5, the models, is in progress: 9 of
+Phase 1 is complete and tagged v0.1.0. Phase 2 of 5, the models, is in progress: 14 of
 18 checklist lines are done. Still missing:
 
-- Every model has a floor trained on the same rows; every comparison has a paired interval
-- Calibration and conformal sets fit on development, with coverage on test
-- Test scored once by scripts/score_test.py; C1 and C2 evidence with their verdicts
-- EPSS beside every exploitation number; ties named
-- Slices with Benjamini-Hochberg; the failure taxonomy in the manifest
 - The predictions in the serving bundle and the API; /v1/predict live; Neon under its ceiling
 - The console shows every prediction with its model, version and uncertainty; design gates green; the look reviewed by Ajay
 - The live check awake and asleep; reset and rederive reproduced every CPU model number

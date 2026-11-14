@@ -2,7 +2,7 @@
  "as_of": "2026-11-13",
  "values": {
   "models.registry.archive": {
-   "value": "registry-cab240b84116.tar.gz",
+   "value": "registry-27093b0cce17.tar.gz",
    "fmt": "text",
    "provenance": {
     "origin": "scripts/build_registry.py",
@@ -67,105 +67,105 @@
      "unscheduled-band",
      1,
      "floor",
-     "candidate",
+     "scored",
      "band floor"
     ],
     [
      "unscheduled-band",
      2,
      "ablation",
-     "candidate",
+     "scored",
      "band text alone"
     ],
     [
      "unscheduled-band",
      3,
      "model",
-     "chosen",
+     "scored",
      "band model"
     ],
     [
      "unscheduled-metrics",
      1,
      "floor",
-     "candidate",
+     "scored",
      "metrics floor"
     ],
     [
      "unscheduled-metrics",
      2,
      "ablation",
-     "candidate",
+     "scored",
      "metrics text alone"
     ],
     [
      "unscheduled-metrics",
      3,
      "model",
-     "chosen",
+     "scored",
      "metrics model"
     ],
     [
      "unscheduled-cwe",
      1,
      "floor",
-     "candidate",
+     "scored",
      "cwe floor"
     ],
     [
      "unscheduled-cwe",
      2,
      "ablation",
-     "candidate",
+     "scored",
      "cwe text alone"
     ],
     [
      "unscheduled-cwe",
      3,
      "model",
-     "chosen",
+     "scored",
      "cwe model"
     ],
     [
      "unscheduled-exploit",
      1,
      "floor",
-     "candidate",
+     "scored",
      "exploitation floor"
     ],
     [
      "unscheduled-exploit",
      2,
      "model",
-     "chosen",
+     "scored",
      "exploitation model"
     ],
     [
      "unscheduled-survival",
      1,
      "floor",
-     "chosen",
+     "scored",
      "survival Cox"
     ],
     [
      "unscheduled-survival",
      2,
      "model",
-     "candidate",
+     "scored",
      "survival forest"
     ],
     [
      "unscheduled-product",
      1,
      "floor",
-     "chosen",
+     "scored",
      "product floor"
     ],
     [
      "unscheduled-product",
      2,
      "model",
-     "candidate",
+     "scored",
      "product retrieval"
     ]
    ],

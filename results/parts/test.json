@@ -1,0 +1,2648 @@
+{
+ "as_of": "2026-11-13",
+ "values": {
+  "criteria.c1.verdict": {
+   "value": "not met",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "criteria.c2.verdict": {
+   "value": "not met",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.clusters": {
+   "value": 274,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.difference": {
+   "value": -0.05734129772532681,
+   "fmt": "sfloat3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.difference_high": {
+   "value": -0.019340090176661877,
+   "fmt": "sfloat3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.difference_low": {
+   "value": -0.10839155838778546,
+   "fmt": "sfloat3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.ece": {
+   "value": 0.053352082894413684,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.ece_high": {
+   "value": 0.06566863832534106,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.ece_low": {
+   "value": 0.04424363216409837,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.floor_kappa": {
+   "value": 0.6485138489145512,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.floor_kappa_high": {
+   "value": 0.7289436328374848,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.floor_kappa_low": {
+   "value": 0.4668570950160566,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.kappa": {
+   "value": 0.5911725511892244,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.kappa_high": {
+   "value": 0.6925115713810889,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.kappa_low": {
+   "value": 0.36351614693303513,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.rows": {
+   "value": 22453,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c1.verdict": {
+   "value": "not met",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD CVSS 3.1 band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.difference_day_1": {
+   "value": 0.01895734597156401,
+   "fmt": "spct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model's recall less EPSS at day 1's, paired",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.difference_day_1_high": {
+   "value": 0.10501319095477378,
+   "fmt": "spct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model's recall less EPSS at day 1's, paired",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.difference_day_1_low": {
+   "value": -0.06915687674433692,
+   "fmt": "spct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model's recall less EPSS at day 1's, paired",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.difference_day_30": {
+   "value": -0.3222748815165876,
+   "fmt": "spct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model's recall less EPSS at day 30's, paired",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.difference_day_30_high": {
+   "value": -0.24252841950861773,
+   "fmt": "spct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model's recall less EPSS at day 30's, paired",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.difference_day_30_low": {
+   "value": -0.4087114214913269,
+   "fmt": "spct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model's recall less EPSS at day 30's, paired",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.difference_day_7": {
+   "value": -0.23222748815165878,
+   "fmt": "spct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model's recall less EPSS at day 7's, paired",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.difference_day_7_high": {
+   "value": -0.15074079316771663,
+   "fmt": "spct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model's recall less EPSS at day 7's, paired",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.difference_day_7_low": {
+   "value": -0.325008971291866,
+   "fmt": "spct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model's recall less EPSS at day 7's, paired",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.difference_floor": {
+   "value": 0.01895734597156401,
+   "fmt": "spct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model's recall less its floor's, paired",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.difference_floor_high": {
+   "value": 0.09231707317073166,
+   "fmt": "spct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model's recall less its floor's, paired",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.difference_floor_low": {
+   "value": -0.0625,
+   "fmt": "spct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model's recall less its floor's, paired",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.epss_day_1": {
+   "value": 0.41706161137440756,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: EPSS at day 1",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.epss_day_30": {
+   "value": 0.7582938388625592,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: EPSS at day 30",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.epss_day_7": {
+   "value": 0.6682464454976303,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: EPSS at day 7",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.floor": {
+   "value": 0.41706161137440756,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the exploitation floor at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.positives": {
+   "value": 211,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.reading_day_1": {
+   "value": "tie",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model against EPSS at day 1",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.reading_day_30": {
+   "value": "behind",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model against EPSS at day 30",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.reading_day_7": {
+   "value": "behind",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model against EPSS at day 7",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.reading_floor": {
+   "value": "tie",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: the model against its floor",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.recall": {
+   "value": 0.43601895734597157,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.recall_high": {
+   "value": 0.5,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.recall_low": {
+   "value": 0.36607142857142855,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.rows": {
+   "value": 63297,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.top": {
+   "value": 3165,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.c2.verdict": {
+   "value": "not met",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.band.coverage": {
+   "value": 0.9612523938894579,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.band.mean_size": {
+   "value": 2.286420522869995,
+   "fmt": "float2",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_A.coverage": {
+   "value": 0.9727876007660446,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_A",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_A.mean_size": {
+   "value": 1.6318532044715628,
+   "fmt": "float2",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_A",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_AC.coverage": {
+   "value": 0.9878412684273816,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_AC",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_AC.mean_size": {
+   "value": 1.1986371531643878,
+   "fmt": "float2",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_AC",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_AV.coverage": {
+   "value": 0.9808488843361689,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_AV",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_AV.mean_size": {
+   "value": 1.4384714737451565,
+   "fmt": "float2",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_AV",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_C.coverage": {
+   "value": 0.9685120028503986,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_C",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_C.mean_size": {
+   "value": 1.8096022803188883,
+   "fmt": "float2",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_C",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_I.coverage": {
+   "value": 0.9656170667616799,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_I",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_I.mean_size": {
+   "value": 1.8377054291186032,
+   "fmt": "float2",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_I",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_PR.coverage": {
+   "value": 0.9677994031977909,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_PR",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_PR.mean_size": {
+   "value": 2.014296530530441,
+   "fmt": "float2",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_PR",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_S.coverage": {
+   "value": 0.9862379192090144,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_S",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_S.mean_size": {
+   "value": 1.2259831648332071,
+   "fmt": "float2",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_S",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_UI.coverage": {
+   "value": 0.9799581347704093,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_UI",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.conformal.metric_UI.mean_size": {
+   "value": 1.2098605976929586,
+   "fmt": "float2",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: the primary's 90 percent set for metric_UI",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.exploit.exploit_floor.auroc": {
+   "value": 0.8331411885948813,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: exploit_floor",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.exploit.exploit_floor.average_precision": {
+   "value": 0.034289284660198316,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: exploit_floor",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.exploit.exploit_floor.brier_calibrated": {
+   "value": 0.0033028128114655606,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: exploit_floor",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.exploit.exploit_lgbm.auroc": {
+   "value": 0.8755134231117291,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: exploit_lgbm",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.exploit.exploit_lgbm.average_precision": {
+   "value": 0.04048260433029285,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: exploit_lgbm",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.exploit.exploit_lgbm.brier_calibrated": {
+   "value": 0.003273619628988707,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: exploit_lgbm",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.band.macro_f1": {
+   "value": 0.4787204985543048,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.band.qwk": {
+   "value": 0.5911725511892244,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.band_from_metrics.qwk": {
+   "value": 0.5299252958904108,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, band_from_metrics",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.cwe.macro_f1": {
+   "value": 0.35879617418907445,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, cwe",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.cwe.top1_accuracy": {
+   "value": 0.6241827491138243,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, cwe",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.cwe.top5_accuracy": {
+   "value": 0.9088617565970855,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, cwe",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_A.kappa": {
+   "value": 0.695762805313245,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_A",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_A.macro_f1": {
+   "value": 0.6127428398965011,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_A",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_AC.kappa": {
+   "value": 0.4214846290291575,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_AC",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_AC.macro_f1": {
+   "value": 0.7107229940647849,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_AC",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_AV.kappa": {
+   "value": 0.7261534373672767,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_AV",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_AV.macro_f1": {
+   "value": 0.656297027335179,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_AV",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_C.kappa": {
+   "value": 0.6117226549515868,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_C",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_C.macro_f1": {
+   "value": 0.7546917712544811,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_C",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_I.kappa": {
+   "value": 0.6258923405651342,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_I",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_I.macro_f1": {
+   "value": 0.7661934819036477,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_I",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_PR.kappa": {
+   "value": 0.4198240549672554,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_PR",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_PR.macro_f1": {
+   "value": 0.6218911428613217,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_PR",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_S.kappa": {
+   "value": 0.8020271116522542,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_S",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_S.macro_f1": {
+   "value": 0.90098540431564,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_S",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_UI.kappa": {
+   "value": 0.791240299761162,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_UI",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback.metric_UI.macro_f1": {
+   "value": 0.8955689841418607,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback, metric_UI",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.band.macro_f1": {
+   "value": 0.39018851759097883,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.band.qwk": {
+   "value": 0.4365384256005336,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.band_from_metrics.qwk": {
+   "value": 0.42578701839291966,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, band_from_metrics",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.cwe.macro_f1": {
+   "value": 0.3649430780798108,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, cwe",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.cwe.top1_accuracy": {
+   "value": 0.601181567546278,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, cwe",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.cwe.top5_accuracy": {
+   "value": 0.8975187081528161,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, cwe",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_A.kappa": {
+   "value": 0.6066722374654743,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_A",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_A.macro_f1": {
+   "value": 0.5422226542531622,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_A",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_AC.kappa": {
+   "value": 0.351963904266411,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_AC",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_AC.macro_f1": {
+   "value": 0.6747011357926479,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_AC",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_AV.kappa": {
+   "value": 0.6298920958879908,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_AV",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_AV.macro_f1": {
+   "value": 0.48754981629882793,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_AV",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_C.kappa": {
+   "value": 0.5399433047891661,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_C",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_C.macro_f1": {
+   "value": 0.7119302555209385,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_C",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_I.kappa": {
+   "value": 0.5508233839879655,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_I",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_I.macro_f1": {
+   "value": 0.7205281198202171,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_I",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_PR.kappa": {
+   "value": 0.3200035903276348,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_PR",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_PR.macro_f1": {
+   "value": 0.48517350982707924,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_PR",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_S.kappa": {
+   "value": 0.750608847016469,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_S",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_S.macro_f1": {
+   "value": 0.8751550834649907,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_S",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_UI.kappa": {
+   "value": 0.6469829888123595,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_UI",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.fallback_text.metric_UI.macro_f1": {
+   "value": 0.823348221564693,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: fallback_text, metric_UI",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.band.macro_f1": {
+   "value": 0.5043384880490545,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.band.qwk": {
+   "value": 0.6485138489145512,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, band",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.band_from_metrics.qwk": {
+   "value": 0.6372759839840594,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, band_from_metrics",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.cwe.macro_f1": {
+   "value": 0.49762556345706127,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, cwe",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.cwe.top1_accuracy": {
+   "value": 0.6753052382827885,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, cwe",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.cwe.top5_accuracy": {
+   "value": 0.9483261126427728,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, cwe",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_A.kappa": {
+   "value": 0.778779031525383,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_A",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_A.macro_f1": {
+   "value": 0.6513632533010529,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_A",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_AC.kappa": {
+   "value": 0.5514518109595986,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_AC",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_AC.macro_f1": {
+   "value": 0.7757049536951994,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_AC",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_AV.kappa": {
+   "value": 0.8098765449671085,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_AV",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_AV.macro_f1": {
+   "value": 0.795369360641691,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_AV",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_C.kappa": {
+   "value": 0.7346937430615414,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_C",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_C.macro_f1": {
+   "value": 0.8328768663133957,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_C",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_I.kappa": {
+   "value": 0.7568760513721652,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_I",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_I.macro_f1": {
+   "value": 0.8487307657132744,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_I",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_PR.kappa": {
+   "value": 0.5086762309118079,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_PR",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_PR.macro_f1": {
+   "value": 0.6959132175359279,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_PR",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_S.kappa": {
+   "value": 0.88140516135172,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_S",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_S.macro_f1": {
+   "value": 0.9407007906590972,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_S",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_UI.kappa": {
+   "value": 0.8569834489215595,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_UI",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.fill.floors.metric_UI.macro_f1": {
+   "value": 0.9284887452525982,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with the label: floors, metric_UI",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.floor.hit_at_1": {
+   "value": 0.2748360818597258,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: floor",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.floor.hit_at_10": {
+   "value": 0.5230727200476852,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: floor",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.floor.hit_at_5": {
+   "value": 0.5161931253725413,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: floor",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.floor.recall_at_1": {
+   "value": 0.25070594330852436,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: floor",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.floor.recall_at_10": {
+   "value": 0.4905146853697371,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: floor",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.floor.recall_at_5": {
+   "value": 0.46924998056047706,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: floor",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.floor_at_threshold.hit_at_1": {
+   "value": 0.26813033975759987,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: floor_at_threshold",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.floor_at_threshold.hit_at_10": {
+   "value": 0.5083449235048678,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: floor_at_threshold",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.floor_at_threshold.hit_at_5": {
+   "value": 0.5034273792966422,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: floor_at_threshold",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.floor_at_threshold.recall_at_1": {
+   "value": 0.24428098690964586,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: floor_at_threshold",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.floor_at_threshold.recall_at_10": {
+   "value": 0.47349386966131474,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: floor_at_threshold",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.floor_at_threshold.recall_at_5": {
+   "value": 0.45493261998156775,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: floor_at_threshold",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.retrieval.hit_at_1": {
+   "value": 0.24237532286906419,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: retrieval",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.retrieval.hit_at_10": {
+   "value": 0.40862805483806874,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: retrieval",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.retrieval.hit_at_5": {
+   "value": 0.3742549175442082,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: retrieval",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.retrieval.recall_at_1": {
+   "value": 0.22437409563777222,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: retrieval",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.retrieval.recall_at_10": {
+   "value": 0.37217877809254846,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: retrieval",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.product.retrieval.recall_at_5": {
+   "value": 0.3387911800394171,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with a vulnerable product in their NVD configurations: retrieval",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.survival.cox.concordance": {
+   "value": 0.7763557634451784,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: cox",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.survival.forest.concordance": {
+   "value": 0.748816802986057,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs, Q03 left out: forest",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  }
+ },
+ "tables": {
+  "models.test.conformal.band_by_filer_type": {
+   "columns": [
+    "Filer type",
+    "CVEs",
+    "Coverage",
+    "Mean set size"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "pct1",
+    "float2"
+   ],
+   "rows": [
+    [
+     "MITRE",
+     793,
+     0.9192938209331651,
+     2.390920554854981
+    ],
+    [
+     "national CERT",
+     739,
+     0.9661705006765899,
+     2.0663058186738836
+    ],
+    [
+     "open source project",
+     9751,
+     0.9725156394215978,
+     2.510716849553892
+    ],
+    [
+     "other",
+     399,
+     0.9323308270676691,
+     2.4661654135338344
+    ],
+    [
+     "research or bug bounty platform",
+     7054,
+     0.9641338247802665,
+     2.026368018145733
+    ],
+    [
+     "vendor",
+     3717,
+     0.9373150390099543,
+     2.1937046004842613
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs with an NVD band, by the filer type of the Phase 1 typing",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.slices.exploitation.filer_type": {
+   "columns": [
+    "Slice",
+    "CVEs",
+    "Model",
+    "Comparator",
+    "Difference",
+    "Adjusted p",
+    "Significant"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "float3",
+    "float3",
+    "sfloat3",
+    "float3",
+    "text"
+   ],
+   "rows": [
+    [
+     "MITRE",
+     6112,
+     0.07305060735253924,
+     0.07765454494573003,
+     -0.0046039375931907905,
+     0.9305347326336831,
+     "no"
+    ],
+    [
+     "national CERT",
+     2556,
+     0.017545154548596134,
+     0.013888946762150387,
+     0.003656207786445747,
+     0.9305347326336831,
+     "no"
+    ],
+    [
+     "open source project",
+     19157,
+     0.042331943010506204,
+     0.03224911730724368,
+     0.010082825703262521,
+     0.9305347326336831,
+     "no"
+    ],
+    [
+     "other",
+     808,
+     0.03202336177124517,
+     0.06302496478026355,
+     -0.03100160300901838,
+     0.9305347326336831,
+     "no"
+    ],
+    [
+     "research or bug bounty platform",
+     20420,
+     0.005768685309505389,
+     0.0036987825598209256,
+     0.0020699027496844636,
+     0.05397301349325337,
+     "no"
+    ],
+    [
+     "vendor",
+     14244,
+     0.06439602045214084,
+     0.07958569125077755,
+     -0.015189670798636715,
+     0.9305347326336831,
+     "no"
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs by filer_type, Benjamini-Hochberg at 0.05 within the family",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.slices.exploitation.published_year": {
+   "columns": [
+    "Slice",
+    "CVEs",
+    "Model",
+    "Comparator",
+    "Difference",
+    "Adjusted p",
+    "Significant"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "float3",
+    "float3",
+    "sfloat3",
+    "float3",
+    "text"
+   ],
+   "rows": [
+    [
+     "2025",
+     48143,
+     0.04290533108350281,
+     0.032603618922827635,
+     0.010301712160675172,
+     0.41579210394802596,
+     "no"
+    ],
+    [
+     "2026",
+     15154,
+     0.047078776887076755,
+     0.06350988650046559,
+     -0.016431109613388832,
+     0.671664167916042,
+     "no"
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs by published_year, Benjamini-Hochberg at 0.05 within the family",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.slices.fill.cwe": {
+   "columns": [
+    "Slice",
+    "CVEs",
+    "Model",
+    "Comparator",
+    "Difference",
+    "Adjusted p",
+    "Significant"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "float3",
+    "float3",
+    "sfloat3",
+    "float3",
+    "text"
+   ],
+   "rows": [
+    [
+     "(none)",
+     12034,
+     0.5750532422648018,
+     0.6225930856136859,
+     -0.04753984334888406,
+     0.006663334999167082,
+     "yes"
+    ],
+    [
+     "NVD-CWE-NOINFO",
+     2319,
+     0.22596416588236534,
+     0.30091172851974957,
+     -0.07494756263738422,
+     0.0079960019990005,
+     "yes"
+    ],
+    [
+     "other",
+     1574,
+     0.1585926581570858,
+     0.23757724991028584,
+     -0.07898459175320005,
+     0.006663334999167082,
+     "yes"
+    ],
+    [
+     "CWE-89",
+     1481,
+     0.21780188774468268,
+     0.25591100543843703,
+     -0.03810911769375436,
+     0.23806278678842396,
+     "no"
+    ],
+    [
+     "CWE-476",
+     977,
+     0.04393371596469142,
+     0.10992563114419784,
+     -0.06599191517950642,
+     0.0079960019990005,
+     "yes"
+    ],
+    [
+     "CWE-79",
+     676,
+     0.29666153985343346,
+     0.3422020794454812,
+     -0.045540539592047735,
+     0.25653839746793267,
+     "no"
+    ],
+    [
+     "CWE-787",
+     591,
+     0.4268809459219277,
+     0.4717250829877969,
+     -0.044844137065869205,
+     0.23806278678842396,
+     "no"
+    ],
+    [
+     "CWE-416",
+     424,
+     0.11976047904191611,
+     -0.012345679012345734,
+     0.13210615805426185,
+     0.07424858999071893,
+     "no"
+    ],
+    [
+     "NVD-CWE-OTHER",
+     410,
+     0.22039258870379153,
+     0.6040462900823335,
+     -0.38365370137854193,
+     0.006663334999167082,
+     "yes"
+    ],
+    [
+     "CWE-125",
+     362,
+     0.15602444269380622,
+     0.1537685474544156,
+     0.002255895239390626,
+     0.9215392303848076,
+     "no"
+    ],
+    [
+     "CWE-434",
+     209,
+     0.38417480549577876,
+     0.40777030487180366,
+     -0.023595499376024898,
+     0.9171884645912337,
+     "no"
+    ],
+    [
+     "CWE-362",
+     192,
+     0.09457364341085284,
+     0.10291858678955457,
+     -0.00834494337870173,
+     0.9215392303848076,
+     "no"
+    ],
+    [
+     "CWE-120",
+     171,
+     0.3932623698678208,
+     0.4552805684881157,
+     -0.062018198620294895,
+     0.46130780763464424,
+     "no"
+    ],
+    [
+     "CWE-77",
+     156,
+     0.4532710280373832,
+     0.437603993344426,
+     0.01566703469295716,
+     0.9171884645912337,
+     "no"
+    ],
+    [
+     "CWE-78",
+     140,
+     0.3796326135997422,
+     0.37241379310344824,
+     0.007218820496293965,
+     0.9215392303848076,
+     "no"
+    ],
+    [
+     "CWE-22",
+     96,
+     0.37757437070938216,
+     0.4902654867256636,
+     -0.11269111601628146,
+     0.2123938030984508,
+     "no"
+    ],
+    [
+     "CWE-190",
+     95,
+     0.24204966850207887,
+     0.03187875620590541,
+     0.21017091229617346,
+     0.06996501749125437,
+     "no"
+    ],
+    [
+     "CWE-94",
+     65,
+     0.39129334345735256,
+     0.5222115691914351,
+     -0.13091822573408252,
+     0.23806278678842396,
+     "no"
+    ],
+    [
+     "CWE-862",
+     62,
+     0.6347569955817378,
+     0.5896304467733039,
+     0.04512654880843392,
+     0.9171884645912337,
+     "no"
+    ],
+    [
+     "CWE-352",
+     57,
+     0.10696920583468394,
+     0.06359300476947527,
+     0.043376201065208675,
+     0.9171884645912337,
+     "no"
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs by cwe, Benjamini-Hochberg at 0.05 within the family",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.slices.fill.filer": {
+   "columns": [
+    "Slice",
+    "CVEs",
+    "Model",
+    "Comparator",
+    "Difference",
+    "Adjusted p",
+    "Significant"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "float3",
+    "float3",
+    "sfloat3",
+    "float3",
+    "text"
+   ],
+   "rows": [
+    [
+     "VulDB",
+     5070,
+     0.7137667149267555,
+     0.7407890273376336,
+     -0.027022312410878158,
+     0.003331667499583541,
+     "yes"
+    ],
+    [
+     "Linux",
+     4675,
+     0.07510269465648556,
+     0.23855866975640128,
+     -0.16345597509991572,
+     0.003331667499583541,
+     "yes"
+    ],
+    [
+     "GitHub_M",
+     3424,
+     0.43196670993847663,
+     0.5032161338685496,
+     -0.07124942393007294,
+     0.003331667499583541,
+     "yes"
+    ],
+    [
+     "VulnCheck",
+     1104,
+     0.5606123329396949,
+     0.6375730854020896,
+     -0.07696075246239464,
+     0.003331667499583541,
+     "yes"
+    ],
+    [
+     "mitre",
+     793,
+     0.47492739466490097,
+     0.5181627988869633,
+     -0.04323540422206229,
+     0.10217113665389527,
+     "no"
+    ],
+    [
+     "Wordfence",
+     585,
+     0.7489701338825953,
+     0.7815363237656867,
+     -0.032566189883091456,
+     0.23388305847076465,
+     "no"
+    ],
+    [
+     "ibm",
+     371,
+     0.44227846860242814,
+     0.45776668746101057,
+     -0.015488218858582425,
+     0.7346326836581709,
+     "no"
+    ],
+    [
+     "INCIBE",
+     346,
+     0.6685251205377476,
+     0.759282710316902,
+     -0.09075758977915438,
+     0.008567144998929107,
+     "yes"
+    ],
+    [
+     "Patchstack",
+     328,
+     0.69117595297596,
+     0.6674000803566303,
+     0.023775872619329674,
+     0.5563884724304514,
+     "no"
+    ],
+    [
+     "huawei",
+     253,
+     0.17314746881878207,
+     0.11363838452099373,
+     0.05950908429778834,
+     0.3907137340420698,
+     "no"
+    ],
+    [
+     "qnap",
+     234,
+     0.43802245044184385,
+     0.2236340533672172,
+     0.21438839707462665,
+     0.003331667499583541,
+     "yes"
+    ],
+    [
+     "apple",
+     202,
+     0.4155543553738137,
+     0.41985994177354624,
+     -0.004305586399732553,
+     0.960519740129935,
+     "no"
+    ],
+    [
+     "SamsungMobile",
+     196,
+     0.28619311589532026,
+     0.32993790553268676,
+     -0.0437447896373665,
+     0.7346326836581709,
+     "no"
+    ],
+    [
+     "microsoft",
+     165,
+     0.4109480364934549,
+     0.5342115875789757,
+     -0.12326355108552078,
+     0.05747126436781609,
+     "no"
+    ],
+    [
+     "fortinet",
+     153,
+     0.6122715404699739,
+     0.6476868327402135,
+     -0.03541529227023965,
+     0.6319916964594626,
+     "no"
+    ],
+    [
+     "dell",
+     147,
+     0.6256493837221148,
+     0.6143112701252236,
+     0.011338113596891186,
+     0.8185380993713669,
+     "no"
+    ],
+    [
+     "@huntr_ai",
+     146,
+     0.5536325007772827,
+     0.5826015928119257,
+     -0.02896909203464304,
+     0.7153566074105804,
+     "no"
+    ],
+    [
+     "Liferay",
+     142,
+     0.33644859813084116,
+     0.36888888888888893,
+     -0.032440290758047774,
+     0.8185380993713669,
+     "no"
+    ],
+    [
+     "GitLab",
+     140,
+     0.17763157894736847,
+     0.1506067094932192,
+     0.02702486945414928,
+     0.784313725490196,
+     "no"
+    ],
+    [
+     "talos",
+     138,
+     0.47805157593123204,
+     0.7053800170794193,
+     -0.2273284411481873,
+     0.003331667499583541,
+     "yes"
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs by filer, Benjamini-Hochberg at 0.05 within the family",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.slices.fill.filer_type": {
+   "columns": [
+    "Slice",
+    "CVEs",
+    "Model",
+    "Comparator",
+    "Difference",
+    "Adjusted p",
+    "Significant"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "float3",
+    "float3",
+    "sfloat3",
+    "float3",
+    "text"
+   ],
+   "rows": [
+    [
+     "open source project",
+     9751,
+     0.3213610914446394,
+     0.4301410455944169,
+     -0.10877995414977748,
+     0.0029985007496251873,
+     "yes"
+    ],
+    [
+     "research or bug bounty platform",
+     7054,
+     0.7020950797319802,
+     0.7372906597596725,
+     -0.0351955800276923,
+     0.0029985007496251873,
+     "yes"
+    ],
+    [
+     "vendor",
+     3717,
+     0.4984353308764553,
+     0.5270726451535428,
+     -0.02863731427708749,
+     0.026986506746626684,
+     "yes"
+    ],
+    [
+     "MITRE",
+     793,
+     0.47492739466490097,
+     0.5181627988869633,
+     -0.04323540422206229,
+     0.05517241379310345,
+     "no"
+    ],
+    [
+     "national CERT",
+     739,
+     0.6108154857889685,
+     0.6754801037374107,
+     -0.06466461794844225,
+     0.01999000499750125,
+     "yes"
+    ],
+    [
+     "other",
+     399,
+     0.43674292160597705,
+     0.4592428847747996,
+     -0.022499963168822523,
+     0.5837081459270365,
+     "no"
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs by filer_type, Benjamini-Hochberg at 0.05 within the family",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.slices.fill.published_year": {
+   "columns": [
+    "Slice",
+    "CVEs",
+    "Model",
+    "Comparator",
+    "Difference",
+    "Adjusted p",
+    "Significant"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "float3",
+    "float3",
+    "sfloat3",
+    "float3",
+    "text"
+   ],
+   "rows": [
+    [
+     "2025",
+     16763,
+     0.6217587082394644,
+     0.6840824122711308,
+     -0.062323704031666316,
+     0.001999000499750125,
+     "yes"
+    ],
+    [
+     "2026",
+     5690,
+     0.4929995634200405,
+     0.5283511766194485,
+     -0.03535161319940805,
+     0.001999000499750125,
+     "yes"
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs by published_year, Benjamini-Hochberg at 0.05 within the family",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.test.slices.fill.vendor": {
+   "columns": [
+    "Slice",
+    "CVEs",
+    "Model",
+    "Comparator",
+    "Difference",
+    "Adjusted p",
+    "Significant"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "float3",
+    "float3",
+    "sfloat3",
+    "float3",
+    "text"
+   ],
+   "rows": [
+    [
+     "linux",
+     4676,
+     0.07475918077787447,
+     0.2382175371346431,
+     -0.16345835635676864,
+     0.004997501249375312,
+     "yes"
+    ],
+    [
+     "code-projects",
+     798,
+     0.7067968510187059,
+     0.7398915618590305,
+     -0.03309471084032456,
+     0.004997501249375312,
+     "yes"
+    ],
+    [
+     "phpgurukul",
+     506,
+     0.753469957723677,
+     0.7460531127693182,
+     0.007416844954358792,
+     0.783608195902049,
+     "no"
+    ],
+    [
+     "",
+     473,
+     0.5652011085311961,
+     0.6377894958199919,
+     -0.0725883872887958,
+     0.004997501249375312,
+     "yes"
+    ],
+    [
+     "(none)",
+     473,
+     0.4913474964239505,
+     0.5468227949092251,
+     -0.05547529848527466,
+     0.17134289997858215,
+     "no"
+    ],
+    [
+     "sourcecodester",
+     384,
+     0.6234406481759334,
+     0.6420084988292429,
+     -0.01856785065330957,
+     0.4417791104447776,
+     "no"
+    ],
+    [
+     "ibm",
+     371,
+     0.44227846860242814,
+     0.45776668746101057,
+     -0.015488218858582425,
+     0.783608195902049,
+     "no"
+    ],
+    [
+     "itsourcecode",
+     327,
+     0.7866556478622069,
+     0.7762042642800737,
+     0.010451383582133156,
+     0.8185380993713669,
+     "no"
+    ],
+    [
+     "campcodes",
+     311,
+     0.7458990635409466,
+     0.720133075182024,
+     0.02576598835892263,
+     0.783608195902049,
+     "no"
+    ],
+    [
+     "huawei",
+     253,
+     0.17314746881878207,
+     0.11363838452099373,
+     0.05950908429778834,
+     0.4417791104447776,
+     "no"
+    ],
+    [
+     "qnap systems inc.",
+     234,
+     0.43802245044184385,
+     0.2236340533672172,
+     0.21438839707462665,
+     0.004997501249375312,
+     "yes"
+    ],
+    [
+     "apple",
+     202,
+     0.4155543553738137,
+     0.41985994177354624,
+     -0.004305586399732553,
+     0.960519740129935,
+     "no"
+    ],
+    [
+     "samsung mobile",
+     196,
+     0.28619311589532026,
+     0.32993790553268676,
+     -0.0437447896373665,
+     0.783608195902049,
+     "no"
+    ],
+    [
+     "d-link",
+     189,
+     0.3958836828564747,
+     0.28065893837705913,
+     0.11522474447941555,
+     0.02798600699650175,
+     "yes"
+    ],
+    [
+     "microsoft",
+     167,
+     0.3940234791889008,
+     0.5450378378378379,
+     -0.15101435864893709,
+     0.02998500749625187,
+     "yes"
+    ],
+    [
+     "fortinet",
+     153,
+     0.6122715404699739,
+     0.6476868327402135,
+     -0.03541529227023965,
+     0.7468992776339104,
+     "no"
+    ],
+    [
+     "openclaw",
+     151,
+     0.3991046260984912,
+     0.4213081246806337,
+     -0.022203498582142545,
+     0.8185380993713669,
+     "no"
+    ],
+    [
+     "dell",
+     147,
+     0.6256493837221148,
+     0.6143112701252236,
+     0.011338113596891186,
+     0.8185380993713669,
+     "no"
+    ],
+    [
+     "labredescefetrj",
+     142,
+     0.7417138237671786,
+     0.78693733451015,
+     -0.04522351074297137,
+     0.1724137931034483,
+     "no"
+    ],
+    [
+     "liferay",
+     142,
+     0.33644859813084116,
+     0.36888888888888893,
+     -0.032440290758047774,
+     0.8185380993713669,
+     "no"
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/score_test.py",
+    "population": "test window CVEs by vendor, Benjamini-Hochberg at 0.05 within the family",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  }
+ },
+ "figures": {}
+}

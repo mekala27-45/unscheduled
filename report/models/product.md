@@ -42,6 +42,14 @@ candidates, averaged over the CVEs.
 
 These are over the 32,161 development CVEs with a labeled product.
 
+| On test, scored once | First candidate | First five | First ten |
+|---|---:|---:|---:|
+| The floor | 0.251 | 0.469 | 0.491 |
+| The floor at its threshold | 0.244 | 0.455 | 0.473 |
+| The retrieval | 0.224 | 0.339 | 0.372 |
+
+These are point values; the plan sets no criterion on the affected product.
+
 ## Against the floor
 
 The string floor is the comparator the retrieval has to beat, on the same CVEs and the same

@@ -195,11 +195,22 @@ CVEs the NVD analyzes after its change are not like the ones it analyzed in 2024
 Test is scored once, by scripts/score_test.py, after the operating points are frozen and hashed into
 the registration. C1 asks: For test CVEs the NVD analyzed, the predicted severity band agrees with the NVD band at a quadratic weighted kappa of at least 0.60, beats the TF-IDF floor with the lower bound of the paired 95 percent interval above zero, and has an expected calibration error at or below 0.05.
 
-Test has not been scored yet.
+The band's test kappa is 0.591 (0.364 to
+0.693), the floor's 0.649, and the paired
+difference -0.057 (-0.108 to
+-0.019); the calibration error is 0.053.
+C1 is not met.
 
 C2 asks: Scored on the day of publication, the top 5 percent by the exploitation score holds at least half of the test CVEs listed in KEV within 180 days. EPSS at days 1, 7 and 30 is reported beside it, and a difference inside the interval is a tie.
 
-Test has not been scored yet.
+The model holds 43.6% (36.6% to
+50.0%) of the 211 test listings in its
+top five percent, and its floor 41.7%, a reading of
+tie for the model. EPSS on day 1 holds 41.7%, a reading of
+tie for the model; on day 7 66.8%
+(behind) and on day 30 75.8%
+(behind). EPSS at day 7 and day 30 has seen days the model has
+not. C2 is not met.
 
 ## The registry
 

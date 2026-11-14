@@ -12,10 +12,10 @@
    "versions": [
     {
      "version": 1,
-     "run_id": "feee81de89f24e658e00501249d09dbe",
+     "run_id": "d7ad812f01d345d58022e08a41a31e3d",
      "run_name": "band floor",
      "role": "floor",
-     "stage": "candidate",
+     "stage": "scored",
      "chosen": false,
      "description": "TF-IDF over the joined text beside the filer and CISA block, logistic regression",
      "params": {
@@ -28,7 +28,10 @@
       "accuracy": 0.72323,
       "macro_f1": 0.538968
      },
-     "test": {},
+     "test": {
+      "qwk": 0.6485138489145512,
+      "macro_f1": 0.5043384880490545
+     },
      "record": "results/models/floors.json",
      "commit": "5914c0275c808a7f28053afa1c4c5bb83d39df63",
      "github_run_id": "43559212749",
@@ -36,10 +39,10 @@
     },
     {
      "version": 2,
-     "run_id": "c1377084da2443a889c5c7156822f06b",
+     "run_id": "d865b3775f5046dd916d59c0e9487320",
      "run_name": "band text alone",
      "role": "ablation",
-     "stage": "candidate",
+     "stage": "scored",
      "chosen": false,
      "description": "frozen bge-small embeddings of the joined text alone, logistic regression",
      "params": {
@@ -53,7 +56,10 @@
       "macro_f1": 0.430384,
       "accuracy": 0.61198
      },
-     "test": {},
+     "test": {
+      "qwk": 0.4365384256005336,
+      "macro_f1": 0.39018851759097883
+     },
      "record": "results/models/fallback.json",
      "commit": "50a9752031654bc37b48981d8ac54cc83e46bd47",
      "github_run_id": "43580024886",
@@ -61,10 +67,10 @@
     },
     {
      "version": 3,
-     "run_id": "326b4d64ce1e4f0a808767c8da170f02",
+     "run_id": "4c79052c733f45fa94a2fb40b5e0d274",
      "run_name": "band model",
      "role": "model",
-     "stage": "chosen",
+     "stage": "scored",
      "chosen": true,
      "description": "frozen bge-small embeddings beside the filer and CISA block, logistic regression",
      "params": {
@@ -78,7 +84,10 @@
       "macro_f1": 0.532077,
       "accuracy": 0.666681
      },
-     "test": {},
+     "test": {
+      "qwk": 0.5911725511892244,
+      "macro_f1": 0.4787204985543048
+     },
      "record": "results/models/fallback.json",
      "commit": "50a9752031654bc37b48981d8ac54cc83e46bd47",
      "github_run_id": "43580024886",
@@ -86,7 +95,8 @@
     }
    ],
    "aliases": {
-    "chosen": 3
+    "chosen": 3,
+    "scored": 3
    },
    "chosen_by": "config/operating_points.yaml, primary"
   },
@@ -96,10 +106,10 @@
    "versions": [
     {
      "version": 1,
-     "run_id": "6c59edd1bb3449468cfa981ff1e9d3a8",
+     "run_id": "873d2c9ef5c347e482df6e424f1813a8",
      "run_name": "metrics floor",
      "role": "floor",
-     "stage": "candidate",
+     "stage": "scored",
      "chosen": false,
      "description": "TF-IDF over the joined text beside the filer and CISA block, logistic regression",
      "params": {
@@ -125,7 +135,17 @@
       "kappa.A": 0.816913,
       "mean_kappa": 0.774407875
      },
-     "test": {},
+     "test": {
+      "kappa.AV": 0.8098765449671085,
+      "kappa.AC": 0.5514518109595986,
+      "kappa.PR": 0.5086762309118079,
+      "kappa.UI": 0.8569834489215595,
+      "kappa.S": 0.88140516135172,
+      "kappa.C": 0.7346937430615414,
+      "kappa.I": 0.7568760513721652,
+      "kappa.A": 0.778779031525383,
+      "mean_kappa": 0.7348427528838605
+     },
      "record": "results/models/floors.json",
      "commit": "5914c0275c808a7f28053afa1c4c5bb83d39df63",
      "github_run_id": "43559212749",
@@ -133,10 +153,10 @@
     },
     {
      "version": 2,
-     "run_id": "6d18df6d109645b4bb30829124fc378a",
+     "run_id": "aa1dd2f5513a41ff855b3d2b10e56954",
      "run_name": "metrics text alone",
      "role": "ablation",
-     "stage": "candidate",
+     "stage": "scored",
      "chosen": false,
      "description": "frozen bge-small embeddings of the joined text alone, logistic regression",
      "params": {
@@ -163,7 +183,17 @@
       "kappa.A": 0.667821,
       "mean_kappa": 0.6042905
      },
-     "test": {},
+     "test": {
+      "kappa.AV": 0.6298920958879908,
+      "kappa.AC": 0.351963904266411,
+      "kappa.PR": 0.3200035903276348,
+      "kappa.UI": 0.6469829888123595,
+      "kappa.S": 0.750608847016469,
+      "kappa.C": 0.5399433047891661,
+      "kappa.I": 0.5508233839879655,
+      "kappa.A": 0.6066722374654743,
+      "mean_kappa": 0.5496112940691839
+     },
      "record": "results/models/fallback.json",
      "commit": "50a9752031654bc37b48981d8ac54cc83e46bd47",
      "github_run_id": "43580024886",
@@ -171,10 +201,10 @@
     },
     {
      "version": 3,
-     "run_id": "0111e8cb25704a4d98afa533d438c6fa",
+     "run_id": "90508f9d9f8f43699ee196a9a2b05546",
      "run_name": "metrics model",
      "role": "model",
-     "stage": "chosen",
+     "stage": "scored",
      "chosen": true,
      "description": "frozen bge-small embeddings beside the filer and CISA block, logistic regression",
      "params": {
@@ -201,7 +231,17 @@
       "kappa.A": 0.760305,
       "mean_kappa": 0.705916875
      },
-     "test": {},
+     "test": {
+      "kappa.AV": 0.7261534373672767,
+      "kappa.AC": 0.4214846290291575,
+      "kappa.PR": 0.4198240549672554,
+      "kappa.UI": 0.791240299761162,
+      "kappa.S": 0.8020271116522542,
+      "kappa.C": 0.6117226549515868,
+      "kappa.I": 0.6258923405651342,
+      "kappa.A": 0.695762805313245,
+      "mean_kappa": 0.636763416700884
+     },
      "record": "results/models/fallback.json",
      "commit": "50a9752031654bc37b48981d8ac54cc83e46bd47",
      "github_run_id": "43580024886",
@@ -209,7 +249,8 @@
     }
    ],
    "aliases": {
-    "chosen": 3
+    "chosen": 3,
+    "scored": 3
    },
    "chosen_by": "config/operating_points.yaml, primary"
   },
@@ -219,10 +260,10 @@
    "versions": [
     {
      "version": 1,
-     "run_id": "50ab2dc2e0e640e6a98ae0d46f295b65",
+     "run_id": "1aca45e1eab247de8cc3de652655faf1",
      "run_name": "cwe floor",
      "role": "floor",
-     "stage": "candidate",
+     "stage": "scored",
      "chosen": false,
      "description": "TF-IDF over the joined text beside the filer and CISA block, logistic regression",
      "params": {
@@ -235,7 +276,11 @@
       "accuracy": 0.710181,
       "top5_accuracy": 0.940982
      },
-     "test": {},
+     "test": {
+      "macro_f1": 0.49762556345706127,
+      "top1_accuracy": 0.6753052382827885,
+      "top5_accuracy": 0.9483261126427728
+     },
      "record": "results/models/floors.json",
      "commit": "5914c0275c808a7f28053afa1c4c5bb83d39df63",
      "github_run_id": "43559212749",
@@ -243,10 +288,10 @@
     },
     {
      "version": 2,
-     "run_id": "a8f07ed38006475aa5d3ab400d6b5375",
+     "run_id": "a0765b58e6034e53a7b3125fa3b38211",
      "run_name": "cwe text alone",
      "role": "ablation",
-     "stage": "candidate",
+     "stage": "scored",
      "chosen": false,
      "description": "frozen bge-small embeddings of the joined text alone, logistic regression",
      "params": {
@@ -260,7 +305,11 @@
       "accuracy": 0.633592,
       "top5_accuracy": 0.901395
      },
-     "test": {},
+     "test": {
+      "macro_f1": 0.3649430780798108,
+      "top1_accuracy": 0.601181567546278,
+      "top5_accuracy": 0.8975187081528161
+     },
      "record": "results/models/fallback.json",
      "commit": "50a9752031654bc37b48981d8ac54cc83e46bd47",
      "github_run_id": "43580024886",
@@ -268,10 +317,10 @@
     },
     {
      "version": 3,
-     "run_id": "b9052299eae04250a2b2144680289224",
+     "run_id": "c02dae4000974b05b7e1a2b6db9e6325",
      "run_name": "cwe model",
      "role": "model",
-     "stage": "chosen",
+     "stage": "scored",
      "chosen": true,
      "description": "frozen bge-small embeddings beside the filer and CISA block, logistic regression",
      "params": {
@@ -285,7 +334,11 @@
       "accuracy": 0.657881,
       "top5_accuracy": 0.913282
      },
-     "test": {},
+     "test": {
+      "macro_f1": 0.35879617418907445,
+      "top1_accuracy": 0.6241827491138243,
+      "top5_accuracy": 0.9088617565970855
+     },
      "record": "results/models/fallback.json",
      "commit": "50a9752031654bc37b48981d8ac54cc83e46bd47",
      "github_run_id": "43580024886",
@@ -293,7 +346,8 @@
     }
    ],
    "aliases": {
-    "chosen": 3
+    "chosen": 3,
+    "scored": 3
    },
    "chosen_by": "config/operating_points.yaml, primary"
   },
@@ -303,10 +357,10 @@
    "versions": [
     {
      "version": 1,
-     "run_id": "85f545ef98df4845b7a7c341ea1b0575",
+     "run_id": "79dc5614d0b640e9bbed4526bce60d5f",
      "run_name": "exploitation floor",
      "role": "floor",
-     "stage": "candidate",
+     "stage": "scored",
      "chosen": false,
      "description": "logistic regression on the day 0 features and the band floor's projection, balanced",
      "params": {
@@ -318,7 +372,11 @@
       "auroc": 0.8329283732099833,
       "recall_at_top5": 0.4094488188976378
      },
-     "test": {},
+     "test": {
+      "average_precision": 0.034289284660198316,
+      "auroc": 0.8331411885948813,
+      "brier_calibrated": 0.0033028128114655606
+     },
      "record": "results/models/rank.json",
      "commit": "f15db284016f49451a153d52d2395e85349fb8fa",
      "github_run_id": "43590255274",
@@ -326,10 +384,10 @@
     },
     {
      "version": 2,
-     "run_id": "f66d1714af8c47d3b899310f63f63901",
+     "run_id": "1ecdd3d0e85f48f58db2ca4fc898d575",
      "run_name": "exploitation model",
      "role": "model",
-     "stage": "chosen",
+     "stage": "scored",
      "chosen": true,
      "description": "LightGBM on the same features, tuned by Optuna on time ordered folds",
      "params": {
@@ -346,7 +404,11 @@
       "auroc": 0.8542787653277357,
       "recall_at_top5": 0.49606299212598426
      },
-     "test": {},
+     "test": {
+      "average_precision": 0.04048260433029285,
+      "auroc": 0.8755134231117291,
+      "brier_calibrated": 0.003273619628988707
+     },
      "record": "results/models/rank.json",
      "commit": "f15db284016f49451a153d52d2395e85349fb8fa",
      "github_run_id": "43590255274",
@@ -354,7 +416,8 @@
     }
    ],
    "aliases": {
-    "chosen": 2
+    "chosen": 2,
+    "scored": 2
    },
    "chosen_by": "config/operating_points.yaml, primary"
   },
@@ -364,10 +427,10 @@
    "versions": [
     {
      "version": 1,
-     "run_id": "0cff19f56c4a46e2b205c8186db24e82",
+     "run_id": "d461b0233cc042239199b645e8158c96",
      "run_name": "survival Cox",
      "role": "floor",
-     "stage": "chosen",
+     "stage": "scored",
      "chosen": true,
      "description": "lifelines Cox proportional hazards on the day 0 features without the text",
      "params": {
@@ -377,7 +440,9 @@
      "dev": {
       "concordance": 0.7783016216314576
      },
-     "test": {},
+     "test": {
+      "concordance": 0.7763557634451784
+     },
      "record": "results/models/survival.json",
      "commit": "7ce4a499f7a2dc49c8ed1867fc615dfdc841523f",
      "github_run_id": "43563265777",
@@ -385,10 +450,10 @@
     },
     {
      "version": 2,
-     "run_id": "2165316e4675418f81173d5308b59848",
+     "run_id": "fa6e14c313e24c22b5aa37792323c8d6",
      "run_name": "survival forest",
      "role": "model",
-     "stage": "candidate",
+     "stage": "scored",
      "chosen": false,
      "description": "scikit-survival random survival forest on the same design",
      "params": {
@@ -398,7 +463,9 @@
      "dev": {
       "concordance": 0.7739965290211138
      },
-     "test": {},
+     "test": {
+      "concordance": 0.748816802986057
+     },
      "record": "results/models/survival.json",
      "commit": "7ce4a499f7a2dc49c8ed1867fc615dfdc841523f",
      "github_run_id": "43563265777",
@@ -406,7 +473,8 @@
     }
    ],
    "aliases": {
-    "chosen": 1
+    "chosen": 1,
+    "scored": 1
    },
    "chosen_by": "the higher development concordance"
   },
@@ -416,10 +484,10 @@
    "versions": [
     {
      "version": 1,
-     "run_id": "b18d6bbd74064cec9c85c93fcd8aad0d",
+     "run_id": "e25ede37b6a3413597b56470c564f17e",
      "run_name": "product floor",
      "role": "floor",
-     "stage": "chosen",
+     "stage": "scored",
      "chosen": true,
      "description": "normalized vendor and product strings, an exact match, then a token set ratio",
      "params": {
@@ -434,7 +502,14 @@
       "recall_at_10": 0.42063385553393423,
       "hit_at_10": 0.4599981343863686
      },
-     "test": {},
+     "test": {
+      "recall_at_1": 0.24428098690964586,
+      "hit_at_1": 0.26813033975759987,
+      "recall_at_5": 0.45493261998156775,
+      "hit_at_5": 0.5034273792966422,
+      "recall_at_10": 0.47349386966131474,
+      "hit_at_10": 0.5083449235048678
+     },
      "record": "results/models/product.json",
      "commit": "370de123265353c8fda776bd4d042bb05fa255ff",
      "github_run_id": "43595717893",
@@ -442,10 +517,10 @@
     },
     {
      "version": 2,
-     "run_id": "c628724a994747508f5838191ff83881",
+     "run_id": "d867130d0ce24181af26284a6a533930",
      "run_name": "product retrieval",
      "role": "model",
-     "stage": "candidate",
+     "stage": "scored",
      "chosen": false,
      "description": "cosine between bge-small embeddings of the joined text and of every CPE vendor and product",
      "params": {
@@ -460,7 +535,14 @@
       "recall_at_10": 0.34518617306513494,
       "hit_at_10": 0.39041074593451697
      },
-     "test": {},
+     "test": {
+      "recall_at_1": 0.22437409563777222,
+      "hit_at_1": 0.24237532286906419,
+      "recall_at_5": 0.3387911800394171,
+      "hit_at_5": 0.3742549175442082,
+      "recall_at_10": 0.37217877809254846,
+      "hit_at_10": 0.40862805483806874
+     },
      "record": "results/models/product.json",
      "commit": "370de123265353c8fda776bd4d042bb05fa255ff",
      "github_run_id": "43595717893",
@@ -468,15 +550,16 @@
     }
    ],
    "aliases": {
-    "chosen": 1
+    "chosen": 1,
+    "scored": 1
    },
    "chosen_by": "the higher development recall at 10"
   }
  ],
  "archive": {
-  "file": "registry-cab240b84116.tar.gz",
-  "sha256": "cab240b8411607046d1a39ec8f2a31d9261e0e3db6a6992b0e2b229f6244936b",
-  "bytes": 113098,
+  "file": "registry-27093b0cce17.tar.gz",
+  "sha256": "27093b0cce17e9a0941e123c6aaf0bb69a077f22cd09508c6757a68d5e1a8b7a",
+  "bytes": 122500,
   "paths_made_relative": 46,
   "open": "tar xzf the archive, then mlflow ui --backend-store-uri sqlite:///mlflow.db in store/"
  }

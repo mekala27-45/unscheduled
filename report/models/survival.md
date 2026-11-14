@@ -33,7 +33,9 @@ penalty of 0.01, and the forest's
 0.774, with leaves of at least
 100 CVEs. Development chooses by concordance, a tie
 going to the floor (DECISIONS.md, the registry).
-Test has not been scored yet.
+On test, scored once, the Cox model's concordance is 0.776
+and the forest's 0.749. These are point values: the plan
+sets no criterion on survival.
 
 ## Against the floor
 

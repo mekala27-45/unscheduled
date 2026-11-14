@@ -1,0 +1,75 @@
+{
+ "criterion": "C2",
+ "population": "test window CVEs",
+ "model": "exploit_lgbm",
+ "rank_by": "the raw exploit_lgbm score, ties by position in CVE id order",
+ "recall_at_top5": {
+  "rows": 63297,
+  "positives": 211,
+  "top": 3165,
+  "model": {
+   "value": 0.43601895734597157,
+   "low": 0.36607142857142855,
+   "high": 0.5
+  },
+  "floor": {
+   "value": 0.41706161137440756,
+   "low": 0.34736296700299973,
+   "high": 0.4831527237872091
+  },
+  "epss_day_1": {
+   "value": 0.41706161137440756,
+   "low": 0.34977578475336324,
+   "high": 0.483335308056872
+  },
+  "epss_day_7": {
+   "value": 0.6682464454976303,
+   "low": 0.6053748418995055,
+   "high": 0.7309660337754029
+  },
+  "epss_day_30": {
+   "value": 0.7582938388625592,
+   "low": 0.702020202020202,
+   "high": 0.8148148148148148
+  },
+  "model_minus_floor": {
+   "value": 0.01895734597156401,
+   "low": -0.0625,
+   "high": 0.09231707317073166,
+   "p": 0.7636181909045477,
+   "reading": "tie"
+  },
+  "model_minus_epss_day_1": {
+   "value": 0.01895734597156401,
+   "low": -0.06915687674433692,
+   "high": 0.10501319095477378,
+   "p": 0.750624687656172,
+   "reading": "tie"
+  },
+  "model_minus_epss_day_7": {
+   "value": -0.23222748815165878,
+   "low": -0.325008971291866,
+   "high": -0.15074079316771663,
+   "p": 0.0009995002498750624,
+   "reading": "behind"
+  },
+  "model_minus_epss_day_30": {
+   "value": -0.3222748815165876,
+   "low": -0.4087114214913269,
+   "high": -0.24252841950861773,
+   "p": 0.0009995002498750624,
+   "reading": "behind"
+  }
+ },
+ "epss_missing": {
+  "day_1": 249,
+  "day_7": 4,
+  "day_30": 5
+ },
+ "epss_rule": "a CVE with no EPSS score at the offset ranks below every scored one",
+ "note": "EPSS at days 7 and 30 has seen days the model has not",
+ "threshold": {
+  "recall_at_top5_min": 0.5
+ },
+ "verdict": "not met"
+}

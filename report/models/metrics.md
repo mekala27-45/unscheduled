@@ -29,14 +29,14 @@ by its kappa.
 
 | Metric | Development, model | Development, floor | Test, model | Test, floor |
 |---|---:|---:|---:|---:|
-| Attack vector | 0.788 | 0.849 | not yet | not yet |
-| Attack complexity | 0.425 | 0.529 | not yet | not yet |
-| Privileges required | 0.561 | 0.607 | not yet | not yet |
-| User interaction | 0.853 | 0.913 | not yet | not yet |
-| Scope | 0.871 | 0.913 | not yet | not yet |
-| Confidentiality | 0.687 | 0.775 | not yet | not yet |
-| Integrity | 0.702 | 0.793 | not yet | not yet |
-| Availability | 0.760 | 0.817 | not yet | not yet |
+| Attack vector | 0.788 | 0.849 | 0.726 | 0.810 |
+| Attack complexity | 0.425 | 0.529 | 0.421 | 0.551 |
+| Privileges required | 0.561 | 0.607 | 0.420 | 0.509 |
+| User interaction | 0.853 | 0.913 | 0.791 | 0.857 |
+| Scope | 0.871 | 0.913 | 0.802 | 0.881 |
+| Confidentiality | 0.687 | 0.775 | 0.612 | 0.735 |
+| Integrity | 0.702 | 0.793 | 0.626 | 0.757 |
+| Availability | 0.760 | 0.817 | 0.696 | 0.779 |
 
 The kappas are point values; no criterion is set on a single metric, and the band's interval is in
 the band card.
@@ -52,6 +52,17 @@ The floor's mean development kappa over the eight is 0.774.
 
 Each head is scaled by its own temperature, fit on development by negative log likelihood, and its
 conformal sets are fit on the scaled development probabilities.
+
+| Metric | Test coverage | Mean set size |
+|---|---:|---:|
+| Attack vector | 98.1% | 1.44 |
+| Attack complexity | 98.8% | 1.20 |
+| Privileges required | 96.8% | 2.01 |
+| User interaction | 98.0% | 1.21 |
+| Scope | 98.6% | 1.23 |
+| Confidentiality | 96.9% | 1.81 |
+| Integrity | 96.6% | 1.84 |
+| Availability | 97.3% | 1.63 |
 
 ## The slices
 

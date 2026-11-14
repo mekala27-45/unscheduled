@@ -29,6 +29,9 @@ On development the fallback's band reaches a quadratic weighted kappa of 0.594
 against the floor's 0.669, and 0.462 from the
 embedding alone.
 The fallback does not beat the floor on development, and C1 says on test whether that gap holds.
+On test the paired difference, model less floor, is -0.057
+(-0.108 to -0.019), and C1 is
+not met.
 
 ## Consequences
 

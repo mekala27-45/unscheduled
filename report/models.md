@@ -10,11 +10,20 @@ the method notes are in docs/models.md.
 
 C1: For test CVEs the NVD analyzed, the predicted severity band agrees with the NVD band at a quadratic weighted kappa of at least 0.60, beats the TF-IDF floor with the lower bound of the paired 95 percent interval above zero, and has an expected calibration error at or below 0.05.
 
-Test has not been scored yet; it is scored once, after the operating points are frozen.
+The band's test kappa is 0.591 (0.364 to
+0.693), the floor's 0.649, the paired
+difference -0.057 (-0.108 to
+-0.019) and the calibration error 0.053.
+**C1 is not met.**
 
 C2: Scored on the day of publication, the top 5 percent by the exploitation score holds at least half of the test CVEs listed in KEV within 180 days. EPSS at days 1, 7 and 30 is reported beside it, and a difference inside the interval is a tie.
 
-Test has not been scored yet.
+The model's top five percent holds 43.6% (36.6%
+to 50.0%) of the 211 test CVEs listed
+within 180 days. EPSS holds 41.7% at day 1
+(tie), 66.8% at day 7
+(behind) and 75.8% at day 30
+(behind). **C2 is not met.**
 
 ## The cards
 
@@ -34,21 +43,21 @@ models; each is a candidate, chosen on development, or scored on test.
 
 | Registered model | Version | Role | Stage | Run |
 |---|---:|---|---|---|
-| unscheduled-band | 1 | floor | candidate | band floor |
-| unscheduled-band | 2 | ablation | candidate | band text alone |
-| unscheduled-band | 3 | model | chosen | band model |
-| unscheduled-metrics | 1 | floor | candidate | metrics floor |
-| unscheduled-metrics | 2 | ablation | candidate | metrics text alone |
-| unscheduled-metrics | 3 | model | chosen | metrics model |
-| unscheduled-cwe | 1 | floor | candidate | cwe floor |
-| unscheduled-cwe | 2 | ablation | candidate | cwe text alone |
-| unscheduled-cwe | 3 | model | chosen | cwe model |
-| unscheduled-exploit | 1 | floor | candidate | exploitation floor |
-| unscheduled-exploit | 2 | model | chosen | exploitation model |
-| unscheduled-survival | 1 | floor | chosen | survival Cox |
-| unscheduled-survival | 2 | model | candidate | survival forest |
-| unscheduled-product | 1 | floor | chosen | product floor |
-| unscheduled-product | 2 | model | candidate | product retrieval |
+| unscheduled-band | 1 | floor | scored | band floor |
+| unscheduled-band | 2 | ablation | scored | band text alone |
+| unscheduled-band | 3 | model | scored | band model |
+| unscheduled-metrics | 1 | floor | scored | metrics floor |
+| unscheduled-metrics | 2 | ablation | scored | metrics text alone |
+| unscheduled-metrics | 3 | model | scored | metrics model |
+| unscheduled-cwe | 1 | floor | scored | cwe floor |
+| unscheduled-cwe | 2 | ablation | scored | cwe text alone |
+| unscheduled-cwe | 3 | model | scored | cwe model |
+| unscheduled-exploit | 1 | floor | scored | exploitation floor |
+| unscheduled-exploit | 2 | model | scored | exploitation model |
+| unscheduled-survival | 1 | floor | scored | survival Cox |
+| unscheduled-survival | 2 | model | scored | survival forest |
+| unscheduled-product | 1 | floor | scored | product floor |
+| unscheduled-product | 2 | model | scored | product retrieval |
 
 ## What the plan said before any result
 

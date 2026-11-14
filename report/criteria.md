@@ -19,6 +19,7 @@ For test CVEs the NVD analyzed, the predicted severity band agrees with the NVD 
 - Compared with: TF-IDF and logistic floor
 - Evidence file: results/models/c1.json
 - Phase that produces it: 2
+- Verdict so far: not met
 
 ## C2, rank
 
@@ -31,6 +32,7 @@ Scored on the day of publication, the top 5 percent by the exploitation score ho
 - Compared with: EPSS at days 1, 7 and 30
 - Evidence file: results/models/c2.json
 - Phase that produces it: 2
+- Verdict so far: not met
 
 ## C3, find
 

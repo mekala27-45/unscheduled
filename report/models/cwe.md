@@ -25,7 +25,10 @@ counting the class for every other CWE.
 ## The metrics, with intervals
 
 On development the macro F1 is 0.437.
-Test has not been scored yet.
+On test, scored once, the macro F1 is 0.359, the first
+candidate is right for 0.624 of the CVEs and the
+first five hold the NVD's CWE for 0.909. These are
+point values; no criterion is set on the CWE.
 
 ## Against the floor
 
@@ -34,6 +37,9 @@ filer's own CWE set, on the same rows.
 On development the floor's macro F1 is 0.527, its first candidate is right
 for 71.0% of the CVEs and its first five hold the NVD's CWE for
 94.1%.
+On test the floor's macro F1 is 0.498, with
+0.675 at the first candidate and
+0.948 in the first five.
 
 ## The calibration
 
