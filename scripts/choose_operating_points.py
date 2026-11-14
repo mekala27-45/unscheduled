@@ -35,7 +35,7 @@ import numpy as np
 import polars as pl
 import yaml
 from unscheduled_core.manifest import ManifestBuilder
-from unscheduled_models import calibrate, conformal, floors, rank, reweight, sets
+from unscheduled_models import calibrate, conformal, floors, numerics, rank, reweight, sets
 
 from scripts.train_floors import plan_seed
 
@@ -221,6 +221,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     parser.add_argument("--lake", type=Path, default=root / "data" / "lake" / "unscheduled.duckdb")
     parser.add_argument("--draft", action="store_true", help="write the results without the operating points")
     args = parser.parse_args(argv)
+    numerics.require("choose")
     seed = plan_seed(root)
     dev_labels = sets.load_labels(args.sets, "development")
     dev_inputs = pl.read_parquet(args.sets / sets.inputs_name("development")).select(

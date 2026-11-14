@@ -31,7 +31,7 @@ import polars as pl
 import yaml
 from sklearn.metrics import average_precision_score, roc_auc_score
 from unscheduled_core.manifest import ManifestBuilder
-from unscheduled_models import calibrate, conformal, evaluate, floors, product, rank, sets, survival
+from unscheduled_models import calibrate, conformal, evaluate, floors, numerics, product, rank, sets, survival
 
 from scripts.train_floors import plan_seed
 
@@ -622,6 +622,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         help="score again and compare with the committed results, changing none (reset and rederive)",
     )
     args = parser.parse_args(argv)
+    numerics.require("score")
     if args.recheck:
         return recheck(root, args.models, args.sets, args.bronze)
     out = root / "results" / "models"

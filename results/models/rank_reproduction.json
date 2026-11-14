@@ -1,0 +1,88 @@
+{
+ "rule": "DECISIONS.md, 2026-11-14, the exploitation step pins its numeric kernels",
+ "run": {
+  "github_run_id": "43590255274",
+  "numerics": {
+   "processor": "AMD EPYC 7763 64-Core Processor",
+   "pins": {
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR"
+   },
+   "openblas": [
+    {
+     "library": "libscipy_openblas",
+     "architecture": "Haswell",
+     "threads": 1
+    },
+    {
+     "library": "libscipy_openblas",
+     "architecture": "Haswell",
+     "threads": 1
+    }
+   ],
+   "numpy_dispatch": [
+    "X86_V3"
+   ]
+  },
+  "model_file_sha256": "5a1143b352a2ff8a32f803762bac65fdb31c4b1b50bf43cc454b394d324e8f43"
+ },
+ "refit": {
+  "where": "the build machine, scripts/train_rank.py --jobs 4 with the pins, on the same committed band floor",
+  "numerics": {
+   "processor": "Intel(R) Xeon(R) Processor @ 2.10GHz",
+   "pins": {
+    "OPENBLAS_CORETYPE": "Haswell",
+    "OPENBLAS_NUM_THREADS": "1",
+    "NPY_DISABLE_CPU_FEATURES": "X86_V4 AVX512_ICL AVX512_SPR"
+   },
+   "openblas": [
+    {
+     "library": "libscipy_openblas",
+     "architecture": "Haswell",
+     "threads": 1
+    },
+    {
+     "library": "libscipy_openblas",
+     "architecture": "Haswell",
+     "threads": 1
+    }
+   ],
+   "numpy_dispatch": [
+    "X86_V3"
+   ]
+  },
+  "model_file_sha256": "7e91861f39d5d40d2b0a84ef4e3cb0fa67b38f93e20d7822dde6ff58f9a74dd0"
+ },
+ "exploitation_part": {
+  "compared": 14,
+  "equal": 14,
+  "differ": [],
+  "missing": [],
+  "extra": []
+ },
+ "search_log": {
+  "lines": 52,
+  "identical": true
+ },
+ "scores": {
+  "development": {
+   "rows": 39919,
+   "every_score_identical": true
+  },
+  "test": {
+   "rows": 63304,
+   "every_score_identical": true
+  },
+  "shadow": {
+   "rows": 78676,
+   "every_score_identical": true
+  }
+ },
+ "record_floats_apart": {
+  "count": 34,
+  "largest_relative_difference": 1.3807165989742283e-15,
+  "where": "hyperparameters the sampler drew; every number of the exploitation part, every trial's fold scores and every score agree"
+ },
+ "result": "pass"
+}

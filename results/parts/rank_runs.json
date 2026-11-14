@@ -1,0 +1,151 @@
+{
+ "as_of": "2026-11-13",
+ "values": {
+  "models.rank.runs.count": {
+   "value": 4,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/rank_runs.py",
+    "population": "development window CVEs published, Q03 left out, KEV within 180 days, in each run",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.runs.floor_recall_high": {
+   "value": 0.41732283464566927,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/rank_runs.py",
+    "population": "development window CVEs published, Q03 left out, KEV within 180 days, in each run",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.runs.floor_recall_low": {
+   "value": 0.4094488188976378,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/rank_runs.py",
+    "population": "development window CVEs published, Q03 left out, KEV within 180 days, in each run",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.runs.lgbm_recall_high": {
+   "value": 0.49606299212598426,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/rank_runs.py",
+    "population": "development window CVEs published, Q03 left out, KEV within 180 days, in each run",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.runs.lgbm_recall_low": {
+   "value": 0.2755905511811024,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/rank_runs.py",
+    "population": "development window CVEs published, Q03 left out, KEV within 180 days, in each run",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.runs.model_pinned": {
+   "value": "yes",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/rank_runs.py",
+    "population": "whether the exploitation model is the run with the numeric kernels pinned",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  }
+ },
+ "tables": {
+  "models.rank.runs": {
+   "columns": [
+    "Run",
+    "Processor",
+    "Leaves",
+    "Learning rate",
+    "Trees",
+    "LightGBM, top five percent",
+    "LightGBM, average precision",
+    "Floor, top five percent",
+    "Floor, average precision"
+   ],
+   "formats": [
+    "text",
+    "text",
+    "int",
+    "float3",
+    "int",
+    "pct1",
+    "float3",
+    "pct1",
+    "float3"
+   ],
+   "rows": [
+    [
+     "the first run, on its own refit of the band floor",
+     "not recorded",
+     131,
+     0.01195709602109925,
+     287,
+     0.47244094488188976,
+     0.026945202152730493,
+     0.4094488188976378,
+     0.049454205493164365
+    ],
+    [
+     "the rerun, on the committed band floor",
+     "not recorded",
+     29,
+     0.022001329503666952,
+     199,
+     0.2755905511811024,
+     0.019454321096411292,
+     0.4094488188976378,
+     0.04913164358709344
+    ],
+    [
+     "the rerun again, on another runner",
+     "AMD EPYC 9V74 80-Core Processor, from the run log",
+     222,
+     0.0307849808016488,
+     156,
+     0.3779527559055118,
+     0.025468974762971185,
+     0.41732283464566927,
+     0.04911165201463104
+    ],
+    [
+     "the run with the numeric kernels pinned: the exploitation model",
+     "AMD EPYC 7763 64-Core Processor",
+     33,
+     0.03342555323327667,
+     111,
+     0.49606299212598426,
+     0.04690246785813685,
+     0.4094488188976378,
+     0.05006481830455037
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/rank_runs.py",
+    "population": "development window CVEs published, Q03 left out, KEV within 180 days, in each run",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  }
+ },
+ "figures": {}
+}

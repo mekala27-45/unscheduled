@@ -710,3 +710,25 @@ beside the first run's. If they do not agree, the rerun stands, and checklist li
 difference and its cause. Nothing else changes: the search, the trials, the folds, the seed and the
 rule that chooses. The new run's record is kept as results/models/rank_unpinned.json, the evidence
 for this entry.
+
+## 2026-11-14: the pinned exploitation run reproduces, and is the model
+
+The pinned run (models run 43590255274) ran on an AMD EPYC 7763 without AVX-512, and the refit on
+this machine, an Intel Xeon with AVX-512, ran with the same pins: OpenBLAS on its Haswell kernels
+with one thread in both, and numpy on its AVX2 code in both, as each record reads back from the
+libraries. They agree. The search printed the same 52 lines, every trial's mean fold average
+precision among them; the 14 values and the folds table of the exploitation part are equal; and the
+two models score every development, test and shadow CVE identically, to the last bit. The records
+differ only in 34 hyperparameters the sampler drew, by at most 1.4e-15 of their size, so the two
+model files differ in bytes and in nothing a number reads (results/models/rank_reproduction.json).
+
+So, under the rule of the entry before, the pinned run is the exploitation model, and the rerun's
+record is kept as results/models/rank_rerun.json. Its LightGBM holds 49.6 percent of the 127
+development listings in its top five percent, with an average precision of 0.047, against the
+floor's 40.9 percent and 0.050. Those are the best development numbers of the four runs, which is
+why the rule was written before the run and depends on reproduction alone: over the four runs
+LightGBM's recall ranges from 27.6 to 49.6 percent while the floor's stays between 40.9 and 41.7,
+and the method notes and the exploitation card show all four. The ONNX export, notebook 06 and the
+calibration draft are rebuilt from the new model, all with the pins, and the scripts whose numbers
+are committed (the exploitation fit, the operating points, the test scoring and the batch) now
+refuse to start without them.

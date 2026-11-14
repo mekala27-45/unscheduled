@@ -33,7 +33,7 @@ import numpy as np
 import polars as pl
 import yaml
 from unscheduled_core.manifest import ManifestBuilder
-from unscheduled_models import calibrate, conformal, sets
+from unscheduled_models import calibrate, conformal, numerics, sets
 
 ORIGIN = "scripts/predict_serving.py"
 SPLITS = ("development", "test", "shadow")
@@ -221,6 +221,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     parser.add_argument("--models", type=Path, default=root / "data" / "models")
     parser.add_argument("--sets", type=Path, default=root / "data" / "sets")
     args = parser.parse_args(argv)
+    numerics.require("predictions")
     points_path = root / "config" / "operating_points.yaml"
     if not points_path.exists():
         raise SystemExit("predict: config/operating_points.yaml is not written yet (step nine)")

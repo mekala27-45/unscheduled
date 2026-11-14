@@ -177,10 +177,8 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     args = parser.parse_args(argv)
     if not args.sample and (args.trials or args.variant or args.band_c):
         raise SystemExit("rank: --trials, --variant and --band-c are for a smoke run with --sample only")
-    gaps = numerics.missing()
-    if not args.sample and gaps:
-        settings = " ".join(f"{name}={value!r}" for name, value in gaps.items())
-        raise SystemExit(f"rank: the numeric pins are not set; start the run with {settings}")
+    if not args.sample:
+        numerics.require("rank")
     started = time.monotonic()
     out = args.out or root / "data" / "models" / ("rank-sample" if args.sample else "rank")
     seed = plan_seed(root)

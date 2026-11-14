@@ -33,6 +33,17 @@ def missing(environ: Mapping[str, str] | None = None) -> dict[str, str]:
     return {name: value for name, value in PINS.items() if env.get(name) != value}
 
 
+def require(name: str, environ: Mapping[str, str] | None = None) -> None:
+    """Stop a script whose numbers are committed when the pins are not in its environment."""
+    gaps = missing(environ)
+    if gaps:
+        settings = " ".join(f"{key}={value!r}" for key, value in gaps.items())
+        raise SystemExit(
+            f"{name}: the numeric pins are not set; start it with {settings}, "
+            'or eval "$(python -m unscheduled_models.numerics)" first'
+        )
+
+
 def processor() -> str | None:
     """The processor's name as the kernel reports it, where it does."""
     info = Path("/proc/cpuinfo")
@@ -68,3 +79,9 @@ def describe() -> dict[str, Any]:
         "openblas": blas,
         "numpy_dispatch": dispatch,
     }
+
+
+if __name__ == "__main__":
+    # eval "$(uv run python -m unscheduled_models.numerics)" sets the pins in a shell.
+    for key, value in PINS.items():
+        print(f"export {key}='{value}'")

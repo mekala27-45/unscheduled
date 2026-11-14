@@ -106,18 +106,34 @@ reads the same day 0 features and the band floor's four probabilities, taken out
 CVEs the band floor was fit on and from the committed floor, the one the API serves, for the rest. Its search, Optuna TPE, 50 trials, runs on the half
 year folds of that change request.
 
-On development, LightGBM's average precision is 0.019
-against the floor's 0.049, and it holds
-27.6% of the development listings in its top
+On development, LightGBM's average precision is 0.047
+against the floor's 0.050, and it holds
+49.6% of the development listings in its top
 five percent, against 40.9% for the floor.
-LightGBM is behind its floor on both measures in this run.
-The first exploitation run, replaced because it projected with its own refit of the band floor
-(DECISIONS.md, the exploitation run reads the committed band floor), chose other trees from the same
-search: its LightGBM held 47.2% of the development listings in
-its top five percent, with an average precision of 0.027, while
-the floor held 40.9% in both runs. A search that moves this far on
-so small a change in its inputs is choosing on noise: three folds with few listings each cannot rank
-fifty trials (DECISIONS.md, the exploitation rerun). The rerun stands, as committed before it ran.
+So LightGBM is behind the floor at the very top of its ranking, where average precision weighs most,
+and ahead across the top five percent, the depth C2 judges. Both are reported, and C2 is judged on
+LightGBM, the exploitation model the operating points name.
+The exploitation step has been run 4 times on the same rows, and its
+search chose different trees each time: over the runs, LightGBM's development recall in the top five
+percent ranges from 27.6% to 49.6%, while the floor's stays between
+40.9% and 41.7%. The first run projected with its own refit of the band floor and was
+replaced by a run on the committed floor (DECISIONS.md, the exploitation run reads the committed band
+floor). That run, repeated on another runner, chose other trees again: the processor and its BLAS
+threads move the band floor's out of fold sums in their last bits, and fifty trials over three folds
+with few listings each turn those bits into different trees (DECISIONS.md, the exploitation rerun,
+and the exploitation step pins its numeric kernels).
+The model is the run with the numeric kernels pinned. Refit on the build machine, another processor,
+with the same pins, it gave the same number for every value of its record's manifest part and every
+score of every CVE (results/models/rank_reproduction.json), the first run of this step to reproduce,
+so it replaced the rerun under the rule committed before it ran. Its trees are still one draw of an
+unstable search, and test judges them.
+
+| Run | Processor | Leaves | Learning rate | Trees | LightGBM, top five percent | LightGBM, average precision | Floor, top five percent | Floor, average precision |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| the first run, on its own refit of the band floor | not recorded | 131 | 0.012 | 287 | 47.2% | 0.027 | 40.9% | 0.049 |
+| the rerun, on the committed band floor | not recorded | 29 | 0.022 | 199 | 27.6% | 0.019 | 40.9% | 0.049 |
+| the rerun again, on another runner | AMD EPYC 9V74 80-Core Processor, from the run log | 222 | 0.031 | 156 | 37.8% | 0.025 | 41.7% | 0.049 |
+| the run with the numeric kernels pinned: the exploitation model | AMD EPYC 7763 64-Core Processor | 33 | 0.033 | 111 | 49.6% | 0.047 | 40.9% | 0.050 |
 
 ## Time to KEV
 

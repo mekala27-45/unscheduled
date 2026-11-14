@@ -35,7 +35,7 @@
    }
   },
   "models.rank.floor.dev_auroc": {
-   "value": 0.8335947319763558,
+   "value": 0.8329283732099833,
    "fmt": "float3",
    "provenance": {
     "origin": "scripts/train_rank.py",
@@ -46,7 +46,7 @@
    }
   },
   "models.rank.floor.dev_average_precision": {
-   "value": 0.04913164358709344,
+   "value": 0.05006481830455037,
    "fmt": "float3",
    "provenance": {
     "origin": "scripts/train_rank.py",
@@ -68,7 +68,7 @@
    }
   },
   "models.rank.lgbm.dev_auroc": {
-   "value": 0.8325173777659578,
+   "value": 0.8542787653277357,
    "fmt": "float3",
    "provenance": {
     "origin": "scripts/train_rank.py",
@@ -79,7 +79,7 @@
    }
   },
   "models.rank.lgbm.dev_average_precision": {
-   "value": 0.019454321096411292,
+   "value": 0.04690246785813685,
    "fmt": "float3",
    "provenance": {
     "origin": "scripts/train_rank.py",
@@ -90,7 +90,7 @@
    }
   },
   "models.rank.lgbm.dev_recall_at_top5": {
-   "value": 0.2755905511811024,
+   "value": 0.49606299212598426,
    "fmt": "pct1",
    "provenance": {
     "origin": "scripts/train_rank.py",
@@ -123,7 +123,7 @@
    }
   },
   "models.rank.trees": {
-   "value": 199,
+   "value": 111,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/train_rank.py",
@@ -173,7 +173,7 @@
      130,
      12636,
      26,
-     0.052152
+     0.060201
     ],
     [
      "2023-01-01",
@@ -182,7 +182,7 @@
      156,
      14113,
      48,
-     0.074199
+     0.077643
     ],
     [
      "2023-07-01",
@@ -191,7 +191,7 @@
      204,
      14722,
      74,
-     0.066936
+     0.073382
     ]
    ],
    "provenance": {

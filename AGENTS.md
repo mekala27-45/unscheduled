@@ -6,7 +6,7 @@ point here.
 ## What this is
 
 unscheduled is a triage platform for the CVEs the NVD no longer analyzes. The month is built in five
-phases; this repository is in Phase 1, the ground truth (BUILD_STATE.md says where it stands).
+phases; this repository is in Phase 2, the models (BUILD_STATE.md says where it stands).
 
 ## Setup
 
@@ -32,7 +32,13 @@ make lint types test         # ruff, mypy strict, pytest
   the time asked for. No random split anywhere.
 - Nobody types a secret. The database connection reaches Vercel through the Neon integration and
   GitHub Actions holds no credential. scripts/check_secrets.py fails on anything that looks like one.
-- Phase 1 has no prediction model and no language model. scripts/check_no_model.py enforces it.
+- No language model before Phase 3. The deep learning and embedding libraries are imported only
+  under packages/models and kaggle/, and the ONNX runtime only there and in packages/api.
+  scripts/check_no_model.py enforces both.
+- A model fit, the operating points, the test scoring and the batch predictions run with the numeric
+  pins of unscheduled_models.numerics, so their numbers are the same on any machine: run
+  `eval "$(uv run python -m unscheduled_models.numerics)"` first. Those scripts refuse to start
+  without the pins; the models workflow and reset and rederive set them.
 - Conventional commits, one module at a time. Pushed history is never rewritten.
 
 ## Files not to edit by hand

@@ -4,21 +4,21 @@
  "floors": {
   "rows": 7782,
   "plain_qwk": 0.4529951810748475,
-  "weighted_qwk": 0.44197780120626906,
+  "weighted_qwk": 0.4419418327110003,
   "clip": 20.0,
   "clipped": 263,
-  "effective_sample_size": 932.8503301433153,
-  "weight_mean": 1.6024619074001984,
+  "effective_sample_size": 932.6598030373589,
+  "weight_mean": 1.6020805718844378,
   "weight_max": 20.0
  },
  "fallback": {
   "rows": 7782,
   "plain_qwk": 0.37904954897300025,
-  "weighted_qwk": 0.3988979306182404,
+  "weighted_qwk": 0.39882588573074196,
   "clip": 20.0,
   "clipped": 263,
-  "effective_sample_size": 932.8503301433153,
-  "weight_mean": 1.6024619074001984,
+  "effective_sample_size": 932.6598030373589,
+  "weight_mean": 1.6020805718844378,
   "weight_max": 20.0
  }
 }

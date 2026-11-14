@@ -45,8 +45,9 @@ def test_runs_are_listed_once_each_with_the_model_last(tmp_path: Path) -> None:
         "AMD EPYC 9V74 80-Core Processor, from the run log",
         "Some CPU",
     ]
-    part = rank_runs.manifest_part(rows, "2026-11-13")
+    part = rank_runs.manifest_part(rows, "2026-11-13", model_pinned=True)
     assert part["values"]["models.rank.runs.count"]["value"] == 3
+    assert part["values"]["models.rank.runs.model_pinned"]["value"] == "yes"
     assert part["values"]["models.rank.runs.lgbm_recall_low"]["value"] == 0.30
     assert part["values"]["models.rank.runs.lgbm_recall_high"]["value"] == 0.47
     assert part["values"]["models.rank.runs.floor_recall_high"]["value"] == 0.42

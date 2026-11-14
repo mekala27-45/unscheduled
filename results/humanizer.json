@@ -260,13 +260,14 @@
    },
    {
     "file": "docs/templates/docs/models.md.j2",
-    "sha256_after": "4acb4d273ea26fb7027e2a094aad4592aaa7bec1f0f69a7cdd776f7a744a2715",
+    "sha256_after": "37e7282cac22d68237b44a1213319cd9147b7248cbe4461ef719bb53b2e19a84",
     "changes": [
      "the label Never a feature, a fragment, made a sentence (pattern 2)",
      "split conformal sets with adaptive sets, which said sets twice and named neither, made split conformal with adaptive prediction sets",
      "Not scored yet, twice, made a sentence (pattern 2)",
      "Hours used, a label with a colon, made a sentence (pattern 19)",
-     "the data lead's one seed objection now names training runs, as the cards' limits do"
+     "the data lead's one seed objection now names training runs, as the cards' limits do",
+     "2026-11-14: the paragraph on the first exploitation run replaced by the runs table and its reading, written after the pass and read the same way"
     ]
    },
    {
@@ -341,11 +342,12 @@
    },
    {
     "file": "report/templates/models/exploit.md.j2",
-    "sha256_after": "c9a81b42d08f279cfbf626e1177e0b1c0724ac4cade99ccbb2947968ff4c9fc1",
+    "sha256_after": "9210238a4e297c1876056f6b6cf2e798d7ad41aceb4aab406373788408f8bda4",
     "changes": [
      "the slices line, without a verb, made a sentence (pattern 2)",
      "says when to read EPSS made specific: when to switch to EPSS; the contrast stays because it answers a likely misreading (pattern 1)",
-     "One seed, one draw made a sentence naming what the intervals leave out, the variation between runs of the search"
+     "One seed, one draw made a sentence naming what the intervals leave out, the variation between runs of the search",
+     "2026-11-14: the paragraph on the first exploitation run replaced by the runs table and its reading, written after the pass and read the same way"
     ]
    },
    {

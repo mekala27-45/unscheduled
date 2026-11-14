@@ -8,12 +8,14 @@ the manifest or a committed file: edit the template, then render.
 
 ```
 Phase            2 of 5, the models: the probes and the scoped model gate, the plan hashed as the
-                 models stage 8e72e6298a18, the point in time sets, the floors, the exploitation
-                 models (rerun on the committed band floor), the survival models checked in R and
-                 the ONNX exports at parity are in; the method notes, the six model cards and
-                 ADRs 0008 to 0010 are written and fill in as results land; the fallback text model
-                 and the product models run in the models workflow; the prompt is
-                 claude/unscheduled-phase-2-prompt.md in the Project
+                 models stage 8e72e6298a18, the point in time sets, the floors, the fallback
+                 text model (behind its floor), the exploitation models (the run with the numeric
+                 kernels pinned, reproduced on a second processor), the survival models checked in
+                 R, the ONNX exports at parity, calibration and conformal sets on development, the
+                 shadow window weighted, and the misses read are in; the method notes, the six model
+                 cards and ADRs 0008 to 0010 are written, read for AI tells, and fill in as results
+                 land; the product models wait for a lake release with the CPE dictionary; the
+                 prompt is claude/unscheduled-phase-2-prompt.md in the Project
 Phase 1          the ground truth, tagged v0.1.0 on the commit that adds the release record;
                  its checklist 18 of 18 lines done (RESULTS.md)
 Repository       public; every commit conventional; CI, web and exposure green on main
@@ -33,14 +35,17 @@ Look approval    approved by Ajay on the evening of 11 November, New York time, 
 Phase 2 runs from the hand off below, and DECISIONS.md holds every choice made on the way. Done: the
 probes and the scoped model gate; the plan hashed as the models stage; the sets, 220,803 train,
 39,924 development, 63,304 test and 78,676 shadow rows; the floors, where the band floor reaches a
-development kappa of 0.669; the exploitation models, rerun on the committed band floor so the API
-serves the projection LightGBM learned from, where LightGBM holds 27.6% of the development
-listings in its top five percent and the floor 40.9% (DECISIONS.md, the exploitation rerun);
-the survival models, checked in R (pass); the ONNX exports (pass). Running or waiting: the
-ModernBERT fallback (step eight) in the models workflow, then its second design from the same
-embeddings; the product models (step five) wait for the first lake release that carries the CPE
-dictionary. Next: commit each record, then calibration, conformal sets and the operating points
-(step nine), the registry, test scored once, the misses read, the batch and the live check.
+development kappa of 0.669; the fallback text model, at 0.594; the exploitation models, where
+LightGBM holds 49.6% of the development listings in its top five percent and the floor
+40.9%, from the run with the numeric kernels pinned, the one of 4 runs that reproduced
+on a second processor; the survival models, checked in R (pass); the ONNX exports
+(pass); calibration, conformal sets and the shadow weights on development; the misses read; the
+humanizer pass; the predict scenario of the load test, written and waiting for the batch. Waiting: the product models (step five), for the
+first lake release that carries the CPE dictionary; the daily fetch carries it from its next run.
+Next, in order: the product step in the models workflow with that release, then the operating
+points frozen and hashed, the registry, test scored once, the batch and its serving measures, the
+live check, reset and rederive with the test recheck, and the release record. Every script whose
+numbers are committed runs with the numeric pins (AGENTS.md).
 
 ## Open problems
 
@@ -49,13 +54,14 @@ dictionary. Next: commit each record, then calibration, conformal sets and the o
 - Kaggle and Databricks secrets are not set. Step eight took its CPU fallback (DECISIONS.md, step
   eight takes the fallback), and KAGGLE_USERNAME with KAGGLE_KEY would let ModernBERT run; without
   the Databricks pair, the registry uses the file store.
-- The CPE dictionary is fetched daily from the next run of the fetch on; the product models wait for
-  the first lake release that carries it. No daily fetch has fired since cpe joined its schedule, and
+- The CPE dictionary is fetched daily; the product models wait for the first lake release that
+  carries it. No daily fetch had finished since cpe joined its schedule when this was written, and
   this session may not start one, so Ajay was asked to start fetch.yml by hand with the source cpe.
-- The exploitation search picks its trees on noise: two runs on nearly the same inputs moved
-  LightGBM's development recall in the top five percent by about twenty points while the floor held
-  still (DECISIONS.md, the exploitation rerun). The rerun stands for this phase; a search that
-  averages over seeds or folds is a change for a later one.
+- The exploitation search picks its trees on noise: over four runs on the same rows, LightGBM's
+  development recall in the top five percent moved by more than twenty points while the floor held
+  within one. The numeric kernels are now pinned, so a run reproduces on any processor
+  (DECISIONS.md, the pinned exploitation run reproduces, and is the model), but a reproducible draw
+  is still one draw; a search that averages over seeds or folds is a change for a later phase.
 - The schedules fire hours late and less often than they ask: the hourly fetch has run a few times
   a day since 12 November, and the daily fetch and lake build several hours after their times. The
   newest lake release changes with each hourly run until the next daily one, so the committed

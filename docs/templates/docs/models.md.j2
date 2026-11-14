@@ -101,14 +101,28 @@ LightGBM, the exploitation model the operating points name.
 LightGBM is behind its floor on both measures in this run.
 {% endif %}
 {% endif %}
-{% if has("models.rank_refit.lgbm.dev_recall_at_top5") %}
-The first exploitation run, replaced because it projected with its own refit of the band floor
-(DECISIONS.md, the exploitation run reads the committed band floor), chose other trees from the same
-search: its LightGBM held {{ v("models.rank_refit.lgbm.dev_recall_at_top5") }} of the development listings in
-its top five percent, with an average precision of {{ v("models.rank_refit.lgbm.dev_average_precision") }}{% if raw("models.rank_refit.floor.dev_recall_at_top5") == raw("models.rank.floor.dev_recall_at_top5") %}, while
-the floor held {{ v("models.rank.floor.dev_recall_at_top5") }} in both runs{% endif %}. A search that moves this far on
-so small a change in its inputs is choosing on noise: three folds with few listings each cannot rank
-fifty trials (DECISIONS.md, the exploitation rerun). The rerun stands, as committed before it ran.
+{% if has("models.rank.runs") %}
+The exploitation step has been run {{ v("models.rank.runs.count") }} times on the same rows, and its
+search chose different trees each time: over the runs, LightGBM's development recall in the top five
+percent ranges from {{ v("models.rank.runs.lgbm_recall_low") }} to {{ v("models.rank.runs.lgbm_recall_high") }}, while the floor's stays between
+{{ v("models.rank.runs.floor_recall_low") }} and {{ v("models.rank.runs.floor_recall_high") }}. The first run projected with its own refit of the band floor and was
+replaced by a run on the committed floor (DECISIONS.md, the exploitation run reads the committed band
+floor). That run, repeated on another runner, chose other trees again: the processor and its BLAS
+threads move the band floor's out of fold sums in their last bits, and fifty trials over three folds
+with few listings each turn those bits into different trees (DECISIONS.md, the exploitation rerun,
+and the exploitation step pins its numeric kernels).
+{% if raw("models.rank.runs.model_pinned") == "yes" %}
+The model is the run with the numeric kernels pinned. Refit on the build machine, another processor,
+with the same pins, it gave the same number for every value of its record's manifest part and every
+score of every CVE (results/models/rank_reproduction.json), the first run of this step to reproduce,
+so it replaced the rerun under the rule committed before it ran. Its trees are still one draw of an
+unstable search, and test judges them.
+{% else %}
+The rerun stands: the run with the numeric kernels pinned did not give the same numbers when refit on
+the build machine, so the rule committed before it ran kept the rerun.
+{% endif %}
+
+{{ table("models.rank.runs") }}
 {% endif %}
 
 ## Time to KEV

@@ -24,7 +24,7 @@
    }
   },
   "models.onnx.exploit_lgbm.max_probability_difference": {
-   "value": 3.1082311602315116e-07,
+   "value": 2.4297235373671455e-07,
    "fmt": "sci1",
    "provenance": {
     "origin": "scripts/export_onnx.py",
@@ -35,7 +35,7 @@
    }
   },
   "models.onnx.exploit_lgbm.megabytes": {
-   "value": 0.6,
+   "value": 0.4,
    "fmt": "float1",
    "provenance": {
     "origin": "scripts/export_onnx.py",
@@ -68,7 +68,7 @@
    }
   },
   "models.onnx.score_gap": {
-   "value": 2.943341625982754e-08,
+   "value": 2.972066537321183e-08,
    "fmt": "sci1",
    "provenance": {
     "origin": "scripts/export_onnx.py",

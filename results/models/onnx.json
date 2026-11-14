@@ -15,7 +15,7 @@
  },
  "exploit_lgbm": {
   "width": 54,
-  "trees": 199
+  "trees": 111
  },
  "files": {
   "band_floor": {
@@ -30,8 +30,8 @@
   },
   "exploit_lgbm": {
    "file": "models/serving/exploit_lgbm.onnx",
-   "bytes": 604097,
-   "sha256": "3ae2d84ce85082677ac45f376c0273983c3c9026ce8259f16a36c1c21183ea59"
+   "bytes": 405520,
+   "sha256": "7696031fb58c263b1bf9dc9fc2ebff4d684872e5e86294e28ce5e3e75d9dc9c0"
   },
   "exploit_day0": {
    "file": "models/serving/exploit_day0.json",
@@ -48,10 +48,10 @@
   "exploit_lgbm": {
    "rows": 2000,
    "max_input_difference": 0.0,
-   "max_probability_difference": 3.1082311602315116e-07
+   "max_probability_difference": 2.4297235373671455e-07
   },
   "projection_against_the_exploitation_run": 2.682209014892578e-07,
-  "lgbm_score_against_the_exploitation_run": 2.943341625982754e-08
+  "lgbm_score_against_the_exploitation_run": 2.972066537321183e-08
  },
  "verdict": "pass",
  "environment": {

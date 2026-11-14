@@ -101,7 +101,7 @@ def runs(folder: Path) -> list[list[Any]]:
     return rows
 
 
-def manifest_part(rows: list[list[Any]], as_of: str) -> dict[str, Any]:
+def manifest_part(rows: list[list[Any]], as_of: str, model_pinned: bool = False) -> dict[str, Any]:
     m = ManifestBuilder(as_of)
     population = "development window CVEs published, Q03 left out, KEV within 180 days, in each run"
     m.table(
@@ -114,6 +114,14 @@ def manifest_part(rows: list[list[Any]], as_of: str) -> dict[str, Any]:
         source="models",
     )
     m.value("models.rank.runs.count", len(rows), "int", origin=ORIGIN, population=population, source="models")
+    m.value(
+        "models.rank.runs.model_pinned",
+        "yes" if model_pinned else "no",
+        "text",
+        origin=ORIGIN,
+        population="whether the exploitation model is the run with the numeric kernels pinned",
+        source="models",
+    )
     for column, name in ((5, "lgbm"), (7, "floor")):
         values = [r[column] for r in rows]
         for end, value in (("low", min(values)), ("high", max(values))):
@@ -131,8 +139,10 @@ def manifest_part(rows: list[list[Any]], as_of: str) -> dict[str, Any]:
 def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     folder = root / "results" / "models"
     rows = runs(folder)
+    model = json.loads((folder / MODEL).read_text(encoding="utf-8"))
+    pinned = bool((model.get("environment") or {}).get("numerics"))
     sets_record = json.loads((folder / "sets.json").read_text(encoding="utf-8"))
-    part = manifest_part(rows, str(sets_record["lake_cut"])[:10])
+    part = manifest_part(rows, str(sets_record["lake_cut"])[:10], model_pinned=pinned)
     out = root / "results" / "parts" / "rank_runs.json"
     out.write_text(json.dumps(part, indent=1) + "\n", encoding="utf-8")
     low, high = min(r[5] for r in rows), max(r[5] for r in rows)

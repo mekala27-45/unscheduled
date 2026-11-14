@@ -29,11 +29,11 @@ writing them, and LightGBM reads the band projection of the same floor it was tr
 the exploitation run reads the committed band floor).
 On the same inputs the ONNX graphs differ from the native models by at most
 2.7e-07 for the floor and
-3.1e-07 for LightGBM, against a tolerance of
+2.4e-07 for LightGBM, against a tolerance of
 1e-4, so the parity check's result is pass.
 On the same sample of development CVEs, the band projection the API computes differs from the one
 the exploitation run used by at most 2.7e-07, and LightGBM's score by at most
-2.9e-08.
+3.0e-08.
 
 The text model stays in the batch: it needs the embedding model and its tokenizer at request time,
 and the batch already holds a prediction for every CVE the API serves; a request scores text that is
