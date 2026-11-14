@@ -70,6 +70,22 @@ def test_the_projection_is_out_of_fold_where_the_floor_was_fit() -> None:
     assert np.allclose(out["train"].sum(axis=1), 1.0, atol=1e-6)
     again = rank.band_projection(train, {"development": dev}, "word", 1.0, 7, log=lambda _: None)
     assert np.array_equal(out["train"], again["train"])
+    # With the floors step's own floor, every row outside the folds is projected by that floor, the
+    # one the API serves, column for column in BANDS order.
+    from unscheduled_models import floors
+    from unscheduled_models.features import Features
+
+    feats = Features("word")
+    x = feats.fit_transform(train)
+    rows = floors.labelled(train, "band")
+    model, _ = floors.fit(x[rows], floors.labels_at(train, "band", rows), 1.0, 7)
+    served = rank.band_projection(
+        train, {"development": dev}, "word", 1.0, 7, log=lambda _: None, committed=(feats, model)
+    )
+    order = [list(model.classes_).index(b) for b in rank.BANDS]
+    assert np.array_equal(served["development"], model.predict_proba(feats.transform(dev))[:, order])
+    unlabelled = np.setdiff1d(np.arange(train.height), rows)
+    assert np.array_equal(served["train"][unlabelled], model.predict_proba(x[unlabelled])[:, order])
 
 
 def design_frames() -> tuple[pl.DataFrame, pl.DataFrame]:

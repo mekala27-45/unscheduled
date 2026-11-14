@@ -100,16 +100,25 @@ def band_projection(
     c: float,
     seed: int,
     log: Callable[[str], None] = print,
+    committed: tuple[Any, Any] | None = None,
 ) -> dict[str, np.ndarray]:
     """The band floor's four band probabilities for every row: out of fold for the train rows with
     an NVD band (the rows the band floor was fit on), from the floor fit on all of them otherwise.
-    The columns follow BANDS."""
+    The columns follow BANDS. committed is the floors step's own features and band model: given, it
+    is the floor every row outside the folds is projected with, the same one the API serves, so the
+    projection LightGBM learns from is the one it is given at serving time; the folds refit on its
+    features. Without it the floor is refit here, for a smoke run."""
     started = time.monotonic()
-    feats = fill_features.Features(variant)
-    x_train = feats.fit_transform(train)
+    if committed is not None:
+        feats, full = committed
+        x_train = feats.transform(train)
+    else:
+        feats = fill_features.Features(variant)
+        x_train = feats.fit_transform(train)
     rows = labelled(train, "band")
     y = np.asarray(labels_at(train, "band", rows))
-    full, _ = fit_floor(x_train[rows], list(y), c, seed)
+    if committed is None:
+        full, _ = fit_floor(x_train[rows], list(y), c, seed)
     order = [list(full.classes_).index(b) for b in BANDS]
     out = {"train": full.predict_proba(x_train)[:, order]}
     for k, (fit_idx, held_idx) in enumerate(

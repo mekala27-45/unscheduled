@@ -30,6 +30,13 @@ on:
         type: string
         required: false
         default: ""
+      floors_run:
+        description: >-
+          The models run of the floors step, whose artifact holds the band floor the exploitation
+          step projects with, the one the API serves (the exploitation step only)
+        type: string
+        required: false
+        default: ""
 
 permissions: {}
 
@@ -45,7 +52,7 @@ jobs:
     timeout-minutes: 340
     permissions:
       contents: read
-      # To download the artifact of an earlier run when embeddings_run names one.
+      # To download the artifact of an earlier run when embeddings_run or floors_run names one.
       actions: read
     env:
       PYTHONHASHSEED: "0"
@@ -81,6 +88,22 @@ jobs:
       - name: The fill floors
         if: env.STEP == 'floors'
         run: uv run python scripts/train_floors.py --jobs 4 --heavy 2
+
+      - name: The committed band floor, from the floors run that made it
+        if: env.STEP == 'exploitation'
+        env:
+          FLOORS_RUN: ${{ inputs.floors_run }}
+          REPO: ${{ github.repository }}
+        run: |
+          case "$FLOORS_RUN" in
+            ""|*[!0-9]*) echo "::error::the exploitation step needs floors_run, the run id of the floors step"; exit 1 ;;
+          esac
+          gh run download "$FLOORS_RUN" --repo "$REPO" --name floors --dir reuse-floors
+          mkdir -p data/models/floors
+          cp reuse-floors/data/models/floors/floors.joblib data/models/floors/
+          rm -rf reuse-floors
+          # scripts/train_rank.py checks the file against the SHA-256 results/models/floors.json names.
+          ls -l data/models/floors
 
       - name: The exploitation models, on the committed band floor
         if: env.STEP == 'exploitation'

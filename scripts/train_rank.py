@@ -132,6 +132,28 @@ def manifest_part(record: dict[str, Any], as_of: str) -> dict[str, Any]:
     return m.dump()
 
 
+def committed_floor(
+    root: Path, path: Path, sample: int | None
+) -> tuple[tuple[Any, Any] | None, dict[str, Any]]:
+    """The floors step's features and band model, the floor the API serves, checked by digest. A smoke
+    run refits it instead; a full run without the file stops, so the projection LightGBM learns from
+    is always the one it gets at serving time (DECISIONS.md, the exploitation run reads the committed
+    band floor)."""
+    record = json.loads((root / "results" / "models" / "floors.json").read_text(encoding="utf-8"))
+    if not path.exists():
+        if sample:
+            return None, {"kind": "refit for a smoke run"}
+        raise SystemExit(f"rank: {path} is missing; restore the floors step's model file first")
+    if file_sha256(path) != record["model_file"]["sha256"]:
+        raise SystemExit(f"rank: {path} is not the model file results/models/floors.json names")
+    saved = joblib.load(path)
+    return (saved["features"], saved["models"]["band"]), {
+        "kind": "the committed band floor",
+        "file": record["model_file"]["path"],
+        "sha256": record["model_file"]["sha256"],
+    }
+
+
 def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--sets", type=Path, default=root / "data" / "sets")
@@ -143,6 +165,12 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     )
     parser.add_argument("--variant", default=None, help="a smoke run only: the band floor representation")
     parser.add_argument("--band-c", type=float, default=None, help="a smoke run only: the band floor C")
+    parser.add_argument(
+        "--floors",
+        type=Path,
+        default=root / "data" / "models" / "floors" / "floors.joblib",
+        help="the floors step's model file, checked against the SHA-256 results/models/floors.json names",
+    )
     args = parser.parse_args(argv)
     if not args.sample and (args.trials or args.variant or args.band_c):
         raise SystemExit("rank: --trials, --variant and --band-c are for a smoke run with --sample only")
@@ -157,12 +185,14 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     from scripts.train_floors import load
 
     frames = load(args.sets, args.sample, seed)
+    committed, floor_source = committed_floor(root, args.floors, args.sample)
     projection = rank.band_projection(
         frames["train"],
         {k: frames[k] for k in ("development", "test", "shadow")},
         variant,
         band_c,
         seed,
+        committed=committed,
     )
     frames = {k: rank.with_projection(f, projection[k]) for k, f in frames.items()}
     train = rank.population(frames["train"])
@@ -205,7 +235,12 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         "sets": digests,
         "lake_release": sets_record.get("lake_release"),
         "seed": seed,
-        "band_floor": {"variant": variant, "C": band_c, "projection_folds": rank.PROJECTION_FOLDS},
+        "band_floor": {
+            "variant": variant,
+            "C": band_c,
+            "projection_folds": rank.PROJECTION_FOLDS,
+            "source": floor_source,
+        },
         "population": {
             "start": str(rank.RANK_START),
             "rule": "published from the start, Q03 left out (DECISIONS.md, 14 November 2026)",

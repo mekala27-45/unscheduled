@@ -622,3 +622,24 @@ fallback text model needs the 130 MB embedding weights at request time, so it is
 batch only, which ADR 0008 records. The prediction file and models.json are optional in the bundle
 contract: a bundle without them empties the prediction table rather than leaving an older batch
 beside newer data.
+
+## 2026-11-14: the exploitation run reads the committed band floor
+
+The exploitation run built LightGBM's band projection with its own refit of the band floor, with the
+representation and C step four chose, on the same train rows, on the reading that the refit equals
+the committed floor. It does not. The ONNX export computes the projection with the committed floor,
+as /v1/predict does, and on its sample of 2,000 development CVEs it found the two projections apart
+by up to 0.0123 and LightGBM's score apart by up to 0.081. The cause is not pinned down: both fits
+run the same code, so it lies in how the two runners built the text features or fit them, and the
+parity test cannot see it, since it compares each ONNX graph with its native model on the same
+inputs. Whatever the cause, LightGBM learned from one floor's projection and would be served
+another's.
+
+So the exploitation run now reads the floors step's own model file, restored from that run's
+artifact by the floors_run input of the models workflow and checked against the SHA-256
+results/models/floors.json names. Every row outside the out of fold folds is projected by the floor
+the API serves, and the folds refit on its features; a full run without the file stops, and only a
+smoke run refits. The change is for consistency between training and serving, made before test is
+read, and the model is chosen by the same rule. When the new run's record is committed, the first
+run's record moves to results/models/rank_refit.json beside it: its LightGBM held 47.2 percent of
+the 127 development listings in its top five percent and its floor 40.9 percent.
