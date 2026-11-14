@@ -1,0 +1,41 @@
+{
+ "release": "lake-20261112",
+ "commit": "4809b8baf44c9c76aeab0ce2ea066db83453acce",
+ "started_at": "2026-11-14T00:12:36Z",
+ "inputs": "the release's bronze, locks and config, each archive checked against its SHA256SUMS",
+ "restored": {
+  "bronze_archives": 12
+ },
+ "build_settings": {
+  "memory": "3GB",
+  "threads": 2
+ },
+ "step_seconds": {
+  "scripts/build_lake.py": 161.4,
+  "scripts/run_analysis.py": 42.7,
+  "scripts/backlog_charts.py": 0.0
+ },
+ "parts": {
+  "lake.json": {
+   "compared": 67,
+   "equal": 67,
+   "differ": [],
+   "missing": [],
+   "extra": []
+  },
+  "backlog.json": {
+   "compared": 626,
+   "equal": 626,
+   "differ": [],
+   "missing": [],
+   "extra": []
+  }
+ },
+ "not_compared": {
+  "values:lake.sha256": "the file digest; lake.content_digest is compared instead"
+ },
+ "compared": 693,
+ "equal": 693,
+ "result": "pass",
+ "seconds": 206.4
+}
