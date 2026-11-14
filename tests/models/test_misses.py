@@ -60,8 +60,8 @@ def write(root: Path, n: int = 300) -> None:
     pl.DataFrame({"cve_id": ids, **{f"band__{b}": proba[:, j] for j, b in enumerate(BANDS)}}).write_parquet(
         root / "data/models/fallback/development_probabilities.parquet"
     )
-    points = {"primary": {"fill": "fallback"}, "temperatures": {"fallback": {"band": 1.0}}}
-    (root / "config/operating_points.yaml").write_text(yaml.safe_dump(points), encoding="utf-8")
+    calibration = {"primary_fill": "fallback", "fill": {"fallback": {"band": {"temperature": 1.0}}}}
+    (root / "results/models/calibration.json").write_text(json.dumps(calibration), encoding="utf-8")
     (root / "results/models/sets.json").write_text(
         json.dumps({"lake_cut": "2026-11-13T06:00:00+00:00"}), encoding="utf-8"
     )
@@ -77,9 +77,14 @@ def test_misses_are_drawn_from_development_and_every_one_is_coded(
     misses = json.loads((tmp_path / "results/models/misses.json").read_text(encoding="utf-8"))
     assert misses["drawn"] == 100 and all(m["predicted_band"] != m["nvd_band"] for m in misses["misses"])
     first = [m["cve_id"] for m in misses["misses"]]
+    assert misses["temperature_from"] == "results/models/calibration.json"
+    # Frozen operating points take over, with another temperature: the same misses are drawn.
+    points = {"primary": {"fill": "fallback"}, "temperatures": {"fallback": {"band": 1.7}}}
+    (tmp_path / "config/operating_points.yaml").write_text(yaml.safe_dump(points), encoding="utf-8")
     draw_misses.main(["draw", *args], root=tmp_path)
     again = json.loads((tmp_path / "results/models/misses.json").read_text(encoding="utf-8"))
     assert [m["cve_id"] for m in again["misses"]] == first
+    assert again["temperature_from"] == "config/operating_points.yaml"
     codes = {c: ("one band apart" if i % 3 else "the description says little") for i, c in enumerate(first)}
     taxonomy = {
         "categories": [

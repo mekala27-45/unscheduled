@@ -39,10 +39,27 @@ DRAWN = 100
 METRICS = sets.METRICS
 
 
+def primary_temperature(root: Path) -> tuple[str, float, str]:
+    """The primary fill model and its band temperature: from the frozen operating points, or before
+    they are frozen from the calibration fit on development they will freeze. A temperature never
+    changes which band is most probable, so the misses are the same either way; it only scales the
+    probabilities a reader sees."""
+    points_path = root / "config" / "operating_points.yaml"
+    if points_path.exists():
+        points = yaml.safe_load(points_path.read_text(encoding="utf-8"))
+        primary = points["primary"]["fill"]
+        return primary, float(points["temperatures"][primary]["band"]), "config/operating_points.yaml"
+    calibration = json.loads((root / "results" / "models" / "calibration.json").read_text(encoding="utf-8"))
+    primary = calibration["primary_fill"]
+    return (
+        primary,
+        float(calibration["fill"][primary]["band"]["temperature"]),
+        "results/models/calibration.json",
+    )
+
+
 def draw(root: Path, models: Path, folder: Path) -> dict[str, Any]:
-    points = yaml.safe_load((root / "config" / "operating_points.yaml").read_text(encoding="utf-8"))
-    primary = points["primary"]["fill"]
-    temperature = float(points["temperatures"][primary]["band"])
+    primary, temperature, temperature_from = primary_temperature(root)
     proba = pl.read_parquet(models / primary / "development_probabilities.parquet")
     labels = pl.read_parquet(folder / "development_labels.parquet")
     inputs = pl.read_parquet(folder / "development_inputs.parquet")
@@ -88,6 +105,7 @@ def draw(root: Path, models: Path, folder: Path) -> dict[str, Any]:
         "plan": "evaluation/phase2_plan.yaml, failure_taxonomy",
         "model": primary,
         "temperature": temperature,
+        "temperature_from": temperature_from,
         "seed": seed,
         "development_rows_with_band": frame.height,
         "development_misses": misses.height,

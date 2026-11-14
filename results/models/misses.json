@@ -1,0 +1,2401 @@
+{
+ "plan": "evaluation/phase2_plan.yaml, failure_taxonomy",
+ "model": "fallback",
+ "temperature": 1.1583885577216333,
+ "temperature_from": "results/models/calibration.json",
+ "seed": 20261114,
+ "development_rows_with_band": 23272,
+ "development_misses": 7757,
+ "drawn": 100,
+ "rule": "a development CVE with an NVD band whose predicted band, the most probable after the frozen temperature, differs",
+ "misses": [
+  {
+   "cve_id": "CVE-2020-26303",
+   "published": "2024-10-26",
+   "description": "insane is a whitelist-oriented HTML sanitizer. Versions 2.6.2 and prior contain one or more regular expressions that are vulnerable to Regular Expression Denial of Service (ReDoS). As of time of publication, no known patches are available.",
+   "filer": "GitHub_M",
+   "filer_type": "open source project",
+   "filer_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:N/VI:N/VA:H/SC:N/SI:N/SA:N",
+   "filer_band": null,
+   "filer_cwes": [
+    "CWE-1333"
+   ],
+   "products": "bevacqua insane",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0734,
+    "MEDIUM": 0.5505,
+    "HIGH": 0.2384,
+    "CRITICAL": 0.1377
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2021-22281",
+   "published": "2024-02-02",
+   "description": ": Relative Path Traversal vulnerability in B&R Industrial Automation Automation Studio allows Relative Path Traversal.This issue affects Automation Studio: from 4.0 through 4.12.\n\n",
+   "filer": "ABB",
+   "filer_type": "vendor",
+   "filer_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:R/S:C/C:N/I:H/A:N",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-23"
+   ],
+   "products": "B&R Industrial Automation Automation Studio",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0151,
+    "MEDIUM": 0.5374,
+    "HIGH": 0.4009,
+    "CRITICAL": 0.0466
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+   "nvd_cwe": "CWE-22"
+  },
+  {
+   "cve_id": "CVE-2021-46990",
+   "published": "2024-02-28",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\npowerpc/64s: Fix crashes when toggling entry flush barrier\n\nThe entry flush mitigation can be enabled/disabled at runtime via a\ndebugfs file (entry_flush), which causes the kernel to patch itself to\nenable/disable the relevant mitigations.\n\nHowever depending on which mitigation we're using, it may not be safe to\ndo that patching while other CPUs are active. For example the following\ncrash:\n\n  sleeper[15639]: segfault (11) at c000000000004c20 nip c000000000004c20 lr c000000000004c20\n\nShows that we returned to userspace with a corrupted LR that points into\nthe kernel, due to executing the partially patched call to the fallback\nentry flush (ie. we missed the LR restore).\n\nFix it by doing the patching under stop machine. The CPUs that aren't\ndoing the patching will be spinning in the core of the stop machine\nlogic. That is currently sufficient for our purposes, because none of\nthe patching we do is to that code or anywhere in the vicinity.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0378,
+    "MEDIUM": 0.2934,
+    "HIGH": 0.6324,
+    "CRITICAL": 0.0365
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2021-47147",
+   "published": "2024-03-25",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nptp: ocp: Fix a resource leak in an error handling path\n\nIf an error occurs after a successful 'pci_ioremap_bar()' call, it must be\nundone by a corresponding 'pci_iounmap()' call, as already done in the\nremove function.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0066,
+    "MEDIUM": 0.2076,
+    "HIGH": 0.6451,
+    "CRITICAL": 0.1407
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2021-47539",
+   "published": "2024-05-24",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nrxrpc: Fix rxrpc_peer leak in rxrpc_look_up_bundle()\n\nNeed to call rxrpc_put_peer() for bundle candidate before kfree() as it\nholds a ref to rxrpc_peer.\n\n[DH: v2: Changed to abstract out the bundle freeing code into a function]",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0078,
+    "MEDIUM": 0.3428,
+    "HIGH": 0.5469,
+    "CRITICAL": 0.1025
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2022-48620",
+   "published": "2024-01-12",
+   "description": "uev (aka libuev) before 2.4.1 has a buffer overflow in epoll_wait if maxevents is a large number.",
+   "filer": "mitre",
+   "filer_type": "MITRE",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": null,
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0412,
+    "MEDIUM": 0.1739,
+    "HIGH": 0.4244,
+    "CRITICAL": 0.3605
+   },
+   "nvd_band": "CRITICAL",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-120"
+  },
+  {
+   "cve_id": "CVE-2022-48629",
+   "published": "2024-03-05",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ncrypto: qcom-rng - ensure buffer for generate is completely filled\n\nThe generate function in struct rng_alg expects that the destination\nbuffer is completely filled if the function returns 0. qcom_rng_read()\ncan run into a situation where the buffer is partially filled with\nrandomness and the remaining part of the buffer is zeroed since\nqcom_rng_generate() doesn't check the return value. This issue can\nbe reproduced by running the following from libkcapi:\n\n    kcapi-rng -b 9000000 > OUTFILE\n\nThe generated OUTFILE will have three huge sections that contain all\nzeros, and this is caused by the code where the test\n'val & PRNG_STATUS_DATA_AVAIL' fails.\n\nLet's fix this issue by ensuring that qcom_rng_read() always returns\nwith a full buffer if the function returns success. Let's also have\nqcom_rng_generate() return the correct value.\n\nHere's some statistics from the ent project\n(https://www.fourmilab.ch/random/) that shows information about the\nquality of the generated numbers:\n\n    $ ent -c qcom-random-before\n    Value Char Occurrences Fraction\n      0           606748   0.067416\n      1            33104   0.003678\n      2            33001   0.003667\n    ...\n    253   \ufffd        32883   0.003654\n    254   \ufffd        33035   0.003671\n    255   \ufffd        33239   0.003693\n\n    Total:       9000000   1.000000\n\n    Entropy = 7.811590 bits per byte.\n\n    Optimum compression would reduce the size\n    of this 9000000 byte file by 2 percent.\n\n    Chi square distribution for 9000000 samples is 9329962.81, and\n    randomly would exceed this value less than 0.01 percent of the\n    times.\n\n    Arithmetic mean value of data bytes is 119.3731 (127.5 = random).\n    Monte Carlo value for Pi is 3.197293333 (error 1.77 percent).\n    Serial correlation coefficient is 0.159130 (totally uncorrelated =\n    0.0).\n\nWithout this patch, the results of the chi-square test is 0.01%, and\nthe numbers are certainly not random according to ent's project page.\nThe results improve with this patch:\n\n    $ ent -c qcom-random-after\n    Value Char Occurrences Fraction\n      0            35432   0.003937\n      1            35127   0.003903\n      2            35424   0.003936\n    ...\n    253   \ufffd        35201   0.003911\n    254   \ufffd        34835   0.003871\n    255   \ufffd        35368   0.003930\n\n    Total:       9000000   1.000000\n\n    Entropy = 7.999979 bits per byte.\n\n    Optimum compression would reduce the size\n    of this 9000000 byte file by 0 percent.\n\n    Chi square distribution for 9000000 samples is 258.77, and randomly\n    would exceed this value 42.24 percent of the times.\n\n    Arithmetic mean value of data bytes is 127.5006 (127.5 = random).\n    Monte Carlo value for Pi is 3.141277333 (error 0.01 percent).\n    Serial correlation coefficient is 0.000468 (totally uncorrelated =\n    0.0).\n\nThis change was tested on a Nexus 5 phone (msm8974 SoC).",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0698,
+    "MEDIUM": 0.2999,
+    "HIGH": 0.463,
+    "CRITICAL": 0.1673
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2022-48643",
+   "published": "2024-04-28",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnetfilter: nf_tables: fix nft_counters_enabled underflow at nf_tables_addchain()\n\nsyzbot is reporting underflow of nft_counters_enabled counter at\nnf_tables_addchain() [1], for commit 43eb8949cfdffa76 (\"netfilter:\nnf_tables: do not leave chain stats enabled on error\") missed that\nnf_tables_chain_destroy() after nft_basechain_init() in the error path of\nnf_tables_addchain() decrements the counter because nft_basechain_init()\nmakes nft_is_base_chain() return true by setting NFT_CHAIN_BASE flag.\n\nIncrement the counter immediately after returning from\nnft_basechain_init().",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0151,
+    "MEDIUM": 0.2064,
+    "HIGH": 0.4886,
+    "CRITICAL": 0.2899
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2022-48699",
+   "published": "2024-05-03",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nsched/debug: fix dentry leak in update_sched_domain_debugfs\n\nKuyo reports that the pattern of using debugfs_remove(debugfs_lookup())\nleaks a dentry and with a hotplug stress test, the machine eventually\nruns out of memory.\n\nFix this up by using the newly created debugfs_lookup_and_remove() call\ninstead which properly handles the dentry reference counting logic.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0268,
+    "MEDIUM": 0.4321,
+    "HIGH": 0.4706,
+    "CRITICAL": 0.0705
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2022-48774",
+   "published": "2024-07-16",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndmaengine: ptdma: Fix the error handling path in pt_core_init()\n\nIn order to free resources correctly in the error handling path of\npt_core_init(), 2 goto's have to be switched. Otherwise, some resources\nwill leak and we will try to release things that have not been allocated\nyet.\n\nAlso move a dev_err() to a place where it is more meaningful.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0136,
+    "MEDIUM": 0.2551,
+    "HIGH": 0.6366,
+    "CRITICAL": 0.0947
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "NVD-CWE-OTHER"
+  },
+  {
+   "cve_id": "CVE-2022-48897",
+   "published": "2024-08-21",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\narm64/mm: fix incorrect file_map_count for invalid pmd\n\nThe page table check trigger BUG_ON() unexpectedly when split hugepage:\n\n ------------[ cut here ]------------\n kernel BUG at mm/page_table_check.c:119!\n Internal error: Oops - BUG: 00000000f2000800 [#1] SMP\n Dumping ftrace buffer:\n    (ftrace buffer empty)\n Modules linked in:\n CPU: 7 PID: 210 Comm: transhuge-stres Not tainted 6.1.0-rc3+ #748\n Hardware name: linux,dummy-virt (DT)\n pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)\n pc : page_table_check_set.isra.0+0x398/0x468\n lr : page_table_check_set.isra.0+0x1c0/0x468\n[...]\n Call trace:\n  page_table_check_set.isra.0+0x398/0x468\n  __page_table_check_pte_set+0x160/0x1c0\n  __split_huge_pmd_locked+0x900/0x1648\n  __split_huge_pmd+0x28c/0x3b8\n  unmap_page_range+0x428/0x858\n  unmap_single_vma+0xf4/0x1c8\n  zap_page_range+0x2b0/0x410\n  madvise_vma_behavior+0xc44/0xe78\n  do_madvise+0x280/0x698\n  __arm64_sys_madvise+0x90/0xe8\n  invoke_syscall.constprop.0+0xdc/0x1d8\n  do_el0_svc+0xf4/0x3f8\n  el0_svc+0x58/0x120\n  el0t_64_sync_handler+0xb8/0xc0\n  el0t_64_sync+0x19c/0x1a0\n[...]\n\nOn arm64, pmd_leaf() will return true even if the pmd is invalid due to\npmd_present_invalid() check. So in pmdp_invalidate() the file_map_count\nwill not only decrease once but also increase once. Then in set_pte_at(),\nthe file_map_count increase again, and so trigger BUG_ON() unexpectedly.\n\nAdd !pmd_present_invalid() check in pmd_user_accessible_page() to fix the\nproblem.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0191,
+    "MEDIUM": 0.2739,
+    "HIGH": 0.5719,
+    "CRITICAL": 0.1351
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2023-27335",
+   "published": "2024-05-03",
+   "description": "Softing edgeAggregator Client Cross-Site Scripting Remote Code Execution Vulnerability. This vulnerability allows remote attackers to execute arbitrary code on affected installations of Softing edgeAggregator. User interaction is required to exploit this vulnerability in that the target must visit a malicious page or open a malicious file.\n\nThe specific flaw exists within the handling of the input parameters provided to the edgeAggregetor client. The issue results from the lack of proper validation of user-supplied data, which can lead to the injection of an arbitrary script. An attacker can leverage this in conjunction with other vulnerabilities to execute arbitrary code in the context of root. Was ZDI-CAN-20504.",
+   "filer": "zdi",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+   "filer_band": "HIGH",
+   "filer_cwes": [
+    "CWE-79"
+   ],
+   "products": "Softing edgeAggregator",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0002,
+    "MEDIUM": 0.1994,
+    "HIGH": 0.6041,
+    "CRITICAL": 0.1963
+   },
+   "nvd_band": "CRITICAL",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:R/S:C/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2023-31211",
+   "published": "2024-01-12",
+   "description": "Insufficient authentication flow in Checkmk before 2.2.0p18, 2.1.0p38 and 2.0.0p39 allows attacker to use locked credentials",
+   "filer": "Checkmk",
+   "filer_type": "open source project",
+   "filer_vector": "CVSS:3.1/AV:L/AC:L/PR:L/UI:N/S:C/C:H/I:H/A:H",
+   "filer_band": "HIGH",
+   "filer_cwes": [
+    "CWE-691"
+   ],
+   "products": "Checkmk GmbH Checkmk",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.007,
+    "MEDIUM": 0.2885,
+    "HIGH": 0.6461,
+    "CRITICAL": 0.0583
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2023-34327",
+   "published": "2024-01-05",
+   "description": "\n[This CNA information record relates to multiple CVEs; the\ntext explains which aspects/vulnerabilities correspond to which CVE.]\n\nAMD CPUs since ~2014 have extensions to normal x86 debugging functionality.\nXen supports guests using these extensions.\n\nUnfortunately there are errors in Xen's handling of the guest state, leading\nto denials of service.\n\n 1) CVE-2023-34327 - An HVM vCPU can end up operating in the context of\n    a previous vCPUs debug mask state.\n\n 2) CVE-2023-34328 - A PV vCPU can place a breakpoint over the live GDT.\n    This allows the PV vCPU to exploit XSA-156 / CVE-2015-8104 and lock\n    up the CPU entirely.\n",
+   "filer": "XEN",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Xen Xen",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0109,
+    "MEDIUM": 0.3698,
+    "HIGH": 0.5595,
+    "CRITICAL": 0.0598
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2023-35022",
+   "published": "2024-06-30",
+   "description": "IBM InfoSphere Information Server 11.7 could allow a local user to update projects that they do not have the authorization to access.  IBM X-Force ID:  258254.",
+   "filer": "ibm",
+   "filer_type": "open source project",
+   "filer_vector": "CVSS:3.1/AV:L/AC:L/PR:N/UI:N/S:U/C:N/I:L/A:N",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-285"
+   ],
+   "products": "IBM InfoSphere Information Server",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.1637,
+    "MEDIUM": 0.7972,
+    "HIGH": 0.0381,
+    "CRITICAL": 0.0011
+   },
+   "nvd_band": "LOW",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2023-38370",
+   "published": "2024-06-27",
+   "description": "IBM Security Access Manager Docker 10.0.0.0 through 10.0.7.1, under certain configurations, could allow a user on the network to install malicious packages.  IBM X-Force ID:  261197.",
+   "filer": "ibm",
+   "filer_type": "open source project",
+   "filer_vector": "CVSS:3.1/AV:A/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "filer_band": "HIGH",
+   "filer_cwes": [
+    "CWE-276"
+   ],
+   "products": "IBM Security Access Manager Docker",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.019,
+    "MEDIUM": 0.2019,
+    "HIGH": 0.6096,
+    "CRITICAL": 0.1695
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:H/A:N",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2023-40104",
+   "published": "2024-02-15",
+   "description": "In ca-certificates, there is a possible way to read encrypted TLS data due to untrusted cryptographic certificates. This could lead to remote information disclosure with no additional execution privileges needed. User interaction is not needed for exploitation.",
+   "filer": "google_android",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Google Android",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.1394,
+    "MEDIUM": 0.62,
+    "HIGH": 0.2287,
+    "CRITICAL": 0.012
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+   "nvd_cwe": "CWE-295"
+  },
+  {
+   "cve_id": "CVE-2023-41220",
+   "published": "2024-05-03",
+   "description": "D-Link DIR-3040 prog.cgi SetSysEmailSettings Stack-Based Buffer Overflow Remote Code Execution Vulnerability. This vulnerability allows network-adjacent attackers to execute arbitrary code on affected installations of D-Link DIR-3040 routers. Authentication is required to exploit this vulnerability.\n\nThe specific flaw exists within the prog.cgi binary, which handles HNAP requests made to the lighttpd webserver listening on TCP ports 80 and 443. The issue results from the lack of proper validation of a user-supplied string before copying it to a fixed-size stack-based buffer. An attacker can leverage this vulnerability to execute code in the context of root. Was ZDI-CAN-21620.",
+   "filer": "zdi",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.0/AV:A/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-121"
+   ],
+   "products": "D-Link DIR-3040",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0021,
+    "MEDIUM": 0.024,
+    "HIGH": 0.7581,
+    "CRITICAL": 0.2157
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:A/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-787"
+  },
+  {
+   "cve_id": "CVE-2023-42010",
+   "published": "2024-07-17",
+   "description": "IBM Sterling B2B Integrator Standard Edition 6.0.0.0 through 6.1.2.5 and 6.2.0.0 through 6.2.0.2 could disclose sensitive information in the HTTP response using man in the middle techniques.  IBM X-Force ID:  265507.",
+   "filer": "ibm",
+   "filer_type": "open source project",
+   "filer_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:U/C:L/I:N/A:N",
+   "filer_band": "LOW",
+   "filer_cwes": [
+    "CWE-497"
+   ],
+   "products": "IBM Sterling B2B Integrator Standard Edition",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.1083,
+    "MEDIUM": 0.8459,
+    "HIGH": 0.0369,
+    "CRITICAL": 0.0089
+   },
+   "nvd_band": "LOW",
+   "nvd_metrics": "AV:N/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2023-42942",
+   "published": "2024-02-21",
+   "description": "This issue was addressed with improved handling of symlinks. This issue is fixed in watchOS 10.1, macOS Sonoma 14.1, tvOS 17.1, iOS 16.7.2 and iPadOS 16.7.2, iOS 17.1 and iPadOS 17.1, macOS Ventura 13.6.1. A malicious app may be able to gain root privileges.",
+   "filer": "apple",
+   "filer_type": "vendor",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Apple iOS and iPadOS; Apple macOS; Apple tvOS; Apple watchOS",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.015,
+    "MEDIUM": 0.4866,
+    "HIGH": 0.4598,
+    "CRITICAL": 0.0386
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:L/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-59"
+  },
+  {
+   "cve_id": "CVE-2023-47189",
+   "published": "2024-06-04",
+   "description": "Improper Authentication vulnerability in WPMU DEV Defender Security allows Accessing Functionality Not Properly Constrained by ACLs.This issue affects Defender Security: from n/a through 4.2.0.",
+   "filer": "Patchstack",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-287"
+   ],
+   "products": "WPMU DEV Defender Security",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0071,
+    "MEDIUM": 0.6775,
+    "HIGH": 0.27,
+    "CRITICAL": 0.0454
+   },
+   "nvd_band": "CRITICAL",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2023-49566",
+   "published": "2024-07-15",
+   "description": "\nIn Apache Linkis <=1.5.0, due to the lack of effective filtering\nof parameters, an attacker configuring malicious \n\ndb2\n\n parameters in the DataSource Manager Module will result\u00a0in jndi injection. Therefore, the parameters in the DB2 URL should be blacklisted.\u00a0\n\nThis attack requires the attacker to obtain an authorized account from Linkis before it can be carried out.\n\n Versions of Apache Linkis \n\n<=1.5.0\n\n will be affected.\nWe recommend users upgrade the version of Linkis to version 1.6.0.\n",
+   "filer": "apache",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": [
+    "CWE-502"
+   ],
+   "products": "Apache Software Foundation Apache Linkis DataSource",
+   "adp_band": "HIGH",
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0103,
+    "MEDIUM": 0.0622,
+    "HIGH": 0.191,
+    "CRITICAL": 0.7366
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2023-50785",
+   "published": "2024-01-25",
+   "description": "Zoho ManageEngine ADAudit Plus before 7270 allows admin users to view names of arbitrary directories via path traversal.",
+   "filer": "mitre",
+   "filer_type": "MITRE",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": null,
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0186,
+    "MEDIUM": 0.4072,
+    "HIGH": 0.4582,
+    "CRITICAL": 0.116
+   },
+   "nvd_band": "LOW",
+   "nvd_metrics": "AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:N/A:N",
+   "nvd_cwe": "CWE-22"
+  },
+  {
+   "cve_id": "CVE-2023-52835",
+   "published": "2024-05-21",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nperf/core: Bail out early if the request AUX area is out of bound\n\nWhen perf-record with a large AUX area, e.g 4GB, it fails with:\n\n    #perf record -C 0 -m ,4G -e arm_spe_0// -- sleep 1\n    failed to mmap with 12 (Cannot allocate memory)\n\nand it reveals a WARNING with __alloc_pages():\n\n\t------------[ cut here ]------------\n\tWARNING: CPU: 44 PID: 17573 at mm/page_alloc.c:5568 __alloc_pages+0x1ec/0x248\n\tCall trace:\n\t __alloc_pages+0x1ec/0x248\n\t __kmalloc_large_node+0xc0/0x1f8\n\t __kmalloc_node+0x134/0x1e8\n\t rb_alloc_aux+0xe0/0x298\n\t perf_mmap+0x440/0x660\n\t mmap_region+0x308/0x8a8\n\t do_mmap+0x3c0/0x528\n\t vm_mmap_pgoff+0xf4/0x1b8\n\t ksys_mmap_pgoff+0x18c/0x218\n\t __arm64_sys_mmap+0x38/0x58\n\t invoke_syscall+0x50/0x128\n\t el0_svc_common.constprop.0+0x58/0x188\n\t do_el0_svc+0x34/0x50\n\t el0_svc+0x34/0x108\n\t el0t_64_sync_handler+0xb8/0xc0\n\t el0t_64_sync+0x1a4/0x1a8\n\n'rb->aux_pages' allocated by kcalloc() is a pointer array which is used to\nmaintains AUX trace pages. The allocated page for this array is physically\ncontiguous (and virtually contiguous) with an order of 0..MAX_ORDER. If the\nsize of pointer array crosses the limitation set by MAX_ORDER, it reveals a\nWARNING.\n\nSo bail out early with -ENOMEM if the request AUX area is out of bound,\ne.g.:\n\n    #perf record -C 0 -m ,4G -e arm_spe_0// -- sleep 1\n    failed to mmap with 12 (Cannot allocate memory)",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0241,
+    "MEDIUM": 0.4763,
+    "HIGH": 0.4726,
+    "CRITICAL": 0.027
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2023-52880",
+   "published": "2024-05-24",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ntty: n_gsm: require CAP_NET_ADMIN to attach N_GSM0710 ldisc\n\nAny unprivileged user can attach N_GSM0710 ldisc, but it requires\nCAP_NET_ADMIN to create a GSM network anyway.\n\nRequire initial namespace CAP_NET_ADMIN to do that.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.043,
+    "MEDIUM": 0.1541,
+    "HIGH": 0.427,
+    "CRITICAL": 0.3758
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2023-52887",
+   "published": "2024-07-29",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: can: j1939: enhanced error handling for tightly received RTS messages in xtp_rx_rts_session_new\n\nThis patch enhances error handling in scenarios with RTS (Request to\nSend) messages arriving closely. It replaces the less informative WARN_ON_ONCE\nbacktraces with a new error handling method. This provides clearer error\nmessages and allows for the early termination of problematic sessions.\nPreviously, sessions were only released at the end of j1939_xtp_rx_rts().\n\nPotentially this could be reproduced with something like:\ntestj1939 -r vcan0:0x80 &\nwhile true; do\n\t# send first RTS\n\tcansend vcan0 18EC8090#1014000303002301;\n\t# send second RTS\n\tcansend vcan0 18EC8090#1014000303002301;\n\t# send abort\n\tcansend vcan0 18EC8090#ff00000000002301;\ndone",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0208,
+    "MEDIUM": 0.4594,
+    "HIGH": 0.4665,
+    "CRITICAL": 0.0533
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2023-5905",
+   "published": "2024-01-15",
+   "description": "The DeMomentSomTres WordPress Export Posts With Images WordPress plugin through 20220825 does not check authorization of requests to export the blog data, allowing any logged in user, such as subscribers to export the contents of the blog, including restricted and unpublished posts, as well as passwords of protected posts.",
+   "filer": "WPScan",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Unknown DeMomentSomTres WordPress Export Posts With Images",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.017,
+    "MEDIUM": 0.646,
+    "HIGH": 0.2837,
+    "CRITICAL": 0.0534
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+   "nvd_cwe": "CWE-862"
+  },
+  {
+   "cve_id": "CVE-2023-6340",
+   "published": "2024-01-17",
+   "description": "SonicWall Capture Client version 3.7.10,\u00a0NetExtender client version 10.2.337 and earlier versions are installed with sfpmonitor.sys driver.  The driver has been found to be vulnerable to Denial-of-Service (DoS) caused by Stack-based Buffer Overflow vulnerability.",
+   "filer": "sonicwall",
+   "filer_type": "vendor",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "SonicWall Capture Client; SonicWall NetExtender",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0303,
+    "MEDIUM": 0.2875,
+    "HIGH": 0.4982,
+    "CRITICAL": 0.184
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "CWE-787"
+  },
+  {
+   "cve_id": "CVE-2023-6979",
+   "published": "2024-01-11",
+   "description": "The Customer Reviews for WooCommerce plugin for WordPress is vulnerable to arbitrary file uploads due to missing file type validation in the ivole_import_upload_csv AJAX action in all versions up to, and including, 5.38.9. This makes it possible for authenticated attackers, with author-level access and above, to upload arbitrary files on the affected site's server which may make remote code execution possible.",
+   "filer": "Wordfence",
+   "filer_type": "vendor",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "filer_band": "CRITICAL",
+   "filer_cwes": null,
+   "products": "ivole Customer Reviews for WooCommerce",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0002,
+    "MEDIUM": 0.008,
+    "HIGH": 0.2274,
+    "CRITICAL": 0.7644
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-434"
+  },
+  {
+   "cve_id": "CVE-2023-6992",
+   "published": "2024-01-04",
+   "description": "Cloudflare version of zlib library was found to be vulnerable to memory corruption issues affecting the deflation algorithm implementation (deflate.c). The issues resulted from improper input validation and heap-based buffer overflow.\nA local attacker could exploit the problem during compression using a crafted malicious file potentially leading to denial of service of the software.\nPatches: The issue has been patched in commit  8352d10 https://github.com/cloudflare/zlib/commit/8352d108c05db1bdc5ac3bdf834dad641694c13c . The upstream repository is not affected.\n",
+   "filer": "cloudflare",
+   "filer_type": "vendor",
+   "filer_vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:N/I:L/A:L",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-122",
+    "CWE-126",
+    "CWE-20"
+   ],
+   "products": "Cloudflare zlib",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0515,
+    "MEDIUM": 0.3133,
+    "HIGH": 0.6124,
+    "CRITICAL": 0.0228
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "CWE-787"
+  },
+  {
+   "cve_id": "CVE-2024-0572",
+   "published": "2024-01-16",
+   "description": "A vulnerability, which was classified as critical, was found in Totolink LR1200GB 9.1.0u.6619_B20230130. Affected is the function setOpModeCfg of the file /cgi-bin/cstecgi.cgi. The manipulation of the argument pppoeUser leads to stack-based buffer overflow. It is possible to launch the attack remotely. The exploit has been disclosed to the public and may be used. The identifier of this vulnerability is VDB-250788. NOTE: The vendor was contacted early about this disclosure but did not respond in any way.",
+   "filer": "VulDB",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "filer_band": "HIGH",
+   "filer_cwes": [
+    "CWE-121"
+   ],
+   "products": "Totolink LR1200GB",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0015,
+    "MEDIUM": 0.0807,
+    "HIGH": 0.748,
+    "CRITICAL": 0.1699
+   },
+   "nvd_band": "CRITICAL",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-0936",
+   "published": "2024-01-26",
+   "description": "A vulnerability classified as critical was found in van_der_Schaar LAB TemporAI 0.0.3. Affected by this vulnerability is the function load_from_file of the component PKL File Handler. The manipulation leads to deserialization. The attack can be launched remotely. The exploit has been disclosed to the public and may be used. The identifier VDB-252181 was assigned to this vulnerability. NOTE: The vendor was contacted early and confirmed immediately the existence of the issue. A patch is planned to be released in February 2024.",
+   "filer": "VulDB",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:L/I:L/A:L",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-502"
+   ],
+   "products": "van_der_Schaar LAB TemporAI",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.006,
+    "MEDIUM": 0.1041,
+    "HIGH": 0.2925,
+    "CRITICAL": 0.5975
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-502"
+  },
+  {
+   "cve_id": "CVE-2024-10448",
+   "published": "2024-10-28",
+   "description": "A vulnerability, which was classified as problematic, has been found in code-projects Blood Bank Management System 1.0. Affected by this issue is some unknown functionality of the file /file/delete.php. The manipulation of the argument bid leads to cross-site request forgery. The attack may be launched remotely. The exploit has been disclosed to the public and may be used. Other endpoints might be affected as well.",
+   "filer": "VulDB",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-352"
+   ],
+   "products": "code-projects Blood Bank Management System",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "poc",
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0067,
+    "MEDIUM": 0.1143,
+    "HIGH": 0.7745,
+    "CRITICAL": 0.1045
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-13029",
+   "published": "2024-12-29",
+   "description": "A vulnerability, which was classified as problematic, was found in Antabot White-Jotter up to 0.2.2. Affected is an unknown function of the file /admin/content/book of the component Edit Book Handler. The manipulation leads to server-side request forgery. It is possible to launch the attack remotely. The exploit has been disclosed to the public and may be used.",
+   "filer": "VulDB",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Antabot White-Jotter",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0227,
+    "MEDIUM": 0.3629,
+    "HIGH": 0.3446,
+    "CRITICAL": 0.2697
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-1454",
+   "published": "2024-02-12",
+   "description": "The use-after-free vulnerability was found in the AuthentIC driver in OpenSC packages, occuring in the card enrolment process using pkcs15-init when a user or administrator enrols or modifies cards. An attacker must have physical access to the computer system and requires a crafted USB device or smart card to present the system with specially crafted responses to the APDUs, which are considered high complexity and low severity. This manipulation can allow for compromised card management operations during enrolment.",
+   "filer": "redhat",
+   "filer_type": "open source project",
+   "filer_vector": "CVSS:3.1/AV:P/AC:H/PR:N/UI:R/S:C/C:L/I:L/A:N",
+   "filer_band": "LOW",
+   "filer_cwes": [
+    "CWE-416"
+   ],
+   "products": "Red Hat Red Hat Enterprise Linux 7; Red Hat Red Hat Enterprise Linux 8; Red Hat Red Hat Enterprise Linux 9",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0377,
+    "MEDIUM": 0.8125,
+    "HIGH": 0.0755,
+    "CRITICAL": 0.0742
+   },
+   "nvd_band": "LOW",
+   "nvd_metrics": "AV:P/AC:H/PR:N/UI:R/S:C/C:L/I:L/A:N",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-1739",
+   "published": "2024-04-16",
+   "description": "lunary-ai/lunary is vulnerable to an authentication issue due to improper validation of email addresses during the signup process. Specifically, the server fails to treat email addresses as case insensitive, allowing the creation of multiple accounts with the same email address by varying the case of the email characters. For example, accounts for 'abc@gmail.com' and 'Abc@gmail.com' can both be created, leading to potential impersonation and confusion among users.",
+   "filer": "@huntr_ai",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.0/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+   "filer_band": "HIGH",
+   "filer_cwes": [
+    "CWE-821"
+   ],
+   "products": "lunary-ai lunary-ai/lunary",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0032,
+    "MEDIUM": 0.3554,
+    "HIGH": 0.503,
+    "CRITICAL": 0.1384
+   },
+   "nvd_band": "CRITICAL",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-20513",
+   "published": "2024-10-02",
+   "description": "A vulnerability in the Cisco AnyConnect VPN server of Cisco Meraki MX and Cisco Meraki Z Series Teleworker Gateway devices could allow an unauthenticated, remote attacker to cause a DoS condition for targeted users of the AnyConnect service on an affected device.\r\n\r\nThis vulnerability is due to insufficient entropy for handlers that are used during SSL VPN session establishment. An unauthenticated attacker could exploit this vulnerability by brute forcing valid session handlers. An authenticated attacker could exploit this vulnerability by connecting to the AnyConnect VPN service of an affected device to retrieve a valid session handler and, based on that handler, predict further valid session handlers. The attacker would then send a crafted HTTPS request using the brute-forced or predicted session handler to the AnyConnect VPN server of the device. A successful exploit could allow the attacker to terminate targeted SSL VPN sessions, forcing remote users to initiate new VPN connections and reauthenticate.",
+   "filer": "cisco",
+   "filer_type": "open source project",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:C/C:N/I:N/A:L",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-639"
+   ],
+   "products": "Cisco Cisco Meraki MX Firmware",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0111,
+    "MEDIUM": 0.3274,
+    "HIGH": 0.371,
+    "CRITICAL": 0.2905
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:L",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2024-22371",
+   "published": "2024-02-26",
+   "description": "Exposure of sensitive data by by crafting a malicious EventFactory and providing a custom ExchangeCreatedEvent that exposes sensitive data. Vulnerability in Apache Camel.This issue affects Apache Camel: from 3.21.X through 3.21.3, from 3.22.X through 3.22.0, from 4.0.X through 4.0.3, from 4.X through 4.3.0.\n\nUsers are recommended to upgrade to version 3.21.4, 3.22.1, 4.0.4 or 4.4.0, which fixes the issue.\n\n",
+   "filer": "apache",
+   "filer_type": "open source project",
+   "filer_vector": "CVSS:3.1/AV:L/AC:H/PR:N/UI:N/S:U/C:L/I:N/A:N",
+   "filer_band": "LOW",
+   "filer_cwes": null,
+   "products": "Apache Software Foundation Apache Camel",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0728,
+    "MEDIUM": 0.8363,
+    "HIGH": 0.072,
+    "CRITICAL": 0.019
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-23204",
+   "published": "2024-01-23",
+   "description": "The issue was addressed with additional permissions checks. This issue is fixed in macOS Sonoma 14.3, watchOS 10.3, iOS 17.3 and iPadOS 17.3. A shortcut may be able to use sensitive data with certain actions without prompting the user.",
+   "filer": "apple",
+   "filer_type": "vendor",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Apple iOS and iPadOS; Apple macOS; Apple watchOS",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.1063,
+    "MEDIUM": 0.6402,
+    "HIGH": 0.2466,
+    "CRITICAL": 0.007
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2024-23471",
+   "published": "2024-07-17",
+   "description": "The SolarWinds Access Rights Manager was found to be susceptible to a Remote Code Execution Vulnerability. If exploited, this vulnerability allows an authenticated user to abuse a SolarWinds service resulting in remote code execution. ",
+   "filer": "SolarWinds",
+   "filer_type": "vendor",
+   "filer_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:C/C:H/I:H/A:H",
+   "filer_band": "CRITICAL",
+   "filer_cwes": [
+    "CWE-287"
+   ],
+   "products": "SolarWinds Access Rights Manager",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0015,
+    "MEDIUM": 0.0138,
+    "HIGH": 0.3148,
+    "CRITICAL": 0.67
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-23771",
+   "published": "2024-01-22",
+   "description": "darkhttpd before 1.15 uses strcmp (which is not constant time) to verify authentication, which makes it easier for remote attackers to bypass authentication via a timing side channel.",
+   "filer": "mitre",
+   "filer_type": "MITRE",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": null,
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0314,
+    "MEDIUM": 0.4,
+    "HIGH": 0.4034,
+    "CRITICAL": 0.1651
+   },
+   "nvd_band": "CRITICAL",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2024-24004",
+   "published": "2024-02-06",
+   "description": "jshERP v3.3 is vulnerable to SQL Injection. The com.jsh.erp.controller.DepotHeadController: com.jsh.erp.utils.BaseResponseInfo findInOutDetail() function of jshERP does not filter `column` and `order` parameters well enough, and an attacker can construct malicious payload to bypass jshERP's protection mechanism in `safeSqlParse` method for sql injection.",
+   "filer": "mitre",
+   "filer_type": "MITRE",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": null,
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0125,
+    "MEDIUM": 0.392,
+    "HIGH": 0.3646,
+    "CRITICAL": 0.2309
+   },
+   "nvd_band": "CRITICAL",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-89"
+  },
+  {
+   "cve_id": "CVE-2024-25305",
+   "published": "2024-02-09",
+   "description": "Code-projects Simple School Managment System 1.0 allows Authentication Bypass via the username and password parameters at School/index.php.",
+   "filer": "mitre",
+   "filer_type": "MITRE",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": null,
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0005,
+    "MEDIUM": 0.2005,
+    "HIGH": 0.2242,
+    "CRITICAL": 0.5749
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-89"
+  },
+  {
+   "cve_id": "CVE-2024-25915",
+   "published": "2024-02-23",
+   "description": "Server-Side Request Forgery (SSRF) vulnerability in Raaj Trambadia Pexels: Free Stock Photos.This issue affects Pexels: Free Stock Photos: from n/a through 1.2.2.\n\n",
+   "filer": "Patchstack",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.1/AV:N/AC:H/PR:L/UI:N/S:C/C:L/I:L/A:N",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-918"
+   ],
+   "products": "Raaj Trambadia Pexels: Free Stock Photos",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0123,
+    "MEDIUM": 0.7858,
+    "HIGH": 0.1894,
+    "CRITICAL": 0.0124
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-26585",
+   "published": "2024-02-21",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ntls: fix race between tx work scheduling and socket close\n\nSimilarly to previous commit, the submitting thread (recvmsg/sendmsg)\nmay exit as soon as the async crypto handler calls complete().\nReorder scheduling the work before calling complete().\nThis seems more logical in the first place, as it's\nthe inverse order of what the submitting thread will do.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0568,
+    "MEDIUM": 0.4147,
+    "HIGH": 0.4696,
+    "CRITICAL": 0.0589
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "CWE-362"
+  },
+  {
+   "cve_id": "CVE-2024-26778",
+   "published": "2024-04-03",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nfbdev: savage: Error out if pixclock equals zero\n\nThe userspace program could pass any values to the driver through\nioctl() interface. If the driver doesn't check the value of pixclock,\nit may cause divide-by-zero error.\n\nAlthough pixclock is checked in savagefb_decode_var(), but it is not\nchecked properly in savagefb_probe(). Fix this by checking whether\npixclock is zero in the function savagefb_check_var() before\ninfo->var.pixclock is used as the divisor.\n\nThis is similar to CVE-2022-3061 in i740fb which was fixed by\ncommit 15cf0b8.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0325,
+    "MEDIUM": 0.345,
+    "HIGH": 0.5593,
+    "CRITICAL": 0.0631
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2024-26893",
+   "published": "2024-04-17",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nfirmware: arm_scmi: Fix double free in SMC transport cleanup path\n\nWhen the generic SCMI code tears down a channel, it calls the chan_free\ncallback function, defined by each transport. Since multiple protocols\nmight share the same transport_info member, chan_free() might want to\nclean up the same member multiple times within the given SCMI transport\nimplementation. In this case, it is SMC transport. This will lead to a NULL\npointer dereference at the second time:\n\n    | scmi_protocol scmi_dev.1: Enabled polling mode TX channel - prot_id:16\n    | arm-scmi firmware:scmi: SCMI Notifications - Core Enabled.\n    | arm-scmi firmware:scmi: unable to communicate with SCMI\n    | Unable to handle kernel NULL pointer dereference at virtual address 0000000000000000\n    | Mem abort info:\n    |   ESR = 0x0000000096000004\n    |   EC = 0x25: DABT (current EL), IL = 32 bits\n    |   SET = 0, FnV = 0\n    |   EA = 0, S1PTW = 0\n    |   FSC = 0x04: level 0 translation fault\n    | Data abort info:\n    |   ISV = 0, ISS = 0x00000004, ISS2 = 0x00000000\n    |   CM = 0, WnR = 0, TnD = 0, TagAccess = 0\n    |   GCS = 0, Overlay = 0, DirtyBit = 0, Xs = 0\n    | user pgtable: 4k pages, 48-bit VAs, pgdp=0000000881ef8000\n    | [0000000000000000] pgd=0000000000000000, p4d=0000000000000000\n    | Internal error: Oops: 0000000096000004 [#1] PREEMPT SMP\n    | Modules linked in:\n    | CPU: 4 PID: 1 Comm: swapper/0 Not tainted 6.7.0-rc2-00124-g455ef3d016c9-dirty #793\n    | Hardware name: FVP Base RevC (DT)\n    | pstate: 61400009 (nZCv daif +PAN -UAO -TCO +DIT -SSBS BTYPE=--)\n    | pc : smc_chan_free+0x3c/0x6c\n    | lr : smc_chan_free+0x3c/0x6c\n    | Call trace:\n    |  smc_chan_free+0x3c/0x6c\n    |  idr_for_each+0x68/0xf8\n    |  scmi_cleanup_channels.isra.0+0x2c/0x58\n    |  scmi_probe+0x434/0x734\n    |  platform_probe+0x68/0xd8\n    |  really_probe+0x110/0x27c\n    |  __driver_probe_device+0x78/0x12c\n    |  driver_probe_device+0x3c/0x118\n    |  __driver_attach+0x74/0x128\n    |  bus_for_each_dev+0x78/0xe0\n    |  driver_attach+0x24/0x30\n    |  bus_add_driver+0xe4/0x1e8\n    |  driver_register+0x60/0x128\n    |  __platform_driver_register+0x28/0x34\n    |  scmi_driver_init+0x84/0xc0\n    |  do_one_initcall+0x78/0x33c\n    |  kernel_init_freeable+0x2b8/0x51c\n    |  kernel_init+0x24/0x130\n    |  ret_from_fork+0x10/0x20\n    | Code: f0004701 910a0021 aa1403e5 97b91c70 (b9400280)\n    | ---[ end trace 0000000000000000 ]---\n\nSimply check for the struct pointer being NULL before trying to access\nits members, to avoid this situation.\n\nThis was found when a transport doesn't really work (for instance no SMC\nservice), the probe routines then tries to clean up, and triggers a crash.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0249,
+    "MEDIUM": 0.2652,
+    "HIGH": 0.5244,
+    "CRITICAL": 0.1855
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2024-27888",
+   "published": "2024-07-29",
+   "description": "A permissions issue was addressed by removing vulnerable code and adding additional checks. This issue is fixed in macOS Sonoma 14.4. An app may be able to modify protected parts of the file system.",
+   "filer": "apple",
+   "filer_type": "vendor",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Apple macOS",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0102,
+    "MEDIUM": 0.3988,
+    "HIGH": 0.5137,
+    "CRITICAL": 0.0773
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:N/UI:R/S:U/C:N/I:H/A:N",
+   "nvd_cwe": "CWE-276"
+  },
+  {
+   "cve_id": "CVE-2024-27913",
+   "published": "2024-02-28",
+   "description": "ospf_te_parse_te in ospfd/ospf_te.c in FRRouting (FRR) through 9.1 allows remote attackers to cause a denial of service (ospfd daemon crash) via a malformed OSPF LSA packet, because of an attempted access to a missing attribute field.",
+   "filer": "mitre",
+   "filer_type": "MITRE",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": null,
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0097,
+    "MEDIUM": 0.2443,
+    "HIGH": 0.5846,
+    "CRITICAL": 0.1615
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:A/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2024-29880",
+   "published": "2024-03-21",
+   "description": "In JetBrains TeamCity before 2023.11 users with access to the agent machine might obtain permissions of the user running the agent process",
+   "filer": "JetBrains",
+   "filer_type": "open source project",
+   "filer_vector": "CVSS:3.1/AV:L/AC:L/PR:H/UI:N/S:U/C:L/I:L/A:L",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-749"
+   ],
+   "products": "JetBrains TeamCity",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "LOW",
+   "probabilities": {
+    "LOW": 0.3334,
+    "MEDIUM": 0.3305,
+    "HIGH": 0.3286,
+    "CRITICAL": 0.0075
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "NVD-CWE-OTHER"
+  },
+  {
+   "cve_id": "CVE-2024-30188",
+   "published": "2024-08-09",
+   "description": "File read and write vulnerability in Apache DolphinScheduler ,\u00a0 authenticated users can illegally access additional resource files.\nThis issue affects Apache DolphinScheduler: from 3.1.0 before 3.2.2.\n\nUsers are recommended to upgrade to version 3.2.2, which fixes the issue.",
+   "filer": "apache",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Apache Software Foundation Apache DolphinScheduler",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0058,
+    "MEDIUM": 0.706,
+    "HIGH": 0.2305,
+    "CRITICAL": 0.0578
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:N",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2024-32081",
+   "published": "2024-06-09",
+   "description": "Missing Authorization vulnerability in Websupporter Filter Custom Fields & Taxonomies Light.This issue affects Filter Custom Fields & Taxonomies Light: from n/a through 1.05.",
+   "filer": "Patchstack",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-862"
+   ],
+   "products": "Websupporter Filter Custom Fields & Taxonomies Light",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0037,
+    "MEDIUM": 0.7916,
+    "HIGH": 0.1866,
+    "CRITICAL": 0.018
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-32701",
+   "published": "2024-06-09",
+   "description": "Missing Authorization vulnerability in InstaWP Team InstaWP Connect.This issue affects InstaWP Connect: from n/a through 0.1.0.24.",
+   "filer": "Patchstack",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:N/I:L/A:N",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-862"
+   ],
+   "products": "InstaWP InstaWP Connect",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0067,
+    "MEDIUM": 0.7798,
+    "HIGH": 0.1981,
+    "CRITICAL": 0.0154
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-34659",
+   "published": "2024-09-04",
+   "description": "Exposure of sensitive information in GroupSharing prior to version 13.6.13.3 allows remote attackers can force the victim to join the group.",
+   "filer": "SamsungMobile",
+   "filer_type": "other",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+   "filer_band": "HIGH",
+   "filer_cwes": null,
+   "products": "Samsung Mobile Group Sharing",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.2133,
+    "MEDIUM": 0.3493,
+    "HIGH": 0.4272,
+    "CRITICAL": 0.0103
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:L/I:N/A:N",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2024-3540",
+   "published": "2024-04-10",
+   "description": "A vulnerability was found in Campcodes Church Management System 1.0. It has been rated as critical. Affected by this issue is some unknown functionality of the file /admin/add_sundaysch.php. The manipulation of the argument Gender leads to sql injection. The attack may be launched remotely. The exploit has been disclosed to the public and may be used. VDB-259910 is the identifier assigned to this vulnerability.",
+   "filer": "VulDB",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-89"
+   ],
+   "products": "Campcodes Church Management System",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0019,
+    "MEDIUM": 0.0871,
+    "HIGH": 0.2938,
+    "CRITICAL": 0.6172
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-35806",
+   "published": "2024-05-17",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nsoc: fsl: qbman: Always disable interrupts when taking cgr_lock\n\nsmp_call_function_single disables IRQs when executing the callback. To\nprevent deadlocks, we must disable IRQs when taking cgr_lock elsewhere.\nThis is already done by qman_update_cgr and qman_delete_cgr; fix the\nother lockers.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0691,
+    "MEDIUM": 0.2331,
+    "HIGH": 0.4767,
+    "CRITICAL": 0.2211
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2024-36071",
+   "published": "2024-06-20",
+   "description": "Samsung Magician 8.0.0 on Windows allows an admin to escalate privileges by tampering with the directory and DLL files used during the installation process. This occurs because of an Untrusted Search Path.",
+   "filer": "mitre",
+   "filer_type": "MITRE",
+   "filer_vector": "CVSS:3.1/AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H",
+   "filer_band": "MEDIUM",
+   "filer_cwes": null,
+   "products": null,
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.001,
+    "MEDIUM": 0.1385,
+    "HIGH": 0.8481,
+    "CRITICAL": 0.0123
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:H/PR:H/UI:R/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-37047",
+   "published": "2024-11-22",
+   "description": "A buffer copy without checking size of input vulnerability has been reported to affect several QNAP operating system versions. If exploited, the vulnerability could allow remote attackers who have gained administrator access to execute code.\n\nWe have already fixed the vulnerability in the following versions:\nQTS 5.2.1.2930 build 20241025 and later\nQuTS hero h5.2.1.2929 build 20241025 and later",
+   "filer": "qnap",
+   "filer_type": "vendor",
+   "filer_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:N/VI:L/VA:L/SC:N/SI:N/SA:N",
+   "filer_band": null,
+   "filer_cwes": [
+    "CWE-120",
+    "CWE-121"
+   ],
+   "products": "QNAP Systems Inc. QTS; QNAP Systems Inc. QuTS hero",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0576,
+    "MEDIUM": 0.2367,
+    "HIGH": 0.279,
+    "CRITICAL": 0.4268
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:N/AC:L/PR:H/UI:N/S:U/C:N/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-38477",
+   "published": "2024-07-01",
+   "description": "null pointer dereference in mod_proxy in Apache HTTP Server 2.4.59 and earlier allows an attacker to crash the server via a malicious request.\nUsers are recommended to upgrade to version 2.4.60, which fixes this issue.",
+   "filer": "apache",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": [
+    "CWE-476"
+   ],
+   "products": "Apache Software Foundation Apache HTTP Server",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0103,
+    "MEDIUM": 0.4733,
+    "HIGH": 0.4652,
+    "CRITICAL": 0.0513
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-38872",
+   "published": "2024-07-26",
+   "description": "Zohocorp ManageEngine Exchange Reporter Plus versions 5717 and below are vulnerable to the authenticated SQL injection in the monitoring module.",
+   "filer": "ManageEngine",
+   "filer_type": "other",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:L",
+   "filer_band": "HIGH",
+   "filer_cwes": [
+    "CWE-89"
+   ],
+   "products": "ManageEngine Exchange Reporter Plus",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.002,
+    "MEDIUM": 0.0194,
+    "HIGH": 0.4875,
+    "CRITICAL": 0.4911
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-89"
+  },
+  {
+   "cve_id": "CVE-2024-39473",
+   "published": "2024-07-05",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nASoC: SOF: ipc4-topology: Fix input format query of process modules without base extension\n\nIf a process module does not have base config extension then the same\nformat applies to all of it's inputs and the process->base_config_ext is\nNULL, causing NULL dereference when specifically crafted topology and\nsequences used.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0244,
+    "MEDIUM": 0.302,
+    "HIGH": 0.4653,
+    "CRITICAL": 0.2084
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "CWE-476"
+  },
+  {
+   "cve_id": "CVE-2024-39486",
+   "published": "2024-07-06",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ndrm/drm_file: Fix pid refcounting race\n\n\nfilp->pid is supposed to be a refcounted pointer; however, before this\npatch, drm_file_update_pid() only increments the refcount of a struct\npid after storing a pointer to it in filp->pid and dropping the\ndev->filelist_mutex, making the following race possible:\n\nprocess A               process B\n=========               =========\n                        begin drm_file_update_pid\n                        mutex_lock(&dev->filelist_mutex)\n                        rcu_replace_pointer(filp->pid, <pid B>, 1)\n                        mutex_unlock(&dev->filelist_mutex)\nbegin drm_file_update_pid\nmutex_lock(&dev->filelist_mutex)\nrcu_replace_pointer(filp->pid, <pid A>, 1)\nmutex_unlock(&dev->filelist_mutex)\nget_pid(<pid A>)\nsynchronize_rcu()\nput_pid(<pid B>)   *** pid B reaches refcount 0 and is freed here ***\n                        get_pid(<pid B>)   *** UAF ***\n                        synchronize_rcu()\n                        put_pid(<pid A>)\n\nAs far as I know, this race can only occur with CONFIG_PREEMPT_RCU=y\nbecause it requires RCU to detect a quiescent state in code that is not\nexplicitly calling into the scheduler.\n\nThis race leads to use-after-free of a \"struct pid\".\nIt is probably somewhat hard to hit because process A has to pass\nthrough a synchronize_rcu() operation while process B is between\nmutex_unlock() and get_pid().\n\nFix it by ensuring that by the time a pointer to the current task's pid\nis stored in the file, an extra reference to the pid has been taken.\n\nThis fix also removes the condition for synchronize_rcu(); I think\nthat optimization is unnecessary complexity, since in that case we\nwould usually have bailed out on the lockless check above.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0429,
+    "MEDIUM": 0.5488,
+    "HIGH": 0.373,
+    "CRITICAL": 0.0353
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:L/AC:H/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-416"
+  },
+  {
+   "cve_id": "CVE-2024-40999",
+   "published": "2024-07-12",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nnet: ena: Add validation for completion descriptors consistency\n\nValidate that `first` flag is set only for the first\ndescriptor in multi-buffer packets.\nIn case of an invalid descriptor, a reset will occur.\nA new reset reason for RX data corruption has been added.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0438,
+    "MEDIUM": 0.2277,
+    "HIGH": 0.5445,
+    "CRITICAL": 0.184
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2024-41069",
+   "published": "2024-07-29",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nASoC: topology: Fix references to freed memory\n\nMost users after parsing a topology file, release memory used by it, so\nhaving pointer references directly into topology file contents is wrong.\nUse devm_kmemdup(), to allocate memory as needed.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0343,
+    "MEDIUM": 0.5567,
+    "HIGH": 0.3822,
+    "CRITICAL": 0.0268
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-416"
+  },
+  {
+   "cve_id": "CVE-2024-41689",
+   "published": "2024-07-26",
+   "description": "This vulnerability exists in SyroTech SY-GPON-1110-WDONT Router due to unencrypted storing of WPA/ WPS credentials within the router's firmware/ database. An attacker with physical access could exploit this by extracting the firmware and reverse engineer the binary data to access the plaintext WPA/ WPS credentials on the vulnerable system.\n\nSuccessful exploitation of this vulnerability could allow the attacker to bypass WPA/ WPS and gain access to the Wi-Fi network of the targeted system.",
+   "filer": "CERT-In",
+   "filer_type": "national CERT",
+   "filer_vector": "CVSS:4.0/AV:P/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:N/SC:N/SI:N/SA:N",
+   "filer_band": null,
+   "filer_cwes": [
+    "CWE-798"
+   ],
+   "products": "SyroTech SyroTech SY-GPON-1110-WDONT router",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0787,
+    "MEDIUM": 0.2855,
+    "HIGH": 0.2729,
+    "CRITICAL": 0.363
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2024-42461",
+   "published": "2024-08-02",
+   "description": "In the Elliptic package 6.5.6 for Node.js, ECDSA signature malleability occurs because BER-encoded signatures are allowed.",
+   "filer": "mitre",
+   "filer_type": "MITRE",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": null,
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0058,
+    "MEDIUM": 0.4839,
+    "HIGH": 0.3,
+    "CRITICAL": 0.2103
+   },
+   "nvd_band": "CRITICAL",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:N",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2024-42628",
+   "published": "2024-08-12",
+   "description": "FrogCMS v0.9.5 was discovered to contain a Cross-Site Request Forgery (CSRF) vulnerability via /admin/?/snippet/edit/3.",
+   "filer": "mitre",
+   "filer_type": "MITRE",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": null,
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0077,
+    "MEDIUM": 0.4533,
+    "HIGH": 0.4461,
+    "CRITICAL": 0.0929
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-352"
+  },
+  {
+   "cve_id": "CVE-2024-43893",
+   "published": "2024-08-26",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nserial: core: check uartclk for zero to avoid divide by zero\n\nCalling ioctl TIOCSSERIAL with an invalid baud_base can\nresult in uartclk being zero, which will result in a\ndivide by zero error in uart_get_divisor(). The check for\nuartclk being zero in uart_set_info() needs to be done\nbefore other settings are made as subsequent calls to\nioctl TIOCSSERIAL for the same port would be impacted if\nthe uartclk check was done where uartclk gets set.\n\nOops: divide error: 0000  PREEMPT SMP KASAN PTI\nRIP: 0010:uart_get_divisor (drivers/tty/serial/serial_core.c:580)\nCall Trace:\n <TASK>\nserial8250_get_divisor (drivers/tty/serial/8250/8250_port.c:2576\n    drivers/tty/serial/8250/8250_port.c:2589)\nserial8250_do_set_termios (drivers/tty/serial/8250/8250_port.c:502\n    drivers/tty/serial/8250/8250_port.c:2741)\nserial8250_set_termios (drivers/tty/serial/8250/8250_port.c:2862)\nuart_change_line_settings (./include/linux/spinlock.h:376\n    ./include/linux/serial_core.h:608 drivers/tty/serial/serial_core.c:222)\nuart_port_startup (drivers/tty/serial/serial_core.c:342)\nuart_startup (drivers/tty/serial/serial_core.c:368)\nuart_set_info (drivers/tty/serial/serial_core.c:1034)\nuart_set_info_user (drivers/tty/serial/serial_core.c:1059)\ntty_set_serial (drivers/tty/tty_io.c:2637)\ntty_ioctl (drivers/tty/tty_io.c:2647 drivers/tty/tty_io.c:2791)\n__x64_sys_ioctl (fs/ioctl.c:52 fs/ioctl.c:907\n    fs/ioctl.c:893 fs/ioctl.c:893)\ndo_syscall_64 (arch/x86/entry/common.c:52\n    (discriminator 1) arch/x86/entry/common.c:83 (discriminator 1))\nentry_SYSCALL_64_after_hwframe (arch/x86/entry/entry_64.S:130)\n\nRule: add",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0384,
+    "MEDIUM": 0.2333,
+    "HIGH": 0.6023,
+    "CRITICAL": 0.1261
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2024-43947",
+   "published": "2024-08-29",
+   "description": "Cross-Site Request Forgery (CSRF) vulnerability in Dinesh Karki WP Armour Extended.This issue affects WP Armour Extended: from n/a through 1.26.",
+   "filer": "Patchstack",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:L",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-352"
+   ],
+   "products": "Dinesh Karki WP Armour Extended",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0074,
+    "MEDIUM": 0.019,
+    "HIGH": 0.9643,
+    "CRITICAL": 0.0093
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+   "nvd_cwe": "CWE-352"
+  },
+  {
+   "cve_id": "CVE-2024-44244",
+   "published": "2024-10-28",
+   "description": "A memory corruption issue was addressed with improved input validation. This issue is fixed in iOS 18.1 and iPadOS 18.1, watchOS 11.1, visionOS 2.1, tvOS 18.1. Processing maliciously crafted web content may lead to an unexpected process crash.",
+   "filer": "apple",
+   "filer_type": "vendor",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Apple Safari; Apple iOS and iPadOS; Apple macOS; Apple tvOS; Apple visionOS; Apple watchOS",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0257,
+    "MEDIUM": 0.3877,
+    "HIGH": 0.5449,
+    "CRITICAL": 0.0417
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:N/A:L",
+   "nvd_cwe": "CWE-787"
+  },
+  {
+   "cve_id": "CVE-2024-44383",
+   "published": "2024-09-04",
+   "description": "WAYOS FBM-291W v19.09.11 is vulnerable to Command Execution via msp_info_htm.",
+   "filer": "mitre",
+   "filer_type": "MITRE",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": null,
+   "adp_band": "HIGH",
+   "adp_ssvc_exploitation": "poc",
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0053,
+    "MEDIUM": 0.1868,
+    "HIGH": 0.1822,
+    "CRITICAL": 0.6257
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:A/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-77"
+  },
+  {
+   "cve_id": "CVE-2024-46610",
+   "published": "2024-09-24",
+   "description": "An access control issue in IceCMS v3.4.7 and before allows attackers to arbitrarily modify users' information, including username and password, via a crafted POST request sent to the endpoint /User/ChangeUser/s in the ChangeUser function in UserController.java",
+   "filer": "mitre",
+   "filer_type": "MITRE",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": null,
+   "adp_band": "HIGH",
+   "adp_ssvc_exploitation": "poc",
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0869,
+    "MEDIUM": 0.4585,
+    "HIGH": 0.2997,
+    "CRITICAL": 0.155
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:H/A:N",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2024-4681",
+   "published": "2024-05-09",
+   "description": "A vulnerability, which was classified as critical, was found in Campcodes Legal Case Management System 1.0. Affected is an unknown function of the file /admin/general-setting of the component Setting Handler. The manipulation of the argument favicon/logo leads to unrestricted upload. It is possible to launch the attack remotely. The exploit has been disclosed to the public and may be used. VDB-263622 is the identifier assigned to this vulnerability.",
+   "filer": "VulDB",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Campcodes Legal Case Management System",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "poc",
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0055,
+    "MEDIUM": 0.0871,
+    "HIGH": 0.2495,
+    "CRITICAL": 0.6579
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-46987",
+   "published": "2024-09-18",
+   "description": "Camaleon CMS is a dynamic and advanced content management system based on Ruby on Rails. A path traversal vulnerability accessible via MediaController's download_private_file method allows authenticated users to download any file on the web server Camaleon CMS is running on (depending on the file permissions). This issue may lead to Information Disclosure. This issue has been addressed in release version 2.8.2. Users are advised to upgrade. There are no known workarounds for this vulnerability.",
+   "filer": "GitHub_M",
+   "filer_type": "open source project",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+   "filer_band": "HIGH",
+   "filer_cwes": [
+    "CWE-200",
+    "CWE-22"
+   ],
+   "products": "owen2345 camaleon-cms",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "poc",
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0087,
+    "MEDIUM": 0.6868,
+    "HIGH": 0.2972,
+    "CRITICAL": 0.0073
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:C/C:H/I:N/A:N",
+   "nvd_cwe": "CWE-22"
+  },
+  {
+   "cve_id": "CVE-2024-47732",
+   "published": "2024-10-21",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\ncrypto: iaa - Fix potential use after free bug\n\nThe free_device_compression_mode(iaa_device, device_mode) function frees\n\"device_mode\" but it iss passed to iaa_compression_modes[i]->free() a few\nlines later resulting in a use after free.\n\nThe good news is that, so far as I can tell, nothing implements the\n->free() function and the use after free happens in dead code.  But, with\nthis fix, when something does implement it, we'll be ready.  :)",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0161,
+    "MEDIUM": 0.2137,
+    "HIGH": 0.527,
+    "CRITICAL": 0.2432
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "CWE-416"
+  },
+  {
+   "cve_id": "CVE-2024-47746",
+   "published": "2024-10-21",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nfuse: use exclusive lock when FUSE_I_CACHE_IO_MODE is set\n\nThis may be a typo. The comment has said shared locks are\nnot allowed when this bit is set. If using shared lock, the\nwait in `fuse_file_cached_io_open` may be forever.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.2191,
+    "MEDIUM": 0.2764,
+    "HIGH": 0.354,
+    "CRITICAL": 0.1505
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "other"
+  },
+  {
+   "cve_id": "CVE-2024-4790",
+   "published": "2024-05-11",
+   "description": "A vulnerability classified as problematic has been found in DedeCMS 5.7.114. This affects an unknown part of the file /sys_verifies.php?action=view. The manipulation of the argument filename with the input ../../../../../etc/passwd leads to path traversal: '../filedir'. It is possible to initiate the attack remotely. The exploit has been disclosed to the public and may be used. The identifier VDB-263889 was assigned to this vulnerability. NOTE: The vendor was contacted early about this disclosure but did not respond in any way.",
+   "filer": "VulDB",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "DedeCMS",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0112,
+    "MEDIUM": 0.4424,
+    "HIGH": 0.2754,
+    "CRITICAL": 0.271
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+   "nvd_cwe": "CWE-22"
+  },
+  {
+   "cve_id": "CVE-2024-4805",
+   "published": "2024-05-12",
+   "description": "A vulnerability classified as critical has been found in Kashipara College Management System 1.0. This affects an unknown part of the file edit_faculty.php. The manipulation of the argument id leads to sql injection. It is possible to initiate the attack remotely. The exploit has been disclosed to the public and may be used. The identifier VDB-263925 was assigned to this vulnerability.",
+   "filer": "VulDB",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Kashipara College Management System",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0032,
+    "MEDIUM": 0.1135,
+    "HIGH": 0.3436,
+    "CRITICAL": 0.5397
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-48510",
+   "published": "2024-11-13",
+   "description": "Directory Traversal vulnerability in DotNetZip v.1.16.0 and before allows a remote attacker to execute arbitrary code via the src/Zip.Shared/ZipEntry.Extract.cs component NOTE: This vulnerability only affects products that are no longer supported by the maintainer.",
+   "filer": "mitre",
+   "filer_type": "MITRE",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": null,
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0021,
+    "MEDIUM": 0.0895,
+    "HIGH": 0.5886,
+    "CRITICAL": 0.3197
+   },
+   "nvd_band": "CRITICAL",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-22"
+  },
+  {
+   "cve_id": "CVE-2024-49217",
+   "published": "2024-10-17",
+   "description": "Incorrect Privilege Assignment vulnerability in Madiri Salman Aashish Adding drop down roles in registration allows Privilege Escalation.This issue affects Adding drop down roles in registration: from n/a through 1.1.",
+   "filer": "Patchstack",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "filer_band": "CRITICAL",
+   "filer_cwes": [
+    "CWE-266"
+   ],
+   "products": "madiriaashish Adding drop down roles in registration",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0008,
+    "MEDIUM": 0.0064,
+    "HIGH": 0.5851,
+    "CRITICAL": 0.4078
+   },
+   "nvd_band": "CRITICAL",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "NVD-CWE-OTHER"
+  },
+  {
+   "cve_id": "CVE-2024-50028",
+   "published": "2024-10-21",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nthermal: core: Reference count the zone in thermal_zone_get_by_id()\n\nThere are places in the thermal netlink code where nothing prevents\nthe thermal zone object from going away while being accessed after it\nhas been returned by thermal_zone_get_by_id().\n\nTo address this, make thermal_zone_get_by_id() get a reference on the\nthermal zone device object to be returned with the help of get_device(),\nunder thermal_list_lock, and adjust all of its callers to this change\nwith the help of the cleanup.h infrastructure.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.1072,
+    "MEDIUM": 0.3388,
+    "HIGH": 0.4427,
+    "CRITICAL": 0.1113
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2024-50095",
+   "published": "2024-11-05",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nRDMA/mad: Improve handling of timed out WRs of mad agent\n\nCurrent timeout handler of mad agent acquires/releases mad_agent_priv\nlock for every timed out WRs. This causes heavy locking contention\nwhen higher no. of WRs are to be handled inside timeout handler.\n\nThis leads to softlockup with below trace in some use cases where\nrdma-cm path is used to establish connection between peer nodes\n\nTrace:\n-----\n BUG: soft lockup - CPU#4 stuck for 26s! [kworker/u128:3:19767]\n CPU: 4 PID: 19767 Comm: kworker/u128:3 Kdump: loaded Tainted: G OE\n     -------  ---  5.14.0-427.13.1.el9_4.x86_64 #1\n Hardware name: Dell Inc. PowerEdge R740/01YM03, BIOS 2.4.8 11/26/2019\n Workqueue: ib_mad1 timeout_sends [ib_core]\n RIP: 0010:__do_softirq+0x78/0x2ac\n RSP: 0018:ffffb253449e4f98 EFLAGS: 00000246\n RAX: 00000000ffffffff RBX: 0000000000000000 RCX: 000000000000001f\n RDX: 000000000000001d RSI: 000000003d1879ab RDI: fff363b66fd3a86b\n RBP: ffffb253604cbcd8 R08: 0000009065635f3b R09: 0000000000000000\n R10: 0000000000000040 R11: ffffb253449e4ff8 R12: 0000000000000000\n R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000040\n FS:  0000000000000000(0000) GS:ffff8caa1fc80000(0000) knlGS:0000000000000000\n CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033\n CR2: 00007fd9ec9db900 CR3: 0000000891934006 CR4: 00000000007706e0\n DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000\n DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400\n PKRU: 55555554\n Call Trace:\n  <IRQ>\n  ? show_trace_log_lvl+0x1c4/0x2df\n  ? show_trace_log_lvl+0x1c4/0x2df\n  ? __irq_exit_rcu+0xa1/0xc0\n  ? watchdog_timer_fn+0x1b2/0x210\n  ? __pfx_watchdog_timer_fn+0x10/0x10\n  ? __hrtimer_run_queues+0x127/0x2c0\n  ? hrtimer_interrupt+0xfc/0x210\n  ? __sysvec_apic_timer_interrupt+0x5c/0x110\n  ? sysvec_apic_timer_interrupt+0x37/0x90\n  ? asm_sysvec_apic_timer_interrupt+0x16/0x20\n  ? __do_softirq+0x78/0x2ac\n  ? __do_softirq+0x60/0x2ac\n  __irq_exit_rcu+0xa1/0xc0\n  sysvec_call_function_single+0x72/0x90\n  </IRQ>\n  <TASK>\n  asm_sysvec_call_function_single+0x16/0x20\n RIP: 0010:_raw_spin_unlock_irq+0x14/0x30\n RSP: 0018:ffffb253604cbd88 EFLAGS: 00000247\n RAX: 000000000001960d RBX: 0000000000000002 RCX: ffff8cad2a064800\n RDX: 000000008020001b RSI: 0000000000000001 RDI: ffff8cad5d39f66c\n RBP: ffff8cad5d39f600 R08: 0000000000000001 R09: 0000000000000000\n R10: ffff8caa443e0c00 R11: ffffb253604cbcd8 R12: ffff8cacb8682538\n R13: 0000000000000005 R14: ffffb253604cbd90 R15: ffff8cad5d39f66c\n  cm_process_send_error+0x122/0x1d0 [ib_cm]\n  timeout_sends+0x1dd/0x270 [ib_core]\n  process_one_work+0x1e2/0x3b0\n  ? __pfx_worker_thread+0x10/0x10\n  worker_thread+0x50/0x3a0\n  ? __pfx_worker_thread+0x10/0x10\n  kthread+0xdd/0x100\n  ? __pfx_kthread+0x10/0x10\n  ret_from_fork+0x29/0x50\n  </TASK>\n\nSimplified timeout handler by creating local list of timed out WRs\nand invoke send handler post creating the list. The new method acquires/\nreleases lock once to fetch the list and hence helps to reduce locking\ncontetiong when processing higher no. of WRs",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0173,
+    "MEDIUM": 0.2299,
+    "HIGH": 0.604,
+    "CRITICAL": 0.1488
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2024-50192",
+   "published": "2024-11-08",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\nirqchip/gic-v4: Don't allow a VMOVP on a dying VPE\n\nKunkun Jiang reported that there is a small window of opportunity for\nuserspace to force a change of affinity for a VPE while the VPE has already\nbeen unmapped, but the corresponding doorbell interrupt still visible in\n/proc/irq/.\n\nPlug the race by checking the value of vmapp_count, which tracks whether\nthe VPE is mapped ot not, and returning an error in this case.\n\nThis involves making vmapp_count common to both GICv4.1 and its v4.0\nancestor.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.1377,
+    "MEDIUM": 0.2463,
+    "HIGH": 0.5658,
+    "CRITICAL": 0.0502
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:H/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2024-50826",
+   "published": "2024-11-14",
+   "description": "A SQL Injection vulnerability was found in /admin/add_content.php in kashipara E-learning Management System Project 1.0 via the title and content parameters.",
+   "filer": "mitre",
+   "filer_type": "MITRE",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": null,
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0004,
+    "MEDIUM": 0.057,
+    "HIGH": 0.3899,
+    "CRITICAL": 0.5527
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-89"
+  },
+  {
+   "cve_id": "CVE-2024-50831",
+   "published": "2024-11-14",
+   "description": "A SQL Injection was found in /admin/admin_user.php in kashipara E-learning Management System Project 1.0 via the username and password parameters.",
+   "filer": "mitre",
+   "filer_type": "MITRE",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": null,
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0006,
+    "MEDIUM": 0.0353,
+    "HIGH": 0.3956,
+    "CRITICAL": 0.5686
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-89"
+  },
+  {
+   "cve_id": "CVE-2024-51486",
+   "published": "2024-11-11",
+   "description": "Ampache is a web based audio/video streaming application and file manager. The vulnerability exists in the interface section of the Ampache menu, where users can change the \"Custom URL\u200a-\u200aFavicon\". This section is not properly sanitized, allowing for the input of strings that can execute JavaScript. This issue has been addressed in version 7.0.1 and all users are advised to upgrade. There are no known workarounds for this vulnerability.",
+   "filer": "GitHub_M",
+   "filer_type": "open source project",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:R/S:U/C:L/I:L/A:L",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-79"
+   ],
+   "products": "ampache ampache",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.002,
+    "MEDIUM": 0.8043,
+    "HIGH": 0.1408,
+    "CRITICAL": 0.0528
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:H/UI:R/S:C/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-5184",
+   "published": "2024-06-05",
+   "description": "The EmailGPT service contains a prompt injection vulnerability.\u00a0The service uses an API service that allows a malicious user to inject a direct prompt and take over the service logic. Attackers can exploit the issue by forcing the AI service to leak the standard hard-coded system prompts and/or execute unwanted prompts.\u00a0When engaging with EmailGPT by submitting a malicious prompt that requests harmful information, the system will respond by providing the requested data. This vulnerability can be exploited by any individual with access to the service.",
+   "filer": "SNPS",
+   "filer_type": "other",
+   "filer_vector": "CVSS:3.1/AV:A/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-74"
+   ],
+   "products": "EmailGPT EmailGPT",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0165,
+    "MEDIUM": 0.3762,
+    "HIGH": 0.4632,
+    "CRITICAL": 0.1441
+   },
+   "nvd_band": "CRITICAL",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:H",
+   "nvd_cwe": "CWE-74"
+  },
+  {
+   "cve_id": "CVE-2024-53145",
+   "published": "2024-12-24",
+   "description": "In the Linux kernel, the following vulnerability has been resolved:\n\num: Fix potential integer overflow during physmem setup\n\nThis issue happens when the real map size is greater than LONG_MAX,\nwhich can be easily triggered on UML/i386.",
+   "filer": "Linux",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Linux Linux",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0168,
+    "MEDIUM": 0.2137,
+    "HIGH": 0.585,
+    "CRITICAL": 0.1844
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:L/AC:L/PR:L/UI:N/S:U/C:N/I:N/A:H",
+   "nvd_cwe": "CWE-190"
+  },
+  {
+   "cve_id": "CVE-2024-53805",
+   "published": "2024-12-06",
+   "description": "Missing Authorization vulnerability in brandtoss WP Mailster allows Exploiting Incorrectly Configured Access Control Security Levels.This issue affects WP Mailster: from n/a through 1.8.16.0.",
+   "filer": "Patchstack",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:N/I:N/A:H",
+   "filer_band": "HIGH",
+   "filer_cwes": [
+    "CWE-862"
+   ],
+   "products": "brandtoss WP Mailster",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "poc",
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0091,
+    "MEDIUM": 0.0974,
+    "HIGH": 0.8141,
+    "CRITICAL": 0.0795
+   },
+   "nvd_band": "CRITICAL",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-5428",
+   "published": "2024-05-28",
+   "description": "A vulnerability classified as problematic was found in SourceCodester Simple Online Bidding System 1.0. Affected by this vulnerability is the function save_product of the file /admin/index.php?page=manage_product of the component HTTP POST Request Handler. The manipulation leads to cross-site request forgery. The attack can be launched remotely. The associated identifier of this vulnerability is VDB-266383.",
+   "filer": "VulDB",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-352"
+   ],
+   "products": "SourceCodester Simple Online Bidding System",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0104,
+    "MEDIUM": 0.2145,
+    "HIGH": 0.7335,
+    "CRITICAL": 0.0415
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:R/S:U/C:N/I:L/A:N",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-55663",
+   "published": "2024-12-12",
+   "description": "XWiki Platform is a generic wiki platform. Starting in version 11.10.6 and prior to versions 13.10.5 and 14.3-rc-1, in `getdocument.vm`; the ordering of the returned documents is defined from an unsanitized request parameter (request.sort) and can allow any user to inject HQL. Depending on the used database backend, the attacker may be able to not only obtain confidential information such as password hashes from the database, but also execute UPDATE/INSERT/DELETE queries. This has been patched in 13.10.5 and 14.3-rc-1. There is no known workaround, other than upgrading XWiki.",
+   "filer": "GitHub_M",
+   "filer_type": "open source project",
+   "filer_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+   "filer_band": null,
+   "filer_cwes": [
+    "CWE-116"
+   ],
+   "products": "xwiki xwiki-platform",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0614,
+    "MEDIUM": 0.524,
+    "HIGH": 0.3362,
+    "CRITICAL": 0.0785
+   },
+   "nvd_band": "CRITICAL",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-5913",
+   "published": "2024-07-10",
+   "description": "An improper input validation vulnerability in Palo Alto Networks PAN-OS software enables an attacker with the ability to tamper with the physical file system to elevate privileges.",
+   "filer": "palo_alto",
+   "filer_type": "vendor",
+   "filer_vector": "CVSS:4.0/AV:P/AC:L/AT:P/PR:H/UI:N/VC:H/VI:H/VA:H/SC:N/SI:N/SA:N",
+   "filer_band": null,
+   "filer_cwes": [
+    "CWE-20"
+   ],
+   "products": "Palo Alto Networks Cloud NGFW; Palo Alto Networks PAN-OS; Palo Alto Networks Prisma Access",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0391,
+    "MEDIUM": 0.1891,
+    "HIGH": 0.5651,
+    "CRITICAL": 0.2067
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:P/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  },
+  {
+   "cve_id": "CVE-2024-6022",
+   "published": "2024-07-12",
+   "description": "The ContentLock WordPress plugin through 1.0.3 does not have CSRF check in place when updating its settings, which could allow attackers to make a logged in admin change them via a CSRF attack",
+   "filer": "WPScan",
+   "filer_type": "open source project",
+   "filer_vector": null,
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "Unknown ContentLock",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0443,
+    "MEDIUM": 0.7572,
+    "HIGH": 0.1806,
+    "CRITICAL": 0.0178
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:R/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-352"
+  },
+  {
+   "cve_id": "CVE-2024-6805",
+   "published": "2024-07-22",
+   "description": "The NI VeriStand Gateway is missing authorization checks when an actor attempts to access File Transfer resources.  These missing checks may result in information disclosure or remote code execution.  This affects NI VeriStand 2024 Q2 and prior versions.",
+   "filer": "NI",
+   "filer_type": "vendor",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+   "filer_band": "HIGH",
+   "filer_cwes": [
+    "CWE-862"
+   ],
+   "products": "NI VeriStand",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0022,
+    "MEDIUM": 0.0504,
+    "HIGH": 0.6673,
+    "CRITICAL": 0.2801
+   },
+   "nvd_band": "CRITICAL",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-862"
+  },
+  {
+   "cve_id": "CVE-2024-6956",
+   "published": "2024-07-21",
+   "description": "A vulnerability was found in itsourcecode University Management System 1.0. It has been rated as critical. Affected by this issue is some unknown functionality of the file /view_cgpa.php. The manipulation of the argument VR/VN leads to sql injection. The attack may be launched remotely. The exploit has been disclosed to the public and may be used. VDB-272078 is the identifier assigned to this vulnerability.",
+   "filer": "VulDB",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-89"
+   ],
+   "products": "itsourcecode University Management System",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0015,
+    "MEDIUM": 0.0347,
+    "HIGH": 0.3182,
+    "CRITICAL": 0.6456
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:H/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-7171",
+   "published": "2024-07-28",
+   "description": "A vulnerability classified as critical has been found in TOTOLINK A3600R 4.1.2cu.5182_B20201102. Affected is the function NTPSyncWithHost of the file /cgi-bin/cstecgi.cgi. The manipulation of the argument hostTime leads to os command injection. It is possible to launch the attack remotely. The exploit has been disclosed to the public and may be used. The identifier of this vulnerability is VDB-272592. NOTE: The vendor was contacted early about this disclosure but did not respond in any way.",
+   "filer": "VulDB",
+   "filer_type": "research or bug bounty platform",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:L/I:L/A:L",
+   "filer_band": "MEDIUM",
+   "filer_cwes": [
+    "CWE-78"
+   ],
+   "products": "TOTOLINK A3600R",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0043,
+    "MEDIUM": 0.0603,
+    "HIGH": 0.1826,
+    "CRITICAL": 0.7527
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": "CWE-78"
+  },
+  {
+   "cve_id": "CVE-2024-8470",
+   "published": "2024-09-05",
+   "description": "SQL injection vulnerability, by which an attacker could send a specially designed query through\u00a0CATEGORY parameter in /jobportal/admin/vacancy/controller.php, and retrieve all the information stored in it.",
+   "filer": "INCIBE",
+   "filer_type": "national CERT",
+   "filer_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "filer_band": "CRITICAL",
+   "filer_cwes": [
+    "CWE-89"
+   ],
+   "products": "PHPGurukul Job Portal",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0004,
+    "MEDIUM": 0.0027,
+    "HIGH": 0.4326,
+    "CRITICAL": 0.5643
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-8535",
+   "published": "2024-11-12",
+   "description": "Authenticated user can access unintended user capabilities\u00a0in\u00a0NetScaler ADC and NetScaler Gateway if the appliance must be configured as a Gateway (SSL VPN, ICA Proxy, CVPN, RDP Proxy) with KCDAccount configuration for Kerberos SSO to access backend resources\u00a0OR\u00a0the appliance must be configured as an\u00a0Auth Server (AAA Vserver)  with KCDAccount configuration for Kerberos SSO to access backend resources",
+   "filer": "Citrix",
+   "filer_type": "vendor",
+   "filer_vector": "CVSS:4.0/AV:N/AC:L/AT:P/PR:L/UI:N/VC:L/VI:L/VA:L/SC:H/SI:H/SA:H",
+   "filer_band": null,
+   "filer_cwes": null,
+   "products": "NetScaler NetScaler ADC; NetScaler NetScaler Gateway",
+   "adp_band": null,
+   "adp_ssvc_exploitation": null,
+   "predicted_band": "MEDIUM",
+   "probabilities": {
+    "LOW": 0.0274,
+    "MEDIUM": 0.5537,
+    "HIGH": 0.3051,
+    "CRITICAL": 0.1138
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:H/PR:N/UI:N/S:U/C:H/I:H/A:H",
+   "nvd_cwe": null
+  },
+  {
+   "cve_id": "CVE-2024-8609",
+   "published": "2024-09-27",
+   "description": "Insertion of Sensitive Information into Log File vulnerability in Oceanic Software ValeApp allows Query System for Information.This issue affects ValeApp: before v2.0.0.",
+   "filer": "TR-CERT",
+   "filer_type": "national CERT",
+   "filer_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H/VI:L/VA:L/SC:L/SI:L/SA:L",
+   "filer_band": null,
+   "filer_cwes": [
+    "CWE-532"
+   ],
+   "products": "Oceanic Software ValeApp",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "CRITICAL",
+   "probabilities": {
+    "LOW": 0.0379,
+    "MEDIUM": 0.2111,
+    "HIGH": 0.3322,
+    "CRITICAL": 0.4189
+   },
+   "nvd_band": "HIGH",
+   "nvd_metrics": "AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:N/A:N",
+   "nvd_cwe": "CWE-532"
+  },
+  {
+   "cve_id": "CVE-2024-9471",
+   "published": "2024-10-09",
+   "description": "A privilege escalation (PE) vulnerability in the XML API of Palo Alto Networks PAN-OS software enables an authenticated PAN-OS administrator with restricted privileges to use a compromised XML API key to perform actions as a higher privileged PAN-OS administrator. For example, an administrator with \"Virtual system administrator (read-only)\" access could use an XML API key of a \"Virtual system administrator\" to perform write operations on the virtual system configuration even though they should be limited to read-only operations.",
+   "filer": "palo_alto",
+   "filer_type": "vendor",
+   "filer_vector": "CVSS:4.0/AV:N/AC:L/AT:N/PR:H/UI:N/VC:L/VI:L/VA:L/SC:N/SI:N/SA:N",
+   "filer_band": null,
+   "filer_cwes": [
+    "CWE-269"
+   ],
+   "products": "Palo Alto Networks Cloud NGFW; Palo Alto Networks PAN-OS; Palo Alto Networks Prisma Access",
+   "adp_band": null,
+   "adp_ssvc_exploitation": "none",
+   "predicted_band": "HIGH",
+   "probabilities": {
+    "LOW": 0.0296,
+    "MEDIUM": 0.0768,
+    "HIGH": 0.7489,
+    "CRITICAL": 0.1447
+   },
+   "nvd_band": "MEDIUM",
+   "nvd_metrics": "AV:N/AC:L/PR:H/UI:N/S:U/C:L/I:L/A:L",
+   "nvd_cwe": "NVD-CWE-NOINFO"
+  }
+ ]
+}

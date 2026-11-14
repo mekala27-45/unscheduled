@@ -31,6 +31,8 @@ import polars as pl
 
 pl.Config.set_tbl_rows(12)
 pl.Config.set_tbl_width_chars(110)
+pd.set_option("display.width", 160)
+pd.set_option("display.max_colwidth", 70)
 SEED = 20261114  # evaluation/phase2_plan.yaml, defaults.seed
 print("numpy", np.__version__, "pandas", pd.__version__, "polars", pl.__version__)"""
 
@@ -179,9 +181,16 @@ print("too high:", int((step > 0).sum()), "too low:", int((step < 0).sum()))""",
     ),
     (
         "markdown",
-        "Each category was named while reading, not before; the meaning column is the sentence written "
-        "for it then. The counts are in the manifest as models.taxonomy, and the console shows them on "
-        "/app/models.",
+        "Each category was named while reading, not before; the meaning column is the sentence "
+        "written for it then, and the rule at the top of results/models/taxonomy.json says which "
+        "category a miss takes when two fit. The two largest are out of the model's reach on these "
+        "inputs: a Linux or Xen commit message says what was fixed and not what an attacker gains, so "
+        "the NVD's band rests on a reading the text does not give, and a filer's vector that the NVD "
+        "rescored leaves the model with the filer's band. The misses a better model could win back "
+        "are the ones where it left a filer or CISA band that already agreed with the NVD, and the "
+        "ones where a word in the text, often VulDB's own rating, pulled it to the band that word "
+        "usually means. The counts are in the manifest as models.taxonomy, and the console shows them "
+        "on /app/models.",
     ),
 ]
 
