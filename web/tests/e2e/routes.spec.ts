@@ -16,6 +16,7 @@ export const ROUTES = [
   "/app/products",
   "/app/match",
   "/app/data",
+  "/app/models",
   "/app/criteria",
   "/app/limits",
   "/status",

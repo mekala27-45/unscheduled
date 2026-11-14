@@ -14,6 +14,7 @@ export const DESTINATIONS: Destination[] = [
   { href: "/app/products", label: "Products", go: "p", summary: "The stand-in products and their exposure" },
   { href: "/app/match", label: "Match", go: "m", summary: "Match an SBOM; only its digest is kept" },
   { href: "/app/data", label: "Data", go: "d", summary: "Sources, licences, locks, freshness" },
+  { href: "/app/models", label: "Models", summary: "The models, their floors, C1 and C2, the misses read" },
   { href: "/app/criteria", label: "Criteria", summary: "C1 to C9, signed before any result" },
   { href: "/status", label: "Status", summary: "Health and freshness per source, live" },
   { href: "/app/limits", label: "Limits", summary: "What a security or data lead would question" },

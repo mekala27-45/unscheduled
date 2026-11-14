@@ -57,7 +57,7 @@ const DOCS = {
 const CONSOLE = {
   scope: "app",
   files: ["web/styles/console.css", "web/styles/tokens.css", "web/styles/base.css", "web/components/console", "web/components/ui", "web/components/ruler", "web/components/charts", "web/app/(console)", "web/app/(site)/design"],
-  routes: ["/app", "/app/cves", "/app/cves/CVE-2099-0001", "/app/backlog", "/app/products", "/app/match", "/app/data", "/app/criteria", "/app/limits", "/status", "/design"],
+  routes: ["/app", "/app/cves", "/app/cves/CVE-2099-0001", "/app/backlog", "/app/products", "/app/match", "/app/data", "/app/models", "/app/criteria", "/app/limits", "/status", "/design"],
 };
 
 function sloplint(set) {

@@ -91,6 +91,29 @@ export type CveField = {
   dated_by: string;
 };
 
+/** One predicted value of the Phase 2 models, never an NVD value: its registered model and version,
+ * its probability calibrated on development and its 90 percent conformal set. */
+export type Prediction = {
+  field: string;
+  model: string;
+  version: number | null;
+  role: string | null;
+  value: string | number | string[] | Record<string, number> | null;
+  probability: number | null;
+  probabilities: Record<string, number> | null;
+  set: string[] | null;
+  detail: Record<string, unknown> | null;
+};
+
+export type Predictions = {
+  batch: string;
+  made_on: string | null;
+  /** The config/splits.yaml window the CVE was published in: development, test or shadow. */
+  window: string | null;
+  note: string;
+  values: Prediction[];
+};
+
 export type Cve = ResponseMeta & {
   id: string;
   state: string | null;
@@ -110,6 +133,9 @@ export type Cve = ResponseMeta & {
   kev: Kev;
   epss: { score: number | null; since: string | null };
   fields: CveField[];
+  predictions: Predictions | null;
+  /** Why the CVE has no prediction, when it has none. */
+  predictions_note: string | null;
 };
 
 export type TimelineKind =
@@ -120,7 +146,8 @@ export type TimelineKind =
   | "kev_listed"
   | "exploit_code"
   | "ghsa_advisory"
-  | "rejected";
+  | "rejected"
+  | "prediction";
 
 export type TimelineEvent = {
   at: string;
@@ -130,6 +157,8 @@ export type TimelineEvent = {
   value: string | null;
   /** For nvd_status: whether the status counts as analyzed (Analyzed or Modified, as the lake counts it). */
   analyzed: boolean | null;
+  /** A title the event brings with it, as the prediction tick does; others take theirs from the kind. */
+  title?: string;
 };
 
 /** EPSS on a registered day after publication, kept for KEV listed CVEs only. */
@@ -158,6 +187,8 @@ export type CveSummary = {
   filer_cvss: number | null;
   filer_severity: string | null;
   epss: number | null;
+  /** The band the Phase 2 model predicts: a prediction, never an NVD value. */
+  predicted_band: string | null;
 };
 
 export type CveList = ResponseMeta & { items: CveSummary[]; next_cursor: string | null };
@@ -243,3 +274,7 @@ export type MatchResult = ResponseMeta & {
   duration_ms: number;
   engine: string;
 };
+
+/** The registry export of the loaded release with the evidence of how each model was chosen and
+ * judged, as GET /v1/models serves it; document is null when the release carries none. */
+export type ModelsEvidence = ResponseMeta & { note: string; document: Record<string, unknown> | null };

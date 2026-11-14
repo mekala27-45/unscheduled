@@ -449,6 +449,42 @@ def check_against_api(out: Path, sample: int = 20_000) -> dict[str, int]:
     return checked
 
 
+def evidence_document(folder: Path) -> dict[str, Any]:
+    """How each model was chosen and judged, from the committed records that exist: C1 and C2 with
+    their intervals and verdicts, the secondary results and the slices of the single test scoring,
+    the development calibration and conformal coverage, the reweighting and the failure taxonomy."""
+
+    def read(name: str) -> Any:
+        path = folder / f"{name}.json"
+        return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None
+
+    out: dict[str, Any] = {}
+    for name in ("c1", "c2", "reweighting", "taxonomy"):
+        value = read(name)
+        if value is not None:
+            out[name] = value
+    scoring = read("test_scoring")
+    if scoring is not None:
+        out["secondary"] = scoring.get("secondary")
+        out["slices"] = scoring.get("slices")
+        out["scored_at"] = scoring.get("scored_at")
+    calibration = read("calibration")
+    if calibration is not None:
+        out["development_calibration"] = {
+            model: {
+                key: heads["band"].get(key)
+                for key in ("temperature", "ece_before", "ece_after", "reliability_after")
+            }
+            for model, heads in calibration.get("fill", {}).items()
+            if "band" in heads
+        }
+        out["band_from_metrics"] = calibration.get("band_from_metrics")
+    conformal = read("conformal")
+    if conformal is not None:
+        out["development_conformal"] = conformal.get("heads")
+    return out
+
+
 def prediction_files(root: Path, out: Path) -> list[dict[str, object]]:
     """The Phase 2 batch predictions for the CVEs this bundle holds, and the registry export they
     name their models by; none before the first batch is committed (scripts/predict_serving.py)."""
@@ -488,6 +524,7 @@ def prediction_files(root: Path, out: Path) -> list[dict[str, object]]:
             for m in registry["models"]
         ],
         "registry_archive": registry.get("archive", {}).get("file"),
+        "evidence": evidence_document(paths.results_dir() / "models"),
     }
     target = out / bundle.MODELS
     target.write_text(json.dumps(document, indent=1, sort_keys=True) + "\n", encoding="utf-8")

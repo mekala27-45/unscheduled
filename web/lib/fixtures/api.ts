@@ -51,6 +51,106 @@ export const API_CVE: S["CveRecord"] = {
     epss_date: field("2026-04-01", "epss", "2026-04-01T00:00:00Z", "epss_score_date"),
     exploit_first_seen: field("2026-05-19", "nuclei", "2026-05-19T21:47:00Z", "event exploit_code, git_first_commit"),
   },
+  predictions: {
+    batch: "fixture00000",
+    made_on: "2026-11-14",
+    window: "test",
+    note: "Predictions of the Phase 2 models, never NVD values. FIXTURE: invented values in the API's shape.",
+    values: [
+      {
+        field: "band",
+        model: "unscheduled-band",
+        version: 3,
+        role: "model",
+        value: "CRITICAL",
+        probability: 0.62,
+        probabilities: { LOW: 0.02, MEDIUM: 0.07, HIGH: 0.29, CRITICAL: 0.62 },
+        set: ["HIGH", "CRITICAL"],
+      },
+      ...(["AV", "AC", "PR", "UI", "S", "C", "I", "A"] as const).map((m, i) => ({
+        field: `metric_${m}`,
+        model: "unscheduled-metrics",
+        version: 3,
+        role: "model",
+        value: ["N", "L", "N", "N", "U", "H", "H", "H"][i],
+        probability: 0.81 - i * 0.03,
+        set: m === "PR" ? ["N", "L"] : [["N", "L", "N", "N", "U", "H", "H", "H"][i]],
+      })),
+      { field: "cwe", model: "unscheduled-cwe", version: 3, role: "model", value: "CWE-94", probability: 0.34, detail: { top5: ["CWE-94", "CWE-78", "CWE-77", "CWE-20", "other"] } },
+      {
+        field: "exploitation",
+        model: "unscheduled-exploit",
+        version: 2,
+        role: "model",
+        value: 0.041,
+        probability: 0.041,
+        detail: {
+          score: 0.18,
+          percentile: 99.2,
+          percentile_of: "every CVE in batch fixture00000",
+          epss: { score: 0.052, percentile: 0.91, date: "2026-04-01", note: "EPSS from FIRST, beside the model and not compared with it here." },
+        },
+      },
+      { field: "kev_listing", model: "unscheduled-survival", version: 1, role: "floor", value: { "30": 0.011, "90": 0.024, "180": 0.033 } },
+      { field: "products", model: "unscheduled-product", version: 2, role: "model", value: ["example:service", "example:gateway"] },
+    ],
+  },
+  predictions_note: null,
+};
+
+export const API_MODELS: S["ModelsDocument"] = {
+  ...V,
+  note: "FIXTURE: invented values in the API's shape.",
+  models: {
+    batch: "fixture00000",
+    made_on: "2026-11-14",
+    models: [
+      {
+        name: "unscheduled-band",
+        description: "The NVD CVSS 3.1 severity band of a CVE at day 0.",
+        chosen_by: "config/operating_points.yaml, primary",
+        aliases: { chosen: 3, scored: 3 },
+        versions: [
+          { version: 1, role: "floor", stage: "scored", description: "TF-IDF beside the filer and CISA block", dev: { qwk: 0.701 }, test: { qwk: 0.684 } },
+          { version: 2, role: "ablation", stage: "scored", description: "frozen embeddings alone", dev: { qwk: 0.512 }, test: { qwk: 0.497 } },
+          { version: 3, role: "model", stage: "scored", description: "frozen embeddings beside the block", dev: { qwk: 0.716 }, test: { qwk: 0.69 } },
+        ],
+      },
+    ],
+    evidence: {
+      c1: {
+        verdict: "not met",
+        population: "test window CVEs with an NVD CVSS 3.1 band",
+        kappa: {
+          rows: 40264,
+          clusters: 310,
+          model: { value: 0.69, low: 0.66, high: 0.72 },
+          floor: { value: 0.684, low: 0.65, high: 0.71 },
+          difference: { value: 0.006, low: -0.004, high: 0.016, p: 0.24 },
+        },
+        ece: { value: 0.031, low: 0.022, high: 0.044 },
+        reliability: [
+          { low: 0.33, high: 0.4, rows: 900, confidence: 0.37, accuracy: 0.34 },
+          { low: 0.53, high: 0.6, rows: 4200, confidence: 0.57, accuracy: 0.55 },
+          { low: 0.8, high: 0.87, rows: 9000, confidence: 0.84, accuracy: 0.8 },
+          { low: 0.93, high: 1, rows: 15000, confidence: 0.96, accuracy: 0.93 },
+        ],
+      },
+      c2: {
+        verdict: "met",
+        note: "EPSS at days 7 and 30 has seen days the model has not",
+        recall_at_top5: {
+          rows: 63000,
+          positives: 120,
+          top: 3150,
+          model: { value: 0.61, low: 0.52, high: 0.7 },
+          epss_day_1: { value: 0.49, low: 0.4, high: 0.58 },
+          model_minus_epss_day_1: { value: 0.12, low: 0.03, high: 0.21, reading: "ahead" },
+        },
+      },
+      taxonomy: { categories: [{ name: "The filer score disagrees with the NVD", count: 31, meaning: "the vector the filer gave led the model one band away" }] },
+    },
+  },
 };
 
 const event = (at: string, kind: string, source: string, detail: Record<string, unknown>, n: number): S["TimelineEvent"] => ({

@@ -40,7 +40,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from unscheduled_core.hashing import sha256_file
 from unscheduled_core.statements import GHSA_ATTRIBUTION, NVD_NOTICE
 
-from unscheduled_api import VERSION, cves, exposure, legacy, logs, matching, migrate, openapi
+from unscheduled_api import VERSION, cves, exposure, legacy, logs, matching, migrate, openapi, predictions
 from unscheduled_api.budget import LOOKUPS, MATCHES, client_address
 from unscheduled_api.problems import MEDIA_TYPE, FieldError, ProblemError
 from unscheduled_api.releases import OWNER, REPO, TAG_PREFIX
@@ -57,6 +57,7 @@ from unscheduled_api.schemas import (
     MatchCounts,
     MatchResponse,
     Meta,
+    ModelsDocument,
     PredictRequest,
     PredictResponse,
     Products,
@@ -519,6 +520,25 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
     def get_backlog() -> Backlog:
         with svc.connection() as conn:
             return exposure.backlog(conn, statement=svc.statement, data_version=svc.label())
+
+    @app.get(
+        "/v1/models",
+        summary="The registered models, their chosen versions and the evidence of how each was judged",
+        response_description="The registry export of the loaded release, or null when it carries none",
+        response_model=ModelsDocument,
+        tags=["predict"],
+        dependencies=looked_up,
+        responses=openapi.problem_responses(429, 500, 503),
+    )
+    def get_models() -> ModelsDocument:
+        with svc.connection() as conn:
+            document = predictions.load_models(conn)
+        return ModelsDocument(
+            statement=svc.statement,
+            data_version=svc.label(),
+            models=document,
+            note=predictions.NOTE if document else "the loaded bundle carries no models",
+        )
 
     @app.get(
         "/v1/products",

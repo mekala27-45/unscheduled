@@ -148,3 +148,17 @@ describe("exposure and a match", () => {
     expect(m.findings[0]).toMatchObject({ cve_ids: ["CVE-2021-23337"], matched_range: ">=0, <4.17.21", source: "osv, ghsa", nvd_status: null, kev_listed: null });
   });
 });
+
+describe("the predictions of a CVE", () => {
+  it("come through with each value's model, version, probability and set", () => {
+    const cve = toCve(API_CVE);
+    expect(cve.predictions?.batch).toBe("fixture00000");
+    const band = cve.predictions?.values.find((v) => v.field === "band");
+    expect(band?.model).toBe("unscheduled-band");
+    expect(band?.set).toEqual(["HIGH", "CRITICAL"]);
+    expect(cve.predictions?.values.find((v) => v.field === "kev_listing")?.value).toEqual({ "30": 0.011, "90": 0.024, "180": 0.033 });
+    const none = toCve({ ...API_CVE, predictions: null, predictions_note: "the loaded bundle carries no predictions" });
+    expect(none.predictions).toBeNull();
+    expect(none.predictions_note).toBe("the loaded bundle carries no predictions");
+  });
+});

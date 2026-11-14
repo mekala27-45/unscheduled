@@ -1343,6 +1343,46 @@
         "title": "Meta",
         "type": "object"
       },
+      "ModelsDocument": {
+        "additionalProperties": false,
+        "description": "The registry export the loaded bundle carried, with the evidence of how each model was chosen\nand judged; models is null when the bundle carried none.",
+        "properties": {
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "models": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/JsonValue"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Models"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "models",
+          "note"
+        ],
+        "title": "ModelsDocument",
+        "type": "object"
+      },
       "PredictRequest": {
         "additionalProperties": false,
         "description": "A description and what a filer would give at publication, scored as a CVE at its day 0. No\nvalue is coerced: a number sent as text or a boolean sent as a number is refused.",
@@ -3251,6 +3291,57 @@
         "summary": "The lock digests, the limits, the statement, the NVD notice and the advisory attribution",
         "tags": [
           "service"
+        ]
+      }
+    },
+    "/v1/models": {
+      "get": {
+        "operationId": "get_models_v1_models_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ModelsDocument"
+                }
+              }
+            },
+            "description": "The registry export of the loaded release, or null when it carries none"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "The registered models, their chosen versions and the evidence of how each was judged",
+        "tags": [
+          "predict"
         ]
       }
     },

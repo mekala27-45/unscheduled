@@ -120,6 +120,14 @@ class PredictRequest(StrictModel):
     reserved_days: Annotated[int | None, Field(ge=0, le=36500)] = None
 
 
+class ModelsDocument(Envelope):
+    """The registry export the loaded bundle carried, with the evidence of how each model was chosen
+    and judged; models is null when the bundle carried none."""
+
+    models: dict[str, JsonValue] | None
+    note: str
+
+
 class PredictResponse(Envelope):
     made_at: UtcDatetime
     note: str

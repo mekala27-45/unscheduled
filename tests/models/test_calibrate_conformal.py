@@ -92,3 +92,13 @@ def test_the_threshold_and_the_sets_on_a_hand_case() -> None:
     assert conformal.threshold(np.array([0.1, 0.2]), 0.9) == 0.2
     member = conformal.sets(np.array([[0.6, 0.3, 0.1], [0.2, 0.5, 0.3]]), 0.7)
     assert member.tolist() == [[True, True, False], [False, True, True]]
+
+
+def test_the_reliability_curve_sums_to_the_ece() -> None:
+    rng = np.random.default_rng(9)
+    confidence = rng.uniform(0.25, 1.0, 3000)
+    correct = (rng.random(3000) < confidence**1.3).astype(float)
+    bins = calibrate.reliability(confidence, correct)
+    assert sum(b["rows"] for b in bins) == 3000
+    rebuilt = sum(b["rows"] / 3000 * abs(b["confidence"] - b["accuracy"]) for b in bins)
+    assert rebuilt == pytest.approx(calibrate.ece(confidence, correct))

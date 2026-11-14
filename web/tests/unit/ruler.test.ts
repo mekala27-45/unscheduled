@@ -73,3 +73,24 @@ describe("the ruler on the fixture timeline", () => {
     expect(layoutRuler(events, now)).toEqual(layoutRuler([...events].reverse(), now));
   });
 });
+
+describe("the prediction tick", () => {
+  it("sits at publication, after the published tick, with the title it brings", () => {
+    const published = events.find((e) => e.kind === "published");
+    expect(published).toBeDefined();
+    const prediction = {
+      at: published!.at,
+      kind: "prediction" as const,
+      source: "unscheduled-band version 3, a prediction and not an NVD value",
+      value: "62%, set HIGH or CRITICAL",
+      analyzed: null,
+      title: "Predicted CRITICAL",
+    };
+    const layout = layoutRuler([...events, prediction], now);
+    const ticks = layout.ticks.filter((t) => t.x === 0);
+    expect(ticks.map((t) => t.kind).slice(0, 2)).toEqual(["published", "prediction"]);
+    const tick = layout.ticks.find((t) => t.kind === "prediction");
+    expect(tick?.title).toBe("Predicted CRITICAL");
+    expect(tick?.value).toBe("62%, set HIGH or CRITICAL");
+  });
+});

@@ -42,6 +42,8 @@ export const useCvePages = (query: CveQuery) =>
     getNextPageParam: (last) => last.next_cursor,
   });
 
+export const useModels = () => useQuery({ queryKey: ["models"], queryFn: ({ signal }) => api.models(signal) });
+
 export const useBacklog = () => useQuery({ queryKey: ["backlog"], queryFn: ({ signal }) => api.backlog(signal) });
 
 export const useProducts = () => useQuery({ queryKey: ["products"], queryFn: ({ signal }) => api.products(signal) });

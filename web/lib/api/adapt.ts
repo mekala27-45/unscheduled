@@ -19,6 +19,9 @@ import type {
   Lock,
   MatchResult,
   Meta,
+  ModelsEvidence,
+  Prediction,
+  Predictions,
   Product,
   ProductList,
   QuarantineCount,
@@ -217,6 +220,40 @@ export function toCve(r: S["CveRecord"]): Cve {
     kev: { listed: text(value("kev_date_added")) !== null, date_added: text(value("kev_date_added")), ransomware: text(value("kev_ransomware")) },
     epss: { score: num(value("epss_score")), since: text(value("epss_date")) },
     fields,
+    predictions: r.predictions ? toPredictions(r.predictions) : null,
+    predictions_note: r.predictions_note ?? null,
+  };
+}
+
+function predictedValue(v: unknown): Prediction["value"] {
+  if (v === null || v === undefined) return null;
+  if (typeof v === "string" || typeof v === "number") return v;
+  if (Array.isArray(v)) return texts(v);
+  if (isRecord(v)) {
+    const out: Record<string, number> = {};
+    for (const [k, x] of Object.entries(v)) if (typeof x === "number") out[k] = x;
+    return out;
+  }
+  return null;
+}
+
+export function toPredictions(p: S["Predictions"]): Predictions {
+  return {
+    batch: p.batch,
+    made_on: p.made_on ?? null,
+    window: p.window ?? null,
+    note: p.note,
+    values: p.values.map((v) => ({
+      field: v.field,
+      model: v.model,
+      version: v.version ?? null,
+      role: v.role ?? null,
+      value: predictedValue(v.value),
+      probability: v.probability ?? null,
+      probabilities: v.probabilities ?? null,
+      set: v.set ?? null,
+      detail: isRecord(v.detail) ? v.detail : null,
+    })),
   };
 }
 
@@ -316,6 +353,7 @@ export function toSummary(c: S["CveSummary"]): CveSummary {
     filer_cvss: v40 ?? c.filer_cvss31_score ?? null,
     filer_severity: (v40 !== null ? c.filer_cvss40_band : c.filer_cvss31_band) ?? null,
     epss: c.epss_score ?? null,
+    predicted_band: c.predicted_band ?? null,
   };
 }
 
@@ -333,6 +371,10 @@ function isQuestion(v: unknown): v is BacklogQuestion {
     (v.kind === "line" || v.kind === "bar") &&
     v.series.every((s) => isRecord(s) && Array.isArray(s.values) && s.values.length === (v.x as unknown[]).length)
   );
+}
+
+export function toModels(m: S["ModelsDocument"]): ModelsEvidence {
+  return { data_version: m.data_version, statement: m.statement, note: m.note, document: isRecord(m.models) ? m.models : null };
 }
 
 export function toBacklog(b: S["Backlog"]): Backlog {

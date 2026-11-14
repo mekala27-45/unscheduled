@@ -100,6 +100,7 @@ def c1(
         "comparator": points["primary"]["fill_comparator"],
         "kappa": kappas,
         "ece": ece,
+        "reliability": calibrate.reliability(confidence, correct),
         "threshold": threshold,
         "verdict": "met" if met else "not met",
     }

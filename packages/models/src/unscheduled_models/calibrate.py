@@ -135,6 +135,31 @@ def ece(confidence: np.ndarray, correct: np.ndarray, bins: int = ECE_BINS) -> fl
     return float(total)
 
 
+def reliability(
+    confidence: np.ndarray, correct: np.ndarray, bins: int = ECE_BINS
+) -> list[dict[str, float | int]]:
+    """The reliability curve the ECE sums over: per equal width bin of the confidence, its edges, its
+    rows, its mean confidence and its accuracy; an empty bin is left out."""
+    confidence = np.asarray(confidence, dtype=np.float64)
+    correct = np.asarray(correct, dtype=np.float64)
+    edges = np.linspace(0.0, 1.0, bins + 1)
+    index = np.clip(np.digitize(confidence, edges[1:-1], right=True), 0, bins - 1)
+    out: list[dict[str, float | int]] = []
+    for b in range(bins):
+        mask = index == b
+        if mask.any():
+            out.append(
+                {
+                    "low": round(float(edges[b]), 6),
+                    "high": round(float(edges[b + 1]), 6),
+                    "rows": int(mask.sum()),
+                    "confidence": float(confidence[mask].mean()),
+                    "accuracy": float(correct[mask].mean()),
+                }
+            )
+    return out
+
+
 def ece_interval(
     confidence: np.ndarray,
     correct: np.ndarray,

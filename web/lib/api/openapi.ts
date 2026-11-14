@@ -164,6 +164,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/models": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The registered models, their chosen versions and the evidence of how each was judged */
+        get: operations["get_models_v1_models_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/predict": {
         parameters: {
             query?: never;
@@ -604,6 +621,23 @@ export interface components {
             statement: string;
             /** Version */
             version: string;
+        };
+        /**
+         * ModelsDocument
+         * @description The registry export the loaded bundle carried, with the evidence of how each model was chosen
+         *     and judged; models is null when the bundle carried none.
+         */
+        ModelsDocument: {
+            /** Data Version */
+            data_version: string;
+            /** Models */
+            models: {
+                [key: string]: components["schemas"]["JsonValue"];
+            } | null;
+            /** Note */
+            note: string;
+            /** Statement */
+            statement: string;
         };
         /**
          * PredictRequest
@@ -1509,6 +1543,53 @@ export interface operations {
             };
             /** @description The server failed while answering */
             500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_models_v1_models_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The registry export of the loaded release, or null when it carries none */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ModelsDocument"];
+                };
+            };
+            /** @description The sync was called too often; This client has used its daily budget */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The server failed while answering */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };

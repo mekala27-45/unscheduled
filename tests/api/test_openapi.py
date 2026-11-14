@@ -22,6 +22,7 @@ ROUTES = {
     ("get", "/v1/products/{product_id}/exposure"),
     ("post", "/v1/match"),
     ("post", "/v1/predict"),
+    ("get", "/v1/models"),
     ("get", "/v1/legacy/report.csv"),
     ("post", "/internal/sync"),
     ("get", "/internal/sync"),

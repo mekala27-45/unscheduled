@@ -115,6 +115,12 @@ def test_the_record_carries_each_prediction_with_its_model_and_uncertainty(predi
     )
 
 
+def test_the_models_route_serves_the_registry_export(predicted: TestClient) -> None:
+    body = predicted.get("/v1/models").json()
+    assert body["models"]["batch"] == "abc123def456"
+    assert body["models"]["models"][0]["name"] == "unscheduled-band"
+
+
 def test_a_cve_without_a_prediction_says_why(predicted: TestClient) -> None:
     train = predicted.get("/v1/cves/CVE-2021-90001").json()
     assert train["predictions"] is None and "fit on CVEs published before 2024" in train["predictions_note"]

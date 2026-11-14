@@ -1,5 +1,5 @@
 import createClient, { type Client } from "openapi-fetch";
-import { toBacklog, toCve, toCveList, toExposure, toHealth, toMatch, toMeta, toProducts, toTimeline } from "./adapt";
+import { toBacklog, toCve, toCveList, toExposure, toHealth, toMatch, toMeta, toModels, toProducts, toTimeline } from "./adapt";
 import type { components, paths } from "./openapi";
 import type * as View from "./view";
 
@@ -9,6 +9,8 @@ export type Meta = View.Meta;
 export type Lock = View.Lock;
 export type Cve = View.Cve;
 export type CveField = View.CveField;
+export type Prediction = View.Prediction;
+export type Predictions = View.Predictions;
 export type CveSummary = View.CveSummary;
 export type CveList = View.CveList;
 export type Timeline = View.Timeline;
@@ -20,6 +22,7 @@ export type Product = View.Product;
 export type Exposure = View.Exposure;
 export type Finding = View.Finding;
 export type MatchResult = View.MatchResult;
+export type ModelsEvidence = View.ModelsEvidence;
 export type CveQuery = NonNullable<paths["/v1/cves"]["get"]["parameters"]["query"]>;
 
 type S = components["schemas"];
@@ -113,6 +116,14 @@ export const api = {
       (c) => c.GET("/health", { signal }),
       (v) => enveloped(v) && hasStrings(v, "status") && hasRecords(v, "database", "data", "release"),
       toHealth,
+    ),
+
+  models: (signal?: AbortSignal) =>
+    run<S["ModelsDocument"], ModelsEvidence>(
+      "/v1/models",
+      (c) => c.GET("/v1/models", { signal }),
+      (v) => enveloped(v) && isRecord(v) && "models" in v,
+      toModels,
     ),
 
   meta: (signal?: AbortSignal) =>

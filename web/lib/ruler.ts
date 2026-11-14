@@ -46,7 +46,7 @@ export type RulerLayout = {
 };
 
 const ORDER: Record<TimelineEvent["kind"], number> = {
-  published: 0, filer_score: 1, ghsa_advisory: 2, nvd_status: 3, cisa_adp: 4, exploit_code: 5, kev_listed: 6, rejected: 7,
+  published: 0, prediction: 1, filer_score: 2, ghsa_advisory: 3, nvd_status: 4, cisa_adp: 5, exploit_code: 6, kev_listed: 7, rejected: 8,
 };
 
 export function titleOf(e: TimelineEvent): string {
@@ -59,6 +59,7 @@ export function titleOf(e: TimelineEvent): string {
     case "exploit_code": return "Exploit code";
     case "ghsa_advisory": return "GitHub advisory";
     case "rejected": return "Rejected";
+    case "prediction": return e.title ?? "Prediction";
   }
 }
 

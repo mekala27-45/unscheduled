@@ -90,6 +90,7 @@ def calibrate_fill(
                 conf, correct = calibrate.top_label(q, truth)
                 point, low, high = calibrate.ece_interval(conf, correct, seed)
                 entry[f"ece_{when}"] = {"value": point, "low": low, "high": high}
+                entry[f"reliability_{when}"] = calibrate.reliability(conf, correct)
         out[task.name] = entry
         calibrated[task.name] = scaled
         calibrated[f"{task.name}__truth"] = truth
