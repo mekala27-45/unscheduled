@@ -1,0 +1,62 @@
+{
+ "as_of": "2026-11-13",
+ "values": {
+  "models.gpu.hours_left": {
+   "value": 8.0,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/gpu_hours.py",
+    "population": "GPU requests under requests/gpu/ for 2026-11",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.gpu.hours_month": {
+   "value": 8.0,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/gpu_hours.py",
+    "population": "GPU requests under requests/gpu/ for 2026-11",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.gpu.hours_used": {
+   "value": 0.0,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/gpu_hours.py",
+    "population": "GPU requests under requests/gpu/ for 2026-11",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.gpu.requests": {
+   "value": 1,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/gpu_hours.py",
+    "population": "GPU requests under requests/gpu/ for 2026-11",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.gpu.runs": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/gpu_hours.py",
+    "population": "GPU requests under requests/gpu/ for 2026-11",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  }
+ },
+ "tables": {},
+ "figures": {}
+}

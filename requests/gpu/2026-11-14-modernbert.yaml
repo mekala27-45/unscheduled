@@ -1,0 +1,15 @@
+# A GPU run is declared in a file here before it starts, with the hours it declares and the hours
+# left in its month under config/budgets.yaml (evaluation/phase2_plan.yaml, gpu). The file is
+# updated with the hours used when the run ends, and never deleted.
+run: ModernBERT multi-task fill model, Phase 2 step eight
+declared_on: 2026-11-14
+month: 2026-11
+where: a Kaggle notebook on one T4, started from the repository with KAGGLE_USERNAME and KAGGLE_KEY
+hours_declared: 3
+hours_left_before: 8
+hours_used: 0
+status: not run
+reason: >-
+  The probe of 14 November found KAGGLE_USERNAME and KAGGLE_KEY unset in the repository secrets, so
+  step eight ran the CPU fallback the plan names (DECISIONS.md, step eight takes the fallback) and
+  this request stands unused.
