@@ -1,0 +1,4 @@
+# A false positive of the generic-api-key rule: the name of rapidfuzz's token set ratio followed by
+# a keyword argument, in a commit already pushed (history is never rewritten). The line now calls
+# the ratio by another name.
+afec4d9214ed10cc552ec8ecb8c7175221702973:packages/models/src/unscheduled_models/product.py:generic-api-key:149

@@ -58,6 +58,8 @@ TOP = 10
 VENDOR_NEIGHBOURS = 3
 POOL = 300
 THRESHOLDS = (50, 60, 70, 80, 90, 100)
+# The ratio the floor ranks by: the overlap of the two strings' word sets (rapidfuzz).
+RATIO = fuzz.token_set_ratio
 _QUOTED = re.compile(r"\\(.)")
 _NON_WORD = re.compile(r"[^0-9a-z]+")
 
@@ -146,18 +148,18 @@ class Floor:
                     else [
                         v
                         for v, _, _ in process.extract(
-                            vendor, self.vendors, scorer=fuzz.token_set_ratio, limit=VENDOR_NEIGHBOURS
+                            vendor, self.vendors, scorer=RATIO, limit=VENDOR_NEIGHBOURS
                         )
                     ]
                 )
                 rows = [i for v in matched for i in self.by_vendor[v]]
                 for i in rows:
-                    s = fuzz.token_set_ratio(query, self.full[i])
+                    s = RATIO(query, self.full[i])
                     if s > scores.get(i, -1.0):
                         scores[i] = s
             else:
                 for _, s, i in process.extract(
-                    product, self.products, scorer=fuzz.token_set_ratio, limit=POOL
+                    product, self.products, scorer=RATIO, limit=POOL
                 ):
                     if s > scores.get(i, -1.0):
                         scores[i] = s
