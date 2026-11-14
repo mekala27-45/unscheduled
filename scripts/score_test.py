@@ -36,6 +36,7 @@ from scripts.train_floors import plan_seed
 
 ORIGIN = "scripts/score_test.py"
 EPSS_DAYS = (1, 7, 30)
+RESAMPLES = evaluate.RESAMPLES  # the plan's 2,000; a test of the code may lower it
 SLICE_MIN_ROWS = 30
 SLICE_TOP = 20
 
@@ -82,11 +83,13 @@ def c1(
     model_guess = np.array([order[classes[i]] for i in p_model.argmax(axis=1)])
     floor_guess = np.array([order[floor_classes[i]] for i in p_floor.argmax(axis=1)])
     keys = [str(f) for f in population.get_column("filer").fill_null("(none)").to_list()]
-    kappas = evaluate.kappa_paired(keys, truth, model_guess, floor_guess, len(sets.BANDS), seed)
+    kappas = evaluate.kappa_paired(
+        keys, truth, model_guess, floor_guess, len(sets.BANDS), seed, resamples=RESAMPLES
+    )
     scaled = calibrate.scale(p_model, float(points["temperatures"][points["primary"]["fill"]]["band"]))
     class_truth = np.array([classes.index(b) for b in population.get_column("band").to_list()])
     confidence, correct = calibrate.top_label(scaled, class_truth)
-    ece = evaluate.ece_clustered(keys, confidence, correct, seed)
+    ece = evaluate.ece_clustered(keys, confidence, correct, seed, resamples=RESAMPLES)
     threshold = criteria["threshold"]
     met = (
         kappas["model"]["value"] >= threshold["kappa_min"]
@@ -135,7 +138,7 @@ def c2(
     model = joined.get_column(points["primary"]["exploitation"]).cast(pl.Float64).to_numpy()
     epss = epss_scores(bronze, joined.get_column("cve_id").to_list())
     by = {"model": model, **{f"epss_day_{d}": epss[d] for d in EPSS_DAYS}}
-    recalls = evaluate.recall_paired(truth, by, seed, reference="model")
+    recalls = evaluate.recall_paired(truth, by, seed, reference="model", resamples=RESAMPLES)
     met = recalls["model"]["value"] >= criteria["threshold"]["recall_at_top5_min"]
     return {
         "criterion": "C2",
@@ -290,7 +293,7 @@ def slices(test: pl.DataFrame, models: Path, points: dict[str, Any], seed: int) 
         chosen = sorted(counts, key=lambda g: (-counts[g], g))
         chosen = chosen if family in ("filer_type", "published_year") else chosen[:SLICE_TOP]
         out["fill"][family] = evaluate.slice_differences(
-            groups, chosen, qwk, a, b, truth, seed, SLICE_MIN_ROWS
+            groups, chosen, qwk, a, b, truth, seed, SLICE_MIN_ROWS, resamples=RESAMPLES
         )
     population = rank.population(test)
     scores = population.join(
@@ -306,12 +309,120 @@ def slices(test: pl.DataFrame, models: Path, points: dict[str, Any], seed: int) 
         groups = scores.get_column(family).fill_null("(none)").cast(pl.String).to_list()
         chosen = sorted(set(groups))
         out["exploitation"][family] = evaluate.slice_differences(
-            groups, chosen, ap, lgbm, base, listed, seed, SLICE_MIN_ROWS
+            groups, chosen, ap, lgbm, base, listed, seed, SLICE_MIN_ROWS, resamples=RESAMPLES
         )
     return out
 
 
-def manifest_part(c1r: dict[str, Any], c2r: dict[str, Any], as_of: str) -> dict[str, Any]:
+def _finite(value: Any) -> bool:
+    return isinstance(value, int | float) and not isinstance(value, bool) and np.isfinite(float(value))
+
+
+def secondary_values(m: ManifestBuilder, record: dict[str, Any]) -> None:
+    """The secondary results and the slices of the single scoring, for the cards and the report."""
+    pop = "test window CVEs with the label"
+    for model, per in record["secondary"]["fill"].items():
+        for task, entry in per.items():
+            for key, value in entry.items():
+                if key != "rows" and _finite(value):
+                    m.value(
+                        f"models.test.fill.{model}.{task}.{key}",
+                        float(value),
+                        "float3",
+                        origin=ORIGIN,
+                        population=f"{pop}: {model}, {task}",
+                        source="models",
+                    )
+    for model, entry in record["secondary"]["exploitation"].items():
+        for key in ("average_precision", "auroc", "brier_calibrated"):
+            m.value(
+                f"models.test.exploit.{model}.{key}",
+                float(entry[key]),
+                "float3",
+                origin=ORIGIN,
+                population=f"test window CVEs, Q03 left out: {model}",
+                source="models",
+            )
+    for model, entry in record["secondary"]["survival"].items():
+        m.value(
+            f"models.test.survival.{model}.concordance",
+            float(entry["concordance"]),
+            "float3",
+            origin=ORIGIN,
+            population=f"test window CVEs, Q03 left out: {model}",
+            source="models",
+        )
+    for name, entry in record["secondary"]["product"].items():
+        for key, value in entry.items():
+            if key.startswith(("recall_at_", "hit_at_")) and _finite(value):
+                m.value(
+                    f"models.test.product.{name}.{key}",
+                    float(value),
+                    "float3",
+                    origin=ORIGIN,
+                    population=f"test window CVEs with a vulnerable product in their NVD configurations: {name}",
+                    source="models",
+                )
+    for head, entry in record["secondary"]["conformal"].items():
+        m.value(
+            f"models.test.conformal.{head}.coverage",
+            float(entry["coverage"]),
+            "pct1",
+            origin=ORIGIN,
+            population=f"{pop}: the primary's 90 percent set for {head}",
+            source="models",
+        )
+        m.value(
+            f"models.test.conformal.{head}.mean_size",
+            float(entry["mean_size"]),
+            "float2",
+            origin=ORIGIN,
+            population=f"{pop}: the primary's 90 percent set for {head}",
+            source="models",
+        )
+    band = record["secondary"]["conformal"].get("band")
+    if band:
+        m.table(
+            "models.test.conformal.band_by_filer_type",
+            ["Filer type", "CVEs", "Coverage", "Mean set size"],
+            ["text", "int", "pct1", "float2"],
+            [
+                [t, int(e["rows"]), float(e["coverage"]), float(e["mean_size"])]
+                for t, e in band["by_filer_type"].items()
+                if int(e["rows"]) > 0
+            ],
+            origin=ORIGIN,
+            population="test window CVEs with an NVD band, by the filer type of the Phase 1 typing",
+            source="models",
+        )
+    for kind, families in record["slices"].items():
+        for family, rows in families.items():
+            tested = [r for r in rows if r.get("tested")]
+            m.table(
+                f"models.test.slices.{kind}.{family}",
+                ["Slice", "CVEs", "Model", "Comparator", "Difference", "Adjusted p", "Significant"],
+                ["text", "int", "float3", "float3", "sfloat3", "float3", "text"],
+                [
+                    [
+                        str(r["slice"]),
+                        int(r["rows"]),
+                        float(r["a"]) if _finite(r["a"]) else None,
+                        float(r["b"]) if _finite(r["b"]) else None,
+                        float(r["difference"]) if _finite(r["difference"]) else None,
+                        float(r["p_adjusted"]),
+                        "yes" if r["significant"] else "no",
+                    ]
+                    for r in tested
+                ],
+                origin=ORIGIN,
+                population=f"test window CVEs by {family}, Benjamini-Hochberg at 0.05 within the family",
+                source="models",
+            )
+
+
+def manifest_part(
+    c1r: dict[str, Any], c2r: dict[str, Any], as_of: str, record: dict[str, Any] | None = None
+) -> dict[str, Any]:
     m = ManifestBuilder(as_of)
     pop1, pop2 = "test window CVEs with an NVD CVSS 3.1 band", "test window CVEs, Q03 left out"
     for key, value, fmt, population in (
@@ -319,6 +430,13 @@ def manifest_part(c1r: dict[str, Any], c2r: dict[str, Any], as_of: str) -> dict[
         ("c1.kappa_low", c1r["kappa"]["model"]["low"], "float3", pop1),
         ("c1.kappa_high", c1r["kappa"]["model"]["high"], "float3", pop1),
         ("c1.floor_kappa", c1r["kappa"]["floor"]["value"], "float3", pop1),
+        ("c1.floor_kappa_low", c1r["kappa"]["floor"]["low"], "float3", pop1),
+        ("c1.floor_kappa_high", c1r["kappa"]["floor"]["high"], "float3", pop1),
+        ("c1.ece_low", c1r["ece"]["low"], "float3", pop1),
+        ("c1.ece_high", c1r["ece"]["high"], "float3", pop1),
+        ("c1.clusters", c1r["kappa"]["clusters"], "int", pop1),
+        ("c2.rows", c2r["recall_at_top5"]["rows"], "int", pop2),
+        ("c2.top", c2r["recall_at_top5"]["top"], "int", pop2),
         ("c1.difference", c1r["kappa"]["difference"]["value"], "sfloat3", pop1),
         ("c1.difference_low", c1r["kappa"]["difference"]["low"], "sfloat3", pop1),
         ("c1.difference_high", c1r["kappa"]["difference"]["high"], "sfloat3", pop1),
@@ -349,6 +467,18 @@ def manifest_part(c1r: dict[str, Any], c2r: dict[str, Any], as_of: str) -> dict[
             population=f"{pop2}: the model against EPSS at day {d}",
             source="models",
         )
+        diff = c2r["recall_at_top5"][f"model_minus_epss_day_{d}"]
+        for suffix, value in (("", diff["value"]), ("_low", diff["low"]), ("_high", diff["high"])):
+            m.value(
+                f"models.test.c2.difference_day_{d}{suffix}",
+                float(value),
+                "spct1",
+                origin=ORIGIN,
+                population=f"{pop2}: the model's recall less EPSS at day {d}'s, paired",
+                source="models",
+            )
+    if record is not None:
+        secondary_values(m, record)
     return m.dump()
 
 
@@ -405,7 +535,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     (out / "c2.json").write_text(json.dumps(c2r, indent=1) + "\n", encoding="utf-8")
     (out / "test_scoring.json").write_text(json.dumps(record, indent=1) + "\n", encoding="utf-8")
     sets_record = json.loads((out / "sets.json").read_text(encoding="utf-8"))
-    part = manifest_part(c1r, c2r, str(sets_record["lake_cut"])[:10])
+    part = manifest_part(c1r, c2r, str(sets_record["lake_cut"])[:10], record)
     (root / "results" / "parts" / "test.json").write_text(json.dumps(part, indent=1) + "\n", encoding="utf-8")
     print(
         f"score: C1 {c1r['verdict']} (kappa {c1r['kappa']['model']['value']:.3f}), C2 {c2r['verdict']} (recall {c2r['recall_at_top5']['model']['value']:.3f})"
