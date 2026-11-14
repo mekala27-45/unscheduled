@@ -13,8 +13,8 @@ start inside what the platform allows; otherwise it is served from the batch.
 
 ## Decision
 
-**The batch.** scripts/predict_serving.py scores every CVE of the development, test and shadow
-windows with the chosen version of each registered model: the band, the eight base metrics and the
+The batch comes from scripts/predict_serving.py, which scores every CVE of the development, test and
+shadow windows with the chosen version of each registered model: the band, the eight base metrics and the
 CWE with their probabilities and conformal sets, the exploitation score with its isotonic
 probability and percentile, the chance of a KEV listing within 30 days, 90 days and 180 days, and the
 likely products. A train window CVE gets none, since every model was fit on it, and the gap window
@@ -22,7 +22,7 @@ gets none, since no model uses it. The predictions travel in the serving bundle 
 table, and the sync loads them like every other table, measuring each chunk against the storage
 ceiling before it writes; an API answer without a prediction says which of these reasons applies.
 
-**On a request.** POST /v1/predict scores a submitted description, with the filer values a filer
+On a request, POST /v1/predict scores a submitted description, with the filer values a filer
 would give, through the band floor and LightGBM, exported to ONNX and run by onnxruntime. Their inputs
 are built without scikit-learn, from specs scripts/export_onnx.py checks against scikit-learn before
 writing them, and LightGBM reads the band projection of the same floor it was trained on (DECISIONS.md,
@@ -35,7 +35,7 @@ On the same sample of development CVEs, the band projection the API computes dif
 the exploitation run used by at most 2.7e-07, and LightGBM's score by at most
 2.9e-08.
 
-**The text model stays in the batch.** It needs the embedding model and its tokenizer at request time,
+The text model stays in the batch: it needs the embedding model and its tokenizer at request time,
 and the batch already holds a prediction for every CVE the API serves; a request scores text that is
 not a CVE yet, where the floor's answer is labeled as the floor's.
 

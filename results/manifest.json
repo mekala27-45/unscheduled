@@ -6657,7 +6657,7 @@
    }
   },
   "build.phase2.checklist_done": {
-   "value": 6,
+   "value": 7,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/build_manifest.py",
@@ -16130,7 +16130,7 @@
     ],
     [
      16,
-     "not done",
+     "done",
      "The docs, ADRs 0008 to 0010, report/models.md and notebooks 04 to 06; the humanizer pass done",
      "docs/models.md, docs/adr/0008-predictions-from-a-batch.md, docs/adr/0009-the-gpu-as-a-committed-request.md, docs/adr/0010-the-fill-model-earns-its-place.md, report/models.md, notebooks/04_the_random_split.ipynb, notebooks/05_reading_the_misses.ipynb, notebooks/06_epss_on_day_30.ipynb, results/humanizer.json"
     ],

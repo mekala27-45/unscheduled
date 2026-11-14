@@ -5,10 +5,10 @@ the new ones, so a score on the CVEs it analyzed says less about the ones it ski
 the NVD did analyze are weighted by the odds that a CVE like them was skipped, from the Phase 1 domain
 classifier, and the band kappa is shown plain and weighted, never one without the other.
 {% if has("models.reweighting.fallback.plain_qwk") %}
-For the primary model's band: {{ v("models.reweighting.fallback.plain_qwk") }} plain and
+The primary model's band kappa is {{ v("models.reweighting.fallback.plain_qwk") }} plain and
 {{ v("models.reweighting.fallback.weighted_qwk") }} weighted, on an effective sample of
-{{ v("models.reweighting.fallback.ess") }} CVEs, against {{ v("models.fallback.band.dev") }} on development; for the floor,
-{{ v("models.reweighting.floors.plain_qwk") }} and {{ v("models.reweighting.floors.weighted_qwk") }}.
+{{ v("models.reweighting.fallback.ess") }} CVEs, against {{ v("models.fallback.band.dev") }} on development; the floor's is
+{{ v("models.reweighting.floors.plain_qwk") }} plain and {{ v("models.reweighting.floors.weighted_qwk") }} weighted.
 {% else %}
 The weighted view is not in the manifest yet.
 {% endif %}
@@ -18,4 +18,8 @@ On development the floor's band agrees with the NVD at {{ v("models.floors.refer
 on the CVEs whose filer gave a band and at {{ v("models.floors.reference.floor_qwk_without_filer") }} on
 the rest.
 {% endif %}
-The slices by filer and filer type in the band card show where the model stands on each.
+{% if self_card is defined and self_card == "band" %}
+The slices above, by filer and by filer type, show where the model stands on each.
+{% else %}
+The band card's slices by filer and by filer type show where the model stands on each.
+{% endif %}

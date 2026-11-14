@@ -57,7 +57,7 @@ is 0.048 before scaling and
 
 ## The slices
 
-The band kappa of the model against the floor in each slice, with Benjamini-Hochberg at the plan's
+Each slice compares the model's band kappa with the floor's, with Benjamini-Hochberg at the plan's
 level within each family.
 
 The slices are computed in the single test scoring, which has not run yet.
@@ -68,15 +68,15 @@ The NVD's labels are not a random sample of CVEs. Since 15 April 2026 it analyze
 the new ones, so a score on the CVEs it analyzed says less about the ones it skipped. The shadow CVEs
 the NVD did analyze are weighted by the odds that a CVE like them was skipped, from the Phase 1 domain
 classifier, and the band kappa is shown plain and weighted, never one without the other.
-For the primary model's band: 0.379 plain and
+The primary model's band kappa is 0.379 plain and
 0.399 weighted, on an effective sample of
-933 CVEs, against 0.594 on development; for the floor,
-0.453 and 0.442.
+933 CVEs, against 0.594 on development; the floor's is
+0.453 plain and 0.442 weighted.
 The filer's own values are features, and they are missing for many CVEs.
 On development the floor's band agrees with the NVD at 0.719
 on the CVEs whose filer gave a band and at 0.574 on
 the rest.
-The slices by filer and filer type in the band card show where the model stands on each.
+The slices above, by filer and by filer type, show where the model stands on each.
 
 ## The limits
 
@@ -84,7 +84,8 @@ The slices by filer and filer type in the band card show where the model stands 
   is agreement with those habits.
 - A CVE with a short description and no filer vector gives the model little to read; its
   probabilities and the width of its set are where that shows.
-- The model was chosen once and scored once with one seed; one seed is one draw.
+- The model was fit once and scored once, so its intervals carry the sampling error of test and not
+  the variation between training runs.
 - It never sees anything after day 0, so a later fact that changes the severity, such as a public
   exploit, does not move its band.
 

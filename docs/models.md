@@ -13,7 +13,7 @@ A model may read only what was public at the end of the day a CVE was published 
 are built from the as-of facts of the lake: the description the NVD change history held at day 0,
 the filer's values from the CVE record as published, the CISA values only when known by then, the
 affected entries, the exploit code signal and the days from reservation to publication. The labels
-are what the NVD and KEV say at the lake cut. Never a feature: EPSS at any offset; any NVD value; KEV; anything known after day 0.
+are what the NVD and KEV say at the lake cut. These are never features: EPSS at any offset; any NVD value; KEV; anything known after day 0.
 
 The four windows hold 220,803 train, 39,924
 development, 63,304 test and 78,676 shadow CVEs.
@@ -141,8 +141,8 @@ the CVE's joined text. A CVE is offered only the names the NVD had created by it
 
 Each fill head is scaled by one temperature fit on development by negative log likelihood, and the
 exploitation score is mapped by an isotonic regression fit on development. The calibration error is
-taken over equal width bins of the top label probability, with a bootstrap interval. Split conformal
-sets with adaptive sets are fit on development at a target coverage of 0.9,
+taken over equal width bins of the top label probability, with a bootstrap interval. Conformal sets,
+split conformal with adaptive prediction sets, are fit on development at a target coverage of 0.9,
 and their coverage is measured on test, overall and by filer type, because test is later
 than development and the coverage a set promises holds only for rows like the ones it was fit on.
 
@@ -170,11 +170,11 @@ CVEs the NVD analyzes after its change are not like the ones it analyzed in 2024
 Test is scored once, by scripts/score_test.py, after the operating points are frozen and hashed into
 the registration. C1 asks: For test CVEs the NVD analyzed, the predicted severity band agrees with the NVD band at a quadratic weighted kappa of at least 0.60, beats the TF-IDF floor with the lower bound of the paired 95 percent interval above zero, and has an expected calibration error at or below 0.05.
 
-Not scored yet.
+Test has not been scored yet.
 
 C2 asks: Scored on the day of publication, the top 5 percent by the exploitation score holds at least half of the test CVEs listed in KEV within 180 days. EPSS at days 1, 7 and 30 is reported beside it, and a difference inside the interval is a tie.
 
-Not scored yet.
+Test has not been scored yet.
 
 ## The registry
 
@@ -193,7 +193,7 @@ The plan runs ModernBERT on a Kaggle T4 under a monthly ceiling in config/budget
 declares its hours and the hours left in a committed file under requests/gpu/ before it starts. No
 run was made in this phase: the Kaggle secrets are absent, so the request stands as written and the
 named fallback ran on CPU instead (DECISIONS.md, step eight takes the fallback).
-Hours used: 0.0 of 8.0 this month.
+The ledger counts 0.0 of this month's 8.0 GPU hours as used.
 
 ## The misses, read
 
@@ -218,6 +218,6 @@ without a filer band and the slices by filer show the model's. KEV is a lower bo
 and nothing here fixes that; the exploitation card says so. EPSS at day 7 and day 30 has seen more
 days than the model, so C2 names those days and calls a difference whose interval holds zero a tie.
 One seed is one draw: the intervals carry the sampling error of test, not the variation between
-seeds, and each card's limits say so.
+training runs, and each card's limits say so.
 
 > unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.

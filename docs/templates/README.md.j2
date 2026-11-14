@@ -2,7 +2,29 @@
 
 Triage for the CVEs the NVD no longer analyzes.
 
-{% if open_items() %}
+The text model is the CPU fallback the plan names, frozen bge-small embeddings with a logistic head
+per task, because the Kaggle secrets are absent; ModernBERT waits for them. The model registry is
+MLflow's SQLite store, written from the committed run records, because no Databricks workspace is
+connected.
+
+{% if has("checklist.phase2") %}
+{% set p2 = namespace(open=[]) %}
+{% for row in rows("checklist.phase2") %}
+{% if row[1] != "done" %}
+{% set p2.open = p2.open + [row] %}
+{% endif %}
+{% endfor %}
+{% if p2.open %}
+Phase 1 is complete and tagged v0.1.0. Phase 2 of 5, the models, is in progress: {{ v("build.phase2.checklist_done") }} of
+{{ v("build.phase2.checklist_total") }} checklist lines are done. Still missing:
+
+{% for row in p2.open %}
+- {{ row[2] }}
+{% endfor %}
+{% else %}
+Phase 2 of 5 is complete, and RESULTS.md has the evidence for every checklist line.
+{% endif %}
+{% elif open_items() %}
 Phase 1 of 5 is in progress: {{ v("build.checklist_done") }} of {{ v("build.checklist_total") }} checklist lines are done. Still missing:
 
 {% for row in open_items() %}
@@ -27,6 +49,8 @@ person approves every plan.
 - The site, with the console, the report and the docs: https://unscheduled-triage.vercel.app
 - The API, no key needed: https://unscheduled-api.vercel.app. Every route is on the site at
   /docs/api and in openapi.json.
+- The models, each value labeled as a prediction: report/models.md, with a card for each in
+  report/models/, and the method in docs/models.md.
 - The first finding: of the CVEs published from 2020 to 2024, {{ v("backlog.q1.share_30d_before_2025") }} were analyzed by
   the NVD within 30 days; of those published since 15 April 2026, {{ v("backlog.q1.share_30d_since_change") }}
   (report/backlog.md, Q1).

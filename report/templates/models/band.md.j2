@@ -84,14 +84,16 @@ promises holds only for CVEs like the ones it was fit on; by filer type:
 
 ## The slices
 
-The band kappa of the model against the floor in each slice, with Benjamini-Hochberg at the plan's
+Each slice compares the model's band kappa with the floor's, with Benjamini-Hochberg at the plan's
 level within each family.
 
 {% with kind = "fill", families = ["filer_type", "published_year", "filer", "cwe", "vendor"] %}
 {% include "models/_slices.md.j2" %}
 {% endwith %}
 
+{% with self_card = "band" %}
 {% include "models/_fill_bias.md.j2" %}
+{% endwith %}
 
 ## The limits
 
@@ -99,7 +101,8 @@ level within each family.
   is agreement with those habits.
 - A CVE with a short description and no filer vector gives the model little to read; its
   probabilities and the width of its set are where that shows.
-- The model was chosen once and scored once with one seed; one seed is one draw.
+- The model was fit once and scored once, so its intervals carry the sampling error of test and not
+  the variation between training runs.
 - It never sees anything after day 0, so a later fact that changes the severity, such as a public
   exploit, does not move its band.
 

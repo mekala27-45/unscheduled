@@ -58,6 +58,7 @@ part of the new ones, so the recall above is measured on the CVEs it chose to an
   the description alone.
 - The dictionary names a product as the NVD spells it; a product the NVD has never named cannot be a
   candidate.
-- One seed, one draw, and nothing after day 0.
+- It reads nothing after day 0: a product that the filer or an advisory names later does not change
+  the candidates.
 
 > unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.

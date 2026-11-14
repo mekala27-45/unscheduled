@@ -61,8 +61,8 @@ says nothing about whether its output is right.
 {% if has("checklist.phase2") %}
 ## The Phase 2 checklist
 
-{{ v("build.phase2.checklist_done") }} of {{ v("build.phase2.checklist_total") }} lines done. A line is done only
-when its evidence says pass, and a file an earlier phase wrote counts here only with what Phase 2
+{{ v("build.phase2.checklist_done") }} of the {{ v("build.phase2.checklist_total") }} lines are done. A line is done
+only when its evidence says pass, and a file an earlier phase wrote counts here only with what Phase 2
 writes into it.
 
 {{ table("checklist.phase2") }}

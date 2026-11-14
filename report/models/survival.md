@@ -68,6 +68,6 @@ attack. Censoring at the lake cut means the latest CVEs have had the least time 
 - The listings in train number in the hundreds, so the hazard of any one column rests on few events.
 - The Cox model assumes the effect of each column is constant over time; the forest does not, and
   development compares the two.
-- One seed, one draw, and nothing after day 0.
+- Each model was fit once, the forest with one seed, and neither reads anything after day 0.
 
 > unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.

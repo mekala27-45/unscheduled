@@ -231,5 +231,157 @@
  "dates": [
   "2026-11-11",
   "2026-11-12"
- ]
+ ],
+ "phase2": {
+  "date": "2026-11-14",
+  "skill": "humanizer (anthropic-skills), patterns from Wikipedia Signs of AI writing",
+  "rule": "keep what each sentence says, change how it reads; no fact, number or claim added that the manifest or the source does not hold",
+  "scope": "every Phase 2 document, read in its template since each renders from one: the method notes, ADRs 0008 to 0010, report/models.md and the six model cards with their partials, the README and RESULTS lines of this phase, and the console copy of /app/models",
+  "not_in_scope": {
+   "DECISIONS.md": "a dated log; its entries are records and are not rewritten",
+   "notebooks": "04 to 06 are written by scripts/make_model_notebooks.py and read in the same review",
+   "BUILD_STATE.md": "rewritten at the end of the phase and read then"
+  },
+  "changed": [
+   {
+    "file": "docs/templates/README.md.j2",
+    "sha256_after": "96eab624d99203fb24366b013469655a2be152b18d404d1a910d7b498b5678c7",
+    "changes": [
+     "the first paragraph names the two fallbacks that ran and why, one sentence each, as the plan asks: the CPU text model for ModernBERT and the SQLite registry for Databricks",
+     "the status lines follow the Phase 2 checklist, and the models get one line under See it; written in this pass and read with it"
+    ]
+   },
+   {
+    "file": "docs/templates/RESULTS.md.j2",
+    "sha256_after": "469055cd54d34366b905148e58843994e290c0e1f9538a6a62a8b1f73eb878c7",
+    "changes": [
+     "the fragment N of M lines done made a sentence (pattern 2)"
+    ]
+   },
+   {
+    "file": "docs/templates/docs/models.md.j2",
+    "sha256_after": "4acb4d273ea26fb7027e2a094aad4592aaa7bec1f0f69a7cdd776f7a744a2715",
+    "changes": [
+     "the label Never a feature, a fragment, made a sentence (pattern 2)",
+     "split conformal sets with adaptive sets, which said sets twice and named neither, made split conformal with adaptive prediction sets",
+     "Not scored yet, twice, made a sentence (pattern 2)",
+     "Hours used, a label with a colon, made a sentence (pattern 19)",
+     "the data lead's one seed objection now names training runs, as the cards' limits do"
+    ]
+   },
+   {
+    "file": "docs/templates/docs/adr/0008-predictions-from-a-batch.md.j2",
+    "sha256_after": "0b2a4f58c67f652096b21db09c7743ff0d6ed7dbaab4dee8e13c65870e906a3d",
+    "changes": [
+     "three bold paragraph labels removed, each paragraph now opening with its subject (pattern 19)"
+    ]
+   },
+   {
+    "file": "docs/adr/0009-the-gpu-as-a-committed-request.md",
+    "sha256_after": "251dc34b4a25b85cf58afdf6329865bd46b4452588a432db91899e8e53744b43",
+    "changes": [
+     "a quota, not a machine cut to a quota; the negative half named nothing a reader believed (pattern 1)",
+     "a rule and a ledger, not a measured run restated without the contrast (pattern 1)",
+     "the closer would be a claim nobody tested replaced by the reason itself (pattern 3)"
+    ]
+   },
+   {
+    "file": "docs/templates/docs/adr/0010-the-fill-model-earns-its-place.md.j2",
+    "sha256_after": "b418beafcb1fda7933be6bf51dd5112bb910055a154b029b71d103ba8d8289b2",
+    "changes": [
+     "the measure that matters cut, the sentence ending on what judges the model (pattern 3)",
+     "a factual fix found while reading: the first consequence called the batch nightly and said the embedding weights do not fit the request path, while ADR 0008 rebuilds the batch when a model, an operating point or the windows change and finds size alone no bar; it now says what ADR 0008 says"
+    ]
+   },
+   {
+    "file": "report/templates/models.md.j2",
+    "sha256_after": "1ee8c19960cd9676c88dd63e823050a1192c24c6ea52207fb911dfb79c04aa8d",
+    "changes": [
+     "Not scored yet, twice, made sentences (pattern 2)",
+     "the registry line and the misses line, both without a verb, made sentences, and Never from test made None comes from test (pattern 2)"
+    ]
+   },
+   {
+    "file": "report/templates/models/band.md.j2",
+    "sha256_after": "b1582ebde9b76e637680bac1518c7804352f3e5075c84178bc2d7a50605e6b1e",
+    "changes": [
+     "the slices line, without a verb, made a sentence (pattern 2)",
+     "one seed is one draw restated as what the intervals carry: the band head is a deterministic fit, so a seed is not what limits it",
+     "the selection bias partial now knows it is in the band card and points to the slices above instead of to the band card"
+    ]
+   },
+   {
+    "file": "report/templates/models/metrics.md.j2",
+    "sha256_after": "c6e68256543c41228b5b2b076dd869b6b2f7ff276a2cf9e2d97c6eb3318a095d",
+    "changes": [
+     "the limit One seed, one draw, and nothing after day 0 made a sentence true of the heads (pattern 2)"
+    ]
+   },
+   {
+    "file": "report/templates/models/cwe.md.j2",
+    "sha256_after": "8c46739109b4b5067d62f9cde302d5998700e46d60dd278abc148d1e3d2de3da",
+    "changes": [
+     "the same limit made a sentence true of the head (pattern 2)"
+    ]
+   },
+   {
+    "file": "report/templates/models/survival.md.j2",
+    "sha256_after": "23bd65a79928d8725fd028af996f5cedca30c580f9f0f7b9c0a8e6c224f91e39",
+    "changes": [
+     "point values after a comma made a sentence of its own",
+     "the same limit made a sentence naming the one model that has a seed, the forest (pattern 2)"
+    ]
+   },
+   {
+    "file": "report/templates/models/product.md.j2",
+    "sha256_after": "65c53867342738a5089576b060427dee0f48675c4397dcc66d0f25d17d5896c5",
+    "changes": [
+     "One seed, one draw was wrong here: neither the string floor nor the retrieval is trained with a seed; replaced by the day 0 limit that applies"
+    ]
+   },
+   {
+    "file": "report/templates/models/exploit.md.j2",
+    "sha256_after": "c9a81b42d08f279cfbf626e1177e0b1c0724ac4cade99ccbb2947968ff4c9fc1",
+    "changes": [
+     "the slices line, without a verb, made a sentence (pattern 2)",
+     "says when to read EPSS made specific: when to switch to EPSS; the contrast stays because it answers a likely misreading (pattern 1)",
+     "One seed, one draw made a sentence naming what the intervals leave out, the variation between runs of the search"
+    ]
+   },
+   {
+    "file": "report/templates/models/_fill_bias.md.j2",
+    "sha256_after": "6b495bb9666cc5eca29cca682beb52cf0ea831c223ed85f668cc3c477d916ebf",
+    "changes": [
+     "the label For the primary model's band with a colon made a sentence, and the floor's pair named plain and weighted (pattern 19)"
+    ]
+   }
+  ],
+  "read_unchanged": [
+   {
+    "file": "report/templates/models/_windows.md.j2",
+    "sha256": "76fd2012ab350dfeebae4a9e7a224b9b8a9340ef4c5e2ca1761fe87cd2edfe39",
+    "why": "plain definitions of the windows; every clause carries a date"
+   },
+   {
+    "file": "report/templates/models/_slices.md.j2",
+    "sha256": "49cccde683aa240f8cd2ed37d6b71625ab96112915e5a1402763e5e40c49bf57",
+    "why": "headings and one status sentence"
+   },
+   {
+    "file": "web/components/console/models-view.tsx",
+    "sha256": "6789fcd189da9fa0e53914c12f041ea77dd2696b4f3f854ce66635154bce1564",
+    "why": "console labels; each names what its region shows, and the empty states say what fills them"
+   },
+   {
+    "file": "docs/skills_matrix.yaml",
+    "sha256": "b4f4ef7f68224abd426e92149428ecfec9fc613632b6e32bc1320afda43bedcd",
+    "why": "the notes of the six Phase 2 rows, each a list of what the paths hold"
+   }
+  ],
+  "checks_after": [
+   "make render: the claim gate rendered every document from the manifest",
+   "make gates: no em dash, the vocabulary, the statement on every surface, no secret, the registration unchanged",
+   "a search of the templates for the patterns that survive a rewrite (contrasts, closers, triads, dashes, bold labels) after the edits"
+  ]
+ }
 }

@@ -19,7 +19,7 @@ difference {{ v("models.test.c1.difference") }} ({{ v("models.test.c1.difference
 {{ v("models.test.c1.difference_high") }}) and the calibration error {{ v("models.test.c1.ece") }}.
 **C1 is {{ v("models.test.c1.verdict") }}.**
 {% else %}
-Not scored yet: test is scored once, after the operating points are frozen.
+Test has not been scored yet; it is scored once, after the operating points are frozen.
 {% endif %}
 
 C2: {{ criteria.criteria[1].sentence }}
@@ -32,7 +32,7 @@ within 180 days. EPSS holds {{ v("models.test.c2.epss_day_1") }} at day 1
 ({{ v("models.test.c2.reading_day_7") }}) and {{ v("models.test.c2.epss_day_30") }} at day 30
 ({{ v("models.test.c2.reading_day_30") }}). **C2 is {{ v("models.test.c2.verdict") }}.**
 {% else %}
-Not scored yet.
+Test has not been scored yet.
 {% endif %}
 
 ## The cards
@@ -49,8 +49,8 @@ Not scored yet.
 {% if has("models.registry.versions_table") %}
 ## The registry
 
-{{ v("models.registry.versions") }} versions over {{ v("models.registry.models") }} registered models,
-each a candidate, chosen on development, or scored on test.
+The registry holds {{ v("models.registry.versions") }} versions over {{ v("models.registry.models") }} registered
+models; each is a candidate, chosen on development, or scored on test.
 
 {{ table("models.registry.versions_table") }}
 {% endif %}
@@ -67,9 +67,9 @@ kept as written, to be read against the cards.
 {% if has("models.taxonomy") %}
 ## The misses, read
 
-{{ v("models.taxonomy.drawn") }} of the {{ v("models.taxonomy.misses") }} development band misses of the
-primary model, drawn with the default seed and coded by reading into categories named while reading.
-Never from test.
+These {{ v("models.taxonomy.drawn") }} misses were drawn with the default seed from the
+{{ v("models.taxonomy.misses") }} development band misses of the primary model, and coded by reading
+into categories named while reading. None comes from test.
 
 {{ table("models.taxonomy") }}
 {% endif %}

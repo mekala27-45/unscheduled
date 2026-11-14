@@ -2,7 +2,25 @@
 
 Triage for the CVEs the NVD no longer analyzes.
 
-Phase 1 of 5 is complete, and RESULTS.md has the evidence for every checklist line.
+The text model is the CPU fallback the plan names, frozen bge-small embeddings with a logistic head
+per task, because the Kaggle secrets are absent; ModernBERT waits for them. The model registry is
+MLflow's SQLite store, written from the committed run records, because no Databricks workspace is
+connected.
+
+Phase 1 is complete and tagged v0.1.0. Phase 2 of 5, the models, is in progress: 7 of
+18 checklist lines are done. Still missing:
+
+- Every model has a floor trained on the same rows; every comparison has a paired interval
+- The affected product retrieval measured against the NVD CPE configurations
+- Calibration and conformal sets fit on development, with coverage on test
+- MLflow runs and the registry; the model cards rendered from the manifest
+- Test scored once by scripts/score_test.py; C1 and C2 evidence with their verdicts
+- EPSS beside every exploitation number; ties named
+- Slices with Benjamini-Hochberg; the failure taxonomy in the manifest
+- The predictions in the serving bundle and the API; /v1/predict live; Neon under its ceiling
+- The console shows every prediction with its model, version and uncertainty; design gates green; the look reviewed by Ajay
+- The live check awake and asleep; reset and rederive reproduced every CPU model number
+- At least fifty conventional commits; the release record passing; v0.2.0 pushed by Ajay; BUILD_STATE.md written for Phase 3
 
 ## What it is
 
@@ -19,6 +37,8 @@ person approves every plan.
 - The site, with the console, the report and the docs: https://unscheduled-triage.vercel.app
 - The API, no key needed: https://unscheduled-api.vercel.app. Every route is on the site at
   /docs/api and in openapi.json.
+- The models, each value labeled as a prediction: report/models.md, with a card for each in
+  report/models/, and the method in docs/models.md.
 - The first finding: of the CVEs published from 2020 to 2024, 80.2% were analyzed by
   the NVD within 30 days; of those published since 15 April 2026, 41.4%
   (report/backlog.md, Q1).
@@ -54,6 +74,12 @@ Only what is built is listed; docs/ROADMAP.md holds the plan for the rest.
 | Forward deployed discovery | report/discovery.md, config/criteria.yaml | the discovery memo and the criteria the customer signed |
 | Communication | report/backlog.md | the backlog report and the pushback paragraph on every evidence page |
 | Technical writing | docs, docs/diagrams, CHANGELOG.md | a quickstart, the API reference from the schema, method notes, and archify diagrams that cite the lines they draw |
+| Classical machine learning | packages/models/src/unscheduled_models/floors.py, packages/models/src/unscheduled_models/rank.py | a TF-IDF floor for every model, and LightGBM tuned by Optuna on time ordered folds |
+| Calibration, conformal sets and survival | packages/models/src/unscheduled_models/calibrate.py, packages/models/src/unscheduled_models/conformal.py, packages/models/src/unscheduled_models/survival.py, packages/models/src/unscheduled_models/reweight.py | temperature and isotonic scaling, split conformal sets, Cox and a survival forest, and the shadow window weighted with its effective sample size |
+| NLP | packages/models/src/unscheduled_models/embed.py, packages/models/src/unscheduled_models/product.py | frozen sentence embeddings through onnxruntime, and retrieval over the CPE dictionary |
+| Evals and error analysis | results/models, notebooks/04_the_random_split.ipynb, notebooks/05_reading_the_misses.ipynb, notebooks/06_epss_on_day_30.ipynb | floors first, paired intervals, and a hundred development misses read and coded |
+| MLOps | packages/models/src/unscheduled_models/registry.py, packages/models/src/unscheduled_models/export.py, requests/gpu | an MLflow registry built from the run records, ONNX models checked for parity, and a GPU budget kept as committed requests |
+| R | R/check_cox.R | the Cox model refit with survival::coxph and compared within a declared tolerance |
 
 ## Where things are
 

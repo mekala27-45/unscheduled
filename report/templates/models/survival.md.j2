@@ -36,8 +36,8 @@ going to the floor (DECISIONS.md, the registry).
 {% endif %}
 {% if has("models.test.survival.cox.concordance") %}
 On test, scored once, the Cox model's concordance is {{ v("models.test.survival.cox.concordance") }}
-and the forest's {{ v("models.test.survival.forest.concordance") }}, point values: the plan sets no
-criterion on survival.
+and the forest's {{ v("models.test.survival.forest.concordance") }}. These are point values: the plan
+sets no criterion on survival.
 {% else %}
 Test has not been scored yet.
 {% endif %}
@@ -77,6 +77,6 @@ attack. Censoring at the lake cut means the latest CVEs have had the least time 
 - The listings in train number in the hundreds, so the hazard of any one column rests on few events.
 - The Cox model assumes the effect of each column is constant over time; the forest does not, and
   development compares the two.
-- One seed, one draw, and nothing after day 0.
+- Each model was fit once, the forest with one seed, and neither reads anything after day 0.
 
 {{ statement() }}

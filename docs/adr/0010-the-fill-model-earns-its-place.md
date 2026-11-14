@@ -23,8 +23,8 @@ it.
 
 ## What happened in Phase 2
 
-ModernBERT did not run (ADR 0009), so the fallback is the primary fill model, and the measure that
-matters is its gain over the floor.
+ModernBERT did not run (ADR 0009), so the fallback is the primary fill model, judged by its gain over
+the floor.
 On development the fallback's band reaches a quadratic weighted kappa of 0.594
 against the floor's 0.669, and 0.462 from the
 embedding alone.
@@ -32,8 +32,8 @@ The fallback does not beat the floor on development, and C1 says on test whether
 
 ## Consequences
 
-- The text model is served from the nightly batch only: its embedding weights do not fit the API's
-  request path (ADR 0008), while the floor scores a submitted description on a request.
+- The text model is served from the batch only (ADR 0008). A description submitted on a request is
+  scored by the floor and LightGBM, which need no embedding model.
 - A later ModernBERT run has a fixed bar: the fallback's development gain, on the same rows and the
   same floor.
 - The comparison costs a second fit of every head, the embedding alone, which is kept because it is

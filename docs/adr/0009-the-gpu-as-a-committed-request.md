@@ -6,8 +6,8 @@ Status: accepted, 14 November 2026
 
 The plan's deep fill model is ModernBERT, fine tuned on a GPU. The build spends no money, so the only
 GPU it can use is a free notebook GPU on Kaggle, reached with a Kaggle username and key kept in the
-repository secrets. A free GPU is a quota, not a machine: a run that overruns it, or several runs
-nobody counted, would stop the build halfway through a phase with nothing to show for the hours.
+repository secrets. A free GPU is a quota: a run that overruns it, or several runs nobody counted,
+would stop the build halfway through a phase with nothing to show for the hours.
 A GPU run also happens outside GitHub Actions, so nothing in the repository would otherwise record
 that it happened, what it cost, or what it produced.
 
@@ -32,9 +32,8 @@ GPU hour used this month.
 
 ## Consequences
 
-- The GPU path is a rule and a ledger in this phase, not a measured run. ModernBERT's code is not
-  part of the release, because code that has never run on the hardware it was written for would be
-  a claim nobody tested.
+- In this phase the GPU path is a rule and a ledger, with no measured run. ModernBERT's code is not
+  part of the release, because it has never run on the hardware it was written for.
 - Adding KAGGLE_USERNAME and KAGGLE_KEY to the repository secrets is what opens the path; the run
   then starts by updating its request, and its result is compared with the fallback by the same
   rule (ADR 0010).

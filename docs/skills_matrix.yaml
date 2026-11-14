@@ -57,3 +57,23 @@ rows:
   - skill: Technical writing
     paths: [docs, docs/diagrams, CHANGELOG.md]
     note: a quickstart, the API reference from the schema, method notes, and archify diagrams that cite the lines they draw
+  # Phase 2 (section 18 of its prompt): only what this phase built. PyTorch is left out, since
+  # ModernBERT did not run; its row comes with the first GPU run.
+  - skill: Classical machine learning
+    paths: [packages/models/src/unscheduled_models/floors.py, packages/models/src/unscheduled_models/rank.py]
+    note: a TF-IDF floor for every model, and LightGBM tuned by Optuna on time ordered folds
+  - skill: Calibration, conformal sets and survival
+    paths: [packages/models/src/unscheduled_models/calibrate.py, packages/models/src/unscheduled_models/conformal.py, packages/models/src/unscheduled_models/survival.py, packages/models/src/unscheduled_models/reweight.py]
+    note: temperature and isotonic scaling, split conformal sets, Cox and a survival forest, and the shadow window weighted with its effective sample size
+  - skill: NLP
+    paths: [packages/models/src/unscheduled_models/embed.py, packages/models/src/unscheduled_models/product.py]
+    note: frozen sentence embeddings through onnxruntime, and retrieval over the CPE dictionary
+  - skill: Evals and error analysis
+    paths: [results/models, notebooks/04_the_random_split.ipynb, notebooks/05_reading_the_misses.ipynb, notebooks/06_epss_on_day_30.ipynb]
+    note: floors first, paired intervals, and a hundred development misses read and coded
+  - skill: MLOps
+    paths: [packages/models/src/unscheduled_models/registry.py, packages/models/src/unscheduled_models/export.py, requests/gpu]
+    note: an MLflow registry built from the run records, ONNX models checked for parity, and a GPU budget kept as committed requests
+  - skill: R
+    paths: [R/check_cox.R]
+    note: the Cox model refit with survival::coxph and compared within a declared tolerance

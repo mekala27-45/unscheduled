@@ -51,15 +51,15 @@ The NVD's labels are not a random sample of CVEs. Since 15 April 2026 it analyze
 the new ones, so a score on the CVEs it analyzed says less about the ones it skipped. The shadow CVEs
 the NVD did analyze are weighted by the odds that a CVE like them was skipped, from the Phase 1 domain
 classifier, and the band kappa is shown plain and weighted, never one without the other.
-For the primary model's band: 0.379 plain and
+The primary model's band kappa is 0.379 plain and
 0.399 weighted, on an effective sample of
-933 CVEs, against 0.594 on development; for the floor,
-0.453 and 0.442.
+933 CVEs, against 0.594 on development; the floor's is
+0.453 plain and 0.442 weighted.
 The filer's own values are features, and they are missing for many CVEs.
 On development the floor's band agrees with the NVD at 0.719
 on the CVEs whose filer gave a band and at 0.574 on
 the rest.
-The slices by filer and filer type in the band card show where the model stands on each.
+The band card's slices by filer and by filer type show where the model stands on each.
 
 ## The limits
 
@@ -67,6 +67,6 @@ The slices by filer and filer type in the band card show where the model stands 
   change, and where the filer named none it reads the text alone.
 - A miss can be a near miss, a parent or a child of the NVD's CWE in the CWE tree, and the metrics
   count it as wrong.
-- One seed, one draw, and nothing after day 0.
+- The head was fit once, and it reads nothing after day 0.
 
 > unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.

@@ -10,11 +10,11 @@ the method notes are in docs/models.md.
 
 C1: For test CVEs the NVD analyzed, the predicted severity band agrees with the NVD band at a quadratic weighted kappa of at least 0.60, beats the TF-IDF floor with the lower bound of the paired 95 percent interval above zero, and has an expected calibration error at or below 0.05.
 
-Not scored yet: test is scored once, after the operating points are frozen.
+Test has not been scored yet; it is scored once, after the operating points are frozen.
 
 C2: Scored on the day of publication, the top 5 percent by the exploitation score holds at least half of the test CVEs listed in KEV within 180 days. EPSS at days 1, 7 and 30 is reported beside it, and a difference inside the interval is a tie.
 
-Not scored yet.
+Test has not been scored yet.
 
 ## The cards
 
@@ -41,9 +41,9 @@ kept as written, to be read against the cards.
 
 ## The misses, read
 
-100 of the 7,757 development band misses of the
-primary model, drawn with the default seed and coded by reading into categories named while reading.
-Never from test.
+These 100 misses were drawn with the default seed from the
+7,757 development band misses of the primary model, and coded by reading
+into categories named while reading. None comes from test.
 
 | Category | Misses | What it means |
 |---|---:|---|
