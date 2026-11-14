@@ -30,6 +30,18 @@ sources:
       min_interval_s: 1.0
     cadence: daily
 
+  cpe:
+    cpes_url: https://services.nvd.nist.gov/rest/json/cpes/2.0
+    cpes_page_size: 10000
+    window_days: 120
+    key_env: NVD_API_KEY
+    limit:
+      keyless: { requests: 5, window_s: 30 }
+      keyed: { requests: 50, window_s: 30 }
+      margin: 0.1
+      min_interval_s: 1.0
+    cadence: daily
+
   kev:
     repo: cisagov/kev-data
     git: https://github.com/cisagov/kev-data
@@ -102,4 +114,4 @@ sources:
 # What the hourly and the daily schedules of .github/workflows/fetch.yml run.
 schedules:
   hourly: [cvelist, kev]
-  daily: [cna_list, cwe, nvd, epss, osv, ghsa, vulnrichment, exploits, registries]
+  daily: [cna_list, cwe, nvd, cpe, epss, osv, ghsa, vulnrichment, exploits, registries]

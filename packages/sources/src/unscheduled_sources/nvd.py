@@ -43,7 +43,11 @@ METRIC_KEYS = (
     ("cvssMetricV30", "3.0"),
     ("cvssMetricV2", "2.0"),
 )
-_WINDOW = re.compile(r"^(?P<part>cves full|cves modified|history) (?P<span>\S+) start=(?P<start>\d+)$")
+_WINDOW = re.compile(
+    r"^(?P<part>cves full|cves modified|cpes full|cpes modified|history) (?P<span>\S+) start=(?P<start>\d+)$"
+)
+# The list each answer holds its records in, by the part of a unit.
+RECORDS = {"cves": "vulnerabilities", "cpes": "products", "history": "cveChanges"}
 _NOTE = re.compile(r"total=(?P<total>\d+) count=(?P<count>\d+)(?P<last> last)?")
 
 
@@ -142,29 +146,34 @@ class Nvd(Fetcher):
             yield from self._history_units()
 
     def _cve_units(self) -> Iterator[Unit]:
+        yield from self._snapshot_units("cves", self.cfg["cves_url"], int(self.cfg["cves_page_size"]))
+
+    def _snapshot_units(self, kind: str, url: str, size: int) -> Iterator[Unit]:
+        """Every record once by startIndex pages from a start time, then increments by lastModified
+        windows from the end of the last full set or increment to the start of this run. The CVE
+        API and the Products API page and filter the same way, so both use this."""
+        full, modified = f"{kind} full", f"{kind} modified"
         pages = self._ledger_pages()
-        size = int(self.cfg["cves_page_size"])
-        url = self.cfg["cves_url"]
         full_runs: dict[str, bool] = {}
         for window, (_, _, last) in pages.items():
             m = _WINDOW.match(window)
-            if m and m["part"] == "cves full":
+            if m and m["part"] == full:
                 full_runs[m["span"]] = full_runs.get(m["span"], False) or last
         complete = sorted(s for s, done in full_runs.items() if done)
         partial = sorted(s for s, done in full_runs.items() if not done)
         if not complete:
             t0_text = partial[-1] if partial else compact(self.run_start)
-            yield from self._pages("cves full", t0_text, {}, size, {"part": "cves", "url": url})
+            yield from self._pages(full, t0_text, {}, size, {"part": kind, "url": url})
             pages = self._ledger_pages()
             if not any(
-                (m := _WINDOW.match(w)) and m["part"] == "cves full" and m["span"] == t0_text and v[2]
+                (m := _WINDOW.match(w)) and m["part"] == full and m["span"] == t0_text and v[2]
                 for w, v in pages.items()
             ):
                 return
             frontier = datetime.strptime(t0_text, "%Y%m%dT%H%M%SZ").replace(tzinfo=UTC)
         else:
             frontier = datetime.strptime(complete[-1], "%Y%m%dT%H%M%SZ").replace(tzinfo=UTC)
-        for span in self._complete_spans("cves modified", pages):
+        for span in self._complete_spans(modified, pages):
             end = parse_ts(span.split("/")[1])
             if end is not None and end > frontier:
                 frontier = end
@@ -175,7 +184,7 @@ class Nvd(Fetcher):
             upper = min(cursor + timedelta(days=days), end_at)
             span = f"{iso(cursor)}/{iso(upper)}"
             params = {"lastModStartDate": api_time(cursor), "lastModEndDate": api_time(upper)}
-            yield from self._pages("cves modified", span, params, size, {"part": "cves", "url": url})
+            yield from self._pages(modified, span, params, size, {"part": kind, "url": url})
             cursor = upper
 
     def _history_units(self) -> Iterator[Unit]:
@@ -210,8 +219,7 @@ class Nvd(Fetcher):
         response = self.http.get(unit.meta["url"], params=params, headers=self.headers)
         body = json.loads(response.content)
         total = int(body.get("totalResults", 0))
-        key = "vulnerabilities" if unit.meta["part"] == "cves" else "cveChanges"
-        count = len(body.get(key) or [])
+        count = len(body.get(RECORDS[unit.meta["part"]]) or [])
         self._last = {"total": total, "count": count}
         start = int(params["startIndex"])
         last = start + count >= total or count == 0
@@ -221,7 +229,7 @@ class Nvd(Fetcher):
             handle.write(response.content)
         sha, size = content_digest(path)
         note = f"total={total} count={count}" + (" last" if last else "")
-        self.ctx.log(f"nvd {unit.window}: {count} of {total} in {response.elapsed_s:.1f}s")
+        self.ctx.log(f"{self.source} {unit.window}: {count} of {total} in {response.elapsed_s:.1f}s")
         return [
             RawFile(
                 unit=unit.name,
@@ -253,7 +261,7 @@ class Nvd(Fetcher):
 
     def raw_from_entry(self, entry: Any, path: Path) -> RawFile:
         raw = super().raw_from_entry(entry, path)
-        raw.meta["part"] = "history" if raw.unit.startswith("history") else "cves"
+        raw.meta["part"] = next((k for k in ("history", "cpes") if raw.unit.startswith(k)), "cves")
         return raw
 
     def _observe(self, cves: list[dict[str, Any]], day: date) -> None:

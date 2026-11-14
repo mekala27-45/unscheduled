@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
     inputs:
       sources:
-        description: "Sources separated by spaces (cvelist kev cna_list cwe nvd epss osv ghsa vulnrichment exploits registries), or all"
+        description: "Sources separated by spaces (cvelist kev cna_list cwe nvd cpe epss osv ghsa vulnrichment exploits registries), or all"
         required: false
         default: all
       bootstrap:

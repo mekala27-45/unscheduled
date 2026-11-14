@@ -30,6 +30,7 @@ SOURCES: dict[str, tuple[str, str]] = {
     "registries": ("unscheduled_sources.registries", "Registries"),
     "epss": ("unscheduled_sources.epss", "Epss"),
     "nvd": ("unscheduled_sources.nvd", "Nvd"),
+    "cpe": ("unscheduled_sources.cpe", "Cpe"),
 }
 
 

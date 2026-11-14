@@ -49,6 +49,24 @@ All terms below were read on 8 November 2026 (UTC) unless the entry says otherwi
   and the KEV date the NVD carries (nvd_cves); its metrics and CWEs by provider (cve_metrics and
   cve_weaknesses, origin nvd_api); every change event with its details (nvd_changes).
 
+## NVD Products API 2.0, the CPE dictionary (cpe)
+
+- **Where:** services.nvd.nist.gov/rest/json/cpes/2.0, every CPE name by startIndex pages of
+  10,000, then lastModified windows of at most 120 days. It held 1,873,730 names when it was first
+  read, on 14 November 2026.
+- **Notice:** the NVD notice above, on every surface that shows the dictionary or a prediction
+  drawn from it.
+- **Limit:** the NVD API limits, as for the nvd source: keyless, 5 requests in any rolling 30
+  seconds (50 with a key), with a 10 percent margin and a floor of one second between requests; the
+  key travels in the apiKey header only. The API answered some requests with 503 on the day, and the
+  fetcher retries 403, 429 and the 5xx answers with a growing pause, as the nvd fetcher does.
+- **Terms:** the NVD API terms of use, as for the nvd source. The NVD pages render only with
+  scripts, so nvd.nist.gov/developers/terms-of-use and /developers/products could not be read from
+  the build machine on 14 November 2026; they are to be read in a browser.
+- **Kept:** per CPE name and modification its id, part, vendor and product, when the NVD created it
+  and last changed it, and whether it is deprecated (cpe_names). The version fields, titles and
+  references stay in the raw pages, locked by their digests.
+
 ## CISA Known Exploited Vulnerabilities (kev)
 
 - **Where:** github.com/cisagov/kev-data, known_exploited_vulnerabilities.json and .csv read at the

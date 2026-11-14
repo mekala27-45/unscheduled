@@ -18,6 +18,9 @@ Column notes, where a name alone could be read two ways:
   is the time the build first saw the metric or weakness (the snapshot time for the CVE List,
   the fetch time for the NVD API)
 - nvd_cves.fetched_at is when the page that carried the record was fetched
+- cpe_names holds one row per CPE name and modification: created is when the NVD created the name,
+  so a model can take only the names that existed at a CVE's day 0; vendor and product keep the
+  quoting of the CPE 2.3 formatted string
 - epss_offsets.offset_days is the day offset after publication (0, 1, 7, 30 or 90), or -1 for the
   daily rows of a CVE listed in KEV
 - osv_advisories.source_db is the database prefix of the advisory id, which the OSV schema
@@ -149,6 +152,22 @@ TABLES: dict[str, Table] = {
             },
             key=("cve_id", "last_modified", "vuln_status"),
             partition="cve_year",
+            order=("fetched_at",),
+        ),
+        Table(
+            "cpe_names",
+            {
+                "cpe_name_id": STR,
+                "part": STR,
+                "vendor": STR,
+                "product": STR,
+                "created": UTC_TS,
+                "last_modified": UTC_TS,
+                "deprecated": BOOL,
+                "fetched_at": UTC_TS,
+            },
+            key=("cpe_name_id", "last_modified"),
+            partition="created_year",
             order=("fetched_at",),
         ),
         Table(
