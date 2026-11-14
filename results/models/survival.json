@@ -1,0 +1,220 @@
+{
+ "plan": "evaluation/phase2_plan.yaml",
+ "models_stage_hash": "8e72e6298a18ef8efc7dba65d26ee84f3780d59c7668e83fa401950d93113898",
+ "sample": null,
+ "sets": {
+  "train_inputs.parquet": "3e04aed74e3c3012eb5bc5cadafbd23951e33c3ae36aca1c2773a0a669d8978a",
+  "development_inputs.parquet": "dbe09cbe8e103fc92ce21260eb5b78428af4547a8b9b5afb72f35f6a04b9f0f2",
+  "test_inputs.parquet": "812411333cdc1685180e31ba91d60205241aea0e4eff771077eaa457ccbb785f",
+  "shadow_inputs.parquet": "02f16e2bf88c3d019016a5400c1d7c6f0c00bb704123db8dd119e9e8eea51388",
+  "train_labels.parquet": "17cc373ba4994c04e642fba1211267f4538c6f456680f8476d2dcfdec6584991",
+  "development_labels.parquet": "11557f3eac96874ca61d671a23384a65141cd451e32c383966baa730a19efe24"
+ },
+ "lake_release": "lake-20261112",
+ "seed": 20261114,
+ "population": {
+  "start": "2021-05-07",
+  "train_rows": 67520,
+  "train_events": 393,
+  "dev_rows": 39919,
+  "dev_events": 156,
+  "time": "days from publication to the KEV listing, censored at the lake cut, plus one"
+ },
+ "design": {
+  "columns": [
+   "log_reserved_days",
+   "published_month",
+   "log_affected_entries",
+   "vendor_present",
+   "product_present",
+   "exploit_code_by_day0",
+   "filer_type=national CERT",
+   "filer_type=other",
+   "filer_type=research or bug bounty platform",
+   "filer_type=vendor",
+   "filer_band=HIGH",
+   "filer_AV=L",
+   "filer_AV=N",
+   "filer_AC=L",
+   "filer_PR=L",
+   "filer_PR=N",
+   "filer_UI=N",
+   "filer_S=U",
+   "filer_C=H",
+   "filer_I=H",
+   "filer_A=H"
+  ],
+  "dropped": {
+   "adp_band": "one category or none seen often enough in train",
+   "adp_ssvc_exploitation": "one category or none seen often enough in train",
+   "adp_ssvc_automatable": "one category or none seen often enough in train",
+   "adp_ssvc_technical_impact": "one category or none seen often enough in train",
+   "versions_present": "correlated at 0.9 or more with product_present, kept before it",
+   "filer_type=MITRE": "correlated at 0.9 or more with product_present, kept before it",
+   "filer_band=CRITICAL": "fewer than 5 listings among the rows it marks",
+   "filer_band=LOW": "fewer than 5 listings among the rows it marks",
+   "filer_band=MEDIUM": "fewer than 5 listings among the rows it marks",
+   "filer_AV=A": "fewer than 5 listings among the rows it marks",
+   "filer_AV=P": "fewer than 5 listings among the rows it marks",
+   "filer_AC=H": "fewer than 5 listings among the rows it marks",
+   "filer_PR=H": "fewer than 5 listings among the rows it marks",
+   "filer_UI=R": "fewer than 5 listings among the rows it marks",
+   "filer_S=C": "fewer than 5 listings among the rows it marks",
+   "filer_C=L": "fewer than 5 listings among the rows it marks",
+   "filer_C=N": "fewer than 5 listings among the rows it marks",
+   "filer_I=L": "fewer than 5 listings among the rows it marks",
+   "filer_I=N": "fewer than 5 listings among the rows it marks",
+   "filer_A=L": "fewer than 5 listings among the rows it marks",
+   "filer_A=N": "fewer than 5 listings among the rows it marks"
+  },
+  "min_events": 5
+ },
+ "cox": {
+  "penalizer": 0.01,
+  "step_size": 0.2,
+  "unpenalized_step_size": 0.2,
+  "search": [
+   {
+    "penalizer": 0.01,
+    "dev_concordance": 0.778302,
+    "seconds": 0.5
+   },
+   {
+    "penalizer": 0.1,
+    "dev_concordance": 0.774492,
+    "seconds": 0.5
+   },
+   {
+    "penalizer": 1.0,
+    "dev_concordance": 0.771127,
+    "seconds": 0.5
+   }
+  ],
+  "coefficients": {
+   "log_reserved_days": -0.037313112009083584,
+   "published_month": -0.08011163250479328,
+   "log_affected_entries": 0.23817474659126686,
+   "vendor_present": 0.025497595454954797,
+   "product_present": 0.07045982331761062,
+   "exploit_code_by_day0": 3.330863491630418,
+   "filer_type=national CERT": -0.26943600456047917,
+   "filer_type=other": -0.17588926897048437,
+   "filer_type=research or bug bounty platform": -0.24302227473123608,
+   "filer_type=vendor": 0.2471338982140704,
+   "filer_band=HIGH": 0.09306132045492689,
+   "filer_AV=L": 0.1061409164320404,
+   "filer_AV=N": -0.22373616140114597,
+   "filer_AC=L": -0.06897924395890563,
+   "filer_PR=L": -0.021081037680150384,
+   "filer_PR=N": -0.08073654452779185,
+   "filer_UI=N": 0.011218069667019472,
+   "filer_S=U": -0.08589914799543809,
+   "filer_C=H": 0.19471571033406207,
+   "filer_I=H": 0.32700461107585077,
+   "filer_A=H": 0.21208450281146296
+  },
+  "unpenalized": {
+   "log_reserved_days": -0.2434238587649636,
+   "published_month": -0.23560026727666297,
+   "log_affected_entries": 0.32046205346436835,
+   "vendor_present": -0.27032415632074713,
+   "product_present": 0.6152358391097329,
+   "exploit_code_by_day0": 3.639732274017234,
+   "filer_type=national CERT": -1.1488710434621217,
+   "filer_type=other": -0.8690120873903016,
+   "filer_type=research or bug bounty platform": -1.1878189448388616,
+   "filer_type=vendor": 0.2460144767479159,
+   "filer_band=HIGH": -0.13764753934198207,
+   "filer_AV=L": -0.9391974525075086,
+   "filer_AV=N": -1.7157675273928834,
+   "filer_AC=L": 0.26951903976405717,
+   "filer_PR=L": 0.3198968385707403,
+   "filer_PR=N": 0.12855437727703645,
+   "filer_UI=N": 0.1304299900653931,
+   "filer_S=U": -0.6272494689170748,
+   "filer_C=H": 0.598676527786224,
+   "filer_I=H": 1.474888034583841,
+   "filer_A=H": 0.23028785861201506
+  }
+ },
+ "forest": {
+  "trees": 300,
+  "min_samples_leaf": 100,
+  "search": [
+   {
+    "min_samples_leaf": 10,
+    "dev_concordance": 0.721695,
+    "seconds": 66.0
+   },
+   {
+    "min_samples_leaf": 30,
+    "dev_concordance": 0.754687,
+    "seconds": 60.5
+   },
+   {
+    "min_samples_leaf": 100,
+    "dev_concordance": 0.773997,
+    "seconds": 51.4
+   }
+  ]
+ },
+ "dev": {
+  "cox": {
+   "concordance": 0.7783016216314576
+  },
+  "forest": {
+   "concordance": 0.7739965290211138
+  }
+ },
+ "horizons_days": [
+  30,
+  90,
+  180
+ ],
+ "predictions": {
+  "development": {
+   "rows": 39919,
+   "content_digest": "eab391d430fc0b7848938c2056b4e3802fbf3ecece8edd4dac802f5d6f5fffb0"
+  },
+  "test": {
+   "rows": 63304,
+   "content_digest": "b18d563d5b752fb1a56b42ae76e0486d409564311da5cd1296f35f1a8db89d3a"
+  },
+  "shadow": {
+   "rows": 78676,
+   "content_digest": "77c2e95c214c68fdbdd966cd7176fc08e93e109faf754dd4f0bee65ed1761e6e"
+  }
+ },
+ "r_check": {
+  "columns": 21,
+  "missing_in_r": [],
+  "max_coefficient_difference": 7.204714913555677e-08,
+  "concordance_lifelines": 0.7260664531521916,
+  "concordance_r": 0.7260664531521916,
+  "concordance_difference": 0.0,
+  "coefficient_tolerance": 0.001,
+  "concordance_tolerance": 0.002,
+  "r_version": "R version 4.6.2 (2026-10-29)",
+  "survival_version": "3.8.12",
+  "result": "pass"
+ },
+ "model_file": {
+  "path": "data/models/survival/survival.joblib",
+  "sha256": "0e97cd191606283d843154e48bc0f9bcf90ca4d12666be743ce996b05bb09b08",
+  "bytes": 1160576,
+  "note": "the forest is refit from the record's leaf size and the seed; its trees are too large to keep"
+ },
+ "environment": {
+  "python": "3.12.16",
+  "lifelines": "0.30.3",
+  "scikit-survival": "0.28.0",
+  "numpy": "2.5.4",
+  "machine": "x86_64",
+  "cpus": 4,
+  "threads": 4,
+  "github_run_id": "43563265777",
+  "github_sha": "7ce4a499f7a2dc49c8ed1867fc615dfdc841523f"
+ },
+ "trained_at": "2026-11-14T05:57:16+00:00",
+ "seconds": 336.4
+}

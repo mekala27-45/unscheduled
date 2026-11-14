@@ -1,0 +1,106 @@
+{
+ "as_of": "2026-11-13",
+ "values": {
+  "models.survival.columns": {
+   "value": 21,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_survival.py",
+    "population": "the survival design: columns kept",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.survival.cox.dev_concordance": {
+   "value": 0.7783016216314576,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_survival.py",
+    "population": "development window CVEs published, Q03 left out: the Cox model",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.survival.cox.penalizer": {
+   "value": "0.01",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_survival.py",
+    "population": "the ridge penalty the Cox model chose on development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.survival.forest.dev_concordance": {
+   "value": 0.7739965290211138,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_survival.py",
+    "population": "development window CVEs published, Q03 left out: the survival forest",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.survival.forest.min_samples_leaf": {
+   "value": 100,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_survival.py",
+    "population": "the leaf size the survival forest chose on development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.survival.r_check.concordance_difference": {
+   "value": 0.0,
+   "fmt": "float4",
+   "provenance": {
+    "origin": "scripts/train_survival.py",
+    "population": "the train population: lifelines without a penalty against R's coxph on the same matrix",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.survival.r_check.max_coefficient_difference": {
+   "value": 7.204714913555677e-08,
+   "fmt": "float4",
+   "provenance": {
+    "origin": "scripts/train_survival.py",
+    "population": "the train population: lifelines without a penalty against R's coxph on the same matrix",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.survival.r_check.result": {
+   "value": "pass",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_survival.py",
+    "population": "the R check of the Cox model, within the plan's tolerances",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.survival.train_events": {
+   "value": 393,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_survival.py",
+    "population": "the train population: listings by the cut",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  }
+ },
+ "tables": {},
+ "figures": {}
+}
