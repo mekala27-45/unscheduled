@@ -79,12 +79,14 @@ NOT_REFIT = {
 R_CHECK = "models.survival.r_check."
 
 
-def model_steps(jobs: int, r_check: bool) -> tuple[list[str], ...]:
-    """The CPU models a laptop can fit, after the sets are rebuilt and checked. --jobs is passed as
-    the models workflow passes it, so LightGBM and the forest use the same number of threads."""
+def model_steps(jobs: int, survival_jobs: int, r_check: bool) -> tuple[list[str], ...]:
+    """The CPU models a laptop can fit, after the sets are rebuilt and checked. LightGBM gets the
+    threads the models workflow gives it, since its sums depend on them. The survival forest fits the
+    same trees with any number of jobs, and each job holds its own copy of the data, so a machine
+    with 8 GB runs it with fewer."""
     return (
         ["scripts/build_sets.py", "--check"],
-        ["scripts/train_survival.py", "--jobs", str(jobs), *(["--r-check"] if r_check else [])],
+        ["scripts/train_survival.py", "--jobs", str(survival_jobs), *(["--r-check"] if r_check else [])],
         ["scripts/train_rank.py", "--jobs", str(jobs)],
     )
 
@@ -365,6 +367,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--jobs", type=int, default=4, help="threads for the model fits, as the models workflow uses"
     )
+    parser.add_argument(
+        "--survival-jobs",
+        type=int,
+        default=1,
+        help="the survival forest's jobs; each holds a copy of the data",
+    )
     args = parser.parse_args(argv)
     if sh(["git", "status", "--porcelain", "--untracked-files=no"]).strip():
         raise SystemExit(
@@ -406,7 +414,7 @@ def main(argv: list[str] | None = None) -> int:
         if args.models:
             r_check = shutil.which("Rscript") is not None
             copy_floor(tree)
-            for step in model_steps(args.jobs, r_check):
+            for step in model_steps(args.jobs, args.survival_jobs, r_check):
                 t0 = time.monotonic()
                 subprocess.run([sys.executable, *step], cwd=tree, env=step_env(tree), check=True)
                 timings[step[0]] = round(time.monotonic() - t0, 1)
