@@ -52,10 +52,38 @@ def test_the_part_carries_the_predict_latencies_only_when_they_ran() -> None:
     }
     without = load_test.manifest_part(record)["values"]
     assert "load.predict_p50_ms" not in without
-    record["predict"] = {"ok": 8, "ms": {"p50": 95.0, "p95": 140.0}}
+    record["predict"] = {"ok": 8, "workers": 2, "ms": {"p50": 95.0, "p95": 140.0}}
     values = load_test.manifest_part(record)["values"]
     assert values["load.predict_requests"]["value"] == 8
+    assert values["load.predict_workers"]["value"] == 2
     assert values["load.predict_p95_ms"]["value"] == 140.0
+    assert "load.predict_alone_p95_ms" not in values
+    record["predict_alone"] = {"ok": 4, "workers": 1, "ms": {"p50": 70.0, "p95": 90.0}}
+    values = load_test.manifest_part(record)["values"]
+    assert values["load.predict_alone_requests"]["value"] == 4
+    assert values["load.predict_alone_p50_ms"]["value"] == 70.0
+    assert values["load.predict_alone_p95_ms"]["value"] == 90.0
+
+
+def test_one_worker_sends_one_call_at_a_time() -> None:
+    import threading
+    import time
+
+    lock = threading.Lock()
+    state = {"in_flight": 0, "most": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        with lock:
+            state["in_flight"] += 1
+            state["most"] = max(state["most"], state["in_flight"])
+        time.sleep(0.01)
+        with lock:
+            state["in_flight"] -= 1
+        return httpx.Response(200, json={"values": []})
+
+    result = load_test.predict("https://api.example", 6, 1, transport=httpx.MockTransport(handler))
+    assert result["result"] == "pass" and result["workers"] == 1
+    assert state["most"] == 1
 
 
 def test_the_fixed_bodies_are_requests_the_api_accepts() -> None:

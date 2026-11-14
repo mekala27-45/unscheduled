@@ -49,6 +49,10 @@ On the build machine a fresh process loads the two ONNX sessions and the floor's
 ms; a warm prediction takes 2.0 ms at the median. The live check
 measures the same on the deployed API.
 
+The load test measured the route from a separate client, 5 calls at a time
+(results/load/c8.json): 60 calls took 105 ms at the median and
+2,040 ms at the 95th percentile. C8 bounds lookups and triage runs, not this route.
+
 Vercel's container registry allows a compressed layer of 2 GB and an image of 15 GB (its documentation,
 read 14 November 2026), so size alone would not keep the text model off the request path. Its cost
 is every cold start loading the embedding model before the first answer, for text the batch cannot

@@ -55,6 +55,21 @@ On the build machine a fresh process loads the two ONNX sessions and the floor's
 {{ v("models.serving.load_ms") }} ms and answers its first prediction in {{ v("models.serving.first_ms") }}
 ms; a warm prediction takes {{ v("models.serving.warm_p50_ms") }} ms at the median. The live check
 measures the same on the deployed API.
+{% if has("load.predict_alone_p95_ms") %}
+
+The load test measured the route from a separate client (results/load/c8.json). One call at a
+time, {{ v("load.predict_alone_requests") }} calls took {{ v("load.predict_alone_p50_ms") }} at the median and {{ v("load.predict_alone_p95_ms") }} at the
+95th percentile. With {{ v("load.predict_workers") }} clients at once, {{ v("load.predict_requests") }} calls took {{ v("load.predict_p50_ms") }} at the
+median and {{ v("load.predict_p95_ms") }} at the 95th percentile. Scoring is a few milliseconds of each
+call, so the slow calls under load spent their time waiting, on each other or on the platform; the
+API does not yet record how long it held a request, so which of the two is unknown. C8 bounds
+lookups and triage runs, not this route, and Phase 4 owns the service numbers.
+{% elif has("load.predict_p95_ms") %}
+
+The load test measured the route from a separate client, {{ v("load.predict_workers") }} calls at a time
+(results/load/c8.json): {{ v("load.predict_requests") }} calls took {{ v("load.predict_p50_ms") }} at the median and
+{{ v("load.predict_p95_ms") }} at the 95th percentile. C8 bounds lookups and triage runs, not this route.
+{% endif %}
 {% else %}
 The serving measurements are taken once the batch is written.
 {% endif %}

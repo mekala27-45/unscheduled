@@ -1,7 +1,7 @@
 """The C8 lookup evidence: the cold start and the warm latencies of the live API, from a separate client.
 
     python scripts/load_test.py [--base-url URL] [--idle-minutes 20] [--lookups 300] [--predicts 60]
-        [--workers 5]
+        [--predicts-alone 20] [--workers 5]
 
 1. Cold. With --idle-minutes the script first sends nothing for that long, then times the first
    /health and the first lookup. On the free plans Vercel stops an idle container and Neon suspends
@@ -12,8 +12,10 @@
    count of each status.
 3. Predict. --predicts POST /v1/predict calls over the same threads, cycling through four fixed
    descriptions with and without filer values. The API scores each with the ONNX floor and LightGBM
-   (ADR 0008), so these latencies are the request path the batch does not cover. A run with
-   --predicts 0 leaves the part out; otherwise every call must answer 200 for the run to pass.
+   (ADR 0008), so these latencies are the request path the batch does not cover. Then
+   --predicts-alone more from one client, one call at a time, so the record shows what running the
+   calls at once adds. A run with --predicts 0 leaves both out; otherwise every call must answer 200
+   for the run to pass.
 4. Persistence from this client, by scripts/check_persistence.py --base-url: the budget count
    carries from one request to the next and every answer names the same data version.
 5. schemathesis, by tests/api/test_schemathesis.py: every operation in openapi.json driven with
@@ -22,7 +24,7 @@
 
 k6 was the plan for step 2; its release binaries are not reachable from the build machine, so the
 same scenario runs here with httpx (DECISIONS.md, 12 November 2026). Every lookup counts against
-this client's daily budget of 2,000, and so does every prediction; the default run spends about 360.
+this client's daily budget of 2,000, and so does every prediction; the default run spends about 380.
 
 Writes results/load/c8.json and exits 1 when the lookup p95 is over the C8 threshold or a part fails.
 """
@@ -281,8 +283,14 @@ def manifest_part(record: dict[str, Any]) -> dict[str, Any]:
     scored = record.get("predict")
     if scored and scored["ok"]:
         builder.value("load.predict_requests", scored["ok"], "int", population=population, **common)
+        builder.value("load.predict_workers", scored["workers"], "int", population=population, **common)
         for q in ("p50", "p95"):
             builder.value(f"load.predict_{q}_ms", scored["ms"][q], "ms", population=population, **common)
+    alone = record.get("predict_alone")
+    if alone and alone["ok"]:
+        builder.value("load.predict_alone_requests", alone["ok"], "int", population=population, **common)
+        for q in ("p50", "p95"):
+            builder.value(f"load.predict_alone_{q}_ms", alone["ms"][q], "ms", population=population, **common)
     c8 = record["c8_lookup"]
     builder.value(
         "criteria.c8.verdict",
@@ -306,6 +314,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--idle-minutes", type=float, default=0.0)
     parser.add_argument("--lookups", type=int, default=300)
     parser.add_argument("--predicts", type=int, default=60, help="POST /v1/predict calls; 0 leaves them out")
+    parser.add_argument(
+        "--predicts-alone", type=int, default=20, help="POST /v1/predict calls from one client, one at a time"
+    )
     parser.add_argument("--workers", type=int, default=5)
     parser.add_argument("--out", type=Path, default=None)
     parser.add_argument(
@@ -326,6 +337,8 @@ def main(argv: list[str] | None = None) -> int:
     record["warm"] = warm(base, args.lookups, args.workers)
     if args.predicts > 0:
         record["predict"] = predict(base, args.predicts, args.workers)
+        if args.predicts_alone > 0:
+            record["predict_alone"] = predict(base, args.predicts_alone, 1)
     record["persistence"] = persistence(["--base-url", base], PERSISTENCE_LIVE)
     if args.local_database_url:
         record["persistence_independent"] = persistence(
@@ -345,6 +358,7 @@ def main(argv: list[str] | None = None) -> int:
         record["schemathesis"],
         record.get("persistence_independent", {"result": "pass"}),
         record.get("predict", {"result": "pass"}),
+        record.get("predict_alone", {"result": "pass"}),
     ]
     parts_ok = all(part["result"] == "pass" for part in parts)
     record["result"] = "pass" if parts_ok and record["c8_lookup"]["verdict"] == "met" else "fail"
@@ -363,9 +377,15 @@ def main(argv: list[str] | None = None) -> int:
         f"{record['cold']['first_lookup']['ms']} ms; warm p50 {w['ms']['p50']} ms, p95 {w['ms']['p95']} ms "
         f"over {w['ok']} of {w['lookups']}; "
         + (
-            f"predict p50 {record['predict']['ms']['p50']} ms over {record['predict']['ok']} of "
-            f"{record['predict']['requests']}; "
+            f"predict p50 {record['predict']['ms']['p50']} ms, p95 {record['predict']['ms']['p95']} ms over "
+            f"{record['predict']['ok']} of {record['predict']['requests']}; "
             if "predict" in record
+            else ""
+        )
+        + (
+            f"alone p50 {record['predict_alone']['ms']['p50']} ms, p95 {record['predict_alone']['ms']['p95']} ms "
+            f"over {record['predict_alone']['ok']} of {record['predict_alone']['requests']}; "
+            if "predict_alone" in record
             else ""
         )
         + f"persistence {record['persistence']['result']}, "

@@ -80,6 +80,17 @@
    },
    "value": 60
   },
+  "load.predict_workers": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-14",
+    "note": null,
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live"
+   },
+   "value": 5
+  },
   "load.warm_lookups": {
    "fmt": "int",
    "provenance": {
