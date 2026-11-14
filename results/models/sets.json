@@ -164,7 +164,7 @@
  ],
  "files": {
   "development_inputs.parquet": {
-   "content_digest": "30ab2c3440390db0b0db58e4de202883114e65dd7cdbe93761a3f678952c0895",
+   "content_digest": "dbe09cbe8e103fc92ce21260eb5b78428af4547a8b9b5afb72f35f6a04b9f0f2",
    "rows": 39924
   },
   "development_labels.parquet": {
@@ -172,7 +172,7 @@
    "rows": 39924
   },
   "shadow_inputs.parquet": {
-   "content_digest": "eaef3c2b7e95e58656bbfafb9d87d838cd45b7c1b4da19a92074f2006fa71018",
+   "content_digest": "02f16e2bf88c3d019016a5400c1d7c6f0c00bb704123db8dd119e9e8eea51388",
    "rows": 78676
   },
   "shadow_labels.parquet": {
@@ -180,7 +180,7 @@
    "rows": 78676
   },
   "test_inputs.parquet": {
-   "content_digest": "b636fff38f1ffd290c8ba62f63cf553beee59942e4a58424a1b75fdcd4ed7fce",
+   "content_digest": "812411333cdc1685180e31ba91d60205241aea0e4eff771077eaa457ccbb785f",
    "rows": 63304
   },
   "test_labels.parquet": {
@@ -188,7 +188,7 @@
    "rows": 63304
   },
   "train_inputs.parquet": {
-   "content_digest": "45bce0d0ff077a991f45393203653a5d5554a690fcdfe407ccf1751e471980cf",
+   "content_digest": "3e04aed74e3c3012eb5bc5cadafbd23951e33c3ae36aca1c2773a0a669d8978a",
    "rows": 220803
   },
   "train_labels.parquet": {
@@ -196,10 +196,10 @@
    "rows": 220803
   }
  },
- "lake_content_digest": "8d97104c0ad0454895cf98e904a676a5c4d6ee23592638bbe139370d7b9a7d7a",
+ "lake_content_digest": "5ab8ce6d373349773d0fe1abdcfd89cf16f1e5fe46a70bc0470f8f55a3c34af4",
  "lake_cut": "2026-11-13 01:00:00-05",
  "lake_release": "lake-20261112",
- "lake_sha256": "00ce926255dcb3209af24407910f53c149d7aa2c814a9560ff3377c02d7326ae",
+ "lake_sha256": "123744560127a8589e2be77c566ad62b1a78d02a2c0b2b4451a22cded00f6aaf",
  "scoring_time": "day 0, the end of the publication day in UTC",
- "seconds": 23.5
+ "seconds": 21.4
 }

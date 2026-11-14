@@ -1,9 +1,9 @@
 {
- "bytes": 455880704,
- "content_digest": "8d97104c0ad0454895cf98e904a676a5c4d6ee23592638bbe139370d7b9a7d7a",
+ "bytes": 456142848,
+ "content_digest": "5ab8ce6d373349773d0fe1abdcfd89cf16f1e5fe46a70bc0470f8f55a3c34af4",
  "data_cut": "2026-11-13T06:00:00+00:00",
  "file": "data/lake/unscheduled.duckdb",
- "sha256": "00ce926255dcb3209af24407910f53c149d7aa2c814a9560ff3377c02d7326ae",
+ "sha256": "123744560127a8589e2be77c566ad62b1a78d02a2c0b2b4451a22cded00f6aaf",
  "tables": {
   "config.bronze_tables": {
    "columns": [
@@ -29,7 +29,7 @@
    "columns": [
     "data_cut"
    ],
-   "digest": "7525c57681979e2ae8bb756d36802f42cbdfa3d48e1f276b781cbc4ab165a304",
+   "digest": "0cd6dbf268dba04aebba9561f5b65d45d4069d28b07dedc0c4be9581fd1f77d4",
    "rows": 1
   },
   "config.splits": {
@@ -114,7 +114,7 @@
     "before_history",
     "pre_history_facts"
    ],
-   "digest": "9914a6f8db2242c5fd2d3ff4432f3b68ff0ec5a5897a1d20cf6bd60e7dc4413f",
+   "digest": "3c17a4822b1b45b5ea193a62b03010da8a90fccbbdae0df4ef28abc46714c187",
    "rows": 424978
   },
   "gold.mart_backlog_q1": {
@@ -134,7 +134,7 @@
     "analyzed_30d",
     "analyzed_90d"
    ],
-   "digest": "cafb0f5f9c254f7d2c4200fe87718fd154f454754e581acdc531b0e2f0abad42",
+   "digest": "9ff8260886a356646b8101cab02359cf35eb1e7fc0e3d17da754f6443e683ce6",
    "rows": 277391
   },
   "gold.mart_backlog_q2": {
@@ -156,7 +156,7 @@
     "business_day_deadline",
     "met_one_business_day"
    ],
-   "digest": "8d22eb69b3569597a7097e512b66c6bb13ecee955ed89bfe496a06f49f0425d0",
+   "digest": "e4de9200bd30a983cf518f1f894cd93977c8bbe76f97d746d243e023ee1449b7",
    "rows": 80312
   },
   "gold.mart_backlog_q3": {
@@ -176,7 +176,7 @@
     "has_adp_ssvc",
     "has_adp_value"
    ],
-   "digest": "043d51fd3e4acca788f9b2d4626487357fc89c92c7bb6c7e7a1a7c2771a92d0c",
+   "digest": "9da2b78e6918d7edba35b8ce1e1ee4d9a4d08e2019d64082164affdd172fb4b0",
    "rows": 80526
   },
   "gold.mart_backlog_q6": {
@@ -207,7 +207,7 @@
     "half",
     "position"
    ],
-   "digest": "ef7638637294e3abe84d6bff9e909ace0fb07a2bc755b053b51baafa9e372b84",
+   "digest": "e321b37034e3e0d658eb4c01ed18cb744bf4addd3ee81366effd417dbd8d8dd3",
    "rows": 78676
   },
   "gold.mart_filer_vs_nvd": {
@@ -242,7 +242,7 @@
     "nvd_band_rank",
     "filer_band_rank"
    ],
-   "digest": "f7c54d695967573bf0fb8d16bf89e37456ceca01446093aff752b02ffa5ab072",
+   "digest": "b92d450a0e2b64505dc89b694b42d311c5a4f66a20194221b2090972749ef115",
    "rows": 47641
   },
   "gold.mart_kev_timing": {
@@ -264,7 +264,7 @@
     "metasploit_before_listing",
     "nuclei_before_listing"
    ],
-   "digest": "3f70ee963d8f11694bba4542db88f127f75af0b8dda1953f8837fc107f2569dd",
+   "digest": "002ea834a58973be2022ae0b413996a30ffb374e6b2cb3a0a4c5264816fc4014",
    "rows": 1025
   },
   "quarantine.quarantine": {
@@ -303,7 +303,7 @@
     "known_from",
     "known_to"
    ],
-   "digest": "65f9ee5ffd61dd40f79becfe64400713e598967a693fd3c5e45640df3230cc63",
+   "digest": "ba0b9310fa2602982e8ac61b158306bf66ac8815c4bc584ce0652834ccb2a5a5",
    "rows": 405474
   },
   "silver.cve_fact": {
@@ -317,7 +317,7 @@
     "dated_by",
     "pre_history"
    ],
-   "digest": "ca0211cef20313dbe452ca82d531ca512dae3acef5de3fc2b7f58d5e4e4ea58e",
+   "digest": "3f1cbe34196cc73071d556d811a2f0bdc4b5339471dd54f0e3f35d620ca4d179",
    "rows": 6629800
   },
   "silver.exploit_first_seen": {
@@ -329,7 +329,7 @@
     "metasploit_modules",
     "nuclei_templates"
    ],
-   "digest": "e1f7c85662c51fca24ed5a645434485e181e986154c4d23fcf33c1a40535daa4",
+   "digest": "bcf518dde652cf4c596ee9699816ab5ddb8154a414acdf3feb270db2517d1388",
    "rows": 7278
   },
   "silver.kev_events": {
@@ -345,7 +345,7 @@
     "known_ransomware",
     "first_seen_commit"
    ],
-   "digest": "1bfd4ab80ad127a032091ee126b2b59375b61d2bc830a1c1330a54ebd2c505b0",
+   "digest": "e4728eabe6f94e2bd77ae6bb07c062343b8115abea1d8d0f388e8b2575830b9b",
    "rows": 1779
   },
   "silver.nvd_status_history": {
@@ -357,7 +357,7 @@
     "dated_by",
     "pre_history"
    ],
-   "digest": "5d595a3cd0fcba9557d68bdad3b0f875432ac61797fa8c62575227dd42bbb4fd",
+   "digest": "c5dffe28b15ed76e417cad01256f1811e05584ee14b698a07914892ef8e816a9",
    "rows": 1023092
   }
  }

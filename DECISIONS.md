@@ -429,3 +429,20 @@ The full search runs in GitHub Actions (.github/workflows/models.yml). It restor
 results/lake/release.json names and fails if any archive moved, rebuilds the lake, rebuilds the sets
 and fails unless all eight files match results/models/sets.json, and only then fits. The records
 under results/ are committed from the run's artifact, and each names its run.
+
+## 2026-11-14: the digests render times in UTC
+
+The first run of the models workflow stopped where it should: the sets it rebuilt from the recorded
+release did not match results/models/sets.json, and the lake content digest differed from the
+committed one. The rows were the same. A table digest casts every cell to text, and DuckDB casts a
+time with a zone to text in the session's zone, which it takes from TZ on the machine. The build
+machine runs with TZ set to America/New_York and a GitHub runner in UTC, so the same rows gave two
+digests. The lake build and the sets already pin UTC for every computation, which is why every
+number agreed while the digests did not.
+
+table_digest now renders the cells in UTC and gives the session its own zone back, with a test that
+the digest is the same in New York, UTC and Kolkata. Digested again under UTC, the lake committed on
+13 November gave 5ab8ce6d3733, the digest the runner computed, so nothing in it changed but the
+digest. The lake was rebuilt here, the four input files of the sets (the files with a time column)
+took new digests, the label files kept theirs, and no count moved. Earlier records that name the old
+lake digest 8d97104c0ad0 describe the same rows.

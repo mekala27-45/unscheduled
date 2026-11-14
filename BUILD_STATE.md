@@ -64,8 +64,8 @@ model.
 
 ## The hand off to Phase 2
 
-- The lake: cut 2026-11-13T06:00:00+00:00, content digest 8d97104c0ad0454895cf98e904a676a5c4d6ee23592638bbe139370d7b9a7d7a, file digest
-  00ce926255dcb3209af24407910f53c149d7aa2c814a9560ff3377c02d7326ae, from the release lake-20261112.
+- The lake: cut 2026-11-13T06:00:00+00:00, content digest 5ab8ce6d373349773d0fe1abdcfd89cf16f1e5fe46a70bc0470f8f55a3c34af4, file digest
+  123744560127a8589e2be77c566ad62b1a78d02a2c0b2b4451a22cded00f6aaf, from the release lake-20261112.
 - The registration: hash 78bf9cdfad9dc5f3ecb7b5251055be570c1c37d0ad0b054b5861f4e31afaa30c, over config/criteria.yaml, config/splits.yaml, config/budgets.yaml, evaluation/phase1_plan.yaml, config/labels.yaml, config/samples.yaml.
 - The splits, by the date a CVE was published (config/splits.yaml):
   - train: 1999-01-01 to 2023-12-31, 234,630 CVEs

@@ -3,7 +3,7 @@
 Phase 1 of 5. Every number on this page comes from results/manifest.json, which the build writes
 from what each step saved, and the claim gate in CI renders the page again and fails on any
 difference. The lake behind the numbers was cut at 2026-11-13 (lake digest
-00ce926255dc).
+123744560127).
 
 ## The lake
 
