@@ -7,11 +7,13 @@ the manifest or a committed file: edit the template, then render.
 ## Where it stands
 
 ```
-Phase            2 of 5, the models: four of eighteen steps done (the probes and the scoped model
-                 gate, the plan hashed as the models stage 8e72e6298a18, the point in
-                 time sets, the survival models checked in R); the floors, the fallback, the
-                 exploitation and the product models are written and run in the models workflow;
-                 the prompt is claude/unscheduled-phase-2-prompt.md in the Project
+Phase            2 of 5, the models: the probes and the scoped model gate, the plan hashed as the
+                 models stage 8e72e6298a18, the point in time sets, the floors, the exploitation
+                 models (rerun on the committed band floor), the survival models checked in R and
+                 the ONNX exports at parity are in; the method notes, the six model cards and
+                 ADRs 0008 to 0010 are written and fill in as results land; the fallback text model
+                 and the product models run in the models workflow; the prompt is
+                 claude/unscheduled-phase-2-prompt.md in the Project
 Phase 1          the ground truth, tagged v0.1.0 on the commit that adds the release record;
                  its checklist 18 of 18 lines done (RESULTS.md)
 Repository       public; every commit conventional; CI, web and exposure green on main
@@ -30,15 +32,15 @@ Look approval    approved by Ajay on the evening of 11 November, New York time, 
 
 Phase 2 runs from the hand off below, and DECISIONS.md holds every choice made on the way. Done: the
 probes and the scoped model gate; the plan hashed as the models stage; the sets, 220,803 train,
-39,924 development, 63,304 test and 78,676 shadow rows with the affected product inputs and labels; the
-survival models, where the Cox model reaches a development concordance of 0.778 and R's coxph
-agrees with lifelines on the same matrix (the check: pass). Running in the models workflow, from
-the recorded release and the sets checked against their digests: the fill floors (step four) and the
-ModernBERT fallback (step eight, since the Kaggle secrets are unset). Waiting: the exploitation models
-(step six) read the band floor from the committed floors record, and the product models (step five)
-read the CPE dictionary from the first lake release that carries it, which the next daily fetch
-writes. Next: commit each run's record from its artifact, then calibration, conformal sets and the
-operating points (step nine).
+39,924 development, 63,304 test and 78,676 shadow rows; the floors, where the band floor reaches a
+development kappa of 0.669; the exploitation models, rerun on the committed band floor so the API
+serves the projection LightGBM learned from, where LightGBM holds 27.6% of the development
+listings in its top five percent and the floor 40.9% (DECISIONS.md, the exploitation rerun);
+the survival models, checked in R (pass); the ONNX exports (pass). Running or waiting: the
+ModernBERT fallback (step eight) in the models workflow, then its second design from the same
+embeddings; the product models (step five) wait for the first lake release that carries the CPE
+dictionary. Next: commit each record, then calibration, conformal sets and the operating points
+(step nine), the registry, test scored once, the misses read, the batch and the live check.
 
 ## Open problems
 
@@ -48,7 +50,12 @@ operating points (step nine).
   eight takes the fallback), and KAGGLE_USERNAME with KAGGLE_KEY would let ModernBERT run; without
   the Databricks pair, the registry uses the file store.
 - The CPE dictionary is fetched daily from the next run of the fetch on; the product models wait for
-  the first lake release that carries it.
+  the first lake release that carries it. No daily fetch has fired since cpe joined its schedule, and
+  this session may not start one, so Ajay was asked to start fetch.yml by hand with the source cpe.
+- The exploitation search picks its trees on noise: two runs on nearly the same inputs moved
+  LightGBM's development recall in the top five percent by about twenty points while the floor held
+  still (DECISIONS.md, the exploitation rerun). The rerun stands for this phase; a search that
+  averages over seeds or folds is a change for a later one.
 - The schedules fire hours late and less often than they ask: the hourly fetch has run a few times
   a day since 12 November, and the daily fetch and lake build several hours after their times. The
   newest lake release changes with each hourly run until the next daily one, so the committed

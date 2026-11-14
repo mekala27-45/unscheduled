@@ -97,3 +97,4 @@ ADR 0007
 2 GB
 15 GB
 /v1/predict
+ADRs 0008 to 0010
