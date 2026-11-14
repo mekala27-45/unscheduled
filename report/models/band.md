@@ -50,6 +50,10 @@ the NVD band than the frozen embedding does, with the same structured block on b
 
 The band head is scaled by one temperature fit on development by negative log likelihood, and its
 conformal sets are fit on the scaled development probabilities.
+The temperature is 1.16. The development calibration error
+is 0.048 before scaling and
+0.019 after, and the mean development set holds
+2.14 bands.
 
 ## The slices
 
@@ -64,7 +68,10 @@ The NVD's labels are not a random sample of CVEs. Since 15 April 2026 it analyze
 the new ones, so a score on the CVEs it analyzed says less about the ones it skipped. The shadow CVEs
 the NVD did analyze are weighted by the odds that a CVE like them was skipped, from the Phase 1 domain
 classifier, and the band kappa is shown plain and weighted, never one without the other.
-The weighted view is not in the manifest yet.
+For the primary model's band: 0.379 plain and
+0.399 weighted, on an effective sample of
+933 CVEs, against 0.594 on development; for the floor,
+0.453 and 0.442.
 The filer's own values are features, and they are missing for many CVEs.
 On development the floor's band agrees with the NVD at 0.719
 on the CVEs whose filer gave a band and at 0.574 on

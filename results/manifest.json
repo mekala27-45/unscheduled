@@ -6657,7 +6657,7 @@
    }
   },
   "build.phase2.checklist_done": {
-   "value": 5,
+   "value": 6,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/build_manifest.py",
@@ -8383,6 +8383,50 @@
     "note": null
    }
   },
+  "models.calibration.band_dev_ece_after": {
+   "value": 0.018858456869723476,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/choose_operating_points.py",
+    "population": "development window CVEs with an NVD band: the expected calibration error of the primary band head after temperature scaling",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.calibration.band_dev_ece_before": {
+   "value": 0.048222442673331666,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/choose_operating_points.py",
+    "population": "development window CVEs with an NVD band: the expected calibration error of the primary band head before temperature scaling",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.calibration.band_temperature": {
+   "value": 1.1583885577216333,
+   "fmt": "float2",
+   "provenance": {
+    "origin": "scripts/choose_operating_points.py",
+    "population": "development window CVEs with an NVD band: the temperature of the primary band head",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.conformal.band_dev_mean_size": {
+   "value": 2.144637332416638,
+   "fmt": "float2",
+   "provenance": {
+    "origin": "scripts/choose_operating_points.py",
+    "population": "development window CVEs with an NVD band: the mean size of the band sets at the target coverage",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
   "models.fallback.band.dev": {
    "value": 0.593827,
    "fmt": "float3",
@@ -9494,6 +9538,72 @@
     "note": null
    }
   },
+  "models.reweighting.fallback.ess": {
+   "value": 932.8503301433153,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/choose_operating_points.py",
+    "population": "shadow CVEs the NVD analyzed with a band: Kish effective sample size of the weights",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.reweighting.fallback.plain_qwk": {
+   "value": 0.37904954897300025,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/choose_operating_points.py",
+    "population": "shadow CVEs the NVD analyzed with a band: plain",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.reweighting.fallback.weighted_qwk": {
+   "value": 0.3988979306182404,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/choose_operating_points.py",
+    "population": "shadow CVEs the NVD analyzed with a band: weighted toward the skipped",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.reweighting.floors.ess": {
+   "value": 932.8503301433153,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/choose_operating_points.py",
+    "population": "shadow CVEs the NVD analyzed with a band: Kish effective sample size of the weights",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.reweighting.floors.plain_qwk": {
+   "value": 0.4529951810748475,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/choose_operating_points.py",
+    "population": "shadow CVEs the NVD analyzed with a band: plain",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.reweighting.floors.weighted_qwk": {
+   "value": 0.44197780120626906,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/choose_operating_points.py",
+    "population": "shadow CVEs the NVD analyzed with a band: weighted toward the skipped",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
   "models.sets.cwe_classes": {
    "value": 51,
    "fmt": "int",
@@ -10391,6 +10501,28 @@
    "provenance": {
     "origin": "scripts/train_survival.py",
     "population": "the train population: listings by the cut",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.taxonomy.drawn": {
+   "value": 100,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/draw_misses.py",
+    "population": "development band misses drawn with the default seed and read by hand",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.taxonomy.misses": {
+   "value": 7757,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/draw_misses.py",
+    "population": "development CVEs with an NVD band the primary fill model gets wrong",
     "source": "models",
     "as_of": "2026-11-13",
     "note": null
@@ -15956,7 +16088,7 @@
     ],
     [
      9,
-     "not done",
+     "done",
      "The plain and reweighted views reported with the effective sample size",
      "results/models/reweighting.json"
     ],
@@ -17150,6 +17282,62 @@
    "provenance": {
     "origin": "scripts/build_sets.py",
     "population": "published CVEs, rejected excluded, by the window of their publication date",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.taxonomy": {
+   "columns": [
+    "Category",
+    "Misses",
+    "What it means"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "text"
+   ],
+   "rows": [
+    [
+     "A kernel or hypervisor fix that states no impact",
+     27,
+     "a Linux or Xen commit message names the bug and its fix but not what an attacker gains; the NVD's band, mostly 5.5 or 7.8, rests on a reading the text does not give"
+    ],
+    [
+     "The NVD rescored the filer's vector",
+     21,
+     "the filer gave a CVSS 3 vector and its band, the NVD changed one or more metrics into another band, and the model stayed with the filer"
+    ],
+    [
+     "A word's usual band, wrong for this CVE",
+     14,
+     "the model followed a word in the text, a weakness class or VulDB's own rating of critical or problematic, to the band it usually means, while the NVD scored the details, such as an admin only page or an adjacent network"
+    ],
+    [
+     "The model left a band that agreed with the NVD",
+     14,
+     "the filer's band or the CISA ADP band matched the NVD's, and the model moved off it, often toward the band its weakness class usually takes"
+    ],
+    [
+     "A short text with no score, scored severe by the NVD",
+     8,
+     "a sentence or two and no filer vector; the NVD assumed the worst case the text allows, and the model spread its probability"
+    ],
+    [
+     "The filer scored in CVSS 4.0 alone",
+     8,
+     "a CVSS 4.0 vector gives no CVSS 3 band or base metrics, so the model had only the vector string to go on"
+    ],
+    [
+     "The text states the impact and the model misread it",
+     8,
+     "the description says what an attacker gets, often in a vendor's stock phrase, and the model's band does not follow it"
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/draw_misses.py",
+    "population": "100 development band misses of the primary fill model, drawn with the default seed",
     "source": "models",
     "as_of": "2026-11-13",
     "note": null

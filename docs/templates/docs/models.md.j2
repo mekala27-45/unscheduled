@@ -165,7 +165,12 @@ sample size, never one without the other.
 {% if has("models.reweighting.fallback.plain_qwk") %}
 For the primary model the plain kappa is {{ v("models.reweighting.fallback.plain_qwk") }} and the
 weighted one {{ v("models.reweighting.fallback.weighted_qwk") }}, on an effective sample of
-{{ v("models.reweighting.fallback.ess") }}.
+{{ v("models.reweighting.fallback.ess") }}; for the floor they are {{ v("models.reweighting.floors.plain_qwk") }} and
+{{ v("models.reweighting.floors.weighted_qwk") }}.
+{% if raw("models.reweighting.fallback.plain_qwk") < raw("models.fallback.band.dev") - 0.1 and raw("models.reweighting.floors.plain_qwk") < raw("models.floors.band.dev") - 0.1 %}
+Both sit well below their development kappas, {{ v("models.fallback.band.dev") }} and {{ v("models.floors.band.dev") }}: the
+CVEs the NVD analyzes after its change are not like the ones it analyzed in 2024, weighted or not.
+{% endif %}
 {% endif %}
 
 ## How test was judged

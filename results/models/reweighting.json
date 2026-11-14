@@ -1,0 +1,24 @@
+{
+ "shadow_cves": 78676,
+ "analyzed": 29810,
+ "floors": {
+  "rows": 7782,
+  "plain_qwk": 0.4529951810748475,
+  "weighted_qwk": 0.44197780120626906,
+  "clip": 20.0,
+  "clipped": 263,
+  "effective_sample_size": 932.8503301433153,
+  "weight_mean": 1.6024619074001984,
+  "weight_max": 20.0
+ },
+ "fallback": {
+  "rows": 7782,
+  "plain_qwk": 0.37904954897300025,
+  "weighted_qwk": 0.3988979306182404,
+  "clip": 20.0,
+  "clipped": 263,
+  "effective_sample_size": 932.8503301433153,
+  "weight_mean": 1.6024619074001984,
+  "weight_max": 20.0
+ }
+}

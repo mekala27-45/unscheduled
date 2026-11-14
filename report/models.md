@@ -39,5 +39,20 @@ kept as written, to be read against the cards.
 - The exploitation model holds more KEV listings in its top 5 percent than EPSS at day 1, and the gap to EPSS at day 30 is a tie or a loss.
 - The reweighted band kappa is lower than the plain one.
 
+## The misses, read
+
+100 of the 7,757 development band misses of the
+primary model, drawn with the default seed and coded by reading into categories named while reading.
+Never from test.
+
+| Category | Misses | What it means |
+|---|---:|---|
+| A kernel or hypervisor fix that states no impact | 27 | a Linux or Xen commit message names the bug and its fix but not what an attacker gains; the NVD's band, mostly 5.5 or 7.8, rests on a reading the text does not give |
+| The NVD rescored the filer's vector | 21 | the filer gave a CVSS 3 vector and its band, the NVD changed one or more metrics into another band, and the model stayed with the filer |
+| A word's usual band, wrong for this CVE | 14 | the model followed a word in the text, a weakness class or VulDB's own rating of critical or problematic, to the band it usually means, while the NVD scored the details, such as an admin only page or an adjacent network |
+| The model left a band that agreed with the NVD | 14 | the filer's band or the CISA ADP band matched the NVD's, and the model moved off it, often toward the band its weakness class usually takes |
+| A short text with no score, scored severe by the NVD | 8 | a sentence or two and no filer vector; the NVD assumed the worst case the text allows, and the model spread its probability |
+| The filer scored in CVSS 4.0 alone | 8 | a CVSS 4.0 vector gives no CVSS 3 band or base metrics, so the model had only the vector string to go on |
+| The text states the impact and the model misread it | 8 | the description says what an attacker gets, often in a vendor's stock phrase, and the model's band does not follow it |
 
 > unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.

@@ -1,0 +1,87 @@
+{
+ "model": "fallback",
+ "method": "split conformal, APS, the class crossing the threshold included",
+ "seed": 20261114,
+ "heads": {
+  "band": {
+   "cutoff": 0.889958276491933,
+   "target": 0.9,
+   "rows": 23272,
+   "dev_coverage": 0.9655379855620488,
+   "dev_mean_size": 2.144637332416638,
+   "dev_rows": 23272
+  },
+  "metric_AV": {
+   "cutoff": 0.9006383024620388,
+   "target": 0.9,
+   "rows": 23272,
+   "dev_coverage": 0.983585424544517,
+   "dev_mean_size": 1.340452045376418,
+   "dev_rows": 23272
+  },
+  "metric_AC": {
+   "cutoff": 0.899941833591338,
+   "target": 0.9,
+   "rows": 23272,
+   "dev_coverage": 0.9882261945685803,
+   "dev_mean_size": 1.1261172224132003,
+   "dev_rows": 23272
+  },
+  "metric_PR": {
+   "cutoff": 0.8978369894201944,
+   "target": 0.9,
+   "rows": 23272,
+   "dev_coverage": 0.9747765555173599,
+   "dev_mean_size": 1.8371863183224475,
+   "dev_rows": 23272
+  },
+  "metric_UI": {
+   "cutoff": 0.8999338764578962,
+   "target": 0.9,
+   "rows": 23272,
+   "dev_coverage": 0.9858198693709178,
+   "dev_mean_size": 1.201185974561705,
+   "dev_rows": 23272
+  },
+  "metric_S": {
+   "cutoff": 0.8947536243953725,
+   "target": 0.9,
+   "rows": 23272,
+   "dev_coverage": 0.9843159161223788,
+   "dev_mean_size": 1.140984874527329,
+   "dev_rows": 23272
+  },
+  "metric_C": {
+   "cutoff": 0.8994782615726213,
+   "target": 0.9,
+   "rows": 23272,
+   "dev_coverage": 0.9724561705053283,
+   "dev_mean_size": 1.6527157098659333,
+   "dev_rows": 23272
+  },
+  "metric_I": {
+   "cutoff": 0.8979005910278305,
+   "target": 0.9,
+   "rows": 23272,
+   "dev_coverage": 0.9715967686490203,
+   "dev_mean_size": 1.683267445857683,
+   "dev_rows": 23272
+  },
+  "metric_A": {
+   "cutoff": 0.9007484497191898,
+   "target": 0.9,
+   "rows": 23272,
+   "dev_coverage": 0.9710381574424201,
+   "dev_mean_size": 1.455482983843245,
+   "dev_rows": 23272
+  }
+ },
+ "floor_band": {
+  "cutoff": 0.8907581090875493,
+  "target": 0.9,
+  "rows": 23272,
+  "dev_coverage": 0.9641199724991406,
+  "dev_mean_size": 1.9147473358542455,
+  "dev_rows": 23272
+ }
+}

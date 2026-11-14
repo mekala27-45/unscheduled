@@ -7,7 +7,8 @@ classifier, and the band kappa is shown plain and weighted, never one without th
 {% if has("models.reweighting.fallback.plain_qwk") %}
 For the primary model's band: {{ v("models.reweighting.fallback.plain_qwk") }} plain and
 {{ v("models.reweighting.fallback.weighted_qwk") }} weighted, on an effective sample of
-{{ v("models.reweighting.fallback.ess") }} CVEs.
+{{ v("models.reweighting.fallback.ess") }} CVEs, against {{ v("models.fallback.band.dev") }} on development; for the floor,
+{{ v("models.reweighting.floors.plain_qwk") }} and {{ v("models.reweighting.floors.weighted_qwk") }}.
 {% else %}
 The weighted view is not in the manifest yet.
 {% endif %}
