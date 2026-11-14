@@ -8,7 +8,8 @@ when every test prediction file has the digest the operating points froze, and o
 results/models/test_scoring.json exists it stops, since a second run on different model digests
 needs a change request that keeps both results (evaluation/phase2_plan.yaml, test_scoring). Writes
 results/models/c1.json, results/models/c2.json, results/models/test_scoring.json and the manifest
-part results/parts/test.json.
+part results/parts/test.json. --recheck scores again from the same frozen files and compares with
+the committed results, writing only results/models/test_recheck.json, for reset and rederive.
 """
 
 from __future__ import annotations
@@ -482,40 +483,33 @@ def manifest_part(
     return m.dump()
 
 
-def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--models", type=Path, default=root / "data" / "models")
-    parser.add_argument("--sets", type=Path, default=root / "data" / "sets")
-    parser.add_argument("--bronze", type=Path, default=root / "data" / "bronze")
-    args = parser.parse_args(argv)
-    out = root / "results" / "models"
-    if (out / "test_scoring.json").exists():
-        raise SystemExit(
-            "score: test was scored already (results/models/test_scoring.json); a second run needs a change request"
-        )
+def compute(
+    root: Path, models: Path, folder: Path, bronze: Path
+) -> tuple[dict[str, Any], dict[str, Any], dict[str, Any]]:
+    """C1, C2 and the scoring record from the frozen operating points and the test files they name."""
     points = operating_points(root)
-    check_frozen(points, args.models)
+    check_frozen(points, models)
     seed = plan_seed(root)
     criteria = {
         c["id"]: c
         for c in yaml.safe_load((root / "config" / "criteria.yaml").read_text(encoding="utf-8"))["criteria"]
     }
-    labels = sets.load_labels(args.sets, "test", unsealed=True)
-    inputs = pl.read_parquet(args.sets / sets.inputs_name("test")).select(
+    labels = sets.load_labels(folder, "test", unsealed=True)
+    inputs = pl.read_parquet(folder / sets.inputs_name("test")).select(
         "cve_id", "published", "published_year", "filer", "filer_type"
     )
-    vendors = pl.read_parquet(args.sets / sets.product_inputs_name("test")).select(
+    vendors = pl.read_parquet(folder / sets.product_inputs_name("test")).select(
         "cve_id", pl.col("filer_pairs").list.first().struct.field("vendor").str.to_lowercase().alias("vendor")
     )
     test = labels.join(inputs, on="cve_id").join(vendors, on="cve_id", how="left").sort("cve_id")
-    primary = pl.read_parquet(args.models / points["primary"]["fill"] / "test_probabilities.parquet")
-    floor = pl.read_parquet(args.models / "floors" / "test_probabilities.parquet")
+    primary = pl.read_parquet(models / points["primary"]["fill"] / "test_probabilities.parquet")
+    floor = pl.read_parquet(models / "floors" / "test_probabilities.parquet")
     c1r = c1(test, points, primary, floor, seed, criteria["C1"])
     c2r = c2(
         test,
         points,
-        pl.read_parquet(args.models / "rank" / "test_scores.parquet"),
-        args.bronze,
+        pl.read_parquet(models / "rank" / "test_scores.parquet"),
+        bronze,
         seed,
         criteria["C2"],
     )
@@ -526,11 +520,82 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         ).hexdigest(),
         "test_predictions": points["test_predictions"],
         "seed": seed,
-        "secondary": secondary(test, points, args.models, args.sets, root),
-        "slices": slices(test, args.models, points, seed),
+        "secondary": secondary(test, points, models, folder, root),
+        "slices": slices(test, models, points, seed),
         "c1_verdict": c1r["verdict"],
         "c2_verdict": c2r["verdict"],
     }
+    return c1r, c2r, record
+
+
+def differences(committed: Any, fresh: Any, where: str = "") -> list[str]:
+    """Every place two JSON documents differ, by path; floats must be equal, as the same code on the
+    same files with the same seed gives the same numbers."""
+    if isinstance(committed, dict) and isinstance(fresh, dict):
+        out = [f"{where}.{k}: only one side" for k in sorted(set(committed) ^ set(fresh))]
+        for k in sorted(set(committed) & set(fresh)):
+            out += differences(committed[k], fresh[k], f"{where}.{k}")
+        return out
+    if isinstance(committed, list) and isinstance(fresh, list):
+        if len(committed) != len(fresh):
+            return [f"{where}: {len(committed)} items against {len(fresh)}"]
+        return [
+            d
+            for i, (a, b) in enumerate(zip(committed, fresh, strict=True))
+            for d in differences(a, b, f"{where}[{i}]")
+        ]
+    if isinstance(committed, float) and isinstance(fresh, float) and np.isnan(committed) and np.isnan(fresh):
+        return []
+    return [] if committed == fresh else [f"{where}: {committed!r} against {fresh!r}"]
+
+
+def recheck(root: Path, models: Path, folder: Path, bronze: Path) -> int:
+    """Score test again from the frozen files and compare with the committed results, writing
+    nothing but results/models/test_recheck.json. For reset and rederive: it changes no result."""
+    out = root / "results" / "models"
+    if not (out / "test_scoring.json").exists():
+        raise SystemExit("score: there is no committed scoring to recheck")
+    c1r, c2r, record = compute(root, models, folder, bronze)
+    committed = {
+        name: json.loads((out / f"{name}.json").read_text(encoding="utf-8"))
+        for name in ("c1", "c2", "test_scoring")
+    }
+    committed["test_scoring"].pop("scored_at", None)
+    record.pop("scored_at", None)
+    fresh = json.loads(json.dumps({"c1": c1r, "c2": c2r, "test_scoring": record}))
+    found = differences(committed, fresh)
+    result = {
+        "checked_at": datetime.now(UTC).replace(microsecond=0).isoformat(),
+        "inputs": "the test prediction files the operating points froze, checked by content digest",
+        "compared": ["c1.json", "c2.json", "test_scoring.json without scored_at"],
+        "differences": found[:50],
+        "difference_count": len(found),
+        "result": "pass" if not found else "fail",
+    }
+    (out / "test_recheck.json").write_text(json.dumps(result, indent=1) + "\n", encoding="utf-8")
+    print(f"score: recheck {result['result']}, {len(found)} differences")
+    return 0 if not found else 1
+
+
+def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--models", type=Path, default=root / "data" / "models")
+    parser.add_argument("--sets", type=Path, default=root / "data" / "sets")
+    parser.add_argument("--bronze", type=Path, default=root / "data" / "bronze")
+    parser.add_argument(
+        "--recheck",
+        action="store_true",
+        help="score again and compare with the committed results, changing none (reset and rederive)",
+    )
+    args = parser.parse_args(argv)
+    if args.recheck:
+        return recheck(root, args.models, args.sets, args.bronze)
+    out = root / "results" / "models"
+    if (out / "test_scoring.json").exists():
+        raise SystemExit(
+            "score: test was scored already (results/models/test_scoring.json); a second run needs a change request"
+        )
+    c1r, c2r, record = compute(root, args.models, args.sets, args.bronze)
     (out / "c1.json").write_text(json.dumps(c1r, indent=1) + "\n", encoding="utf-8")
     (out / "c2.json").write_text(json.dumps(c2r, indent=1) + "\n", encoding="utf-8")
     (out / "test_scoring.json").write_text(json.dumps(record, indent=1) + "\n", encoding="utf-8")

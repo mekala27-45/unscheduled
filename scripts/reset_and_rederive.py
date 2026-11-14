@@ -20,6 +20,16 @@ The committed numbers must come from the same release for the comparison to mean
 record names the release, the commit and every difference. Raw files are not parsed again here:
 they are several gigabytes and this machine holds a few, so the bronze is checked by digest instead
 (DECISIONS.md, 12 November 2026). Writes results/rederive.json; exits 1 on any difference.
+
+With --models, the Phase 2 models follow in the same worktree: the sets are rebuilt from the rebuilt
+lake and must match their content digests; the CPU models a laptop can fit, the survival models and
+the exploitation models, are fit again (the exploitation step on the committed band floor, checked by
+digest) and their parts compared with the committed ones; and once test has been scored, the
+scoring is run again by scripts/score_test.py --recheck from the test prediction files the operating
+points froze, copied from this checkout's data/models and checked by digest, and every number of
+C1, C2 and the scoring record compared. The floors, the text model and the product models are not
+fit again here: the floors take hours on a four CPU runner and the text model's embeddings longer, so
+their predictions are checked through the frozen digests instead.
 """
 
 from __future__ import annotations
@@ -58,6 +68,52 @@ def steps(memory: str, threads: int) -> tuple[list[str], ...]:
         ["scripts/run_analysis.py"],
         ["scripts/backlog_charts.py"],
     )
+
+
+MODEL_PARTS = ("survival.json", "rank.json")
+NOT_REFIT = {
+    "floors": "about two and a half hours on a four CPU runner; their test predictions are checked by digest",
+    "fallback": "hours of embedding on a runner; its test predictions are checked by digest",
+    "product": "reads the embeddings too; its test candidates are checked by digest",
+}
+R_CHECK = "models.survival.r_check."
+
+
+def model_steps(jobs: int, r_check: bool) -> tuple[list[str], ...]:
+    """The CPU models a laptop can fit, after the sets are rebuilt and checked. --jobs is passed as
+    the models workflow passes it, so LightGBM and the forest use the same number of threads."""
+    return (
+        ["scripts/build_sets.py", "--check"],
+        ["scripts/train_survival.py", "--jobs", str(jobs), *(["--r-check"] if r_check else [])],
+        ["scripts/train_rank.py", "--jobs", str(jobs)],
+    )
+
+
+def copy_floor(tree: Path) -> None:
+    """The committed band floor the exploitation step projects with; train_rank.py checks its digest."""
+    source = ROOT / "data" / "models" / "floors" / "floors.joblib"
+    if not source.exists():
+        raise SystemExit(
+            "rederive: data/models/floors/floors.joblib is missing; restore the floors step's artifact"
+        )
+    target = tree / "data" / "models" / "floors"
+    target.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(source, target / "floors.joblib")
+
+
+def copy_frozen(tree: Path) -> Path:
+    """The test prediction files the operating points froze, apart from what the refits wrote."""
+    sys.path.insert(0, str(ROOT))
+    from scripts.choose_operating_points import TEST_FILES
+
+    frozen = tree / "data" / "frozen"
+    for path in TEST_FILES.values():
+        source = ROOT / "data" / "models" / path
+        if not source.exists():
+            raise SystemExit(f"rederive: data/models/{path} is missing; restore the model step's artifact")
+        (frozen / path).parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source, frozen / path)
+    return frozen
 
 
 def step_env(tree: Path) -> dict[str, str]:
@@ -305,6 +361,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--keep", action="store_true", help="keep the worktree for inspection")
     parser.add_argument("--memory", default="3GB", help="the DuckDB memory limit of the lake build")
     parser.add_argument("--threads", type=int, default=2, help="DuckDB and dbt threads")
+    parser.add_argument("--models", action="store_true", help="the Phase 2 models too (see the docstring)")
+    parser.add_argument(
+        "--jobs", type=int, default=4, help="threads for the model fits, as the models workflow uses"
+    )
     args = parser.parse_args(argv)
     if sh(["git", "status", "--porcelain", "--untracked-files=no"]).strip():
         raise SystemExit(
@@ -342,8 +402,42 @@ def main(argv: list[str] | None = None) -> int:
             committed = json.loads((ROOT / "results" / "parts" / name).read_text(encoding="utf-8"))
             rebuilt = json.loads((tree / "results" / "parts" / name).read_text(encoding="utf-8"))
             parts[name] = compare(committed, rebuilt)
+        not_compared = dict(NOT_COMPARED)
+        if args.models:
+            r_check = shutil.which("Rscript") is not None
+            copy_floor(tree)
+            for step in model_steps(args.jobs, r_check):
+                t0 = time.monotonic()
+                subprocess.run([sys.executable, *step], cwd=tree, env=step_env(tree), check=True)
+                timings[step[0]] = round(time.monotonic() - t0, 1)
+            for name in MODEL_PARTS:
+                committed = json.loads((ROOT / "results" / "parts" / name).read_text(encoding="utf-8"))
+                rebuilt = json.loads((tree / "results" / "parts" / name).read_text(encoding="utf-8"))
+                if not r_check:
+                    for key in [k for k in committed.get("values", {}) if k.startswith(R_CHECK)]:
+                        not_compared[f"values:{key}"] = (
+                            "R is not on this machine; the models workflow ran the check"
+                        )
+                        committed["values"].pop(key)
+                parts[name] = compare(committed, rebuilt)
+            record["not_refit"] = NOT_REFIT
+            if (tree / "results" / "models" / "test_scoring.json").exists():
+                frozen = copy_frozen(tree)
+                t0 = time.monotonic()
+                done = subprocess.run(
+                    [sys.executable, "scripts/score_test.py", "--recheck", "--models", str(frozen)],
+                    cwd=tree,
+                    env=step_env(tree),
+                    check=False,
+                )
+                timings["scripts/score_test.py --recheck"] = round(time.monotonic() - t0, 1)
+                recheck = json.loads(
+                    (tree / "results" / "models" / "test_recheck.json").read_text(encoding="utf-8")
+                )
+                record["test_recheck"] = {**recheck, "exit": done.returncode}
+            record["step_seconds"] = timings
         record["parts"] = parts
-        record["not_compared"] = NOT_COMPARED
+        record["not_compared"] = not_compared
     finally:
         if not args.keep:
             subprocess.run(["git", "worktree", "remove", "--force", str(tree)], cwd=ROOT, check=False)
@@ -355,7 +449,8 @@ def main(argv: list[str] | None = None) -> int:
     gaps = sum(len(p["missing"]) + len(p["differ"]) for p in record["parts"].values())
     record["compared"] = compared
     record["equal"] = equal
-    record["result"] = "pass" if gaps == 0 and compared > 0 else "fail"
+    recheck_failed = record.get("test_recheck", {}).get("result", "pass") != "pass"
+    record["result"] = "pass" if gaps == 0 and compared > 0 and not recheck_failed else "fail"
     record["seconds"] = round(time.monotonic() - started, 1)
     OUT.write_text(json.dumps(record, indent=1, default=str) + "\n", encoding="utf-8")
     print(f"rederive: {equal} of {compared} entries equal from {tag}; {record['result']}")

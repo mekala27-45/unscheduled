@@ -219,3 +219,17 @@ def test_the_scorer_runs_end_to_end_once(tmp_path: Path, monkeypatch) -> None:  
         assert "scored already" in str(err)
     else:
         raise AssertionError("a second scoring ran")
+    # The recheck scores again from the same frozen files, finds every number equal, and changes
+    # no result; a changed committed number is found.
+    before = (tmp_path / "results/models/c1.json").read_bytes()
+    assert score_test.main([*args, "--recheck"], root=tmp_path) == 0
+    assert (tmp_path / "results/models/c1.json").read_bytes() == before
+    assert (
+        json.loads((tmp_path / "results/models/test_recheck.json").read_text(encoding="utf-8"))["result"]
+        == "pass"
+    )
+    c1["kappa"]["model"]["value"] += 0.001
+    (tmp_path / "results/models/c1.json").write_text(json.dumps(c1), encoding="utf-8")
+    assert score_test.main([*args, "--recheck"], root=tmp_path) == 1
+    found = json.loads((tmp_path / "results/models/test_recheck.json").read_text(encoding="utf-8"))
+    assert found["difference_count"] == 1 and found["differences"][0].startswith(".c1.kappa.model.value")
