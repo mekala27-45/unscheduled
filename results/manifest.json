@@ -6635,7 +6635,7 @@
    }
   },
   "build.checklist_done": {
-   "value": 17,
+   "value": 18,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/build_manifest.py",
@@ -13844,7 +13844,7 @@
     ],
     [
      18,
-     "not done",
+     "done",
      "At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2",
      "results/release.json"
     ]

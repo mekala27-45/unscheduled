@@ -1,0 +1,109 @@
+{
+ "tag": "v0.1.0",
+ "on": "the commit that adds this file",
+ "built_from": "5861acd08a6e64eef61982ed14039d92e268cc0c",
+ "recorded_at": "2026-11-14T01:07:12Z",
+ "commits": {
+  "total": 120,
+  "conventional": 120,
+  "minimum": 50
+ },
+ "steps": [
+  {
+   "name": "gates",
+   "command": "make gates",
+   "exit_code": 0,
+   "seconds": 2.6,
+   "last_line": "warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead."
+  },
+  {
+   "name": "ruff check",
+   "command": "uv run ruff check .",
+   "exit_code": 0,
+   "seconds": 0.1,
+   "last_line": "warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead."
+  },
+  {
+   "name": "ruff format",
+   "command": "uv run ruff format --check .",
+   "exit_code": 0,
+   "seconds": 0.1,
+   "last_line": "warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead."
+  },
+  {
+   "name": "mypy",
+   "command": "uv run mypy",
+   "exit_code": 0,
+   "seconds": 1.0,
+   "last_line": "warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead."
+  },
+  {
+   "name": "pytest",
+   "command": "uv run pytest -q -p no:warnings",
+   "exit_code": 0,
+   "seconds": 143.5,
+   "last_line": "  from starlette.testclient import TestClient as TestClient  # noqa"
+  },
+  {
+   "name": "manifest",
+   "command": "uv run python scripts/build_manifest.py",
+   "exit_code": 0,
+   "seconds": 0.3,
+   "last_line": "warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead."
+  },
+  {
+   "name": "claim gate",
+   "command": "uv run python scripts/check_published_numbers.py",
+   "exit_code": 0,
+   "seconds": 0.5,
+   "last_line": "warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead."
+  }
+ ],
+ "evidence": {
+  "api_verify": {
+   "file": "results/live/api_verify.json",
+   "present": true,
+   "result": "pass",
+   "passed": 17,
+   "total": 17,
+   "checked_at": "2026-11-13T23:52:20Z"
+  },
+  "load": {
+   "file": "results/load/c8.json",
+   "present": true,
+   "result": "pass",
+   "finished_at": "2026-11-14T00:41:44Z"
+  },
+  "live_check": {
+   "file": "results/live_check.json",
+   "present": true,
+   "awake": {
+    "result": "pass",
+    "passed": 14,
+    "total": 14,
+    "finished_at": "2026-11-13T23:58:36Z"
+   },
+   "asleep": {
+    "result": "pass",
+    "passed": 14,
+    "total": 14,
+    "finished_at": "2026-11-14T01:03:53Z"
+   }
+  },
+  "rederive": {
+   "file": "results/rederive.json",
+   "present": true,
+   "result": "pass",
+   "release": "lake-20261112"
+  },
+  "design_gates": {
+   "file": "results/design/gates.json",
+   "present": true,
+   "sloplint": "pass"
+  }
+ },
+ "checklist_open_before_this_line": [],
+ "push": "the tag push starts release.yml, which reruns the gates and publishes the notes",
+ "result": "pass",
+ "failed": []
+}

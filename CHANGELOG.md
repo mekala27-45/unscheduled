@@ -102,6 +102,7 @@ scripts/changelog.py from the history before each tag. A subject reads as it was
 
 ### Tests
 
+- live: the site read in a browser again after twenty quiet minutes (5861acd)
 - load: the cold start and three hundred warm lookups on the live API, C8 met (d7755a7)
 - web: the design gates on the built site, with the rebuilt numbers (010f184)
 - rederive: every committed number rebuilt again in a fresh worktree, 693 of 693 equal (ab2c1a1)

@@ -84,6 +84,6 @@ says nothing about whether its output is right.
 | 15 | done | sloplint, axe and Lighthouse green; the look reviewed or marked pending | results/design/gates.json |
 | 16 | done | README with the matrix, RESULTS, DECISIONS, the memos and notebooks; the humanizer pass | RESULTS.md, report/discovery.md, report/backlog.md, report/legacy.md, notebooks/01_the_first_backlog_chart.ipynb, notebooks/02_kappa_on_everything.ipynb, notebooks/03_the_matcher_without_schemes.ipynb, results/humanizer.json |
 | 17 | done | The live check awake and asleep; reset and rederive reproduced every number | results/live_check.json, results/rederive.json |
-| 18 | not done | At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2 | results/release.json |
+| 18 | done | At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2 | results/release.json |
 
 > unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.

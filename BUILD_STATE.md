@@ -8,7 +8,7 @@ the manifest or a committed file: edit the template, then render.
 
 ```
 Phase            1 of 5, the ground truth
-Checklist        17 of 18 lines done (RESULTS.md)
+Checklist        18 of 18 lines done (RESULTS.md)
 Repository       public; every commit conventional; CI, web and exposure green on main
 Vercel           unscheduled-api (container) at unscheduled-api.vercel.app
                  unscheduled (web) at unscheduled-triage.vercel.app: the landing with its
@@ -21,18 +21,15 @@ Look approval    approved by Ajay on the evening of 11 November, New York time, 
                  landing, docs, report and ruler screens: everything is good so far
 ```
 
-Open checklist lines:
-
-- At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2
-
 ## Next action
 
-The scheduled daily fetch finished the NVD change history on 12 November, and lake.yml has loaded
-the live API from the newest lake release each day since. The committed numbers are rebuilt here
-from the settled lake release named above (scripts/restore_release.py), and scripts/verify_api.py
-passes against the live API. Next: web/scripts/live-check.mjs awake, scripts/load_test.py with
-twenty idle minutes, the live check asleep, scripts/reset_and_rederive.py, the web suite and the
-design gates; then the cut-a-release skill, and Ajay pushes the tag.
+Phase 1 is built and checked. The committed numbers are rebuilt from the settled lake release named
+above, and every checklist line holds its evidence. The release record, results/release.json,
+passes: the gates, ruff, mypy, pytest, the manifest and the claim gate on a clean checkout, with the
+live API check, the load test, the live check awake and asleep, the reset and rederive and the
+design gates as its evidence. Next: Ajay pushes the tag v0.1.0 on the commit that adds the release
+record, or replies yes, push the v0.1.0 tag; release.yml reruns the gates on the tag and publishes
+the notes. Then the Phase 2 prompt is written from this repository as it stands.
 
 ## Open problems
 

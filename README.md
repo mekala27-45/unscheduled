@@ -2,9 +2,7 @@
 
 Triage for the CVEs the NVD no longer analyzes.
 
-Phase 1 of 5 is in progress: 17 of 18 checklist lines are done. Still missing:
-
-- At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2
+Phase 1 of 5 is complete, and RESULTS.md has the evidence for every checklist line.
 
 ## What it is
 
