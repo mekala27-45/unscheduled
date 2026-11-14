@@ -103,7 +103,9 @@ def draw(root: Path, models: Path, folder: Path) -> dict[str, Any]:
 
 def check(root: Path) -> dict[str, Any]:
     misses = json.loads((root / "results" / "models" / "misses.json").read_text(encoding="utf-8"))
-    taxonomy = json.loads((root / "results" / "models" / "taxonomy.json").read_text(encoding="utf-8"))
+    taxonomy: dict[str, Any] = json.loads(
+        (root / "results" / "models" / "taxonomy.json").read_text(encoding="utf-8")
+    )
     named = {c["name"] for c in taxonomy["categories"]}
     codes: dict[str, str] = taxonomy["codes"]
     drawn = [m["cve_id"] for m in misses["misses"]]
