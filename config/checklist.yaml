@@ -90,3 +90,101 @@ items:
     text: "At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2"
     evidence:
       - results/release.json
+
+# Section 20 of the Phase 2 prompt, printed in RESULTS.md beside the first. A file an earlier phase
+# wrote counts for this phase only with what this phase writes into it (has, equals).
+phase2:
+  - n: 1
+    text: "The probes extended and read by every model step; the scoped model gate in CI with its three tests"
+    evidence:
+      - {file: results/probe.json, has: [[phase2, libraries], [phase2, weights]]}
+  - n: 2
+    text: "The Phase 2 plan hashed as registration stage two before any model saw a test CVE"
+    evidence:
+      - {file: evaluation/registration.json, equals: {stages/2/stage: models}}
+  - n: 3
+    text: "The training sets built point in time, the leakage test passing, the sets published by digest"
+    evidence:
+      - results/models/sets.json
+  - n: 4
+    text: "Every model has a floor trained on the same rows; every comparison has a paired interval"
+    evidence:
+      - results/models/floors.json
+      - results/models/c1.json
+      - results/models/c2.json
+  - n: 5
+    text: "The affected product retrieval measured against the NVD CPE configurations"
+    evidence:
+      - results/models/product.json
+  - n: 6
+    text: "The exploitation model tuned on time ordered folds; the survival model checked in R"
+    evidence:
+      - results/models/rank.json
+      - {file: results/models/survival.json, equals: {r_check/result: pass}}
+  - n: 7
+    text: "ModernBERT run on Kaggle by a committed request inside the GPU budget, or its fallback named; ONNX parity passing"
+    evidence:
+      - results/parts/gpu.json
+      - results/models/fallback.json
+      - {file: results/models/onnx.json, equals: {verdict: pass}}
+  - n: 8
+    text: "Calibration and conformal sets fit on development, with coverage on test"
+    evidence:
+      - results/models/calibration.json
+      - results/models/conformal.json
+      - {file: results/models/test_scoring.json, has: [[secondary, conformal, band]]}
+  - n: 9
+    text: "The plain and reweighted views reported with the effective sample size"
+    evidence:
+      - results/models/reweighting.json
+  - n: 10
+    text: "MLflow runs and the registry; the model cards rendered from the manifest"
+    evidence:
+      - results/registry/registry.json
+      - report/models.md
+      - report/models/band.md
+  - n: 11
+    text: "Test scored once by scripts/score_test.py; C1 and C2 evidence with their verdicts"
+    evidence:
+      - {file: results/models/c1.json, has: [[verdict]]}
+      - {file: results/models/c2.json, has: [[verdict]]}
+  - n: 12
+    text: "EPSS beside every exploitation number; ties named"
+    evidence:
+      - {file: results/models/c2.json, has: [[recall_at_top5, epss_day_1], [recall_at_top5, epss_day_7], [recall_at_top5, epss_day_30]]}
+  - n: 13
+    text: "Slices with Benjamini-Hochberg; the failure taxonomy in the manifest"
+    evidence:
+      - {file: results/models/test_scoring.json, has: [[slices, fill], [slices, exploitation]]}
+      - results/parts/taxonomy.json
+  - n: 14
+    text: "The predictions in the serving bundle and the API; /v1/predict live; Neon under its ceiling"
+    evidence:
+      - results/models/predictions.json
+      - {file: results/live/api_verify.json, has: [[predictions]]}
+  - n: 15
+    text: "The console shows every prediction with its model, version and uncertainty; design gates green; the look reviewed by Ajay"
+    evidence:
+      - results/design/gates.json
+      - results/design/look_review.json
+  - n: 16
+    text: "The docs, ADRs 0008 to 0010, report/models.md and notebooks 04 to 06; the humanizer pass done"
+    evidence:
+      - docs/models.md
+      - docs/adr/0008-predictions-from-a-batch.md
+      - docs/adr/0009-the-gpu-as-a-committed-request.md
+      - docs/adr/0010-the-fill-model-earns-its-place.md
+      - report/models.md
+      - notebooks/04_the_random_split.ipynb
+      - notebooks/05_reading_the_misses.ipynb
+      - notebooks/06_epss_on_day_30.ipynb
+      - {file: results/humanizer.json, has: [[phase2]]}
+  - n: 17
+    text: "The live check awake and asleep; reset and rederive reproduced every CPU model number"
+    evidence:
+      - {file: results/live_check.json, has: [[awake, predict], [asleep, predict]]}
+      - {file: results/rederive.json, has: [[parts, rank.json], [parts, survival.json], [test_recheck]]}
+  - n: 18
+    text: "At least fifty conventional commits; the release record passing; v0.2.0 pushed by Ajay; BUILD_STATE.md written for Phase 3"
+    evidence:
+      - {file: results/release.json, equals: {tag: v0.2.0}}

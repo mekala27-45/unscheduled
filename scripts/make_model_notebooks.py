@@ -216,8 +216,7 @@ table = pd.DataFrame({name: [rank.recall_at_top(truth, s)] for name, s in by.ite
     ),
     (
         "code",
-        """listed = scores.filter(pl.col("kev_180")).join(labels.select("cve_id", "days_to_kev"), on="cve_id", how="left")
-days = listed["days_to_kev"].to_numpy()
+        """days = scores.filter(pl.col("kev_180"))["days_to_kev"].to_numpy()
 print("listed CVEs listed within 30 days of publication:", int((days <= 30).sum()), "of", len(days))
 print("median days to listing:", float(np.median(days)))""",
     ),

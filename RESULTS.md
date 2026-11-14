@@ -86,4 +86,31 @@ says nothing about whether its output is right.
 | 17 | done | The live check awake and asleep; reset and rederive reproduced every number | results/live_check.json, results/rederive.json |
 | 18 | done | At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2 | results/release.json |
 
+## The Phase 2 checklist
+
+4 of 18 lines done. A line is done only
+when its evidence says pass, and a file an earlier phase wrote counts here only with what Phase 2
+writes into it.
+
+| Item | Status | Line | Evidence |
+|---:|---|---|---|
+| 1 | done | The probes extended and read by every model step; the scoped model gate in CI with its three tests | results/probe.json |
+| 2 | done | The Phase 2 plan hashed as registration stage two before any model saw a test CVE | evaluation/registration.json |
+| 3 | done | The training sets built point in time, the leakage test passing, the sets published by digest | results/models/sets.json |
+| 4 | not done | Every model has a floor trained on the same rows; every comparison has a paired interval | results/models/floors.json, results/models/c1.json, results/models/c2.json |
+| 5 | not done | The affected product retrieval measured against the NVD CPE configurations | results/models/product.json |
+| 6 | done | The exploitation model tuned on time ordered folds; the survival model checked in R | results/models/rank.json, results/models/survival.json |
+| 7 | not done | ModernBERT run on Kaggle by a committed request inside the GPU budget, or its fallback named; ONNX parity passing | results/parts/gpu.json, results/models/fallback.json, results/models/onnx.json |
+| 8 | not done | Calibration and conformal sets fit on development, with coverage on test | results/models/calibration.json, results/models/conformal.json, results/models/test_scoring.json |
+| 9 | not done | The plain and reweighted views reported with the effective sample size | results/models/reweighting.json |
+| 10 | not done | MLflow runs and the registry; the model cards rendered from the manifest | results/registry/registry.json, report/models.md, report/models/band.md |
+| 11 | not done | Test scored once by scripts/score_test.py; C1 and C2 evidence with their verdicts | results/models/c1.json, results/models/c2.json |
+| 12 | not done | EPSS beside every exploitation number; ties named | results/models/c2.json |
+| 13 | not done | Slices with Benjamini-Hochberg; the failure taxonomy in the manifest | results/models/test_scoring.json, results/parts/taxonomy.json |
+| 14 | not done | The predictions in the serving bundle and the API; /v1/predict live; Neon under its ceiling | results/models/predictions.json, results/live/api_verify.json |
+| 15 | not done | The console shows every prediction with its model, version and uncertainty; design gates green; the look reviewed by Ajay | results/design/gates.json, results/design/look_review.json |
+| 16 | not done | The docs, ADRs 0008 to 0010, report/models.md and notebooks 04 to 06; the humanizer pass done | docs/models.md, docs/adr/0008-predictions-from-a-batch.md, docs/adr/0009-the-gpu-as-a-committed-request.md, docs/adr/0010-the-fill-model-earns-its-place.md, report/models.md, notebooks/04_the_random_split.ipynb, notebooks/05_reading_the_misses.ipynb, notebooks/06_epss_on_day_30.ipynb, results/humanizer.json |
+| 17 | not done | The live check awake and asleep; reset and rederive reproduced every CPU model number | results/live_check.json, results/rederive.json |
+| 18 | not done | At least fifty conventional commits; the release record passing; v0.2.0 pushed by Ajay; BUILD_STATE.md written for Phase 3 | results/release.json |
+
 > unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.

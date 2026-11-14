@@ -14,6 +14,7 @@ import os
 import sys
 from datetime import UTC, datetime
 from pathlib import Path
+from typing import Any
 
 ROOT = Path(__file__).resolve().parents[1]
 if __package__ in {None, ""}:
@@ -47,13 +48,52 @@ def evidence_holds(path: Path) -> bool:
     return bool(data.get("result", "pass") == "pass")
 
 
-def checklist_rows(root: Path) -> list[list[str | int | None]]:
+def _at(data: Any, path: list[str]) -> tuple[bool, Any]:
+    """The value at a key path, a digit indexing a list."""
+    for key in path:
+        if isinstance(data, list) and key.isdigit() and int(key) < len(data):
+            data = data[int(key)]
+        elif isinstance(data, dict) and key in data:
+            data = data[key]
+        else:
+            return False, None
+    return True, data
+
+
+def condition_holds(path: Path, has: list[list[str]], equals: dict[str, Any]) -> bool:
+    """A later phase's evidence can be a file an earlier phase wrote too, so a line may also ask for
+    what only this phase writes into it: keys that must be there (has, each a list of keys from the
+    top) and values that must match (equals, a key path joined by slashes)."""
+    if not has and not equals:
+        return True
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    if not all(_at(data, list(keys))[0] for keys in has):
+        return False
+    return all(_at(data, key.split("/")) == (True, value) for key, value in equals.items())
+
+
+def checklist_rows(root: Path, section: str = "items") -> list[list[str | int | None]]:
     spec = yaml.safe_load((root / "config" / "checklist.yaml").read_text(encoding="utf-8"))
     rows: list[list[str | int | None]] = []
-    for item in spec["items"]:
-        evidence = [str(e) for e in item["evidence"]]
-        ok = all(evidence_holds(root / e) for e in evidence)
-        rows.append([int(item["n"]), "done" if ok else "not done", str(item["text"]), ", ".join(evidence)])
+    for item in spec.get(section, []):
+        names: list[str] = []
+        ok = True
+        for entry in item["evidence"]:
+            if isinstance(entry, str):
+                names.append(entry)
+                ok = ok and evidence_holds(root / entry)
+                continue
+            names.append(str(entry["file"]))
+            path = root / str(entry["file"])
+            ok = (
+                ok
+                and evidence_holds(path)
+                and condition_holds(path, entry.get("has", []), entry.get("equals", {}))
+            )
+        rows.append([int(item["n"]), "done" if ok else "not done", str(item["text"]), ", ".join(names)])
     return rows
 
 
@@ -88,6 +128,25 @@ def build(root: Path, as_of: str) -> ManifestBuilder:
         population="the section 20 checklist",
         source="build",
     )
+    phase2 = checklist_rows(root, "phase2")
+    if phase2:
+        population = "the Phase 2 checklist, section 20 of the Phase 2 prompt"
+        builder.table(
+            "checklist.phase2",
+            ["Item", "Status", "Line", "Evidence"],
+            ["int", "text", "text", "text"],
+            phase2,
+            origin="scripts/build_manifest.py",
+            population=population,
+            source="build",
+        )
+        for key, value in (
+            ("build.phase2.checklist_done", sum(1 for r in phase2 if r[1] == "done")),
+            ("build.phase2.checklist_total", len(phase2)),
+        ):
+            builder.value(
+                key, value, "int", origin="scripts/build_manifest.py", population=population, source="build"
+            )
     return builder
 
 
