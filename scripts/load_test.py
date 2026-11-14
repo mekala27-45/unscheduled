@@ -1,6 +1,7 @@
 """The C8 lookup evidence: the cold start and the warm latencies of the live API, from a separate client.
 
-    python scripts/load_test.py [--base-url URL] [--idle-minutes 20] [--lookups 300] [--workers 5]
+    python scripts/load_test.py [--base-url URL] [--idle-minutes 20] [--lookups 300] [--predicts 60]
+        [--workers 5]
 
 1. Cold. With --idle-minutes the script first sends nothing for that long, then times the first
    /health and the first lookup. On the free plans Vercel stops an idle container and Neon suspends
@@ -9,15 +10,19 @@
 2. Warm. --lookups GET /v1/cves/{id} calls over --workers threads, the ids drawn by seed from the
    newest pages of the CVE list. Every latency is kept, and the record gives p50, p95, p99 and the
    count of each status.
-3. Persistence from this client, by scripts/check_persistence.py --base-url: the budget count
+3. Predict. --predicts POST /v1/predict calls over the same threads, cycling through four fixed
+   descriptions with and without filer values. The API scores each with the ONNX floor and LightGBM
+   (ADR 0008), so these latencies are the request path the batch does not cover. A run with
+   --predicts 0 leaves the part out; otherwise every call must answer 200 for the run to pass.
+4. Persistence from this client, by scripts/check_persistence.py --base-url: the budget count
    carries from one request to the next and every answer names the same data version.
-4. schemathesis, by tests/api/test_schemathesis.py: every operation in openapi.json driven with
+5. schemathesis, by tests/api/test_schemathesis.py: every operation in openapi.json driven with
    generated requests against the app with data loaded; the generator would spend the live daily
    budget in minutes, so it runs in process, as it does in CI.
 
 k6 was the plan for step 2; its release binaries are not reachable from the build machine, so the
 same scenario runs here with httpx (DECISIONS.md, 12 November 2026). Every lookup counts against
-this client's daily budget of 2,000; the default run spends about 300.
+this client's daily budget of 2,000, and so does every prediction; the default run spends about 360.
 
 Writes results/load/c8.json and exits 1 when the lookup p95 is over the C8 threshold or a part fails.
 """
@@ -33,6 +38,7 @@ import sys
 import threading
 import time
 from collections import Counter
+from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -47,6 +53,31 @@ PERSISTENCE_LIVE = ROOT / "results" / "load" / "persistence_live.json"
 PERSISTENCE_LOCAL = ROOT / "results" / "load" / "persistence_independent.json"
 C8_LOOKUP_P95_MS = 1500.0
 SEED = 20261112
+# Four descriptions a filer might write on day 0, with and without its own values: what a request to
+# /v1/predict looks like, never a CVE the batch already scored.
+PREDICT_BODIES: tuple[dict[str, Any], ...] = (
+    {
+        "description": "A crafted request to the upload handler of the web console allows an unauthenticated "
+        "attacker to run commands as the service account.",
+        "filer_type": "vendor",
+        "cvss31_vector": "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+        "cwes": ["CWE-78"],
+    },
+    {
+        "description": "A stored cross site scripting flaw in the comment field of the admin dashboard lets an "
+        "authenticated user run script in the browser of another user.",
+        "cwes": ["CWE-79"],
+    },
+    {
+        "description": "An out of bounds read in the image parser can crash the service when it opens a malformed "
+        "file supplied by a remote user.",
+        "filer_type": "vendor",
+    },
+    {
+        "description": "Improper access control in the reporting API exposes the invoices of other tenants to any "
+        "signed in user who changes the account id in the request.",
+    },
+)
 USER_AGENT = "unscheduled-load/0.1 (+https://github.com/mekala27-45/unscheduled)"
 
 
@@ -109,23 +140,27 @@ def cold(base: str, idle_minutes: float) -> dict[str, Any]:
     }
 
 
-def warm(base: str, lookups: int, workers: int) -> dict[str, Any]:
-    with httpx.Client(timeout=60.0, headers={"User-Agent": USER_AGENT}) as client:
-        ids = sample_ids(client, base, pages=3, count=lookups)
-        timed(client, f"{base}/health")  # the container and the compute are awake before the clock starts
+def run_calls(
+    jobs: list[Any],
+    workers: int,
+    call: Callable[[httpx.Client, Any], tuple[int, float]],
+    transport: httpx.BaseTransport | None = None,
+) -> dict[str, Any]:
+    """Each job through call() over --workers threads, each with its own client; the latency of
+    every 200 is kept, and every status is counted."""
     latencies: list[float] = []
     statuses: Counter[int] = Counter()
     lock = threading.Lock()
-    queue = list(enumerate(ids))
+    queue = list(jobs)
 
     def worker() -> None:
-        with httpx.Client(timeout=60.0, headers={"User-Agent": USER_AGENT}) as client:
+        with httpx.Client(timeout=60.0, headers={"User-Agent": USER_AGENT}, transport=transport) as client:
             while True:
                 with lock:
                     if not queue:
                         return
-                    _, cve = queue.pop()
-                status, ms = timed(client, f"{base}/v1/cves/{cve}")
+                    job = queue.pop()
+                status, ms = call(client, job)
                 with lock:
                     statuses[status] += 1
                     if status == 200:
@@ -139,11 +174,9 @@ def warm(base: str, lookups: int, workers: int) -> dict[str, Any]:
         t.join()
     seconds = time.perf_counter() - t0
     return {
-        "lookups": lookups,
         "workers": workers,
-        "distinct_cves": len(set(ids)),
         "seconds": round(seconds, 1),
-        "per_second": round(lookups / seconds, 1) if seconds else None,
+        "per_second": round(len(jobs) / seconds, 1) if seconds else None,
         "statuses": {str(k): v for k, v in sorted(statuses.items())},
         "ok": len(latencies),
         "ms": {
@@ -153,6 +186,40 @@ def warm(base: str, lookups: int, workers: int) -> dict[str, Any]:
             "max": max(latencies) if latencies else None,
             "mean": round(statistics.fmean(latencies), 1) if latencies else None,
         },
+    }
+
+
+def warm(base: str, lookups: int, workers: int) -> dict[str, Any]:
+    with httpx.Client(timeout=60.0, headers={"User-Agent": USER_AGENT}) as client:
+        ids = sample_ids(client, base, pages=3, count=lookups)
+        timed(client, f"{base}/health")  # the container and the compute are awake before the clock starts
+    result = run_calls(ids, workers, lambda client, cve: timed(client, f"{base}/v1/cves/{cve}"))
+    return {"lookups": lookups, "distinct_cves": len(set(ids)), **result}
+
+
+def timed_post(client: httpx.Client, url: str, body: dict[str, Any]) -> tuple[int, float]:
+    t0 = time.perf_counter()
+    try:
+        status = client.post(url, json=body).status_code
+    except httpx.HTTPError:
+        status = 0
+    return status, round((time.perf_counter() - t0) * 1000, 1)
+
+
+def predict(
+    base: str, count: int, workers: int, transport: httpx.BaseTransport | None = None
+) -> dict[str, Any]:
+    """POST /v1/predict count times, cycling through PREDICT_BODIES; every call must answer 200."""
+    jobs = [PREDICT_BODIES[i % len(PREDICT_BODIES)] for i in range(count)]
+    result = run_calls(
+        jobs, workers, lambda client, body: timed_post(client, f"{base}/v1/predict", body), transport
+    )
+    passed = count > 0 and result["ok"] == count
+    return {
+        "requests": count,
+        "bodies": len(PREDICT_BODIES),
+        **result,
+        "result": "pass" if passed else "fail",
     }
 
 
@@ -211,6 +278,11 @@ def manifest_part(record: dict[str, Any]) -> dict[str, Any]:
     builder.value("load.warm_workers", warm["workers"], "int", population=population, **common)
     for q in ("p50", "p95", "p99"):
         builder.value(f"load.warm_{q}_ms", warm["ms"][q], "ms", population=population, **common)
+    scored = record.get("predict")
+    if scored and scored["ok"]:
+        builder.value("load.predict_requests", scored["ok"], "int", population=population, **common)
+        for q in ("p50", "p95"):
+            builder.value(f"load.predict_{q}_ms", scored["ms"][q], "ms", population=population, **common)
     c8 = record["c8_lookup"]
     builder.value(
         "criteria.c8.verdict",
@@ -233,6 +305,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--base-url", default=LIVE)
     parser.add_argument("--idle-minutes", type=float, default=0.0)
     parser.add_argument("--lookups", type=int, default=300)
+    parser.add_argument("--predicts", type=int, default=60, help="POST /v1/predict calls; 0 leaves them out")
     parser.add_argument("--workers", type=int, default=5)
     parser.add_argument("--out", type=Path, default=None)
     parser.add_argument(
@@ -251,6 +324,8 @@ def main(argv: list[str] | None = None) -> int:
         "cold": cold(base, args.idle_minutes),
     }
     record["warm"] = warm(base, args.lookups, args.workers)
+    if args.predicts > 0:
+        record["predict"] = predict(base, args.predicts, args.workers)
     record["persistence"] = persistence(["--base-url", base], PERSISTENCE_LIVE)
     if args.local_database_url:
         record["persistence_independent"] = persistence(
@@ -269,6 +344,7 @@ def main(argv: list[str] | None = None) -> int:
         record["persistence"],
         record["schemathesis"],
         record.get("persistence_independent", {"result": "pass"}),
+        record.get("predict", {"result": "pass"}),
     ]
     parts_ok = all(part["result"] == "pass" for part in parts)
     record["result"] = "pass" if parts_ok and record["c8_lookup"]["verdict"] == "met" else "fail"
@@ -285,7 +361,14 @@ def main(argv: list[str] | None = None) -> int:
     print(
         f"load: cold health {record['cold']['health']['ms']} ms, first lookup "
         f"{record['cold']['first_lookup']['ms']} ms; warm p50 {w['ms']['p50']} ms, p95 {w['ms']['p95']} ms "
-        f"over {w['ok']} of {w['lookups']}; persistence {record['persistence']['result']}, "
+        f"over {w['ok']} of {w['lookups']}; "
+        + (
+            f"predict p50 {record['predict']['ms']['p50']} ms over {record['predict']['ok']} of "
+            f"{record['predict']['requests']}; "
+            if "predict" in record
+            else ""
+        )
+        + f"persistence {record['persistence']['result']}, "
         f"schemathesis {record['schemathesis']['result']}; C8 lookups {record['c8_lookup']['verdict']}"
     )
     return 0 if record["result"] == "pass" else 1
