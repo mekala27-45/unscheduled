@@ -175,7 +175,7 @@
    "rows": [
     [
      "config.bronze_tables",
-     12
+     13
     ],
     [
      "config.filer_types",
@@ -321,7 +321,7 @@
     "population": "every published table",
     "source": "lake"
    },
-   "value": "5ab8ce6d373349773d0fe1abdcfd89cf16f1e5fe46a70bc0470f8f55a3c34af4"
+   "value": "a49849f7ff75e3dfc19e73701b189cbea8ad7d37b79de233268f709bff1e4a78"
   },
   "lake.cves": {
    "fmt": "int",
@@ -574,7 +574,7 @@
     "population": "data/lake/unscheduled.duckdb",
     "source": "lake"
    },
-   "value": "123744560127a8589e2be77c566ad62b1a78d02a2c0b2b4451a22cded00f6aaf"
+   "value": "97ad3bce0c4bf0c19460db803a6b8ac67a82219a83125c8965a7fb1f7130f683"
   },
   "lake.window.development.adp_band": {
    "fmt": "int",

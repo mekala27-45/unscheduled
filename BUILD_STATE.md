@@ -70,8 +70,8 @@ dictionary. Next: commit each record, then calibration, conformal sets and the o
 
 ## The hand off to Phase 2
 
-- The lake: cut 2026-11-13T06:00:00+00:00, content digest 5ab8ce6d373349773d0fe1abdcfd89cf16f1e5fe46a70bc0470f8f55a3c34af4, file digest
-  123744560127a8589e2be77c566ad62b1a78d02a2c0b2b4451a22cded00f6aaf, from the release lake-20261112.
+- The lake: cut 2026-11-13T06:00:00+00:00, content digest a49849f7ff75e3dfc19e73701b189cbea8ad7d37b79de233268f709bff1e4a78, file digest
+  97ad3bce0c4bf0c19460db803a6b8ac67a82219a83125c8965a7fb1f7130f683, from the release lake-20261112.
 - The registration: hash 78bf9cdfad9dc5f3ecb7b5251055be570c1c37d0ad0b054b5861f4e31afaa30c, over config/criteria.yaml, config/splits.yaml, config/budgets.yaml, evaluation/phase1_plan.yaml, config/labels.yaml, config/samples.yaml.
 - The splits, by the date a CVE was published (config/splits.yaml):
   - train: 1999-01-01 to 2023-12-31, 234,630 CVEs

@@ -29,6 +29,13 @@
    "rows": 424708
   },
   {
+   "bytes": 0,
+   "files": 0,
+   "name": "cpe_names",
+   "present": false,
+   "rows": 0
+  },
+  {
    "bytes": 197490085,
    "files": 10,
    "name": "nvd_changes",
@@ -85,7 +92,9 @@
    "rows": 8206
   }
  ],
- "bronze_missing": [],
+ "bronze_missing": [
+  "cpe_names"
+ ],
  "config_rows": {
   "filer_types": 634,
   "sbom_components": 4080,

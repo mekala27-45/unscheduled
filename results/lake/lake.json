@@ -1,9 +1,9 @@
 {
  "bytes": 456142848,
- "content_digest": "5ab8ce6d373349773d0fe1abdcfd89cf16f1e5fe46a70bc0470f8f55a3c34af4",
+ "content_digest": "a49849f7ff75e3dfc19e73701b189cbea8ad7d37b79de233268f709bff1e4a78",
  "data_cut": "2026-11-13T06:00:00+00:00",
  "file": "data/lake/unscheduled.duckdb",
- "sha256": "123744560127a8589e2be77c566ad62b1a78d02a2c0b2b4451a22cded00f6aaf",
+ "sha256": "97ad3bce0c4bf0c19460db803a6b8ac67a82219a83125c8965a7fb1f7130f683",
  "tables": {
   "config.bronze_tables": {
    "columns": [
@@ -13,8 +13,8 @@
     "rows",
     "present"
    ],
-   "digest": "da1cc15adc1f4c3e631ac0f16dea6e10ddfc46bcd11f08fc72891fd2b8c1635a",
-   "rows": 12
+   "digest": "a9cf27c22ef3f2f58422f7469dedf23ee7198073d4484ce70e5a4f58810c60b8",
+   "rows": 13
   },
   "config.filer_types": {
    "columns": [

@@ -663,3 +663,14 @@ kept as results/models/rank_refit.json and its development values as models.rank
 manifest, and the method notes and the exploitation card give both runs beside the floor. A search
 that averages over seeds or over more folds, or the floor as the exploitation model, would be a
 change for a later phase with its own registration.
+
+## 2026-11-14: the committed lake numbers rebuilt with the CPE contract entry
+
+Reset and rederive, run on the code of this phase, rebuilt the lake from lake-20261112 and found two
+values apart from the committed ones: config.bronze_tables reads 13 against 12, and so the lake's
+content digest differs. The CPE dictionary joined the source contract in this phase and that
+release does not carry it, so the build declares the table and records it as missing; the other
+691 values, the backlog's included, are equal. The four lake records (results/lake/lake.json,
+completeness.json, dbt_results.json and results/parts/lake.json) are replaced by that rebuild, so
+the committed lake numbers are again what the current code builds from the recorded release, and
+the models workflow's check of the lake digest compares against it.
