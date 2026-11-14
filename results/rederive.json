@@ -1,18 +1,18 @@
 {
  "release": "lake-20261112",
- "commit": "4809b8baf44c9c76aeab0ce2ea066db83453acce",
- "started_at": "2026-11-14T00:12:36Z",
+ "commit": "5914c0275c808a7f28053afa1c4c5bb83d39df63",
+ "started_at": "2026-11-14T04:58:33Z",
  "inputs": "the release's bronze, locks and config, each archive checked against its SHA256SUMS",
  "restored": {
   "bronze_archives": 12
  },
  "build_settings": {
-  "memory": "3GB",
+  "memory": "4GB",
   "threads": 2
  },
  "step_seconds": {
-  "scripts/build_lake.py": 161.4,
-  "scripts/run_analysis.py": 42.7,
+  "scripts/build_lake.py": 161.6,
+  "scripts/run_analysis.py": 42.8,
   "scripts/backlog_charts.py": 0.0
  },
  "parts": {
@@ -37,5 +37,5 @@
  "compared": 693,
  "equal": 693,
  "result": "pass",
- "seconds": 206.4
+ "seconds": 206.8
 }
