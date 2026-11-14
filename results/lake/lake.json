@@ -1,9 +1,9 @@
 {
- "bytes": 456142848,
- "content_digest": "197f0e3bd87fed737086f544c5b9c7f0647970207e9fb80b4e55981914321814",
+ "bytes": 455880704,
+ "content_digest": "8d97104c0ad0454895cf98e904a676a5c4d6ee23592638bbe139370d7b9a7d7a",
  "data_cut": "2026-11-13T06:00:00+00:00",
  "file": "data/lake/unscheduled.duckdb",
- "sha256": "0d50798827c71b0f7959994f5472eae9c1c530e05710f16d1b128c6e5df6bfba",
+ "sha256": "00ce926255dcb3209af24407910f53c149d7aa2c814a9560ff3377c02d7326ae",
  "tables": {
   "config.bronze_tables": {
    "columns": [
@@ -13,7 +13,7 @@
     "rows",
     "present"
    ],
-   "digest": "8479bd0baf997961ee322782fd50b35a2fbe9fd0b6f703be8e7d92dbddfef18d",
+   "digest": "da1cc15adc1f4c3e631ac0f16dea6e10ddfc46bcd11f08fc72891fd2b8c1635a",
    "rows": 12
   },
   "config.filer_types": {
@@ -22,14 +22,14 @@
     "org_id",
     "filer_type"
    ],
-   "digest": "2792ddaaeb972ab03928b6c500292c3a24d57d422be34874541598fa7c49e557",
+   "digest": "a9c22ce23560b140fb1b2de90454b2d81cb45275f69f1e40f2b71bf09a02c10f",
    "rows": 634
   },
   "config.lake_build": {
    "columns": [
     "data_cut"
    ],
-   "digest": "04e7ea009595e483406cd1c0280e00a1f46279bbf48ccdf47e09bf1f1ecd2b54",
+   "digest": "7525c57681979e2ae8bb756d36802f42cbdfa3d48e1f276b781cbc4ab165a304",
    "rows": 1
   },
   "config.splits": {
@@ -39,7 +39,7 @@
     "end_day",
     "note"
    ],
-   "digest": "2afd324c04f2f3928d8bdb37c2d3c694af700d6b4c59834ac41eaf91140b7404",
+   "digest": "5dd58a1c42086e1fcf498854f9910555b3ab81475fe9299360ffe367e4a7e01c",
    "rows": 5
   },
   "config.status_labels": {
@@ -48,7 +48,7 @@
     "meaning",
     "april_2026_label"
    ],
-   "digest": "31e2851644efa6afdbc9ca0929e939cff18952d84b344d93fb3df323b478333c",
+   "digest": "df343b9d0f9d629dc28ef84ad34ce1783d4529e4e96eb118137e50277fd1706a",
    "rows": 7
   },
   "gold.cve_current": {
@@ -114,7 +114,7 @@
     "before_history",
     "pre_history_facts"
    ],
-   "digest": "8a572e0d9775d04582fd42203bbd10d307c3b9b8f301d077de0e9235f4c7c0c1",
+   "digest": "9914a6f8db2242c5fd2d3ff4432f3b68ff0ec5a5897a1d20cf6bd60e7dc4413f",
    "rows": 424978
   },
   "gold.mart_backlog_q1": {
@@ -134,7 +134,7 @@
     "analyzed_30d",
     "analyzed_90d"
    ],
-   "digest": "7203c2db1c84a3848453c8ca0c4372a85c41253bcdac115edf5f4b41ae02b65d",
+   "digest": "cafb0f5f9c254f7d2c4200fe87718fd154f454754e581acdc531b0e2f0abad42",
    "rows": 277391
   },
   "gold.mart_backlog_q2": {
@@ -156,7 +156,7 @@
     "business_day_deadline",
     "met_one_business_day"
    ],
-   "digest": "a8f907cc3b39241f8296644ccb2fa512088ce87dab14667a400432009a995d7b",
+   "digest": "8d22eb69b3569597a7097e512b66c6bb13ecee955ed89bfe496a06f49f0425d0",
    "rows": 80312
   },
   "gold.mart_backlog_q3": {
@@ -176,7 +176,7 @@
     "has_adp_ssvc",
     "has_adp_value"
    ],
-   "digest": "5e9b963b23453f570e1912884f4800fac2992556003d8cb8bcf7a2dae021e917",
+   "digest": "043d51fd3e4acca788f9b2d4626487357fc89c92c7bb6c7e7a1a7c2771a92d0c",
    "rows": 80526
   },
   "gold.mart_backlog_q6": {
@@ -189,7 +189,7 @@
     "month_total",
     "share_of_month"
    ],
-   "digest": "53b9951358f1b0a47537d02e70abd02f4500354808ae2fb692c949055a4dc714",
+   "digest": "9451564071f1b6c986833a5cf699cc463e4603baa76d71847d82fc852c69d4be",
    "rows": 9909
   },
   "gold.mart_domain_shift": {
@@ -207,7 +207,7 @@
     "half",
     "position"
    ],
-   "digest": "d6998afe5b8be2172fc7e35e28eab997c083baf0235d594de7e02e4024754898",
+   "digest": "ef7638637294e3abe84d6bff9e909ace0fb07a2bc755b053b51baafa9e372b84",
    "rows": 78676
   },
   "gold.mart_filer_vs_nvd": {
@@ -242,7 +242,7 @@
     "nvd_band_rank",
     "filer_band_rank"
    ],
-   "digest": "9770a3dba8917e2e0c0128d9edbb0f6803a972c472496b938304a4d18c9fc6b2",
+   "digest": "f7c54d695967573bf0fb8d16bf89e37456ceca01446093aff752b02ffa5ab072",
    "rows": 47641
   },
   "gold.mart_kev_timing": {
@@ -264,7 +264,7 @@
     "metasploit_before_listing",
     "nuclei_before_listing"
    ],
-   "digest": "ea020124c1ad9644a349c73bf75e5209c45aca447525ca8395ebbe281c4311ba",
+   "digest": "3f70ee963d8f11694bba4542db88f127f75af0b8dda1953f8837fc107f2569dd",
    "rows": 1025
   },
   "quarantine.quarantine": {
@@ -276,7 +276,7 @@
     "row_key",
     "detail"
    ],
-   "digest": "3fe10618c86409a7fcf54f0cc911aeb7ba4e850b3efdb746d15df2fbe0efbf3a",
+   "digest": "fe9fdef37c017b386f0cc50ab8bfdfb2c249a9a0435b915319a727679ac72ddf",
    "rows": 961
   },
   "quarantine.quarantine_counts": {
@@ -286,7 +286,7 @@
     "row_count",
     "cve_count"
    ],
-   "digest": "a062e07fd6e889dd56d82633adfcfa01b186e92d5da6100bda16aaee3c6d552f",
+   "digest": "98685f4ff396a9e2c68539d0d7af4db3653093c233e5e25c2fb1a508925e1e37",
    "rows": 8
   },
   "silver.advisory_versions": {
@@ -303,7 +303,7 @@
     "known_from",
     "known_to"
    ],
-   "digest": "e4c9d11b53d88ea53da93f1e4e17998e4e3060cdc82c9575e8cd41bd9ad6b227",
+   "digest": "65f9ee5ffd61dd40f79becfe64400713e598967a693fd3c5e45640df3230cc63",
    "rows": 405474
   },
   "silver.cve_fact": {
@@ -317,7 +317,7 @@
     "dated_by",
     "pre_history"
    ],
-   "digest": "c9756f5c457990a9b44547a2d46c5e965eee8f41fbeee57106b50ee5cf7acff6",
+   "digest": "ca0211cef20313dbe452ca82d531ca512dae3acef5de3fc2b7f58d5e4e4ea58e",
    "rows": 6629800
   },
   "silver.exploit_first_seen": {
@@ -329,7 +329,7 @@
     "metasploit_modules",
     "nuclei_templates"
    ],
-   "digest": "98804473e7196a73e69f75269100f2a829890377a6d8baba10ad3aebe31c7508",
+   "digest": "e1f7c85662c51fca24ed5a645434485e181e986154c4d23fcf33c1a40535daa4",
    "rows": 7278
   },
   "silver.kev_events": {
@@ -345,7 +345,7 @@
     "known_ransomware",
     "first_seen_commit"
    ],
-   "digest": "de3b5ba8a0b06d18e13c4a9edc4bf01f4785f460fd9d970ebdda943168b01775",
+   "digest": "1bfd4ab80ad127a032091ee126b2b59375b61d2bc830a1c1330a54ebd2c505b0",
    "rows": 1779
   },
   "silver.nvd_status_history": {
@@ -357,7 +357,7 @@
     "dated_by",
     "pre_history"
    ],
-   "digest": "1d52244c5547b81cf724b87e54045bbe183bbd4ff9266031b51a62d58344192a",
+   "digest": "5d595a3cd0fcba9557d68bdad3b0f875432ac61797fa8c62575227dd42bbb4fd",
    "rows": 1023092
   }
  }

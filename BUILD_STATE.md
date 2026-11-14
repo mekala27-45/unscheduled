@@ -8,7 +8,7 @@ the manifest or a committed file: edit the template, then render.
 
 ```
 Phase            1 of 5, the ground truth
-Checklist        14 of 18 lines done (RESULTS.md)
+Checklist        15 of 18 lines done (RESULTS.md)
 Repository       public; every commit conventional; CI, web and exposure green on main
 Vercel           unscheduled-api (container) at unscheduled-api.vercel.app
                  unscheduled (web) at unscheduled-triage.vercel.app: the landing with its
@@ -24,7 +24,6 @@ Look approval    approved by Ajay on the evening of 11 November, New York time, 
 Open checklist lines:
 
 - Persistence observed independently; schemathesis green; the load test with the cold start
-- The console, the ruler, the landing, the docs and the report live on Vercel
 - The live check awake and asleep; reset and rederive reproduced every number
 - At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2
 
@@ -56,8 +55,8 @@ design gates; then the cut-a-release skill, and Ajay pushes the tag.
 
 ## The hand off to Phase 2
 
-- The lake: cut 2026-11-13T06:00:00+00:00, content digest 197f0e3bd87fed737086f544c5b9c7f0647970207e9fb80b4e55981914321814, file digest
-  0d50798827c71b0f7959994f5472eae9c1c530e05710f16d1b128c6e5df6bfba, from the release lake-20261112.
+- The lake: cut 2026-11-13T06:00:00+00:00, content digest 8d97104c0ad0454895cf98e904a676a5c4d6ee23592638bbe139370d7b9a7d7a, file digest
+  00ce926255dcb3209af24407910f53c149d7aa2c814a9560ff3377c02d7326ae, from the release lake-20261112.
 - The registration: hash 78bf9cdfad9dc5f3ecb7b5251055be570c1c37d0ad0b054b5861f4e31afaa30c, over config/criteria.yaml, config/splits.yaml, config/budgets.yaml, evaluation/phase1_plan.yaml, config/labels.yaml, config/samples.yaml.
 - The splits, by the date a CVE was published (config/splits.yaml):
   - train: 1999-01-01 to 2023-12-31, 234,630 CVEs

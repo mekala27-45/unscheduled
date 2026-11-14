@@ -3,7 +3,7 @@
 Phase 1 of 5. Every number on this page comes from results/manifest.json, which the build writes
 from what each step saved, and the claim gate in CI renders the page again and fails on any
 difference. The lake behind the numbers was cut at 2026-11-13 (lake digest
-0d50798827c7).
+00ce926255dc).
 
 ## The lake
 
@@ -80,7 +80,7 @@ says nothing about whether its output is right.
 | 11 | not done | Persistence observed independently; schemathesis green; the load test with the cold start | results/load/c8.json |
 | 12 | done | The CLI gives the same answers as the API on the same inputs | results/cli_parity.json |
 | 13 | done | The design system in place with the palette validator green in CI | web/styles/tokens.css, results/design/palette.json |
-| 14 | not done | The console, the ruler, the landing, the docs and the report live on Vercel | results/live/web_verify.json |
+| 14 | done | The console, the ruler, the landing, the docs and the report live on Vercel | results/live/web_verify.json |
 | 15 | done | sloplint, axe and Lighthouse green; the look reviewed or marked pending | results/design/gates.json |
 | 16 | done | README with the matrix, RESULTS, DECISIONS, the memos and notebooks; the humanizer pass | RESULTS.md, report/discovery.md, report/backlog.md, report/legacy.md, notebooks/01_the_first_backlog_chart.ipynb, notebooks/02_kappa_on_everything.ipynb, notebooks/03_the_matcher_without_schemes.ipynb, results/humanizer.json |
 | 17 | not done | The live check awake and asleep; reset and rederive reproduced every number | results/live_check.json, results/rederive.json |

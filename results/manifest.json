@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-13",
+ "as_of": "2026-11-14",
  "values": {
   "backlog.q1.analysis_undated": {
    "value": 0,
@@ -6635,13 +6635,13 @@
    }
   },
   "build.checklist_done": {
-   "value": 14,
+   "value": 15,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/build_manifest.py",
     "population": "the section 20 checklist",
     "source": "build",
-    "as_of": "2026-11-13",
+    "as_of": "2026-11-14",
     "note": null
    }
   },
@@ -6652,7 +6652,7 @@
     "origin": "scripts/build_manifest.py",
     "population": "the section 20 checklist",
     "source": "build",
-    "as_of": "2026-11-13",
+    "as_of": "2026-11-14",
     "note": null
    }
   },
@@ -7603,7 +7603,7 @@
    }
   },
   "lake.content_digest": {
-   "value": "197f0e3bd87fed737086f544c5b9c7f0647970207e9fb80b4e55981914321814",
+   "value": "8d97104c0ad0454895cf98e904a676a5c4d6ee23592638bbe139370d7b9a7d7a",
    "fmt": "text",
    "provenance": {
     "origin": "scripts/build_lake.py",
@@ -7856,7 +7856,7 @@
    }
   },
   "lake.sha256": {
-   "value": "0d50798827c71b0f7959994f5472eae9c1c530e05710f16d1b128c6e5df6bfba",
+   "value": "00ce926255dcb3209af24407910f53c149d7aa2c814a9560ff3377c02d7326ae",
    "fmt": "text",
    "provenance": {
     "origin": "scripts/build_lake.py",
@@ -13721,7 +13721,7 @@
     ],
     [
      14,
-     "not done",
+     "done",
      "The console, the ruler, the landing, the docs and the report live on Vercel",
      "results/live/web_verify.json"
     ],
@@ -13754,7 +13754,7 @@
     "origin": "scripts/build_manifest.py",
     "population": "the section 20 checklist",
     "source": "build",
-    "as_of": "2026-11-13",
+    "as_of": "2026-11-14",
     "note": null
    }
   },
