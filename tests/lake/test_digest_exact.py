@@ -1,4 +1,5 @@
-"""A table digest is exact: the same rows give the same digest in any order and on any thread count."""
+"""A table digest is exact: the same rows give the same digest in any order, on any thread count and
+in any session time zone."""
 
 from __future__ import annotations
 
@@ -30,6 +31,7 @@ def test_the_sums_are_exact_integers() -> None:
     # The digest is rebuilt here from the row hashes summed in Python, where integers are exact; a sum
     # taken as a DOUBLE would print in floating point and not match.
     con = duckdb.connect()
+    con.execute("set TimeZone = 'UTC'")
     _table(con, "i")
     hashes = [
         int(h)
@@ -51,3 +53,17 @@ def test_the_sums_are_exact_integers() -> None:
         }
     )
     assert table_digest(con, "main.t")["digest"] == expected
+
+
+def test_the_digest_does_not_depend_on_the_session_time_zone() -> None:
+    # DuckDB takes the session zone from TZ on the machine, and casts a time with a zone to text in
+    # it; the digest renders in UTC, and the session keeps its own zone afterwards.
+    con = duckdb.connect()
+    _table(con, "i")
+    con.execute("set TimeZone = 'America/New_York'")
+    new_york = table_digest(con, "main.t")["digest"]
+    assert con.execute("select current_setting('TimeZone')").fetchone() == ("America/New_York",)
+    con.execute("set TimeZone = 'UTC'")
+    assert table_digest(con, "main.t")["digest"] == new_york
+    con.execute("set TimeZone = 'Asia/Kolkata'")
+    assert table_digest(con, "main.t")["digest"] == new_york
