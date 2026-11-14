@@ -29,6 +29,7 @@ import numpy as np
 import pandas as pd
 import polars as pl
 from lifelines import CoxPHFitter
+from lifelines.exceptions import ConvergenceError
 from lifelines.utils import concordance_index
 from sksurv.ensemble import RandomSurvivalForest
 
@@ -143,23 +144,32 @@ class Design:
         return pd.DataFrame(out)
 
 
-# lifelines' Newton steps start at 0.95 of the full step; on a design with a long tail (a CVE with
-# hundreds of affected entries) the first full steps overflow exp and stop the fit. A half step
-# reaches the same optimum, the likelihood being concave, and it is the step the R check is held to.
-STEP_SIZE = 0.5
-MAX_STEPS = 500
+# lifelines' Newton steps start at 0.95 of the full step. On this design the first full steps
+# overflow exp (a listing is about forty times likelier with exploit code by day 0) and stop the fit,
+# so the fit starts at a fifth of the step and, if it still stops, tries again at half that. Every
+# step size reaches the same optimum, the likelihood being concave; the record names the step used.
+STEP_SIZES = (0.2, 0.1, 0.05)
+MAX_STEPS = 1000
 
 
 def fit_cox(x: pd.DataFrame, durations: np.ndarray, events: np.ndarray, penalizer: float) -> CoxPHFitter:
     data = x.assign(duration=durations, event=events.astype(int))
-    model = CoxPHFitter(penalizer=penalizer, l1_ratio=0.0)
-    model.fit(
-        data,
-        duration_col="duration",
-        event_col="event",
-        fit_options={"step_size": STEP_SIZE, "max_steps": MAX_STEPS},
-    )
-    return model
+    failure: Exception | None = None
+    for step in STEP_SIZES:
+        model = CoxPHFitter(penalizer=penalizer, l1_ratio=0.0)
+        try:
+            model.fit(
+                data,
+                duration_col="duration",
+                event_col="event",
+                fit_options={"step_size": step, "max_steps": MAX_STEPS},
+            )
+        except ConvergenceError as error:
+            failure = error
+            continue
+        model.step_size_used = step
+        return model
+    raise ValueError(f"the Cox fit with penalizer {penalizer} did not converge at any step size") from failure
 
 
 def cox_risk(model: CoxPHFitter, x: pd.DataFrame) -> np.ndarray:

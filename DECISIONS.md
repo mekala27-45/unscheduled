@@ -484,9 +484,11 @@ exploitation models keep them.
 
 The time is the days from publication to the listing plus one, so the 44 train CVEs listed on the day
 they were published count at one day and every time is positive; the probabilities of a listing by
-30, 90 and 180 days are read at those days plus one. lifelines takes half Newton steps: its default
-steps overflowed on the long tail of the affected entries in a sample of train, and since the
-likelihood is concave the optimum is the same.
+30, 90 and 180 days are read at those days plus one. lifelines starts its Newton steps at a fifth of
+the full step, and at half that again if a fit still stops: its default steps overflowed on this
+design, which stopped the fit without a penalty on the whole train population in the first run of
+the survival step, and since the likelihood is concave every step size reaches the same optimum. The
+record names the step each fit used.
 
 lifelines 0.30.3 requires pandas below 3, so the workspace now resolves pandas 2.3.3 instead of
 3.1.1. Nothing outside packages/models imports pandas, and statsmodels uses it only in tests.

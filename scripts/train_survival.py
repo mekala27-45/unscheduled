@@ -202,6 +202,8 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         "design": {"columns": design.columns, "dropped": design.dropped, "min_events": survival.MIN_EVENTS},
         "cox": {
             "penalizer": result.cox_penalizer,
+            "step_size": getattr(result.cox, "step_size_used", None),
+            "unpenalized_step_size": getattr(result.unpenalized, "step_size_used", None),
             "search": result.cox_search,
             "coefficients": {str(k): float(v) for k, v in result.cox.params_.items()},
             "unpenalized": {str(k): float(v) for k, v in result.unpenalized.params_.items()},
