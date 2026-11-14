@@ -45,7 +45,10 @@ def write_root(root: Path) -> None:
         (root / folder).mkdir(parents=True, exist_ok=True)
     for split, n in (("development", 30), ("test", 20), ("shadow", 25)):
         ids = [f"CVE-2025-{split[:2]}{i:04d}" for i in range(n)]
-        pl.DataFrame({"cve_id": ids}).write_parquet(root / f"data/sets/{split}_inputs.parquet")
+        filer_bands = [["LOW", "HIGH", None, "NONE"][i % 4] for i in range(n)]
+        pl.DataFrame(
+            {"cve_id": ids, "filer_band": filer_bands}, schema_overrides={"filer_band": pl.String}
+        ).write_parquet(root / f"data/sets/{split}_inputs.parquet")
         columns: dict[str, object] = {"cve_id": ids}
         for j, band in enumerate(probabilities(rng, n, 4).T):
             columns[f"band__{['LOW', 'MEDIUM', 'HIGH', 'CRITICAL'][j]}"] = band
@@ -135,6 +138,14 @@ def test_every_window_row_gets_a_prediction_from_the_chosen_versions(tmp_path: P
     assert all(len(p.split("|")) <= 5 for p in table.get_column("products") if p)
     record = json.loads((tmp_path / "results/models/predictions.json").read_text(encoding="utf-8"))
     assert record["survival_model"] == "cox" and record["product_model"] == "retrieval"
+    # The shadow view counts every shadow CVE once, by predicted band and filer band.
+    counts = record["shadow_bands"]
+    assert [r[0] for r in counts] == ["LOW", "MEDIUM", "HIGH", "CRITICAL"]
+    assert sum(r[-1] for r in counts) == 25 and all(sum(r[1:-1]) == r[-1] for r in counts)
+    # Columns: the band, filer LOW, MEDIUM, HIGH, CRITICAL, NONE, no filer band, and all.
+    assert [sum(r[j] for r in counts) for j in range(1, 7)] == [7, 0, 6, 0, 6, 6]
+    part = json.loads((tmp_path / "results/parts/predictions.json").read_text(encoding="utf-8"))
+    assert "models.predictions.shadow_bands" in part["tables"]
     serving = json.loads((tmp_path / "models/serving/serving.json").read_text(encoding="utf-8"))
     assert serving["band_floor"]["version"] == 1 and serving["exploit"]["version"] == 2
     assert len(serving["exploit"]["quantiles"]) == 1001

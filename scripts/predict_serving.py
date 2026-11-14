@@ -144,8 +144,42 @@ def write_serving(
     path.write_text(json.dumps(serving, indent=1) + "\n", encoding="utf-8")
 
 
+FILER_COLUMNS = (*sets.BANDS, "NONE")
+
+
+def shadow_bands(table: pl.DataFrame, folder: Path) -> list[list[Any]]:
+    """The plan's shadow view: each predicted band against the filer's band at day 0, as counts. A
+    filer band is not a label, so this makes no accuracy claim; it shows where the model and the
+    filer part ways on the CVEs the NVD may never analyze."""
+    inputs = pl.read_parquet(folder / "shadow_inputs.parquet", columns=["cve_id", "filer_band"])
+    shadow = (
+        table.filter(pl.col("window") == "shadow")
+        .select("cve_id", "band")
+        .join(inputs, on="cve_id", how="left")
+        .with_columns(pl.col("filer_band").fill_null("(none)"))
+    )
+    counts = {
+        (r["band"], r["filer_band"]): r["len"] for r in shadow.group_by("band", "filer_band").len().to_dicts()
+    }
+    rows = []
+    for band in sets.BANDS:
+        cells = [int(counts.get((band, f), 0)) for f in (*FILER_COLUMNS, "(none)")]
+        rows.append([band, *cells, sum(cells)])
+    return rows
+
+
 def manifest_part(record: dict[str, Any], as_of: str) -> dict[str, Any]:
     m = ManifestBuilder(as_of)
+    if record.get("shadow_bands"):
+        m.table(
+            "models.predictions.shadow_bands",
+            ["Predicted band", *(f"Filer {f}" for f in FILER_COLUMNS), "No filer band", "All"],
+            ["text", *(["int"] * (len(FILER_COLUMNS) + 2))],
+            record["shadow_bands"],
+            origin=ORIGIN,
+            population="shadow window CVEs: the primary model's band against the filer band at day 0, counts only",
+            source="models",
+        )
     m.value(
         "models.predictions.rows",
         int(record["rows"]),
@@ -253,6 +287,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         "survival_model": survival_model,
         "product_model": product_model,
         "rule": "development, test and shadow window CVEs; train window CVEs carry none since the models were fit on them",
+        "shadow_bands": shadow_bands(table, args.sets),
         "file": {
             "path": TARGET.as_posix(),
             "bytes": target.stat().st_size,
