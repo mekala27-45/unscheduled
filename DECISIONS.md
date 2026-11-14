@@ -490,3 +490,16 @@ likelihood is concave the optimum is the same.
 
 lifelines 0.30.3 requires pandas below 3, so the workspace now resolves pandas 2.3.3 instead of
 3.1.1. Nothing outside packages/models imports pandas, and statsmodels uses it only in tests.
+
+## 2026-11-14: step eight takes the fallback
+
+The probe of 14 November found KAGGLE_USERNAME and KAGGLE_KEY unset, so step eight runs the fallback
+the plan names (fallback_text) and ModernBERT waits for the secrets. The embeddings come from the ONNX
+export BAAI publishes beside bge-small-en-v1.5 at the pinned revision, checked against the SHA-256
+the Hub records for it, and run with onnxruntime: the first token's hidden state scaled to unit
+length, the text cut at 256 tokens as the plan cuts ModernBERT's input, so no PyTorch enters the
+workspace. Each fill task gets a logistic regression on the embeddings, the joint softmax by L-BFGS
+since 384 dense columns fit it quickly, with C from the five values of the floors, chosen on
+development by the metric of the task's floor. The same embeddings serve the affected product
+retrieval of step five. The fallback runs in the models workflow, where embedding every set row
+takes a runner a few hours.

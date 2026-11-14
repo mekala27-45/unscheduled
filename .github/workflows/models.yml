@@ -15,6 +15,7 @@ on:
           - floors
           - exploitation
           - survival
+          - fallback
         default: floors
 
 permissions: {}
@@ -83,6 +84,10 @@ jobs:
           Rscript -e 'if (!requireNamespace("survival", quietly = TRUE)) install.packages("survival", repos = "https://cloud.r-project.org")'
           uv run python scripts/train_survival.py --jobs 4 --r-check
 
+      - name: The ModernBERT fallback, frozen embeddings with a head per task
+        if: env.STEP == 'fallback'
+        run: uv run python scripts/train_fallback.py --jobs 4
+
       - name: Gather what the step wrote
         if: always()
         run: |
@@ -91,6 +96,7 @@ jobs:
             floors) files="results/models/floors.json results/parts/floors.json data/models/floors" ;;
             exploitation) files="results/models/rank.json results/parts/rank.json data/models/rank" ;;
             survival) files="results/models/survival.json results/parts/survival.json data/models/survival" ;;
+            fallback) files="results/models/fallback.json results/parts/fallback.json data/models/fallback" ;;
             *) files="" ;;
           esac
           for f in $files; do
