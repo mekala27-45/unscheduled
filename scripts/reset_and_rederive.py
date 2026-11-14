@@ -199,6 +199,28 @@ def download(tag: str) -> Path:
     return folder
 
 
+def download_one(tag: str, name: str) -> tuple[Path, str]:
+    """One asset of a release, checked against its SHA256SUMS or, when the sums leave it out, the
+    digest GitHub recorded at upload; kept in the cache while it still has that digest."""
+    folder = CACHE / tag
+    folder.mkdir(parents=True, exist_ok=True)
+    assets = {str(a["name"]): a for a in gh_json(f"repos/{REPOSITORY}/releases/tags/{tag}")["assets"]}
+    if name not in assets:
+        raise SystemExit(f"restore: {tag} has no {name}")
+    sums: dict[str, str] = {}
+    if "SHA256SUMS" in assets:
+        fetch_asset(int(assets["SHA256SUMS"]["id"]), folder / "SHA256SUMS")
+        sums = sums_of((folder / "SHA256SUMS").read_text(encoding="utf-8"))
+    expected = expected_digests(assets, sums, [name], tag)[name]
+    target = folder / name
+    if not (target.exists() and file_sha256(target) == expected):
+        fetch_asset(int(assets[name]["id"]), target)
+        if file_sha256(target) != expected:
+            target.unlink()
+            raise SystemExit(f"restore: {name} from {tag} does not have the digest {expected[:12]}")
+    return target, expected
+
+
 def expected_digests(
     assets: dict[str, Any], sums: dict[str, str], wanted: list[str], tag: str
 ) -> dict[str, str]:

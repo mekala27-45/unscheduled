@@ -16,7 +16,13 @@ on:
           - exploitation
           - survival
           - fallback
+          - product
         default: floors
+      cpe_release:
+        description: The lake release whose bronze carries the CPE dictionary (the product step only)
+        type: string
+        required: false
+        default: ""
 
 permissions: {}
 
@@ -88,6 +94,21 @@ jobs:
         if: env.STEP == 'fallback'
         run: uv run python scripts/train_fallback.py --jobs 4
 
+      - name: The CPE dictionary from the lake release that carries it
+        if: env.STEP == 'product'
+        env:
+          CPE_RELEASE: ${{ inputs.cpe_release }}
+        run: |
+          if [ -z "$CPE_RELEASE" ]; then
+            echo "::error::the product step needs cpe_release, a lake release with bronze-cpe_names.tar"
+            exit 1
+          fi
+          uv run python scripts/restore_release.py --release "$CPE_RELEASE" --table cpe_names
+
+      - name: The affected product models
+        if: env.STEP == 'product'
+        run: uv run python scripts/train_product.py --jobs 4
+
       - name: Gather what the step wrote
         if: always()
         run: |
@@ -97,6 +118,7 @@ jobs:
             exploitation) files="results/models/rank.json results/parts/rank.json data/models/rank" ;;
             survival) files="results/models/survival.json results/parts/survival.json data/models/survival" ;;
             fallback) files="results/models/fallback.json results/parts/fallback.json data/models/fallback" ;;
+            product) files="results/models/product.json results/parts/product.json data/models/product" ;;
             *) files="" ;;
           esac
           for f in $files; do

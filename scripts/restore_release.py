@@ -29,14 +29,37 @@ ROOT = Path(__file__).resolve().parents[1]
 if __package__ in {None, ""}:
     sys.path.insert(0, str(ROOT))
 
+import tarfile
+
 from scripts.reset_and_rederive import (
     archive_digests,
     download,
+    download_one,
     extract,
     recorded_release,
     settled_lake_release,
     unchanged_since_recorded,
 )
+
+
+def restore_tables(tag: str | None, tables: list[str]) -> int:
+    """Single bronze tables from a named release, each checked by digest and extracted in place of
+    any earlier copy of that table, the rest of bronze untouched. Each table gets a note beside it,
+    data/bronze/<table>.release.json, naming the release and the archive's digest, which the model
+    that reads it copies into its record."""
+    if not tag:
+        raise SystemExit("restore: --table needs --release, the release the table is read from")
+    bronze = ROOT / "data" / "bronze"
+    bronze.mkdir(parents=True, exist_ok=True)
+    for table in tables:
+        archive, digest = download_one(tag, f"bronze-{table}.tar")
+        shutil.rmtree(bronze / table, ignore_errors=True)
+        with tarfile.open(archive) as tar:
+            tar.extractall(bronze, filter="data")
+        note = {"tag": tag, "archive": archive.name, "sha256": digest}
+        (bronze / f"{table}.release.json").write_text(json.dumps(note, indent=1) + "\n", encoding="utf-8")
+        print(f"restore: {table} from {tag}, {archive.name} {digest[:12]}")
+    return 0
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -47,7 +70,15 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="restore the release results/lake/release.json names, fail if an archive changed since, keep the record",
     )
+    parser.add_argument(
+        "--table",
+        action="append",
+        default=[],
+        help="restore only this bronze table from --release, beside the bronze already here (repeatable)",
+    )
     args = parser.parse_args(argv)
+    if args.table:
+        return restore_tables(args.release, args.table)
     recorded = recorded_release() if args.recorded else None
     if args.recorded and not recorded:
         raise SystemExit("restore: results/lake/release.json names no release to restore")

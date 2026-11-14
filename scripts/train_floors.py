@@ -71,11 +71,11 @@ def models_stage_hash(root: Path) -> str:
     return str(stage["hash"])
 
 
-def verify_sets(root: Path, folder: Path) -> dict[str, str]:
-    """The content digest of every set file the floors read, checked against the committed record."""
+def verify_sets(root: Path, folder: Path, names: tuple[str, ...] = READ) -> dict[str, str]:
+    """The content digest of every set file a step reads, checked against the committed record."""
     committed = json.loads((root / "results" / "models" / "sets.json").read_text(encoding="utf-8"))["files"]
     digests: dict[str, str] = {}
-    for name in READ:
+    for name in names:
         digest = sets.content_digest(folder / name)
         if digest != committed[name]["content_digest"]:
             raise SystemExit(

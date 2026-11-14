@@ -505,3 +505,24 @@ since 384 dense columns fit it quickly, with C from the five values of the floor
 development by the metric of the task's floor. The same embeddings serve the affected product
 retrieval of step five. The fallback runs in the models workflow, where embedding every set row
 takes a runner a few hours.
+
+## 2026-11-14: change request, the product floor's threshold
+
+Change to evaluation/phase2_plan.yaml after its hash, recorded before the product models were fit on
+the development window (a smoke run on a sample of 500 development CVEs tested the code and no
+result of it is kept), so there are no earlier results to keep beside the new ones.
+
+- Old: product_floor chooses "the ratio threshold by recall at 1 on development".
+- New: the threshold is chosen from 50, 60, 70, 80, 90 and 100 by F1 at 1 on development: precision
+  at 1 over the CVEs the floor names a product for, recall at 1 over every development CVE with a
+  product label. Recall and hit rate at 1, 5 and 10 are reported for the floor with its threshold
+  and without one, and for the retrieval, which has no threshold.
+- Why: a threshold only removes candidates, so recall at 1 can only fall as the threshold rises, and
+  choosing by it would take the lowest threshold of any grid; the plan's rule chooses nothing.
+
+Two readings the plan leaves open are fixed with it. Recall at k is, per CVE with a label, the share
+of its labelled vendor and product pairs among the first k candidates, averaged over the CVEs, and
+the hit rate at k is the share of those CVEs with any labelled pair among the first k. A CVE is
+offered only the pairs the NVD had created a CPE name for by the end of its publication day, since
+the NVD often creates the name while it analyzes the CVE, which would put the answer among the
+candidates.
