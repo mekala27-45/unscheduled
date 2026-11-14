@@ -28,10 +28,15 @@ are built without scikit-learn, from specs scripts/export_onnx.py checks against
 writing them, and LightGBM reads the band projection of the same floor it was trained on (DECISIONS.md,
 the exploitation run reads the committed band floor).
 {% if has("models.onnx.parity") %}
-On {{ v("models.onnx.parity") }} parity, the ONNX graphs differ from the native models by at most
+On the same inputs the ONNX graphs differ from the native models by at most
 {{ v("models.onnx.band_floor.max_probability_difference") }} for the floor and
 {{ v("models.onnx.exploit_lgbm.max_probability_difference") }} for LightGBM, against a tolerance of
-1e-4.
+1e-4, so the parity check's result is {{ v("models.onnx.parity") }}.
+{% if has("models.onnx.projection_gap") %}
+On the same sample of development CVEs, the band projection the API computes differs from the one
+the exploitation run used by at most {{ v("models.onnx.projection_gap") }}, and LightGBM's score by at most
+{{ v("models.onnx.score_gap") }}.
+{% endif %}
 {% endif %}
 
 **The text model stays in the batch.** It needs the embedding model and its tokenizer at request time,

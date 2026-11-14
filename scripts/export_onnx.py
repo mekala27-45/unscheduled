@@ -92,7 +92,7 @@ def manifest_part(record: dict[str, Any], as_of: str) -> dict[str, Any]:
             m.value(
                 f"models.onnx.{name}",
                 float(record["parity"][key]),
-                "float4",
+                "sci1",
                 origin=ORIGIN,
                 population=(
                     f"{record['parity']['band_floor']['rows']} development CVEs: the committed band floor "

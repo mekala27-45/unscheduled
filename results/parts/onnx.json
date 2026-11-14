@@ -1,0 +1,84 @@
+{
+ "as_of": "2026-11-13",
+ "values": {
+  "models.onnx.band_floor.max_probability_difference": {
+   "value": 2.7481183995092806e-07,
+   "fmt": "sci1",
+   "provenance": {
+    "origin": "scripts/export_onnx.py",
+    "population": "2000 development CVEs drawn with the default seed",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.onnx.band_floor.megabytes": {
+   "value": 6.4,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/export_onnx.py",
+    "population": "the ONNX file of band_floor",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.onnx.exploit_lgbm.max_probability_difference": {
+   "value": 3.1082311602315116e-07,
+   "fmt": "sci1",
+   "provenance": {
+    "origin": "scripts/export_onnx.py",
+    "population": "2000 development CVEs drawn with the default seed",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.onnx.exploit_lgbm.megabytes": {
+   "value": 0.6,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/export_onnx.py",
+    "population": "the ONNX file of exploit_lgbm",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.onnx.parity": {
+   "value": "pass",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/export_onnx.py",
+    "population": "every probability within the tolerance of evaluation: 1e-4",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.onnx.projection_gap": {
+   "value": 2.682209014892578e-07,
+   "fmt": "sci1",
+   "provenance": {
+    "origin": "scripts/export_onnx.py",
+    "population": "2000 development CVEs: the committed band floor against the refit the exploitation run used, largest absolute difference",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.onnx.score_gap": {
+   "value": 2.943341625982754e-08,
+   "fmt": "sci1",
+   "provenance": {
+    "origin": "scripts/export_onnx.py",
+    "population": "2000 development CVEs: the committed band floor against the refit the exploitation run used, largest absolute difference",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  }
+ },
+ "tables": {},
+ "figures": {}
+}
