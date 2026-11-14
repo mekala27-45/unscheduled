@@ -406,3 +406,26 @@ model was fit, so there are no earlier results to keep beside the new ones.
   not be listed within 180 days of its publication, and the old population and folds labeled every
   earlier CVE negative by construction. All 278 train CVEs listed within 180 days were published on
   or after that date, and the rank part of train holds 67,566 CVEs.
+
+## 2026-11-14: the floor solver, and where the floors run
+
+The plan names a TF-IDF and logistic regression floor per task and leaves the solver open. Each
+floor is fit as one logistic regression per class against the rest by liblinear, not as one softmax
+over the classes by L-BFGS. On a sample of 20,000 train CVEs with the word grams, the CWE floor took
+89 seconds at C 0.1 and 257 seconds at C 10 as one softmax, against 6 and 15 seconds as one fit per
+class on two processes; the band took 4 and 12 seconds against 2 and 2. Train is eleven times the
+sample, and the character grams put 592 entries in a row of the sample against 85 for the word grams
+alone, so the softmax grid would not finish inside the six hours a GitHub runner allows. The class
+probabilities are the per class probabilities scaled to sum to one, and liblinear penalizes the
+intercept with the weights; temperature scaling at step nine calibrates what comes out. The fits
+share threads, since liblinear releases the GIL, and the same fits on one thread and on two gave
+identical coefficients.
+
+The floors read the text and the filer and CISA features, as band_floor says, and nothing else: the
+affected entries, the exploit code signal and the publication time wait for the exploitation models.
+Train holds no CISA value at day 0, so the floors learn nothing from those columns.
+
+The full search runs in GitHub Actions (.github/workflows/models.yml). It restores the release
+results/lake/release.json names and fails if any archive moved, rebuilds the lake, rebuilds the sets
+and fails unless all eight files match results/models/sets.json, and only then fits. The records
+under results/ are committed from the run's artifact, and each names its run.

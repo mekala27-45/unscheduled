@@ -35,9 +35,14 @@ hashed into evaluation/registration.json as the models stage, after the Phase 1 
 moving their hash, before any model exists. Next: step three, the training set builder on the as-of
 engine, with the leakage test on the sets. Step three: scripts/build_sets.py writes the sets
 (data/sets, rebuilt from the lake, never committed) and results/models/sets.json with their digests:
-220,803 train, 39,924 development, 63,304 test and 78,676 shadow rows. Next: step four,
-the fill floors, after the change request that starts the exploitation population when KEV could
-first list a CVE within 180 days.
+220,803 train, 39,924 development, 63,304 test and 78,676 shadow rows. The change
+request that starts the exploitation population when KEV could first list a CVE within 180 days is
+in DECISIONS.md. Step four, the fill floors: unscheduled_models.floors and scripts/train_floors.py
+fit them, one logistic regression per class against the rest by liblinear (DECISIONS.md, the floor
+solver), and the full search runs in the models workflow, which restores the recorded release,
+rebuilds the lake and the sets, and fits only when the sets match their committed digests. Next:
+commit results/models/floors.json from that run, then step five, the CPE dictionary and the product
+model.
 
 ## Open problems
 
