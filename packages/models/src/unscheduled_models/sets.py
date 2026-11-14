@@ -26,6 +26,7 @@ from typing import Any
 
 import duckdb
 import polars as pl
+from unscheduled_core.featurize import joined_text
 from unscheduled_lake.digest import table_digest
 
 SPLITS = ("train", "development", "test", "shadow")
@@ -97,32 +98,6 @@ LABEL_COLUMNS = (
     "days_to_kev",
     "kev_event",
 )
-
-
-def joined_text(
-    description: str | None,
-    filer: str | None,
-    products: str | None,
-    filer_vector: str | None = None,
-    adp_band: str | None = None,
-    ssvc_exploitation: str | None = None,
-) -> str:
-    """The one text field every text model reads. It carries the day 0 description, the filer, the
-    products, and the structured values the floors also get one hot (the filer vector, the CISA ADP
-    band and SSVC exploitation when known at day 0), so a text model and its floor see the same
-    inputs."""
-    parts = [(description or "").strip()]
-    if filer:
-        parts.append(f"Filer: {filer}")
-    if products:
-        parts.append(f"Products: {products}")
-    if filer_vector:
-        parts.append(f"Filer score: {filer_vector}")
-    if adp_band:
-        parts.append(f"CISA ADP severity: {adp_band}")
-    if ssvc_exploitation:
-        parts.append(f"CISA SSVC exploitation: {ssvc_exploitation}")
-    return "\n".join(p for p in parts if p)
 
 
 def labels_name(split: str) -> str:

@@ -229,6 +229,11 @@ def fmt_year(value: float | int | str | None) -> str:
     return str(round(_num(value)))
 
 
+def fmt_sci1(value: float | int | str | None) -> str:
+    """A small number in scientific notation with one decimal, as 2.0e-07."""
+    return f"{_num(value):.1e}"
+
+
 FORMATS: dict[str, FormatFn] = {
     "int": fmt_int,
     "float1": _fixed(1),
@@ -278,6 +283,7 @@ FORMATS: dict[str, FormatFn] = {
     "quarter": fmt_quarter,
     "year": fmt_year,
     "text": fmt_text,
+    "sci1": fmt_sci1,
 }
 
 
