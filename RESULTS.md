@@ -88,7 +88,7 @@ says nothing about whether its output is right.
 
 ## The Phase 2 checklist
 
-4 of 18 lines done. A line is done only
+5 of 18 lines done. A line is done only
 when its evidence says pass, and a file an earlier phase wrote counts here only with what Phase 2
 writes into it.
 
@@ -100,7 +100,7 @@ writes into it.
 | 4 | not done | Every model has a floor trained on the same rows; every comparison has a paired interval | results/models/floors.json, results/models/c1.json, results/models/c2.json |
 | 5 | not done | The affected product retrieval measured against the NVD CPE configurations | results/models/product.json |
 | 6 | done | The exploitation model tuned on time ordered folds; the survival model checked in R | results/models/rank.json, results/models/survival.json |
-| 7 | not done | ModernBERT run on Kaggle by a committed request inside the GPU budget, or its fallback named; ONNX parity passing | results/parts/gpu.json, results/models/fallback.json, results/models/onnx.json |
+| 7 | done | ModernBERT run on Kaggle by a committed request inside the GPU budget, or its fallback named; ONNX parity passing | results/parts/gpu.json, results/models/fallback.json, results/models/onnx.json |
 | 8 | not done | Calibration and conformal sets fit on development, with coverage on test | results/models/calibration.json, results/models/conformal.json, results/models/test_scoring.json |
 | 9 | not done | The plain and reweighted views reported with the effective sample size | results/models/reweighting.json |
 | 10 | not done | MLflow runs and the registry; the model cards rendered from the manifest | results/registry/registry.json, report/models.md, report/models/band.md |

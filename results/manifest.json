@@ -6657,7 +6657,7 @@
    }
   },
   "build.phase2.checklist_done": {
-   "value": 4,
+   "value": 5,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/build_manifest.py",
@@ -8380,6 +8380,259 @@
     "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
     "source": "live",
     "as_of": "2026-11-14",
+    "note": null
+   }
+  },
+  "models.fallback.band.dev": {
+   "value": 0.593827,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Severity band, quadratic weighted kappa, the embedding beside the filer and CISA block the floors read",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.cwe.dev": {
+   "value": 0.436605,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Weakness (CWE), macro F1, the embedding beside the filer and CISA block the floors read",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.metric_A.dev": {
+   "value": 0.760305,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Availability, Cohen kappa, the embedding beside the filer and CISA block the floors read",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.metric_AC.dev": {
+   "value": 0.424799,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Attack complexity, Cohen kappa, the embedding beside the filer and CISA block the floors read",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.metric_AV.dev": {
+   "value": 0.788284,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Attack vector, Cohen kappa, the embedding beside the filer and CISA block the floors read",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.metric_C.dev": {
+   "value": 0.686655,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Confidentiality, Cohen kappa, the embedding beside the filer and CISA block the floors read",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.metric_I.dev": {
+   "value": 0.701786,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Integrity, Cohen kappa, the embedding beside the filer and CISA block the floors read",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.metric_PR.dev": {
+   "value": 0.561415,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Privileges required, Cohen kappa, the embedding beside the filer and CISA block the floors read",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.metric_S.dev": {
+   "value": 0.871363,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Scope, Cohen kappa, the embedding beside the filer and CISA block the floors read",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.metric_UI.dev": {
+   "value": 0.852728,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: User interaction, Cohen kappa, the embedding beside the filer and CISA block the floors read",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.name": {
+   "value": "frozen BAAI/bge-small-en-v1.5 embeddings with a logistic head per task",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "the deep fill model this phase ran: ModernBERT waits for the Kaggle secrets",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.text.band.dev": {
+   "value": 0.462306,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Severity band, quadratic weighted kappa, the embedding alone, the ablation",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.text.cwe.dev": {
+   "value": 0.428047,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Weakness (CWE), macro F1, the embedding alone, the ablation",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.text.metric_A.dev": {
+   "value": 0.667821,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Availability, Cohen kappa, the embedding alone, the ablation",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.text.metric_AC.dev": {
+   "value": 0.326918,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Attack complexity, Cohen kappa, the embedding alone, the ablation",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.text.metric_AV.dev": {
+   "value": 0.688038,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Attack vector, Cohen kappa, the embedding alone, the ablation",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.text.metric_C.dev": {
+   "value": 0.597916,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Confidentiality, Cohen kappa, the embedding alone, the ablation",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.text.metric_I.dev": {
+   "value": 0.611499,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Integrity, Cohen kappa, the embedding alone, the ablation",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.text.metric_PR.dev": {
+   "value": 0.374575,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Privileges required, Cohen kappa, the embedding alone, the ablation",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.text.metric_S.dev": {
+   "value": 0.819059,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: Scope, Cohen kappa, the embedding alone, the ablation",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.text.metric_UI.dev": {
+   "value": 0.748498,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label: User interaction, Cohen kappa, the embedding alone, the ablation",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.width.joint": {
+   "value": 665,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "the columns of the joint design: the embedding and the structured block",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.width.text": {
+   "value": 384,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "the columns of the text design: the embedding",
+    "source": "models",
+    "as_of": "2026-11-13",
     "note": null
    }
   },
@@ -15691,7 +15944,7 @@
     ],
     [
      7,
-     "not done",
+     "done",
      "ModernBERT run on Kaggle by a committed request inside the GPU budget, or its fallback named; ONNX parity passing",
      "results/parts/gpu.json, results/models/fallback.json, results/models/onnx.json"
     ],
@@ -16440,6 +16693,171 @@
     "origin": "scripts/build_lake.py",
     "population": "the tables of the lake file",
     "source": "lake",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.fallback.chosen": {
+   "columns": [
+    "Task",
+    "Design",
+    "Chosen by",
+    "C",
+    "Development score"
+   ],
+   "formats": [
+    "text",
+    "text",
+    "text",
+    "text",
+    "float3"
+   ],
+   "rows": [
+    [
+     "Severity band",
+     "joint",
+     "quadratic weighted kappa",
+     "0.3",
+     0.593827
+    ],
+    [
+     "Attack vector",
+     "joint",
+     "Cohen kappa",
+     "1",
+     0.788284
+    ],
+    [
+     "Attack complexity",
+     "joint",
+     "Cohen kappa",
+     "0.3",
+     0.424799
+    ],
+    [
+     "Privileges required",
+     "joint",
+     "Cohen kappa",
+     "3",
+     0.561415
+    ],
+    [
+     "User interaction",
+     "joint",
+     "Cohen kappa",
+     "1",
+     0.852728
+    ],
+    [
+     "Scope",
+     "joint",
+     "Cohen kappa",
+     "0.3",
+     0.871363
+    ],
+    [
+     "Confidentiality",
+     "joint",
+     "Cohen kappa",
+     "0.3",
+     0.686655
+    ],
+    [
+     "Integrity",
+     "joint",
+     "Cohen kappa",
+     "3",
+     0.701786
+    ],
+    [
+     "Availability",
+     "joint",
+     "Cohen kappa",
+     "1",
+     0.760305
+    ],
+    [
+     "Weakness (CWE)",
+     "joint",
+     "macro F1",
+     "0.3",
+     0.436605
+    ],
+    [
+     "Severity band",
+     "text",
+     "quadratic weighted kappa",
+     "0.3",
+     0.462306
+    ],
+    [
+     "Attack vector",
+     "text",
+     "Cohen kappa",
+     "0.1",
+     0.688038
+    ],
+    [
+     "Attack complexity",
+     "text",
+     "Cohen kappa",
+     "0.3",
+     0.326918
+    ],
+    [
+     "Privileges required",
+     "text",
+     "Cohen kappa",
+     "1",
+     0.374575
+    ],
+    [
+     "User interaction",
+     "text",
+     "Cohen kappa",
+     "1",
+     0.748498
+    ],
+    [
+     "Scope",
+     "text",
+     "Cohen kappa",
+     "0.3",
+     0.819059
+    ],
+    [
+     "Confidentiality",
+     "text",
+     "Cohen kappa",
+     "3",
+     0.597916
+    ],
+    [
+     "Integrity",
+     "text",
+     "Cohen kappa",
+     "0.3",
+     0.611499
+    ],
+    [
+     "Availability",
+     "text",
+     "Cohen kappa",
+     "0.1",
+     0.667821
+    ],
+    [
+     "Weakness (CWE)",
+     "text",
+     "macro F1",
+     "0.1",
+     0.428047
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/train_fallback.py",
+    "population": "development window CVEs with the label",
+    "source": "models",
     "as_of": "2026-11-13",
     "note": null
    }

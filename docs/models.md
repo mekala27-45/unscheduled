@@ -68,6 +68,34 @@ and a logistic regression per task. A change request recorded before any fill mo
 gives each head the floor's own filer and CISA block beside the embedding, so the comparison with
 the floor measures the text representation alone; the embedding by itself is kept as an ablation.
 
+On development, the band reaches 0.594 with the block and
+0.462 from the embedding alone, against the floor's
+0.669.
+The text model is behind its floor on every one of the ten tasks: on these rows the frozen embedding,
+even beside the floor's own structured block, carries less than the TF-IDF grams of the same text.
+
+| Task | Design | Chosen by | C | Development score |
+|---|---|---|---|---:|
+| Severity band | joint | quadratic weighted kappa | 0.3 | 0.594 |
+| Attack vector | joint | Cohen kappa | 1 | 0.788 |
+| Attack complexity | joint | Cohen kappa | 0.3 | 0.425 |
+| Privileges required | joint | Cohen kappa | 3 | 0.561 |
+| User interaction | joint | Cohen kappa | 1 | 0.853 |
+| Scope | joint | Cohen kappa | 0.3 | 0.871 |
+| Confidentiality | joint | Cohen kappa | 0.3 | 0.687 |
+| Integrity | joint | Cohen kappa | 3 | 0.702 |
+| Availability | joint | Cohen kappa | 1 | 0.760 |
+| Weakness (CWE) | joint | macro F1 | 0.3 | 0.437 |
+| Severity band | text | quadratic weighted kappa | 0.3 | 0.462 |
+| Attack vector | text | Cohen kappa | 0.1 | 0.688 |
+| Attack complexity | text | Cohen kappa | 0.3 | 0.327 |
+| Privileges required | text | Cohen kappa | 1 | 0.375 |
+| User interaction | text | Cohen kappa | 1 | 0.748 |
+| Scope | text | Cohen kappa | 0.3 | 0.819 |
+| Confidentiality | text | Cohen kappa | 3 | 0.598 |
+| Integrity | text | Cohen kappa | 0.3 | 0.611 |
+| Availability | text | Cohen kappa | 0.1 | 0.668 |
+| Weakness (CWE) | text | macro F1 | 0.1 | 0.428 |
 
 ## The exploitation models
 

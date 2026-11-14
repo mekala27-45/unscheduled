@@ -24,7 +24,7 @@ counting the class for every other CWE.
 
 ## The metrics, with intervals
 
-The development result is not in the manifest yet.
+On development the macro F1 is 0.437.
 Test has not been scored yet.
 
 ## Against the floor

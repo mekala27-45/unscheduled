@@ -27,18 +27,16 @@ by its kappa.
 
 ## The metrics, with intervals
 
-The model's results are not in the manifest yet. The floor's development kappas:
-
-| Metric | Development, floor |
-|---|---:|
-| Attack vector | 0.849 |
-| Attack complexity | 0.529 |
-| Privileges required | 0.607 |
-| User interaction | 0.913 |
-| Scope | 0.913 |
-| Confidentiality | 0.775 |
-| Integrity | 0.793 |
-| Availability | 0.817 |
+| Metric | Development, model | Development, floor | Test, model | Test, floor |
+|---|---:|---:|---:|---:|
+| Attack vector | 0.788 | 0.849 | not yet | not yet |
+| Attack complexity | 0.425 | 0.529 | not yet | not yet |
+| Privileges required | 0.561 | 0.607 | not yet | not yet |
+| User interaction | 0.853 | 0.913 | not yet | not yet |
+| Scope | 0.871 | 0.913 | not yet | not yet |
+| Confidentiality | 0.687 | 0.775 | not yet | not yet |
+| Integrity | 0.702 | 0.793 | not yet | not yet |
+| Availability | 0.760 | 0.817 | not yet | not yet |
 
 The kappas are point values; no criterion is set on a single metric, and the band's interval is in
 the band card.
@@ -47,6 +45,7 @@ the band card.
 
 The floor reads the same text as TF-IDF beside the same filer and CISA values, one logistic
 regression per metric, on the same rows.
+The table above gives both on each window.
 The floor's mean development kappa over the eight is 0.774.
 
 ## The calibration

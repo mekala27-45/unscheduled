@@ -50,9 +50,12 @@ are frozen.
 The floor is TF-IDF over the same joined text beside the same filer and CISA values, and a logistic
 regression, fit on the same rows.
 {% if has("models.fallback.band.dev") %}
-On development the floor reaches {{ v("models.floors.band.dev") }} and the embedding without the
-structured block {{ v("models.fallback.text.band.dev") }}, so the block and the text each carry part
-of the result.
+On development the floor reaches {{ v("models.floors.band.dev") }}, the model {{ v("models.fallback.band.dev") }} and the
+embedding without the structured block {{ v("models.fallback.text.band.dev") }}.
+{% if raw("models.fallback.band.dev") < raw("models.floors.band.dev") %}
+The model is behind its floor before test is read: the TF-IDF grams of the joined text carry more of
+the NVD band than the frozen embedding does, with the same structured block on both sides.
+{% endif %}
 {% endif %}
 {% if has("models.test.c1.floor_kappa") %}
 On test the floor's kappa is {{ v("models.test.c1.floor_kappa") }} ({{ v("models.test.c1.floor_kappa_low") }}

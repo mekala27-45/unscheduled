@@ -61,6 +61,19 @@ the floor measures the text representation alone; the embedding by itself is kep
 On development, the band reaches {{ v("models.fallback.band.dev") }} with the block and
 {{ v("models.fallback.text.band.dev") }} from the embedding alone, against the floor's
 {{ v("models.floors.band.dev") }}.
+{% set tasks = ["band", "metric_AV", "metric_AC", "metric_PR", "metric_UI", "metric_S", "metric_C", "metric_I", "metric_A", "cwe"] %}
+{% set behind = namespace(n=0) %}
+{% for t in tasks %}
+{% if raw("models.fallback." ~ t ~ ".dev") < raw("models.floors." ~ t ~ ".dev") %}
+{% set behind.n = behind.n + 1 %}
+{% endif %}
+{% endfor %}
+{% if behind.n == tasks | length %}
+The text model is behind its floor on every one of the ten tasks: on these rows the frozen embedding,
+even beside the floor's own structured block, carries less than the TF-IDF grams of the same text.
+{% elif behind.n > 0 %}
+The text model is behind its floor on {{ behind.n }} of the ten tasks.
+{% endif %}
 
 {{ table("models.fallback.chosen") }}
 {% endif %}

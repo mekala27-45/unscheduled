@@ -25,8 +25,10 @@ it.
 
 ModernBERT did not run (ADR 0009), so the fallback is the primary fill model, and the measure that
 matters is its gain over the floor.
-The fallback's development result is measured in its own run, and this record renders it once the
-run's record is committed.
+On development the fallback's band reaches a quadratic weighted kappa of 0.594
+against the floor's 0.669, and 0.462 from the
+embedding alone.
+The fallback does not beat the floor on development, and C1 says on test whether that gap holds.
 
 ## Consequences
 

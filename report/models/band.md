@@ -32,7 +32,7 @@ It learns from the train CVEs with an NVD band and is chosen on the development 
 
 ## The metrics, with intervals
 
-The development result is not in the manifest yet.
+On development the band reaches a quadratic weighted kappa of 0.594.
 
 Test has not been scored yet. C1 is judged once, by scripts/score_test.py, after the operating points
 are frozen.
@@ -41,6 +41,10 @@ are frozen.
 
 The floor is TF-IDF over the same joined text beside the same filer and CISA values, and a logistic
 regression, fit on the same rows.
+On development the floor reaches 0.669, the model 0.594 and the
+embedding without the structured block 0.462.
+The model is behind its floor before test is read: the TF-IDF grams of the joined text carry more of
+the NVD band than the frozen embedding does, with the same structured block on both sides.
 
 ## The calibration
 
