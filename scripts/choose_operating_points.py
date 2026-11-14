@@ -113,9 +113,11 @@ def calibrate_exploit(scores: pl.DataFrame, labels: pl.DataFrame) -> dict[str, A
     return out
 
 
-def fit_conformal(calibrated: dict[str, np.ndarray], seed: int) -> dict[str, Any]:
+def fit_conformal(
+    calibrated: dict[str, np.ndarray], seed: int, heads: tuple[str, ...] = CONFORMAL_HEADS
+) -> dict[str, Any]:
     out = {}
-    for head in CONFORMAL_HEADS:
+    for head in heads:
         p, truth = calibrated[head], calibrated[f"{head}__truth"]
         fitted = conformal.fit(p, truth, seed)
         out[head] = {
@@ -226,12 +228,15 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     dev = dev_labels.join(dev_inputs, on="cve_id")
     fill: dict[str, Any] = {}
     calibrated: dict[str, np.ndarray] = {}
+    floor_calibrated: dict[str, np.ndarray] = {}
     from_metrics: dict[str, Any] = {}
     for model in FILL_MODELS:
         proba = pl.read_parquet(args.models / model / "development_probabilities.parquet")
         fill[model], cal = calibrate_fill(proba, dev, seed)
         if model == PRIMARY_FILL:
             calibrated = cal
+        else:
+            floor_calibrated = cal
         # The plan's band_from_metrics, reported beside the band head and never the primary.
         banded = dev.join(proba, on="cve_id", how="inner")
         truth = banded.get_column("band").cast(pl.String).to_list()
@@ -255,6 +260,8 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         "method": "split conformal, APS, the class crossing the threshold included",
         "seed": seed,
         "heads": fit_conformal(calibrated, seed),
+        # The band floor serves POST /v1/predict, so its band head gets sets of its own.
+        "floor_band": fit_conformal(floor_calibrated, seed, heads=("band",))["band"],
     }
     weights = shadow_weights(args.lake, args.models, args.sets)
     out = root / "results" / "models"
@@ -294,6 +301,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         "conformal": {
             "target": conformal.TARGET,
             "cutoffs": {h: round(e["cutoff"], 9) for h, e in conformal_record["heads"].items()},
+            "floor_band_cutoff": round(conformal_record["floor_band"]["cutoff"], 9),
         },
         "c2": {
             "top_share": rank.TOP_SHARE,

@@ -10,6 +10,8 @@ COPY pyproject.toml uv.lock README.md LICENSE AGENTS.md alembic.ini ./
 COPY alembic ./alembic
 COPY config ./config
 COPY packages ./packages
+# The ONNX floor and exploitation model POST /v1/predict scores with, and their input specs.
+COPY models ./models
 # Only the API and what it imports: the lake, the analysis and the command line stay out of the image.
 RUN uv sync --frozen --no-dev --package unscheduled-api
 EXPOSE 80

@@ -23,6 +23,7 @@ from unscheduled_api.legacy import AdapterWriter, LegacyWriter
 from unscheduled_api.matching import Matcher, OsvApiAdvisories, PackageMatcher
 from unscheduled_api.problems import ProblemError
 from unscheduled_api.releases import GitHubReleases
+from unscheduled_api.scoring import Scorer
 from unscheduled_api.settings import DATABASE_VARIABLES, Settings
 from unscheduled_api.sync import Sync
 from unscheduled_api.versions import VersionCache
@@ -49,9 +50,11 @@ class Services:
     versions: VersionCache = field(init=False)
     facts: FactsCache = field(init=False)
     budget: Budget | None = field(init=False)
+    scorer: Scorer = field(init=False)
     statement: str = STATEMENT
 
     def __post_init__(self) -> None:
+        self.scorer = Scorer(self.settings.root)
         self.versions = VersionCache(self.engine, self.settings.schema)
         self.facts = FactsCache(self.engine, self.settings)
         limits = {

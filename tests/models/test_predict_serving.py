@@ -75,15 +75,22 @@ def write_root(root: Path) -> None:
     heads = {"band": 1.2, "cwe": 0.9, **{f"metric_{m}": 1.0 for m in METRICS}}
     points = {
         "primary": {"fill": "fallback", "fill_design": "joint", "exploitation": "exploit_lgbm"},
-        "temperatures": {"fallback": heads},
-        "conformal": {"target": 0.9, "cutoffs": {h: 0.8 for h in heads if h != "cwe"}},
+        "temperatures": {"fallback": heads, "floors": heads},
+        "conformal": {
+            "target": 0.9,
+            "cutoffs": {h: 0.8 for h in heads if h != "cwe"},
+            "floor_band_cutoff": 0.85,
+        },
     }
     (root / "config/operating_points.yaml").write_text(yaml.safe_dump(points), encoding="utf-8")
     models = [
         {
             "name": name,
             "aliases": {"chosen": chosen},
-            "versions": [{"version": v, "run_name": f"{name} {v}", "role": "model"} for v in range(1, 4)],
+            "versions": [
+                {"version": v, "run_name": f"{name} {v}", "role": "floor" if v == 1 else "model"}
+                for v in range(1, 4)
+            ],
         }
         for name, chosen in (
             ("unscheduled-band", 3),
@@ -128,6 +135,9 @@ def test_every_window_row_gets_a_prediction_from_the_chosen_versions(tmp_path: P
     assert all(len(p.split("|")) <= 5 for p in table.get_column("products") if p)
     record = json.loads((tmp_path / "results/models/predictions.json").read_text(encoding="utf-8"))
     assert record["survival_model"] == "cox" and record["product_model"] == "retrieval"
+    serving = json.loads((tmp_path / "models/serving/serving.json").read_text(encoding="utf-8"))
+    assert serving["band_floor"]["version"] == 1 and serving["exploit"]["version"] == 2
+    assert len(serving["exploit"]["quantiles"]) == 1001
     first = (tmp_path / predict_serving.TARGET).read_bytes()
     predict_serving.main(
         ["--models", str(tmp_path / "data/models"), "--sets", str(tmp_path / "data/sets")], root=tmp_path

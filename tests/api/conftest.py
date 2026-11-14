@@ -30,7 +30,17 @@ from tests.api.fixtures.github import FakeGitHub
 postgres_url = _postgres.postgres_url  # the session fixture, shared with tests/cli
 
 SCHEMA = "unscheduled"
-TABLES = ("cve", "cve_event", "product", "finding", "match_log", "client_budget", "ops_run", "settings")
+TABLES = (
+    "cve",
+    "cve_event",
+    "product",
+    "finding",
+    "prediction",
+    "match_log",
+    "client_budget",
+    "ops_run",
+    "settings",
+)
 ORIGIN = "https://unscheduled-triage.vercel.app"
 ORIGINS = f"{ORIGIN}, https://unscheduled-sigma.vercel.app/"
 TAG = "serving-202611070500"

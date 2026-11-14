@@ -599,3 +599,26 @@ C2 judge neither survival nor the affected product, so for those development cho
 fixed here before the product models have a result: the higher development concordance for
 survival, and the higher development recall at 10 for the affected product, since the console shows
 a list of candidates. A tie goes to the floor.
+
+## 2026-11-14: how the predictions are served
+
+The plan serves predictions for "every CVE in the serving slice (published since 2021, and every KEV
+listed CVE), measured against the Neon ceiling before loading". Two parts of that slice get none. A
+CVE published before 2024 is in the train window, so every model was fit on it, and its prediction
+would be surer than any new CVE's; a CVE in the gap window is used by no model, as the plan says.
+The batch (scripts/predict_serving.py) covers the development, test and shadow windows, and an API
+answer without a prediction says which of these reasons applies. The live check of 13 November read
+the database at 84 percent of the 800 MB ceiling, so the prediction table is typed and compact: the
+eight base metrics as one text, their probabilities as one array, their sets as one text, a row
+digest of sixteen characters; the sync measures each chunk against the ceiling before it writes, as
+it does for every table.
+
+POST /v1/predict scores a description with optional filer values through the band floor and LightGBM
+in ONNX, their inputs built without scikit-learn by unscheduled_core.featurize from specs that
+scripts/export_onnx.py checks against scikit-learn before writing them. It charges the lookup budget,
+one lookup per prediction, since config/budgets.yaml is a registered file and a scored text costs
+about what a lookup does; the body is capped at 16 KB and the description at 4,000 characters. The
+fallback text model needs the 130 MB embedding weights at request time, so it is served from the
+batch only, which ADR 0008 records. The prediction file and models.json are optional in the bundle
+contract: a bundle without them empties the prediction table rather than leaving an older batch
+beside newer data.

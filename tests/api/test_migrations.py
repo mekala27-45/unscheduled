@@ -41,7 +41,7 @@ def test_the_version_table_lives_in_the_schema_and_nowhere_else(
         ).fetchall()
         revision = conn.execute('select version_num from "unscheduled"."alembic_version"').fetchone()
     assert ("unscheduled",) in found and ("public",) not in found
-    assert revision == ("0001",)
+    assert revision == ("0002",)
 
 
 def test_two_instances_starting_together_migrate_once(postgres_url: str, tmp_path: Path) -> None:

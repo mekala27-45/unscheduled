@@ -13,7 +13,12 @@ any instance of the container can take the next step.
 A target bundle is loaded in this order, one step per call:
 
     sweep cve, load cve (chunks), sweep cve_event, load cve_event (chunks), sweep product,
-    load product, sweep finding, load finding, backlog, finalize
+    load product, sweep finding, load finding, sweep prediction, load prediction (chunks), backlog,
+    models, finalize
+
+The prediction file and models.json are optional: a bundle without them empties the prediction
+table and stores no models, so the API never serves a prediction from an older bundle beside newer
+data. A cursor written under another plan starts its load again from the first step.
 
 A sweep deletes the rows the new file no longer holds, before its load, so the storage peak stays
 near one copy of the slice. A load chunk is copied into a temporary table and upserted by key with a
@@ -66,6 +71,8 @@ CALLS_PER_MINUTE = 30
 STORAGE_ALLOWANCE = 3.0  # bytes written per byte of row, for heap, TOAST and indexes; deliberately high
 MANIFEST_MAX_BYTES = 1_000_000
 BACKLOG_MAX_BYTES = 5_000_000
+MODELS_MAX_BYTES = 2_000_000
+PLAN_VERSION = 2
 
 Step = tuple[str, str | None]
 PLAN: tuple[Step, ...] = (
@@ -77,7 +84,10 @@ PLAN: tuple[Step, ...] = (
     ("load", "product"),
     ("sweep", "finding"),
     ("load", "finding"),
+    ("sweep", "prediction"),
+    ("load", "prediction"),
     ("backlog", None),
+    ("models", None),
     ("finalize", None),
 )
 CVE_DB_COLUMNS = tuple("provenance" if c.name == "provenance_json" else c.name for c in bnd.CVE_COLUMNS)
@@ -86,9 +96,33 @@ DB_COLUMNS: dict[str, tuple[str, ...]] = {
     "cve_event": ("event_id", "cve_id", "at", "kind", "source", "detail"),
     "product": ("product_id", "name", "body", "row_digest"),
     "finding": ("finding_id", "product_id", "as_of", "cve_ids", "body", "row_digest"),
+    "prediction": (
+        "cve_id",
+        "band",
+        "band_p_low",
+        "band_p_medium",
+        "band_p_high",
+        "band_p_critical",
+        "band_set",
+        "metrics",
+        "metrics_p",
+        "metric_sets",
+        "cwe",
+        "cwe_p",
+        "cwe_top",
+        "exploit_score",
+        "exploit_p",
+        "exploit_pct",
+        "listed_by_30",
+        "listed_by_90",
+        "listed_by_180",
+        "products",
+        "row_digest",
+    ),
 }
 JSON_COLUMNS = frozenset({"provenance", "detail", "body"})
-DIGESTED = frozenset({"cve", "product", "finding"})  # cve_event rows are immutable: their key is their digest
+# cve_event rows are immutable: their key is their digest.
+DIGESTED = frozenset({"cve", "product", "finding", "prediction"})
 
 SyncStatus = Literal["current", "more", "done"]
 
@@ -151,10 +185,14 @@ def chunks_for(rows: int, chunk_rows: int) -> int:
 
 
 def plan_chunks(files: Sequence[dict[str, Any]]) -> int | None:
-    """Every call a full load takes: one per sweep, per load chunk, the backlog and the finalize."""
+    """Every call a full load takes: one per sweep, per load chunk, the backlog, the models and the
+    finalize. An optional file the bundle does not carry takes one sweep and one empty load."""
     rows = {str(f["file"]): f.get("rows") for f in files}
-    total = 2  # backlog and finalize
-    for table in bnd.TABLES.values():
+    total = 3  # backlog, models and finalize
+    for name, table in bnd.TABLES.items():
+        if name in bnd.OPTIONAL_TABLES and table.file not in rows:
+            total += 2
+            continue
         count = rows.get(table.file)
         if count is None:
             return None
@@ -211,6 +249,10 @@ class Sync:
             state, recent = self._state(conn, now)
             loaded = state.get("data_version")
             current = state.get("sync")
+            if current is not None and current.get("plan") != PLAN_VERSION:
+                # A load begun under another plan of steps starts again from the release check.
+                conn.execute(sa.text(f"delete from {self.t('settings')} where key = 'sync'"))
+                current = None
             check = state.get("release_check") or {}
             checked_at = _parse_iso(check.get("checked_at"))
             if current is None and checked_at is not None and now - checked_at < CHECK_INTERVAL:
@@ -343,7 +385,14 @@ class Sync:
                 "detail": {"newest": newest["tag"]},
             }
         target = self._target(newest)
-        cursor = {"target": target, "step": 0, "offset": 0, "started_at": _now_iso(now), "absent_columns": {}}
+        cursor = {
+            "target": target,
+            "step": 0,
+            "offset": 0,
+            "started_at": _now_iso(now),
+            "absent_columns": {},
+            "plan": PLAN_VERSION,
+        }
         self._put(conn, "sync", cursor)
         label = version_label(target["tag"], target["manifest_sha256"])
         outcome = Outcome(
@@ -389,7 +438,9 @@ class Sync:
         manifest = BundleManifest.model_validate(newest["manifest"])
         assets: dict[str, Any] = newest["assets"]
         files: list[dict[str, Any]] = []
-        for name in bnd.FILES:
+        named = {f.file for f in manifest.files}
+        carried = [*bnd.FILES, *(name for name in bnd.OPTIONAL_FILES if name in named)]
+        for name in carried:
             entry = manifest.entry(name)
             asset = assets.get(name)
             if asset is None:
@@ -407,7 +458,7 @@ class Sync:
             "locks": manifest.locks,
             "sources": manifest.sources,
             "files": files,
-            "assets": {name: assets[name] for name in bnd.FILES},
+            "assets": {name: assets[name] for name in carried},
             "chunks_total": plan_chunks(files),
         }
 
@@ -435,7 +486,20 @@ class Sync:
         chunk: Chunk | None = None
         done = False
         record: dict[str, Any] = {"bundle": label, "step": f"{kind} {table}" if table else kind}
-        if kind == "sweep":
+        carried = {str(f["file"]) for f in target["files"]}
+        if (
+            kind in ("sweep", "load")
+            and table in bnd.OPTIONAL_TABLES
+            and bnd.TABLES[table].file not in carried
+        ):
+            # The bundle carries no file for this table: the sweep empties it, the load has nothing.
+            deleted = 0
+            if kind == "sweep":
+                deleted = int(conn.execute(sa.text(f"delete from {self.t(table)}")).rowcount or 0)
+            chunk = Chunk(table, 0, 0, deleted, 0)
+            cursor["step"], cursor["offset"] = index + 1, 0
+            record.update(status="absent", rows_changed=deleted, detail={"file": bnd.TABLES[table].file})
+        elif kind == "sweep":
             assert table is not None
             path = self._local(target, bnd.TABLES[table].file)
             absent = self._verify_file(target, table, path)
@@ -466,6 +530,19 @@ class Sync:
             self._put(conn, "backlog", backlog)
             cursor["step"] = index + 1
             record.update(status="loaded", rows_in=1, rows_changed=1)
+        elif kind == "models":
+            models: Any = None
+            if bnd.MODELS in carried:
+                path = self._local(target, bnd.MODELS, MODELS_MAX_BYTES)
+                try:
+                    models = json.loads(path.read_bytes())
+                except (UnicodeDecodeError, json.JSONDecodeError) as err:
+                    raise BundleError(f"{bnd.MODELS} is not JSON") from err
+                if not isinstance(models, dict) or not isinstance(models.get("models"), list):
+                    raise BundleError(f"{bnd.MODELS} is not a JSON object with a list of models")
+            self._put(conn, "models", models)
+            cursor["step"] = index + 1
+            record.update(status="loaded" if models else "absent", rows_in=1 if models else 0)
         else:
             version = self._finalize(conn, target, cursor, now)
             self._put(conn, "data_version", version)
@@ -507,6 +584,9 @@ class Sync:
         if table == "cve":
             for batch in bnd.iter_column(path, "cve_id"):
                 yield [str(k) for k in batch if k is not None]
+        elif table == "prediction":
+            for batch in bnd.iter_column(path, "cve_id"):
+                yield [str(k).upper() for k in batch if k is not None]
         elif table == "product":
             for rows in bnd.iter_rows(path, bnd.file_columns(path)):
                 yield [bnd.product_row(r)["product_id"] for r in rows]
@@ -514,10 +594,12 @@ class Sync:
             columns = [c.name for c in bnd.EVENT_COLUMNS]
             for rows in bnd.iter_rows(path, columns):
                 yield [bnd.event_row(r)["event_id"] for r in rows]
-        else:
+        elif table == "finding":
             columns = bnd.file_columns(path)
             for rows in bnd.iter_rows(path, columns):
                 yield [bnd.finding_row(r)["finding_id"] for r in rows]
+        else:
+            raise BundleError(f"no key reader for the table {table}")
 
     def _sweep(self, conn: sa.Connection, table: str, path: Path) -> int:
         """Delete the rows of a table whose key the new file does not hold. Returns how many went."""

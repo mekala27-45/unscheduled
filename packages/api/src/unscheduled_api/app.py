@@ -25,7 +25,7 @@ from collections.abc import AsyncIterator, Awaitable, Callable
 from contextlib import asynccontextmanager
 from datetime import UTC, date, datetime
 from pathlib import Path as FilePath
-from typing import Annotated, Any
+from typing import Annotated, Any, Literal
 
 import sqlalchemy as sa
 import structlog
@@ -57,6 +57,8 @@ from unscheduled_api.schemas import (
     MatchCounts,
     MatchResponse,
     Meta,
+    PredictRequest,
+    PredictResponse,
     Products,
     ReleaseFacts,
     SbomSummary,
@@ -64,6 +66,7 @@ from unscheduled_api.schemas import (
     SyncResponse,
     Timeline,
 )
+from unscheduled_api.scoring import NOTE as PREDICT_NOTE
 from unscheduled_api.services import Services, database_problem
 from unscheduled_api.settings import Settings
 from unscheduled_api.sync import CALLS_PER_MINUTE
@@ -71,6 +74,7 @@ from unscheduled_api.sync import CALLS_PER_MINUTE
 log = structlog.get_logger("unscheduled.api")
 
 UPLOAD_TYPES = frozenset({"application/json", "application/vnd.cyclonedx+json", "application/spdx+json"})
+PREDICT_MAX_BYTES = 16_384
 PRODUCT_PATTERN = r"^[A-Za-z0-9][A-Za-z0-9._-]{0,99}$"
 AS_OF_PATTERN = r"^(pin|today|[0-9]{4}-[0-9]{2}-[0-9]{2})$"
 STORED = (
@@ -452,6 +456,10 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
         analyzed_from: Annotated[
             IsoDate | None, Query(description="the NVD status is Analyzed, since this day or later")
         ] = None,
+        predicted_band: Annotated[
+            Literal["LOW", "MEDIUM", "HIGH", "CRITICAL"] | None,
+            Query(description="the band the Phase 2 model predicts, a prediction and never an NVD value"),
+        ] = None,
         cursor: Annotated[
             str | None,
             Query(
@@ -473,6 +481,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
             has_filer_score=has_filer_score,
             kev_added_from=kev_added_from,
             analyzed_from=analyzed_from,
+            predicted_band=predicted_band,
         )
         with svc.connection() as conn:
             return cves.list_cves(
@@ -648,6 +657,41 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
             ),
             duration_ms=run.duration_ms,
             stored=STORED,
+        )
+
+    # Predictions ---------------------------------------------------------------------------------
+
+    @app.post(
+        "/v1/predict",
+        summary="Score a description and optional filer values with the ONNX floor and exploitation model",
+        response_description="The predicted band with its set, and the exploitation score with its percentile",
+        response_model=PredictResponse,
+        tags=["predict"],
+        responses=openapi.problem_responses(400, 413, 422, 429, 500, 503),
+    )
+    async def predict(body: PredictRequest, request: Request, response: Response) -> PredictResponse:
+        declared = request.headers.get("content-length", "")
+        if declared.isdigit() and int(declared) > PREDICT_MAX_BYTES:
+            raise ProblemError(
+                "payload-too-large", f"a prediction request is at most {PREDICT_MAX_BYTES} bytes"
+            )
+        budget = svc.require_budget()
+        try:
+            client, used, allowed = await run_in_threadpool(budget.charge, client_address(request), LOOKUPS)
+        except sa.exc.SQLAlchemyError as err:
+            raise database_problem(err) from err
+        request.state.client = client
+        response.headers.update(
+            {"X-Budget-Limit": str(allowed), "X-Budget-Remaining": str(max(allowed - used, 0))}
+        )
+        made_at = datetime.now(UTC).replace(microsecond=0)
+        values = await run_in_threadpool(svc.scorer.score, body, made_at)
+        return PredictResponse(
+            statement=svc.statement,
+            data_version=svc.label(),
+            made_at=made_at,
+            note=PREDICT_NOTE,
+            values=values,
         )
 
     # The legacy report ---------------------------------------------------------------------------

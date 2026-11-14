@@ -290,6 +290,27 @@
             ],
             "title": "Note"
           },
+          "predictions": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Predictions"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "predictions_note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Predictions Note"
+          },
           "statement": {
             "title": "Statement",
             "type": "string"
@@ -489,6 +510,17 @@
               }
             ],
             "title": "Nvd Status Since"
+          },
+          "predicted_band": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Predicted Band"
           },
           "published": {
             "anyOf": [
@@ -1309,6 +1341,302 @@
           "limits"
         ],
         "title": "Meta",
+        "type": "object"
+      },
+      "PredictRequest": {
+        "additionalProperties": false,
+        "description": "A description and what a filer would give at publication, scored as a CVE at its day 0. No\nvalue is coerced: a number sent as text or a boolean sent as a number is refused.",
+        "properties": {
+          "cvss31_vector": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "pattern": "^CVSS:3\\.1/[A-Z:/]+$",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cvss31 Vector"
+          },
+          "cwes": {
+            "items": {
+              "pattern": "^CWE-[0-9]{1,5}$",
+              "type": "string"
+            },
+            "maxItems": 10,
+            "title": "Cwes",
+            "type": "array"
+          },
+          "description": {
+            "maxLength": 4000,
+            "minLength": 20,
+            "title": "Description",
+            "type": "string"
+          },
+          "exploit_code": {
+            "default": false,
+            "title": "Exploit Code",
+            "type": "boolean"
+          },
+          "filer": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filer"
+          },
+          "filer_type": {
+            "anyOf": [
+              {
+                "maxLength": 60,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Filer Type"
+          },
+          "product": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product"
+          },
+          "reserved_days": {
+            "anyOf": [
+              {
+                "maximum": 36500.0,
+                "minimum": 0.0,
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reserved Days"
+          },
+          "vendor": {
+            "anyOf": [
+              {
+                "maxLength": 120,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Vendor"
+          }
+        },
+        "required": [
+          "description"
+        ],
+        "title": "PredictRequest",
+        "type": "object"
+      },
+      "PredictResponse": {
+        "additionalProperties": false,
+        "properties": {
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "made_at": {
+            "format": "date-time",
+            "title": "Made At",
+            "type": "string"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          },
+          "values": {
+            "items": {
+              "$ref": "#/components/schemas/PredictedValue"
+            },
+            "title": "Values",
+            "type": "array"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "made_at",
+          "note",
+          "values"
+        ],
+        "title": "PredictResponse",
+        "type": "object"
+      },
+      "PredictedValue": {
+        "additionalProperties": false,
+        "description": "One predicted field with the model that made it and its uncertainty. A prediction is never an\nNVD value, and every response that carries one says so.",
+        "properties": {
+          "detail": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/JsonValue"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detail"
+          },
+          "field": {
+            "title": "Field",
+            "type": "string"
+          },
+          "model": {
+            "title": "Model",
+            "type": "string"
+          },
+          "probabilities": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "type": "number"
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Probabilities"
+          },
+          "probability": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Probability"
+          },
+          "role": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Role"
+          },
+          "set": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Set"
+          },
+          "value": {
+            "$ref": "#/components/schemas/JsonValue"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          }
+        },
+        "required": [
+          "field",
+          "model",
+          "version",
+          "role",
+          "value"
+        ],
+        "title": "PredictedValue",
+        "type": "object"
+      },
+      "Predictions": {
+        "additionalProperties": false,
+        "properties": {
+          "batch": {
+            "title": "Batch",
+            "type": "string"
+          },
+          "made_on": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Made On"
+          },
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "values": {
+            "items": {
+              "$ref": "#/components/schemas/PredictedValue"
+            },
+            "title": "Values",
+            "type": "array"
+          },
+          "window": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Window"
+          }
+        },
+        "required": [
+          "batch",
+          "made_on",
+          "window",
+          "note",
+          "values"
+        ],
+        "title": "Predictions",
         "type": "object"
       },
       "Problem": {
@@ -2275,6 +2603,30 @@
             }
           },
           {
+            "description": "the band the Phase 2 model predicts, a prediction and never an NVD value",
+            "in": "query",
+            "name": "predicted_band",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "enum": [
+                    "LOW",
+                    "MEDIUM",
+                    "HIGH",
+                    "CRITICAL"
+                  ],
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "description": "the band the Phase 2 model predicts, a prediction and never an NVD value",
+              "title": "Predicted Band"
+            }
+          },
+          {
             "description": "next_cursor from the previous page, sent with the same filters",
             "in": "query",
             "name": "cursor",
@@ -2899,6 +3251,97 @@
         "summary": "The lock digests, the limits, the statement, the NVD notice and the advisory attribution",
         "tags": [
           "service"
+        ]
+      }
+    },
+    "/v1/predict": {
+      "post": {
+        "operationId": "predict_v1_predict_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PredictRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PredictResponse"
+                }
+              }
+            },
+            "description": "The predicted band with its set, and the exploitation score with its percentile"
+          },
+          "400": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The body is not JSON; The cursor is not one this listing issued"
+          },
+          "413": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The upload is over the size limit"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The document is neither CycloneDX nor SPDX JSON; The request did not validate"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "Score a description and optional filer values with the ONNX floor and exploitation model",
+        "tags": [
+          "predict"
         ]
       }
     },

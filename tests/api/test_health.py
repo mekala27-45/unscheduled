@@ -64,7 +64,7 @@ def test_meta_states_the_limits_the_service_enforces() -> None:
 def test_health_reports_the_database_facts_the_probe_reads(client: TestClient) -> None:
     body = client.get("/health").json()
     database = body["database"]
-    assert database["reachable"] is True and database["migration"] == "0001"
+    assert database["reachable"] is True and database["migration"] == "0002"
     assert database["server_version"] and database["server_version"][0].isdigit()
     assert isinstance(database["pgvector_available"], bool)
     assert isinstance(database["pgvector_installed"], bool)

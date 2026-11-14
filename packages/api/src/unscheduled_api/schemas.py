@@ -11,7 +11,7 @@ from __future__ import annotations
 from datetime import UTC, date, datetime
 from typing import Annotated, Literal
 
-from pydantic import AfterValidator, Field, JsonValue
+from pydantic import AfterValidator, ConfigDict, Field, JsonValue
 from unscheduled_core.model import StrictModel
 
 
@@ -38,6 +38,29 @@ class FieldValue(StrictModel):
     rule: str
 
 
+class PredictedValue(StrictModel):
+    """One predicted field with the model that made it and its uncertainty. A prediction is never an
+    NVD value, and every response that carries one says so."""
+
+    field: str
+    model: str
+    version: int | None
+    role: str | None
+    value: JsonValue
+    probability: float | None = None
+    probabilities: dict[str, float] | None = None
+    set: list[str] | None = None
+    detail: dict[str, JsonValue] | None = None
+
+
+class Predictions(StrictModel):
+    batch: str
+    made_on: date | None
+    window: str | None
+    note: str
+    values: list[PredictedValue]
+
+
 class CveRecord(Envelope):
     cve_id: str
     as_of: date | None
@@ -45,6 +68,8 @@ class CveRecord(Envelope):
     fields: dict[str, FieldValue]
     links: dict[str, str]
     note: str | None = None
+    predictions: Predictions | None = None
+    predictions_note: str | None = None
 
 
 class CveSummary(StrictModel):
@@ -66,6 +91,7 @@ class CveSummary(StrictModel):
     epss_score: float | None
     exploit_first_seen: date | None
     has_cpe: bool | None
+    predicted_band: str | None = None
 
 
 class CvePage(Envelope):
@@ -73,6 +99,31 @@ class CvePage(Envelope):
     limit: int
     next_cursor: str | None
     filters: dict[str, JsonValue]
+
+
+class PredictRequest(StrictModel):
+    """A description and what a filer would give at publication, scored as a CVE at its day 0. No
+    value is coerced: a number sent as text or a boolean sent as a number is refused."""
+
+    model_config = ConfigDict(extra="forbid", frozen=True, strict=True)
+
+    description: Annotated[str, Field(min_length=20, max_length=4000)]
+    filer: Annotated[str | None, Field(max_length=120)] = None
+    filer_type: Annotated[str | None, Field(max_length=60)] = None
+    cvss31_vector: Annotated[str | None, Field(max_length=120, pattern=r"^CVSS:3\.1/[A-Z:/]+$")] = None
+    cwes: Annotated[list[Annotated[str, Field(pattern=r"^CWE-[0-9]{1,5}$")]], Field(max_length=10)] = Field(
+        default_factory=list
+    )
+    vendor: Annotated[str | None, Field(max_length=120)] = None
+    product: Annotated[str | None, Field(max_length=120)] = None
+    exploit_code: bool = False
+    reserved_days: Annotated[int | None, Field(ge=0, le=36500)] = None
+
+
+class PredictResponse(Envelope):
+    made_at: UtcDatetime
+    note: str
+    values: list[PredictedValue]
 
 
 class TimelineEvent(StrictModel):

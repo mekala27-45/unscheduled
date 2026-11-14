@@ -164,6 +164,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/predict": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Score a description and optional filer values with the ONNX floor and exploitation model */
+        post: operations["predict_v1_predict_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/products": {
         parameters: {
             query?: never;
@@ -297,6 +314,9 @@ export interface components {
             };
             /** Note */
             note?: string | null;
+            predictions?: components["schemas"]["Predictions"] | null;
+            /** Predictions Note */
+            predictions_note?: string | null;
             /** Statement */
             statement: string;
         };
@@ -336,6 +356,8 @@ export interface components {
             nvd_status: string | null;
             /** Nvd Status Since */
             nvd_status_since: string | null;
+            /** Predicted Band */
+            predicted_band?: string | null;
             /** Published */
             published: string | null;
         };
@@ -582,6 +604,91 @@ export interface components {
             statement: string;
             /** Version */
             version: string;
+        };
+        /**
+         * PredictRequest
+         * @description A description and what a filer would give at publication, scored as a CVE at its day 0. No
+         *     value is coerced: a number sent as text or a boolean sent as a number is refused.
+         */
+        PredictRequest: {
+            /** Cvss31 Vector */
+            cvss31_vector?: string | null;
+            /** Cwes */
+            cwes?: string[];
+            /** Description */
+            description: string;
+            /**
+             * Exploit Code
+             * @default false
+             */
+            exploit_code: boolean;
+            /** Filer */
+            filer?: string | null;
+            /** Filer Type */
+            filer_type?: string | null;
+            /** Product */
+            product?: string | null;
+            /** Reserved Days */
+            reserved_days?: number | null;
+            /** Vendor */
+            vendor?: string | null;
+        };
+        /** PredictResponse */
+        PredictResponse: {
+            /** Data Version */
+            data_version: string;
+            /**
+             * Made At
+             * Format: date-time
+             */
+            made_at: string;
+            /** Note */
+            note: string;
+            /** Statement */
+            statement: string;
+            /** Values */
+            values: components["schemas"]["PredictedValue"][];
+        };
+        /**
+         * PredictedValue
+         * @description One predicted field with the model that made it and its uncertainty. A prediction is never an
+         *     NVD value, and every response that carries one says so.
+         */
+        PredictedValue: {
+            /** Detail */
+            detail?: {
+                [key: string]: components["schemas"]["JsonValue"];
+            } | null;
+            /** Field */
+            field: string;
+            /** Model */
+            model: string;
+            /** Probabilities */
+            probabilities?: {
+                [key: string]: number;
+            } | null;
+            /** Probability */
+            probability?: number | null;
+            /** Role */
+            role: string | null;
+            /** Set */
+            set?: string[] | null;
+            value: components["schemas"]["JsonValue"];
+            /** Version */
+            version: number | null;
+        };
+        /** Predictions */
+        Predictions: {
+            /** Batch */
+            batch: string;
+            /** Made On */
+            made_on: string | null;
+            /** Note */
+            note: string;
+            /** Values */
+            values: components["schemas"]["PredictedValue"][];
+            /** Window */
+            window: string | null;
         };
         /** Problem */
         Problem: {
@@ -1004,6 +1111,8 @@ export interface operations {
                 kev_added_from?: string | null;
                 /** @description the NVD status is Analyzed, since this day or later */
                 analyzed_from?: string | null;
+                /** @description the band the Phase 2 model predicts, a prediction and never an NVD value */
+                predicted_band?: ("LOW" | "MEDIUM" | "HIGH" | "CRITICAL") | null;
                 /** @description next_cursor from the previous page, sent with the same filters */
                 cursor?: string | null;
                 /** @description CVEs per page */
@@ -1400,6 +1509,84 @@ export interface operations {
             };
             /** @description The server failed while answering */
             500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    predict_v1_predict_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PredictRequest"];
+            };
+        };
+        responses: {
+            /** @description The predicted band with its set, and the exploitation score with its percentile */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PredictResponse"];
+                };
+            };
+            /** @description The body is not JSON; The cursor is not one this listing issued */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The upload is over the size limit */
+            413: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The document is neither CycloneDX nor SPDX JSON; The request did not validate */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The sync was called too often; This client has used its daily budget */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The server failed while answering */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };

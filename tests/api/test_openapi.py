@@ -1,4 +1,5 @@
-"""The committed openapi.json is the app's schema, with every route of section 12 and honest errors."""
+"""The committed openapi.json is the app's schema, with every route of section 12, POST /v1/predict of
+Phase 2, and honest errors."""
 
 from __future__ import annotations
 
@@ -20,6 +21,7 @@ ROUTES = {
     ("get", "/v1/products"),
     ("get", "/v1/products/{product_id}/exposure"),
     ("post", "/v1/match"),
+    ("post", "/v1/predict"),
     ("get", "/v1/legacy/report.csv"),
     ("post", "/internal/sync"),
     ("get", "/internal/sync"),

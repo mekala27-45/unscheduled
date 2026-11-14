@@ -17,6 +17,8 @@ dependencies = [
   "polars>=1.30",
   "httpx>=0.28",
   "pyyaml>=6.0",
+  "onnxruntime==1.32.0",
+  "numpy>=2.0",
 ]
 
 [build-system]

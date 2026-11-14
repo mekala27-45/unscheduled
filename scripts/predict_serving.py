@@ -21,6 +21,7 @@ import argparse
 import hashlib
 import json
 import sys
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -101,6 +102,46 @@ def percentile(values: np.ndarray) -> np.ndarray:
     """Each value's percentile among all of them: the share at or below it, times 100."""
     order = np.sort(values)
     return (np.searchsorted(order, values, side="right") / len(values) * 100.0).astype(np.float32)
+
+
+def floor_version(registry: dict[str, Any], name: str) -> int:
+    model = next(m for m in registry["models"] if m["name"] == name)
+    return int(next(v["version"] for v in model["versions"] if v["role"] == "floor"))
+
+
+def write_serving(
+    root: Path,
+    points: dict[str, Any],
+    registry: dict[str, Any],
+    iso: dict[str, Any],
+    table: pl.DataFrame,
+    record: dict[str, Any],
+) -> None:
+    """What POST /v1/predict needs beside the ONNX files: the band floor's temperature and conformal
+    cutoff, the exploitation model's isotonic map, and the batch's score quantiles for a percentile."""
+    exploit = next(m for m in registry["models"] if m["name"] == "unscheduled-exploit")
+    chosen = int(exploit["aliases"]["chosen"])
+    scores = table.get_column("exploit_score").cast(pl.Float64).to_numpy()
+    serving = {
+        "batch": record["batch"],
+        "made_on": record["made_on"],
+        "band_floor": {
+            "model": "unscheduled-band",
+            "version": floor_version(registry, "unscheduled-band"),
+            "role": "floor",
+            "temperature": float(points["temperatures"]["floors"]["band"]),
+            "conformal_cutoff": float(points["conformal"]["floor_band_cutoff"]),
+        },
+        "exploit": {
+            "model": "unscheduled-exploit",
+            "version": chosen,
+            "role": next(v["role"] for v in exploit["versions"] if v["version"] == chosen),
+            "isotonic": {"x": list(iso["x"]), "y": list(iso["y"])},
+            "quantiles": [round(float(q), 8) for q in np.quantile(scores, np.linspace(0.0, 1.0, 1001))],
+        },
+    }
+    path = root / "models" / "serving" / "serving.json"
+    path.write_text(json.dumps(serving, indent=1) + "\n", encoding="utf-8")
 
 
 def manifest_part(record: dict[str, Any], as_of: str) -> dict[str, Any]:
@@ -204,6 +245,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     table.write_parquet(target, compression="zstd", compression_level=19, statistics=False)
     record = {
         "batch": batch,
+        "made_on": datetime.now(UTC).date().isoformat(),
         "rows": table.height,
         "windows": windows,
         "columns": table.columns,
@@ -221,6 +263,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     (root / "results" / "models" / "predictions.json").write_text(
         json.dumps(record, indent=1) + "\n", encoding="utf-8"
     )
+    write_serving(root, points, registry, iso, table, record)
     sets_record = json.loads((root / "results" / "models" / "sets.json").read_text(encoding="utf-8"))
     part = manifest_part(record, str(sets_record["lake_cut"])[:10])
     (root / "results" / "parts" / "predictions.json").write_text(

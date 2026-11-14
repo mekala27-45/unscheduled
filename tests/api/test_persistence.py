@@ -33,4 +33,4 @@ def test_what_the_server_stored_is_read_back_after_it_stops(postgres_url: str) -
     result = json.loads(proc.stdout[: proc.stdout.rindex("}") + 1])
     assert result["read_back"]["budget"] == {"lookups": 2, "matches": 1}
     assert result["read_back"]["match_log"][0]["hashed"] is True
-    assert result["read_back"]["migration"] == "0001" and len(result["read_back"]["sync_runs"]) == 1
+    assert result["read_back"]["migration"] == "0002" and len(result["read_back"]["sync_runs"]) == 1

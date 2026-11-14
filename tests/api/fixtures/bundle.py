@@ -181,8 +181,11 @@ def write_bundle(
     generated_at: str = GENERATED_AT,
     lake_digest: str = LAKE_DIGEST,
     row_group_size: int | None = None,
+    predictions: Sequence[Mapping[str, Any]] | None = None,
+    models_value: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
-    """Write the five files and bundle_manifest.json into dest; return the manifest."""
+    """Write the five files and bundle_manifest.json into dest, and the optional prediction file and
+    models.json when given; return the manifest."""
     dest.mkdir(parents=True, exist_ok=True)
     files: list[dict[str, Any]] = []
     for table in ("cve", "cve_event", "product", "finding"):
@@ -197,6 +200,16 @@ def write_bundle(
         encoding="utf-8",
     )
     files.append({"file": backlog_path.name, "sha256": _sha256(backlog_path), "rows": None})
+    if predictions is not None:
+        path = dest / "prediction.parquet"
+        pl.DataFrame(list(predictions)).write_parquet(path)
+        files.append({"file": path.name, "sha256": _sha256(path), "rows": len(predictions)})
+    if models_value is not None:
+        path = dest / "models.json"
+        path.write_text(json.dumps(models_value, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+        files.append(
+            {"file": path.name, "sha256": _sha256(path), "rows": len(models_value.get("models", []))}
+        )
     manifest = {"generated_at": generated_at, "lake_digest": lake_digest, "files": files, "sources": SOURCES}
     (dest / "bundle_manifest.json").write_text(json.dumps(manifest, indent=1) + "\n", encoding="utf-8")
     return manifest

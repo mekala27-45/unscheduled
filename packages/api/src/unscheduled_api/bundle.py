@@ -11,6 +11,11 @@ it until the bytes match the sha256 in bundle_manifest.json and every required c
     finding.parquet       product_id (or product), as_of, the CVE ids (cve_id, or cve_aliases and
                           upstream_cves as packages/match writes them), and any further columns
     backlog.json          the Q1 to Q6 values from the manifest, served as they are
+    prediction.parquet    optional: the Phase 2 batch predictions, one row per CVE (PREDICTION_COLUMNS)
+    models.json           optional: the registry export the predictions name their models by
+
+A bundle without the two optional files serves no predictions: the sync empties the table and the
+API says the bundle carried none.
 
 A column listed as required must exist in the file (its values may be null). An optional column
 that is missing loads as null and is listed in the data version, so a reader can tell "the source
@@ -35,6 +40,12 @@ from unscheduled_core.model import StrictModel
 MANIFEST = "bundle_manifest.json"
 BACKLOG = "backlog.json"
 FILES = ("cve.parquet", "cve_event.parquet", "product.parquet", "finding.parquet", BACKLOG)
+PREDICTION = "prediction.parquet"
+MODELS = "models.json"
+OPTIONAL_FILES = (PREDICTION, MODELS)
+METRICS = ("AV", "AC", "PR", "UI", "S", "C", "I", "A")
+BANDS = ("LOW", "MEDIUM", "HIGH", "CRITICAL")
+PREDICTION_DIGEST_LENGTH = 16
 
 
 class BundleError(ValueError):
@@ -76,6 +87,9 @@ def parse_manifest(data: bytes) -> BundleManifest:
         raise BundleError(f"{MANIFEST} does not match the contract: {err}") from err
     names = [f.file for f in manifest.files]
     missing = [name for name in FILES if name not in names]
+    unknown = [name for name in names if name not in FILES and name not in OPTIONAL_FILES]
+    if unknown:
+        raise BundleError(f"{MANIFEST} names files the contract does not know: {', '.join(unknown)}")
     if missing:
         raise BundleError(f"{MANIFEST} does not name {', '.join(missing)}")
     if len(set(names)) != len(names):
@@ -142,6 +156,26 @@ PRODUCT_KEYS: tuple[Column, ...] = ()
 FINDING_KEYS: tuple[Column, ...] = (Column("as_of", "date"),)
 PRODUCT_KEY_NAMES = ("product_id", "product")
 
+PREDICTION_COLUMNS: tuple[Column, ...] = (
+    Column("cve_id", "text"),
+    Column("band", "text"),
+    *(Column(f"band_p_{b.lower()}", "float") for b in BANDS),
+    Column("band_set", "text"),
+    *(Column(f"metric_{m}", "text") for m in METRICS),
+    *(Column(f"metric_{m}_p", "float") for m in METRICS),
+    *(Column(f"metric_{m}_set", "text") for m in METRICS),
+    Column("cwe", "text"),
+    Column("cwe_p", "float"),
+    Column("cwe_top", "text"),
+    Column("exploit_score", "float"),
+    Column("exploit_p", "float"),
+    Column("exploit_pct", "float"),
+    Column("listed_by_30", "float"),
+    Column("listed_by_90", "float"),
+    Column("listed_by_180", "float"),
+    Column("products", "text"),
+)
+
 EVENT_ID_LENGTH = 16
 
 # The fields of a CVE record the API serves with a source and a known_from each.
@@ -163,7 +197,9 @@ TABLES: dict[str, Table] = {
     "cve_event": Table("cve_event", "cve_event.parquet", "event_id", 100_000),
     "product": Table("product", "product.parquet", "product_id", 20_000),
     "finding": Table("finding", "finding.parquet", "finding_id", 50_000),
+    "prediction": Table("prediction", PREDICTION, "cve_id", 25_000),
 }
+OPTIONAL_TABLES = frozenset({"prediction"})
 
 
 def file_columns(path: Path) -> list[str]:
@@ -176,9 +212,13 @@ def file_rows(path: Path) -> int:
 
 def check_columns(table: str, present: Sequence[str]) -> list[str]:
     """Raise when a required column is missing; return the optional ones that are."""
-    spec = {"cve": CVE_COLUMNS, "cve_event": EVENT_COLUMNS, "product": PRODUCT_KEYS, "finding": FINDING_KEYS}[
-        table
-    ]
+    spec = {
+        "cve": CVE_COLUMNS,
+        "cve_event": EVENT_COLUMNS,
+        "product": PRODUCT_KEYS,
+        "finding": FINDING_KEYS,
+        "prediction": PREDICTION_COLUMNS,
+    }[table]
     have = set(present)
     missing = [c.name for c in spec if c.required and c.name not in have]
     if table in {"product", "finding"} and not have.intersection(PRODUCT_KEY_NAMES):
@@ -436,4 +476,56 @@ def finding_row(raw: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
-ROW_BUILDERS = {"cve": cve_row, "cve_event": event_row, "product": product_row, "finding": finding_row}
+def _required_float(value: Any, column: str) -> float:
+    number = _float(value, column)
+    if number is None:
+        raise BundleError(f"prediction.parquet: {column} has no value")
+    return number
+
+
+def prediction_row(raw: Mapping[str, Any]) -> dict[str, Any]:
+    """One prediction as the compact table holds it: the eight metrics as one text, their
+    probabilities as one array, their sets as one text, each in the order of METRICS."""
+    cve_id = (_text(raw.get("cve_id"), "cve_id") or "").upper()
+    band = _text(raw.get("band"), "band")
+    if not cve_id or band not in BANDS:
+        raise BundleError(f"prediction.parquet holds a row without a cve_id or a band ({cve_id or 'no id'})")
+    metrics = [_text(raw.get(f"metric_{m}"), f"metric_{m}") or "" for m in METRICS]
+    if not all(metrics):
+        raise BundleError(f"{cve_id}: a predicted base metric is missing")
+    out: dict[str, Any] = {
+        "cve_id": cve_id,
+        "band": band,
+        **{
+            f"band_p_{b.lower()}": _required_float(raw.get(f"band_p_{b.lower()}"), f"band_p_{b.lower()}")
+            for b in BANDS
+        },
+        "band_set": _text(raw.get("band_set"), "band_set") or band,
+        "metrics": ",".join(metrics),
+        "metrics_p": [_required_float(raw.get(f"metric_{m}_p"), f"metric_{m}_p") for m in METRICS],
+        "metric_sets": ";".join(
+            _text(raw.get(f"metric_{m}_set"), f"metric_{m}_set") or v
+            for m, v in zip(METRICS, metrics, strict=True)
+        ),
+        "cwe": _text(raw.get("cwe"), "cwe") or "",
+        "cwe_p": _required_float(raw.get("cwe_p"), "cwe_p"),
+        "cwe_top": _text(raw.get("cwe_top"), "cwe_top") or "",
+        "exploit_score": _required_float(raw.get("exploit_score"), "exploit_score"),
+        "exploit_p": _required_float(raw.get("exploit_p"), "exploit_p"),
+        "exploit_pct": _required_float(raw.get("exploit_pct"), "exploit_pct"),
+        "listed_by_30": _float(raw.get("listed_by_30"), "listed_by_30"),
+        "listed_by_90": _float(raw.get("listed_by_90"), "listed_by_90"),
+        "listed_by_180": _float(raw.get("listed_by_180"), "listed_by_180"),
+        "products": _text(raw.get("products"), "products") or "",
+    }
+    out["row_digest"] = row_digest(out)[:PREDICTION_DIGEST_LENGTH]
+    return out
+
+
+ROW_BUILDERS = {
+    "cve": cve_row,
+    "cve_event": event_row,
+    "product": product_row,
+    "finding": finding_row,
+    "prediction": prediction_row,
+}

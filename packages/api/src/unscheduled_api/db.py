@@ -11,6 +11,8 @@ project in the same database never sees these migrations.
     cve_event     the ruler events: one row per dated event, keyed by a digest of its content
     product       the stand in products with their pins
     finding       the exposure findings per product and snapshot date, with every CVE each names
+    prediction    the batch predictions of Phase 2 for the CVEs no model was fit on, one row each,
+                  typed and compact to stay under the storage ceiling
     match_log     one row per uploaded SBOM: its digest, counts, timing and hashed client, never the SBOM
     client_budget the daily count per hashed client and kind of request
     ops_run       the run ledger of the sync: one row per call that did work
@@ -113,6 +115,33 @@ finding = sa.Table(
 sa.Index("ix_finding_product_as_of", finding.c.product_id, finding.c.as_of)
 sa.Index("ix_finding_cve_ids", finding.c.cve_ids, postgresql_using="gin")
 
+prediction = sa.Table(
+    "prediction",
+    metadata,
+    sa.Column("cve_id", sa.Text, primary_key=True),
+    sa.Column("band", sa.Text, nullable=False),
+    sa.Column("band_p_low", sa.REAL, nullable=False),
+    sa.Column("band_p_medium", sa.REAL, nullable=False),
+    sa.Column("band_p_high", sa.REAL, nullable=False),
+    sa.Column("band_p_critical", sa.REAL, nullable=False),
+    sa.Column("band_set", sa.Text, nullable=False),
+    sa.Column("metrics", sa.Text, nullable=False),
+    sa.Column("metrics_p", ARRAY(sa.REAL), nullable=False),
+    sa.Column("metric_sets", sa.Text, nullable=False),
+    sa.Column("cwe", sa.Text, nullable=False),
+    sa.Column("cwe_p", sa.REAL, nullable=False),
+    sa.Column("cwe_top", sa.Text, nullable=False),
+    sa.Column("exploit_score", sa.REAL, nullable=False),
+    sa.Column("exploit_p", sa.REAL, nullable=False),
+    sa.Column("exploit_pct", sa.REAL, nullable=False),
+    sa.Column("listed_by_30", sa.REAL),
+    sa.Column("listed_by_90", sa.REAL),
+    sa.Column("listed_by_180", sa.REAL),
+    sa.Column("products", sa.Text, nullable=False),
+    sa.Column("row_digest", sa.Text, nullable=False),
+)
+sa.Index("ix_prediction_band", prediction.c.band)
+
 match_log = sa.Table(
     "match_log",
     metadata,
@@ -159,7 +188,7 @@ ops_run = sa.Table(
 )
 sa.Index("ix_ops_run_kind_started", ops_run.c.kind, ops_run.c.started_at)
 
-DATA_TABLES = ("cve", "cve_event", "product", "finding")
+DATA_TABLES = ("cve", "cve_event", "product", "finding", "prediction")
 
 
 def make_engine(url: str, schema: str) -> sa.Engine:

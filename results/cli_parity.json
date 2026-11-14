@@ -2,7 +2,7 @@
  "bundle_tag": "serving-202611070500",
  "cases": [
   {
-   "answer_sha256": "7664f423cefaf8cb3d0242d7196ee12746e0f14e0756e25ddb551d33336d6267",
+   "answer_sha256": "0c2c285db6d60009d62db9126eb1c9778c5d3fd6f4157e0f82cf45f9d8e9a6f8",
    "command": "unsched cve CVE-2021-90001",
    "http_status": 200,
    "name": "a cve",
@@ -10,7 +10,7 @@
    "same": true
   },
   {
-   "answer_sha256": "3a5b721bf2fa65fbf090534437462e13349171068fad75f9b25337fefde20628",
+   "answer_sha256": "3af2f9f36562eb7ec5209a7830a453d978abd22bc8459249e2ee9d77adce8ca4",
    "command": "unsched cve CVE-2021-90001 --as-of 2021-03-05",
    "http_status": 200,
    "name": "a cve as of a day",
@@ -26,7 +26,7 @@
    "same": true
   },
   {
-   "answer_sha256": "9f7d7790baae93722f9cebcda3724c28e68ce197da8bab16a52d214dc485312f",
+   "answer_sha256": "e46bc40f99973f74150435473b49a7884617c095e13241c3688efd411c426766",
    "command": "unsched cves --cwe cwe-79",
    "http_status": 200,
    "name": "a cwe",
@@ -42,7 +42,7 @@
    "same": true
   },
   {
-   "answer_sha256": "7bb4beb530215f3ed9c5ef074168f374e69be95814097707cb1715330f4e7f61",
+   "answer_sha256": "c49f03a6d526a8884450b1e66a9ca7dbeb2e95b420341159f5c4d8739a8779b7",
    "command": "unsched cves --kev --filer fixture-oss",
    "http_status": 200,
    "name": "a filtered page",
@@ -50,7 +50,7 @@
    "same": true
   },
   {
-   "answer_sha256": "e61df8ae935a5c887842c2fad1c88d876245af956e5a64452f303ac78af9b6b2",
+   "answer_sha256": "6dbd7c497fff9fb8334857a1167714266276fa4d3267c82c5a324fb938366d05",
    "command": "unsched cves --limit 2",
    "http_status": 200,
    "name": "a page",
@@ -58,7 +58,7 @@
    "same": true
   },
   {
-   "answer_sha256": "b8fac1a0dc016095bc83bf27a30c6403a6bdd6a0551629c96504b8b03d9f479e",
+   "answer_sha256": "11ee46530cd7643d74bf56b76a952ff68b7993754e4e94b1edffb9b222818d6f",
    "command": "python -m unscheduled_cli cve CVE-2026-90005 --as-of 2026-06-01",
    "http_status": 200,
    "name": "a separate process",
@@ -90,7 +90,7 @@
    "same": true
   },
   {
-   "answer_sha256": "2797600336f6a2d6e5c630c78a10f40ae3413d819f164ee8effddec560110ab7",
+   "answer_sha256": "e8fab88dedd46fb7e9114dd717a70c5e9f8d2a3e778f27d65b753babeab01105",
    "command": "unsched cve CVE-2026-90003 --as-of 2026-01-01",
    "http_status": 200,
    "name": "before publication",

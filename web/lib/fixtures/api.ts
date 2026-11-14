@@ -133,7 +133,7 @@ export const API_HEALTH_EMPTY: S["Health"] = {
     variables_found: ["DATABASE_URL"],
     reachable: true,
     schema_name: "unscheduled",
-    migration: "0001",
+    migration: "0002",
     server_version: "18.6",
     pgvector_available: true,
     pgvector_installed: false,

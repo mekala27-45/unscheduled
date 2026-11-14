@@ -16,11 +16,13 @@ import schemathesis
 from fastapi.testclient import TestClient
 from hypothesis import HealthCheck, settings
 from schemathesis.specs.openapi.checks import positive_data_acceptance
+from unscheduled_api import scoring
 from unscheduled_api.app import create_app
 from unscheduled_api.settings import Budgets
 
 from tests.api.conftest import PUBLISHED_AT, TAG, sync_until_done
 from tests.api.fixtures.github import FakeGitHub
+from tests.api.test_predictions import serving_folder
 
 ROOT = Path(__file__).resolve().parents[2]
 WIDE = Budgets(
@@ -32,8 +34,12 @@ WIDE = Budgets(
 
 
 @pytest.fixture
-def api_schema(make_services: Any, github: FakeGitHub, bundle_dir: Path) -> Any:
-    app = create_app(make_services(budgets=WIDE))
+def api_schema(make_services: Any, github: FakeGitHub, bundle_dir: Path, tmp_path: Path) -> Any:
+    services = make_services(budgets=WIDE)
+    # Small real ONNX models, so POST /v1/predict is driven as the deployment serves it.
+    serving_folder(tmp_path / "root")
+    services.scorer = scoring.Scorer(tmp_path / "root")
+    app = create_app(services)
     github.publish(bundle_dir, TAG, PUBLISHED_AT)
     sync_until_done(TestClient(app))
     schema = schemathesis.openapi.from_path(ROOT / "openapi.json")

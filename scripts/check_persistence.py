@@ -32,7 +32,7 @@ from typing import Any
 
 import httpx
 
-HEAD_MIGRATION = "0001"  # alembic/versions, the newest revision
+HEAD_MIGRATION = "0002"  # alembic/versions, the newest revision
 ROOT = Path(__file__).resolve().parents[1]
 SBOM = b'{"bomFormat": "CycloneDX", "specVersion": "1.6", "components": []}'
 LOOKUPS = ("/v1/cves/CVE-2021-44228", "/v1/products")

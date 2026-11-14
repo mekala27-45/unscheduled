@@ -20,7 +20,7 @@ from typing import Any
 import sqlalchemy as sa
 from unscheduled_core.hashing import sha256_json
 
-from unscheduled_api import db
+from unscheduled_api import db, predictions
 from unscheduled_api.asof import Event, Fact, current_facts, end_of_day, facts_as_of
 from unscheduled_api.bundle import jsonable
 from unscheduled_api.problems import ProblemError
@@ -105,6 +105,9 @@ def get_cve(
         if not known:
             note = f"{cve} was not yet published on {as_of.isoformat()}; nothing about it was public that day"
     published = row.get("published")
+    predicted, predictions_note = (None, None)
+    if known:
+        predicted, predictions_note = predictions.block(conn, cve, predictions.load_models(conn), row)
     description = facts.get("description")
     if (
         known
@@ -123,6 +126,8 @@ def get_cve(
         fields=_field_values(facts),
         links=links(cve),
         note=note,
+        predictions=predicted,
+        predictions_note=predictions_note,
     )
 
 
@@ -138,6 +143,7 @@ class CveFilters:
     has_filer_score: bool | None = None
     kev_added_from: date | None = None
     analyzed_from: date | None = None
+    predicted_band: str | None = None
 
     def as_dict(self) -> dict[str, Any]:
         return {k: jsonable(v) for k, v in asdict(self).items() if v is not None}
@@ -185,7 +191,13 @@ def list_cves(
     if not 1 <= limit <= PAGE_MAX:
         raise ProblemError("invalid-request", f"limit is between 1 and {PAGE_MAX}")
     c = db.cve.c
-    query = sa.select(*[c[name] for name in SUMMARY_COLUMNS])
+    p = db.prediction.c
+    columns = [c[name] for name in SUMMARY_COLUMNS if name != "predicted_band"]
+    query = sa.select(*columns, p.band.label("predicted_band")).select_from(
+        db.cve.outerjoin(db.prediction, p.cve_id == c.cve_id)
+    )
+    if filters.predicted_band is not None:
+        query = query.where(p.band == filters.predicted_band)
     if filters.published_from is not None:
         query = query.where(c.published >= datetime.combine(filters.published_from, time.min, tzinfo=UTC))
     if filters.published_to is not None:

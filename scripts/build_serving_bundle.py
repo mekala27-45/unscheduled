@@ -422,6 +422,8 @@ def check_against_api(out: Path, sample: int = 20_000) -> dict[str, int]:
     checked: dict[str, int] = {}
     for name, table in api.TABLES.items():
         path = out / table.file
+        if name in api.OPTIONAL_TABLES and not path.exists():
+            continue
         present = api.file_columns(path)
         api.check_columns(name, present)
         if name == "cve" and present != [c.name for c in api.CVE_COLUMNS]:
@@ -445,6 +447,52 @@ def check_against_api(out: Path, sample: int = 20_000) -> dict[str, int]:
             break
         checked[name] = rows
     return checked
+
+
+def prediction_files(root: Path, out: Path) -> list[dict[str, object]]:
+    """The Phase 2 batch predictions for the CVEs this bundle holds, and the registry export they
+    name their models by; none before the first batch is committed (scripts/predict_serving.py)."""
+    from unscheduled_api import bundle
+
+    source = root / "models" / "serving" / "predictions.parquet"
+    record_path = paths.results_dir() / "models" / "predictions.json"
+    registry_path = paths.results_dir() / "registry" / "registry.json"
+    if not (source.exists() and record_path.exists() and registry_path.exists()):
+        return []
+    record = json.loads(record_path.read_text(encoding="utf-8"))
+    if sha256_file(source) != record["file"]["sha256"]:
+        raise SystemExit("serving: models/serving/predictions.parquet is not the file its record names")
+    held = pl.read_parquet(out / "cve.parquet", columns=["cve_id"])
+    columns = [c.name for c in bundle.PREDICTION_COLUMNS]
+    frame = held.join(pl.read_parquet(source, columns=columns), on="cve_id", how="inner").sort("cve_id")
+    entries = [_write_parquet(frame.select(columns), out / bundle.PREDICTION)]
+    registry = json.loads(registry_path.read_text(encoding="utf-8"))
+    document = {
+        "batch": record["batch"],
+        "made_on": record.get("made_on"),
+        "rule": record["rule"],
+        "rows_in_batch": record["rows"],
+        "survival_model": record["survival_model"],
+        "product_model": record["product_model"],
+        "models": [
+            {
+                "name": m["name"],
+                "description": m["description"],
+                "chosen_by": m.get("chosen_by"),
+                "aliases": m["aliases"],
+                "versions": [
+                    {k: v[k] for k in ("version", "run_name", "role", "stage", "description", "dev", "test")}
+                    for v in m["versions"]
+                ],
+            }
+            for m in registry["models"]
+        ],
+        "registry_archive": registry.get("archive", {}).get("file"),
+    }
+    target = out / bundle.MODELS
+    target.write_text(json.dumps(document, indent=1, sort_keys=True) + "\n", encoding="utf-8")
+    entries.append(_entry(target, len(document["models"])))
+    return entries
 
 
 def build(lake_file: Path, out: Path) -> dict[str, object]:
@@ -481,6 +529,7 @@ def build(lake_file: Path, out: Path) -> dict[str, object]:
     backlog = out / "backlog.json"
     backlog.write_text(json.dumps(backlog_document(root), indent=1, sort_keys=True) + "\n", encoding="utf-8")
     files.append(_entry(backlog, len(backlog_document(root).get("questions", []))))
+    files.extend(prediction_files(root, out))
     lake_report = json.loads((paths.results_dir() / "lake" / "lake.json").read_text(encoding="utf-8"))
     if lake_report.get("sha256") != sha256_file(lake_file):
         raise SystemExit(
