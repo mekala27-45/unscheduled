@@ -1,0 +1,15 @@
+# gitleaks reads this file from the repository root (CI runs `gitleaks git .` without --config).
+# It keeps every default rule and adds one narrow allowlist.
+
+[extend]
+useDefault = true
+
+# The model records name each pinned weight file beside its SHA-256 digest, and the file name
+# tokenizer.json holds the keyword the generic-api-key rule looks for, so a published digest reads
+# as a key. Only that exact line is allowed: the file name tokenizer.json and 64 lowercase hex
+# characters, nothing else. (A paths entry with condition AND was tried and allowed every line of
+# the matching files in gitleaks 8.30.1, so the line itself is the whole condition.)
+[[allowlists]]
+description = "The SHA-256 digest of the pinned tokenizer.json in a model record"
+regexTarget = "line"
+regexes = ['''^\s*"tokenizer\.json": "[0-9a-f]{64}",?\s*$''']
