@@ -1,5 +1,5 @@
 {
- "date": "2026-11-12",
+ "date": "2026-11-14",
  "base": "http://127.0.0.1:3210",
  "sloplint": {
   "result": "pass",
@@ -536,6 +536,76 @@
     }
    },
    {
+    "route": "/docs/adr-0002",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/docs/adr-0004",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
     "route": "/docs/adr-0007",
     "serious": 0,
     "critical": 0,
@@ -571,7 +641,182 @@
     }
    },
    {
+    "route": "/docs/api",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
     "route": "/docs/architecture",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/docs/as-of",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/docs/changelog",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/docs/methods",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": [
+       "region (moderate)"
+      ]
+     }
+    }
+   },
+   {
+    "route": "/docs/quickstart",
     "serious": 0,
     "critical": 0,
     "projects": {
