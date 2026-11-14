@@ -748,3 +748,18 @@ unscheduled_models.numerics, and results/backlog/q8.json with the backlog part a
 answers rebuilt with the pins from the recorded release. Every other backlog value was equal. The
 lake, the survival models and the exploitation models were equal in the same run, 708 of 713 values
 in all before this change.
+
+## 2026-11-14: the load test runs again once the predictions are live
+
+The load test of 14 November (results/load/c8.json, commit 31cbeaa) ran before any lake run had
+loaded the prediction batch, so its lookups read CVE records without a predictions block. Its
+/v1/predict part sent five calls at a time and gave a median of 105 ms with a 95th percentile of
+2,040 ms, and nothing in the record says how much of that tail comes from the calls running at
+once.
+
+So once a lake run has loaded the batch and the API verify passes its prediction checks, the test
+runs again with the same settings: twenty idle minutes before the cold requests, 300 lookups and 60
+predictions over five workers, and now 20 more predictions from one client, one call at a time. Its
+record replaces results/load/c8.json, and its numbers replace the C8 lookup reading in every
+document, whatever they are. The first record stays as results/load/c8_before_batch.json. This
+entry is written before the run, so which record stands does not depend on its numbers.
