@@ -297,10 +297,11 @@
    },
    {
     "file": "report/templates/models.md.j2",
-    "sha256_after": "1ee8c19960cd9676c88dd63e823050a1192c24c6ea52207fb911dfb79c04aa8d",
+    "sha256_after": "e5868cb4733860716c645d405748887ca35e85dc7a2cc57fa7ab5264c08b1796",
     "changes": [
      "Not scored yet, twice, made sentences (pattern 2)",
-     "the registry line and the misses line, both without a verb, made sentences, and Never from test made None comes from test (pattern 2)"
+     "the registry line and the misses line, both without a verb, made sentences, and Never from test made None comes from test (pattern 2)",
+     "2026-11-14: the section on what the two misses say, written after test was scored and read the same way; each sentence follows the numbers it reads"
     ]
    },
    {

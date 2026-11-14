@@ -25,6 +25,22 @@ within 180 days. EPSS holds 41.7% at day 1
 (behind) and 75.8% at day 30
 (behind). **C2 is not met.**
 
+## What the misses say
+
+C1 judges the primary fill model, the CPU fallback the plan names for when ModernBERT cannot run, and
+on test it is behind its own floor: the paired difference is -0.057, with the whole
+interval below zero. The TF-IDF floor, on the same rows, reaches 0.649. So the miss
+says that a frozen sentence embedding carries less of the NVD band than the word and character grams of
+the same text; it says nothing yet about a model fine tuned on the task, since ModernBERT has not run
+(ADR 0009), and a later run is judged against the same floor (ADR 0010).
+
+C2 asks for half of the later KEV listings in the top five percent on the day a CVE is published, and
+the model holds 43.6%. Against its logistic floor the reading is tie, against EPSS on day 1
+tie, and EPSS on day 7 and day 30, which has seen a week and a month of exploitation
+activity, holds 66.8% and 75.8%.
+On these test CVEs, what is public on day 0 orders the later listings about as well as EPSS does on
+day 1, and no better; the gain comes with the days after publication.
+
 ## The cards
 
 | Card | Registered model | What it gives |

@@ -35,6 +35,31 @@ within 180 days. EPSS holds {{ v("models.test.c2.epss_day_1") }} at day 1
 Test has not been scored yet.
 {% endif %}
 
+{% if has("models.test.c1.verdict") and has("models.test.c2.verdict") and (raw("models.test.c1.verdict") != "met" or raw("models.test.c2.verdict") != "met") %}
+## What the misses say
+
+{% if raw("models.test.c1.verdict") != "met" %}
+C1 judges the primary fill model, the CPU fallback the plan names for when ModernBERT cannot run, and
+on test it is {% if raw("models.test.c1.difference_high") < 0 %}behind its own floor: the paired difference is {{ v("models.test.c1.difference") }}, with the whole
+interval below zero{% else %}not ahead of its own floor: the paired difference is {{ v("models.test.c1.difference") }}, and its
+interval holds zero{% endif %}. The TF-IDF floor, on the same rows, reaches {{ v("models.test.c1.floor_kappa") }}. So the miss
+says that a frozen sentence embedding carries less of the NVD band than the word and character grams of
+the same text; it says nothing yet about a model fine tuned on the task, since ModernBERT has not run
+(ADR 0009), and a later run is judged against the same floor (ADR 0010).
+
+{% endif %}
+{% if raw("models.test.c2.verdict") != "met" %}
+C2 asks for half of the later KEV listings in the top five percent on the day a CVE is published, and
+the model holds {{ v("models.test.c2.recall") }}. Against its logistic floor the reading is {{ v("models.test.c2.reading_floor") }}, against EPSS on day 1
+{{ v("models.test.c2.reading_day_1") }}, and EPSS on day 7 and day 30, which has seen a week and a month of exploitation
+activity, holds {{ v("models.test.c2.epss_day_7") }} and {{ v("models.test.c2.epss_day_30") }}.
+{% if raw("models.test.c2.reading_floor") == "tie" and raw("models.test.c2.reading_day_1") == "tie" %}
+On these test CVEs, what is public on day 0 orders the later listings about as well as EPSS does on
+day 1, and no better; the gain comes with the days after publication.
+{% endif %}
+{% endif %}
+
+{% endif %}
 ## The cards
 
 | Card | Registered model | What it gives |
