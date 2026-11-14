@@ -27,6 +27,28 @@ Test has not been scored yet.
 | report/models/survival.md | unscheduled-survival | The chance of a listing within 30 days, 90 days and 180 days |
 | report/models/product.md | unscheduled-product | Candidate vendor and product names from the CPE dictionary |
 
+## The registry
+
+The registry holds 15 versions over 6 registered
+models; each is a candidate, chosen on development, or scored on test.
+
+| Registered model | Version | Role | Stage | Run |
+|---|---:|---|---|---|
+| unscheduled-band | 1 | floor | candidate | band floor |
+| unscheduled-band | 2 | ablation | candidate | band text alone |
+| unscheduled-band | 3 | model | chosen | band model |
+| unscheduled-metrics | 1 | floor | candidate | metrics floor |
+| unscheduled-metrics | 2 | ablation | candidate | metrics text alone |
+| unscheduled-metrics | 3 | model | chosen | metrics model |
+| unscheduled-cwe | 1 | floor | candidate | cwe floor |
+| unscheduled-cwe | 2 | ablation | candidate | cwe text alone |
+| unscheduled-cwe | 3 | model | chosen | cwe model |
+| unscheduled-exploit | 1 | floor | candidate | exploitation floor |
+| unscheduled-exploit | 2 | model | chosen | exploitation model |
+| unscheduled-survival | 1 | floor | chosen | survival Cox |
+| unscheduled-survival | 2 | model | candidate | survival forest |
+| unscheduled-product | 1 | floor | chosen | product floor |
+| unscheduled-product | 2 | model | candidate | product retrieval |
 
 ## What the plan said before any result
 

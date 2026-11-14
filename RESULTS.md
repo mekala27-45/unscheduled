@@ -88,7 +88,7 @@ says nothing about whether its output is right.
 
 ## The Phase 2 checklist
 
-8 of the 18 lines are done. A line is done
+9 of the 18 lines are done. A line is done
 only when its evidence says pass, and a file an earlier phase wrote counts here only with what Phase 2
 writes into it.
 
@@ -103,7 +103,7 @@ writes into it.
 | 7 | done | ModernBERT run on Kaggle by a committed request inside the GPU budget, or its fallback named; ONNX parity passing | results/parts/gpu.json, results/models/fallback.json, results/models/onnx.json |
 | 8 | not done | Calibration and conformal sets fit on development, with coverage on test | results/models/calibration.json, results/models/conformal.json, results/models/test_scoring.json |
 | 9 | done | The plain and reweighted views reported with the effective sample size | results/models/reweighting.json |
-| 10 | not done | MLflow runs and the registry; the model cards rendered from the manifest | results/registry/registry.json, report/models.md, report/models/band.md |
+| 10 | done | MLflow runs and the registry; the model cards rendered from the manifest | results/registry/registry.json, report/models.md, report/models/band.md |
 | 11 | not done | Test scored once by scripts/score_test.py; C1 and C2 evidence with their verdicts | results/models/c1.json, results/models/c2.json |
 | 12 | not done | EPSS beside every exploitation number; ties named | results/models/c2.json |
 | 13 | not done | Slices with Benjamini-Hochberg; the failure taxonomy in the manifest | results/models/test_scoring.json, results/parts/taxonomy.json |

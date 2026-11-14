@@ -1,0 +1,483 @@
+{
+ "tracking": {
+  "backend": "MLflow SQLite store, packed by digest (the Databricks pair is not set)",
+  "mlflow": "3.18.0",
+  "experiment": "unscheduled-phase2"
+ },
+ "records_missing": [],
+ "models": [
+  {
+   "name": "unscheduled-band",
+   "description": "The NVD CVSS 3.1 severity band of a CVE at day 0.",
+   "versions": [
+    {
+     "version": 1,
+     "run_id": "feee81de89f24e658e00501249d09dbe",
+     "run_name": "band floor",
+     "role": "floor",
+     "stage": "candidate",
+     "chosen": false,
+     "description": "TF-IDF over the joined text beside the filer and CISA block, logistic regression",
+     "params": {
+      "C": 0.3,
+      "representation": "word_char",
+      "solver": "liblinear, one logistic regression per class against the rest"
+     },
+     "dev": {
+      "qwk": 0.669081,
+      "accuracy": 0.72323,
+      "macro_f1": 0.538968
+     },
+     "test": {},
+     "record": "results/models/floors.json",
+     "commit": "5914c0275c808a7f28053afa1c4c5bb83d39df63",
+     "github_run_id": "43559212749",
+     "model_file_sha256": "2b1064df88c918a096d69912c39977da6105cff5dbe3289ea3a121d6aadfc778"
+    },
+    {
+     "version": 2,
+     "run_id": "c1377084da2443a889c5c7156822f06b",
+     "run_name": "band text alone",
+     "role": "ablation",
+     "stage": "candidate",
+     "chosen": false,
+     "description": "frozen bge-small embeddings of the joined text alone, logistic regression",
+     "params": {
+      "C": 0.3,
+      "design": "text",
+      "width": 384,
+      "embedding": "BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a"
+     },
+     "dev": {
+      "qwk": 0.462306,
+      "macro_f1": 0.430384,
+      "accuracy": 0.61198
+     },
+     "test": {},
+     "record": "results/models/fallback.json",
+     "commit": "50a9752031654bc37b48981d8ac54cc83e46bd47",
+     "github_run_id": "43580024886",
+     "model_file_sha256": "4a881a3821fbbcb344e42132a2c0a5cdee541951f6d49f70c15eb0104ba7c100"
+    },
+    {
+     "version": 3,
+     "run_id": "326b4d64ce1e4f0a808767c8da170f02",
+     "run_name": "band model",
+     "role": "model",
+     "stage": "chosen",
+     "chosen": true,
+     "description": "frozen bge-small embeddings beside the filer and CISA block, logistic regression",
+     "params": {
+      "C": 0.3,
+      "design": "joint",
+      "width": 665,
+      "embedding": "BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a"
+     },
+     "dev": {
+      "qwk": 0.593827,
+      "macro_f1": 0.532077,
+      "accuracy": 0.666681
+     },
+     "test": {},
+     "record": "results/models/fallback.json",
+     "commit": "50a9752031654bc37b48981d8ac54cc83e46bd47",
+     "github_run_id": "43580024886",
+     "model_file_sha256": "4a881a3821fbbcb344e42132a2c0a5cdee541951f6d49f70c15eb0104ba7c100"
+    }
+   ],
+   "aliases": {
+    "chosen": 3
+   },
+   "chosen_by": "config/operating_points.yaml, primary"
+  },
+  {
+   "name": "unscheduled-metrics",
+   "description": "The eight NVD CVSS 3.1 base metrics of a CVE at day 0, one head each.",
+   "versions": [
+    {
+     "version": 1,
+     "run_id": "6c59edd1bb3449468cfa981ff1e9d3a8",
+     "run_name": "metrics floor",
+     "role": "floor",
+     "stage": "candidate",
+     "chosen": false,
+     "description": "TF-IDF over the joined text beside the filer and CISA block, logistic regression",
+     "params": {
+      "C.AV": 1.0,
+      "C.AC": 3.0,
+      "C.PR": 3.0,
+      "C.UI": 3.0,
+      "C.S": 3.0,
+      "C.C": 1.0,
+      "C.I": 1.0,
+      "C.A": 3.0,
+      "representation": "word_char",
+      "solver": "liblinear, one logistic regression per class against the rest"
+     },
+     "dev": {
+      "kappa.AV": 0.848687,
+      "kappa.AC": 0.529358,
+      "kappa.PR": 0.60692,
+      "kappa.UI": 0.912597,
+      "kappa.S": 0.913013,
+      "kappa.C": 0.774992,
+      "kappa.I": 0.792783,
+      "kappa.A": 0.816913,
+      "mean_kappa": 0.774407875
+     },
+     "test": {},
+     "record": "results/models/floors.json",
+     "commit": "5914c0275c808a7f28053afa1c4c5bb83d39df63",
+     "github_run_id": "43559212749",
+     "model_file_sha256": "2b1064df88c918a096d69912c39977da6105cff5dbe3289ea3a121d6aadfc778"
+    },
+    {
+     "version": 2,
+     "run_id": "6d18df6d109645b4bb30829124fc378a",
+     "run_name": "metrics text alone",
+     "role": "ablation",
+     "stage": "candidate",
+     "chosen": false,
+     "description": "frozen bge-small embeddings of the joined text alone, logistic regression",
+     "params": {
+      "C.AV": 0.1,
+      "C.AC": 0.3,
+      "C.PR": 1.0,
+      "C.UI": 1.0,
+      "C.S": 0.3,
+      "C.C": 3.0,
+      "C.I": 0.3,
+      "C.A": 0.1,
+      "design": "text",
+      "width": 384,
+      "embedding": "BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a"
+     },
+     "dev": {
+      "kappa.AV": 0.688038,
+      "kappa.AC": 0.326918,
+      "kappa.PR": 0.374575,
+      "kappa.UI": 0.748498,
+      "kappa.S": 0.819059,
+      "kappa.C": 0.597916,
+      "kappa.I": 0.611499,
+      "kappa.A": 0.667821,
+      "mean_kappa": 0.6042905
+     },
+     "test": {},
+     "record": "results/models/fallback.json",
+     "commit": "50a9752031654bc37b48981d8ac54cc83e46bd47",
+     "github_run_id": "43580024886",
+     "model_file_sha256": "4a881a3821fbbcb344e42132a2c0a5cdee541951f6d49f70c15eb0104ba7c100"
+    },
+    {
+     "version": 3,
+     "run_id": "0111e8cb25704a4d98afa533d438c6fa",
+     "run_name": "metrics model",
+     "role": "model",
+     "stage": "chosen",
+     "chosen": true,
+     "description": "frozen bge-small embeddings beside the filer and CISA block, logistic regression",
+     "params": {
+      "C.AV": 1.0,
+      "C.AC": 0.3,
+      "C.PR": 3.0,
+      "C.UI": 1.0,
+      "C.S": 0.3,
+      "C.C": 0.3,
+      "C.I": 3.0,
+      "C.A": 1.0,
+      "design": "joint",
+      "width": 665,
+      "embedding": "BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a"
+     },
+     "dev": {
+      "kappa.AV": 0.788284,
+      "kappa.AC": 0.424799,
+      "kappa.PR": 0.561415,
+      "kappa.UI": 0.852728,
+      "kappa.S": 0.871363,
+      "kappa.C": 0.686655,
+      "kappa.I": 0.701786,
+      "kappa.A": 0.760305,
+      "mean_kappa": 0.705916875
+     },
+     "test": {},
+     "record": "results/models/fallback.json",
+     "commit": "50a9752031654bc37b48981d8ac54cc83e46bd47",
+     "github_run_id": "43580024886",
+     "model_file_sha256": "4a881a3821fbbcb344e42132a2c0a5cdee541951f6d49f70c15eb0104ba7c100"
+    }
+   ],
+   "aliases": {
+    "chosen": 3
+   },
+   "chosen_by": "config/operating_points.yaml, primary"
+  },
+  {
+   "name": "unscheduled-cwe",
+   "description": "The NVD CWE of a CVE at day 0: the 50 most frequent in train, and other.",
+   "versions": [
+    {
+     "version": 1,
+     "run_id": "50ab2dc2e0e640e6a98ae0d46f295b65",
+     "run_name": "cwe floor",
+     "role": "floor",
+     "stage": "candidate",
+     "chosen": false,
+     "description": "TF-IDF over the joined text beside the filer and CISA block, logistic regression",
+     "params": {
+      "C": 1.0,
+      "representation": "word_char",
+      "solver": "liblinear, one logistic regression per class against the rest"
+     },
+     "dev": {
+      "macro_f1": 0.527481,
+      "accuracy": 0.710181,
+      "top5_accuracy": 0.940982
+     },
+     "test": {},
+     "record": "results/models/floors.json",
+     "commit": "5914c0275c808a7f28053afa1c4c5bb83d39df63",
+     "github_run_id": "43559212749",
+     "model_file_sha256": "2b1064df88c918a096d69912c39977da6105cff5dbe3289ea3a121d6aadfc778"
+    },
+    {
+     "version": 2,
+     "run_id": "a8f07ed38006475aa5d3ab400d6b5375",
+     "run_name": "cwe text alone",
+     "role": "ablation",
+     "stage": "candidate",
+     "chosen": false,
+     "description": "frozen bge-small embeddings of the joined text alone, logistic regression",
+     "params": {
+      "C": 0.1,
+      "design": "text",
+      "width": 384,
+      "embedding": "BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a"
+     },
+     "dev": {
+      "macro_f1": 0.428047,
+      "accuracy": 0.633592,
+      "top5_accuracy": 0.901395
+     },
+     "test": {},
+     "record": "results/models/fallback.json",
+     "commit": "50a9752031654bc37b48981d8ac54cc83e46bd47",
+     "github_run_id": "43580024886",
+     "model_file_sha256": "4a881a3821fbbcb344e42132a2c0a5cdee541951f6d49f70c15eb0104ba7c100"
+    },
+    {
+     "version": 3,
+     "run_id": "b9052299eae04250a2b2144680289224",
+     "run_name": "cwe model",
+     "role": "model",
+     "stage": "chosen",
+     "chosen": true,
+     "description": "frozen bge-small embeddings beside the filer and CISA block, logistic regression",
+     "params": {
+      "C": 0.3,
+      "design": "joint",
+      "width": 665,
+      "embedding": "BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a"
+     },
+     "dev": {
+      "macro_f1": 0.436605,
+      "accuracy": 0.657881,
+      "top5_accuracy": 0.913282
+     },
+     "test": {},
+     "record": "results/models/fallback.json",
+     "commit": "50a9752031654bc37b48981d8ac54cc83e46bd47",
+     "github_run_id": "43580024886",
+     "model_file_sha256": "4a881a3821fbbcb344e42132a2c0a5cdee541951f6d49f70c15eb0104ba7c100"
+    }
+   ],
+   "aliases": {
+    "chosen": 3
+   },
+   "chosen_by": "config/operating_points.yaml, primary"
+  },
+  {
+   "name": "unscheduled-exploit",
+   "description": "Whether KEV lists a CVE within 180 days of its publication, scored at day 0.",
+   "versions": [
+    {
+     "version": 1,
+     "run_id": "85f545ef98df4845b7a7c341ea1b0575",
+     "run_name": "exploitation floor",
+     "role": "floor",
+     "stage": "candidate",
+     "chosen": false,
+     "description": "logistic regression on the day 0 features and the band floor's projection, balanced",
+     "params": {
+      "C": 0.1,
+      "class_weight": "balanced"
+     },
+     "dev": {
+      "average_precision": 0.05006481830455037,
+      "auroc": 0.8329283732099833,
+      "recall_at_top5": 0.4094488188976378
+     },
+     "test": {},
+     "record": "results/models/rank.json",
+     "commit": "f15db284016f49451a153d52d2395e85349fb8fa",
+     "github_run_id": "43590255274",
+     "model_file_sha256": "5a1143b352a2ff8a32f803762bac65fdb31c4b1b50bf43cc454b394d324e8f43"
+    },
+    {
+     "version": 2,
+     "run_id": "f66d1714af8c47d3b899310f63f63901",
+     "run_name": "exploitation model",
+     "role": "model",
+     "stage": "chosen",
+     "chosen": true,
+     "description": "LightGBM on the same features, tuned by Optuna on time ordered folds",
+     "params": {
+      "lgbm.num_leaves": 33,
+      "lgbm.learning_rate": 0.03342555323327667,
+      "lgbm.min_child_samples": 90,
+      "lgbm.feature_fraction": 0.7128153321749716,
+      "lgbm.bagging_fraction": 0.9241881902931517,
+      "lgbm.lambda_l2": 9.971875510879944,
+      "trees": 111
+     },
+     "dev": {
+      "average_precision": 0.04690246785813685,
+      "auroc": 0.8542787653277357,
+      "recall_at_top5": 0.49606299212598426
+     },
+     "test": {},
+     "record": "results/models/rank.json",
+     "commit": "f15db284016f49451a153d52d2395e85349fb8fa",
+     "github_run_id": "43590255274",
+     "model_file_sha256": "5a1143b352a2ff8a32f803762bac65fdb31c4b1b50bf43cc454b394d324e8f43"
+    }
+   ],
+   "aliases": {
+    "chosen": 2
+   },
+   "chosen_by": "config/operating_points.yaml, primary"
+  },
+  {
+   "name": "unscheduled-survival",
+   "description": "The days from publication to a KEV listing, censored at the lake cut.",
+   "versions": [
+    {
+     "version": 1,
+     "run_id": "0cff19f56c4a46e2b205c8186db24e82",
+     "run_name": "survival Cox",
+     "role": "floor",
+     "stage": "chosen",
+     "chosen": true,
+     "description": "lifelines Cox proportional hazards on the day 0 features without the text",
+     "params": {
+      "penalizer": 0.01,
+      "step_size": 0.2
+     },
+     "dev": {
+      "concordance": 0.7783016216314576
+     },
+     "test": {},
+     "record": "results/models/survival.json",
+     "commit": "7ce4a499f7a2dc49c8ed1867fc615dfdc841523f",
+     "github_run_id": "43563265777",
+     "model_file_sha256": "0e97cd191606283d843154e48bc0f9bcf90ca4d12666be743ce996b05bb09b08"
+    },
+    {
+     "version": 2,
+     "run_id": "2165316e4675418f81173d5308b59848",
+     "run_name": "survival forest",
+     "role": "model",
+     "stage": "candidate",
+     "chosen": false,
+     "description": "scikit-survival random survival forest on the same design",
+     "params": {
+      "trees": 300,
+      "min_samples_leaf": 100
+     },
+     "dev": {
+      "concordance": 0.7739965290211138
+     },
+     "test": {},
+     "record": "results/models/survival.json",
+     "commit": "7ce4a499f7a2dc49c8ed1867fc615dfdc841523f",
+     "github_run_id": "43563265777",
+     "model_file_sha256": "0e97cd191606283d843154e48bc0f9bcf90ca4d12666be743ce996b05bb09b08"
+    }
+   ],
+   "aliases": {
+    "chosen": 1
+   },
+   "chosen_by": "the higher development concordance"
+  },
+  {
+   "name": "unscheduled-product",
+   "description": "The CPE vendor and product pairs a CVE affects, as ranked candidates.",
+   "versions": [
+    {
+     "version": 1,
+     "run_id": "b18d6bbd74064cec9c85c93fcd8aad0d",
+     "run_name": "product floor",
+     "role": "floor",
+     "stage": "chosen",
+     "chosen": true,
+     "description": "normalized vendor and product strings, an exact match, then a token set ratio",
+     "params": {
+      "threshold": 90,
+      "vendor_neighbours": 3
+     },
+     "dev": {
+      "recall_at_1": 0.19087739389157463,
+      "hit_at_1": 0.22157271229128447,
+      "recall_at_5": 0.4056483214986213,
+      "hit_at_5": 0.4554273809893971,
+      "recall_at_10": 0.42063385553393423,
+      "hit_at_10": 0.4599981343863686
+     },
+     "test": {},
+     "record": "results/models/product.json",
+     "commit": "370de123265353c8fda776bd4d042bb05fa255ff",
+     "github_run_id": "43595717893",
+     "model_file_sha256": null
+    },
+    {
+     "version": 2,
+     "run_id": "c628724a994747508f5838191ff83881",
+     "run_name": "product retrieval",
+     "role": "model",
+     "stage": "candidate",
+     "chosen": false,
+     "description": "cosine between bge-small embeddings of the joined text and of every CPE vendor and product",
+     "params": {
+      "pool": 300,
+      "embedding": "BAAI/bge-small-en-v1.5@5c38ec7c405ec4b44b94cc5a9bb96e735b38267a"
+     },
+     "dev": {
+      "recall_at_1": 0.19241444601586394,
+      "hit_at_1": 0.21768601722583253,
+      "recall_at_5": 0.3077537168522606,
+      "hit_at_5": 0.3495538074064861,
+      "recall_at_10": 0.34518617306513494,
+      "hit_at_10": 0.39041074593451697
+     },
+     "test": {},
+     "record": "results/models/product.json",
+     "commit": "370de123265353c8fda776bd4d042bb05fa255ff",
+     "github_run_id": "43595717893",
+     "model_file_sha256": null
+    }
+   ],
+   "aliases": {
+    "chosen": 1
+   },
+   "chosen_by": "the higher development recall at 10"
+  }
+ ],
+ "archive": {
+  "file": "registry-cab240b84116.tar.gz",
+  "sha256": "cab240b8411607046d1a39ec8f2a31d9261e0e3db6a6992b0e2b229f6244936b",
+  "bytes": 113098,
+  "paths_made_relative": 46,
+  "open": "tar xzf the archive, then mlflow ui --backend-store-uri sqlite:///mlflow.db in store/"
+ }
+}

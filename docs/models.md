@@ -208,6 +208,8 @@ the sets it read, the commit, the Actions run and its model file's SHA-256. The 
 SQLite backend, written by scripts/build_registry.py from the committed run records rather than from
 inside the jobs, so the repository alone rebuilds it, and its --check flag fails when the committed
 export no longer matches the records (DECISIONS.md, the registry).
+It holds 15 versions over 6 registered
+models, written with MLflow 3.18.0.
 A version is a candidate until development chooses it, and scored once test has been read. The API
 and the console read the export, results/registry/registry.json, never a tracking server, and the
 store is packed into an archive named by its digest and attached to the release.

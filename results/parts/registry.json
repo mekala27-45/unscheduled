@@ -1,0 +1,182 @@
+{
+ "as_of": "2026-11-13",
+ "values": {
+  "models.registry.archive": {
+   "value": "registry-cab240b84116.tar.gz",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/build_registry.py",
+    "population": "the packed store, named by the first twelve characters of its SHA-256",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.registry.mlflow": {
+   "value": "3.18.0",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/build_registry.py",
+    "population": "the MLflow version that wrote the store",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.registry.models": {
+   "value": 6,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_registry.py",
+    "population": "registered models in the MLflow store",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.registry.versions": {
+   "value": 15,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_registry.py",
+    "population": "model versions in the MLflow store, one per candidate",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  }
+ },
+ "tables": {
+  "models.registry.versions_table": {
+   "columns": [
+    "Registered model",
+    "Version",
+    "Role",
+    "Stage",
+    "Run"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "text",
+    "text",
+    "text"
+   ],
+   "rows": [
+    [
+     "unscheduled-band",
+     1,
+     "floor",
+     "candidate",
+     "band floor"
+    ],
+    [
+     "unscheduled-band",
+     2,
+     "ablation",
+     "candidate",
+     "band text alone"
+    ],
+    [
+     "unscheduled-band",
+     3,
+     "model",
+     "chosen",
+     "band model"
+    ],
+    [
+     "unscheduled-metrics",
+     1,
+     "floor",
+     "candidate",
+     "metrics floor"
+    ],
+    [
+     "unscheduled-metrics",
+     2,
+     "ablation",
+     "candidate",
+     "metrics text alone"
+    ],
+    [
+     "unscheduled-metrics",
+     3,
+     "model",
+     "chosen",
+     "metrics model"
+    ],
+    [
+     "unscheduled-cwe",
+     1,
+     "floor",
+     "candidate",
+     "cwe floor"
+    ],
+    [
+     "unscheduled-cwe",
+     2,
+     "ablation",
+     "candidate",
+     "cwe text alone"
+    ],
+    [
+     "unscheduled-cwe",
+     3,
+     "model",
+     "chosen",
+     "cwe model"
+    ],
+    [
+     "unscheduled-exploit",
+     1,
+     "floor",
+     "candidate",
+     "exploitation floor"
+    ],
+    [
+     "unscheduled-exploit",
+     2,
+     "model",
+     "chosen",
+     "exploitation model"
+    ],
+    [
+     "unscheduled-survival",
+     1,
+     "floor",
+     "chosen",
+     "survival Cox"
+    ],
+    [
+     "unscheduled-survival",
+     2,
+     "model",
+     "candidate",
+     "survival forest"
+    ],
+    [
+     "unscheduled-product",
+     1,
+     "floor",
+     "chosen",
+     "product floor"
+    ],
+    [
+     "unscheduled-product",
+     2,
+     "model",
+     "candidate",
+     "product retrieval"
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/build_registry.py",
+    "population": "every version in the registry",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  }
+ },
+ "figures": {}
+}
