@@ -2676,6 +2676,7 @@ dependencies = [
     { name = "scikit-survival" },
     { name = "scipy" },
     { name = "tokenizers" },
+    { name = "unscheduled-analysis" },
     { name = "unscheduled-core" },
     { name = "unscheduled-lake" },
 ]
@@ -2700,6 +2701,7 @@ requires-dist = [
     { name = "scikit-survival", specifier = "==0.28.0" },
     { name = "scipy", specifier = ">=1.14" },
     { name = "tokenizers", specifier = "==0.23.3" },
+    { name = "unscheduled-analysis", editable = "packages/analysis" },
     { name = "unscheduled-core", editable = "packages/core" },
     { name = "unscheduled-lake", editable = "packages/lake" },
 ]

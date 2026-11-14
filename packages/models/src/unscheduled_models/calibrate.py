@@ -69,6 +69,15 @@ class Isotonic:
         out: np.ndarray = np.interp(scores, self.x, self.y, left=self.y[0], right=self.y[-1])
         return out
 
+    def compact(self) -> Isotonic:
+        """The same function from fewer points: the first and the last score of every run of equal
+        values, between which the map is flat, so the interpolation is unchanged."""
+        n = len(self.y)
+        keep = [
+            i for i in range(n) if i in (0, n - 1) or self.y[i] != self.y[i - 1] or self.y[i] != self.y[i + 1]
+        ]
+        return Isotonic(self.x[keep], self.y[keep])
+
 
 def fit_isotonic(scores: np.ndarray, truth: np.ndarray, weights: np.ndarray | None = None) -> Isotonic:
     """Pool adjacent violators on the labels ordered by score. Equal scores are pooled first, so the

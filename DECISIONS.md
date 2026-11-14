@@ -526,3 +526,19 @@ the hit rate at k is the share of those CVEs with any labelled pair among the fi
 offered only the pairs the NVD had created a CPE name for by the end of its publication day, since
 the NVD often creates the name while it analyzes the CVE, which would put the answer among the
 candidates.
+
+## 2026-11-14: the shadow weights, out of half
+
+The plan weighs the shadow CVEs the NVD analyzed by "the Q8 domain classifier odds that a shadow CVE
+is one the NVD skipped". Q8 fit that classifier on the earlier half of the shadow window and scored
+the later half. A weight from a fit that saw the CVE would be surer than the classifier is, so each
+half here is scored by the classifier fit, with Q8's features and settings, on the other half, and
+every analyzed shadow CVE gets a weight from a fit that did not see it. The weights are clipped at
+20 as planned, and the band kappa is reported plain and weighted with Kish's effective sample size.
+
+The operating points (config/operating_points.yaml) are written by scripts/choose_operating_points.py
+once every model step has left its test predictions: the primary models (the fallback for the fill
+tasks with the floors as its comparator, LightGBM for exploitation with its floor as comparator), a
+temperature per head, the digest of each isotonic map, the conformal cutoffs, the C2 rule (the top 5
+percent by the raw LightGBM score, ties by position in CVE id order) and the content digest of every
+test prediction file. They are hashed into the registration before scripts/score_test.py runs.

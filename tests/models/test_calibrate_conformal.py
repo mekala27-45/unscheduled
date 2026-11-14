@@ -18,6 +18,9 @@ def test_isotonic_matches_scikit_learn() -> None:
     probe = np.linspace(-0.1, 1.1, 301)
     assert np.allclose(ours.predict(probe), reference.predict(probe), atol=1e-12)
     assert np.all(np.diff(ours.predict(np.sort(scores))) >= 0)
+    small = ours.compact()
+    assert len(small.x) < len(ours.x)
+    assert np.allclose(small.predict(probe), ours.predict(probe), atol=1e-12)
 
 
 def test_temperature_cools_an_overconfident_head() -> None:

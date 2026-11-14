@@ -7,6 +7,7 @@ license = "Apache-2.0"
 dependencies = [
   "unscheduled-core",
   "unscheduled-lake",
+  "unscheduled-analysis",
   "numpy>=2.0",
   "pandas>=2.2",
   "polars>=2.1",
