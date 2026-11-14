@@ -7,8 +7,8 @@ the manifest or a committed file: edit the template, then render.
 ## Where it stands
 
 ```
-Phase            2 of 5, the models: two of eighteen steps done (the probes, the scoped model
-                 gate, and the plan hashed as the models stage 8e72e6298a18);
+Phase            2 of 5, the models: three of eighteen steps done (the probes, the scoped model
+                 gate, the point in time sets, and the plan hashed as the models stage 8e72e6298a18);
                  the prompt is claude/unscheduled-phase-2-prompt.md in the Project
 Phase 1          the ground truth, tagged v0.1.0 on the commit that adds the release record;
                  its checklist 18 of 18 lines done (RESULTS.md)
@@ -33,7 +33,11 @@ under packages/models and kaggle/, the ONNX runtime also under packages/api, and
 client or agent framework anywhere. Step two: evaluation/phase2_plan.yaml and config/models.yaml are
 hashed into evaluation/registration.json as the models stage, after the Phase 1 stages and without
 moving their hash, before any model exists. Next: step three, the training set builder on the as-of
-engine, with the leakage test on the sets, the day 0 description read from the NVD change history.
+engine, with the leakage test on the sets. Step three: scripts/build_sets.py writes the sets
+(data/sets, rebuilt from the lake, never committed) and results/models/sets.json with their digests:
+220,803 train, 39,924 development, 63,304 test and 78,676 shadow rows. Next: step four,
+the fill floors, after the change request that starts the exploitation population when KEV could
+first list a CVE within 180 days.
 
 ## Open problems
 

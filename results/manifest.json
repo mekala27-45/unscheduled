@@ -8360,6 +8360,721 @@
     "as_of": "2026-11-14",
     "note": null
    }
+  },
+  "models.sets.cwe_classes": {
+   "value": 51,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "the CWE classes of the label: the most frequent in train, and other",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.description_from_history": {
+   "value": 38057,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.kev_180": {
+   "value": 127,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.kev_q03": {
+   "value": 5,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.rows": {
+   "value": 39924,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.share.adp_band": {
+   "value": 0.05806,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.share.adp_ssvc_exploitation": {
+   "value": 0.331555,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.share.description": {
+   "value": 1.0,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.share.exploit_code_by_day0": {
+   "value": 0.001828,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.share.filer_band": {
+   "value": 0.605801,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.share.filer_cvss31_vector": {
+   "value": 0.559563,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.share.filer_cvss40_vector": {
+   "value": 0.080603,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.share.filer_cwes": {
+   "value": 0.563446,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.share.products": {
+   "value": 0.850215,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.with_band": {
+   "value": 23272,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.with_cwe": {
+   "value": 19350,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.development.with_metrics": {
+   "value": 23272,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.description_from_history": {
+   "value": 76794,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.kev_180": {
+   "value": 155,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.kev_q03": {
+   "value": 4,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.rows": {
+   "value": 78676,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.share.adp_band": {
+   "value": 0.073085,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.share.adp_ssvc_exploitation": {
+   "value": 0.409057,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.share.description": {
+   "value": 1.0,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.share.exploit_code_by_day0": {
+   "value": 0.000839,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.share.filer_band": {
+   "value": 0.616592,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.share.filer_cvss31_vector": {
+   "value": 0.610212,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.share.filer_cvss40_vector": {
+   "value": 0.290444,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.share.filer_cwes": {
+   "value": 0.742781,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.share.products": {
+   "value": 0.971427,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.with_band": {
+   "value": 7782,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.with_cwe": {
+   "value": 3842,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.shadow.with_metrics": {
+   "value": 7782,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: shadow",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.description_from_history": {
+   "value": 61921,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.kev_180": {
+   "value": 211,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.kev_q03": {
+   "value": 7,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.rows": {
+   "value": 63304,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.share.adp_band": {
+   "value": 0.094481,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.share.adp_ssvc_exploitation": {
+   "value": 0.535401,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.share.description": {
+   "value": 1.0,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.share.exploit_code_by_day0": {
+   "value": 0.004929,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.share.filer_band": {
+   "value": 0.580137,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.share.filer_cvss31_vector": {
+   "value": 0.55938,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.share.filer_cvss40_vector": {
+   "value": 0.276649,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.share.filer_cwes": {
+   "value": 0.733856,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.share.products": {
+   "value": 0.914587,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.with_band": {
+   "value": 22453,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.with_cwe": {
+   "value": 12695,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.test.with_metrics": {
+   "value": 22453,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: test",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.description_from_history": {
+   "value": 7068,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.kev_180": {
+   "value": 278,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.kev_q03": {
+   "value": 46,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.rows": {
+   "value": 220803,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.share.adp_band": {
+   "value": 0.0,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.share.adp_ssvc_exploitation": {
+   "value": 0.0,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.share.description": {
+   "value": 1.0,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.share.exploit_code_by_day0": {
+   "value": 0.003605,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.share.filer_band": {
+   "value": 0.013464,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.share.filer_cvss31_vector": {
+   "value": 0.01308,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.share.filer_cvss40_vector": {
+   "value": 0.0,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.share.filer_cwes": {
+   "value": 0.012056,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.share.products": {
+   "value": 0.405724,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train, share of rows with the feature known at day 0",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.with_band": {
+   "value": 101427,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.with_cwe": {
+   "value": 206430,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.train.with_metrics": {
+   "value": 101427,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date: train",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
   }
  },
  "tables": {
@@ -14527,6 +15242,65 @@
     "origin": "scripts/build_lake.py",
     "population": "the tables of the lake file",
     "source": "lake",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.sets.coverage": {
+   "columns": [
+    "Window",
+    "CVEs",
+    "NVD band",
+    "KEV within 180 days",
+    "Filer band at day 0",
+    "Description"
+   ],
+   "formats": [
+    "text",
+    "int",
+    "int",
+    "int",
+    "pct1",
+    "pct1"
+   ],
+   "rows": [
+    [
+     "train",
+     220803,
+     101427,
+     278,
+     0.013464,
+     1.0
+    ],
+    [
+     "development",
+     39924,
+     23272,
+     127,
+     0.605801,
+     1.0
+    ],
+    [
+     "test",
+     63304,
+     22453,
+     211,
+     0.580137,
+     1.0
+    ],
+    [
+     "shadow",
+     78676,
+     7782,
+     155,
+     0.616592,
+     1.0
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/build_sets.py",
+    "population": "published CVEs, rejected excluded, by the window of their publication date",
+    "source": "models",
     "as_of": "2026-11-13",
     "note": null
    }

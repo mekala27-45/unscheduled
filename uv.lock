@@ -17,6 +17,7 @@ members = [
     "unscheduled-lake",
     "unscheduled-legacy-adapter",
     "unscheduled-match",
+    "unscheduled-models",
     "unscheduled-render",
     "unscheduled-sources",
 ]
@@ -1941,6 +1942,7 @@ dependencies = [
     { name = "unscheduled-lake" },
     { name = "unscheduled-legacy-adapter" },
     { name = "unscheduled-match" },
+    { name = "unscheduled-models" },
     { name = "unscheduled-render" },
     { name = "unscheduled-sources" },
 ]
@@ -1970,6 +1972,7 @@ requires-dist = [
     { name = "unscheduled-lake", editable = "packages/lake" },
     { name = "unscheduled-legacy-adapter", editable = "packages/legacy_adapter" },
     { name = "unscheduled-match", editable = "packages/match" },
+    { name = "unscheduled-models", editable = "packages/models" },
     { name = "unscheduled-render", editable = "packages/render" },
     { name = "unscheduled-sources", editable = "packages/sources" },
 ]
@@ -2161,6 +2164,33 @@ requires-dist = [
     { name = "pytz", specifier = ">=2024.1" },
     { name = "univers", specifier = "==32.0.1" },
     { name = "unscheduled-core", editable = "packages/core" },
+]
+
+[[package]]
+name = "unscheduled-models"
+version = "0.2.0"
+source = { editable = "packages/models" }
+dependencies = [
+    { name = "duckdb" },
+    { name = "numpy" },
+    { name = "pandas" },
+    { name = "polars" },
+    { name = "pyarrow" },
+    { name = "pyyaml" },
+    { name = "unscheduled-core" },
+    { name = "unscheduled-lake" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "duckdb", specifier = "==2.0.0" },
+    { name = "numpy", specifier = ">=2.0" },
+    { name = "pandas", specifier = ">=2.2" },
+    { name = "polars", specifier = ">=2.1" },
+    { name = "pyarrow", specifier = ">=20.0" },
+    { name = "pyyaml", specifier = ">=6.0" },
+    { name = "unscheduled-core", editable = "packages/core" },
+    { name = "unscheduled-lake", editable = "packages/lake" },
 ]
 
 [[package]]

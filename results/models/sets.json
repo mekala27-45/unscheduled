@@ -1,0 +1,205 @@
+{
+ "coverage": {
+  "development": {
+   "band_none": 0,
+   "bands": {
+    "CRITICAL": 3044,
+    "HIGH": 8287,
+    "LOW": 373,
+    "MEDIUM": 11568
+   },
+   "description_from_history": 38057,
+   "feature_share": {
+    "adp_band": 0.05806,
+    "adp_ssvc_exploitation": 0.331555,
+    "description": 1.0,
+    "exploit_code_by_day0": 0.001828,
+    "filer_band": 0.605801,
+    "filer_cvss31_vector": 0.559563,
+    "filer_cvss40_vector": 0.080603,
+    "filer_cwes": 0.563446,
+    "products": 0.850215
+   },
+   "kev_180": 127,
+   "kev_q03": 5,
+   "rows": 39924,
+   "with_band": 23272,
+   "with_cwe": 19350,
+   "with_metrics": 23272
+  },
+  "shadow": {
+   "band_none": 0,
+   "bands": {
+    "CRITICAL": 953,
+    "HIGH": 2946,
+    "LOW": 145,
+    "MEDIUM": 3738
+   },
+   "description_from_history": 76794,
+   "feature_share": {
+    "adp_band": 0.073085,
+    "adp_ssvc_exploitation": 0.409057,
+    "description": 1.0,
+    "exploit_code_by_day0": 0.000839,
+    "filer_band": 0.616592,
+    "filer_cvss31_vector": 0.610212,
+    "filer_cvss40_vector": 0.290444,
+    "filer_cwes": 0.742781,
+    "products": 0.971427
+   },
+   "kev_180": 155,
+   "kev_q03": 4,
+   "rows": 78676,
+   "with_band": 7782,
+   "with_cwe": 3842,
+   "with_metrics": 7782
+  },
+  "test": {
+   "band_none": 0,
+   "bands": {
+    "CRITICAL": 4455,
+    "HIGH": 7095,
+    "LOW": 321,
+    "MEDIUM": 10582
+   },
+   "description_from_history": 61921,
+   "feature_share": {
+    "adp_band": 0.094481,
+    "adp_ssvc_exploitation": 0.535401,
+    "description": 1.0,
+    "exploit_code_by_day0": 0.004929,
+    "filer_band": 0.580137,
+    "filer_cvss31_vector": 0.55938,
+    "filer_cvss40_vector": 0.276649,
+    "filer_cwes": 0.733856,
+    "products": 0.914587
+   },
+   "kev_180": 211,
+   "kev_q03": 7,
+   "rows": 63304,
+   "with_band": 22453,
+   "with_cwe": 12695,
+   "with_metrics": 22453
+  },
+  "train": {
+   "band_none": 0,
+   "bands": {
+    "CRITICAL": 16071,
+    "HIGH": 41344,
+    "LOW": 1813,
+    "MEDIUM": 42199
+   },
+   "description_from_history": 7068,
+   "feature_share": {
+    "adp_band": 0.0,
+    "adp_ssvc_exploitation": 0.0,
+    "description": 1.0,
+    "exploit_code_by_day0": 0.003605,
+    "filer_band": 0.013464,
+    "filer_cvss31_vector": 0.01308,
+    "filer_cvss40_vector": 0.0,
+    "filer_cwes": 0.012056,
+    "products": 0.405724
+   },
+   "kev_180": 278,
+   "kev_q03": 46,
+   "rows": 220803,
+   "with_band": 101427,
+   "with_cwe": 206430,
+   "with_metrics": 101427
+  }
+ },
+ "cwe_classes": [
+  "CWE-119",
+  "CWE-120",
+  "CWE-125",
+  "CWE-189",
+  "CWE-190",
+  "CWE-20",
+  "CWE-200",
+  "CWE-22",
+  "CWE-255",
+  "CWE-264",
+  "CWE-269",
+  "CWE-276",
+  "CWE-284",
+  "CWE-287",
+  "CWE-295",
+  "CWE-306",
+  "CWE-310",
+  "CWE-319",
+  "CWE-352",
+  "CWE-362",
+  "CWE-399",
+  "CWE-400",
+  "CWE-416",
+  "CWE-427",
+  "CWE-434",
+  "CWE-476",
+  "CWE-502",
+  "CWE-522",
+  "CWE-532",
+  "CWE-59",
+  "CWE-601",
+  "CWE-611",
+  "CWE-668",
+  "CWE-732",
+  "CWE-74",
+  "CWE-77",
+  "CWE-770",
+  "CWE-78",
+  "CWE-787",
+  "CWE-79",
+  "CWE-798",
+  "CWE-862",
+  "CWE-863",
+  "CWE-89",
+  "CWE-918",
+  "CWE-94",
+  "NVD-CWE-NOINFO",
+  "NVD-CWE-OTHER",
+  "NVD-CWE-Other",
+  "NVD-CWE-noinfo",
+  "other"
+ ],
+ "files": {
+  "development_inputs.parquet": {
+   "content_digest": "30ab2c3440390db0b0db58e4de202883114e65dd7cdbe93761a3f678952c0895",
+   "rows": 39924
+  },
+  "development_labels.parquet": {
+   "content_digest": "11557f3eac96874ca61d671a23384a65141cd451e32c383966baa730a19efe24",
+   "rows": 39924
+  },
+  "shadow_inputs.parquet": {
+   "content_digest": "eaef3c2b7e95e58656bbfafb9d87d838cd45b7c1b4da19a92074f2006fa71018",
+   "rows": 78676
+  },
+  "shadow_labels.parquet": {
+   "content_digest": "4334470fc17f8927619ec6b7baaed7eb687aa75c023f00aa94953549251c728f",
+   "rows": 78676
+  },
+  "test_inputs.parquet": {
+   "content_digest": "b636fff38f1ffd290c8ba62f63cf553beee59942e4a58424a1b75fdcd4ed7fce",
+   "rows": 63304
+  },
+  "test_labels.parquet": {
+   "content_digest": "b09cd43038a3e6cec04c5ea0539549fdd10154c3004076916c9a3edbf04239af",
+   "rows": 63304
+  },
+  "train_inputs.parquet": {
+   "content_digest": "45bce0d0ff077a991f45393203653a5d5554a690fcdfe407ccf1751e471980cf",
+   "rows": 220803
+  },
+  "train_labels.parquet": {
+   "content_digest": "17cc373ba4994c04e642fba1211267f4538c6f456680f8476d2dcfdec6584991",
+   "rows": 220803
+  }
+ },
+ "lake_content_digest": "8d97104c0ad0454895cf98e904a676a5c4d6ee23592638bbe139370d7b9a7d7a",
+ "lake_cut": "2026-11-13 01:00:00-05",
+ "lake_release": "lake-20261112",
+ "lake_sha256": "00ce926255dcb3209af24407910f53c149d7aa2c814a9560ff3377c02d7326ae",
+ "scoring_time": "day 0, the end of the publication day in UTC",
+ "seconds": 23.5
+}

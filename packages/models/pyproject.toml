@@ -1,0 +1,23 @@
+[project]
+name = "unscheduled-models"
+version = "0.2.0"
+description = "Phase 2: point in time training sets, the floors, the rank and survival models, calibration, conformal sets and the registry"
+requires-python = ">=3.12,<3.13"
+license = "Apache-2.0"
+dependencies = [
+  "unscheduled-core",
+  "unscheduled-lake",
+  "numpy>=2.0",
+  "pandas>=2.2",
+  "polars>=2.1",
+  "pyarrow>=20.0",
+  "duckdb==2.0.0",
+  "pyyaml>=6.0",
+]
+
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/unscheduled_models"]

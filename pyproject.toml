@@ -16,6 +16,7 @@ dependencies = [
   "unscheduled-lake",
   "unscheduled-analysis",
   "unscheduled-cli",
+  "unscheduled-models",
   "typer>=0.15",
   "httpx>=0.28",
 ]
@@ -51,6 +52,7 @@ unscheduled-sources = { workspace = true }
 unscheduled-lake = { workspace = true }
 unscheduled-analysis = { workspace = true }
 unscheduled-cli = { workspace = true }
+unscheduled-models = { workspace = true }
 
 [tool.ruff]
 line-length = 110
@@ -69,7 +71,7 @@ python_version = "3.12"
 strict = true
 files = ["packages", "scripts"]
 explicit_package_bases = true
-mypy_path = ["packages/core/src", "packages/render/src", "packages/api/src", "packages/sources/src", "packages/match/src", "packages/legacy_adapter/src", "packages/lake/src", "packages/analysis/src", "packages/cli/src"]
+mypy_path = ["packages/core/src", "packages/render/src", "packages/api/src", "packages/sources/src", "packages/match/src", "packages/legacy_adapter/src", "packages/lake/src", "packages/analysis/src", "packages/cli/src", "packages/models/src"]
 exclude = ["/tests/", "web/", "dbt/"]
 
 [[tool.mypy.overrides]]

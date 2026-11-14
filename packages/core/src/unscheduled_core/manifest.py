@@ -38,6 +38,7 @@ SOURCES = frozenset(
         "lake",
         "sbom",
         "match",
+        "models",
         "probe",
         "live",
         "build",

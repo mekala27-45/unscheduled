@@ -354,3 +354,37 @@ criteria page still shows the hash the customer signed. One reading choice is re
 silver.cve_fact holds no dated description, so the day 0 description comes from the NVD change
 history, where New CVE Received adds the text and later events change it; a CVE before the history
 keeps its current text with description_rule current.
+
+## 2026-11-14: what the training sets can know at day 0
+
+scripts/build_sets.py writes one row per published CVE in train, development, test and shadow from
+the lake built from lake-20261112, every feature read at the end of the publication day in UTC.
+Building them showed three things about the sources, recorded before any model is fit:
+
+- The NVD change history records New CVE Received, with the text it received, only for CVEs
+  published since late 2023: none of the 2016 to 2022 CVEs has one, 4,654 of 2023 do, and nearly
+  every CVE since 2024 does. So the day 0 description comes from the history for 98 percent of
+  development, test and shadow rows and for 3 percent of train rows, which keep their current
+  text under description_rule current, as the plan registered.
+- Before late 2023 the first NVD event for a CVE is its Initial Analysis, hours to weeks after
+  publication, and the filer values in silver.cve_fact are dated by it. A filer CVSS band is known
+  at day 0 for 1.3 percent of train rows and for 58 to 62 percent of later rows. A floor still
+  learns its weight from the 2,870 train rows that have one; the models are judged on test, where
+  the band is present for most rows.
+- The affected versions fact is dated by the record update rule, so no train CVE has it at day 0
+  and the empty column check failed on it. The affected list (vendor and product names, the count
+  of entries and whether versions are given) is read from the CVE List record as fetched, under
+  affected_rule current, like the description of an old CVE. The reference count is left out:
+  references grow after publication and would leak attention.
+
+The joined text every text model reads now also carries the structured values the floors get one
+hot (the filer vector, the CISA ADP band and SSVC exploitation known at day 0), so a text model and
+its floor see the same inputs, as the plan requires. The sets are rebuilt from the settled release
+wherever they are needed and checked against the digests in results/models/sets.json; this session
+cannot write a release, so they are not uploaded from here. Rebuilt under PYTHONHASHSEED 0 and 1,
+all eight files gave the same content digests.
+
+One flaw in the registered rank population surfaced too, and is taken up as a change request before
+any exploitation model is fit: KEV began on 3 November 2021, so a CVE published before 7 May 2021
+could not be listed within 180 days of publication, and the plan's population and folds would label
+every earlier CVE negative by construction.
