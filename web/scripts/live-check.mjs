@@ -9,8 +9,10 @@
  * One pass visits every route: the landing and its field, the console with one CVE the NVD did not
  * schedule and its ruler, the same CVE as known the day before its publication, the backlog, one
  * product exposure, one of the six SBOMs on the match page, the data, criteria, limits and status
- * pages, the docs architecture page and the report. On every route the statement and the NVD notice
- * must be on the page, no data region may show its error state, and the page may log no error.
+ * pages, the docs architecture page and the report; for Phase 2 also one CVE of the prediction batch
+ * with its predictions and the models page, and POST /v1/predict timed twice. On every route the
+ * statement and the NVD notice must be on the page, no data region may show its error state, and
+ * the page may log no error.
  *
  * --phase awake writes results/live/web_verify.json; both phases write their pass into
  * results/live_check.json, so the record holds the site awake and after --idle-minutes with nothing
@@ -51,7 +53,33 @@ async function pick() {
   if (!cve) throw new Error("the API returned no Deferred CVE from the last 120 days");
   const before = new Date(Date.parse(cve.published) - 86400_000).toISOString().slice(0, 10);
   const products = (await api("/v1/products")).products ?? [];
-  return { cve: cve.cve_id, before, product: products.map((p) => p.product_id).sort()[0] };
+  // Phase 2: one CVE of the prediction batch, found by its predicted band.
+  const predicted = (await api("/v1/cves?predicted_band=HIGH&limit=1")).items?.[0]?.cve_id ?? null;
+  return { cve: cve.cve_id, before, product: products.map((p) => p.product_id).sort()[0], predicted };
+}
+
+/** A scored description, twice: the first answer loads the ONNX models in the container, the second
+ * is warm. In the asleep phase the container has just woken for /health, so the first answer also
+ * holds the models' load after a cold start. */
+async function predictTwice() {
+  const body = JSON.stringify({
+    description: "A crafted request to the upload handler of the web console lets an unauthenticated attacker run commands as the service account.",
+    cvss31_vector: "CVSS:3.1/AV:N/AC:L/PR:N/UI:N/S:U/C:H/I:H/A:H",
+    cwes: ["CWE-78"],
+  });
+  const one = async () => {
+    const t = Date.now();
+    const res = await fetch(`${API}/v1/predict`, {
+      method: "POST",
+      headers: { "content-type": "application/json", "user-agent": "unscheduled-live-check/0.1" },
+      body,
+    });
+    const answer = await res.json().catch(() => ({}));
+    return { status: res.status, ms: Date.now() - t, band: answer.values?.find((v) => v.field === "band")?.value ?? null };
+  };
+  const first = await one();
+  const second = await one();
+  return { first, second, ok: first.status === 200 && second.status === 200 && Boolean(first.band) };
 }
 
 function routes(p) {
@@ -72,6 +100,28 @@ function routes(p) {
         const said = page.getByText(`Nothing was known about ${p.cve}`);
         await said.first().waitFor({ timeout: 20_000 }).catch(() => {});
         return [(await said.count()) > 0 || "the day before publication did not say nothing was known"];
+      },
+    },
+    ...(p.predicted
+      ? [
+          {
+            route: `/app/cves/${p.predicted}`,
+            check: async (page) => {
+              await page.locator("section.prediction").first().waitFor({ timeout: 20_000 });
+              const text = (await page.locator("main").innerText()).replace(/\s+/g, " ");
+              return [
+                (await page.locator("section.prediction").count()) >= 3 || "the CVE page shows fewer than three predictions",
+                /Prediction of unscheduled-band version \d+/.test(text) || "the band prediction does not name its model and version",
+              ];
+            },
+          },
+        ]
+      : []),
+    {
+      route: "/app/models",
+      check: async (page) => {
+        const text = (await page.locator("main").innerText()).replace(/\s+/g, " ");
+        return ["unscheduled-band", "unscheduled-exploit", "unscheduled-product"].map((m) => text.includes(m) || `the models page does not list ${m}`);
       },
     },
     { route: "/app/backlog", check: async (page) => [(await page.locator("main [role='img']").count()) >= 6 || "fewer than six backlog charts"] },
@@ -143,6 +193,8 @@ async function main() {
   const t0 = Date.now();
   const health = await fetch(`${API}/health`).then((r) => r.json().then((b) => ({ status: r.status, ms: Date.now() - t0, data_version: b.data_version })));
   const picked = await pick();
+  const predict = await predictTwice();
+  console.log(`live: /v1/predict ${predict.first.ms} ms then ${predict.second.ms} ms (${predict.first.status}, band ${predict.first.band})`);
   const browser = await chromium.launch(process.env.PW_CHROMIUM ? { executablePath: process.env.PW_CHROMIUM } : {});
   const results = await pass(browser, picked);
   const version = browser.version();
@@ -159,9 +211,10 @@ async function main() {
     browser: `Chromium ${version}, headless, 1440 by 900`,
     client: "web/scripts/live-check.mjs, a separate machine with no credential",
     picked,
+    predict,
     passed,
     total: results.length,
-    result: passed === results.length ? "pass" : "fail",
+    result: passed === results.length && predict.ok && Boolean(picked.predicted) ? "pass" : "fail",
     routes: results,
   };
   const live = path.join(RESULTS, "live");
