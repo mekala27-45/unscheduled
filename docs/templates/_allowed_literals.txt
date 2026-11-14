@@ -77,3 +77,16 @@ evaluation/phase2_plan.yaml
 claude/unscheduled-phase-2-prompt.md
 day 0
 180 days
+day 1
+day 7
+day 30
+F1
+SHA-256
+T4
+7 May 2021
+3 November 2021
+ADR 0008
+ADR 0009
+ADR 0010
+14 November 2026
+0010. The fill model

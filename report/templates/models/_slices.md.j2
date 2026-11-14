@@ -1,0 +1,14 @@
+{% set names = {"filer_type": "filer type", "published_year": "year of publication", "filer": "filer, the twenty largest", "cwe": "CWE, the twenty largest", "vendor": "vendor, the twenty largest"} %}
+{% set shown = namespace(any=false) %}
+{% for family in families %}
+{% if has("models.test.slices." ~ kind ~ "." ~ family) %}
+{% set shown.any = true %}
+### By {{ names[family] }}
+
+{{ table("models.test.slices." ~ kind ~ "." ~ family) }}
+
+{% endif %}
+{% endfor %}
+{% if not shown.any %}
+The slices are computed in the single test scoring, which has not run yet.
+{% endif %}

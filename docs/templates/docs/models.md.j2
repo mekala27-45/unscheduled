@@ -1,0 +1,218 @@
+{% set plan = data("evaluation/phase2_plan.yaml") %}
+# Method notes: the models
+
+Phase 2 fills in what the NVD no longer writes for most new CVEs, and ranks them by the chance of
+exploitation, with every value labeled as a prediction. These notes say how each model was built,
+what it reads, how it was chosen and how it is judged. Every number here is read from the manifest,
+and every choice made on the way is a dated entry in DECISIONS.md. The plan behind all of it,
+evaluation/phase2_plan.yaml, was hashed into the registration as the models stage before any model
+saw a test CVE.
+
+## The training sets, as known at day 0
+
+A model may read only what was public at the end of the day a CVE was published (day 0). The sets
+are built from the as-of facts of the lake: the description the NVD change history held at day 0,
+the filer's values from the CVE record as published, the CISA values only when known by then, the
+affected entries, the exploit code signal and the days from reservation to publication. The labels
+are what the NVD and KEV say at the lake cut. Never a feature: {{ plan.features.never | join("; ") }}.
+
+{% if has("models.sets.train.rows") %}
+The four windows hold {{ v("models.sets.train.rows") }} train, {{ v("models.sets.development.rows") }}
+development, {{ v("models.sets.test.rows") }} test and {{ v("models.sets.shadow.rows") }} shadow CVEs.
+A leakage test rebuilds every value from the facts known at day 0 and fails if any differs, and an
+empty feature column fails the build. Each file is published by its content digest
+(results/models/sets.json), and every training run checks the files it reads against those digests
+before it fits. The test labels sit in a file of their own that only scripts/score_test.py opens,
+and a gate in CI fails on any other reference to it.
+
+{{ table("models.sets.coverage") }}
+{% endif %}
+
+## The floors
+
+Every model has a floor trained on the same rows: TF-IDF over the joined text beside the filer and
+CISA values one hot, and a logistic regression, one per class against the rest
+(DECISIONS.md, the floor solver). The band floor's grid, from the plan:
+{{ plan.models.band_floor.choose }}.
+
+{% if has("models.floors.band.dev") %}
+The representation chosen is {{ v("models.floors.representation") }}. The band floor reaches a
+development kappa of {{ v("models.floors.band.dev") }} at C {{ v("models.floors.band.C") }}. On the
+{{ v("models.floors.reference.filer_rows") }} development CVEs with a filer band, the filer's own band
+agrees with the NVD at {{ v("models.floors.reference.filer_qwk") }}, and the floor at
+{{ v("models.floors.reference.floor_qwk_with_filer") }}; on the {{ v("models.floors.reference.without_rows") }}
+without one, the floor reaches {{ v("models.floors.reference.floor_qwk_without_filer") }}. The mean
+kappa over the eight base metrics is {{ v("models.floors.metrics.mean_kappa") }}, and the CWE floor
+has a development macro F1 of {{ v("models.floors.cwe.dev") }}.
+
+{{ table("models.floors.chosen") }}
+{% endif %}
+
+## The text model
+
+The plan runs ModernBERT on a Kaggle GPU and names a CPU fallback for when the Kaggle secrets are
+absent ({{ plan.models.fallback_text.kind }}). The secrets were absent, so the fallback ran: the
+joined text of every set row embedded once with the pinned bge-small weights, through onnxruntime,
+and a logistic regression per task. A change request recorded before any fill model had a result
+gives each head the floor's own filer and CISA block beside the embedding, so the comparison with
+the floor measures the text representation alone; the embedding by itself is kept as an ablation.
+
+{% if has("models.fallback.band.dev") %}
+On development, the band reaches {{ v("models.fallback.band.dev") }} with the block and
+{{ v("models.fallback.text.band.dev") }} from the embedding alone, against the floor's
+{{ v("models.floors.band.dev") }}.
+
+{{ table("models.fallback.chosen") }}
+{% endif %}
+
+## The exploitation models
+
+The label is a KEV listing within 180 days of publication, and the population starts on
+the day KEV could first list a CVE within that window (DECISIONS.md, the change request on the
+exploitation population). The floor is a logistic regression with balanced class weights; LightGBM
+reads the same day 0 features and the band floor's four probabilities, taken out of fold for the
+CVEs the band floor was fit on. Its search, {{ plan.models.exploit_lgbm.search }}, runs on the half
+year folds of that change request.
+
+{% if has("models.rank.lgbm.dev_average_precision") %}
+On development, LightGBM's average precision is {{ v("models.rank.lgbm.dev_average_precision") }}
+against the floor's {{ v("models.rank.floor.dev_average_precision") }}, and it holds
+{{ v("models.rank.lgbm.dev_recall_at_top5") }} of the development listings in its top
+five percent, against {{ v("models.rank.floor.dev_recall_at_top5") }} for the floor.
+{% if raw("models.rank.lgbm.dev_average_precision") < raw("models.rank.floor.dev_average_precision") and raw("models.rank.lgbm.dev_recall_at_top5") > raw("models.rank.floor.dev_recall_at_top5") %}
+So LightGBM is behind the floor at the very top of its ranking, where average precision weighs most,
+and ahead across the top five percent, the depth C2 judges. Both are reported, and C2 is judged on
+LightGBM, the exploitation model the operating points name.
+{% endif %}
+{% endif %}
+
+## Time to KEV
+
+{% if has("models.survival.cox.dev_concordance") %}
+A Cox model and a random survival forest model the days from publication to a KEV listing, censored
+at the lake cut, on the day 0 features without the text. The Cox model's development concordance is
+{{ v("models.survival.cox.dev_concordance") }} and the forest's {{ v("models.survival.forest.dev_concordance") }}.
+R's coxph, fit on the same design matrix without a penalty, differs from lifelines by at most
+{{ v("models.survival.r_check.max_coefficient_difference") }} in a coefficient and by
+{{ v("models.survival.r_check.concordance_difference") }} in concordance. The plan's tolerance is
+{{ plan.models.survival_r_check.tolerance }}, and the recorded result is
+{{ v("models.survival.r_check.result") }}.
+{% endif %}
+
+## The affected product
+
+The floor normalizes the filer's vendor and product strings and matches them to the CPE dictionary,
+exactly and then by a token set ratio; the retrieval ranks every CPE vendor and product by cosine to
+the CVE's joined text. A CVE is offered only the names the NVD had created by its day 0.
+
+{% if has("models.product.floor.threshold") %}
+The floor's threshold is chosen by the F1 of each CVE's first candidate on development (DECISIONS.md,
+the change request on the product floor's threshold), and it is {{ v("models.product.floor.threshold") }}.
+On the {{ v("models.product.dev_cves") }} development CVEs with a labeled product, the share of their
+labeled pairs found in the first ten candidates is {{ v("models.product.floor.dev_recall_at_10") }} for
+the floor without its threshold, {{ v("models.product.floor_at_threshold.dev_recall_at_10") }} with it,
+and {{ v("models.product.retrieval.dev_recall_at_10") }} for the retrieval.
+{% endif %}
+
+## Calibration and conformal sets
+
+Each fill head is scaled by one temperature fit on development by negative log likelihood, and the
+exploitation score is mapped by an isotonic regression fit on development. The calibration error is
+taken over equal width bins of the top label probability, with a bootstrap interval. Split conformal
+sets with adaptive sets are fit on development at a target coverage of {{ plan.conformal.target_coverage }},
+and their coverage is measured on test, overall and by filer type, because test is later
+than development and the coverage a set promises holds only for rows like the ones it was fit on.
+
+{% if has("models.calibration.band_temperature") %}
+The band's temperature is {{ v("models.calibration.band_temperature") }}; its development calibration
+error is {{ v("models.calibration.band_dev_ece_before") }} before scaling and
+{{ v("models.calibration.band_dev_ece_after") }} after.
+{% endif %}
+
+## The CVEs the NVD skipped
+
+The NVD's analyzed CVEs after April 2026 are a selected sample, so a score on them says little
+about the CVEs it skipped. The shadow CVEs it did analyze are weighted by the odds that a CVE like
+them was skipped, from the Phase 1 domain classifier fit out of half, clipped at
+{{ plan.reweighting.clip }}, and the band kappa is shown plain and weighted, with Kish's effective
+sample size, never one without the other.
+
+{% if has("models.reweighting.fallback.plain_qwk") %}
+For the primary model the plain kappa is {{ v("models.reweighting.fallback.plain_qwk") }} and the
+weighted one {{ v("models.reweighting.fallback.weighted_qwk") }}, on an effective sample of
+{{ v("models.reweighting.fallback.ess") }}.
+{% endif %}
+
+## How test was judged
+
+{% set criteria = data("config/criteria.yaml") %}
+Test is scored once, by scripts/score_test.py, after the operating points are frozen and hashed into
+the registration. C1 asks: {{ criteria.criteria[0].sentence }}
+
+{% if has("models.test.c1.kappa") %}
+The band's test kappa is {{ v("models.test.c1.kappa") }} ({{ v("models.test.c1.kappa_low") }} to
+{{ v("models.test.c1.kappa_high") }}), the floor's {{ v("models.test.c1.floor_kappa") }}, and the paired
+difference {{ v("models.test.c1.difference") }} ({{ v("models.test.c1.difference_low") }} to
+{{ v("models.test.c1.difference_high") }}); the calibration error is {{ v("models.test.c1.ece") }}.
+C1 is {{ v("models.test.c1.verdict") }}.
+{% else %}
+Not scored yet.
+{% endif %}
+
+C2 asks: {{ criteria.criteria[1].sentence }}
+
+{% if has("models.test.c2.recall") %}
+The model holds {{ v("models.test.c2.recall") }} ({{ v("models.test.c2.recall_low") }} to
+{{ v("models.test.c2.recall_high") }}) of the {{ v("models.test.c2.positives") }} test listings in its
+top five percent. EPSS on day 1 holds {{ v("models.test.c2.epss_day_1") }}, a reading of
+{{ v("models.test.c2.reading_day_1") }} for the model; on day 7 {{ v("models.test.c2.epss_day_7") }}
+({{ v("models.test.c2.reading_day_7") }}) and on day 30 {{ v("models.test.c2.epss_day_30") }}
+({{ v("models.test.c2.reading_day_30") }}). EPSS at day 7 and day 30 has seen days the model has
+not. C2 is {{ v("models.test.c2.verdict") }}.
+{% else %}
+Not scored yet.
+{% endif %}
+
+## The registry
+
+Every training run is logged to MLflow with its parameters, its development metrics, the digests of
+the sets it read, the commit, the Actions run and its model file's SHA-256. The store is MLflow's
+SQLite backend, written by scripts/build_registry.py from the committed run records rather than from
+inside the jobs, so the repository alone rebuilds it, and its --check flag fails when the committed
+export no longer matches the records (DECISIONS.md, the registry).
+{% if has("models.registry.versions") %}
+It holds {{ v("models.registry.versions") }} versions over {{ v("models.registry.models") }} registered
+models, written with MLflow {{ v("models.registry.mlflow") }}.
+{% endif %}
+A version is a candidate until development chooses it, and scored once test has been read. The API
+and the console read the export, results/registry/registry.json, never a tracking server, and the
+store is packed into an archive named by its digest and attached to the release.
+
+## The GPU request
+
+The plan runs ModernBERT on a Kaggle T4 under a monthly ceiling in config/budgets.yaml, and every run
+declares its hours and the hours left in a committed file under requests/gpu/ before it starts. No
+run was made in this phase: the Kaggle secrets are absent, so the request stands as written and the
+named fallback ran on CPU instead (DECISIONS.md, step eight takes the fallback).
+{% if has("models.gpu.hours_used") %}
+Hours used: {{ v("models.gpu.hours_used") }} of {{ v("models.gpu.hours_month") }} this month.
+{% endif %}
+
+{% if has("models.taxonomy") %}
+## The misses, read
+
+{{ v("models.taxonomy.drawn") }} band misses were drawn with the default seed from development, never
+test, read one by one and coded into categories named while reading.
+
+{{ table("models.taxonomy") }}
+{% endif %}
+
+## What a data lead would push back on
+
+NVD labels are a selected sample; the filer score as a feature favors filers who score; KEV is a
+lower bound on exploitation; EPSS at day 7 and day 30 has seen more days than the model; one seed is
+one draw. The weighted view, the floor on the same rows, the ties named in C2 and the misses read by
+hand are what the build did about each, and the limits in each model card say what none of them
+fixes.
+
+{{ statement() }}

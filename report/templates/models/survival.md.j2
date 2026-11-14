@@ -1,0 +1,82 @@
+{% set plan = data("evaluation/phase2_plan.yaml") %}
+# Model card: the time to KEV
+
+unscheduled-survival estimates when a CVE will be listed in KEV, as the probability of a listing
+within 30 days, within 90 days and within 180 days of publication, from what was public at the end of
+the publication day. Two models are fit, a Cox proportional hazards model and a random survival
+forest, and development chooses between them by concordance. The R check refits the Cox model in R and compares.
+
+## What it is for, and not for
+
+It is for saying how soon a CVE the exploitation score ranks high is likely to reach KEV, so a
+reviewer can tell an urgent listing from a slow one. It is not a forecast of exploitation itself, and
+not a probability for any one CVE to bet on: KEV listings are rare and the curves are averages over
+CVEs like it. C1 and C2 do not judge it.
+
+## The data and its window
+
+{% include "models/_windows.md.j2" %}
+
+The population is the exploitation population: CVEs published from 7 May 2021, Q03 left out. The time
+is the days from publication to the listing, censored at the lake cut for a CVE not listed by then.
+The models read the day 0 features without the text (DECISIONS.md, the survival models, as built).
+{% if has("models.survival.train_events") %}
+Train holds {{ v("models.survival.train_events") }} listings, and the design keeps
+{{ v("models.survival.columns") }} columns.
+{% endif %}
+
+## The metrics, with intervals
+
+{% if has("models.survival.cox.dev_concordance") %}
+On development the Cox model's concordance is {{ v("models.survival.cox.dev_concordance") }}, at a
+penalty of {{ v("models.survival.cox.penalizer") }}, and the forest's
+{{ v("models.survival.forest.dev_concordance") }}, with leaves of at least
+{{ v("models.survival.forest.min_samples_leaf") }} CVEs. Development chooses by concordance, a tie
+going to the floor (DECISIONS.md, the registry).
+{% endif %}
+{% if has("models.test.survival.cox.concordance") %}
+On test, scored once, the Cox model's concordance is {{ v("models.test.survival.cox.concordance") }}
+and the forest's {{ v("models.test.survival.forest.concordance") }}, point values: the plan sets no
+criterion on survival.
+{% else %}
+Test has not been scored yet.
+{% endif %}
+
+## Against the floor
+
+The Cox model is the floor and the forest the model, both on the same rows and the same columns, so
+the forest has to earn its place by concordance on development.
+
+## The R check
+
+R's survival::coxph fits the same design matrix without a penalty, and the plan's tolerance is
+{{ plan.models.survival_r_check.tolerance }}.
+{% if has("models.survival.r_check.result") %}
+The largest coefficient difference is {{ v("models.survival.r_check.max_coefficient_difference") }}
+and the concordance difference {{ v("models.survival.r_check.concordance_difference") }}; the recorded
+result is {{ v("models.survival.r_check.result") }}.
+{% endif %}
+
+## The calibration
+
+The survival probabilities are not recalibrated; the curves are the models' own. The console draws
+them as estimates, labeled with the model and version.
+
+## The slices
+
+The plan does not slice the survival models.
+
+## The selection bias note
+
+KEV is a lower bound on exploitation, and a listing date is the day CISA added the CVE to the
+catalog, after exploitation was seen, so the time measured is the time to a listing, not to the first
+attack. Censoring at the lake cut means the latest CVEs have had the least time to be listed.
+
+## The limits
+
+- The listings in train number in the hundreds, so the hazard of any one column rests on few events.
+- The Cox model assumes the effect of each column is constant over time; the forest does not, and
+  development compares the two.
+- One seed, one draw, and nothing after day 0.
+
+{{ statement() }}

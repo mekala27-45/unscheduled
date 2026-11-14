@@ -26,6 +26,7 @@ const FIXED_DOCS: DocSource[] = [
   { slug: "architecture", file: "ARCHITECTURE.md", section: "How it is built" },
   { slug: "as-of", file: "docs/asof.md", section: "How it is built" },
   { slug: "methods", file: "docs/methods.md", section: "How it is built" },
+  { slug: "models", file: "docs/models.md", section: "How it is built" },
   { slug: "spec", file: "docs/SPEC.md", section: "How it is built" },
   { slug: "roadmap", file: "docs/ROADMAP.md", section: "How it is built" },
   { slug: "changelog", file: "CHANGELOG.md", section: "How it is built" },
@@ -107,6 +108,13 @@ export const REPORT_SOURCES: DocSource[] = [
   { slug: "legacy", file: "report/legacy.md" },
   { slug: "criteria", file: "report/criteria.md" },
   { slug: "data-card", file: "report/data_card.md" },
+  { slug: "models", file: "report/models.md" },
+  { slug: "model-band", file: "report/models/band.md" },
+  { slug: "model-metrics", file: "report/models/metrics.md" },
+  { slug: "model-cwe", file: "report/models/cwe.md" },
+  { slug: "model-exploit", file: "report/models/exploit.md" },
+  { slug: "model-survival", file: "report/models/survival.md" },
+  { slug: "model-product", file: "report/models/product.md" },
 ];
 
 function exists(file: string): boolean {

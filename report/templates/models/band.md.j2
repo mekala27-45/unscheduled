@@ -1,0 +1,103 @@
+{% set criteria = data("config/criteria.yaml") %}
+# Model card: the severity band
+
+unscheduled-band predicts the band the NVD would give a CVE under CVSS 3.1, one of LOW, MEDIUM, HIGH
+and CRITICAL, from what was public at the end of the day the CVE was published. It is the band head
+of the primary fill model, the CPU fallback the plan names for when ModernBERT cannot run: embeddings
+of the joined text beside the floor's filer and CISA block, and a logistic regression. Every value it
+gives is labeled as a prediction with its model and version, never as an NVD value.
+
+## What it is for, and not for
+
+It is for ordering the CVEs the NVD has not analyzed by likely severity, and for showing a band with
+its probability and its conformal set where the NVD field is empty. It is not for replacing the
+NVD's analysis, not for a compliance, legal or regulatory decision, and not for a CVE published
+before 2024: every model was fit on those, so the API serves them no prediction.
+
+## The data and its window
+
+{% include "models/_windows.md.j2" %}
+
+It learns from the train CVEs with an NVD band and is chosen on the development CVEs with one.
+
+{% if has("models.sets.coverage") %}
+{{ table("models.sets.coverage") }}
+{% endif %}
+
+## The metrics, with intervals
+
+{% if has("models.fallback.band.dev") %}
+On development the band reaches a quadratic weighted kappa of {{ v("models.fallback.band.dev") }}.
+{% else %}
+The development result is not in the manifest yet.
+{% endif %}
+
+{% if has("models.test.c1.kappa") %}
+On the {{ v("models.test.c1.rows") }} test CVEs with an NVD band, scored once, the kappa is
+{{ v("models.test.c1.kappa") }} ({{ v("models.test.c1.kappa_low") }} to {{ v("models.test.c1.kappa_high") }}) and
+the expected calibration error {{ v("models.test.c1.ece") }} ({{ v("models.test.c1.ece_low") }} to
+{{ v("models.test.c1.ece_high") }}). The intervals are a {{ criteria.criteria[0].interval }}, over
+{{ v("models.test.c1.clusters") }} filers. The band computed from the eight predicted base metrics
+reaches {{ v("models.test.fill.fallback.band_from_metrics.qwk") }}, reported beside the band head and
+never in its place. C1 is {{ v("models.test.c1.verdict") }}.
+{% else %}
+Test has not been scored yet. C1 is judged once, by scripts/score_test.py, after the operating points
+are frozen.
+{% endif %}
+
+## Against the floor
+
+The floor is TF-IDF over the same joined text beside the same filer and CISA values, and a logistic
+regression, fit on the same rows.
+{% if has("models.fallback.band.dev") %}
+On development the floor reaches {{ v("models.floors.band.dev") }} and the embedding without the
+structured block {{ v("models.fallback.text.band.dev") }}, so the block and the text each carry part
+of the result.
+{% endif %}
+{% if has("models.test.c1.floor_kappa") %}
+On test the floor's kappa is {{ v("models.test.c1.floor_kappa") }} ({{ v("models.test.c1.floor_kappa_low") }}
+to {{ v("models.test.c1.floor_kappa_high") }}), and the paired difference, model less floor, is
+{{ v("models.test.c1.difference") }} ({{ v("models.test.c1.difference_low") }} to
+{{ v("models.test.c1.difference_high") }}).
+{% endif %}
+
+## The calibration
+
+The band head is scaled by one temperature fit on development by negative log likelihood, and its
+conformal sets are fit on the scaled development probabilities.
+{% if has("models.calibration.band_temperature") %}
+The temperature is {{ v("models.calibration.band_temperature") }}. The development calibration error
+is {{ v("models.calibration.band_dev_ece_before") }} before scaling and
+{{ v("models.calibration.band_dev_ece_after") }} after, and the mean development set holds
+{{ v("models.conformal.band_dev_mean_size") }} bands.
+{% endif %}
+{% if has("models.test.conformal.band.coverage") %}
+On test the sets cover {{ v("models.test.conformal.band.coverage") }} of the bands with a mean size of
+{{ v("models.test.conformal.band.mean_size") }}. Test is later than development, so the coverage a set
+promises holds only for CVEs like the ones it was fit on; by filer type:
+
+{{ table("models.test.conformal.band_by_filer_type") }}
+{% endif %}
+
+## The slices
+
+The band kappa of the model against the floor in each slice, with Benjamini-Hochberg at the plan's
+level within each family.
+
+{% with kind = "fill", families = ["filer_type", "published_year", "filer", "cwe", "vendor"] %}
+{% include "models/_slices.md.j2" %}
+{% endwith %}
+
+{% include "models/_fill_bias.md.j2" %}
+
+## The limits
+
+- The NVD band is the label, and the NVD is one analyst team with its own habits; agreement with it
+  is agreement with those habits.
+- A CVE with a short description and no filer vector gives the model little to read; its
+  probabilities and the width of its set are where that shows.
+- The model was chosen once and scored once with one seed; one seed is one draw.
+- It never sees anything after day 0, so a later fact that changes the severity, such as a public
+  exploit, does not move its band.
+
+{{ statement() }}

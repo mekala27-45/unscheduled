@@ -8801,6 +8801,204 @@
     "note": null
    }
   },
+  "models.gpu.hours_left": {
+   "value": 8.0,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/gpu_hours.py",
+    "population": "GPU requests under requests/gpu/ for 2026-11",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.gpu.hours_month": {
+   "value": 8.0,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/gpu_hours.py",
+    "population": "GPU requests under requests/gpu/ for 2026-11",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.gpu.hours_used": {
+   "value": 0.0,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/gpu_hours.py",
+    "population": "GPU requests under requests/gpu/ for 2026-11",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.gpu.requests": {
+   "value": 1,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/gpu_hours.py",
+    "population": "GPU requests under requests/gpu/ for 2026-11",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.gpu.runs": {
+   "value": 0,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/gpu_hours.py",
+    "population": "GPU requests under requests/gpu/ for 2026-11",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.dev_positives": {
+   "value": 127,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the exploitation models: the rank population from 7 May 2021, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.dev_rows": {
+   "value": 39919,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the exploitation models: the rank population from 7 May 2021, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.floor.C": {
+   "value": "0.1",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the regularization the exploitation floor chose on development",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.floor.dev_auroc": {
+   "value": 0.8337147458120812,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "development window CVEs published, Q03 left out: the logistic floor, KEV within 180 days",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.floor.dev_average_precision": {
+   "value": 0.049454205493164365,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "development window CVEs published, Q03 left out: the logistic floor, KEV within 180 days",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.floor.dev_recall_at_top5": {
+   "value": 0.4094488188976378,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "development window CVEs published, Q03 left out: the logistic floor, KEV within 180 days",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.lgbm.dev_auroc": {
+   "value": 0.8601518249226687,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "development window CVEs published, Q03 left out: LightGBM, KEV within 180 days",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.lgbm.dev_average_precision": {
+   "value": 0.026945202152730493,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "development window CVEs published, Q03 left out: LightGBM, KEV within 180 days",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.lgbm.dev_recall_at_top5": {
+   "value": 0.47244094488188976,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "development window CVEs published, Q03 left out: LightGBM, KEV within 180 days",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.train_positives": {
+   "value": 278,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the exploitation models: the rank population from 7 May 2021, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.train_rows": {
+   "value": 67520,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the exploitation models: the rank population from 7 May 2021, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.trees": {
+   "value": 287,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the exploitation models: the rank population from 7 May 2021, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.trials": {
+   "value": 50,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the exploitation models: the rank population from 7 May 2021, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
   "models.sets.cwe_classes": {
    "value": 51,
    "fmt": "int",
@@ -9672,7 +9870,7 @@
   },
   "models.survival.r_check.max_coefficient_difference": {
    "value": 7.204714913555677e-08,
-   "fmt": "float4",
+   "fmt": "sci1",
    "provenance": {
     "origin": "scripts/train_survival.py",
     "population": "the train population: lifelines without a penalty against R's coxph on the same matrix",
@@ -16046,6 +16244,62 @@
    "provenance": {
     "origin": "scripts/train_floors.py",
     "population": "development window CVEs with the label",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank.folds": {
+   "columns": [
+    "Fit on CVEs published before",
+    "Validated on",
+    "Fit rows",
+    "Fit listed",
+    "Validation rows",
+    "Validation listed",
+    "Average precision"
+   ],
+   "formats": [
+    "text",
+    "text",
+    "int",
+    "int",
+    "int",
+    "int",
+    "float3"
+   ],
+   "rows": [
+    [
+     "2022-07-01",
+     "2022-07-01 to 2023-01-01",
+     26049,
+     130,
+     12636,
+     26,
+     0.052411
+    ],
+    [
+     "2023-01-01",
+     "2023-01-01 to 2023-07-01",
+     38685,
+     156,
+     14113,
+     48,
+     0.047432
+    ],
+    [
+     "2023-07-01",
+     "2023-07-01 to 2024-01-01",
+     52798,
+     204,
+     14722,
+     74,
+     0.058503
+    ]
+   ],
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the train part of the rank population, by the half years of the change request",
     "source": "models",
     "as_of": "2026-11-13",
     "note": null

@@ -1,0 +1,85 @@
+{% set names = {"AV": "Attack vector", "AC": "Attack complexity", "PR": "Privileges required", "UI": "User interaction", "S": "Scope", "C": "Confidentiality", "I": "Integrity", "A": "Availability"} %}
+{% set order = ["AV", "AC", "PR", "UI", "S", "C", "I", "A"] %}
+# Model card: the base metrics
+
+unscheduled-metrics predicts the eight CVSS 3.1 base metrics the NVD would set for a CVE, from what
+was public at the end of the day it was published: attack vector, attack complexity, privileges
+required, user interaction, scope, and the three impacts. Each metric is a head of the primary fill
+model, the CPU fallback of the plan, and each is scored by Cohen's kappa against the NVD. Every value
+is labeled as a prediction with its model and version.
+
+## What it is for, and not for
+
+It is for showing a reader which parts of a vector the text and the filer's values point to while
+the NVD field is empty, each with its probability and its conformal set. It is not for writing a
+CVSS vector or score in anyone's name, and not for a CVE published before 2024, which every model was
+fit on. The band the eight metrics imply is computed and reported beside the band head, never in its
+place.
+
+## The data and its window
+
+{% include "models/_windows.md.j2" %}
+
+It learns from the train CVEs with an NVD CVSS 3.1 vector, and each head's C is chosen on development
+by its kappa.
+
+## The metrics, with intervals
+
+{% if has("models.fallback.metric_AV.dev") or has("models.test.fill.fallback.metric_AV.kappa") %}
+| Metric | Development, model | Development, floor | Test, model | Test, floor |
+|---|---:|---:|---:|---:|
+{% for m in order %}
+| {{ names[m] }} | {{ v("models.fallback.metric_" ~ m ~ ".dev") if has("models.fallback.metric_" ~ m ~ ".dev") else "not yet" }} | {{ v("models.floors.metric_" ~ m ~ ".dev") }} | {{ v("models.test.fill.fallback.metric_" ~ m ~ ".kappa") if has("models.test.fill.fallback.metric_" ~ m ~ ".kappa") else "not yet" }} | {{ v("models.test.fill.floors.metric_" ~ m ~ ".kappa") if has("models.test.fill.floors.metric_" ~ m ~ ".kappa") else "not yet" }} |
+{% endfor %}
+{% else %}
+The model's results are not in the manifest yet. The floor's development kappas:
+
+| Metric | Development, floor |
+|---|---:|
+{% for m in order %}
+| {{ names[m] }} | {{ v("models.floors.metric_" ~ m ~ ".dev") }} |
+{% endfor %}
+{% endif %}
+
+The kappas are point values; no criterion is set on a single metric, and the band's interval is in
+the band card.
+
+## Against the floor
+
+The floor reads the same text as TF-IDF beside the same filer and CISA values, one logistic
+regression per metric, on the same rows.
+{% if has("models.fallback.metric_AV.dev") %}
+The table above gives both on each window.
+{% endif %}
+{% if has("models.floors.metrics.mean_kappa") %}
+The floor's mean development kappa over the eight is {{ v("models.floors.metrics.mean_kappa") }}.
+{% endif %}
+
+## The calibration
+
+Each head is scaled by its own temperature, fit on development by negative log likelihood, and its
+conformal sets are fit on the scaled development probabilities.
+{% if has("models.test.conformal.metric_AV.coverage") %}
+
+| Metric | Test coverage | Mean set size |
+|---|---:|---:|
+{% for m in order %}
+| {{ names[m] }} | {{ v("models.test.conformal.metric_" ~ m ~ ".coverage") }} | {{ v("models.test.conformal.metric_" ~ m ~ ".mean_size") }} |
+{% endfor %}
+{% endif %}
+
+## The slices
+
+The plan slices the fill models by the band kappa, so the slices are in the band card.
+
+{% include "models/_fill_bias.md.j2" %}
+
+## The limits
+
+- A filer's vector, when there is one, is a feature, so a head can repeat a filer's metric that the
+  NVD would change.
+- On development the floor agrees with the NVD least on attack complexity and privileges required,
+  and those are the two heads to read with the most care.
+- One seed, one draw, and nothing after day 0.
+
+{{ statement() }}

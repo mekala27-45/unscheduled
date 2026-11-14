@@ -1,0 +1,5 @@
+The windows are cut by publication date (config/splits.yaml). Train, everything published before
+2024, fits the model; development, all of 2024, chooses it; test, from 2025 to the end of March 2026,
+judges it once; and the shadow window, from 15 April 2026 on, is where it predicts. The first two weeks
+of April 2026 are a gap no model uses. Every input is the value known at the end of the publication
+day (day 0), and the labels are what the NVD and KEV say at the lake cut.

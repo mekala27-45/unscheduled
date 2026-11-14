@@ -1,0 +1,20 @@
+## The selection bias note
+
+The NVD's labels are not a random sample of CVEs. Since 15 April 2026 it analyzes a chosen part of
+the new ones, so a score on the CVEs it analyzed says less about the ones it skipped. The shadow CVEs
+the NVD did analyze are weighted by the odds that a CVE like them was skipped, from the Phase 1 domain
+classifier, and the band kappa is shown plain and weighted, never one without the other.
+{% if has("models.reweighting.fallback.plain_qwk") %}
+For the primary model's band: {{ v("models.reweighting.fallback.plain_qwk") }} plain and
+{{ v("models.reweighting.fallback.weighted_qwk") }} weighted, on an effective sample of
+{{ v("models.reweighting.fallback.ess") }} CVEs.
+{% else %}
+The weighted view is not in the manifest yet.
+{% endif %}
+The filer's own values are features, and they are missing for many CVEs.
+{% if has("models.floors.reference.floor_qwk_with_filer") %}
+On development the floor's band agrees with the NVD at {{ v("models.floors.reference.floor_qwk_with_filer") }}
+on the CVEs whose filer gave a band and at {{ v("models.floors.reference.floor_qwk_without_filer") }} on
+the rest.
+{% endif %}
+The slices by filer and filer type in the band card show where the model stands on each.

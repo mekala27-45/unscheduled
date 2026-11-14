@@ -1,0 +1,74 @@
+# Model card: the weakness
+
+unscheduled-cwe predicts the CWE the NVD would assign a CVE, from what was public at the end of the
+day it was published. It is a head of the primary fill model, the CPU fallback of the plan, over the
+most common CWEs of train and a class for every other one, scored by macro F1 so a rare weakness
+counts as much as a common one. Every value is labeled as a prediction with its model and version.
+
+## What it is for, and not for
+
+It is for suggesting the likely weakness while the NVD field is empty, with the next candidates
+beside the first. It is not for filing a CWE in anyone's name, not for a weakness outside the classes
+it was fit on, which it can only call other, and not for a CVE published before 2024.
+
+## The data and its window
+
+{% include "models/_windows.md.j2" %}
+
+{% if has("models.sets.cwe_classes") %}
+It learns from the train CVEs with an NVD CWE, over {{ v("models.sets.cwe_classes") }} classes,
+counting the class for every other CWE.
+{% endif %}
+
+## The metrics, with intervals
+
+{% if has("models.fallback.cwe.dev") %}
+On development the macro F1 is {{ v("models.fallback.cwe.dev") }}.
+{% else %}
+The development result is not in the manifest yet.
+{% endif %}
+{% if has("models.test.fill.fallback.cwe.macro_f1") %}
+On test, scored once, the macro F1 is {{ v("models.test.fill.fallback.cwe.macro_f1") }}, the first
+candidate is right for {{ v("models.test.fill.fallback.cwe.top1_accuracy") }} of the CVEs and the
+first five hold the NVD's CWE for {{ v("models.test.fill.fallback.cwe.top5_accuracy") }}. These are
+point values; no criterion is set on the CWE.
+{% else %}
+Test has not been scored yet.
+{% endif %}
+
+## Against the floor
+
+The floor reads the same text as TF-IDF beside the same filer and CISA values, including the
+filer's own CWE set, on the same rows.
+{% if has("models.floors.cwe.dev") %}
+On development the floor's macro F1 is {{ v("models.floors.cwe.dev") }}, its first candidate is right
+for {{ v("models.floors.cwe.dev_accuracy") }} of the CVEs and its first five hold the NVD's CWE for
+{{ v("models.floors.cwe.dev_top5_accuracy") }}.
+{% endif %}
+{% if has("models.test.fill.floors.cwe.macro_f1") %}
+On test the floor's macro F1 is {{ v("models.test.fill.floors.cwe.macro_f1") }}, with
+{{ v("models.test.fill.floors.cwe.top1_accuracy") }} at the first candidate and
+{{ v("models.test.fill.floors.cwe.top5_accuracy") }} in the first five.
+{% endif %}
+
+## The calibration
+
+The CWE head is scaled by its own temperature, fit on development by negative log likelihood like
+the other heads. Conformal sets are fit for the band and the eight metrics only; for the CWE the
+console shows the five most likely candidates and the probability of the first.
+
+## The slices
+
+The plan slices the fill models by the band kappa, so the slices are in the band card.
+
+{% include "models/_fill_bias.md.j2" %}
+
+## The limits
+
+- The filer's CWE set at day 0 is a feature, so the head can repeat a filer's CWE the NVD would
+  change, and where the filer named none it reads the text alone.
+- A miss can be a near miss, a parent or a child of the NVD's CWE in the CWE tree, and the metrics
+  count it as wrong.
+- One seed, one draw, and nothing after day 0.
+
+{{ statement() }}

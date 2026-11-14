@@ -1,0 +1,77 @@
+{% set plan = data("evaluation/phase2_plan.yaml") %}
+{% set criteria = data("config/criteria.yaml") %}
+# The models
+
+Phase 2 fills in what the NVD no longer writes for most new CVEs and ranks them by the chance of
+exploitation. Six registered models do it, each with a card in report/models/ that says what it is
+for and not for, its data and window, its metrics with intervals, its floor, its calibration, its
+slices, the selection bias it carries and its limits. Every number below is read from the manifest;
+the method notes are in docs/models.md.
+
+## The two criteria
+
+C1: {{ criteria.criteria[0].sentence }}
+
+{% if has("models.test.c1.verdict") %}
+The band's test kappa is {{ v("models.test.c1.kappa") }} ({{ v("models.test.c1.kappa_low") }} to
+{{ v("models.test.c1.kappa_high") }}), the floor's {{ v("models.test.c1.floor_kappa") }}, the paired
+difference {{ v("models.test.c1.difference") }} ({{ v("models.test.c1.difference_low") }} to
+{{ v("models.test.c1.difference_high") }}) and the calibration error {{ v("models.test.c1.ece") }}.
+**C1 is {{ v("models.test.c1.verdict") }}.**
+{% else %}
+Not scored yet: test is scored once, after the operating points are frozen.
+{% endif %}
+
+C2: {{ criteria.criteria[1].sentence }}
+
+{% if has("models.test.c2.verdict") %}
+The model's top five percent holds {{ v("models.test.c2.recall") }} ({{ v("models.test.c2.recall_low") }}
+to {{ v("models.test.c2.recall_high") }}) of the {{ v("models.test.c2.positives") }} test CVEs listed
+within 180 days. EPSS holds {{ v("models.test.c2.epss_day_1") }} at day 1
+({{ v("models.test.c2.reading_day_1") }}), {{ v("models.test.c2.epss_day_7") }} at day 7
+({{ v("models.test.c2.reading_day_7") }}) and {{ v("models.test.c2.epss_day_30") }} at day 30
+({{ v("models.test.c2.reading_day_30") }}). **C2 is {{ v("models.test.c2.verdict") }}.**
+{% else %}
+Not scored yet.
+{% endif %}
+
+## The cards
+
+| Card | Registered model | What it gives |
+|---|---|---|
+| report/models/band.md | unscheduled-band | The CVSS 3.1 severity band, with its probability and conformal set |
+| report/models/metrics.md | unscheduled-metrics | The eight CVSS 3.1 base metrics, each with its set |
+| report/models/cwe.md | unscheduled-cwe | The weakness, with the five most likely |
+| report/models/exploit.md | unscheduled-exploit | The chance of a KEV listing within 180 days, ranked on day 0 |
+| report/models/survival.md | unscheduled-survival | The chance of a listing within 30 days, 90 days and 180 days |
+| report/models/product.md | unscheduled-product | Candidate vendor and product names from the CPE dictionary |
+
+{% if has("models.registry.versions_table") %}
+## The registry
+
+{{ v("models.registry.versions") }} versions over {{ v("models.registry.models") }} registered models,
+each a candidate, chosen on development, or scored on test.
+
+{{ table("models.registry.versions_table") }}
+{% endif %}
+
+## What the plan said before any result
+
+These were written into evaluation/phase2_plan.yaml and hashed before any model was fit. They are
+kept as written, to be read against the cards.
+
+{% for line in plan.predictions_made_before_results %}
+- {{ line }}
+{% endfor %}
+
+{% if has("models.taxonomy") %}
+## The misses, read
+
+{{ v("models.taxonomy.drawn") }} of the {{ v("models.taxonomy.misses") }} development band misses of the
+primary model, drawn with the default seed and coded by reading into categories named while reading.
+Never from test.
+
+{{ table("models.taxonomy") }}
+{% endif %}
+
+{{ statement() }}
