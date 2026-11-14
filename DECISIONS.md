@@ -324,3 +324,10 @@ machine sent the two connections out from two addresses, one of which had carrie
 lookups. Eight lookups over one connection counted down by one each. scripts/check_persistence.py
 --base-url now sends both lookups over one connection, and the load test ran again from the start,
 twenty quiet minutes included.
+
+## 2026-11-14: a checklist line is done when its evidence holds
+
+scripts/build_manifest.py marked a checklist line done when its evidence files existed and were not
+empty, so a record of a failed run, or a live check with only its awake phase, counted. A line is
+now done when every file of its evidence exists, every JSON record that states a result states a
+pass, and results/live_check.json holds a pass for the site awake and asleep.

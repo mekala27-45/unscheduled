@@ -77,7 +77,7 @@ says nothing about whether its output is right.
 | 8 | done | The matcher and osv-scanner agree; the CPE contrast measured | results/exposure/disagreements.json, results/exposure/summary.json |
 | 9 | done | The legacy script characterized and replaced by the adapter | report/legacy.md |
 | 10 | done | The API live on Vercel with Neon, loaded only by the sync, verified from a separate client | results/live/api_verify.json |
-| 11 | not done | Persistence observed independently; schemathesis green; the load test with the cold start | results/load/c8.json |
+| 11 | done | Persistence observed independently; schemathesis green; the load test with the cold start | results/load/c8.json |
 | 12 | done | The CLI gives the same answers as the API on the same inputs | results/cli_parity.json |
 | 13 | done | The design system in place with the palette validator green in CI | web/styles/tokens.css, results/design/palette.json |
 | 14 | done | The console, the ruler, the landing, the docs and the report live on Vercel | results/live/web_verify.json |

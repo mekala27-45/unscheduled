@@ -1,0 +1,18 @@
+{
+ "base_url": "https://unscheduled-api.vercel.app",
+ "budget_remaining": [
+  "1999",
+  "1998"
+ ],
+ "checked_at": "2026-11-14T00:41:34+00:00",
+ "data_version": [
+  "serving-202611131326+7a6e339ce211"
+ ],
+ "mode": "base-url",
+ "passed": true,
+ "problems": [],
+ "statuses": [
+  200,
+  200
+ ]
+}

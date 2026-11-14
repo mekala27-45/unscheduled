@@ -307,7 +307,7 @@
  },
  "neon": {
   "status": "probed",
-  "probed_at": "2026-11-12T00:23:39+00:00",
+  "probed_at": "2026-11-14T00:41:54+00:00",
   "console": {
    "project": "unscheduled",
    "region": "AWS US East 1 (N. Virginia)",
@@ -320,11 +320,29 @@
    "branches": 2,
    "linked_vercel_project": "unscheduled-api"
   },
-  "from_the_api": "not yet connected"
+  "from_the_api": {
+   "configured": true,
+   "variable": "DATABASE_URL_UNPOOLED",
+   "variables_found": [
+    "DATABASE_URL_UNPOOLED",
+    "DATABASE_URL"
+   ],
+   "reachable": true,
+   "schema_name": "unscheduled",
+   "migration": "0001",
+   "server_version": "18.7 (a21afb5)",
+   "pgvector_available": true,
+   "pgvector_installed": false,
+   "database_size_bytes": 674988032,
+   "storage_ceiling_mb": 800,
+   "storage_ceiling_bytes": 800000000,
+   "storage_share_used": 0.8437,
+   "error": null
+  }
  },
  "vercel": {
   "status": "probed",
-  "probed_at": "2026-11-12T00:23:39+00:00",
+  "probed_at": "2026-11-14T00:41:54+00:00",
   "console": {
    "plan": "Hobby",
    "api_project": "unscheduled-api",
@@ -344,13 +362,13 @@
   },
   "api": {
    "health_status": 200,
-   "first_request_ms": 2213,
-   "warm_p50_ms": 169,
-   "warm_max_ms": 274
+   "first_request_ms": 427,
+   "warm_p50_ms": 172,
+   "warm_max_ms": 206
   },
   "web": {
    "status": 200,
-   "ms": 325,
+   "ms": 565,
    "statement_present": true,
    "nvd_notice_present": true
   }

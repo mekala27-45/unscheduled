@@ -22,13 +22,37 @@ if __package__ in {None, ""}:
 import yaml
 from unscheduled_core.manifest import ManifestBuilder, write
 
+LIVE_CHECK_PHASES = ("awake", "asleep")
+
+
+def evidence_holds(path: Path) -> bool:
+    """A piece of evidence exists and is not empty. A JSON record that states a result must state a
+    pass, and the live check must hold a pass for each of its phases: a record of a failed run is
+    evidence of the failure, not of the line."""
+    if not path.exists() or path.stat().st_size == 0:
+        return False
+    if path.suffix != ".json":
+        return True
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return False
+    if not isinstance(data, dict):
+        return True
+    if path.name == "live_check.json":
+        return all(
+            isinstance(data.get(phase), dict) and data[phase].get("result") == "pass"
+            for phase in LIVE_CHECK_PHASES
+        )
+    return bool(data.get("result", "pass") == "pass")
+
 
 def checklist_rows(root: Path) -> list[list[str | int | None]]:
     spec = yaml.safe_load((root / "config" / "checklist.yaml").read_text(encoding="utf-8"))
     rows: list[list[str | int | None]] = []
     for item in spec["items"]:
         evidence = [str(e) for e in item["evidence"]]
-        ok = all((root / e).exists() and (root / e).stat().st_size > 0 for e in evidence)
+        ok = all(evidence_holds(root / e) for e in evidence)
         rows.append([int(item["n"]), "done" if ok else "not done", str(item["text"]), ", ".join(evidence)])
     return rows
 

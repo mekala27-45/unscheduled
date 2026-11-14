@@ -1,17 +1,35 @@
 {
- "probed_at": "2026-11-12T00:23:39+00:00",
+ "probed_at": "2026-11-14T00:41:54+00:00",
  "api": {
   "health_status": 200,
-  "first_request_ms": 2213,
-  "warm_p50_ms": 169,
-  "warm_max_ms": 274,
-  "version": "0.1.0.dev0",
-  "database": "not yet connected",
-  "cors_allows_web_origin": false
+  "first_request_ms": 427,
+  "warm_p50_ms": 172,
+  "warm_max_ms": 206,
+  "version": "0.1.0",
+  "database": {
+   "configured": true,
+   "variable": "DATABASE_URL_UNPOOLED",
+   "variables_found": [
+    "DATABASE_URL_UNPOOLED",
+    "DATABASE_URL"
+   ],
+   "reachable": true,
+   "schema_name": "unscheduled",
+   "migration": "0001",
+   "server_version": "18.7 (a21afb5)",
+   "pgvector_available": true,
+   "pgvector_installed": false,
+   "database_size_bytes": 674988032,
+   "storage_ceiling_mb": 800,
+   "storage_ceiling_bytes": 800000000,
+   "storage_share_used": 0.8437,
+   "error": null
+  },
+  "cors_allows_web_origin": true
  },
  "web": {
   "status": 200,
-  "ms": 325,
+  "ms": 565,
   "statement_present": true,
   "nvd_notice_present": true
  },
@@ -51,6 +69,6 @@
    "default_token_permissions": "read and write, narrowed by every workflow to what it needs",
    "actions_may_open_pull_requests": true
   },
-  "age_days": 5
+  "age_days": 7
  }
 }

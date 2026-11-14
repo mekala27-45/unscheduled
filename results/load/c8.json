@@ -1,0 +1,57 @@
+{
+ "base_url": "https://unscheduled-api.vercel.app",
+ "client": "scripts/load_test.py with httpx, a separate process with no database credential",
+ "commit": "f2a8e5ec81b2ff4fb0b6d77782fb12d1d64ca127",
+ "started_at": "2026-11-14T00:21:18Z",
+ "cold": {
+  "idle_minutes_before": 20.0,
+  "at": "2026-11-14T00:41:18Z",
+  "health": {
+   "status": 200,
+   "ms": 4589.0
+  },
+  "first_lookup": {
+   "cve": "CVE-2026-125659",
+   "status": 200,
+   "ms": 147.3
+  }
+ },
+ "warm": {
+  "lookups": 300,
+  "workers": 5,
+  "distinct_cves": 188,
+  "seconds": 9.1,
+  "per_second": 33.1,
+  "statuses": {
+   "200": 300
+  },
+  "ok": 300,
+  "ms": {
+   "p50": 94.7,
+   "p95": 265.1,
+   "p99": 2741.2,
+   "max": 3397.3,
+   "mean": 149.8
+  }
+ },
+ "persistence": {
+  "exit_code": 0,
+  "file": "results/load/persistence_live.json",
+  "result": "pass",
+  "mode": "base-url"
+ },
+ "schemathesis": {
+  "test": "tests/api/test_schemathesis.py",
+  "exit_code": 0,
+  "summary": "1 passed, 12 subtests passed in 7.24s",
+  "result": "pass"
+ },
+ "c8_lookup": {
+  "threshold_p95_ms": 1500.0,
+  "p95_ms": 265.1,
+  "spend": "zero: the Vercel Hobby and Neon free plans, no card on either",
+  "verdict": "met"
+ },
+ "finished_at": "2026-11-14T00:41:44Z",
+ "result": "pass"
+}

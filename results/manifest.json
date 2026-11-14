@@ -6635,7 +6635,7 @@
    }
   },
   "build.checklist_done": {
-   "value": 15,
+   "value": 16,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/build_manifest.py",
@@ -6652,6 +6652,17 @@
     "origin": "scripts/build_manifest.py",
     "population": "the section 20 checklist",
     "source": "build",
+    "as_of": "2026-11-14",
+    "note": null
+   }
+  },
+  "criteria.c8.verdict": {
+   "value": "lookups met (p95 265 ms against 1,500 ms); the triage run is measured in Phase 4",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live",
     "as_of": "2026-11-14",
     "note": null
    }
@@ -8259,6 +8270,94 @@
     "population": "CVEs published in the train window, rejected excluded",
     "source": "lake",
     "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "load.cold_health_ms": {
+   "value": 4589.0,
+   "fmt": "ms",
+   "provenance": {
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live",
+    "as_of": "2026-11-14",
+    "note": null
+   }
+  },
+  "load.cold_lookup_ms": {
+   "value": 147.3,
+   "fmt": "ms",
+   "provenance": {
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live",
+    "as_of": "2026-11-14",
+    "note": null
+   }
+  },
+  "load.idle_minutes": {
+   "value": 20.0,
+   "fmt": "min1",
+   "provenance": {
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live",
+    "as_of": "2026-11-14",
+    "note": null
+   }
+  },
+  "load.warm_lookups": {
+   "value": 300,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live",
+    "as_of": "2026-11-14",
+    "note": null
+   }
+  },
+  "load.warm_p50_ms": {
+   "value": 94.7,
+   "fmt": "ms",
+   "provenance": {
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live",
+    "as_of": "2026-11-14",
+    "note": null
+   }
+  },
+  "load.warm_p95_ms": {
+   "value": 265.1,
+   "fmt": "ms",
+   "provenance": {
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live",
+    "as_of": "2026-11-14",
+    "note": null
+   }
+  },
+  "load.warm_p99_ms": {
+   "value": 2741.2,
+   "fmt": "ms",
+   "provenance": {
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live",
+    "as_of": "2026-11-14",
+    "note": null
+   }
+  },
+  "load.warm_workers": {
+   "value": 5,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live",
+    "as_of": "2026-11-14",
     "note": null
    }
   }
@@ -13703,7 +13802,7 @@
     ],
     [
      11,
-     "not done",
+     "done",
      "Persistence observed independently; schemathesis green; the load test with the cold start",
      "results/load/c8.json"
     ],

@@ -2,9 +2,8 @@
 
 Triage for the CVEs the NVD no longer analyzes.
 
-Phase 1 of 5 is in progress: 15 of 18 checklist lines are done. Still missing:
+Phase 1 of 5 is in progress: 16 of 18 checklist lines are done. Still missing:
 
-- Persistence observed independently; schemathesis green; the load test with the cold start
 - The live check awake and asleep; reset and rederive reproduced every number
 - At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2
 

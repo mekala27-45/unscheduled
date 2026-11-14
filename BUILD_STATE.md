@@ -8,7 +8,7 @@ the manifest or a committed file: edit the template, then render.
 
 ```
 Phase            1 of 5, the ground truth
-Checklist        15 of 18 lines done (RESULTS.md)
+Checklist        16 of 18 lines done (RESULTS.md)
 Repository       public; every commit conventional; CI, web and exposure green on main
 Vercel           unscheduled-api (container) at unscheduled-api.vercel.app
                  unscheduled (web) at unscheduled-triage.vercel.app: the landing with its
@@ -23,7 +23,6 @@ Look approval    approved by Ajay on the evening of 11 November, New York time, 
 
 Open checklist lines:
 
-- Persistence observed independently; schemathesis green; the load test with the cold start
 - The live check awake and asleep; reset and rederive reproduced every number
 - At least fifty conventional commits; v0.1.0 tagged; BUILD_STATE.md written for Phase 2
 
@@ -83,5 +82,7 @@ design gates; then the cut-a-release skill, and Ajay pushes the tag.
   The strongest feature toward skipped is published month (months since 2026-04), so part of the shift is
   time since the change; the next ones are filer or type: filer_Wordfence; filer or type: filer_WPScan; filer or type: filer_Patchstack; filer or type: filer_AMD.
   Toward analyzed: filer or type: filer_microsoft; filer or type: filer_Chrome; word: n8n; word: flowise; filer or type: filer_adobe.
+- The API: the first lookup after 20.0 min idle took 147 ms; warm, p50
+  95 ms and p95 265 ms over 300 lookups (lookups met (p95 265 ms against 1,500 ms); the triage run is measured in Phase 4).
 - The look: approved by Ajay on the evening of 11 November, New York time; he asked for no change.
 - Kaggle GPU hours: 8 for the month (config/budgets.yaml), none used in Phase 1.
