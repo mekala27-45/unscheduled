@@ -144,6 +144,8 @@ export const API_MODELS: S["ModelsDocument"] = {
           positives: 120,
           top: 3150,
           model: { value: 0.61, low: 0.52, high: 0.7 },
+          floor: { value: 0.55, low: 0.46, high: 0.64 },
+          model_minus_floor: { value: 0.06, low: -0.02, high: 0.14, reading: "tie" },
           epss_day_1: { value: 0.49, low: 0.4, high: 0.58 },
           model_minus_epss_day_1: { value: 0.12, low: 0.03, high: 0.21, reading: "ahead" },
         },

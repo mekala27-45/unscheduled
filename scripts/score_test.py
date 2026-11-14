@@ -137,8 +137,11 @@ def c2(
     joined = population.join(scores, on="cve_id", how="left")
     truth = joined.get_column("kev_180").fill_null(False).cast(pl.Int8).to_numpy()
     model = joined.get_column(points["primary"]["exploitation"]).cast(pl.Float64).to_numpy()
+    # The model's own floor on the same rows, paired like EPSS: it does not decide C2, and every
+    # comparison carries its interval.
+    floor = joined.get_column(points["primary"]["exploitation_comparator"]).cast(pl.Float64).to_numpy()
     epss = epss_scores(bronze, joined.get_column("cve_id").to_list())
-    by = {"model": model, **{f"epss_day_{d}": epss[d] for d in EPSS_DAYS}}
+    by = {"model": model, "floor": floor, **{f"epss_day_{d}": epss[d] for d in EPSS_DAYS}}
     recalls = evaluate.recall_paired(truth, by, seed, reference="model", resamples=RESAMPLES)
     met = recalls["model"]["value"] >= criteria["threshold"]["recall_at_top5_min"]
     return {
@@ -451,6 +454,32 @@ def manifest_part(
         ("c2.verdict", c2r["verdict"], "text", pop2),
     ):
         m.value(f"models.test.{key}", value, fmt, origin=ORIGIN, population=population, source="models")
+    m.value(
+        "models.test.c2.floor",
+        c2r["recall_at_top5"]["floor"]["value"],
+        "pct1",
+        origin=ORIGIN,
+        population=f"{pop2}: the exploitation floor at day 0",
+        source="models",
+    )
+    m.value(
+        "models.test.c2.reading_floor",
+        c2r["recall_at_top5"]["model_minus_floor"]["reading"],
+        "text",
+        origin=ORIGIN,
+        population=f"{pop2}: the model against its floor",
+        source="models",
+    )
+    diff = c2r["recall_at_top5"]["model_minus_floor"]
+    for suffix, value in (("", diff["value"]), ("_low", diff["low"]), ("_high", diff["high"])):
+        m.value(
+            f"models.test.c2.difference_floor{suffix}",
+            float(value),
+            "spct1",
+            origin=ORIGIN,
+            population=f"{pop2}: the model's recall less its floor's, paired",
+            source="models",
+        )
     for d in EPSS_DAYS:
         m.value(
             f"models.test.c2.epss_day_{d}",

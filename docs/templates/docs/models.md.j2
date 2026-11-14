@@ -176,7 +176,8 @@ C2 asks: {{ criteria.criteria[1].sentence }}
 {% if has("models.test.c2.recall") %}
 The model holds {{ v("models.test.c2.recall") }} ({{ v("models.test.c2.recall_low") }} to
 {{ v("models.test.c2.recall_high") }}) of the {{ v("models.test.c2.positives") }} test listings in its
-top five percent. EPSS on day 1 holds {{ v("models.test.c2.epss_day_1") }}, a reading of
+top five percent{% if has("models.test.c2.floor") %}, and its floor {{ v("models.test.c2.floor") }}, a reading of
+{{ v("models.test.c2.reading_floor") }} for the model{% endif %}. EPSS on day 1 holds {{ v("models.test.c2.epss_day_1") }}, a reading of
 {{ v("models.test.c2.reading_day_1") }} for the model; on day 7 {{ v("models.test.c2.epss_day_7") }}
 ({{ v("models.test.c2.reading_day_7") }}) and on day 30 {{ v("models.test.c2.epss_day_30") }}
 ({{ v("models.test.c2.reading_day_30") }}). EPSS at day 7 and day 30 has seen days the model has

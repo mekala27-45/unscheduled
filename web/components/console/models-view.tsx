@@ -156,8 +156,8 @@ function Reliability({ bins, label }: { bins: Rec[]; label: string }) {
 
 function C2View({ c2 }: { c2: Rec }) {
   const r = isRec(c2.recall_at_top5) ? c2.recall_at_top5 : {};
-  const rows = ["model", "epss_day_1", "epss_day_7", "epss_day_30"].filter((k) => isRec(r[k]));
-  const names: Record<string, string> = { model: "The model, at publication", epss_day_1: "EPSS on day 1", epss_day_7: "EPSS on day 7", epss_day_30: "EPSS on day 30" };
+  const rows = ["model", "floor", "epss_day_1", "epss_day_7", "epss_day_30"].filter((k) => isRec(r[k]));
+  const names: Record<string, string> = { model: "The model, at publication", floor: "Its floor, at publication", epss_day_1: "EPSS on day 1", epss_day_7: "EPSS on day 7", epss_day_30: "EPSS on day 30" };
   return (
     <>
       <p className="mb-md">
