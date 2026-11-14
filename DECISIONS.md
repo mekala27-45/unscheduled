@@ -674,3 +674,39 @@ release does not carry it, so the build declares the table and records it as mis
 completeness.json, dbt_results.json and results/parts/lake.json) are replaced by that rebuild, so
 the committed lake numbers are again what the current code builds from the recorded release, and
 the models workflow's check of the lake digest compares against it.
+
+## 2026-11-14: the exploitation step pins its numeric kernels
+
+The exploitation step was run once more, on the same code and the same committed band floor (models
+run 43588159927), to see whether its search reproduces on another runner. It does not. That runner
+named its processor, an AMD EPYC 9V74 with AVX-512, and its search chose 222 leaves at a learning
+rate of 0.031 where the committed rerun chose 29 at 0.022; its LightGBM holds 37.8 percent of the
+127 development listings in its top five percent, against 27.6 percent for the rerun. Reset and
+rederive on this build machine, an Intel Xeon with AVX-512 and one BLAS thread, had chosen a third
+model, with 98 trees and a development average precision of 0.040. The rerun's runner did not name
+its processor; the models workflow prints it from the run above on. The floor moved too, in its
+fourth digit: a development average precision of 0.04913 in the rerun, 0.04911 in the new run and
+0.0495 here. So the rows LightGBM reads already differ before its search starts.
+
+The likely cause is the numeric kernels. liblinear takes its vector operations from scipy's
+OpenBLAS, which picks its kernels for the processor it finds and splits sums over the threads it
+has, and numpy picks its own vector code for the processor when it is imported. The out of fold
+refits of the band floor then differ in their last bits from one machine to the next, and fifty
+trials over folds with 26 to 74 listings turn those bits into different trees. A model that lands
+elsewhere on every machine cannot pass reset and rederive, which checklist line 17 asks of every
+CPU model.
+
+So every fit of the models workflow, and every refit of reset and rederive, now runs with the
+kernels pinned (unscheduled_models.numerics): OpenBLAS on its Haswell kernels with one thread, and
+numpy without its AVX-512 code, which every x86-64 runner and this machine can run. A full
+exploitation run refuses to start without the pins, and its record keeps the kernels and threads
+the process actually ran with.
+
+The rule, committed before the pinned run: the exploitation step is fit once more in the models
+workflow with the pins, and refit on this machine with the same pins. If the two agree on every
+number of the exploitation part, the pinned run replaces the rerun as the exploitation model,
+whatever its development numbers, and the rerun's record is kept as results/models/rank_rerun.json
+beside the first run's. If they do not agree, the rerun stands, and checklist line 17 records the
+difference and its cause. Nothing else changes: the search, the trials, the folds, the seed and the
+rule that chooses. The new run's record is kept as results/models/rank_unpinned.json, the evidence
+for this entry.

@@ -122,8 +122,11 @@ def step_env(tree: Path) -> dict[str, str]:
     """The environment of a step in the worktree. The packages are imported from this checkout's
     environment, and they find the repository root from their own location unless UNSCHED_ROOT names
     it, so without it every step would read and write this checkout instead of the worktree. The
-    hash seed is fixed as lake.yml fixes it."""
-    return {**os.environ, "UNSCHED_ROOT": str(tree), "PYTHONHASHSEED": "0"}
+    hash seed is fixed as lake.yml fixes it, and the numeric kernels as the models workflow pins
+    them (unscheduled_models.numerics), so a refit here runs the sums the runner ran."""
+    from unscheduled_models.numerics import PINS
+
+    return {**os.environ, **PINS, "UNSCHED_ROOT": str(tree), "PYTHONHASHSEED": "0"}
 
 
 def sh(args: list[str], cwd: Path = ROOT) -> str:
@@ -399,7 +402,14 @@ def main(argv: list[str] | None = None) -> int:
     try:
         record["restored"] = extract(folder, tree)
         timings = {}
-        record["build_settings"] = {"memory": args.memory, "threads": args.threads}
+        from unscheduled_models import numerics
+
+        record["build_settings"] = {
+            "memory": args.memory,
+            "threads": args.threads,
+            "processor": numerics.processor(),
+            "numeric_pins": numerics.PINS,
+        }
         for step in steps(args.memory, args.threads):
             t0 = time.monotonic()
             subprocess.run([sys.executable, *step], cwd=tree, env=step_env(tree), check=True)

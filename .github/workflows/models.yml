@@ -58,6 +58,12 @@ jobs:
       PYTHONHASHSEED: "0"
       GH_TOKEN: ${{ github.token }}
       STEP: ${{ inputs.step }}
+      # The numeric kernels every fit runs with, as unscheduled_models.numerics pins them, so a
+      # fit gives the same numbers on any processor (DECISIONS.md, the exploitation step pins its
+      # numeric kernels). tests/models/test_numerics.py holds these to that module.
+      OPENBLAS_CORETYPE: Haswell
+      OPENBLAS_NUM_THREADS: "1"
+      NPY_DISABLE_CPU_FEATURES: X86_V4 AVX512_ICL AVX512_SPR
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

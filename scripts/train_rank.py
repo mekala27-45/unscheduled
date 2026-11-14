@@ -11,7 +11,10 @@ the train population, and scores development. Test and shadow get scores for eve
 since whether a test CVE was listed before publication is a label: scripts/score_test.py leaves those
 out when it scores. Writes the models and the scores to --out (never committed) and commits
 results/models/rank.json and the manifest part results/parts/rank.json. Runs in the models workflow
-beside the floors, on a runner with the memory the band floor's text needs.
+beside the floors, on a runner with the memory the band floor's text needs. A full run refuses to
+start unless the numeric pins of unscheduled_models.numerics are in its environment, as the models
+workflow and reset and rederive set them, since without them the search lands elsewhere on another
+machine; the record keeps the kernels and threads the process actually ran with.
 """
 
 from __future__ import annotations
@@ -38,7 +41,7 @@ import polars as pl
 import sklearn
 import yaml
 from unscheduled_core.manifest import ManifestBuilder
-from unscheduled_models import rank, sets
+from unscheduled_models import numerics, rank, sets
 
 from scripts.train_floors import file_sha256, models_stage_hash, plan_seed, verify_sets
 
@@ -174,6 +177,10 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     args = parser.parse_args(argv)
     if not args.sample and (args.trials or args.variant or args.band_c):
         raise SystemExit("rank: --trials, --variant and --band-c are for a smoke run with --sample only")
+    gaps = numerics.missing()
+    if not args.sample and gaps:
+        settings = " ".join(f"{name}={value!r}" for name, value in gaps.items())
+        raise SystemExit(f"rank: the numeric pins are not set; start the run with {settings}")
     started = time.monotonic()
     out = args.out or root / "data" / "models" / ("rank-sample" if args.sample else "rank")
     seed = plan_seed(root)
@@ -278,6 +285,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
             "machine": platform.machine(),
             "cpus": os.cpu_count(),
             "threads": args.jobs,
+            "numerics": numerics.describe(),
             "github_run_id": os.environ.get("GITHUB_RUN_ID"),
             "github_sha": os.environ.get("GITHUB_SHA"),
         },
