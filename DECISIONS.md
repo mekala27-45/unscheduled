@@ -388,3 +388,21 @@ One flaw in the registered rank population surfaced too, and is taken up as a ch
 any exploitation model is fit: KEV began on 3 November 2021, so a CVE published before 7 May 2021
 could not be listed within 180 days of publication, and the plan's population and folds would label
 every earlier CVE negative by construction.
+
+## 2026-11-14: change request, the exploitation population starts when KEV could list a CVE
+
+Change to evaluation/phase2_plan.yaml after its hash, recorded before any exploitation or survival
+model was fit, so there are no earlier results to keep beside the new ones.
+
+- Old: populations.rank was every published CVE in the window, rejected and Q03 excluded, and
+  exploit_lgbm fit on the years up to Y and validated on Y plus 1, for Y from 2018 to 2022.
+- New: the rank population, for the floor, LightGBM and both survival models, is every published
+  CVE from 7 May 2021 on, rejected and Q03 excluded. The LightGBM folds are half years inside that
+  part of train: fit before 1 July 2022 and validate on the second half of 2022, fit before 2023
+  and validate on its first half, fit before 1 July 2023 and validate on its second half. The
+  objective stays the mean average precision over the folds, and development and test are
+  unchanged.
+- Why: CISA started the KEV catalog on 3 November 2021, so a CVE published before 7 May 2021 could
+  not be listed within 180 days of its publication, and the old population and folds labeled every
+  earlier CVE negative by construction. All 278 train CVEs listed within 180 days were published on
+  or after that date, and the rank part of train holds 67,566 CVEs.
