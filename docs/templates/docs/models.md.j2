@@ -71,7 +71,7 @@ The label is a KEV listing within 180 days of publication, and the population st
 the day KEV could first list a CVE within that window (DECISIONS.md, the change request on the
 exploitation population). The floor is a logistic regression with balanced class weights; LightGBM
 reads the same day 0 features and the band floor's four probabilities, taken out of fold for the
-CVEs the band floor was fit on. Its search, {{ plan.models.exploit_lgbm.search }}, runs on the half
+CVEs the band floor was fit on and from the committed floor, the one the API serves, for the rest. Its search, {{ plan.models.exploit_lgbm.search }}, runs on the half
 year folds of that change request.
 
 {% if has("models.rank.lgbm.dev_average_precision") %}
@@ -84,6 +84,18 @@ So LightGBM is behind the floor at the very top of its ranking, where average pr
 and ahead across the top five percent, the depth C2 judges. Both are reported, and C2 is judged on
 LightGBM, the exploitation model the operating points name.
 {% endif %}
+{% if raw("models.rank.lgbm.dev_average_precision") < raw("models.rank.floor.dev_average_precision") and raw("models.rank.lgbm.dev_recall_at_top5") < raw("models.rank.floor.dev_recall_at_top5") %}
+LightGBM is behind its floor on both measures in this run.
+{% endif %}
+{% endif %}
+{% if has("models.rank_refit.lgbm.dev_recall_at_top5") %}
+The first exploitation run, replaced because it projected with its own refit of the band floor
+(DECISIONS.md, the exploitation run reads the committed band floor), chose other trees from the same
+search: its LightGBM held {{ v("models.rank_refit.lgbm.dev_recall_at_top5") }} of the development listings in
+its top five percent, with an average precision of {{ v("models.rank_refit.lgbm.dev_average_precision") }}{% if raw("models.rank_refit.floor.dev_recall_at_top5") == raw("models.rank.floor.dev_recall_at_top5") %}, while
+the floor held {{ v("models.rank.floor.dev_recall_at_top5") }} in both runs{% endif %}. A search that moves this far on
+so small a change in its inputs is choosing on noise: three folds with few listings each cannot rank
+fifty trials (DECISIONS.md, the exploitation rerun). The rerun stands, as committed before it ran.
 {% endif %}
 
 ## Time to KEV

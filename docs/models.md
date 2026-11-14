@@ -75,16 +75,21 @@ The label is a KEV listing within 180 days of publication, and the population st
 the day KEV could first list a CVE within that window (DECISIONS.md, the change request on the
 exploitation population). The floor is a logistic regression with balanced class weights; LightGBM
 reads the same day 0 features and the band floor's four probabilities, taken out of fold for the
-CVEs the band floor was fit on. Its search, Optuna TPE, 50 trials, runs on the half
+CVEs the band floor was fit on and from the committed floor, the one the API serves, for the rest. Its search, Optuna TPE, 50 trials, runs on the half
 year folds of that change request.
 
-On development, LightGBM's average precision is 0.027
+On development, LightGBM's average precision is 0.019
 against the floor's 0.049, and it holds
-47.2% of the development listings in its top
+27.6% of the development listings in its top
 five percent, against 40.9% for the floor.
-So LightGBM is behind the floor at the very top of its ranking, where average precision weighs most,
-and ahead across the top five percent, the depth C2 judges. Both are reported, and C2 is judged on
-LightGBM, the exploitation model the operating points name.
+LightGBM is behind its floor on both measures in this run.
+The first exploitation run, replaced because it projected with its own refit of the band floor
+(DECISIONS.md, the exploitation run reads the committed band floor), chose other trees from the same
+search: its LightGBM held 47.2% of the development listings in
+its top five percent, with an average precision of 0.027, while
+the floor held 40.9% in both runs. A search that moves this far on
+so small a change in its inputs is choosing on noise: three folds with few listings each cannot rank
+fifty trials (DECISIONS.md, the exploitation rerun). The rerun stands, as committed before it ran.
 
 ## Time to KEV
 

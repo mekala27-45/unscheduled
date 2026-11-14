@@ -8912,7 +8912,7 @@
    }
   },
   "models.rank.floor.dev_auroc": {
-   "value": 0.8337147458120812,
+   "value": 0.8335947319763558,
    "fmt": "float3",
    "provenance": {
     "origin": "scripts/train_rank.py",
@@ -8923,7 +8923,7 @@
    }
   },
   "models.rank.floor.dev_average_precision": {
-   "value": 0.049454205493164365,
+   "value": 0.04913164358709344,
    "fmt": "float3",
    "provenance": {
     "origin": "scripts/train_rank.py",
@@ -8945,7 +8945,7 @@
    }
   },
   "models.rank.lgbm.dev_auroc": {
-   "value": 0.8601518249226687,
+   "value": 0.8325173777659578,
    "fmt": "float3",
    "provenance": {
     "origin": "scripts/train_rank.py",
@@ -8956,7 +8956,7 @@
    }
   },
   "models.rank.lgbm.dev_average_precision": {
-   "value": 0.026945202152730493,
+   "value": 0.019454321096411292,
    "fmt": "float3",
    "provenance": {
     "origin": "scripts/train_rank.py",
@@ -8967,7 +8967,7 @@
    }
   },
   "models.rank.lgbm.dev_recall_at_top5": {
-   "value": 0.47244094488188976,
+   "value": 0.2755905511811024,
    "fmt": "pct1",
    "provenance": {
     "origin": "scripts/train_rank.py",
@@ -9000,7 +9000,7 @@
    }
   },
   "models.rank.trees": {
-   "value": 287,
+   "value": 199,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/train_rank.py",
@@ -9016,6 +9016,149 @@
    "provenance": {
     "origin": "scripts/train_rank.py",
     "population": "the exploitation models: the rank population from 7 May 2021, Q03 left out",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank_refit.dev_positives": {
+   "value": 127,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the exploitation models: the rank population from 7 May 2021, Q03 left out (the first exploitation run, on a refit of the band floor; results/models/rank_refit.json)",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank_refit.dev_rows": {
+   "value": 39919,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the exploitation models: the rank population from 7 May 2021, Q03 left out (the first exploitation run, on a refit of the band floor; results/models/rank_refit.json)",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank_refit.floor.C": {
+   "value": "0.1",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the regularization the exploitation floor chose on development (the first exploitation run, on a refit of the band floor; results/models/rank_refit.json)",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank_refit.floor.dev_auroc": {
+   "value": 0.8337147458120812,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "development window CVEs published, Q03 left out: the logistic floor, KEV within 180 days (the first exploitation run, on a refit of the band floor; results/models/rank_refit.json)",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank_refit.floor.dev_average_precision": {
+   "value": 0.049454205493164365,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "development window CVEs published, Q03 left out: the logistic floor, KEV within 180 days (the first exploitation run, on a refit of the band floor; results/models/rank_refit.json)",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank_refit.floor.dev_recall_at_top5": {
+   "value": 0.4094488188976378,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "development window CVEs published, Q03 left out: the logistic floor, KEV within 180 days (the first exploitation run, on a refit of the band floor; results/models/rank_refit.json)",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank_refit.lgbm.dev_auroc": {
+   "value": 0.8601518249226687,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "development window CVEs published, Q03 left out: LightGBM, KEV within 180 days (the first exploitation run, on a refit of the band floor; results/models/rank_refit.json)",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank_refit.lgbm.dev_average_precision": {
+   "value": 0.026945202152730493,
+   "fmt": "float3",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "development window CVEs published, Q03 left out: LightGBM, KEV within 180 days (the first exploitation run, on a refit of the band floor; results/models/rank_refit.json)",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank_refit.lgbm.dev_recall_at_top5": {
+   "value": 0.47244094488188976,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "development window CVEs published, Q03 left out: LightGBM, KEV within 180 days (the first exploitation run, on a refit of the band floor; results/models/rank_refit.json)",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank_refit.train_positives": {
+   "value": 278,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the exploitation models: the rank population from 7 May 2021, Q03 left out (the first exploitation run, on a refit of the band floor; results/models/rank_refit.json)",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank_refit.train_rows": {
+   "value": 67520,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the exploitation models: the rank population from 7 May 2021, Q03 left out (the first exploitation run, on a refit of the band floor; results/models/rank_refit.json)",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank_refit.trees": {
+   "value": 287,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the exploitation models: the rank population from 7 May 2021, Q03 left out (the first exploitation run, on a refit of the band floor; results/models/rank_refit.json)",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.rank_refit.trials": {
+   "value": 50,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/train_rank.py",
+    "population": "the exploitation models: the rank population from 7 May 2021, Q03 left out (the first exploitation run, on a refit of the band floor; results/models/rank_refit.json)",
     "source": "models",
     "as_of": "2026-11-13",
     "note": null
@@ -16429,7 +16572,7 @@
      130,
      12636,
      26,
-     0.052411
+     0.052152
     ],
     [
      "2023-01-01",
@@ -16438,7 +16581,7 @@
      156,
      14113,
      48,
-     0.047432
+     0.074199
     ],
     [
      "2023-07-01",
@@ -16447,7 +16590,7 @@
      204,
      14722,
      74,
-     0.058503
+     0.066936
     ]
    ],
    "provenance": {

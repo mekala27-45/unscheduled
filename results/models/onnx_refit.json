@@ -1,0 +1,61 @@
+{
+ "tolerance": 0.0001,
+ "opset": 15,
+ "seed": 20261114,
+ "band_floor": {
+  "variant": "word_char",
+  "width": 400281,
+  "classes": [
+   "LOW",
+   "MEDIUM",
+   "HIGH",
+   "CRITICAL"
+  ],
+  "C": 0.3
+ },
+ "exploit_lgbm": {
+  "width": 54,
+  "trees": 287
+ },
+ "files": {
+  "band_floor": {
+   "file": "models/serving/band_floor.onnx",
+   "bytes": 6404868,
+   "sha256": "141e8443c0957c419799eec6385833e1b19b43a054612804f33434b2b5632194"
+  },
+  "band_floor_spec": {
+   "file": "models/serving/band_floor.json.gz",
+   "bytes": 3132874,
+   "sha256": "f6cbfe6b986d7ee4225589493a2b1e43c5c20a2edd2581ec9243aadd427889fd"
+  },
+  "exploit_lgbm": {
+   "file": "models/serving/exploit_lgbm.onnx",
+   "bytes": 2326096,
+   "sha256": "e5f516932e6bcbae827af9971e48a6fec7790d800e13828d1b95976975abf214"
+  },
+  "exploit_day0": {
+   "file": "models/serving/exploit_day0.json",
+   "bytes": 5350,
+   "sha256": "84721cf38818c0530b5ce5c862f320b80a943bb13e43e04140134ac65bdba521"
+  }
+ },
+ "parity": {
+  "band_floor": {
+   "rows": 2000,
+   "max_feature_difference": 5.960464477539063e-08,
+   "max_probability_difference": 2.7481183995092806e-07
+  },
+  "exploit_lgbm": {
+   "rows": 2000,
+   "max_input_difference": 0.0,
+   "max_probability_difference": 2.66960986927689e-07
+  },
+  "projection_against_the_exploitation_run": 0.012297093868255615,
+  "lgbm_score_against_the_exploitation_run": 0.08095442370768662
+ },
+ "verdict": "pass",
+ "environment": {
+  "onnx": "1.23.2",
+  "onnxruntime": "1.32.0"
+ }
+}

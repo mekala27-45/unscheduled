@@ -643,3 +643,23 @@ smoke run refits. The change is for consistency between training and serving, ma
 read, and the model is chosen by the same rule. When the new run's record is committed, the first
 run's record moves to results/models/rank_refit.json beside it: its LightGBM held 47.2 percent of
 the 127 development listings in its top five percent and its floor 40.9 percent.
+
+## 2026-11-14: the exploitation rerun, and how far its search moves
+
+The exploitation run on the committed band floor (models run 43576735960) chose other trees than the
+first run: 29 leaves at a learning rate of 0.022, from a best fold mean average precision of 0.064,
+against 131 leaves at 0.012 from 0.053. On development its LightGBM holds 27.6 percent of the 127
+listings in its top five percent, with an average precision of 0.019, against 47.2 percent and 0.027
+for the first run's; the logistic floor holds 40.9 percent in both runs, with an average precision of
+0.049. The two runs read the same rows and differ only in the band projection, which the committed
+floor and the first run's refit put a little apart (results/models/onnx_refit.json measures the gap
+on the export's sample).
+
+So the plan's search, fifty trials over three half year folds with 26, 48 and 74 listings to
+validate on, picks its trees on noise, and the best fold mean of one run says little about
+development. The rerun stands as the model, as the entry before this one committed before it ran,
+and test judges it; nothing is chosen again after seeing these numbers. The first run's record is
+kept as results/models/rank_refit.json and its development values as models.rank_refit in the
+manifest, and the method notes and the exploitation card give both runs beside the floor. A search
+that averages over seeds or over more folds, or the floor as the exploitation model, would be a
+change for a later phase with its own registration.
