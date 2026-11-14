@@ -344,3 +344,13 @@ BAAI/bge-small-en-v1.5 at 5c38ec7c405e (MIT) for the product retrieval and the C
 probe gained a phase2 section that reads the libraries from PyPI, the weights from the Hub, and the
 Kaggle and Databricks accounts only when their secrets exist, writing whether each answered and
 never a value.
+
+## 2026-11-14: the Phase 2 plan is hashed as the models stage
+
+evaluation/phase2_plan.yaml and config/models.yaml were committed first (9c59a44 and 796ce4c) and
+then hashed into evaluation/registration.json as a third stage, models, before any model, set or
+model result existed. The Phase 1 hash and its files at the top of the file did not move, so the
+criteria page still shows the hash the customer signed. One reading choice is recorded with it:
+silver.cve_fact holds no dated description, so the day 0 description comes from the NVD change
+history, where New CVE Received adds the text and later events change it; a CVE before the history
+keeps its current text with description_rule current.

@@ -87,6 +87,56 @@
     "result_files": []
    },
    "note": "read from the data or drawn with a fixed seed, hashed before any test CVE was scored"
+  },
+  {
+   "stage": "models",
+   "registered_at": "2026-11-14T03:45:52+00:00",
+   "hash": "8e72e6298a18ef8efc7dba65d26ee84f3780d59c7668e83fa401950d93113898",
+   "files": {
+    "evaluation/phase2_plan.yaml": "088926a2593a79675791ec37ba028009713f9f8b585bf1c2fad790cf9c954198",
+    "config/models.yaml": "981d820acc900a37f6375d490f7790e01fa957aa30a0ed159aaa7a63d6565fb2"
+   },
+   "first_committed": {
+    "evaluation/phase2_plan.yaml": {
+     "added_in": "9c59a448ef95e53fa758a6231dac868e9c988eaa",
+     "added_at": "2026-11-13T22:45:42-05:00",
+     "changed_since": false
+    },
+    "config/models.yaml": {
+     "added_in": "796ce4c7f0baed8d30b3346b0e679ae6c2e2a099",
+     "added_at": "2026-11-13T22:42:00-05:00",
+     "changed_since": false
+    }
+   },
+   "state_at_hash": {
+    "bronze_tables": [
+     "cve_metrics",
+     "cve_records",
+     "cve_weaknesses",
+     "cwe",
+     "epss_offsets",
+     "exploit_signals",
+     "ghsa",
+     "kev",
+     "nvd_changes",
+     "nvd_cves",
+     "osv_advisories",
+     "vulnrichment"
+    ],
+    "lake_file": true,
+    "result_files": [
+     "charts.json",
+     "q1.json",
+     "q2.json",
+     "q3.json",
+     "q4.json",
+     "q5.json",
+     "q6.json",
+     "q8.json"
+    ]
+   },
+   "note": "the Phase 2 plan and the pinned weights, hashed before any model saw a test CVE",
+   "model_results_at_hash": []
   }
  ],
  "note": "registered before any test CVE was scored by anything"

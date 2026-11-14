@@ -7,8 +7,9 @@ the manifest or a committed file: edit the template, then render.
 ## Where it stands
 
 ```
-Phase            2 of 5, the models: the first of eighteen steps done (the probes and the scoped
-                 model gate); the prompt is claude/unscheduled-phase-2-prompt.md in the Project
+Phase            2 of 5, the models: two of eighteen steps done (the probes, the scoped model
+                 gate, and the plan hashed as the models stage 8e72e6298a18);
+                 the prompt is claude/unscheduled-phase-2-prompt.md in the Project
 Phase 1          the ground truth, tagged v0.1.0 on the commit that adds the release record;
                  its checklist 18 of 18 lines done (RESULTS.md)
 Repository       public; every commit conventional; CI, web and exposure green on main
@@ -25,12 +26,14 @@ Look approval    approved by Ajay on the evening of 11 November, New York time, 
 
 ## Next action
 
-Phase 2 has started from the hand off below. Step one is done: results/probe.json now carries a
-section for Phase 2 (the libraries on PyPI, the two pinned weights in config/models.yaml, Kaggle and
-Databricks answered or not, R with the survival package), and the model gate is scoped: model
-libraries only under packages/models and kaggle/, the ONNX runtime also under packages/api, and no
-model provider client or agent framework anywhere. Next: step two, evaluation/phase2_plan.yaml
-hashed into evaluation/registration.json as stage two, before any model sees a test CVE.
+Phase 2 has started from the hand off below. Step one: results/probe.json carries a section for
+Phase 2 (the libraries on PyPI, the two weights pinned in config/models.yaml, Kaggle and Databricks
+answered or not, R with the survival package), and the model gate is scoped: model libraries only
+under packages/models and kaggle/, the ONNX runtime also under packages/api, and no model provider
+client or agent framework anywhere. Step two: evaluation/phase2_plan.yaml and config/models.yaml are
+hashed into evaluation/registration.json as the models stage, after the Phase 1 stages and without
+moving their hash, before any model exists. Next: step three, the training set builder on the as-of
+engine, with the leakage test on the sets, the day 0 description read from the NVD change history.
 
 ## Open problems
 
