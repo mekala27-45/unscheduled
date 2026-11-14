@@ -550,8 +550,11 @@ the floors were still fitting in the models workflow and the first fallback run 
 so no development score of a fill model had been seen.
 
 - Old: fallback_text is "frozen embeddings from config/models.yaml embedding, a logistic head per
-  task", and modernbert reads "the joined text, at most 256 tokens". Each head saw the text alone,
-  while band_floor reads the text "with the filer and CISA features, one hot".
+  task", and modernbert reads "the joined text, at most 256 tokens". The joined text carries the
+  filer's CVSS vector, the CISA ADP band and SSVC exploitation as strings
+  (unscheduled_models.sets.joined_text), so each head saw those values only through the embedding
+  of the whole text, while band_floor also reads them one hot, with the filer's eight base metrics,
+  its band and the CWE lists.
 - New: the fallback fits two designs on the same embeddings. Joint, the model: each head reads the
   embedding beside the floors' own filer and CISA block (the same encoder, fit on train, 281 columns
   on the full train window). Text, the ablation: the embedding alone, as the plan wrote it. The
@@ -561,11 +564,12 @@ so no development score of a fill model had been seen.
   pooled text beside the same block. config/operating_points.yaml takes the joint heads as the
   primary fill model, and the text heads' test probabilities are frozen with it, so the scorer
   reports the ablation from the same single run.
-- Why: C1 requires the model to beat the TF-IDF floor. The floor reads the filer's CVSS vector and
-  its eight base metrics, which carry most of what the NVD band is, so a text model without them
-  would lose by construction, and the comparison would measure the vector rather than the text
-  representation. With the same structured block on both sides, the paired difference measures
-  what the embedding adds over TF-IDF. The first fallback run, started before this entry with the
+- Why: C1 requires the model to beat the TF-IDF floor. The floor reads the filer's vector and its
+  eight base metrics one hot, and they carry most of what the NVD band is. A sentence embedding of
+  the joined text keeps them only as far as its 384 numbers hold a CVSS vector string beside the
+  description, so the comparison would turn on how well the embedding stores a vector rather than
+  on how well it reads the description. With the same structured block on both sides, the paired
+  difference measures what the embedding adds over TF-IDF. The first fallback run, started before this entry with the
   plan's text alone and the embeddings unscaled, finishes as it began; its record is kept as
   results/models/fallback_first.json and its embeddings are read again by the second run
   (models.yml, embeddings_run), since the rows and the weights are the same.
