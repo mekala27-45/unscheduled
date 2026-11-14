@@ -19,8 +19,9 @@ on:
 
 permissions: {}
 
+# One run per step at a time; different steps run side by side on their own runners.
 concurrency:
-  group: models
+  group: models-${{ inputs.step }}
   cancel-in-progress: false
 
 jobs:
