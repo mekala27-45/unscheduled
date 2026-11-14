@@ -10,7 +10,7 @@ test("the docs list every document by section and open each one", async ({ page 
   for (const section of ["Start here", "How it is built", "Decisions", "Runbooks", "The data and the customer"]) {
     await expect(page.getByRole("heading", { level: 2, name: section })).toBeVisible();
   }
-  await expect(page.locator(".doc-group").filter({ hasText: "Decisions" }).locator(".doc-list li")).toHaveCount(9);
+  await expect(page.locator(".doc-group").filter({ hasText: "Decisions" }).locator(".doc-list li")).toHaveCount(10);
   await page.getByRole("link", { name: "Architecture", exact: true }).click();
   await expect(page).toHaveURL(/\/docs\/architecture$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Architecture");

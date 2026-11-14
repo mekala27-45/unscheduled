@@ -50,7 +50,20 @@ describe("the documents in this repository", () => {
 
   it("renders the report documents, each ending with the statement", () => {
     const reports = readReports();
-    expect(reports.map((r) => r.slug)).toEqual(["backlog", "discovery", "legacy", "criteria", "data-card"]);
+    expect(reports.map((r) => r.slug)).toEqual([
+      "backlog",
+      "discovery",
+      "legacy",
+      "criteria",
+      "data-card",
+      "models",
+      "model-band",
+      "model-metrics",
+      "model-cwe",
+      "model-exploit",
+      "model-survival",
+      "model-product",
+    ]);
     for (const r of reports) expect(r.html).toContain("portfolio demonstration");
   });
 });

@@ -32,6 +32,7 @@ export const ROUTES = [
   "/docs/adr-0002",
   "/docs/adr-0004",
   "/docs/adr-0007",
+  "/docs/adr-0008",
   "/docs/adr-0009",
   "/docs/adr-0010",
   "/report",

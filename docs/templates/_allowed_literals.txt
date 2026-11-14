@@ -90,3 +90,10 @@ ADR 0009
 ADR 0010
 14 November 2026
 0010. The fill model
+ADR 0005
+ADR 0007
+0008. Predictions come from a batch
+1e-4
+2 GB
+15 GB
+/v1/predict
