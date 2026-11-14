@@ -57,7 +57,7 @@ def test_recall_against_epss_names_a_tie() -> None:
 
 
 def test_slices_correct_within_a_family() -> None:
-    keys, truth, good, poor = bands(1200, 7)
+    _keys, truth, good, poor = bands(1200, 7)
     groups = [f"g{i % 3}" for i in range(1200)] + ["tiny"] * 5
     t = [int(v) for v in truth] + [0, 1, 0, 1, 0]
     a = [int(v) for v in good] + [0, 1, 0, 1, 0]
