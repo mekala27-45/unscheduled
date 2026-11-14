@@ -16,6 +16,8 @@ data/cache/
 data/serving/
 data/sets/
 data/models/
+# The MLflow store is packed into results/registry; the unpacked store stays out of git
+data/registry/
 # The locks and the run ledger ride in each lake release (fetch.yml), not in git
 data/locks/
 *.duckdb

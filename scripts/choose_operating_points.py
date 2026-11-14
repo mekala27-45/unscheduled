@@ -270,6 +270,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         "frozen_for": "Phase 2, before scripts/score_test.py scores test once",
         "primary": {
             "fill": PRIMARY_FILL,
+            "fill_design": json.loads((out / "fallback.json").read_text(encoding="utf-8"))["primary"],
             "fill_comparator": "floors",
             "exploitation": PRIMARY_EXPLOIT,
             "exploitation_comparator": "exploit_floor",

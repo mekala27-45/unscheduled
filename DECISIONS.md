@@ -569,3 +569,29 @@ so no development score of a fill model had been seen.
   plan's text alone and the embeddings unscaled, finishes as it began; its record is kept as
   results/models/fallback_first.json and its embeddings are read again by the second run
   (models.yml, embeddings_run), since the rows and the weights are the same.
+
+## 2026-11-14: the registry is MLflow's SQLite store, written from the run records
+
+The prompt asks for MLflow on the Databricks workspace when its secrets exist and the probe passes,
+and otherwise for a file store published as a release asset named by digest. The secrets are unset.
+MLflow 3.18 keeps its plain file store in maintenance mode and refuses to open it unless
+MLFLOW_ALLOW_FILE_STORE is set, and its documentation points to SQLite, so the store is MLflow's
+SQLite backend: one database and its artifact folder, packed into
+results/registry/registry-<digest>.tar.gz with fixed times and owners, the artifact paths rewritten
+relative to the store so the archive opens wherever it is unpacked. The release attaches it.
+
+The runs are written from the committed records under results/models, not from inside the training
+jobs. The jobs run on separate runners whose artifacts expire after 30 days, and every value a run
+holds (parameters, development and test metrics, the set digests, the commit, the Actions run, the
+model file's SHA-256) is already in a committed record, so scripts/build_registry.py writes the same
+store from the repository alone, and --check confirms the committed export still matches the
+records. Each run's start and end are the record's own times. mlflow-skinny with SQLAlchemy and
+Alembic is enough for this and stays in packages/models; the API image does not install it.
+
+Fifteen versions over six registered models: for the band, the metrics and the CWE, the floor, the
+text ablation and the model; for exploitation, survival and the affected product, the floor and the
+model. The fill and exploitation primaries are the ones config/operating_points.yaml freezes. C1 and
+C2 judge neither survival nor the affected product, so for those development chooses, by a rule
+fixed here before the product models have a result: the higher development concordance for
+survival, and the higher development recall at 10 for the affected product, since the console shows
+a list of candidates. A tie goes to the floor.
