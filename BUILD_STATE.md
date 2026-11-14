@@ -111,8 +111,8 @@ numbers are committed runs with the numeric pins (AGENTS.md).
   The strongest feature toward skipped is published month (months since 2026-04), so part of the shift is
   time since the change; the next ones are filer or type: filer_Wordfence; filer or type: filer_WPScan; filer or type: filer_Patchstack; filer or type: filer_AMD.
   Toward analyzed: filer or type: filer_microsoft; filer or type: filer_Chrome; word: n8n; word: flowise; filer or type: filer_adobe.
-- The API: the first lookup after 20.0 min idle took 147 ms; warm, p50
-  95 ms and p95 265 ms over 300 lookups (lookups met (p95 265 ms against 1,500 ms); the triage run is measured in Phase 4).
+- The API: the first lookup after 20.0 min idle took 220 ms; warm, p50
+  115 ms and p95 553 ms over 300 lookups (lookups met (p95 553 ms against 1,500 ms); the triage run is measured in Phase 4).
 - The look: approved by Ajay on the evening of 11 November, New York time; he asked for no change.
 - Kaggle GPU hours: 8 for the month (config/budgets.yaml), none used in Phase 1.
 

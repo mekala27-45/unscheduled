@@ -6701,7 +6701,7 @@
    }
   },
   "criteria.c8.verdict": {
-   "value": "lookups met (p95 265 ms against 1,500 ms); the triage run is measured in Phase 4",
+   "value": "lookups met (p95 553 ms against 1,500 ms); the triage run is measured in Phase 4",
    "fmt": "text",
    "provenance": {
     "origin": "scripts/load_test.py",
@@ -8318,7 +8318,7 @@
    }
   },
   "load.cold_health_ms": {
-   "value": 4589.0,
+   "value": 9039.0,
    "fmt": "ms",
    "provenance": {
     "origin": "scripts/load_test.py",
@@ -8329,7 +8329,7 @@
    }
   },
   "load.cold_lookup_ms": {
-   "value": 147.3,
+   "value": 219.8,
    "fmt": "ms",
    "provenance": {
     "origin": "scripts/load_test.py",
@@ -8350,6 +8350,39 @@
     "note": null
    }
   },
+  "load.predict_p50_ms": {
+   "value": 104.8,
+   "fmt": "ms",
+   "provenance": {
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live",
+    "as_of": "2026-11-14",
+    "note": null
+   }
+  },
+  "load.predict_p95_ms": {
+   "value": 2039.6,
+   "fmt": "ms",
+   "provenance": {
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live",
+    "as_of": "2026-11-14",
+    "note": null
+   }
+  },
+  "load.predict_requests": {
+   "value": 60,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live",
+    "as_of": "2026-11-14",
+    "note": null
+   }
+  },
   "load.warm_lookups": {
    "value": 300,
    "fmt": "int",
@@ -8362,7 +8395,7 @@
    }
   },
   "load.warm_p50_ms": {
-   "value": 94.7,
+   "value": 115.3,
    "fmt": "ms",
    "provenance": {
     "origin": "scripts/load_test.py",
@@ -8373,7 +8406,7 @@
    }
   },
   "load.warm_p95_ms": {
-   "value": 265.1,
+   "value": 553.1,
    "fmt": "ms",
    "provenance": {
     "origin": "scripts/load_test.py",
@@ -8384,7 +8417,7 @@
    }
   },
   "load.warm_p99_ms": {
-   "value": 2741.2,
+   "value": 1623.5,
    "fmt": "ms",
    "provenance": {
     "origin": "scripts/load_test.py",
