@@ -2,6 +2,8 @@
 
     python scripts/register.py plan     # the criteria, splits, budgets and Phase 1 plan
     python scripts/register.py data     # then the status vocabulary and the seeded samples
+    python scripts/register.py models   # Phase 2: its plan and the pinned weights, before any model
+    python scripts/register.py operating_points  # the frozen operating points, before test
     python scripts/register.py --check  # fail if any registered file changed since its hash
 
 The plan stage is hashed before the lake exists and before any result is computed, and records
@@ -40,10 +42,20 @@ STAGES: dict[str, tuple[str, ...]] = {
         "config/labels.yaml",
         "config/samples.yaml",
     ),
+    # Phase 2: added after the Phase 1 registration, each as a stage of its own, without changing
+    # the Phase 1 hash or files at the top of evaluation/registration.json.
+    "models": (
+        "evaluation/phase2_plan.yaml",
+        "config/models.yaml",
+    ),
+    "operating_points": ("config/operating_points.yaml",),
 }
+LATER = ("models", "operating_points")
 NOTES = {
     "plan": "hashed before the lake existed and before any result was computed",
     "data": "read from the data or drawn with a fixed seed, hashed before any test CVE was scored",
+    "models": "the Phase 2 plan and the pinned weights, hashed before any model saw a test CVE",
+    "operating_points": "the operating points chosen on development, hashed before test was scored",
 }
 PLAN_OUT = Path("evaluation/registration_plan.json")
 FULL_OUT = Path("evaluation/registration.json")
@@ -141,7 +153,49 @@ def write(path: Path, record: dict[str, object]) -> None:
     path.write_text(json.dumps(record, indent=1) + "\n", encoding="utf-8")
 
 
+def model_results(root: Path) -> list[str]:
+    folder = root / "results" / "models"
+    return sorted(p.name for p in folder.glob("*.json")) if folder.exists() else []
+
+
+def later_refusal(root: Path, name: str) -> str | None:
+    """Why a later stage cannot be hashed now: what it must come before already exists."""
+    found = model_results(root)
+    if name == "models" and found:
+        return "a model result already exists: " + ", ".join(found)
+    if name == "operating_points" and "test_scoring.json" in found:
+        return "test was already scored"
+    return None
+
+
+def register_later(root: Path, name: str) -> int:
+    full_path = root / FULL_OUT
+    if not full_path.exists():
+        print("registration: complete the plan and data stages first")
+        return 1
+    full: dict[str, Any] = json.loads(full_path.read_text(encoding="utf-8"))
+    if any(s.get("stage") == name for s in full["stages"]):
+        print(f"registration: the {name} stage is registered; a change is a change request")
+        return 1
+    moved = changed(root, full) + [f for s in full["stages"] for f in changed(root, s)]
+    if moved:
+        print("registration: a registered file changed since its hash: " + ", ".join(sorted(set(moved))))
+        return 1
+    refusal = later_refusal(root, name)
+    if refusal:
+        print(f"registration: refused, {refusal}")
+        return 1
+    record = stage_record(root, name, digests(root, STAGES[name]))
+    record["model_results_at_hash"] = model_results(root)
+    full["stages"].append(record)
+    write(full_path, full)
+    print(f"registration: the {name} stage hashed as {str(record['hash'])[:12]}")
+    return 0
+
+
 def register(root: Path, name: str) -> int:
+    if name in LATER:
+        return register_later(root, name)
     plan_path, full_path = root / PLAN_OUT, root / FULL_OUT
     if name == "plan":
         if plan_path.exists():
@@ -186,7 +240,10 @@ def check(root: Path) -> int:
         if not path.exists():
             continue
         found = True
-        moved = changed(root, json.loads(path.read_text(encoding="utf-8")))
+        record: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
+        moved = changed(root, record)
+        for stage in record.get("stages") or []:
+            moved += [f for f in changed(root, stage) if f not in moved]
         if moved:
             print(f"registration: changed since {path.name}: " + ", ".join(moved))
             return 1
@@ -201,7 +258,7 @@ def main(argv: list[str]) -> int:
     if "--check" in argv:
         return check(ROOT)
     if len(argv) != 1 or argv[0] not in STAGES:
-        print("usage: register.py plan | data | --check")
+        print("usage: register.py plan | data | models | operating_points | --check")
         return 2
     return register(ROOT, argv[0])
 
