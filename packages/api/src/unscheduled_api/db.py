@@ -131,9 +131,10 @@ prediction = sa.Table(
     sa.Column("cwe", sa.Text, nullable=False),
     sa.Column("cwe_p", sa.REAL, nullable=False),
     sa.Column("cwe_top", sa.Text, nullable=False),
-    sa.Column("exploit_score", sa.REAL, nullable=False),
-    sa.Column("exploit_p", sa.REAL, nullable=False),
-    sa.Column("exploit_pct", sa.REAL, nullable=False),
+    # Empty together for a CVE listed in KEV before its publication (alembic 0003).
+    sa.Column("exploit_score", sa.REAL),
+    sa.Column("exploit_p", sa.REAL),
+    sa.Column("exploit_pct", sa.REAL),
     sa.Column("listed_by_30", sa.REAL),
     sa.Column("listed_by_90", sa.REAL),
     sa.Column("listed_by_180", sa.REAL),

@@ -115,6 +115,38 @@ def test_the_record_carries_each_prediction_with_its_model_and_uncertainty(predi
     )
 
 
+def test_a_cve_listed_before_publication_carries_no_exploitation_and_says_why(
+    client: TestClient, github: FakeGitHub, tmp_path: Path
+) -> None:
+    """The batch leaves the exploitation values empty for a CVE CISA listed before its publication
+    (Q03); the row still loads through the migrated table and keeps its other predictions."""
+    unscored = prediction("CVE-2026-90003") | {
+        "exploit_score": None,
+        "exploit_p": None,
+        "exploit_pct": None,
+        "listed_by_30": None,
+        "listed_by_90": None,
+        "listed_by_180": None,
+    }
+    folder = tmp_path / "with-q03"
+    write_bundle(
+        folder, predictions=[unscored, prediction("CVE-2025-90004", "CRITICAL")], models_value=MODELS
+    )
+    github.publish(folder, TAG, PUBLISHED_AT)
+    assert sync_until_done(client)[-1]["status"] == "done"
+    block = client.get("/v1/cves/CVE-2026-90003").json()["predictions"]
+    fields = {v["field"] for v in block["values"]}
+    assert "band" in fields and "products" in fields
+    assert "exploitation" not in fields and "kev_listing" not in fields
+    assert (
+        "never NVD values" in block["note"]
+        and "listed this CVE in KEV before it was published" in block["note"]
+    )
+    scored = client.get("/v1/cves/CVE-2025-90004").json()["predictions"]
+    assert "exploitation" in {v["field"] for v in scored["values"]}
+    assert "before it was published" not in scored["note"]
+
+
 def test_the_models_route_serves_the_registry_export(predicted: TestClient) -> None:
     body = predicted.get("/v1/models").json()
     assert body["models"]["batch"] == "abc123def456"

@@ -192,7 +192,7 @@ class Scorer:
                     "meaning": "the chance KEV lists this CVE within 180 days of publication, scored at day 0",
                     "score": round(score, 6),
                     "percentile": percentile(exploit["quantiles"], score),
-                    "percentile_of": f"every CVE in batch {serving['batch']}",
+                    "percentile_of": f"every scored CVE in batch {serving['batch']}",
                 },
             ),
         ]

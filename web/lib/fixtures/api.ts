@@ -87,7 +87,7 @@ export const API_CVE: S["CveRecord"] = {
         detail: {
           score: 0.18,
           percentile: 99.2,
-          percentile_of: "every CVE in batch fixture00000",
+          percentile_of: "every scored CVE in batch fixture00000",
           epss: { score: 0.052, percentile: 0.91, date: "2026-04-01", note: "EPSS from FIRST, beside the model and not compared with it here." },
         },
       },
@@ -235,7 +235,7 @@ export const API_HEALTH_EMPTY: S["Health"] = {
     variables_found: ["DATABASE_URL"],
     reachable: true,
     schema_name: "unscheduled",
-    migration: "0002",
+    migration: "0003",
     server_version: "18.6",
     pgvector_available: true,
     pgvector_installed: false,

@@ -22,6 +22,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import socket
 import subprocess
 import sys
@@ -32,8 +33,18 @@ from typing import Any
 
 import httpx
 
-HEAD_MIGRATION = "0002"  # alembic/versions, the newest revision
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def head_migration(folder: Path = ROOT / "alembic" / "versions") -> str:
+    """The newest revision in alembic/versions, the one a migrated database reports."""
+    found = (
+        re.search(r'^revision = "(\d+)"', f.read_text(encoding="utf-8"), re.M) for f in folder.glob("*.py")
+    )
+    return max(m.group(1) for m in found if m)
+
+
+HEAD_MIGRATION = head_migration()
 SBOM = b'{"bomFormat": "CycloneDX", "specVersion": "1.6", "components": []}'
 LOOKUPS = ("/v1/cves/CVE-2021-44228", "/v1/products")
 

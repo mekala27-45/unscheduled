@@ -24,6 +24,10 @@ NOTE = (
     "A probability is calibrated on the development window, and a set holds the true value nine times "
     "in ten on development; coverage on later CVEs is measured, not promised."
 )
+UNSCORED_NOTE = (
+    "No exploitation score: CISA listed this CVE in KEV before it was published, so the exploitation "
+    "models leave it out (quarantine Q03), and its listing is a fact, not a prediction."
+)
 EPSS_NOTE = (
     "EPSS from FIRST, beside the model and not compared with it here: EPSS is read on the day it was "
     "published, after the CVE had days of exposure, while the model scores at day 0."
@@ -158,21 +162,23 @@ def block(
         "date": cve_row["epss_date"].isoformat() if cve_row.get("epss_date") else None,
         "note": EPSS_NOTE,
     }
-    values.append(
-        _value(
-            "exploitation",
-            models,
-            round(float(row["exploit_p"]), 6),
-            row["exploit_p"],
-            detail={
-                "meaning": "the chance KEV lists this CVE within 180 days of publication, scored at day 0",
-                "score": round(float(row["exploit_score"]), 6),
-                "percentile": round(float(row["exploit_pct"]), 2),
-                "percentile_of": f"every CVE in batch {models.get('batch')}",
-                "epss": epss,
-            },
+    scored = row["exploit_p"] is not None
+    if scored:
+        values.append(
+            _value(
+                "exploitation",
+                models,
+                round(float(row["exploit_p"]), 6),
+                row["exploit_p"],
+                detail={
+                    "meaning": "the chance KEV lists this CVE within 180 days of publication, scored at day 0",
+                    "score": round(float(row["exploit_score"]), 6),
+                    "percentile": round(float(row["exploit_pct"]), 2),
+                    "percentile_of": f"every scored CVE in batch {models.get('batch')}",
+                    "epss": epss,
+                },
+            )
         )
-    )
     by_day = {str(h): row[f"listed_by_{h}"] for h in (30, 90, 180) if row[f"listed_by_{h}"] is not None}
     if by_day:
         values.append(
@@ -200,7 +206,7 @@ def block(
             batch=str(models.get("batch") or ""),
             made_on=date.fromisoformat(made) if isinstance(made, str) else None,
             window=window_of(cve_row.get("published")),
-            note=NOTE,
+            note=NOTE if scored else f"{NOTE} {UNSCORED_NOTE}",
             values=values,
         ),
         None,

@@ -120,3 +120,14 @@ def test_the_column_check_names_what_is_missing() -> None:
     ]
     with pytest.raises(BundleError, match="product_id or product"):
         bnd.check_columns("finding", ["as_of"])
+
+
+def test_a_prediction_takes_its_exploitation_values_together_or_not_at_all() -> None:
+    from tests.api.test_predictions import prediction
+
+    empty = {"exploit_score": None, "exploit_p": float("nan"), "exploit_pct": None}
+    row = bnd.prediction_row(prediction("CVE-2024-21887") | empty)
+    assert row["exploit_score"] is None and row["exploit_p"] is None and row["exploit_pct"] is None
+    assert bnd.prediction_row(prediction("CVE-2024-21887"))["exploit_pct"] == 97.5
+    with pytest.raises(BundleError, match="an exploitation value is missing beside the others"):
+        bnd.prediction_row(prediction("CVE-2024-21887") | {"exploit_pct": None})

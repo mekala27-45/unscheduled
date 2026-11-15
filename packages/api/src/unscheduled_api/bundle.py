@@ -483,9 +483,14 @@ def _required_float(value: Any, column: str) -> float:
     return number
 
 
+EXPLOIT_COLUMNS = ("exploit_score", "exploit_p", "exploit_pct")
+
+
 def prediction_row(raw: Mapping[str, Any]) -> dict[str, Any]:
     """One prediction as the compact table holds it: the eight metrics as one text, their
-    probabilities as one array, their sets as one text, each in the order of METRICS."""
+    probabilities as one array, their sets as one text, each in the order of METRICS. The three
+    exploitation values come together or not at all: a CVE CISA listed in KEV before its publication
+    is outside the exploitation population and carries none."""
     cve_id = (_text(raw.get("cve_id"), "cve_id") or "").upper()
     band = _text(raw.get("band"), "band")
     if not cve_id or band not in BANDS:
@@ -493,6 +498,9 @@ def prediction_row(raw: Mapping[str, Any]) -> dict[str, Any]:
     metrics = [_text(raw.get(f"metric_{m}"), f"metric_{m}") or "" for m in METRICS]
     if not all(metrics):
         raise BundleError(f"{cve_id}: a predicted base metric is missing")
+    exploit = {c: _float(raw.get(c), c) for c in EXPLOIT_COLUMNS}
+    if None in exploit.values() and any(v is not None for v in exploit.values()):
+        raise BundleError(f"{cve_id}: an exploitation value is missing beside the others")
     out: dict[str, Any] = {
         "cve_id": cve_id,
         "band": band,
@@ -510,9 +518,7 @@ def prediction_row(raw: Mapping[str, Any]) -> dict[str, Any]:
         "cwe": _text(raw.get("cwe"), "cwe") or "",
         "cwe_p": _required_float(raw.get("cwe_p"), "cwe_p"),
         "cwe_top": _text(raw.get("cwe_top"), "cwe_top") or "",
-        "exploit_score": _required_float(raw.get("exploit_score"), "exploit_score"),
-        "exploit_p": _required_float(raw.get("exploit_p"), "exploit_p"),
-        "exploit_pct": _required_float(raw.get("exploit_pct"), "exploit_pct"),
+        **exploit,
         "listed_by_30": _float(raw.get("listed_by_30"), "listed_by_30"),
         "listed_by_90": _float(raw.get("listed_by_90"), "listed_by_90"),
         "listed_by_180": _float(raw.get("listed_by_180"), "listed_by_180"),
