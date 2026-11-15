@@ -125,6 +125,13 @@ numbers are committed runs with the numeric pins (AGENTS.md).
   {{ v("load.predict_p95_ms") }}, against {{ v("load.predict_alone_p95_ms") }} for one client alone, and scoring is a few milliseconds of each call
   (ADR 0008). The API records no server timing yet, so where the calls wait is open for Phase 4.
 {% endif %}
+{% set health = (verify.checks | selectattr("name", "equalto", "health, with the database and the data") | first).facts if verify else {} %}
+{% set neon = health.get("storage_share_used") %}
+{% if neon is not none and neon > 0.9 %}
+- Neon holds {{ "%.1f" | format(neon * 100) }} percent of its {{ health.get("storage_ceiling_mb") }} MB ceiling with the predictions loaded, and the lake
+  grows every day. The sync refuses a chunk that would pass the ceiling and writes nothing, so the
+  site stays up, but Phase 3 adds pgvector: it measures the room first and trims a table if it must.
+{% endif %}
 - Kaggle and Databricks secrets are not set. Step eight took its CPU fallback (DECISIONS.md, step
   eight takes the fallback), and KAGGLE_USERNAME with KAGGLE_KEY would let ModernBERT run; without
   the Databricks pair, the registry uses the file store.

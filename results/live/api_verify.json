@@ -1,10 +1,10 @@
 {
  "base_url": "https://unscheduled-api.vercel.app",
- "checked_at": "2026-11-13T23:52:20Z",
+ "checked_at": "2026-11-15T22:07:25Z",
  "client": "scripts/verify_api.py, a separate process with no database credential",
- "data_version": "serving-202611131326+7a6e339ce211",
- "passed": 17,
- "total": 17,
+ "data_version": "serving-202611152200+f89ae3f7e825",
+ "passed": 20,
+ "total": 20,
  "result": "pass",
  "checks": [
   {
@@ -12,22 +12,23 @@
    "route": "GET /health",
    "ok": true,
    "status": 200,
-   "ms": 454.9,
+   "ms": 447.0,
    "detail": "",
    "facts": {
     "ready": true,
-    "data_version": "serving-202611131326+7a6e339ce211",
-    "tag": "serving-202611131326",
-    "loaded_at": "2026-11-13T13:30:45.682371Z",
+    "data_version": "serving-202611152200+f89ae3f7e825",
+    "tag": "serving-202611152200",
+    "loaded_at": "2026-11-15T22:06:16.301896Z",
     "counts": {
-     "cve": 260100,
+     "cve": 260589,
      "finding": 1275,
      "product": 6,
-     "cve_event": 1290699
+     "cve_event": 1292258,
+     "prediction": 181904
     },
     "database_reachable": true,
-    "migration": "0001",
-    "storage_share_used": 0.8437,
+    "migration": "0003",
+    "storage_share_used": 0.9408,
     "storage_ceiling_mb": 800
    }
   },
@@ -39,8 +40,8 @@
    "ms": null,
    "detail": "",
    "facts": {
-    "newest_serving_release": "serving-202611131326",
-    "published_at": "2026-11-13T13:26:57Z"
+    "newest_serving_release": "serving-202611152200",
+    "published_at": "2026-11-15T22:00:55Z"
    }
   },
   {
@@ -48,7 +49,7 @@
    "route": "GET /v1/meta",
    "ok": true,
    "status": 200,
-   "ms": 101.0,
+   "ms": 82.5,
    "detail": "",
    "facts": {
     "keys": [
@@ -71,12 +72,12 @@
    "route": "GET /v1/cves",
    "ok": true,
    "status": 200,
-   "ms": 203.7,
+   "ms": 157.7,
    "detail": "",
    "facts": {
     "returned": 100,
     "limit": 100,
-    "first": "CVE-2026-128335"
+    "first": "CVE-2026-129449"
    }
   },
   {
@@ -84,7 +85,7 @@
    "route": "GET /v1/cves?cursor=",
    "ok": true,
    "status": 200,
-   "ms": 170.5,
+   "ms": 101.4,
    "detail": "",
    "facts": {
     "returned": 100,
@@ -96,7 +97,7 @@
    "route": "GET /v1/cves",
    "ok": true,
    "status": 200,
-   "ms": 133.1,
+   "ms": 85.7,
    "detail": "",
    "facts": {
     "kev": 5,
@@ -110,10 +111,10 @@
    "route": "GET /v1/cves/{id}",
    "ok": true,
    "status": 200,
-   "ms": 126.3,
+   "ms": 99.8,
    "detail": "",
    "facts": {
-    "cve": "CVE-2026-128335",
+    "cve": "CVE-2026-129449",
     "fields": 31,
     "nvd_status": "Deferred"
    }
@@ -123,13 +124,13 @@
    "route": "GET /v1/cves/{id}?as_of=",
    "ok": true,
    "status": 200,
-   "ms": 103.6,
+   "ms": 82.3,
    "detail": "",
    "facts": {
-    "cve": "CVE-2026-128335",
-    "as_of": "2026-11-12",
+    "cve": "CVE-2026-129449",
+    "as_of": "2026-11-14",
     "known": false,
-    "note": "CVE-2026-128335 was not yet published on 2026-11-12; nothing about it was public that day"
+    "note": "CVE-2026-129449 was not yet published on 2026-11-14; nothing about it was public that day"
    }
   },
   {
@@ -137,10 +138,10 @@
    "route": "GET /v1/cves/{id}/timeline",
    "ok": true,
    "status": 200,
-   "ms": 111.4,
+   "ms": 82.1,
    "detail": "",
    "facts": {
-    "cve": "CVE-2026-128335",
+    "cve": "CVE-2026-129449",
     "events": 4
    }
   },
@@ -149,7 +150,7 @@
    "route": "GET /v1/backlog",
    "ok": true,
    "status": 200,
-   "ms": 114.6,
+   "ms": 89.9,
    "detail": "",
    "facts": {
     "questions": 6
@@ -160,7 +161,7 @@
    "route": "GET /v1/products",
    "ok": true,
    "status": 200,
-   "ms": 170.6,
+   "ms": 81.6,
    "detail": "",
    "facts": {
     "products": [
@@ -178,7 +179,7 @@
    "route": "GET /v1/products/{id}/exposure",
    "ok": true,
    "status": 200,
-   "ms": 195.3,
+   "ms": 119.0,
    "detail": "",
    "facts": {
     "product": "cloud-dashboard",
@@ -197,7 +198,7 @@
    "route": "POST /v1/match",
    "ok": true,
    "status": 200,
-   "ms": 3645.0,
+   "ms": 3087.5,
    "detail": "",
    "facts": {
     "sbom": "rust-cli.cdx.json",
@@ -220,7 +221,7 @@
    "route": "GET /v1/legacy/report.csv",
    "ok": true,
    "status": 200,
-   "ms": 876.4,
+   "ms": 356.2,
    "detail": "",
    "facts": {
     "rows": 667,
@@ -254,7 +255,7 @@
    "route": "OPTIONS /v1/cves",
    "ok": true,
    "status": 200,
-   "ms": 72.4,
+   "ms": 96.2,
    "detail": "",
    "facts": {
     "allow_origin": "https://unscheduled-triage.vercel.app"
@@ -265,14 +266,81 @@
    "route": "POST /internal/sync",
    "ok": true,
    "status": 200,
-   "ms": 561.0,
+   "ms": 410.1,
    "detail": "",
    "facts": {
     "status": "current",
-    "detail": "serving-202611131326 is loaded",
-    "target": "serving-202611131326+7a6e339ce211",
+    "detail": "serving-202611152200 is loaded",
+    "target": "serving-202611152200+f89ae3f7e825",
     "checked_release": true
    }
+  },
+  {
+   "name": "the registry export with its evidence",
+   "route": "GET /v1/models",
+   "ok": true,
+   "status": 200,
+   "ms": 102.5,
+   "detail": "",
+   "facts": {
+    "models": [
+     "unscheduled-band",
+     "unscheduled-cwe",
+     "unscheduled-exploit",
+     "unscheduled-metrics",
+     "unscheduled-product",
+     "unscheduled-survival"
+    ],
+    "batch": "df00a8d7e396"
+   }
+  },
+  {
+   "name": "a CVE found by its predicted band, its predictions labeled",
+   "route": "GET /v1/cves?predicted_band=",
+   "ok": true,
+   "status": 200,
+   "ms": 92.1,
+   "detail": "",
+   "facts": {
+    "cve_id": "CVE-2026-125711",
+    "batch": "df00a8d7e396",
+    "fields": [
+     "band",
+     "cwe",
+     "exploitation",
+     "kev_listing",
+     "metric_A",
+     "metric_AC",
+     "metric_AV",
+     "metric_C",
+     "metric_I",
+     "metric_PR",
+     "metric_S",
+     "metric_UI",
+     "products"
+    ],
+    "band": "CRITICAL"
+   }
+  },
+  {
+   "name": "a submitted description scored on request",
+   "route": "POST /v1/predict",
+   "ok": true,
+   "status": 200,
+   "ms": 710.2,
+   "detail": "",
+   "facts": {
+    "fields": [
+     "band",
+     "exploitation"
+    ],
+    "band": "CRITICAL",
+    "percentile": 92.7
+   }
   }
- ]
+ ],
+ "predictions": {
+  "batch": "df00a8d7e396",
+  "checks": 3
+ }
 }

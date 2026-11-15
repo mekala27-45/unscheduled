@@ -29,9 +29,8 @@ Look approval    Phase 1: approved by Ajay on the evening of 11 November, New Yo
                  Phase 2: the CVE page with predictions and /app/models wait for his review
 ```
 
-Open checklist lines, Phase 2 (14 of 18 done):
+Open checklist lines, Phase 2 (15 of 18 done):
 
-- 14. The predictions in the serving bundle and the API; /v1/predict live; Neon under its ceiling
 - 15. The console shows every prediction with its model, version and uncertainty; design gates green; the look reviewed by Ajay
 - 17. The live check awake and asleep; reset and rederive reproduced every CPU model number
 - 18. At least fifty conventional commits; the release record passing; v0.2.0 pushed by Ajay; BUILD_STATE.md written for Phase 3
@@ -53,13 +52,6 @@ the batch of 181,904 predictions with its serving measures; the load test with /
 reset and rederive, 713 of 713 values equal (pass), with the test recheck
 (pass).
 
-Waiting: the live database holds no predictions yet. The lake build carries the batch in the
-serving bundle and its sync loads it into Neon. The run of 14 November started before the batch was
-committed, and the run of 15 November stopped at the bundle's check against the API on five rows
-without an exploitation score, fixed since (DECISIONS.md, 15 November). Once the API with the new
-migration is deployed, Ajay can start a lake run (gh workflow run lake.yml), or the next daily run
-does; this session starts no workflow that creates a release.
-
 Next, in order: the API verify with the predictions; the live check awake, then asleep after
 twenty idle minutes; the screens of a CVE page with predictions and of /app/models to Ajay for his
 look review; the changelog and the release record; then Ajay pushes v0.2.0. Every script whose
@@ -72,6 +64,9 @@ numbers are committed runs with the numeric pins (AGENTS.md).
   its floor and EPSS on day 1. Test cannot be scored again without a change request that keeps both
   results (evaluation/phase2_plan.yaml), so a better model is judged in a later phase, against the
   same floors.
+- Neon holds 94.1 percent of its 800 MB ceiling with the predictions loaded, and the lake
+  grows every day. The sync refuses a chunk that would pass the ceiling and writes nothing, so the
+  site stays up, but Phase 3 adds pgvector: it measures the room first and trims a table if it must.
 - Kaggle and Databricks secrets are not set. Step eight took its CPU fallback (DECISIONS.md, step
   eight takes the fallback), and KAGGLE_USERNAME with KAGGLE_KEY would let ModernBERT run; without
   the Databricks pair, the registry uses the file store.
@@ -167,8 +162,8 @@ numbers are committed runs with the numeric pins (AGENTS.md).
   models/serving/predictions.parquet, travels in the serving bundle and the sync loads it with the
   rest; POST /v1/predict scores a submitted description with the ONNX band floor and LightGBM, and
   a known CVE's answer always comes from the batch (ADR 0008).
-- Neon: 84.4 percent of the ceiling of 800 MB in use when the API was
-  checked at 2026-11-13T23:52:20Z, holding serving-202611131326+7a6e339ce211 (results/live/api_verify.json).
+- Neon: 94.1 percent of the ceiling of 800 MB in use when the API was
+  checked at 2026-11-15T22:07:25Z, holding serving-202611152200+f89ae3f7e825 (results/live/api_verify.json).
 - Kaggle GPU hours this month: 0.0 used and 8.0 left of 8.0 (requests/gpu/).
 - The look: the Phase 2 screens wait for Ajay's review.
 - The open problems, in order, are the list above.
