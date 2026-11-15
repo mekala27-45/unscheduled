@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-14",
+ "as_of": "2026-11-15",
  "values": {
   "backlog.q1.analysis_undated": {
    "value": 0,
@@ -6641,7 +6641,7 @@
     "origin": "scripts/build_manifest.py",
     "population": "the section 20 checklist",
     "source": "build",
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null
    }
   },
@@ -6652,7 +6652,7 @@
     "origin": "scripts/build_manifest.py",
     "population": "the section 20 checklist",
     "source": "build",
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null
    }
   },
@@ -6663,7 +6663,7 @@
     "origin": "scripts/build_manifest.py",
     "population": "the Phase 2 checklist, section 20 of the Phase 2 prompt",
     "source": "build",
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null
    }
   },
@@ -6674,7 +6674,7 @@
     "origin": "scripts/build_manifest.py",
     "population": "the Phase 2 checklist, section 20 of the Phase 2 prompt",
     "source": "build",
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null
    }
   },
@@ -9335,6 +9335,17 @@
    "provenance": {
     "origin": "scripts/predict_serving.py",
     "population": "development window CVEs with a prediction",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
+  "models.predictions.exploit_unscored": {
+   "value": 5,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "development CVEs listed in KEV before publication (Q03), with no exploitation score",
     "source": "models",
     "as_of": "2026-11-13",
     "note": null
@@ -17989,7 +18000,7 @@
     "origin": "scripts/build_manifest.py",
     "population": "the section 20 checklist",
     "source": "build",
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null
    }
   },
@@ -18120,7 +18131,7 @@
     "origin": "scripts/build_manifest.py",
     "population": "the Phase 2 checklist, section 20 of the Phase 2 prompt",
     "source": "build",
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null
    }
   },

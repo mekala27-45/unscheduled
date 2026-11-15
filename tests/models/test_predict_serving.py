@@ -163,6 +163,72 @@ def test_every_window_row_gets_a_prediction_from_the_chosen_versions(tmp_path: P
     assert (tmp_path / predict_serving.TARGET).read_bytes() == first
 
 
+def leave_unscored(root: Path, split: str, ids: list[str], q03: list[str] | None = None) -> None:
+    """Drop rows from the exploitation and survival scores, as the exploitation step does for the
+    development Q03 CVEs, and write the development labels that name the Q03 ones."""
+    for name in (
+        f"data/models/rank/{split}_scores.parquet",
+        f"data/models/survival/{split}_survival.parquet",
+    ):
+        frame = pl.read_parquet(root / name)
+        frame.filter(~pl.col("cve_id").is_in(ids)).write_parquet(root / name)
+    dev = pl.read_parquet(root / "data/sets/development_inputs.parquet", columns=["cve_id"])
+    marked = set(ids if q03 is None else q03)
+    dev.with_columns(pl.col("cve_id").is_in(list(marked)).alias("kev_q03")).write_parquet(
+        root / "data/sets/development_labels.parquet"
+    )
+
+
+def run(root: Path) -> int:
+    return predict_serving.main(
+        ["--models", str(root / "data/models"), "--sets", str(root / "data/sets")], root=root
+    )
+
+
+def test_the_q03_rows_keep_their_fill_and_carry_no_exploitation(tmp_path: Path) -> None:
+    write_root(tmp_path)
+    q03 = ["CVE-2025-de0003", "CVE-2025-de0011"]
+    leave_unscored(tmp_path, "development", q03)
+    assert run(tmp_path) == 0
+    table = pl.read_parquet(tmp_path / predict_serving.TARGET)
+    assert table.height == 75
+    empty = table.filter(pl.col("cve_id").is_in(q03))
+    assert empty.height == 2 and empty.get_column("band").is_not_null().all()
+    for column in ("exploit_score", "exploit_p", "exploit_pct", "listed_by_30", "listed_by_180"):
+        assert empty.get_column(column).null_count() == 2, column
+    scored = table.filter(~pl.col("cve_id").is_in(q03))
+    floats = [c for c, t in table.schema.items() if t in (pl.Float32, pl.Float64)]
+    assert not any(table.select(pl.col(c).is_nan().any()).item() for c in floats)
+    assert scored.get_column("exploit_pct").null_count() == 0
+    assert scored.get_column("exploit_pct").max() == 100
+    record = json.loads((tmp_path / "results/models/predictions.json").read_text(encoding="utf-8"))
+    assert record["exploitation_unscored"]["rows"] == 2
+    assert record["exploitation_unscored"]["cve_ids"] == {"development": q03}
+    part = json.loads((tmp_path / "results/parts/predictions.json").read_text(encoding="utf-8"))
+    assert part["values"]["models.predictions.exploit_unscored"]["value"] == 2
+    serving = json.loads((tmp_path / "models/serving/serving.json").read_text(encoding="utf-8"))
+    quantiles = serving["exploit"]["quantiles"]
+    assert all(np.isfinite(quantiles)) and quantiles == sorted(quantiles)
+
+
+def test_an_unscored_test_or_shadow_row_stops_the_run(tmp_path: Path) -> None:
+    import pytest
+
+    write_root(tmp_path)
+    leave_unscored(tmp_path, "test", ["CVE-2025-te0004"], q03=[])
+    with pytest.raises(SystemExit, match="test CVEs have no exploitation score"):
+        run(tmp_path)
+
+
+def test_an_unscored_development_row_outside_q03_stops_the_run(tmp_path: Path) -> None:
+    import pytest
+
+    write_root(tmp_path)
+    leave_unscored(tmp_path, "development", ["CVE-2025-de0003", "CVE-2025-de0005"], q03=["CVE-2025-de0003"])
+    with pytest.raises(SystemExit, match="not the Q03 ones"):
+        run(tmp_path)
+
+
 def test_the_floor_version_serves_only_candidates_at_its_threshold() -> None:
     cands = pl.DataFrame(
         {

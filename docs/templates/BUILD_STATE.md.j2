@@ -94,9 +94,11 @@ reset and rederive, {{ rederive.equal }} of {{ rederive.compared }} values equal
 {% if has("models.predictions.batch") and not live_predictions %}
 
 Waiting: the live database holds no predictions yet. The lake build carries the batch in the
-serving bundle and its sync loads it into Neon, but the last lake run started before the batch was
-committed. Ajay can start one (gh workflow run lake.yml), or the next daily run does; this session
-starts no workflow that creates a release.
+serving bundle and its sync loads it into Neon. The run of 14 November started before the batch was
+committed, and the run of 15 November stopped at the bundle's check against the API on five rows
+without an exploitation score, fixed since (DECISIONS.md, 15 November). Once the API with the new
+migration is deployed, Ajay can start a lake run (gh workflow run lake.yml), or the next daily run
+does; this session starts no workflow that creates a release.
 {% endif %}
 
 {% if look and tracked("results/release.json") %}

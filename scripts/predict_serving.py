@@ -9,10 +9,16 @@ any new CVE's, and the gap window gets none, since no model uses it. Each row ho
 version of each registered model (results/registry/registry.json): the band with its four
 probabilities scaled by the frozen temperature and its 90 percent conformal set; each base metric
 the same way; the CWE with its probability and its five most probable classes; the raw exploitation
-score, its isotonic probability and its percentile among every CVE of the batch; the chance of a KEV
-listing by 30, 90 and 180 days; and the five most likely affected products. Writes
+score, its isotonic probability and its percentile among the scored CVEs of the batch; the chance of
+a KEV listing by 30, 90 and 180 days; and the five most likely affected products. Writes
 models/serving/predictions.parquet (committed, read by the serving bundle), results/models/
 predictions.json and the manifest part results/parts/predictions.json. Reads no test label.
+
+The exploitation step scores every test and shadow CVE but leaves the development CVEs CISA listed in
+KEV before their publication (Q03) out of its development population (scripts/train_rank.py). Those
+rows keep their band, metrics, CWE and products and carry no exploitation score, percentile or
+listing chance: empty, never NaN, so the percentile and the quantiles count the scored CVEs only.
+Any other row without a score stops the run.
 """
 
 from __future__ import annotations
@@ -111,10 +117,43 @@ def fill_columns(proba: pl.DataFrame, points: dict[str, Any]) -> dict[str, Any]:
     return out
 
 
-def percentile(values: np.ndarray) -> np.ndarray:
-    """Each value's percentile among all of them: the share at or below it, times 100."""
-    order = np.sort(values)
-    return (np.searchsorted(order, values, side="right") / len(values) * 100.0).astype(np.float32)
+def percentile(values: pl.Series) -> pl.Series:
+    """Each score's percentile among the scored ones: the share at or below it, times 100. A row
+    without a score gets none."""
+    scored = values.is_not_null()
+    order = np.sort(values.drop_nulls().cast(pl.Float64).to_numpy())
+    at = values.cast(pl.Float64).fill_null(0.0).to_numpy()
+    pct = (np.searchsorted(order, at, side="right") / max(len(order), 1) * 100.0).astype(np.float32)
+    return pl.Series("exploit_pct", pct).zip_with(scored, pl.Series([None] * len(values), dtype=pl.Float32))
+
+
+def unscored(split: str, cve_ids: list[str], folder: Path) -> list[str]:
+    """The rows the exploitation step left without a score, which may only be the development CVEs
+    listed in KEV before publication (Q03). The development labels say which those are; no test label
+    is read, and a test or shadow row without a score stops the run."""
+    if not cve_ids:
+        return []
+    if split != "development":
+        raise SystemExit(f"predict: {len(cve_ids)} {split} CVEs have no exploitation score")
+    labels = pl.read_parquet(folder / "development_labels.parquet", columns=["cve_id", "kev_q03"])
+    q03 = set(labels.filter(pl.col("kev_q03").fill_null(False)).get_column("cve_id").to_list())
+    if set(cve_ids) != q03:
+        raise SystemExit(
+            "predict: the development CVEs without an exploitation score are not the Q03 ones "
+            f"({len(set(cve_ids) - q03)} unscored outside Q03, {len(q03 - set(cve_ids))} Q03 scored)"
+        )
+    return sorted(cve_ids)
+
+
+def exploitation(scores: pl.DataFrame, column: str, isotonic: calibrate.Isotonic) -> dict[str, pl.Series]:
+    """The raw exploitation score and its isotonic probability, both empty where the row has no score."""
+    raw = scores.get_column(column).cast(pl.Float64)
+    scored = raw.is_not_null()
+    p = pl.Series("exploit_p", isotonic.predict(raw.fill_null(0.0).to_numpy()).astype(np.float32))
+    return {
+        "exploit_score": raw.cast(pl.Float32).alias("exploit_score"),
+        "exploit_p": p.zip_with(scored, pl.Series([None] * len(raw), dtype=pl.Float32)),
+    }
 
 
 def floor_version(registry: dict[str, Any], name: str) -> int:
@@ -134,7 +173,7 @@ def write_serving(
     cutoff, the exploitation model's isotonic map, and the batch's score quantiles for a percentile."""
     exploit = next(m for m in registry["models"] if m["name"] == "unscheduled-exploit")
     chosen = int(exploit["aliases"]["chosen"])
-    scores = table.get_column("exploit_score").cast(pl.Float64).to_numpy()
+    scores = table.get_column("exploit_score").drop_nulls().cast(pl.Float64).to_numpy()
     serving = {
         "batch": record["batch"],
         "made_on": record["made_on"],
@@ -201,6 +240,15 @@ def manifest_part(record: dict[str, Any], as_of: str) -> dict[str, Any]:
         population="development, test and shadow window CVEs, one row each",
         source="models",
     )
+    if "exploitation_unscored" in record:
+        m.value(
+            "models.predictions.exploit_unscored",
+            int(record["exploitation_unscored"]["rows"]),
+            "int",
+            origin=ORIGIN,
+            population="development CVEs listed in KEV before publication (Q03), with no exploitation score",
+            source="models",
+        )
     m.value(
         "models.predictions.megabytes",
         round(record["file"]["bytes"] / 1e6, 1),
@@ -251,6 +299,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
     isotonic = calibrate.Isotonic(np.asarray(iso["x"]), np.asarray(iso["y"]))
     frames: list[pl.DataFrame] = []
     windows: dict[str, int] = {}
+    left_out: dict[str, list[str]] = {}
     for split in SPLITS:
         ids = pl.read_parquet(args.sets / f"{split}_inputs.parquet", columns=["cve_id"])
         fill = ids.join(
@@ -265,9 +314,13 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         scores = ids.join(
             pl.read_parquet(args.models / "rank" / f"{split}_scores.parquet"), on="cve_id", how="left"
         )
-        raw = scores.get_column(points["primary"]["exploitation"]).cast(pl.Float64).to_numpy()
-        columns["exploit_score"] = raw.astype(np.float32)
-        columns["exploit_p"] = isotonic.predict(raw).astype(np.float32)
+        primary = points["primary"]["exploitation"]
+        missing = unscored(
+            split, scores.filter(pl.col(primary).is_null()).get_column("cve_id").to_list(), args.sets
+        )
+        if missing:
+            left_out[split] = missing
+        columns.update(exploitation(scores, primary, isotonic))
         surv = ids.join(
             pl.read_parquet(args.models / "survival" / f"{split}_survival.parquet"), on="cve_id", how="left"
         )
@@ -282,9 +335,7 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         frames.append(pl.DataFrame(columns))
         windows[split] = fill.height
     table = pl.concat(frames).sort("cve_id")
-    table = table.with_columns(
-        pl.Series("exploit_pct", percentile(table.get_column("exploit_score").to_numpy()))
-    )
+    table = table.with_columns(percentile(table.get_column("exploit_score")))
     digest = hashlib.sha256(
         points_path.read_bytes() + json.dumps(versions, sort_keys=True).encode()
     ).hexdigest()
@@ -304,6 +355,12 @@ def main(argv: list[str] | None = None, root: Path = ROOT) -> int:
         "product_model": product_model,
         "product_threshold": product_threshold,
         "rule": "development, test and shadow window CVEs; train window CVEs carry none since the models were fit on them",
+        "exploitation_unscored": {
+            "rows": sum(len(v) for v in left_out.values()),
+            "cve_ids": left_out,
+            "rule": "the development CVEs CISA listed in KEV before publication (Q03), outside the exploitation "
+            "population; their rows carry no exploitation score, percentile or listing chance",
+        },
         "shadow_bands": shadow_bands(table, args.sets),
         "file": {
             "path": TARGET.as_posix(),

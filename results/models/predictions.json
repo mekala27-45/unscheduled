@@ -1,6 +1,6 @@
 {
  "batch": "df00a8d7e396",
- "made_on": "2026-11-14",
+ "made_on": "2026-11-15",
  "rows": 181904,
  "windows": {
   "development": 39924,
@@ -88,6 +88,19 @@
  "product_model": "floor",
  "product_threshold": 90.0,
  "rule": "development, test and shadow window CVEs; train window CVEs carry none since the models were fit on them",
+ "exploitation_unscored": {
+  "rows": 5,
+  "cve_ids": {
+   "development": [
+    "CVE-2023-46805",
+    "CVE-2024-21887",
+    "CVE-2024-29745",
+    "CVE-2024-29748",
+    "CVE-2024-43093"
+   ]
+  },
+  "rule": "the development CVEs CISA listed in KEV before publication (Q03), outside the exploitation population; their rows carry no exploitation score, percentile or listing chance"
+ },
  "shadow_bands": [
   [
    "LOW",
@@ -132,8 +145,8 @@
  ],
  "file": {
   "path": "models/serving/predictions.parquet",
-  "bytes": 12552409,
-  "sha256": "452616212f47d3741d31600edfaa6a89b0c51f32e9a36e574094e3a5944ea908",
-  "content_digest": "88b761b204822d10173b2fa16ffd44cfe0f70d2a9279c05d6da875046a533137"
+  "bytes": 12550385,
+  "sha256": "a37c34c2abed58f42e564859597cac7afd7a0750822437552a9151654d915e83",
+  "content_digest": "00f1302bfabb94df1f0729bf468972269cfd286d86876dec9b933a4776644828"
  }
 }

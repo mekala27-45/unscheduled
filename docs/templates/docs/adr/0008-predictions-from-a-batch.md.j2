@@ -18,7 +18,11 @@ shadow windows with the chosen version of each registered model: the band, the e
 CWE with their probabilities and conformal sets, the exploitation score with its isotonic
 probability and percentile, the chance of a KEV listing within 30 days, 90 days and 180 days, and the
 likely products. A train window CVE gets none, since every model was fit on it, and the gap window
-gets none, since no model uses it. The predictions travel in the serving bundle as an optional
+gets none, since no model uses it.{% if has("models.predictions.exploit_unscored") %} The {{ v("models.predictions.exploit_unscored") }} development CVEs CISA listed in KEV before
+they were published keep their other predictions and carry no exploitation score or listing
+chance: the exploitation step leaves them out of its population (quarantine Q03), so their answer
+says their listing is a fact and not a prediction, and the percentiles count the scored CVEs only.{% endif %} The
+predictions travel in the serving bundle as an optional
 table, and the sync loads them like every other table, measuring each chunk against the storage
 ceiling before it writes; an API answer without a prediction says which of these reasons applies.
 

@@ -273,10 +273,11 @@
    },
    {
     "file": "docs/templates/docs/adr/0008-predictions-from-a-batch.md.j2",
-    "sha256_after": "eea12452d2a781508aa3aede7afc0a808e278f4dad053901f632ac84997176f5",
+    "sha256_after": "aac5c38f618527ed8b97b81ea8807b4b927a45dd927ed4c156eaff380ef2e9eb",
     "changes": [
      "three bold paragraph labels removed, each paragraph now opening with its subject (pattern 19)",
-     "2026-11-14: the live measures of /v1/predict from the load test, one client alone and five at once, with what they do not tell, written after the pass and read the same way"
+     "2026-11-14: the live measures of /v1/predict from the load test, one client alone and five at once, with what they do not tell, written after the pass and read the same way",
+     "2026-11-15: what the batch rows of the CVEs listed in KEV before publication carry, written after the pass and read the same way"
     ]
    },
    {

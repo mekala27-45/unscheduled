@@ -763,3 +763,24 @@ predictions over five workers, and now 20 more predictions from one client, one 
 record replaces results/load/c8.json, and its numbers replace the C8 lookup reading in every
 document, whatever they are. The first record stays as results/load/c8_before_batch.json. This
 entry is written before the run, so which record stands does not depend on its numbers.
+
+## 2026-11-15: the batch carries no exploitation score where the exploitation step gave none
+
+The scheduled lake run of 15 November (run 43716317542) stopped at the serving bundle's check
+against the API: five rows of the prediction batch had no exploitation score. They are the
+development CVEs CISA listed in KEV before their publication, CVE-2023-46805, CVE-2024-21887,
+CVE-2024-29745, CVE-2024-29748 and CVE-2024-43093. The exploitation step leaves Q03 out of its
+development population and scores every test and shadow CVE (scripts/train_rank.py), and the batch
+joined its scores by CVE, so those rows took NaN for the score and its probability, a percentile of
+100 and no listing chance. The NaN also reached the 1,001 quantiles that POST /v1/predict reads, so
+on the live API every submitted description got a percentile of 0.0. The API verify did not catch
+it, since it checks the probability and not the percentile.
+
+So the batch now leaves the exploitation score, probability and percentile empty on those rows,
+never NaN, and stops on any other row without a score: a test or shadow row, or a development row
+outside Q03. The percentiles and the quantiles count the scored CVEs only, which moves every other
+percentile by at most 0.003 points; the rows, the batch id and every other column are equal to the
+batch before. The API takes the three values together or not at all, alembic 0003 drops NOT NULL on
+their columns, and for such a CVE the predictions block leaves out the exploitation value and says
+why: its listing is a fact, not a prediction. A test holds the committed serving files to numbers,
+so a NaN there fails CI before it reaches a release.

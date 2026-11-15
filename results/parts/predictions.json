@@ -23,6 +23,17 @@
     "note": null
    }
   },
+  "models.predictions.exploit_unscored": {
+   "value": 5,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/predict_serving.py",
+    "population": "development CVEs listed in KEV before publication (Q03), with no exploitation score",
+    "source": "models",
+    "as_of": "2026-11-13",
+    "note": null
+   }
+  },
   "models.predictions.megabytes": {
    "value": 12.6,
    "fmt": "float1",

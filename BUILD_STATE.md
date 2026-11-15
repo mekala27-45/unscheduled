@@ -54,9 +54,11 @@ reset and rederive, 713 of 713 values equal (pass), with the test recheck
 (pass).
 
 Waiting: the live database holds no predictions yet. The lake build carries the batch in the
-serving bundle and its sync loads it into Neon, but the last lake run started before the batch was
-committed. Ajay can start one (gh workflow run lake.yml), or the next daily run does; this session
-starts no workflow that creates a release.
+serving bundle and its sync loads it into Neon. The run of 14 November started before the batch was
+committed, and the run of 15 November stopped at the bundle's check against the API on five rows
+without an exploitation score, fixed since (DECISIONS.md, 15 November). Once the API with the new
+migration is deployed, Ajay can start a lake run (gh workflow run lake.yml), or the next daily run
+does; this session starts no workflow that creates a release.
 
 Next, in order: the API verify with the predictions; the live check awake, then asleep after
 twenty idle minutes; the screens of a CVE page with predictions and of /app/models to Ajay for his
