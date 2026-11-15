@@ -1,0 +1,26 @@
+{
+ "phase": 2,
+ "reviewer": "Ajay Mekala",
+ "reviewed_at": "2026-11-15T23:32:00Z",
+ "local_time": "2026-11-15 18:32, New York time",
+ "site": "https://unscheduled-triage.vercel.app",
+ "data_version": "serving-202611152200+f89ae3f7e825",
+ "web_commit": "bba6db2",
+ "screens": [
+  "/app/cves/CVE-2026-126119, the head of the page with the ruler and its predicted tick, light, 1440 pixels",
+  "/app/cves/CVE-2026-126119, the predictions block, light, 1440 pixels",
+  "/app/cves/CVE-2026-126119, the predictions block, dark, 1440 pixels",
+  "/app/cves/CVE-2026-126119, the predictions block, light, 390 pixels",
+  "/app/models, the whole page in four parts, light, 1440 pixels"
+ ],
+ "fixed_before_review": [
+  "the region for the CVEs the NVD skipped read fields the export does not have and said not measured; it now draws the model beside its floor, plain and weighted",
+  "the model cards show the same headline scores on development and on test, named in words",
+  "long text wraps inside the tables; counts are grouped; the slice and head names read as words",
+  "EPSS reads as a percent beside the model's chance"
+ ],
+ "words": "everything is good",
+ "change_requested": null,
+ "result": "pass",
+ "summary": "approved by Ajay on the evening of 15 November, New York time, after the CVE page with predictions and the models page: everything is good"
+}

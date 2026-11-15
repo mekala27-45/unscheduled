@@ -46,7 +46,7 @@ Data             the committed numbers come from the lake cut {{ v("lake.data_cu
 Look approval    Phase 1: approved by Ajay on the evening of 11 November, New York time, after
                  the landing, docs, report and ruler screens: everything is good so far
 {% if look %}
-                 Phase 2: {{ look.summary }}
+                 {{ ("Phase 2: " ~ look.summary) | wordwrap(83, wrapstring="\n                 ") }}
 {% else %}
                  Phase 2: the CVE page with predictions and /app/models wait for his review
 {% endif %}
