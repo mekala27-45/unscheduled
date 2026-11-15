@@ -23,8 +23,8 @@ Phase            2 of 5, the models: every model step is in, from the probes and
 {% if points %}
                  frozen as the stage {{ (reg.stages | selectattr("stage", "equalto", "operating_points") | first).hash[:12] }}, the registry, test scored once (C1 {{ v("models.test.c1.verdict") }}, C2
                  {{ v("models.test.c2.verdict") }}), the prediction batch with its serving measures, the load test
-                 with /v1/predict, and reset and rederive with the test recheck; the open
-                 checklist lines below are what is left; the prompt is
+                 with /v1/predict, and reset and rederive with the test recheck;
+                 {{ v("build.phase2.checklist_done") }} of {{ v("build.phase2.checklist_total") }} checklist lines done (RESULTS.md); the prompt is
                  claude/unscheduled-phase-2-prompt.md in the Project
 {% else %}
                  wait to be frozen; the prompt is claude/unscheduled-phase-2-prompt.md in the Project
@@ -101,9 +101,13 @@ migration is deployed, Ajay can start a lake run (gh workflow run lake.yml), or 
 does; this session starts no workflow that creates a release.
 {% endif %}
 
-{% if look and tracked("results/release.json") %}
+{% set release = data("results/release.json") if tracked("results/release.json") else none %}
+{% if look and release and release.tag == "v0.2.0" and release.result == "pass" %}
 Next: Ajay pushes v0.2.0 from his machine, and the Phase 3 prompt is written from the repository
 as it stands then.
+{% elif look %}
+Next: the changelog and the release record on a clean checkout, then Ajay pushes v0.2.0 from his
+machine. Every script whose numbers are committed runs with the numeric pins (AGENTS.md).
 {% else %}
 Next, in order: the API verify with the predictions; the live check awake, then asleep after
 twenty idle minutes; the screens of a CVE page with predictions and of /app/models to Ajay for his
@@ -114,7 +118,7 @@ numbers are committed runs with the numeric pins (AGENTS.md).
 ## Open problems
 
 {% if has("models.test.c1.verdict") %}
-- C1 and C2 are {{ v("models.test.c1.verdict") }} and {{ v("models.test.c2.verdict") }}, scored once (the hand off below has the numbers). The fill model is
+- C1 is {{ v("models.test.c1.verdict") }} and C2 is {{ v("models.test.c2.verdict") }}, each scored once (the hand off below has the numbers). The fill model is
   the CPU fallback, behind its TF-IDF floor on development and on test; the exploitation model ties
   its floor and EPSS on day 1. Test cannot be scored again without a change request that keeps both
   results (evaluation/phase2_plan.yaml), so a better model is judged in a later phase, against the

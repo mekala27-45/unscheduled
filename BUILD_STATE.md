@@ -11,8 +11,8 @@ Phase            2 of 5, the models: every model step is in, from the probes and
                  as the models stage 8e72e6298a18 to the product models, the operating points
                  frozen as the stage 406e8887f350, the registry, test scored once (C1 not met, C2
                  not met), the prediction batch with its serving measures, the load test
-                 with /v1/predict, and reset and rederive with the test recheck; the open
-                 checklist lines below are what is left; the prompt is
+                 with /v1/predict, and reset and rederive with the test recheck;
+                 17 of 18 checklist lines done (RESULTS.md); the prompt is
                  claude/unscheduled-phase-2-prompt.md in the Project
 Phase 1          the ground truth, tagged v0.1.0 on the commit that adds the release record;
                  its checklist 18 of 18 lines done (RESULTS.md)
@@ -51,12 +51,12 @@ the batch of 181,904 predictions with its serving measures; the load test with /
 reset and rederive, 713 of 713 values equal (pass), with the test recheck
 (pass).
 
-Next: Ajay pushes v0.2.0 from his machine, and the Phase 3 prompt is written from the repository
-as it stands then.
+Next: the changelog and the release record on a clean checkout, then Ajay pushes v0.2.0 from his
+machine. Every script whose numbers are committed runs with the numeric pins (AGENTS.md).
 
 ## Open problems
 
-- C1 and C2 are not met and not met, scored once (the hand off below has the numbers). The fill model is
+- C1 is not met and C2 is not met, each scored once (the hand off below has the numbers). The fill model is
   the CPU fallback, behind its TF-IDF floor on development and on test; the exploitation model ties
   its floor and EPSS on day 1. Test cannot be scored again without a change request that keeps both
   results (evaluation/phase2_plan.yaml), so a better model is judged in a later phase, against the
