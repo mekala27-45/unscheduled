@@ -1,45 +1,45 @@
 {
- "as_of": "2026-11-14",
+ "as_of": "2026-11-15",
  "figures": {},
  "tables": {},
  "values": {
   "criteria.c8.verdict": {
    "fmt": "text",
    "provenance": {
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null,
     "origin": "scripts/load_test.py",
     "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
     "source": "live"
    },
-   "value": "lookups met (p95 553 ms against 1,500 ms); the triage run is measured in Phase 4"
+   "value": "lookups met (p95 177 ms against 1,500 ms); the triage run is measured in Phase 4"
   },
   "load.cold_health_ms": {
    "fmt": "ms",
    "provenance": {
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null,
     "origin": "scripts/load_test.py",
     "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
     "source": "live"
    },
-   "value": 9039.0
+   "value": 5899.6
   },
   "load.cold_lookup_ms": {
    "fmt": "ms",
    "provenance": {
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null,
     "origin": "scripts/load_test.py",
     "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
     "source": "live"
    },
-   "value": 219.8
+   "value": 140.4
   },
   "load.idle_minutes": {
    "fmt": "min1",
    "provenance": {
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null,
     "origin": "scripts/load_test.py",
     "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
@@ -47,32 +47,65 @@
    },
    "value": 20.0
   },
-  "load.predict_p50_ms": {
+  "load.predict_alone_p50_ms": {
    "fmt": "ms",
    "provenance": {
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null,
     "origin": "scripts/load_test.py",
     "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
     "source": "live"
    },
-   "value": 104.8
+   "value": 94.7
+  },
+  "load.predict_alone_p95_ms": {
+   "fmt": "ms",
+   "provenance": {
+    "as_of": "2026-11-15",
+    "note": null,
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live"
+   },
+   "value": 375.5
+  },
+  "load.predict_alone_requests": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-15",
+    "note": null,
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live"
+   },
+   "value": 20
+  },
+  "load.predict_p50_ms": {
+   "fmt": "ms",
+   "provenance": {
+    "as_of": "2026-11-15",
+    "note": null,
+    "origin": "scripts/load_test.py",
+    "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
+    "source": "live"
+   },
+   "value": 92.3
   },
   "load.predict_p95_ms": {
    "fmt": "ms",
    "provenance": {
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null,
     "origin": "scripts/load_test.py",
     "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
     "source": "live"
    },
-   "value": 2039.6
+   "value": 1189.2
   },
   "load.predict_requests": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null,
     "origin": "scripts/load_test.py",
     "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
@@ -83,7 +116,7 @@
   "load.predict_workers": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null,
     "origin": "scripts/load_test.py",
     "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
@@ -94,7 +127,7 @@
   "load.warm_lookups": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null,
     "origin": "scripts/load_test.py",
     "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
@@ -105,40 +138,40 @@
   "load.warm_p50_ms": {
    "fmt": "ms",
    "provenance": {
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null,
     "origin": "scripts/load_test.py",
     "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
     "source": "live"
    },
-   "value": 115.3
+   "value": 99.9
   },
   "load.warm_p95_ms": {
    "fmt": "ms",
    "provenance": {
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null,
     "origin": "scripts/load_test.py",
     "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
     "source": "live"
    },
-   "value": 553.1
+   "value": 176.6
   },
   "load.warm_p99_ms": {
    "fmt": "ms",
    "provenance": {
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null,
     "origin": "scripts/load_test.py",
     "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",
     "source": "live"
    },
-   "value": 1623.5
+   "value": 1851.1
   },
   "load.warm_workers": {
    "fmt": "int",
    "provenance": {
-    "as_of": "2026-11-14",
+    "as_of": "2026-11-15",
     "note": null,
     "origin": "scripts/load_test.py",
     "population": "the live API at https://unscheduled-api.vercel.app, from a separate client",

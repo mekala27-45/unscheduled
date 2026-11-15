@@ -1,12 +1,12 @@
 {
  "base_url": "https://unscheduled-api.vercel.app",
  "budget_remaining": [
-  "1869",
-  "1868"
+  "1985",
+  "1984"
  ],
- "checked_at": "2026-11-14T15:03:08+00:00",
+ "checked_at": "2026-11-15T22:42:50+00:00",
  "data_version": [
-  "serving-202611141230+97a0e11d58c9"
+  "serving-202611152200+f89ae3f7e825"
  ],
  "mode": "base-url",
  "passed": true,

@@ -154,120 +154,148 @@
   "phase": "asleep",
   "web": "https://unscheduled-triage.vercel.app",
   "api": "https://unscheduled-api.vercel.app",
-  "started_at": "2026-11-14T01:03:15Z",
-  "finished_at": "2026-11-14T01:03:53Z",
+  "started_at": "2026-11-15T23:03:37Z",
+  "finished_at": "2026-11-15T23:04:23Z",
   "idle_minutes_before": 20,
   "first_health": {
    "status": 200,
-   "ms": 580,
-   "data_version": "serving-202611131326+7a6e339ce211"
+   "ms": 4861,
+   "data_version": "serving-202611152200+f89ae3f7e825"
   },
   "browser": "Chromium 153.0.8010.12, headless, 1440 by 900",
   "client": "web/scripts/live-check.mjs, a separate machine with no credential",
   "picked": {
-   "cve": "CVE-2026-128335",
-   "before": "2026-11-12",
-   "product": "cloud-dashboard"
+   "cve": "CVE-2026-129449",
+   "before": "2026-11-14",
+   "product": "cloud-dashboard",
+   "predicted": "CVE-2026-126119"
   },
-  "passed": 14,
-  "total": 14,
+  "predict": {
+   "first": {
+    "status": 200,
+    "ms": 1092,
+    "band": "CRITICAL"
+   },
+   "second": {
+    "status": 200,
+    "ms": 103,
+    "band": "CRITICAL"
+   },
+   "ok": true
+  },
+  "passed": 16,
+  "total": 16,
   "result": "pass",
   "routes": [
    {
     "route": "/",
     "status": 200,
-    "ms": 2012,
+    "ms": 1616,
     "ok": true,
     "problems": []
    },
    {
     "route": "/app",
     "status": 200,
-    "ms": 3673,
+    "ms": 6742,
     "ok": true,
     "problems": []
    },
    {
     "route": "/app/cves",
     "status": 200,
-    "ms": 2279,
+    "ms": 2139,
     "ok": true,
     "problems": []
    },
    {
-    "route": "/app/cves/CVE-2026-128335",
+    "route": "/app/cves/CVE-2026-129449",
     "status": 200,
-    "ms": 2437,
+    "ms": 1879,
     "ok": true,
     "problems": []
    },
    {
-    "route": "/app/cves/CVE-2026-128335?as_of=2026-11-12",
+    "route": "/app/cves/CVE-2026-129449?as_of=2026-11-14",
     "status": 200,
-    "ms": 1866,
+    "ms": 1777,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/app/cves/CVE-2026-126119",
+    "status": 200,
+    "ms": 1744,
+    "ok": true,
+    "problems": []
+   },
+   {
+    "route": "/app/models",
+    "status": 200,
+    "ms": 1697,
     "ok": true,
     "problems": []
    },
    {
     "route": "/app/backlog",
     "status": 200,
-    "ms": 2028,
+    "ms": 1677,
     "ok": true,
     "problems": []
    },
    {
     "route": "/app/products",
     "status": 200,
-    "ms": 3391,
+    "ms": 2944,
     "ok": true,
     "problems": []
    },
    {
     "route": "/app/match",
     "status": 200,
-    "ms": 5776,
+    "ms": 5273,
     "ok": true,
     "problems": []
    },
    {
     "route": "/app/data",
     "status": 200,
-    "ms": 1771,
+    "ms": 1793,
     "ok": true,
     "problems": []
    },
    {
     "route": "/app/criteria",
     "status": 200,
-    "ms": 1867,
+    "ms": 1757,
     "ok": true,
     "problems": []
    },
    {
     "route": "/app/limits",
     "status": 200,
-    "ms": 1547,
+    "ms": 1397,
     "ok": true,
     "problems": []
    },
    {
     "route": "/status",
     "status": 200,
-    "ms": 2127,
+    "ms": 1699,
     "ok": true,
     "problems": []
    },
    {
     "route": "/docs/architecture",
     "status": 200,
-    "ms": 1625,
+    "ms": 1445,
     "ok": true,
     "problems": []
    },
    {
     "route": "/report/backlog",
     "status": 200,
-    "ms": 1601,
+    "ms": 1487,
     "ok": true,
     "problems": []
    }

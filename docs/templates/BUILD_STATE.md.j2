@@ -184,10 +184,8 @@ numbers are committed runs with the numeric pins (AGENTS.md).
 
   Toward analyzed: {% for r in rows("backlog.q8.features_toward_analyzed")[:5] %}{{ r[0] }}{{ "; " if not loop.last else "." }}{% endfor %}
 
-{% if has("load.warm_p95_ms") %}
-- The API: the first lookup after {{ v("load.idle_minutes") }} idle took {{ v("load.cold_lookup_ms") }}; warm, p50
-  {{ v("load.warm_p50_ms") }} and p95 {{ v("load.warm_p95_ms") }} over {{ v("load.warm_lookups") }} lookups ({{ v("criteria.c8.verdict") }}).
-{% endif %}
+- The API: its Phase 1 measures are in BUILD_STATE.md at the tag v0.1.0; the line for the API as it
+  stands, with the predictions loaded, is in the hand off below.
 - The look: approved by Ajay on the evening of 11 November, New York time; he asked for no change.
 - Kaggle GPU hours: {{ budgets.kaggle_gpu_hours_month }} for the month (config/budgets.yaml), none used in Phase 1.
 
@@ -227,6 +225,10 @@ numbers are committed runs with the numeric pins (AGENTS.md).
   models/serving/predictions.parquet, travels in the serving bundle and the sync loads it with the
   rest; POST /v1/predict scores a submitted description with the ONNX band floor and LightGBM, and
   a known CVE's answer always comes from the batch (ADR 0008).
+{% if has("load.warm_p95_ms") %}
+- The API with the predictions loaded, from a separate client: the first lookup after
+  {{ v("load.idle_minutes") }} idle took {{ v("load.cold_lookup_ms") }}; warm, p50 {{ v("load.warm_p50_ms") }} and p95 {{ v("load.warm_p95_ms") }} over {{ v("load.warm_lookups") }} lookups ({{ v("criteria.c8.verdict") }}).
+{% endif %}
 {% endif %}
 {% if verify %}
 {% for c in verify.checks %}

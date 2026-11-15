@@ -53,9 +53,13 @@ On the build machine a fresh process loads the two ONNX sessions and the floor's
 ms; a warm prediction takes 2.0 ms at the median. The live check
 measures the same on the deployed API.
 
-The load test measured the route from a separate client, 5 calls at a time
-(results/load/c8.json): 60 calls took 105 ms at the median and
-2,040 ms at the 95th percentile. C8 bounds lookups and triage runs, not this route.
+The load test measured the route from a separate client (results/load/c8.json). One call at a
+time, 20 calls took 95 ms at the median and 376 ms at the
+95th percentile. With 5 clients at once, 60 calls took 92 ms at the
+median and 1,189 ms at the 95th percentile. Scoring is a few milliseconds of each
+call, so the slow calls under load spent their time waiting, on each other or on the platform; the
+API does not yet record how long it held a request, so which of the two is unknown. C8 bounds
+lookups and triage runs, not this route, and Phase 4 owns the service numbers.
 
 Vercel's container registry allows a compressed layer of 2 GB and an image of 15 GB (its documentation,
 read 14 November 2026), so size alone would not keep the text model off the request path. Its cost

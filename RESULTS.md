@@ -88,7 +88,7 @@ says nothing about whether its output is right.
 
 ## The Phase 2 checklist
 
-15 of the 18 lines are done. A line is done
+16 of the 18 lines are done. A line is done
 only when its evidence says pass, and a file an earlier phase wrote counts here only with what Phase 2
 writes into it.
 
@@ -110,7 +110,7 @@ writes into it.
 | 14 | done | The predictions in the serving bundle and the API; /v1/predict live; Neon under its ceiling | results/models/predictions.json, results/live/api_verify.json |
 | 15 | not done | The console shows every prediction with its model, version and uncertainty; design gates green; the look reviewed by Ajay | results/design/gates.json, results/design/look_review.json |
 | 16 | done | The docs, ADRs 0008 to 0010, report/models.md and notebooks 04 to 06; the humanizer pass done | docs/models.md, docs/adr/0008-predictions-from-a-batch.md, docs/adr/0009-the-gpu-as-a-committed-request.md, docs/adr/0010-the-fill-model-earns-its-place.md, report/models.md, notebooks/04_the_random_split.ipynb, notebooks/05_reading_the_misses.ipynb, notebooks/06_epss_on_day_30.ipynb, results/humanizer.json |
-| 17 | not done | The live check awake and asleep; reset and rederive reproduced every CPU model number | results/live_check.json, results/rederive.json |
+| 17 | done | The live check awake and asleep; reset and rederive reproduced every CPU model number | results/live_check.json, results/rederive.json |
 | 18 | not done | At least fifty conventional commits; the release record passing; v0.2.0 pushed by Ajay; BUILD_STATE.md written for Phase 3 | results/release.json |
 
 > unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.

@@ -1,55 +1,74 @@
 {
  "base_url": "https://unscheduled-api.vercel.app",
  "client": "scripts/load_test.py with httpx, a separate process with no database credential",
- "commit": "afa3d40d4f54571cc93a65ec26dd6ab7e47b3a18",
- "started_at": "2026-11-14T14:42:41Z",
+ "commit": "bba6db2926486d4ca3288ce3ad50d8ed58b3e738",
+ "started_at": "2026-11-15T22:22:27Z",
  "cold": {
   "idle_minutes_before": 20.0,
-  "at": "2026-11-14T15:02:41Z",
+  "at": "2026-11-15T22:42:28Z",
   "health": {
    "status": 200,
-   "ms": 9039.0
+   "ms": 5899.6
   },
   "first_lookup": {
-   "cve": "CVE-2026-18742",
+   "cve": "CVE-2026-125796",
    "status": 200,
-   "ms": 219.8
+   "ms": 140.4
   }
  },
  "warm": {
   "lookups": 300,
   "distinct_cves": 188,
   "workers": 5,
-  "seconds": 10.5,
-  "per_second": 28.6,
+  "seconds": 8.9,
+  "per_second": 33.9,
   "statuses": {
    "200": 300
   },
   "ok": 300,
   "ms": {
-   "p50": 115.3,
-   "p95": 553.1,
-   "p99": 1623.5,
-   "max": 2107.7,
-   "mean": 173.9
+   "p50": 99.9,
+   "p95": 176.6,
+   "p99": 1851.1,
+   "max": 2884.9,
+   "mean": 147.0
   }
  },
  "predict": {
   "requests": 60,
   "bodies": 4,
   "workers": 5,
-  "seconds": 5.7,
-  "per_second": 10.6,
+  "seconds": 3.1,
+  "per_second": 19.2,
   "statuses": {
    "200": 60
   },
   "ok": 60,
   "ms": {
-   "p50": 104.8,
-   "p95": 2039.6,
-   "p99": 2149.3,
-   "max": 2149.3,
-   "mean": 465.8
+   "p50": 92.3,
+   "p95": 1189.2,
+   "p99": 1324.5,
+   "max": 1324.5,
+   "mean": 253.9
+  },
+  "result": "pass"
+ },
+ "predict_alone": {
+  "requests": 20,
+  "bodies": 4,
+  "workers": 1,
+  "seconds": 2.2,
+  "per_second": 9.3,
+  "statuses": {
+   "200": 20
+  },
+  "ok": 20,
+  "ms": {
+   "p50": 94.7,
+   "p95": 375.5,
+   "p99": 375.5,
+   "max": 375.5,
+   "mean": 107.3
   },
   "result": "pass"
  },
@@ -62,15 +81,15 @@
  "schemathesis": {
   "test": "tests/api/test_schemathesis.py",
   "exit_code": 0,
-  "summary": "1 passed, 14 subtests passed in 13.33s",
+  "summary": "1 passed, 14 subtests passed in 36.78s",
   "result": "pass"
  },
  "c8_lookup": {
   "threshold_p95_ms": 1500.0,
-  "p95_ms": 553.1,
+  "p95_ms": 176.6,
   "spend": "zero: the Vercel Hobby and Neon free plans, no card on either",
   "verdict": "met"
  },
- "finished_at": "2026-11-14T15:03:25Z",
+ "finished_at": "2026-11-15T22:43:36Z",
  "result": "pass"
 }

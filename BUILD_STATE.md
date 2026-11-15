@@ -29,10 +29,9 @@ Look approval    Phase 1: approved by Ajay on the evening of 11 November, New Yo
                  Phase 2: the CVE page with predictions and /app/models wait for his review
 ```
 
-Open checklist lines, Phase 2 (15 of 18 done):
+Open checklist lines, Phase 2 (16 of 18 done):
 
 - 15. The console shows every prediction with its model, version and uncertainty; design gates green; the look reviewed by Ajay
-- 17. The live check awake and asleep; reset and rederive reproduced every CPU model number
 - 18. At least fifty conventional commits; the release record passing; v0.2.0 pushed by Ajay; BUILD_STATE.md written for Phase 3
 
 ## Next action
@@ -64,6 +63,9 @@ numbers are committed runs with the numeric pins (AGENTS.md).
   its floor and EPSS on day 1. Test cannot be scored again without a change request that keeps both
   results (evaluation/phase2_plan.yaml), so a better model is judged in a later phase, against the
   same floors.
+- Under load the prediction route waits: with 5 clients at once its 95th percentile was
+  1,189 ms, against 376 ms for one client alone, and scoring is a few milliseconds of each call
+  (ADR 0008). The API records no server timing yet, so where the calls wait is open for Phase 4.
 - Neon holds 94.1 percent of its 800 MB ceiling with the predictions loaded, and the lake
   grows every day. The sync refuses a chunk that would pass the ceiling and writes nothing, so the
   site stays up, but Phase 3 adds pgvector: it measures the room first and trims a table if it must.
@@ -124,8 +126,8 @@ numbers are committed runs with the numeric pins (AGENTS.md).
   The strongest feature toward skipped is published month (months since 2026-04), so part of the shift is
   time since the change; the next ones are filer or type: filer_Wordfence; filer or type: filer_WPScan; filer or type: filer_Patchstack; filer or type: filer_AMD.
   Toward analyzed: filer or type: filer_microsoft; filer or type: filer_Chrome; word: n8n; word: flowise; filer or type: filer_adobe.
-- The API: the first lookup after 20.0 min idle took 220 ms; warm, p50
-  115 ms and p95 553 ms over 300 lookups (lookups met (p95 553 ms against 1,500 ms); the triage run is measured in Phase 4).
+- The API: its Phase 1 measures are in BUILD_STATE.md at the tag v0.1.0; the line for the API as it
+  stands, with the predictions loaded, is in the hand off below.
 - The look: approved by Ajay on the evening of 11 November, New York time; he asked for no change.
 - Kaggle GPU hours: 8 for the month (config/budgets.yaml), none used in Phase 1.
 
@@ -162,6 +164,8 @@ numbers are committed runs with the numeric pins (AGENTS.md).
   models/serving/predictions.parquet, travels in the serving bundle and the sync loads it with the
   rest; POST /v1/predict scores a submitted description with the ONNX band floor and LightGBM, and
   a known CVE's answer always comes from the batch (ADR 0008).
+- The API with the predictions loaded, from a separate client: the first lookup after
+  20.0 min idle took 140 ms; warm, p50 100 ms and p95 177 ms over 300 lookups (lookups met (p95 177 ms against 1,500 ms); the triage run is measured in Phase 4).
 - Neon: 94.1 percent of the ceiling of 800 MB in use when the API was
   checked at 2026-11-15T22:07:25Z, holding serving-202611152200+f89ae3f7e825 (results/live/api_verify.json).
 - Kaggle GPU hours this month: 0.0 used and 8.0 left of 8.0 (requests/gpu/).
