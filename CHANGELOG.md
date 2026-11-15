@@ -3,7 +3,134 @@
 Every version tag with the conventional commits it carries, newest first, written by
 scripts/changelog.py from the history before each tag. A subject reads as it was committed.
 
-## v0.1.0
+## v0.2.0
+
+### Added
+
+- api: predictions with their uncertainty, the batch and its measures (1fe03ed)
+- models: the registry and the cards (d7d043b)
+- models: the operating points frozen and hashed before test (a2d0dac)
+- models: the affected product by retrieval (77ddd89)
+- models: the pinned exploitation run reproduces, and is the model (b92753b)
+- models: the exploitation runs side by side (ea884f5)
+- serving: measure what serving the predictions costs, for ADR 0008 (0e5344f)
+- models: calibrated, with sets, and the shadow window weighted (128fc3f)
+- analysis: the errors, read (e278a6d)
+- models: the fallback text model, both designs, behind its floor (48444bb)
+- models: C2 pairs the exploitation model with its floor as well (bea8cc1)
+- models: the C1 and C2 verdicts where the criteria memo reads them (33131f7)
+- live: the live check reads a predicted CVE and the models page (2caaafb)
+- live: the verifier checks the registry, a predicted CVE and a scored request (51ac3a4)
+- analysis: notebook 06, EPSS on day 30 (050391b)
+- models: the ONNX exports, at parity with the models they serve (f68f8c5)
+- models: the exploitation model rerun on the committed band floor (c286172)
+- build: the Phase 2 checklist, with evidence only this phase writes (e7a9d8c)
+- rederive: the CPU models and the test scoring, rebuilt and compared (fc6ddf6)
+- models: the shadow view, the predicted band against the filer band (a55777c)
+- models: the GPU as a committed request, with a ledger (f1b21c8)
+- models: the exploitation model, tuned (00dfa16)
+- analysis: notebook 04, the random split (bd8c38a)
+- models: the floors first (a28061b)
+- web: the models in the console (ee9ec04)
+- api: predictions with their uncertainty (fc6da41)
+- models: the batch predictions the API serves (0816d3e)
+- models: the ONNX exports and the featurizer the API scores with (ce95b28)
+- models: the band rated from the predicted metrics, beside the band head (eef750b)
+- models: the registry, MLflow runs written from the run records (80dc6c6)
+- models: the text model reads the floor's structured block (7a6e794)
+- models: the test scorer, which runs once after the freeze (1566a44)
+- models: the operating points, chosen on development and frozen (5e6946f)
+- models: temperature scaling, isotonic fits and APS sets, held to the libraries (66145e2)
+- models: the affected product by retrieval, beside its string floor (afec4d9)
+- sources: the NVD CPE dictionary from the Products API (1f729d7)
+- models: the ModernBERT fallback, embeddings with a head per task (be4c470)
+- models: time to KEV, with the Cox model checked in R (7ed5c70)
+- models: the exploitation floor and LightGBM, searched on time folds (5086dc5)
+- models: the affected product inputs and labels in the sets (a878d2c)
+- models: train the floors from the committed sets, in a workflow (c85d85a)
+- models: the fill floor features and search (e63077f)
+- models: point in time training sets (6812340)
+
+### Fixed
+
+- web: the models page reads the reweighted view and names what it shows (bba6db2)
+- models: the batch leaves the exploitation score empty where the step gave none (0628308)
+- api: a prediction may carry no exploitation values, and says why [skip deploy] (1906558)
+- release: the record reads the checklist of the phase it closes [skip deploy] (849c60e)
+- state: the build state passes the claim gate and says what waits on the lake run (67945e5)
+- lake: the lake build pins the numeric kernels as the models do (f8d7d18)
+- serving: the product floor serves its candidates at the frozen threshold (9cdd2ca)
+- models: the product step gives the shadow window its candidates too (370de12)
+- models: pin the numeric kernels every fit runs with (f15db28)
+- rederive: the survival forest with one job on a small machine (b6f98c2)
+- web: the prediction spacing through its token, the gates on the new pages (11f6236)
+- models: the exploitation run projects with the committed band floor (ffa8076)
+- models: the floor exported in band order, its parity checked in batches (6552cdb)
+- models: the R check's largest coefficient gap in scientific notation (8a1db6d)
+- web: the ruler draws the prediction before the as-of cut (d8b1a6b)
+- models: type the taxonomy record the misses check returns (58100c3)
+- ci: a gitleaks false positive on the product floor's ratio (99b67fd)
+- models: the Cox fit starts at a fifth of the Newton step (7ce4a49)
+- lake: table digests render times in UTC on any machine (1818241)
+
+### Documents
+
+- design: Ajay approves the Phase 2 screens [skip deploy] (9d76673)
+- decisions: the load test runs again once the predictions are live [skip deploy] (4878ed8)
+- report: the criteria page renders the new C8 lookup reading [skip deploy] (fd0015b)
+- state: the hand off to Phase 3, rendered from the records [skip deploy] (96f8bcf)
+- report: what the two misses say, read from the scoring [skip deploy] (18a2b9a)
+- the Phase 2 documents read for AI tells, and the README names the fallbacks (0a72107)
+- state: where Phase 2 stands at midday (50a9752)
+- the data lead's objections answered one by one (bf69eff)
+- ADR 0008, how the predictions are served (702ea71)
+- the method notes, the six model cards and ADR 0010 (ccaf1fc)
+- decisions: the joined text already carries the filer vector as a string (cb29796)
+- build-state: Phase 2, four steps done and four running or waiting (d4529bf)
+- decisions: the floor solver, and where the floors run (fc91bb3)
+- decisions: the exploitation population starts when KEV could list a CVE (7d16cf7)
+- build-state: Phase 1 tagged v0.1.0, the next action is Phase 2 (f783835)
+
+### Tests
+
+- live: the load test with the predictions live, and the site asleep [skip deploy] (45e6028)
+- live: the API answers predictions, 20 of 20, and the site passes awake [skip deploy] (5b53fc1)
+- live: the API verify fails a predict percentile of zero [skip deploy] (ebe840e)
+- live: the load test times /v1/predict from one client alone as well [skip deploy] (1c26ed0)
+- live: the load test with /v1/predict against the live API [skip deploy] (975aea2)
+- web: the design gates again on the final Phase 2 pages [skip deploy] (afa3d40)
+- rederive: the models rebuilt from the sets, every number equal (31cbeaa)
+- models: C1 and C2, scored once, neither met (bdc72fd)
+- live: the load test posts to /v1/predict as well (b2e08d8)
+- models: the single scoring run end to end on invented files (132a192)
+- models: an unused name in the slice test (05dd9e2)
+
+### Continuous integration
+
+- models: name the processor each fit runs on (5c32504)
+- secrets: allow the tokenizer digest line in the model records (285cd6c)
+- models: one run per step, the steps side by side (407d905)
+
+### Build
+
+- api: keep the batch predictions out of the API image (06f9626)
+
+### Chores
+
+- lake: the committed lake numbers rebuilt with the CPE contract entry (6a4fcaf)
+- results: the first fallback run, the plan's text alone, kept (c2d5d4e)
+- results: the survival models, checked in R (3dcf817)
+- results: the rederive again, against the digests in UTC (0782aaa)
+- results: the lake and the sets digested in UTC (5914c02)
+- plan: the Phase 2 plan, hashed as the models stage (f969236)
+- plan: the Phase 2 plan, written before any model exists (9c59a44)
+- phase2: probes and the scoped model gate (796ce4c)
+
+### Other
+
+- models: format the product floor (af3dc76)
+
+## v0.1.0, 2026-11-13
 
 ### Added
 
@@ -130,6 +257,7 @@ scripts/changelog.py from the history before each tag. A subject reads as it was
 
 ### Chores
 
+- release: the release record for v0.1.0, every gate and every piece of evidence passing (d9d1261)
 - agents: the release skill writes the changelog before the tag (2b1f3ea)
 - restore a lake release into the checkout, as lake.yml does (d6b39f1)
 - the phase gate writes its record (b04986d)
