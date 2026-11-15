@@ -1,11 +1,13 @@
 {
- "tag": "v0.1.0",
+ "tag": "v0.2.0",
+ "phase": 2,
  "on": "the commit that adds this file",
- "built_from": "5861acd08a6e64eef61982ed14039d92e268cc0c",
- "recorded_at": "2026-11-14T01:07:12Z",
+ "built_from": "89abae4cd38a04925572dbd582228ea6c97abe9f",
+ "recorded_at": "2026-11-15T23:45:03Z",
  "commits": {
-  "total": 120,
-  "conventional": 120,
+  "since": "v0.1.0",
+  "total": 104,
+  "conventional": 104,
   "minimum": 50
  },
  "steps": [
@@ -13,50 +15,50 @@
    "name": "gates",
    "command": "make gates",
    "exit_code": 0,
-   "seconds": 2.6,
-   "last_line": "warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead."
+   "seconds": 2.5,
+   "last_line": "registration: every registered file matches its hash"
   },
   {
    "name": "ruff check",
    "command": "uv run ruff check .",
    "exit_code": 0,
-   "seconds": 0.1,
-   "last_line": "warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead."
+   "seconds": 0.0,
+   "last_line": "All checks passed!"
   },
   {
    "name": "ruff format",
    "command": "uv run ruff format --check .",
    "exit_code": 0,
    "seconds": 0.1,
-   "last_line": "warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead."
+   "last_line": "346 files already formatted"
   },
   {
    "name": "mypy",
    "command": "uv run mypy",
    "exit_code": 0,
-   "seconds": 1.0,
-   "last_line": "warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead."
+   "seconds": 0.6,
+   "last_line": "Success: no issues found in 183 source files"
   },
   {
    "name": "pytest",
    "command": "uv run pytest -q -p no:warnings",
    "exit_code": 0,
-   "seconds": 143.5,
-   "last_line": "  from starlette.testclient import TestClient as TestClient  # noqa"
+   "seconds": 151.7,
+   "last_line": ".....................................                                    [100%]"
   },
   {
    "name": "manifest",
    "command": "uv run python scripts/build_manifest.py",
    "exit_code": 0,
-   "seconds": 0.3,
-   "last_line": "warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead."
+   "seconds": 0.2,
+   "last_line": "manifest: 1140 values, 40 tables, as of 2026-11-15"
   },
   {
    "name": "claim gate",
    "command": "uv run python scripts/check_published_numbers.py",
    "exit_code": 0,
    "seconds": 0.5,
-   "last_line": "warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead."
+   "last_line": "claim gate: 19 documents match the manifest"
   }
  ],
  "evidence": {
@@ -64,30 +66,30 @@
    "file": "results/live/api_verify.json",
    "present": true,
    "result": "pass",
-   "passed": 17,
-   "total": 17,
-   "checked_at": "2026-11-13T23:52:20Z"
+   "passed": 20,
+   "total": 20,
+   "checked_at": "2026-11-15T22:07:25Z"
   },
   "load": {
    "file": "results/load/c8.json",
    "present": true,
    "result": "pass",
-   "finished_at": "2026-11-14T00:41:44Z"
+   "finished_at": "2026-11-15T22:43:36Z"
   },
   "live_check": {
    "file": "results/live_check.json",
    "present": true,
    "awake": {
     "result": "pass",
-    "passed": 14,
-    "total": 14,
-    "finished_at": "2026-11-13T23:58:36Z"
+    "passed": 16,
+    "total": 16,
+    "finished_at": "2026-11-15T22:22:23Z"
    },
    "asleep": {
     "result": "pass",
-    "passed": 14,
-    "total": 14,
-    "finished_at": "2026-11-14T01:03:53Z"
+    "passed": 16,
+    "total": 16,
+    "finished_at": "2026-11-15T23:04:23Z"
    }
   },
   "rederive": {
@@ -102,6 +104,7 @@
    "sloplint": "pass"
   }
  },
+ "checklist": "checklist.phase2",
  "checklist_open_before_this_line": [],
  "push": "the tag push starts release.yml, which reruns the gates and publishes the notes",
  "result": "pass",

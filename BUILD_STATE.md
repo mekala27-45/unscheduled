@@ -12,7 +12,7 @@ Phase            2 of 5, the models: every model step is in, from the probes and
                  frozen as the stage 406e8887f350, the registry, test scored once (C1 not met, C2
                  not met), the prediction batch with its serving measures, the load test
                  with /v1/predict, and reset and rederive with the test recheck;
-                 17 of 18 checklist lines done (RESULTS.md); the prompt is
+                 18 of 18 checklist lines done (RESULTS.md); the prompt is
                  claude/unscheduled-phase-2-prompt.md in the Project
 Phase 1          the ground truth, tagged v0.1.0 on the commit that adds the release record;
                  its checklist 18 of 18 lines done (RESULTS.md)
@@ -29,10 +29,6 @@ Look approval    Phase 1: approved by Ajay on the evening of 11 November, New Yo
                  Phase 2: approved by Ajay on the evening of 15 November, New York time, after the
                  CVE page with predictions and the models page: everything is good
 ```
-
-Open checklist lines, Phase 2 (17 of 18 done):
-
-- 18. At least fifty conventional commits; the release record passing; v0.2.0 pushed by Ajay; BUILD_STATE.md written for Phase 3
 
 ## Next action
 
@@ -51,8 +47,8 @@ the batch of 181,904 predictions with its serving measures; the load test with /
 reset and rederive, 713 of 713 values equal (pass), with the test recheck
 (pass).
 
-Next: the changelog and the release record on a clean checkout, then Ajay pushes v0.2.0 from his
-machine. Every script whose numbers are committed runs with the numeric pins (AGENTS.md).
+Next: Ajay pushes v0.2.0 from his machine, and the Phase 3 prompt is written from the repository
+as it stands then.
 
 ## Open problems
 

@@ -7,10 +7,7 @@ per task, because the Kaggle secrets are absent; ModernBERT waits for them. The 
 MLflow's SQLite store, written from the committed run records, because no Databricks workspace is
 connected.
 
-Phase 1 is complete and tagged v0.1.0. Phase 2 of 5, the models, is in progress: 17 of
-18 checklist lines are done. Still missing:
-
-- At least fifty conventional commits; the release record passing; v0.2.0 pushed by Ajay; BUILD_STATE.md written for Phase 3
+Phase 2 of 5 is complete, and RESULTS.md has the evidence for every checklist line.
 
 ## What it is
 

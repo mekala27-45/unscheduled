@@ -6657,7 +6657,7 @@
    }
   },
   "build.phase2.checklist_done": {
-   "value": 17,
+   "value": 18,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/build_manifest.py",
@@ -18155,7 +18155,7 @@
     ],
     [
      18,
-     "not done",
+     "done",
      "At least fifty conventional commits; the release record passing; v0.2.0 pushed by Ajay; BUILD_STATE.md written for Phase 3",
      "results/release.json"
     ]
