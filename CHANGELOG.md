@@ -75,6 +75,8 @@ scripts/changelog.py from the history before each tag. A subject reads as it was
 
 ### Documents
 
+- state: the build state reads the v0.2.0 record, not any release record [skip deploy] (9e717f3)
+- changelog: the commits v0.2.0 carries [skip deploy] (2384634)
 - design: Ajay approves the Phase 2 screens [skip deploy] (9d76673)
 - decisions: the load test runs again once the predictions are live [skip deploy] (4878ed8)
 - report: the criteria page renders the new C8 lookup reading [skip deploy] (fd0015b)
