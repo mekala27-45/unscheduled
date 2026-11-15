@@ -417,11 +417,20 @@ def run(base: str) -> dict[str, Any]:
                 },
             )
             values = {p["field"]: p for p in body.get("values", [])}
-            r.facts = {"fields": sorted(values), "band": (values.get("band") or {}).get("value")}
+            percentile = ((values.get("exploitation") or {}).get("detail") or {}).get("percentile")
+            r.facts = {
+                "fields": sorted(values),
+                "band": (values.get("band") or {}).get("value"),
+                "percentile": percentile,
+            }
             if set(values) != {"band", "exploitation"}:
                 r.detail = f"/v1/predict answered {sorted(values)}, not the band and the exploitation score"
             elif not 0.0 <= float(values["exploitation"]["value"]) <= 1.0:
                 r.detail = "the exploitation probability is outside zero to one"
+            elif not isinstance(percentile, int | float) or not 0.0 < float(percentile) <= 100.0:
+                # A network command injection with no privilege needed sits above the lowest scores of
+                # the batch; a percentile of zero means the quantiles the API reads are not numbers.
+                r.detail = f"the exploitation percentile is {percentile}, not above zero"
 
         steps: list[tuple[str, str, Callable[[Check], None]]] = [
             ("health, with the database and the data", "GET /health", health),
