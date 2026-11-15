@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useModels } from "@/lib/api/queries";
-import { formatDate, formatShare } from "@/lib/format";
+import { formatDate, formatInt, formatShare } from "@/lib/format";
 import { PageHead } from "./page-head";
+import { METRIC_NAMES } from "./predictions";
 import { EmptyState, ErrorState, Loading, Region, SkeletonLines, SkeletonTable } from "./region";
 import { StatusText } from "./status-text";
 
@@ -12,6 +13,7 @@ type Rec = Record<string, unknown>;
 const isRec = (v: unknown): v is Rec => typeof v === "object" && v !== null && !Array.isArray(v);
 const num = (v: unknown): number | null => (typeof v === "number" && Number.isFinite(v) ? v : null);
 const fixed = (v: unknown, d = 3): string => (num(v) == null ? "not measured" : (num(v) as number).toFixed(d));
+const count = (v: unknown): string => (num(v) == null ? "not measured" : formatInt(num(v) as number));
 const interval = (e: unknown, d = 3): string => {
   if (!isRec(e)) return "not measured";
   return `${fixed(e.value, d)} (${fixed(e.low, d)} to ${fixed(e.high, d)})`;
@@ -38,6 +40,39 @@ const SCORED_ONCE =
 function NotYet({ what, body = SCORED_ONCE }: { what: string; body?: string }) {
   return <EmptyState title={`Not in this release yet: ${what}`} body={body} action={{ label: "Read the criteria", href: "/app/criteria" }} />;
 }
+
+/** The scores a card shows for each version, the same ones on development and on test; the full
+ * set is in the report. */
+const HEADLINE: Record<string, [string, string][]> = {
+  "unscheduled-band": [["qwk", "kappa"], ["macro_f1", "macro F1"]],
+  "unscheduled-metrics": [["mean_kappa", "mean kappa over the eight"]],
+  "unscheduled-cwe": [["top5_accuracy", "top 5 accuracy"], ["macro_f1", "macro F1"]],
+  "unscheduled-exploit": [["average_precision", "AP"], ["auroc", "AUROC"]],
+  "unscheduled-survival": [["concordance", "concordance"]],
+  "unscheduled-product": [["recall_at_10", "recall at 10"], ["hit_at_1", "hit at 1"]],
+};
+
+function scores(name: string, r: Rec, none: string): string {
+  const keys: [string, string][] =
+    HEADLINE[name] ??
+    Object.keys(r)
+      .filter((k) => num(r[k]) != null)
+      .slice(0, 2)
+      .map((k) => [k, k.replace(/[_.]/g, " ")]);
+  const shown = keys.filter(([k]) => num(r[k]) != null).map(([k, label]) => `${label} ${fixed(r[k])}`);
+  return shown.join(", ") || none;
+}
+
+const FAMILY_NAMES: Record<string, string> = {
+  cwe: "Weakness (CWE)",
+  filer: "Filer",
+  vendor: "Vendor",
+  filer_type: "Filer type",
+  published_year: "Year published",
+};
+const familyName = (f: string) => FAMILY_NAMES[f] ?? f.replace(/_/g, " ");
+const sliceName = (v: unknown) => (v === "" ? "(blank)" : String(v));
+const headName = (h: string) => (h === "band" ? "Severity band" : METRIC_NAMES[h] ? `${METRIC_NAMES[h]} (${h.replace("metric_", "")})` : h);
 
 function ModelCards({ models }: { models: Rec[] }) {
   return (
@@ -72,23 +107,18 @@ function ModelCards({ models }: { models: Rec[] }) {
                 {versions.map((v) => {
                   const dev = isRec(v.dev) ? v.dev : {};
                   const test = isRec(v.test) ? v.test : {};
-                  const first = (r: Rec) => Object.entries(r).filter(([, x]) => typeof x === "number").slice(0, 2);
                   return (
                     <TableRow key={String(v.version)}>
                       <TableCell className="lead num">
                         {String(v.version)}
                         {chosen === num(v.version) ? <span className="text-fg-muted"> chosen</span> : null}
                       </TableCell>
-                      <TableCell>
+                      <TableCell className="wrap">
                         {String(v.role)}: {String(v.description ?? v.run_name ?? "")}
                       </TableCell>
                       <TableCell>{String(v.stage)}</TableCell>
-                      <TableCell className="num">
-                        {first(dev).map(([k, x]) => `${k} ${fixed(x)}`).join(", ") || "none"}
-                      </TableCell>
-                      <TableCell className="num">
-                        {first(test).map(([k, x]) => `${k} ${fixed(x)}`).join(", ") || "not scored"}
-                      </TableCell>
+                      <TableCell className="num">{scores(name, dev, "none")}</TableCell>
+                      <TableCell className="num">{scores(name, test, "not scored")}</TableCell>
                     </TableRow>
                   );
                 })}
@@ -120,7 +150,7 @@ function C1View({ c1 }: { c1: Rec }) {
       <dd className="num">{interval(c1.ece)}</dd>
       <dt>Population</dt>
       <dd>
-        {String(c1.population ?? "")}, {String(isRec(kappa) ? (kappa.rows ?? "") : "")} CVEs in {String(isRec(kappa) ? (kappa.clusters ?? "") : "")} filer clusters
+        {String(c1.population ?? "")}, {count(kappa.rows)} CVEs in {count(kappa.clusters)} filer clusters
       </dd>
     </dl>
   );
@@ -163,7 +193,7 @@ function C2View({ c2 }: { c2: Rec }) {
       <p className="mb-md">
         <Verdict verdict={c2.verdict} />{" "}
         <span className="text-app-sm text-fg-muted">
-          Recall of KEV listings within 180 days in the top {String(r.top ?? "")} of {String(r.rows ?? "")} test CVEs ({String(r.positives ?? "")} listed).
+          Recall of KEV listings within 180 days in the top {count(r.top)} of {count(r.rows)} test CVEs ({count(r.positives)} listed).
         </span>
       </p>
       <Table label="Recall at the top 5 percent, with EPSS beside">
@@ -211,7 +241,7 @@ function Coverage({ secondary }: { secondary: Rec }) {
           const overall = isRec(e.overall) ? e.overall : e;
           return (
             <TableRow key={head}>
-              <TableCell className="lead">{head}</TableCell>
+              <TableCell className="lead">{headName(head)}</TableCell>
               <TableCell className="num">{formatShare(num(overall.coverage), 1)}</TableCell>
               <TableCell className="num">{fixed(overall.mean_size, 2)}</TableCell>
             </TableRow>
@@ -228,10 +258,10 @@ function Slices({ slices }: { slices: Rec }) {
   return (
     <div className="grid gap-lg">
       {families.map(([family, rows]) => (
-        <Table key={family} label={`Band kappa of the model against the floor by ${family}, Benjamini-Hochberg at 0.05`}>
+        <Table key={family} label={`Band kappa of the model against the floor by ${familyName(family).toLowerCase()}, Benjamini-Hochberg at 0.05`}>
           <TableHeader>
             <TableRow>
-              <TableHead>{family}</TableHead>
+              <TableHead>{familyName(family)}</TableHead>
               <TableHead className="num">CVEs</TableHead>
               <TableHead className="num">Model</TableHead>
               <TableHead className="num">Floor</TableHead>
@@ -241,8 +271,8 @@ function Slices({ slices }: { slices: Rec }) {
           <TableBody>
             {(Array.isArray(rows) ? (rows as Rec[]) : []).slice(0, 25).map((r) => (
               <TableRow key={String(r.slice)}>
-                <TableCell className="lead">{String(r.slice)}</TableCell>
-                <TableCell className="num">{String(r.rows)}</TableCell>
+                <TableCell className="lead">{sliceName(r.slice)}</TableCell>
+                <TableCell className="num">{count(r.rows)}</TableCell>
                 <TableCell className="num">{r.tested ? fixed(r.a) : "too few"}</TableCell>
                 <TableCell className="num">{r.tested ? fixed(r.b) : ""}</TableCell>
                 <TableCell>{r.tested ? `${fixed(r.difference)}${r.significant ? ", significant after correction" : ", not significant"}` : "not tested"}</TableCell>
@@ -270,9 +300,9 @@ function Taxonomy({ taxonomy }: { taxonomy: Rec }) {
       <TableBody>
         {cats.map((c) => (
           <TableRow key={String(c.name)}>
-            <TableCell className="lead">{String(c.name)}</TableCell>
-            <TableCell className="num">{String(c.count)}</TableCell>
-            <TableCell>{String(c.meaning ?? "")}</TableCell>
+            <TableCell className="lead wrap">{String(c.name)}</TableCell>
+            <TableCell className="num">{count(c.count)}</TableCell>
+            <TableCell className="wrap">{String(c.meaning ?? "")}</TableCell>
           </TableRow>
         ))}
       </TableBody>
@@ -280,22 +310,52 @@ function Taxonomy({ taxonomy }: { taxonomy: Rec }) {
   );
 }
 
+const VIEW_NAMES: Record<string, string> = { fallback: "The model", floors: "The floor" };
+
+/** The export keeps one record per scored version (the chosen model and its floor), each with its
+ * plain and weighted kappa on the same analyzed shadow CVEs and the same weights. */
 function Reweighting({ w }: { w: Rec }) {
+  const views = (Object.entries(w).filter(([, v]) => isRec(v)) as [string, Rec][]).sort(
+    ([a], [b]) => Number(a === "floors") - Number(b === "floors"),
+  );
+  if (views.length === 0) return <NotYet what="the reweighted view" body="The weights are fit with the operating points on development and shadow; this region fills from the release that carries them." />;
+  const first = views[0][1];
   return (
-    <dl className="facts">
-      <dt>Band kappa, plain</dt>
-      <dd className="num">{fixed(w.plain_qwk)}</dd>
-      <dt>Band kappa, weighted toward the skipped</dt>
-      <dd className="num">{fixed(w.weighted_qwk)}</dd>
-      <dt>Effective sample size</dt>
-      <dd className="num">
-        {fixed(w.kish_ess, 0)} of {String(w.rows ?? "")} analyzed shadow CVEs
-      </dd>
-      <dt>Weights clipped at</dt>
-      <dd className="num">
-        {String(w.clip ?? "")}, {String(w.clipped ?? 0)} weights clipped
-      </dd>
-    </dl>
+    <>
+      <Table label="Band kappa on the analyzed shadow CVEs, plain and weighted toward the skipped">
+        <TableHeader>
+          <TableRow>
+            <TableHead>Band kappa</TableHead>
+            {views.map(([k]) => (
+              <TableHead key={k} className="num">
+                {VIEW_NAMES[k] ?? k}
+              </TableHead>
+            ))}
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell className="lead">Plain</TableCell>
+            {views.map(([k, v]) => (
+              <TableCell key={k} className="num">
+                {fixed(v.plain_qwk)}
+              </TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell className="lead">Weighted toward the skipped</TableCell>
+            {views.map(([k, v]) => (
+              <TableCell key={k} className="num">
+                {fixed(v.weighted_qwk)}
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableBody>
+      </Table>
+      <p className="mt-sm text-app-xs text-fg-muted">
+        {count(first.rows)} shadow CVEs the NVD analyzed with a band, weighted by the Q8 classifier toward the ones it skipped. Effective sample size {count(first.effective_sample_size)}; weights clipped at {count(first.clip)}, {count(first.clipped)} of them clipped.
+      </p>
+    </>
   );
 }
 

@@ -218,3 +218,19 @@ test("the theme toggle wins over the system and survives a reload", async ({ pag
   await expect(page.locator("html")).toHaveAttribute("data-theme", want);
   expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe(paper);
 });
+
+test.describe("the models page", () => {
+  test("the skipped CVEs show the plain and weighted kappa of the model beside its floor", async ({ page }) => {
+    await mockApi(page);
+    await page.goto("/app/models");
+    const table = page.getByRole("region", { name: "Band kappa on the analyzed shadow CVEs, plain and weighted toward the skipped" });
+    await expect(table).toBeVisible();
+    const weighted = table.getByRole("row").filter({ hasText: "Weighted toward the skipped" });
+    await expect(weighted).toContainText("0.399");
+    await expect(weighted).toContainText("0.441");
+    await expect(page.getByText("7,700 shadow CVEs the NVD analyzed with a band")).toBeVisible();
+    await expect(page.getByText("Effective sample size 930")).toBeVisible();
+    await expect(page.locator("main")).not.toContainText("not measured");
+    await expect(page.getByText("in the top 3,150 of 63,000 test CVEs")).toBeVisible();
+  });
+});

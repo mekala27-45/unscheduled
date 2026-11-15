@@ -4,7 +4,7 @@ import { formatDate, formatShare } from "@/lib/format";
 import { EmptyState } from "./region";
 
 const BANDS = ["LOW", "MEDIUM", "HIGH", "CRITICAL"] as const;
-const METRIC_NAMES: Record<string, string> = {
+export const METRIC_NAMES: Record<string, string> = {
   metric_AV: "Attack vector",
   metric_AC: "Attack complexity",
   metric_PR: "Privileges required",
@@ -181,11 +181,11 @@ export function PredictionsView({ predictions, note, published }: { predictions:
             <span className="text-fg-muted">chance of a KEV listing within 180 days, scored at publication</span>
           </p>
           <p className="text-app-sm">
-            Higher than <span className="num">{Number(exploit.detail?.percentile ?? 0).toFixed(1)}</span> percent of the CVEs in the batch.
+            Higher than <span className="num">{Number(exploit.detail?.percentile ?? 0).toFixed(1)}</span> percent of the scored CVEs in the batch.
             EPSS beside it:{" "}
             {epss?.score != null ? (
               <>
-                <span className="num">{epss.score.toFixed(5)}</span>
+                <span className="num">{formatShare(epss.score, 2)}</span>
                 {epss.date ? <span className="text-fg-muted"> on {formatDate(epss.date)}</span> : null}
               </>
             ) : (

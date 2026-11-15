@@ -151,6 +151,12 @@ export const API_MODELS: S["ModelsDocument"] = {
         },
       },
       taxonomy: { categories: [{ name: "The filer score disagrees with the NVD", count: 31, meaning: "the vector the filer gave led the model one band away" }] },
+      reweighting: {
+        analyzed: 29000,
+        shadow_cves: 78000,
+        floors: { clip: 20, rows: 7700, clipped: 250, plain_qwk: 0.452, weighted_qwk: 0.441, effective_sample_size: 930.4, weight_max: 20, weight_mean: 1.6 },
+        fallback: { clip: 20, rows: 7700, clipped: 250, plain_qwk: 0.379, weighted_qwk: 0.399, effective_sample_size: 930.4, weight_max: 20, weight_mean: 1.6 },
+      },
     },
   },
 };
