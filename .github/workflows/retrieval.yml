@@ -1,0 +1,78 @@
+name: retrieval
+
+# The retrieval evaluation of step 5 on the development window, from the corpus a lake run published
+# beside its serving release (scripts/publish_serving.py --corpus). It reads no shadow query; the
+# shadow window is scored once, after the agent_points stage is hashed. Started by hand; the results
+# come back as an artifact, and a person commits them.
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: "The serving release whose corpus to evaluate (serving-<stamp>); empty for the newest that has one"
+        required: false
+        default: ""
+
+permissions: {}
+
+concurrency:
+  group: retrieval
+  cancel-in-progress: false
+
+jobs:
+  eval:
+    name: retrieval on the development window
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions:
+      contents: read
+    env:
+      PYTHONHASHSEED: "0"
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      RELEASE: ${{ inputs.release }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: "3.12"
+          enable-cache: false
+      - run: uv sync --frozen
+
+      - name: Postgres with pgvector
+        run: |
+          bash scripts/ci/pgvector.sh
+          sudo systemctl start postgresql
+          sudo -u postgres createuser --superuser "$USER"
+          sudo -u postgres createdb --owner "$USER" retrieval
+
+      - name: The corpus from its release, checked by digest
+        run: |
+          tag="$RELEASE"
+          if [ -z "$tag" ]; then
+            tag="$(gh api "repos/$REPO/releases?per_page=60" --jq '[.[] | select(any(.assets[]; .name | startswith("corpus-manifest-")))][0].tag_name // ""')"
+          fi
+          if [ -z "$tag" ]; then echo "No release has a corpus yet."; exit 1; fi
+          mkdir -p data/corpus
+          gh release download "$tag" --repo "$REPO" --dir data/corpus --pattern 'corpus-*'
+          cd data/corpus
+          mv corpus-manifest-*.json manifest.json
+          mv corpus-queries-*.parquet queries.parquet
+          mv corpus-[0-9a-f]*.parquet chunks.parquet
+          echo "The corpus of $tag."
+
+      - name: The evaluation
+        run: uv run python scripts/eval_retrieval.py --database-url "postgresql:///retrieval?host=/var/run/postgresql" --threads 4 --write
+
+      - name: Keep the results
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: retrieval
+          path: |
+            results/retrieval
+            results/parts/retrieval.json
+            config/retrieval.yaml
+          if-no-files-found: warn

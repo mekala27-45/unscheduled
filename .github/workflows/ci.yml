@@ -18,6 +18,8 @@ jobs:
       PYTHONHASHSEED: "0"
       # The API tests start a Postgres from the runner's own binaries; a skip is a failure here.
       UNSCHED_REQUIRE_POSTGRES: "1"
+      # The retrieval tests need pgvector with halfvec, which the step below installs.
+      UNSCHED_REQUIRE_PGVECTOR: "1"
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -35,6 +37,8 @@ jobs:
           uv run ruff check .
           uv run ruff format --check .
           uv run mypy
+      - name: pgvector for the retrieval tests
+        run: bash scripts/ci/pgvector.sh
       - name: Tests
         run: uv run pytest
       - name: The claim gate

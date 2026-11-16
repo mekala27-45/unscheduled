@@ -29,3 +29,16 @@ libraries:
   - google-adk
   # the property tests
   - hypothesis
+
+# The models retrieval loads beside the embedding model config/models.yaml pins, by the same rule: the
+# newest revision of the repository that was at least min_age_days old on phase_start. The plan names
+# the reranker cross-encoder/ms-marco-MiniLM-L-6-v2; the repository is now
+# cross-encoder/ms-marco-MiniLM-L6-v2, and the hub sends the old name there.
+models:
+  reranker:
+    id: cross-encoder/ms-marco-MiniLM-L6-v2
+    revision: 233902d25c440f23af6f7d6e94d2946bac0bee0a
+    revision_date: 2026-08-09
+    onnx: onnx/model_quint8_avx2.onnx
+    licence: apache-2.0
+    pinned_on: 2026-11-16
