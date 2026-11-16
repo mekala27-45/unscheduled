@@ -33,6 +33,13 @@ for (const p of PAGES) {
     const size = info.project.name.startsWith("desktop") ? "1440x900" : "390x844";
     const theme = info.project.name.endsWith("dark") ? "dark" : "light";
     await page.screenshot({ path: path.join(OUT, `${p.name}-${size}-${theme}.png`) });
-    if (process.env.SHOTS_FULL) await page.screenshot({ path: path.join(OUT, "full", `${p.name}-${size}-${theme}.png`), fullPage: true });
+    if (process.env.SHOTS_FULL) {
+      // A window as tall as the page, so the sticky sidebar is drawn all the way down the shot.
+      const width = page.viewportSize()?.width ?? 1440;
+      const height = await page.evaluate(() => document.documentElement.scrollHeight);
+      await page.setViewportSize({ width, height });
+      await page.waitForTimeout(200);
+      await page.screenshot({ path: path.join(OUT, "full", `${p.name}-${size}-${theme}.png`), fullPage: true });
+    }
   });
 }
