@@ -1,0 +1,62 @@
+name: agent-eval
+
+# The agent evals of step 12 on KEV listings, from the newest lake release (the work database built
+# here) and the corpus a lake run published, with every provider answer served from tests/replays.
+# The shadow window is refused until the agent_points stage is hashed. Started by hand; the results
+# come back as an artifact, and a person commits them.
+
+on:
+  workflow_dispatch:
+    inputs:
+      window:
+        description: "development, or shadow once the agent_points stage is hashed"
+        required: true
+        default: development
+
+permissions: {}
+
+concurrency:
+  group: agent-eval
+  cancel-in-progress: false
+
+jobs:
+  eval:
+    name: the agent on KEV listings
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    permissions:
+      contents: read
+    env:
+      PYTHONHASHSEED: "0"
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      WINDOW: ${{ inputs.window }}
+      UNSCHED_REPLAY_ONLY: "1"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: "3.12"
+          enable-cache: false
+      - run: uv sync --frozen
+      - name: Postgres with pgvector
+        run: |
+          bash scripts/ci/pgvector.sh
+          sudo systemctl start postgresql
+          sudo -u postgres createuser --superuser "$USER"
+          sudo -u postgres createdb --owner "$USER" agent
+      - name: The work database from the newest lake release
+        run: bash scripts/ci/restore_lake.sh
+      - name: The corpus and the findings of the newest serving release that has a corpus
+        run: bash scripts/ci/restore_corpus.sh
+      - name: The evals
+        run: uv run python scripts/eval_agent.py --window "$WINDOW" --database-url "postgresql:///agent?host=/var/run/postgresql" --write
+      - name: Keep the results
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: agent-eval-${{ inputs.window }}
+          path: results/agent
+          if-no-files-found: warn

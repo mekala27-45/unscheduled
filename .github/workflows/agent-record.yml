@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       job:
-        description: "What to record: smoke (one patch plan from every provider and model with a key)"
+        description: "What to record: smoke (one plan from every model with a key), or development or shadow (the agent evals of that window)"
         required: true
         default: smoke
 
@@ -22,7 +22,7 @@ jobs:
   record:
     name: record provider calls
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 240
     permissions:
       contents: read
     env:
@@ -38,13 +38,31 @@ jobs:
           enable-cache: false
       - run: uv sync --frozen
 
+      - name: Postgres with pgvector, the work database and the corpus, for the evals
+        if: inputs.job != 'smoke'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          bash scripts/ci/pgvector.sh
+          sudo systemctl start postgresql
+          sudo -u postgres createuser --superuser "$USER"
+          sudo -u postgres createdb --owner "$USER" agent
+          bash scripts/ci/restore_lake.sh
+          bash scripts/ci/restore_corpus.sh
+
       - name: Record
         env:
           GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
-        run: uv run python scripts/record_replays.py "$JOB"
+        run: |
+          if [ "$JOB" = "smoke" ]; then
+            uv run python scripts/record_replays.py smoke
+          else
+            uv run python scripts/eval_agent.py --window "$JOB" --record --database-url "postgresql:///agent?host=/var/run/postgresql"
+          fi
 
       - name: The secrets gate over what was recorded
         run: uv run python scripts/check_secrets.py

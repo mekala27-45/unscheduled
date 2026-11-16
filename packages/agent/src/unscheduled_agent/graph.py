@@ -339,3 +339,18 @@ def fork(graph: Any, run_id: str, checkpoint_id: str, changes: dict[str, Any], a
 
 def history(graph: Any, run_id: str) -> Sequence[Any]:
     return list(graph.get_state_history(config(run_id)))
+
+
+def run_to_interrupts(
+    sources: Sources, router: Router | None, cve_id: str, at: datetime, run_id: str
+) -> dict[str, Any]:
+    """One run in memory to its approval interrupts with no approval given, as the evals read it: the
+    plan's decision names no hash, so it is void, and the run goes on to the warning when there is one."""
+    from langgraph.checkpoint.memory import InMemorySaver
+
+    compiled = build(sources, router).compile(checkpointer=InMemorySaver())
+    compiled.invoke(start(cve_id, at, run_id), config(run_id))
+    snapshot = compiled.get_state(config(run_id))
+    if any(t.interrupts for t in snapshot.tasks) and snapshot.values.get("plan_check"):
+        compiled.invoke(Command(resume={"decision": "none"}), config(run_id))
+    return dict(compiled.get_state(config(run_id)).values)

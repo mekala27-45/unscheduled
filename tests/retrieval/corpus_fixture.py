@@ -181,6 +181,21 @@ def build(path: Path) -> Path:
                mitigations)
         """
     )
+    con.execute(
+        """
+        create table silver.exploit_first_seen as select * from (values
+            ('CVE-2026-1000', timestamptz '2026-05-03 00:00:00+00', timestamptz '2026-05-03 00:00:00+00', null::timestamptz)
+        ) as t(cve_id, first_seen, metasploit_first_seen, nuclei_first_seen)
+        """
+    )
+    con.execute(
+        """
+        create table silver.cve_fact as select * from (values
+            ('CVE-2026-1000', 'epss', 'epss', '0.01', timestamptz '2026-05-01 00:00:00+00', timestamptz '2026-05-02 00:00:00+00', 'epss_score_date', false),
+            ('CVE-2026-1000', 'epss', 'epss', '0.42', timestamptz '2026-05-02 00:00:00+00', null::timestamptz, 'epss_score_date', false)
+        ) as t(cve_id, field, source, value, known_from, known_to, dated_by, pre_history)
+        """
+    )
     con.execute("create table config.lake_build as select timestamptz '2026-11-16 03:00:00+00' as data_cut")
     con.execute(
         """

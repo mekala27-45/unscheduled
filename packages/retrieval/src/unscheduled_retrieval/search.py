@@ -239,3 +239,40 @@ def rerank(
     scores = score([texts[c] for c, _, _ in hits])
     order = sorted(range(len(hits)), key=lambda i: (-float(scores[i]), i))
     return [(hits[i][0], hits[i][1], float(scores[i])) for i in order]
+
+
+class Searcher:
+    """The configuration config/retrieval.yaml froze, as one function from a query and a time to the
+    chunks it returns, for the agent's retrieve node."""
+
+    def __init__(
+        self,
+        chosen: str,
+        store: Store,
+        flat: Flat,
+        encode: Callable[[str], np.ndarray],
+        score: Callable[[str, Sequence[str]], np.ndarray] | None,
+        texts: dict[str, str],
+        ef_search: int,
+    ) -> None:
+        self.chosen = chosen
+        self.store = store
+        self.flat = flat
+        self.encode = encode
+        self.score = score
+        self.texts = texts
+        self.ef_search = ef_search
+
+    def __call__(self, query: str, at: datetime, k: int) -> list[Hit]:
+        floor = self.store.floor(query, at) if self.chosen != "dense" else []
+        if self.chosen == "floor":
+            return floor[:k]
+        dense = self.store.dense(self.encode(query), at, self.ef_search)
+        if self.chosen == "dense":
+            return dense[:k]
+        fused = rrf([documents(floor), documents(dense)])
+        candidates = hybrid_chunks(fused, [floor, dense])
+        if self.chosen == "rerank" and self.score is not None:
+            scorer = self.score
+            candidates = rerank(candidates, self.texts, lambda passages: scorer(query, passages))
+        return candidates[:k]
