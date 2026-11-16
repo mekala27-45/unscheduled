@@ -1,8 +1,8 @@
 """POST /v1/triage, the runs, the approvals by hash and the search, against a real Postgres.
 
 The slice is the fixture bundle the other API tests load; the scoped corpus is a GitHub advisory and
-a KEV entry for CVE-2021-90001, written into corpus_document and corpus_chunk as the sync will write
-them. No provider is configured (config/agent_points.yaml does not exist yet), so the no model floor
+a KEV entry for CVE-2021-90001 (tests/api/fixtures/bundle.py), written into corpus_document and
+corpus_chunk by the sync's own row builders; test_sync loads the same files through the sync. No provider is configured (config/agent_points.yaml does not exist yet), so the no model floor
 drafts, and the run says so.
 """
 
@@ -16,86 +16,37 @@ from typing import Any
 import psycopg
 import pytest
 from fastapi.testclient import TestClient
+from unscheduled_api import bundle as bnd
 from unscheduled_api import triage
 from unscheduled_api.db import checkpoint_schema
 
+from tests.api.fixtures.bundle import ADVISORY_DOC, CORPUS_CVE, KEV_DOC, corpus_frames
 from tests.api.postgres import plain
 
-CVE = "CVE-2021-90001"
+CVE = CORPUS_CVE
 AS_OF = "2022-01-15"
-ADVISORY = "ghsa:GHSA-fx01-0001-aaaa"
-KEV_DOC = f"kev:{CVE}"
+ADVISORY = ADVISORY_DOC
 # Made from words, never a literal a secret scanner would read as a credential.
 TOKEN = "-".join(["approver", "token", "for", "the", "triage", "tests", "only"])
 
 
-def documents() -> list[dict[str, Any]]:
-    return [
-        {
-            "doc_id": ADVISORY,
-            "version": "2021-03-02T00:00:00Z",
-            "source": "ghsa",
-            "known_from": datetime(2021, 3, 2, tzinfo=UTC),
-            "known_to": None,
-            "withdrawn": None,
-            "cve_ids": [CVE],
-            "sections": {
-                "summary": "Remote code execution in logkit through unsafe deserialization",
-                "details": "Fixture advisory. logkit deserializes log records from the network without checks.",
-                "affected": "Go/example.org/fixture/logkit: from 0 fixed in 1.2.1",
-            },
-        },
-        {
-            "doc_id": KEV_DOC,
-            "version": "2021.12.10",
-            "source": "kev",
-            "known_from": datetime(2021, 12, 10, tzinfo=UTC),
-            "known_to": None,
-            "withdrawn": None,
-            "cve_ids": [CVE],
-            "sections": {
-                "entry": "Fixture logkit deserialization vulnerability\nProduct: Fixture logkit\nAdded to KEV on 2021-12-10",
-                "description": "Fixture logkit contains a deserialization flaw that allows remote code execution.",
-                "required_action": "Apply mitigations per vendor instructions.",
-            },
-        },
-    ]
-
-
 def load_corpus(url: str, schema: str = "unscheduled") -> None:
+    """The fixture corpus into a schema's corpus tables, row by row as the sync's builders make them."""
+    documents, chunks = corpus_frames()
     with psycopg.connect(plain(url), autocommit=True) as conn:
-        for d in documents():
+        for raw in documents.to_dicts():
+            row = bnd.corpus_document_row(raw)
+            row["sections"] = json.dumps(row["sections"])
             conn.execute(
-                f'insert into "{schema}".corpus_document (doc_id, version, source, known_from, known_to, withdrawn, cve_ids, sections) '
-                "values (%s, %s, %s, %s, %s, %s, %s, %s)",
-                (
-                    d["doc_id"],
-                    d["version"],
-                    d["source"],
-                    d["known_from"],
-                    d["known_to"],
-                    d["withdrawn"],
-                    d["cve_ids"],
-                    json.dumps(d["sections"]),
-                ),
+                f'insert into "{schema}".corpus_document ({", ".join(row)}) values ({", ".join(["%s"] * len(row))})',
+                tuple(row.values()),
             )
-            for ordinal, (section, text) in enumerate(d["sections"].items()):
-                conn.execute(
-                    f'insert into "{schema}".corpus_chunk (chunk_id, doc_id, version, source, known_from, known_to, withdrawn, ordinal, sections, text) '
-                    "values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
-                    (
-                        f"{d['doc_id']}#{ordinal}",
-                        d["doc_id"],
-                        d["version"],
-                        d["source"],
-                        d["known_from"],
-                        d["known_to"],
-                        d["withdrawn"],
-                        ordinal,
-                        [section],
-                        text,
-                    ),
-                )
+        for raw in chunks.to_dicts():
+            row = bnd.corpus_chunk_row(raw)
+            conn.execute(
+                f'insert into "{schema}".corpus_chunk ({", ".join(row)}) values ({", ".join(["%s"] * len(row))})',
+                tuple(row.values()),
+            )
 
 
 @pytest.fixture

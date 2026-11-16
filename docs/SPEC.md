@@ -70,6 +70,17 @@ time, read as its UTC date), the CVEs it names (`cve_id`, or `cve_aliases` and `
 packages/match writes them), and any further columns, kept whole. `backlog.json` is any JSON object
 or list; /v1/backlog serves it as it is.
 
+Optional, both or neither: the scoped advisory corpus of ADR 0011, which `build_serving_bundle.py
+--corpus` adds once `build_corpus.py` has built the corpus. `corpus_document.parquet` holds every
+version of the advisories that name a CVE the six stand in products carry, of every KEV entry and of
+every CWE weakness: `doc_id`, `version`, `source`, `known_from`, `known_to`, `withdrawn`, `cve_ids`,
+`sections_json` (the sections by name). `corpus_chunk.parquet` holds their chunks: `chunk_id`,
+`doc_id`, `version`, `source`, the three times, `ordinal`, `sections` (in their order), `text`, and
+`embedding` (384 numbers) only when config/retrieval.yaml freezes a configuration that reads vectors.
+A version without a `known_from` refuses the bundle. A bundle without these files leaves the corpus
+Neon holds as it is: every version keeps its own known_from, so an older corpus is still right about
+the past, and a corpus build that waits or fails never empties the search.
+
 ## 3. The sync
 
 `POST /internal/sync` (and `GET`, for the Vercel cron, which only sends GET) does one bounded step
@@ -88,13 +99,17 @@ nothing loading                    lists releases (with the last ETag; a 304 cos
                                    loaded one: current, or start loading it (status more)
 loading                            the next step of: sweep cve, load cve, sweep cve_event, load
                                    cve_event, sweep product, load product, sweep finding,
-                                   load finding, backlog, finalize
+                                   load finding, sweep prediction, load prediction, sweep
+                                   corpus_document, load corpus_document, sweep corpus_chunk,
+                                   load corpus_chunk, backlog, models, finalize
 ```
 
 A sweep deletes the rows whose key the new file no longer holds, before that table loads, so the
 storage peak stays near one copy of the slice. A load takes one chunk (cve 20,000 rows, cve_event
-100,000, finding 50,000, product 20,000), copies it into a temporary table and upserts by key, writing
-only the rows whose digest changed. Before a chunk is written, the database size plus the size of
+100,000, finding 50,000, product 20,000, prediction 25,000, corpus_document and corpus_chunk 5,000),
+copies it into a temporary table and upserts by key, writing only the rows whose digest changed. A
+document version is keyed `doc_id@version`, so a version whose `known_to` a newer one set is written
+again and the rest are not. Before a chunk is written, the database size plus the size of
 the rows that would change, times three for indexes and TOAST, is compared with
 `neon.storage_ceiling_mb` (decimal megabytes); past it the call refuses with `storage-ceiling` and
 writes nothing. Finalize writes the data version, the row counts and the freshness of each source,

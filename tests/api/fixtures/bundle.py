@@ -11,7 +11,7 @@ from __future__ import annotations
 import hashlib
 import json
 from collections.abc import Mapping, Sequence
-from datetime import date, datetime
+from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Any
 
@@ -172,6 +172,104 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+# The scoped corpus of the fixture: a GitHub advisory and a KEV entry for CVE-2021-90001, as
+# build_corpus.py writes documents and chunks and build_serving_bundle.py cuts them to the scope.
+CORPUS_CVE = "CVE-2021-90001"
+ADVISORY_DOC = "ghsa:GHSA-fx01-0001-aaaa"
+KEV_DOC = f"kev:{CORPUS_CVE}"
+
+
+def corpus_documents() -> list[dict[str, Any]]:
+    return [
+        {
+            "doc_id": ADVISORY_DOC,
+            "version": "2021-03-02T00:00:00Z",
+            "source": "ghsa",
+            "known_from": datetime(2021, 3, 2, tzinfo=UTC),
+            "known_to": None,
+            "withdrawn": None,
+            "cve_ids": [CORPUS_CVE],
+            "sections": {
+                "summary": "Remote code execution in logkit through unsafe deserialization",
+                "details": "Fixture advisory. logkit deserializes log records from the network without checks.",
+                "affected": "Go/example.org/fixture/logkit: from 0 fixed in 1.2.1",
+            },
+        },
+        {
+            "doc_id": KEV_DOC,
+            "version": "2021.12.10",
+            "source": "kev",
+            "known_from": datetime(2021, 12, 10, tzinfo=UTC),
+            "known_to": None,
+            "withdrawn": None,
+            "cve_ids": [CORPUS_CVE],
+            "sections": {
+                "entry": "Fixture logkit deserialization vulnerability\nProduct: Fixture logkit\nAdded to KEV on 2021-12-10",
+                "description": "Fixture logkit contains a deserialization flaw that allows remote code execution.",
+                "required_action": "Apply mitigations per vendor instructions.",
+            },
+        },
+    ]
+
+
+def corpus_frames(documents: Sequence[Mapping[str, Any]] | None = None) -> tuple[pl.DataFrame, pl.DataFrame]:
+    """The two bundle files of a corpus: its document versions and one chunk per section."""
+    docs = list(corpus_documents() if documents is None else documents)
+    times = {"known_from": TIMESTAMP, "known_to": TIMESTAMP, "withdrawn": TIMESTAMP}
+    document_frame = pl.DataFrame(
+        [
+            {
+                **{
+                    k: d[k]
+                    for k in ("doc_id", "version", "source", "known_from", "known_to", "withdrawn", "cve_ids")
+                },
+                "sections_json": json.dumps(d["sections"], sort_keys=True),
+            }
+            for d in docs
+        ],
+        schema={
+            "doc_id": pl.Utf8,
+            "version": pl.Utf8,
+            "source": pl.Utf8,
+            **times,
+            "cve_ids": TEXT_LIST,
+            "sections_json": pl.Utf8,
+        },
+        orient="row",
+    )
+    chunks = [
+        {
+            "chunk_id": f"{d['doc_id']}@{d['version']}#{ordinal}",
+            "doc_id": d["doc_id"],
+            "version": d["version"],
+            "source": d["source"],
+            "known_from": d["known_from"],
+            "known_to": d["known_to"],
+            "withdrawn": d["withdrawn"],
+            "ordinal": ordinal,
+            "sections": [section],
+            "text": text,
+        }
+        for d in docs
+        for ordinal, (section, text) in enumerate(d["sections"].items())
+    ]
+    chunk_frame = pl.DataFrame(
+        chunks,
+        schema={
+            "chunk_id": pl.Utf8,
+            "doc_id": pl.Utf8,
+            "version": pl.Utf8,
+            "source": pl.Utf8,
+            **times,
+            "ordinal": pl.Int32,
+            "sections": TEXT_LIST,
+            "text": pl.Utf8,
+        },
+        orient="row",
+    )
+    return document_frame, chunk_frame
+
+
 def write_bundle(
     dest: Path,
     *,
@@ -183,9 +281,10 @@ def write_bundle(
     row_group_size: int | None = None,
     predictions: Sequence[Mapping[str, Any]] | None = None,
     models_value: Mapping[str, Any] | None = None,
+    corpus: Sequence[Mapping[str, Any]] | None = None,
 ) -> dict[str, Any]:
-    """Write the five files and bundle_manifest.json into dest, and the optional prediction file and
-    models.json when given; return the manifest."""
+    """Write the five files and bundle_manifest.json into dest, and the optional prediction file,
+    models.json and the two corpus files when given; return the manifest."""
     dest.mkdir(parents=True, exist_ok=True)
     files: list[dict[str, Any]] = []
     for table in ("cve", "cve_event", "product", "finding"):
@@ -210,6 +309,13 @@ def write_bundle(
         files.append(
             {"file": path.name, "sha256": _sha256(path), "rows": len(models_value.get("models", []))}
         )
+    if corpus is not None:
+        for data, name in zip(
+            corpus_frames(corpus), ("corpus_document.parquet", "corpus_chunk.parquet"), strict=True
+        ):
+            path = dest / name
+            data.write_parquet(path)
+            files.append({"file": path.name, "sha256": _sha256(path), "rows": data.height})
     manifest = {"generated_at": generated_at, "lake_digest": lake_digest, "files": files, "sources": SOURCES}
     (dest / "bundle_manifest.json").write_text(json.dumps(manifest, indent=1) + "\n", encoding="utf-8")
     return manifest

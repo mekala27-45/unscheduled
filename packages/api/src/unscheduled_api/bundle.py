@@ -13,9 +13,14 @@ it until the bytes match the sha256 in bundle_manifest.json and every required c
     backlog.json          the Q1 to Q6 values from the manifest, served as they are
     prediction.parquet    optional: the Phase 2 batch predictions, one row per CVE (PREDICTION_COLUMNS)
     models.json           optional: the registry export the predictions name their models by
+    corpus_document.parquet  optional: the scoped advisory corpus of ADR 0011, one row per version of
+                          each document, with known_from, known_to, withdrawn and its sections
+    corpus_chunk.parquet  optional, with it: the chunks of those versions, in their section order
 
 A bundle without the two optional files serves no predictions: the sync empties the table and the
-API says the bundle carried none.
+API says the bundle carried none. A bundle without the corpus files leaves the corpus the sync loaded
+before in place: every version keeps its own known_from, so an older corpus is still right about the
+past, and a lake run whose corpus build waited or failed does not empty the search.
 
 A column listed as required must exist in the file (its values may be null). An optional column
 that is missing loads as null and is listed in the data version, so a reader can tell "the source
@@ -42,7 +47,10 @@ BACKLOG = "backlog.json"
 FILES = ("cve.parquet", "cve_event.parquet", "product.parquet", "finding.parquet", BACKLOG)
 PREDICTION = "prediction.parquet"
 MODELS = "models.json"
-OPTIONAL_FILES = (PREDICTION, MODELS)
+CORPUS_DOCUMENT = "corpus_document.parquet"
+CORPUS_CHUNK = "corpus_chunk.parquet"
+OPTIONAL_FILES = (PREDICTION, MODELS, CORPUS_DOCUMENT, CORPUS_CHUNK)
+EMBEDDING_DIMENSIONS = 384
 METRICS = ("AV", "AC", "PR", "UI", "S", "C", "I", "A")
 BANDS = ("LOW", "MEDIUM", "HIGH", "CRITICAL")
 PREDICTION_DIGEST_LENGTH = 16
@@ -176,6 +184,32 @@ PREDICTION_COLUMNS: tuple[Column, ...] = (
     Column("products", "text"),
 )
 
+# The corpus as build_corpus.py writes it, cut to the scope of ADR 0011 by build_serving_bundle.py.
+DOCUMENT_COLUMNS: tuple[Column, ...] = (
+    Column("doc_id", "text"),
+    Column("version", "text"),
+    Column("source", "text"),
+    Column("known_from", "timestamp"),
+    Column("known_to", "timestamp"),
+    Column("withdrawn", "timestamp"),
+    Column("cve_ids", "text_list"),
+    Column("sections_json", "json"),
+)
+CHUNK_COLUMNS: tuple[Column, ...] = (
+    Column("chunk_id", "text"),
+    Column("doc_id", "text"),
+    Column("version", "text"),
+    Column("source", "text"),
+    Column("known_from", "timestamp"),
+    Column("known_to", "timestamp"),
+    Column("withdrawn", "timestamp"),
+    Column("ordinal", "int"),
+    Column("sections", "ordered_list"),
+    Column("text", "text"),
+    # Only when config/retrieval.yaml freezes a configuration that reads vectors.
+    Column("embedding", "vector", required=False),
+)
+
 EVENT_ID_LENGTH = 16
 # The 16 hex characters of an event id are 64 bits; the table keeps them as one bigint, shifted by
 # 2**63 so that the signed order of the numbers is the order of the hex strings, which the timeline
@@ -216,8 +250,12 @@ TABLES: dict[str, Table] = {
     "product": Table("product", "product.parquet", "product_id", 20_000),
     "finding": Table("finding", "finding.parquet", "finding_id", 50_000),
     "prediction": Table("prediction", PREDICTION, "cve_id", 25_000),
+    "corpus_document": Table("corpus_document", CORPUS_DOCUMENT, "doc_key", 5_000),
+    "corpus_chunk": Table("corpus_chunk", CORPUS_CHUNK, "chunk_id", 5_000),
 }
-OPTIONAL_TABLES = frozenset({"prediction"})
+OPTIONAL_TABLES = frozenset({"prediction", "corpus_document", "corpus_chunk"})
+# Optional tables a bundle without their file leaves as they are, rather than emptying them.
+KEPT_WHEN_ABSENT = frozenset({"corpus_document", "corpus_chunk"})
 
 
 def file_columns(path: Path) -> list[str]:
@@ -236,6 +274,8 @@ def check_columns(table: str, present: Sequence[str]) -> list[str]:
         "product": PRODUCT_KEYS,
         "finding": FINDING_KEYS,
         "prediction": PREDICTION_COLUMNS,
+        "corpus_document": DOCUMENT_COLUMNS,
+        "corpus_chunk": CHUNK_COLUMNS,
     }[table]
     have = set(present)
     missing = [c.name for c in spec if c.required and c.name not in have]
@@ -341,6 +381,35 @@ def _text(value: Any, column: str) -> str | None:
     raise BundleError(f"{column}: {type(value).__name__} is not text")
 
 
+def _int(value: Any, column: str) -> int | None:
+    if value is None:
+        return None
+    if isinstance(value, bool) or not isinstance(value, int | float) or value != int(value):
+        raise BundleError(f"{column}: {value!r} is not a whole number")
+    return int(value)
+
+
+def _ordered_list(value: Any, column: str) -> list[str]:
+    """A list whose order means something (the sections of a chunk, in the order they appear)."""
+    if value is None:
+        return []
+    if isinstance(value, list | tuple):
+        return [str(v) for v in value if v is not None and str(v).strip()]
+    raise BundleError(f"{column}: {type(value).__name__} is not a list")
+
+
+def _vector(value: Any, column: str) -> str | None:
+    """A vector as the text pgvector reads, with exactly the dimensions the halfvec column holds."""
+    if value is None:
+        return None
+    if not isinstance(value, list | tuple) or len(value) != EMBEDDING_DIMENSIONS:
+        raise BundleError(f"{column}: a vector has {EMBEDDING_DIMENSIONS} numbers")
+    numbers = [_float(v, column) for v in value]
+    if any(n is None for n in numbers):
+        raise BundleError(f"{column}: a vector holds a value that is not a finite number")
+    return "[" + ",".join(f"{n:.6g}" for n in numbers if n is not None) + "]"
+
+
 def _text_list(value: Any, column: str) -> list[str]:
     if value is None:
         return []
@@ -382,6 +451,9 @@ READERS = {
     "bool": _bool,
     "text_list": _text_list,
     "json": _json,
+    "int": _int,
+    "ordered_list": _ordered_list,
+    "vector": _vector,
 }
 
 
@@ -546,10 +618,69 @@ def prediction_row(raw: Mapping[str, Any]) -> dict[str, Any]:
     return out
 
 
+def _required_text(raw: Mapping[str, Any], name: str, file: str) -> str:
+    value = _text(raw.get(name), name)
+    if not value:
+        raise BundleError(f"{file} holds a row without a {name}")
+    return value
+
+
+def _times(raw: Mapping[str, Any], file: str) -> dict[str, datetime | None]:
+    known_from = _timestamp(raw.get("known_from"), "known_from")
+    if known_from is None:
+        raise BundleError(f"{file} holds a version without a known_from")
+    return {
+        "known_from": known_from,
+        "known_to": _timestamp(raw.get("known_to"), "known_to"),
+        "withdrawn": _timestamp(raw.get("withdrawn"), "withdrawn"),
+    }
+
+
+def corpus_document_row(raw: Mapping[str, Any]) -> dict[str, Any]:
+    doc_id = _required_text(raw, "doc_id", CORPUS_DOCUMENT)
+    version = _required_text(raw, "version", CORPUS_DOCUMENT)
+    sections = _json(raw.get("sections_json"), "sections_json")
+    if not isinstance(sections, dict):
+        raise BundleError(f"{doc_id}: sections_json is not a JSON object")
+    out: dict[str, Any] = {
+        # One key for one version of one document; neither an id nor a version holds an @.
+        "doc_key": f"{doc_id}@{version}",
+        "doc_id": doc_id,
+        "version": version,
+        "source": _required_text(raw, "source", CORPUS_DOCUMENT),
+        **_times(raw, CORPUS_DOCUMENT),
+        "cve_ids": sorted({c.upper() for c in _text_list(raw.get("cve_ids"), "cve_ids")}),
+        "sections": {str(k): _text(v, "sections_json") or "" for k, v in sorted(sections.items())},
+    }
+    out["row_digest"] = row_digest(out)
+    return out
+
+
+def corpus_chunk_row(raw: Mapping[str, Any]) -> dict[str, Any]:
+    ordinal = _int(raw.get("ordinal"), "ordinal")
+    if ordinal is None:
+        raise BundleError(f"{CORPUS_CHUNK} holds a chunk without an ordinal")
+    out: dict[str, Any] = {
+        "chunk_id": _required_text(raw, "chunk_id", CORPUS_CHUNK),
+        "doc_id": _required_text(raw, "doc_id", CORPUS_CHUNK),
+        "version": _required_text(raw, "version", CORPUS_CHUNK),
+        "source": _required_text(raw, "source", CORPUS_CHUNK),
+        **_times(raw, CORPUS_CHUNK),
+        "ordinal": ordinal,
+        "sections": _ordered_list(raw.get("sections"), "sections"),
+        "text": _required_text(raw, "text", CORPUS_CHUNK),
+        "embedding": _vector(raw.get("embedding"), "embedding"),
+    }
+    out["row_digest"] = row_digest(out)
+    return out
+
+
 ROW_BUILDERS = {
     "cve": cve_row,
     "cve_event": event_row,
     "product": product_row,
     "finding": finding_row,
     "prediction": prediction_row,
+    "corpus_document": corpus_document_row,
+    "corpus_chunk": corpus_chunk_row,
 }

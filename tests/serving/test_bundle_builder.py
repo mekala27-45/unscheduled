@@ -51,3 +51,69 @@ def test_the_locks_are_summarized_by_source_without_any_secret(tmp_path: Path) -
     assert all(len(v["lock_sha256"]) == 64 for v in locks.values())
     text = json.dumps(locks)
     assert "postgres" not in text and "token" not in text.lower()
+
+
+def test_the_scoped_corpus_joins_the_bundle_and_the_api_reads_it_back(tmp_path: Path) -> None:
+    """ADR 0011: Neon holds every version of the advisories that name a CVE the products carry, of
+    every KEV entry and of every CWE weakness; an advisory for another CVE stays in the lake."""
+    import polars as pl
+    from unscheduled_core.hashing import sha256_file
+
+    from tests.api.fixtures.bundle import corpus_documents, corpus_frames, write_bundle
+
+    out = tmp_path / "serving"
+    write_bundle(out)
+    other = {
+        **corpus_documents()[0],
+        "doc_id": "ghsa:GHSA-zzzz-zzzz-zzzz",
+        "cve_ids": ["CVE-2020-12345"],
+    }
+    cwe = {
+        **corpus_documents()[1],
+        "doc_id": "cwe:CWE-502",
+        "source": "cwe",
+        "version": "4.21",
+        "cve_ids": [],
+    }
+    documents, chunks = corpus_frames([*corpus_documents(), other, cwe])
+    corpus_dir = tmp_path / "corpus"
+    corpus_dir.mkdir()
+    documents.write_parquet(corpus_dir / "documents.parquet")
+    chunks.with_columns(pl.lit("x").alias("digest")).write_parquet(corpus_dir / "chunks.parquet")
+    files = {
+        name: {"sha256": sha256_file(corpus_dir / name)} for name in ("documents.parquet", "chunks.parquet")
+    }
+    (corpus_dir / "manifest.json").write_text(
+        json.dumps({"status": "built", "files": files}), encoding="utf-8"
+    )
+
+    entries = bundle.add_corpus(out, corpus_dir)
+    assert [e["file"] for e in entries] == ["corpus_document.parquet", "corpus_chunk.parquet"]
+    kept = pl.read_parquet(out / "corpus_document.parquet")
+    assert sorted(kept.get_column("doc_id").to_list()) == [
+        "cwe:CWE-502",
+        "ghsa:GHSA-fx01-0001-aaaa",
+        "kev:CVE-2021-90001",
+    ]
+    assert pl.read_parquet(out / "corpus_chunk.parquet").get_column("doc_id").n_unique() == 3
+    manifest = json.loads((out / "bundle_manifest.json").read_text(encoding="utf-8"))
+    named = {f["file"]: f for f in manifest["files"]}
+    assert named["corpus_chunk.parquet"]["sha256"] == sha256_file(out / "corpus_chunk.parquet")
+    # Again: the same files, the manifest names each once.
+    bundle.add_corpus(out, corpus_dir)
+    again = json.loads((out / "bundle_manifest.json").read_text(encoding="utf-8"))
+    assert [f["file"] for f in again["files"]].count("corpus_document.parquet") == 1
+
+
+def test_a_corpus_that_waits_adds_nothing(tmp_path: Path) -> None:
+    from tests.api.fixtures.bundle import write_bundle
+
+    out = tmp_path / "serving"
+    write_bundle(out)
+    before = (out / "bundle_manifest.json").read_text(encoding="utf-8")
+    corpus_dir = tmp_path / "corpus"
+    corpus_dir.mkdir()
+    (corpus_dir / "manifest.json").write_text(json.dumps({"status": "waiting"}), encoding="utf-8")
+    assert bundle.add_corpus(out, corpus_dir) == []
+    assert (out / "bundle_manifest.json").read_text(encoding="utf-8") == before
+    assert not (out / "corpus_chunk.parquet").exists()

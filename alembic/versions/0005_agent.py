@@ -39,18 +39,22 @@ def _t(name: str) -> str:
 
 def upgrade() -> None:
     op.execute("create extension if not exists vector")
+    # doc_key is doc_id@version, one key for the sync to sweep and upsert by; row_digest lets a reload
+    # write only the versions that changed (a known_to set when a newer version arrives).
     op.execute(
         f"create table {_t('corpus_document')} ("
-        "doc_id text not null, version text not null, source text not null, "
+        "doc_key text primary key, doc_id text not null, version text not null, source text not null, "
         "known_from timestamptz not null, known_to timestamptz, withdrawn timestamptz, "
-        "cve_ids text[] not null default '{}', sections jsonb not null, primary key (doc_id, version))"
+        "cve_ids text[] not null default '{}', sections jsonb not null, row_digest text not null)"
     )
     op.execute(f"create index corpus_document_cves on {_t('corpus_document')} using gin (cve_ids)")
+    op.execute(f"create index corpus_document_doc on {_t('corpus_document')} (doc_id, known_from)")
     op.execute(
         f"create table {_t('corpus_chunk')} ("
         "chunk_id text primary key, doc_id text not null, version text not null, source text not null, "
         "known_from timestamptz not null, known_to timestamptz, withdrawn timestamptz, "
-        "ordinal integer not null, sections text[] not null, text text not null, embedding halfvec(384))"
+        "ordinal integer not null, sections text[] not null, text text not null, embedding halfvec(384), "
+        "row_digest text not null)"
     )
     op.execute(
         f"create index corpus_chunk_text on {_t('corpus_chunk')} using gin (to_tsvector('english', text))"

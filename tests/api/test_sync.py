@@ -21,7 +21,7 @@ from unscheduled_api.settings import Budgets
 from unscheduled_api.sync import CALLS_PER_MINUTE, LOCK_KEY, PLAN
 
 from tests.api.conftest import PUBLISHED_AT, TAG, Clock, sync_until_done
-from tests.api.fixtures.bundle import rows, write_bundle
+from tests.api.fixtures.bundle import ADVISORY_DOC, KEV_DOC, corpus_documents, rows, write_bundle
 from tests.api.fixtures.github import FakeGitHub
 from tests.api.postgres import plain
 
@@ -72,6 +72,7 @@ def test_a_load_rebuilds_an_event_key_index_it_left_oversized(
     bundle_dir: Path,
     postgres_url: str,
     monkeypatch: pytest.MonkeyPatch,
+    clock: Clock,
 ) -> None:
     """A full load inserts the event keys in random order; the end of the load rebuilds the primary
     key when it is much larger than a fresh build would be, and says so in the loaded record. Small
@@ -86,6 +87,8 @@ def test_a_load_rebuilds_an_event_key_index_it_left_oversized(
         conn.execute(
             "delete from \"unscheduled\".\"settings\" where key in ('data_version', 'release_check')"
         )
+    # Two full loads take more calls than the sync answers in a minute.
+    clock.advance(61)
     sync_until_done(client)
     rebuilt = setting(postgres_url, "data_version")["rebuilt_indexes"]
     assert set(rebuilt) == {"cve_event_pkey"}
@@ -155,6 +158,92 @@ def test_a_new_bundle_writes_only_what_changed_and_sweeps_what_left(
             'select nvd_status from "unscheduled"."cve" where cve_id = \'CVE-2026-90003\''
         ).fetchone()
     assert status == ("Analyzed",)
+
+
+def corpus_rows(url: str) -> dict[str, Any]:
+    with psycopg.connect(plain(url)) as conn:
+        documents = conn.execute(
+            'select doc_key, known_to, sections from "unscheduled".corpus_document order by doc_key'
+        ).fetchall()
+        chunks = conn.execute(
+            'select chunk_id, sections, embedding is null from "unscheduled".corpus_chunk order by chunk_id'
+        ).fetchall()
+    return {"documents": documents, "chunks": chunks}
+
+
+def test_the_corpus_loads_stays_when_a_bundle_lacks_it_and_follows_a_new_version(
+    client: TestClient, github: FakeGitHub, clock: Clock, tmp_path: Path, postgres_url: str
+) -> None:
+    first = tmp_path / "first"
+    write_bundle(first, corpus=corpus_documents())
+    github.publish(first, TAG, PUBLISHED_AT)
+    answers = sync_until_done(client)
+    by_step = {a["step"]: a for a in answers}
+    assert by_step["load corpus_document"]["chunk"]["rows_changed"] == 2
+    assert by_step["load corpus_chunk"]["chunk"]["rows_changed"] == 6
+    loaded = corpus_rows(postgres_url)
+    assert [d[0] for d in loaded["documents"]] == [
+        f"{ADVISORY_DOC}@2021-03-02T00:00:00Z",
+        f"{KEV_DOC}@2021.12.10",
+    ]
+    assert loaded["documents"][0][2]["affected"].endswith("fixed in 1.2.1")
+    assert all(c[2] for c in loaded["chunks"])  # no vectors until a configuration needs them
+    assert setting(postgres_url, "data_version")["counts"]["corpus_chunk"] == 6
+
+    # A bundle whose corpus build waited carries no corpus: the corpus stays as it was.
+    bare = tmp_path / "bare"
+    write_bundle(bare, generated_at="2026-11-08T05:00:00Z")
+    github.publish(bare, "serving-202611080500", "2026-11-08T05:10:00Z")
+    clock.advance(61)
+    answers = sync_until_done(client)
+    kept = {a["step"]: a for a in answers}
+    assert kept["sweep corpus_document"]["chunk"]["rows_changed"] == 0
+    assert corpus_rows(postgres_url) == loaded
+
+    # A new version of the advisory closes the old one (known_to) and the KEV entry leaves the scope.
+    old, _kev = corpus_documents()
+    newer = {
+        **old,
+        "version": "2021-12-11T00:00:00Z",
+        "known_from": old["known_from"].replace(month=12, day=11),
+    }
+    newer["sections"] = {
+        **old["sections"],
+        "affected": "Go/example.org/fixture/logkit: from 0 fixed in 1.2.2",
+    }
+    closed = {**old, "known_to": newer["known_from"]}
+    third = tmp_path / "third"
+    write_bundle(third, generated_at="2026-11-09T05:00:00Z", corpus=[closed, newer])
+    github.publish(third, "serving-202611090500", "2026-11-09T05:10:00Z")
+    clock.advance(61)
+    answers = sync_until_done(client)
+    steps = {a["step"]: a for a in answers}
+    assert steps["sweep corpus_document"]["chunk"]["rows_changed"] == 1
+    assert steps["load corpus_document"]["chunk"]["rows_changed"] == 2
+    after = corpus_rows(postgres_url)
+    assert [d[0] for d in after["documents"]] == [
+        f"{ADVISORY_DOC}@2021-03-02T00:00:00Z",
+        f"{ADVISORY_DOC}@2021-12-11T00:00:00Z",
+    ]
+    assert after["documents"][0][1] is not None and after["documents"][1][1] is None
+    assert not any(c[0].startswith(KEV_DOC) for c in after["chunks"])
+
+
+def test_a_corpus_chunk_without_a_known_from_is_refused(
+    client: TestClient, github: FakeGitHub, tmp_path: Path, postgres_url: str
+) -> None:
+    broken = tmp_path / "broken"
+    documents = corpus_documents()
+    documents[0] = {**documents[0], "known_from": None}
+    write_bundle(broken, corpus=documents)
+    github.publish(broken, TAG, PUBLISHED_AT)
+    for _ in range(40):
+        response = client.post("/internal/sync")
+        if response.status_code != 200:
+            break
+    assert response.status_code == 502 and response.json()["type"].endswith("bundle-rejected")
+    assert "without a known_from" in response.json()["detail"]
+    assert count(postgres_url, "corpus_document") == 0
 
 
 def test_a_file_that_does_not_match_its_digest_is_rejected_and_nothing_is_loaded(

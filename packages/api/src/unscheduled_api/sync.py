@@ -13,12 +13,15 @@ any instance of the container can take the next step.
 A target bundle is loaded in this order, one step per call:
 
     sweep cve, load cve (chunks), sweep cve_event, load cve_event (chunks), sweep product,
-    load product, sweep finding, load finding, sweep prediction, load prediction (chunks), backlog,
-    models, finalize
+    load product, sweep finding, load finding, sweep prediction, load prediction (chunks),
+    sweep corpus_document, load corpus_document (chunks), sweep corpus_chunk, load corpus_chunk
+    (chunks), backlog, models, finalize
 
 The prediction file and models.json are optional: a bundle without them empties the prediction
 table and stores no models, so the API never serves a prediction from an older bundle beside newer
-data. A cursor written under another plan starts its load again from the first step.
+data. The corpus files are optional the other way: a bundle without them leaves the corpus loaded
+before as it is, since each version carries its own known_from. A cursor written under another plan
+starts its load again from the first step.
 
 A sweep deletes the rows the new file no longer holds, before its load, so the storage peak stays
 near one copy of the slice. A load chunk is copied into a temporary table and upserted by key with a
@@ -72,7 +75,7 @@ STORAGE_ALLOWANCE = 3.0  # bytes written per byte of row, for heap, TOAST and in
 MANIFEST_MAX_BYTES = 1_000_000
 BACKLOG_MAX_BYTES = 5_000_000
 MODELS_MAX_BYTES = 2_000_000
-PLAN_VERSION = 2
+PLAN_VERSION = 3
 
 Step = tuple[str, str | None]
 PLAN: tuple[Step, ...] = (
@@ -86,6 +89,10 @@ PLAN: tuple[Step, ...] = (
     ("load", "finding"),
     ("sweep", "prediction"),
     ("load", "prediction"),
+    ("sweep", "corpus_document"),
+    ("load", "corpus_document"),
+    ("sweep", "corpus_chunk"),
+    ("load", "corpus_chunk"),
     ("backlog", None),
     ("models", None),
     ("finalize", None),
@@ -119,10 +126,38 @@ DB_COLUMNS: dict[str, tuple[str, ...]] = {
         "products",
         "row_digest",
     ),
+    "corpus_document": (
+        "doc_key",
+        "doc_id",
+        "version",
+        "source",
+        "known_from",
+        "known_to",
+        "withdrawn",
+        "cve_ids",
+        "sections",
+        "row_digest",
+    ),
+    "corpus_chunk": (
+        "chunk_id",
+        "doc_id",
+        "version",
+        "source",
+        "known_from",
+        "known_to",
+        "withdrawn",
+        "ordinal",
+        "sections",
+        "text",
+        "embedding",
+        "row_digest",
+    ),
 }
 JSON_COLUMNS = frozenset({"provenance", "detail", "body"})
+# A column JSON in one table only: the sections of a document are an object; of a chunk, a text array.
+TABLE_JSON_COLUMNS: dict[str, frozenset[str]] = {"corpus_document": frozenset({"sections"})}
 # cve_event rows are immutable: their key is their digest.
-DIGESTED = frozenset({"cve", "product", "finding", "prediction"})
+DIGESTED = frozenset({"cve", "product", "finding", "prediction", "corpus_document", "corpus_chunk"})
 # An index the end of a load rebuilds when it is REBUILD_RATIO times the size of a fresh build, which
 # takes about row_bytes a row: a btree entry of a bigint with its item pointer at the default fill.
 REBUILT: dict[str, tuple[str, int]] = {"cve_event": ("cve_event_pkey", 23)}
@@ -205,8 +240,8 @@ def plan_chunks(files: Sequence[dict[str, Any]]) -> int | None:
     return total
 
 
-def _copy_text(value: Any, column: str) -> Any:
-    if column in JSON_COLUMNS:
+def _copy_text(value: Any, column: str, table: str = "") -> Any:
+    if column in JSON_COLUMNS or column in TABLE_JSON_COLUMNS.get(table, frozenset()):
         return canonical_json(value)
     return value
 
@@ -494,6 +529,15 @@ class Sync:
         carried = {str(f["file"]) for f in target["files"]}
         if (
             kind in ("sweep", "load")
+            and table in bnd.KEPT_WHEN_ABSENT
+            and bnd.TABLES[table].file not in carried
+        ):
+            # The bundle carries no corpus: what the sync loaded before stays, as it was.
+            chunk = Chunk(table, 0, 0, 0, 0)
+            cursor["step"], cursor["offset"] = index + 1, 0
+            record.update(status="kept", rows_changed=0, detail={"file": bnd.TABLES[table].file})
+        elif (
+            kind in ("sweep", "load")
             and table in bnd.OPTIONAL_TABLES
             and bnd.TABLES[table].file not in carried
         ):
@@ -603,6 +647,12 @@ class Sync:
             columns = bnd.file_columns(path)
             for rows in bnd.iter_rows(path, columns):
                 yield [bnd.finding_row(r)["finding_id"] for r in rows]
+        elif table == "corpus_document":
+            for rows in bnd.iter_rows(path, ["doc_id", "version"]):
+                yield [f"{r['doc_id']}@{r['version']}" for r in rows]
+        elif table == "corpus_chunk":
+            for batch in bnd.iter_column(path, "chunk_id"):
+                yield [str(k) for k in batch if k is not None]
         else:
             raise BundleError(f"no key reader for the table {table}")
 
@@ -653,7 +703,7 @@ class Sync:
         assert raw is not None
         with raw.cursor() as cur, cur.copy(f"copy pg_temp.sync_rows ({names}) from stdin") as copy:
             for row in rows:
-                copy.write_row(tuple(_copy_text(row[c], c) for c in columns))
+                copy.write_row(tuple(_copy_text(row[c], c, table) for c in columns))
         key = spec.key
         changed_filter = f"t.{key} is null" + (
             " or t.row_digest is distinct from s.row_digest" if table in DIGESTED else ""

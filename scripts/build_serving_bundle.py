@@ -1,6 +1,7 @@
 """Build the serving bundle the API loads into Neon: data/serving/ with its manifest of digests.
 
     python scripts/build_serving_bundle.py
+    python scripts/build_serving_bundle.py --corpus   # then add the scoped corpus, once built
 
 From the lake file, for every CVE published since 2021-01-01 and every KEV listed CVE:
 
@@ -17,6 +18,15 @@ From the lake file, for every CVE published since 2021-01-01 and every KEV liste
     bundle_manifest.json every file with its sha256 and rows, when it was generated, the data cut,
                          the digest of the lake it came from, the locks by source, and the
                          quarantine counts and the newest run ledger rows for the data page
+
+With --corpus, after scripts/build_corpus.py has built data/corpus (it reads this bundle's
+finding.parquet for the CVEs the products carry), the scoped corpus of ADR 0011 joins the bundle:
+
+    corpus_document.parquet  every version of the advisories that name a CVE the six stand in
+                         products carry, of every KEV entry and of every CWE weakness
+    corpus_chunk.parquet the chunks of those versions
+
+A corpus that waits or did not build adds nothing, and the sync then keeps the corpus Neon holds.
 
 Every file is written in a fixed row order with one thread, so the same lake gives the same bytes.
 """
@@ -590,7 +600,104 @@ def build(lake_file: Path, out: Path) -> dict[str, object]:
     return manifest
 
 
+CORPUS_SOURCES_IN_FULL = ("kev", "cwe")
+ADVISORY_SOURCES = ("ghsa", "osv")
+
+
+def scoped_corpus(corpus_dir: Path, findings: Path) -> tuple[pl.DataFrame, pl.DataFrame] | None:
+    """The documents and chunks Neon holds (ADR 0011): every version of the advisories that name a
+    CVE the products carry, of every KEV entry and of every CWE weakness. None while the corpus waits."""
+    manifest_path = corpus_dir / "manifest.json"
+    if not manifest_path.exists():
+        return None
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("status") != "built":
+        return None
+    for file, entry in manifest["files"].items():
+        if sha256_file(corpus_dir / file) != entry["sha256"]:
+            raise SystemExit(f"serving: data/corpus/{file} does not match its digest in the corpus manifest")
+    frame = pl.read_parquet(findings)
+    carried = sorted(
+        {
+            c
+            for column in ("cve_aliases", "upstream_cves")
+            if column in frame.columns
+            for values in frame.get_column(column).drop_nulls().to_list()
+            for c in values
+            if str(c).startswith("CVE-")
+        }
+    )
+    documents = pl.read_parquet(corpus_dir / "documents.parquet")
+    advisory = (
+        pl.col("source").is_in(ADVISORY_SOURCES)
+        & pl.col("cve_ids").list.eval(pl.element().is_in(carried)).list.any()
+    )
+    kept = documents.filter(pl.col("source").is_in(CORPUS_SOURCES_IN_FULL) | advisory)
+    keys = kept.select("doc_id", "version")
+    chunks = pl.read_parquet(corpus_dir / "chunks.parquet").join(keys, on=["doc_id", "version"], how="semi")
+    document_columns = [
+        "doc_id",
+        "version",
+        "source",
+        "known_from",
+        "known_to",
+        "withdrawn",
+        "cve_ids",
+        "sections_json",
+    ]
+    chunk_columns = [
+        "chunk_id",
+        "doc_id",
+        "version",
+        "source",
+        "known_from",
+        "known_to",
+        "withdrawn",
+        "ordinal",
+        "sections",
+        "text",
+    ]
+    return (
+        kept.select(document_columns).sort(["doc_id", "known_from", "version"]),
+        chunks.select(chunk_columns).sort("chunk_id"),
+    )
+
+
+def add_corpus(out: Path, corpus_dir: Path) -> list[dict[str, object]]:
+    """Add the scoped corpus to a built bundle and its manifest; nothing when the corpus waits."""
+    from unscheduled_api import bundle
+
+    manifest_path = out / "bundle_manifest.json"
+    if not manifest_path.exists():
+        raise SystemExit("serving: build the bundle first; --corpus adds to it")
+    scoped = scoped_corpus(corpus_dir, out / "finding.parquet")
+    if scoped is None:
+        print("serving: the corpus is not built; the bundle carries none and the sync keeps Neon's")
+        return []
+    documents, chunks = scoped
+    entries = [
+        _write_parquet(documents, out / bundle.CORPUS_DOCUMENT),
+        _write_parquet(chunks, out / bundle.CORPUS_CHUNK),
+    ]
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    names = {str(e["file"]) for e in entries}
+    manifest["files"] = [f for f in manifest["files"] if f["file"] not in names] + entries
+    tmp = manifest_path.with_name(manifest_path.name + ".tmp")
+    tmp.write_text(json.dumps(manifest, indent=1) + "\n", encoding="utf-8")
+    checked = check_against_api(out)
+    tmp.replace(manifest_path)
+    print(
+        f"serving: the scoped corpus read back: {checked.get('corpus_document')} documents, {checked.get('corpus_chunk')} chunks checked"
+    )
+    return entries
+
+
 def main() -> int:
+    if "--corpus" in sys.argv[1:]:
+        for f in add_corpus(paths.data_dir() / "serving", paths.data_dir() / "corpus"):
+            size = int(str(f["bytes"])) / 1e6
+            print(f"serving: {f['file']} {f['rows']} rows, {size:.1f} MB, {str(f['sha256'])[:12]}")
+        return 0
     manifest = build(paths.lake_file(), paths.data_dir() / "serving")
     for f in manifest["files"]:  # type: ignore[attr-defined]
         print(f"serving: {f['file']} {f['rows']} rows, {f['bytes'] / 1e6:.1f} MB, {f['sha256'][:12]}")

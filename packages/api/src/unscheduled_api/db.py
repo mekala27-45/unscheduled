@@ -194,16 +194,19 @@ sa.Index("ix_ops_run_kind_started", ops_run.c.kind, ops_run.c.started_at)
 corpus_document = sa.Table(
     "corpus_document",
     metadata,
-    sa.Column("doc_id", sa.Text, primary_key=True),
-    sa.Column("version", sa.Text, primary_key=True),
+    sa.Column("doc_key", sa.Text, primary_key=True),
+    sa.Column("doc_id", sa.Text, nullable=False),
+    sa.Column("version", sa.Text, nullable=False),
     sa.Column("source", sa.Text, nullable=False),
     sa.Column("known_from", sa.DateTime(timezone=True), nullable=False),
     sa.Column("known_to", sa.DateTime(timezone=True)),
     sa.Column("withdrawn", sa.DateTime(timezone=True)),
     sa.Column("cve_ids", ARRAY(sa.Text), nullable=False, server_default=sa.text("'{}'")),
     sa.Column("sections", JSONB, nullable=False),
+    sa.Column("row_digest", sa.Text, nullable=False),
 )
 sa.Index("corpus_document_cves", corpus_document.c.cve_ids, postgresql_using="gin")
+sa.Index("corpus_document_doc", corpus_document.c.doc_id, corpus_document.c.known_from)
 
 corpus_chunk = sa.Table(
     "corpus_chunk",
@@ -220,6 +223,7 @@ corpus_chunk = sa.Table(
     sa.Column("text", sa.Text, nullable=False),
     # halfvec(384) of pgvector, created by migration 0005; the API reads and writes it as text.
     sa.Column("embedding", sa.types.NullType()),
+    sa.Column("row_digest", sa.Text, nullable=False),
 )
 sa.Index(
     "corpus_chunk_text", sa.text("to_tsvector('english', text)"), postgresql_using="gin", _table=corpus_chunk
