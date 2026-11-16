@@ -125,9 +125,12 @@ def facts_of(state: TriageState) -> Facts:
 
 
 def _timed(
-    name: str, step: Callable[[TriageState], dict[str, Any]]
+    name: str, step: Callable[[TriageState], dict[str, Any]], sources: object = None
 ) -> Callable[[TriageState], dict[str, Any]]:
     def node(state: TriageState) -> dict[str, Any]:
+        if hasattr(sources, "node"):
+            # The guard of defend.py checks each call against the allowlist of the node running.
+            sources.node = name
         started = time.perf_counter()
         update = step(state)
         update["timings"] = {name: round((time.perf_counter() - started) * 1000, 2)}
@@ -276,7 +279,7 @@ def build(
         "done": done,
     }
     for name, step in steps.items():
-        node: Any = _timed(name, step)  # the node protocols of langgraph take a state and return an update
+        node: Any = _timed(name, step, sources)  # langgraph's node protocols: a state in, an update out
         builder.add_node(name, node)
     order = ["intake", "match", "fill", "rank", "retrieve", "plan", "verify", "approve"]
     builder.add_edge(START, order[0])

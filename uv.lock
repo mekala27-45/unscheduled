@@ -18,6 +18,7 @@ members = [
     "unscheduled-lake",
     "unscheduled-legacy-adapter",
     "unscheduled-match",
+    "unscheduled-mcp",
     "unscheduled-models",
     "unscheduled-render",
     "unscheduled-retrieval",
@@ -2982,6 +2983,7 @@ dependencies = [
     { name = "unscheduled-lake" },
     { name = "unscheduled-legacy-adapter" },
     { name = "unscheduled-match" },
+    { name = "unscheduled-mcp" },
     { name = "unscheduled-models" },
     { name = "unscheduled-render" },
     { name = "unscheduled-retrieval" },
@@ -3014,6 +3016,7 @@ requires-dist = [
     { name = "unscheduled-lake", editable = "packages/lake" },
     { name = "unscheduled-legacy-adapter", editable = "packages/legacy_adapter" },
     { name = "unscheduled-match", editable = "packages/match" },
+    { name = "unscheduled-mcp", editable = "packages/mcp" },
     { name = "unscheduled-models", editable = "packages/models" },
     { name = "unscheduled-render", editable = "packages/render" },
     { name = "unscheduled-retrieval", editable = "packages/retrieval" },
@@ -3237,6 +3240,21 @@ requires-dist = [
     { name = "packageurl-python", specifier = "==0.17.6" },
     { name = "pytz", specifier = ">=2024.1" },
     { name = "univers", specifier = "==32.0.1" },
+    { name = "unscheduled-core", editable = "packages/core" },
+]
+
+[[package]]
+name = "unscheduled-mcp"
+version = "0.1.0"
+source = { editable = "packages/mcp" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "unscheduled-core" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "pydantic", specifier = ">=2.10" },
     { name = "unscheduled-core", editable = "packages/core" },
 ]
 
