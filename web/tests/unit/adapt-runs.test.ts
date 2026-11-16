@@ -1,6 +1,16 @@
 import { describe, expect, it } from "vitest";
-import { GRAPH_ORDER, toRun, toRunList, toSearch } from "@/lib/api/adapt";
-import { API_RUNS, API_RUN_DECIDED, API_RUN_EARLY, API_RUN_PLAN_APPROVED, API_RUN_WAITING, API_SEARCH } from "@/lib/fixtures/runs";
+import { GRAPH_ORDER, toLabelList, toLabelResult, toRun, toRunList, toSearch } from "@/lib/api/adapt";
+import {
+  API_LABELS,
+  API_LABELS_OPEN,
+  API_LABEL_KEPT,
+  API_RUNS,
+  API_RUN_DECIDED,
+  API_RUN_EARLY,
+  API_RUN_PLAN_APPROVED,
+  API_RUN_WAITING,
+  API_SEARCH,
+} from "@/lib/fixtures/runs";
 
 // FIXTURE: every input below was cut from a real answer of the API over its invented fixture data
 // (lib/fixtures/runs.ts, scripts/cut_run_fixtures.py); none is data.
@@ -71,5 +81,25 @@ describe("the lists", () => {
     expect(found.results.length).toBe(API_SEARCH.results.length);
     expect(found.results.every((h) => h.untrusted)).toBe(true);
     expect(found.configuration).toBe("floor");
+  });
+});
+
+describe("the drafts to label for the judge", () => {
+  it("reads each draft as a person would, with no check and no writer beside it", () => {
+    const open = toLabelList(API_LABELS_OPEN);
+    expect(open.total).toBe(API_LABELS_OPEN.total);
+    expect(open.labelled).toBe(0);
+    expect(open.drafts.every((d) => d.label === null)).toBe(true);
+    const plan = open.drafts.find((d) => d.kind === "plan");
+    expect(plan?.draft.steps.length).toBeGreaterThan(0);
+    expect(plan?.draft.claims.every((c) => c.failures.length === 0)).toBe(true);
+    expect(open.drafts.every((d) => d.draft.by === null)).toBe(true);
+  });
+
+  it("keeps the label a person gave, and the listing after it counts it", () => {
+    const kept = toLabelResult(API_LABEL_KEPT);
+    expect(kept.draft.label?.usable).toBe(true);
+    expect(kept.labelled).toBe(1);
+    expect(toLabelList(API_LABELS).drafts.filter((d) => d.label).length).toBe(1);
   });
 });

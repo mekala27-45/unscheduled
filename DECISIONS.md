@@ -841,3 +841,20 @@ search over Postgres in its base and moves the corpus builder (DuckDB, the token
 (the tokenizer, ONNX Runtime) to the extras corpus and embed, so the API's search pulls in neither
 (DuckDB still reaches the image through the Phase 1 matcher). The encoder joins the image only if
 config/retrieval.yaml freezes a configuration that needs it.
+
+## 2026-11-16: the judge's labels go through the API, with the approver's token
+
+The plan calibrates the judge against forty development drafts Ajay labels in the console, shown
+without the configuration that wrote each. The labels need the same guard as a decision, since a
+stranger who could label would set the judge's agreement, so POST /v1/labels takes the approver's
+token in the header and records nothing without it, and a label names the hash of the draft it was
+shown. Labels are only ever added to judge_label; the newest on a draft's hash counts, so a slip is
+corrected by labelling again and both stay on record. A label never gates a criterion.
+
+The drafts are a committed file, evaluation/judge/drafts.json, drawn by seed from the drafts the
+development evals keep (scripts/draw_judge_drafts.py), twenty from the floor and twenty from the
+models, blocked drafts left out since a person never sees one. Which configuration wrote each is in
+evaluation/judge_key.json, outside the folder the API image copies, so the API that serves the
+drafts cannot leak it. judge_label joins migration 0005, which no deployed database has run yet; a
+draft id carries the run time with the configuration, the CVE and the kind, so two runs of one CVE
+never share an id.

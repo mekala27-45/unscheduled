@@ -32,6 +32,8 @@ ROUTES = {
     ("get", "/v1/runs/{run_id}"),
     ("post", "/v1/approvals"),
     ("get", "/v1/search"),
+    ("get", "/v1/labels"),
+    ("post", "/v1/labels"),
 }
 
 

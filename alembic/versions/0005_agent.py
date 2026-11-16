@@ -85,10 +85,27 @@ def upgrade() -> None:
         "provider text not null, model text not null, day date not null, "
         "requests integer not null default 0, tokens integer not null default 0, primary key (provider, model, day))"
     )
+    # The labels Ajay gives the forty development drafts for the judge: only ever added, and only with
+    # the approver's token; the newest label on a draft's hash is the one that counts.
+    op.execute(
+        f"create table {_t('judge_label')} ("
+        "id bigint generated always as identity primary key, draft_id text not null, "
+        "sha256 text not null check (length(sha256) = 64), usable boolean not null, "
+        "reason text not null check (length(reason) between 1 and 280), labelled_by text not null, "
+        "labelled_at timestamptz not null)"
+    )
+    op.execute(f"create index judge_label_draft on {_t('judge_label')} (draft_id, labelled_at desc)")
     op.execute(f'create schema if not exists "{_checkpoints()}"')
 
 
 def downgrade() -> None:
-    for table in ("agent_budget", "agent_approval", "agent_run", "corpus_chunk", "corpus_document"):
+    for table in (
+        "judge_label",
+        "agent_budget",
+        "agent_approval",
+        "agent_run",
+        "corpus_chunk",
+        "corpus_document",
+    ):
         op.execute(f"drop table if exists {_t(table)}")
     op.execute(f'drop schema if exists "{_checkpoints()}" cascade')

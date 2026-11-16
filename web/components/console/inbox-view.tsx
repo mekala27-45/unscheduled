@@ -5,7 +5,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useRuns } from "@/lib/api/queries";
 import { formatDate, formatDateTime, shortDigest } from "@/lib/format";
 import { PageHead } from "./page-head";
-import { EmptyState, QueryRegion, Region, SkeletonTable } from "./region";
+import { JudgeLabels } from "./judge-labels";
+import { QueryRegion, Region, SkeletonTable } from "./region";
 
 export function InboxView() {
   const runs = useRuns();
@@ -63,10 +64,7 @@ export function InboxView() {
         </QueryRegion>
       </Region>
       <Region id="labels" title="Drafts to label for the judge" note="Forty drafts from the development window, each marked usable or not, with a reason">
-        <EmptyState
-          title="The drafts to label come with the agent evals"
-          body="The judge is calibrated against forty labels from Ajay. The drafts are cut from the development runs of the agent evals; until those run, there is nothing to label."
-        />
+        <JudgeLabels />
       </Region>
     </>
   );

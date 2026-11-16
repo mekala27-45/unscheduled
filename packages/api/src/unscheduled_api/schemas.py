@@ -401,6 +401,50 @@ class ApprovalRequest(StrictModel):
     by: Annotated[str, Field(min_length=1, max_length=64, pattern=r"^[A-Za-z0-9 ._-]+$")] = "ajay"
 
 
+class LabelRequest(StrictModel):
+    draft_id: Annotated[
+        str, Field(pattern=r"^[0-9a-f]{16}$", description="the draft, as GET /v1/labels lists it")
+    ]
+    sha256: Annotated[
+        str, Field(pattern=r"^[0-9a-f]{64}$", description="the hash of the draft the label is on, as shown")
+    ]
+    usable: bool = Field(description="whether a person could act on the draft as it stands")
+    reason: Annotated[str, Field(min_length=1, max_length=280, description="why, in a sentence")]
+    by: Annotated[str, Field(min_length=1, max_length=64, pattern=r"^[A-Za-z0-9 ._-]+$")] = "ajay"
+
+
+class Label(StrictModel):
+    usable: bool
+    reason: str
+    by: str
+    at: UtcDatetime
+
+
+class LabelDraft(StrictModel):
+    draft_id: str
+    kind: Literal["plan", "warning"]
+    cve_id: str
+    as_of: str = Field(description="the run time the draft was written as of")
+    sha256: str
+    draft: dict[str, JsonValue] = Field(
+        description="the draft as the development eval kept it, untrusted text"
+    )
+    label: Label | None = Field(description="the newest label on this hash, or none yet")
+
+
+class LabelList(Envelope):
+    drafts: list[LabelDraft]
+    labelled: int
+    total: int
+    note: str | None = None
+
+
+class LabelResult(Envelope):
+    draft: LabelDraft = Field(description="the draft with the label that now counts")
+    labelled: int
+    total: int
+
+
 class NodeCost(StrictModel):
     ms: float = Field(description="the time the node took, milliseconds")
     calls: int = Field(description="model calls made by the node, the floor's included")

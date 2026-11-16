@@ -18,6 +18,7 @@ stage is hashed; this script refuses it before.
 from __future__ import annotations
 
 import argparse
+import gzip
 import hashlib
 import json
 import sys
@@ -56,6 +57,26 @@ def run_one(
     state = graph.run_to_interrupts(guard, router, cve_id, at, run_id)
     state["defenses"] = dict(guard.counts)
     return state
+
+
+def kept(configuration: str, cve_id: str, at: datetime, state: dict[str, Any]) -> list[dict[str, Any]]:
+    """The drafts a run kept, as a person would see them: each verified draft with its hash."""
+    out = []
+    for kind in ("plan", "warning"):
+        check = state.get(f"{kind}_check")
+        if check:
+            out.append(
+                {
+                    "configuration": configuration,
+                    "cve_id": cve_id,
+                    "as_of": at.isoformat(),
+                    "kind": kind,
+                    "sha256": check["sha256"],
+                    "blocked": bool(check["blocked"]),
+                    "draft": check["draft"],
+                }
+            )
+    return out
 
 
 def score(state: dict[str, Any], sources: LakeSources) -> dict[str, Any]:
@@ -170,14 +191,15 @@ def main(argv: list[str] | None = None) -> int:
         return datetime.combine(at.astimezone(UTC).date(), time(23, 59, 59, 999999), tzinfo=UTC)
 
     rows = list(population.iter_rows(named=True))
-    results: dict[str, Any] = {
-        "floor": [
-            score(
-                run_one(sources, None, r["cve_id"], day_end(r["listed_at"]), f"floor-{r['cve_id']}"), sources
-            )
-            for r in rows
-        ]
-    }
+    drafts: list[dict[str, Any]] = []
+
+    def scored(name: str, router: Router | None, r: dict[str, Any]) -> dict[str, Any]:
+        at = day_end(r["listed_at"])
+        state = run_one(sources, router, r["cve_id"], at, f"{name}-{r['cve_id']}")
+        drafts.extend(kept(name, r["cve_id"], at, state))
+        return score(state, sources)
+
+    results: dict[str, Any] = {"floor": [scored("floor", None, r) for r in rows]}
     sampled = set(draw([r["cve_id"] for r in rows], sample_n))
     floor_sampled = [s for s, r in zip(results["floor"], rows, strict=True) if r["cve_id"] in sampled]
     for provider, model in order:
@@ -187,14 +209,7 @@ def main(argv: list[str] | None = None) -> int:
         transport = replay.Recording(cassette) if args.record else replay.Replay(cassette)
         router = Router(adapters(config, [(provider, model)], transport, book), MemoryBudget(limits(config)))
         name = f"{provider}/{model}"
-        results[name] = [
-            score(
-                run_one(sources, router, r["cve_id"], day_end(r["listed_at"]), f"{name}-{r['cve_id']}"),
-                sources,
-            )
-            for r in rows
-            if r["cve_id"] in sampled
-        ]
+        results[name] = [scored(name, router, r) for r in rows if r["cve_id"] in sampled]
     close()
     record = {
         "phase": 3,
@@ -213,6 +228,9 @@ def main(argv: list[str] | None = None) -> int:
         (OUT / f"evals_{args.window}.json").write_text(
             json.dumps(record, indent=1, default=str) + "\n", encoding="utf-8"
         )
+        # Every draft the window's runs kept, for the judge's labels (scripts/draw_judge_drafts.py).
+        lines = "".join(json.dumps(d, sort_keys=True, default=str) + "\n" for d in drafts)
+        (OUT / f"drafts_{args.window}.jsonl.gz").write_bytes(gzip.compress(lines.encode(), mtime=0))
     return 0
 
 

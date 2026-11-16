@@ -155,6 +155,7 @@ transaction level advisory lock, so two instances starting together run them onc
 | agent_run | one row per triage run: CVE, run time, status, the hashes of its drafts, a summary that stays after its checkpoints go |
 | agent_approval | every decision on a draft: run, kind, hash, decision, who, when, whether the token matched; only ever added |
 | agent_budget | the model calls and tokens of each provider and model, per UTC day, so every instance reads one count |
+| judge_label | every label on a draft for the judge: draft, hash, usable, reason, who, when; only ever added, and the newest on a draft's hash counts |
 
 The checkpoints of the triage graph live in a schema of their own beside it, `unscheduled_checkpoints`
 (the API's schema name with `_checkpoints`), made by migration 0005 and filled by the LangGraph saver,
@@ -190,6 +191,8 @@ response carries the `X-Data-Version` header. The CSV carries the statement in
 | GET /v1/runs/{id} | one run as it stands; a run past the cap answers from its row in agent_run |
 | POST /v1/approvals | `{run_id, kind, sha256, decision, by}` with `Authorization: Bearer` and the approver's token: a person's decision on the draft of that hash |
 | GET /v1/search | `q`, `as_of` (a past day), `limit` 1 to 50: ranked chunks of the corpus as known at the end of that day, each marked untrusted |
+| GET /v1/labels | the forty development drafts to label for the judge (evaluation/judge/drafts.json), without the configuration that wrote each, every one with the label that counts; counted as a read, and answered before any data is loaded |
+| POST /v1/labels | `{draft_id, sha256, usable, reason, by}` with `Authorization: Bearer` and the approver's token: a label on the draft of that hash, and how many are labelled |
 | POST /mcp | the MCP server over streamable HTTP, stateless, answering in JSON; GET and DELETE answer 405 |
 
 The as-of rule (the same one the lake follows): a field with events takes its newest event at or
@@ -217,6 +220,11 @@ token, with another, or on a hash that is not the hash of the draft that waits, 
 approval-refused, nothing is recorded and the run still waits. The status of a draft is read every
 time from the draft as it stands and the decisions of its hash, so a draft changed after a decision
 has a new hash and no approval. No route, command or tool applies, sends or files anything.
+
+A label for the judge needs the same token. The forty drafts are a committed file the development
+evals write (evaluation/judge/drafts.json); a label names a draft and its hash as the file holds it,
+and on another hash, or without the token, the answer is label-refused and nothing is recorded.
+Labels never gate anything: they calibrate the judge, which is reported beside the code checks.
 
 Logs are one JSON object per line: method, route template, status, time taken, the first eight hex
 digits of the hashed client. Never a connection value, a token, an SBOM or an address.
@@ -325,6 +333,12 @@ some of the runs that wait, in the console with the approver's token, then start
 403. A decision on a draft needs the approver's token and the hash of the draft that waits. The
 request lacked the token, carried another, or named another hash; nothing was recorded and the run
 still waits.
+
+### problem-label-refused
+
+403. A label on a draft for the judge needs the approver's token and the hash of the draft as
+evaluation/judge/drafts.json holds it. The request lacked the token, carried another, or named
+another hash; nothing was recorded.
 
 ### problem-internal
 

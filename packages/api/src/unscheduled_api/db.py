@@ -272,6 +272,19 @@ agent_budget = sa.Table(
     sa.Column("tokens", sa.Integer, nullable=False, server_default=sa.text("0")),
 )
 
+judge_label = sa.Table(
+    "judge_label",
+    metadata,
+    sa.Column("id", sa.BigInteger, sa.Identity(always=True), primary_key=True),
+    sa.Column("draft_id", sa.Text, nullable=False),
+    sa.Column("sha256", sa.Text, nullable=False),
+    sa.Column("usable", sa.Boolean, nullable=False),
+    sa.Column("reason", sa.Text, nullable=False),
+    sa.Column("labelled_by", sa.Text, nullable=False),
+    sa.Column("labelled_at", sa.DateTime(timezone=True), nullable=False),
+)
+sa.Index("judge_label_draft", judge_label.c.draft_id, judge_label.c.labelled_at.desc())
+
 DATA_TABLES = ("cve", "cve_event", "product", "finding", "prediction")
 
 

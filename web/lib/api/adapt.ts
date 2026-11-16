@@ -16,6 +16,9 @@ import type {
   Exposure,
   Finding,
   Health,
+  LabelDraft,
+  LabelList,
+  LabelResult,
   Lock,
   MatchResult,
   Meta,
@@ -661,3 +664,17 @@ export function toSearch(s: S["SearchResults"]): SearchResults {
   };
 }
 
+function toLabelDraft(d: S["LabelDraft"]): LabelDraft {
+  const kind: DraftKind = d.kind === "warning" ? "warning" : "plan";
+  const label = d.label ? { usable: d.label.usable, reason: d.label.reason, by: d.label.by, at: d.label.at } : null;
+  // The draft as the development eval kept it, read the way a run's draft is, with no check beside it.
+  return { draft_id: d.draft_id, kind, cve_id: d.cve_id, as_of: d.as_of, sha256: d.sha256, draft: toDraft(kind, { sha256: d.sha256, check: { draft: d.draft } }), label };
+}
+
+export function toLabelList(l: S["LabelList"]): LabelList {
+  return { data_version: l.data_version, statement: l.statement, drafts: l.drafts.map(toLabelDraft), labelled: l.labelled, total: l.total, note: l.note ?? null };
+}
+
+export function toLabelResult(r: S["LabelResult"]): LabelResult {
+  return { data_version: r.data_version, statement: r.statement, draft: toLabelDraft(r.draft), labelled: r.labelled, total: r.total };
+}

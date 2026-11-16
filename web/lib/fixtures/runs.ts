@@ -145,35 +145,35 @@ export const API_RUN_WAITING: S["RunView"] = {
   },
   "nodes": {
     "intake": {
-      "ms": 5.14,
+      "ms": 4.7,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "match": {
-      "ms": 4.13,
+      "ms": 5.3,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "fill": {
-      "ms": 0.01,
+      "ms": 0.0,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "rank": {
-      "ms": 1.5,
+      "ms": 1.89,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "retrieve": {
-      "ms": 3.16,
+      "ms": 3.69,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
@@ -187,7 +187,7 @@ export const API_RUN_WAITING: S["RunView"] = {
       "shadow_usd": 0.0
     },
     "verify": {
-      "ms": 0.57,
+      "ms": 0.41,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
@@ -209,7 +209,7 @@ export const API_RUN_WAITING: S["RunView"] = {
       "retries": 0,
       "shadow_usd": 0.0,
       "error": null,
-      "at": "2026-11-16T05:50:32+00:00"
+      "at": "2026-11-16T07:17:26+00:00"
     }
   ],
   "cost": {
@@ -427,7 +427,7 @@ export const API_RUN_PLAN_APPROVED: S["RunView"] = {
       "sha256": "bf61a0ca523740b166a4039b8bb94d459bb79cac2342f4126f5c0bbff65a1023",
       "decision": "approve",
       "by": "ajay",
-      "at": "2026-11-16T05:50:32+00:00",
+      "at": "2026-11-16T07:17:26+00:00",
       "token_ok": true
     }
   ],
@@ -468,35 +468,35 @@ export const API_RUN_PLAN_APPROVED: S["RunView"] = {
   },
   "nodes": {
     "intake": {
-      "ms": 5.14,
+      "ms": 4.7,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "match": {
-      "ms": 4.13,
+      "ms": 5.3,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "fill": {
-      "ms": 0.01,
+      "ms": 0.0,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "rank": {
-      "ms": 1.5,
+      "ms": 1.89,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "retrieve": {
-      "ms": 3.16,
+      "ms": 3.69,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
@@ -510,7 +510,7 @@ export const API_RUN_PLAN_APPROVED: S["RunView"] = {
       "shadow_usd": 0.0
     },
     "verify": {
-      "ms": 0.57,
+      "ms": 0.41,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
@@ -524,14 +524,14 @@ export const API_RUN_PLAN_APPROVED: S["RunView"] = {
       "shadow_usd": 0.0
     },
     "warn": {
-      "ms": 0.14,
+      "ms": 0.17,
       "calls": 1,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "verify_warning": {
-      "ms": 3.4,
+      "ms": 3.26,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
@@ -553,7 +553,7 @@ export const API_RUN_PLAN_APPROVED: S["RunView"] = {
       "retries": 0,
       "shadow_usd": 0.0,
       "error": null,
-      "at": "2026-11-16T05:50:32+00:00"
+      "at": "2026-11-16T07:17:26+00:00"
     },
     {
       "provider": "floor",
@@ -569,7 +569,7 @@ export const API_RUN_PLAN_APPROVED: S["RunView"] = {
       "retries": 0,
       "shadow_usd": 0.0,
       "error": null,
-      "at": "2026-11-16T05:50:32+00:00"
+      "at": "2026-11-16T07:17:26+00:00"
     }
   ],
   "cost": {
@@ -782,7 +782,7 @@ export const API_RUN_DECIDED: S["RunView"] = {
       "sha256": "bf61a0ca523740b166a4039b8bb94d459bb79cac2342f4126f5c0bbff65a1023",
       "decision": "approve",
       "by": "ajay",
-      "at": "2026-11-16T05:50:32+00:00",
+      "at": "2026-11-16T07:17:26+00:00",
       "token_ok": true
     },
     {
@@ -791,7 +791,7 @@ export const API_RUN_DECIDED: S["RunView"] = {
       "sha256": "8719e4f397d4fc797b5b8bc982e4f832024b0bc8b0fffbe4d2cc1747523448d2",
       "decision": "approve",
       "by": "ajay",
-      "at": "2026-11-16T05:50:32+00:00",
+      "at": "2026-11-16T07:17:26+00:00",
       "token_ok": true
     }
   ],
@@ -832,35 +832,35 @@ export const API_RUN_DECIDED: S["RunView"] = {
   },
   "nodes": {
     "intake": {
-      "ms": 5.14,
+      "ms": 4.7,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "match": {
-      "ms": 4.13,
+      "ms": 5.3,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "fill": {
-      "ms": 0.01,
+      "ms": 0.0,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "rank": {
-      "ms": 1.5,
+      "ms": 1.89,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "retrieve": {
-      "ms": 3.16,
+      "ms": 3.69,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
@@ -874,7 +874,7 @@ export const API_RUN_DECIDED: S["RunView"] = {
       "shadow_usd": 0.0
     },
     "verify": {
-      "ms": 0.57,
+      "ms": 0.41,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
@@ -888,21 +888,21 @@ export const API_RUN_DECIDED: S["RunView"] = {
       "shadow_usd": 0.0
     },
     "warn": {
-      "ms": 0.14,
+      "ms": 0.17,
       "calls": 1,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "verify_warning": {
-      "ms": 3.4,
+      "ms": 3.26,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "approve_warning": {
-      "ms": 0.03,
+      "ms": 0.04,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
@@ -931,7 +931,7 @@ export const API_RUN_DECIDED: S["RunView"] = {
       "retries": 0,
       "shadow_usd": 0.0,
       "error": null,
-      "at": "2026-11-16T05:50:32+00:00"
+      "at": "2026-11-16T07:17:26+00:00"
     },
     {
       "provider": "floor",
@@ -947,7 +947,7 @@ export const API_RUN_DECIDED: S["RunView"] = {
       "retries": 0,
       "shadow_usd": 0.0,
       "error": null,
-      "at": "2026-11-16T05:50:32+00:00"
+      "at": "2026-11-16T07:17:26+00:00"
     }
   ],
   "cost": {
@@ -1081,14 +1081,14 @@ export const API_RUN_EARLY: S["RunView"] = {
   },
   "nodes": {
     "intake": {
-      "ms": 3.46,
+      "ms": 3.62,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "match": {
-      "ms": 2.9,
+      "ms": 3.06,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
@@ -1109,14 +1109,14 @@ export const API_RUN_EARLY: S["RunView"] = {
       "shadow_usd": 0.0
     },
     "retrieve": {
-      "ms": 3.23,
+      "ms": 2.96,
       "calls": 0,
       "tokens_in": 0,
       "tokens_out": 0,
       "shadow_usd": 0.0
     },
     "plan": {
-      "ms": 0.11,
+      "ms": 0.13,
       "calls": 1,
       "tokens_in": 0,
       "tokens_out": 0,
@@ -1145,7 +1145,7 @@ export const API_RUN_EARLY: S["RunView"] = {
       "retries": 0,
       "shadow_usd": 0.0,
       "error": null,
-      "at": "2026-11-16T05:50:32+00:00"
+      "at": "2026-11-16T07:17:26+00:00"
     }
   ],
   "cost": {
@@ -1168,7 +1168,7 @@ export const API_RUNS: S["RunList"] = {
       "cve_id": "CVE-2099-0001",
       "as_of": "2021-06-01T23:59:59.999999Z",
       "status": "waiting",
-      "created_at": "2026-11-16T05:50:32.371790Z",
+      "created_at": "2026-11-16T07:17:26.272610Z",
       "plan_sha256": "bf61a0ca523740b166a4039b8bb94d459bb79cac2342f4126f5c0bbff65a1023",
       "warning_sha256": null
     },
@@ -1177,7 +1177,7 @@ export const API_RUNS: S["RunList"] = {
       "cve_id": "CVE-2099-0001",
       "as_of": "2022-01-15T23:59:59.999999Z",
       "status": "decided",
-      "created_at": "2026-11-16T05:50:32.228390Z",
+      "created_at": "2026-11-16T07:17:26.108560Z",
       "plan_sha256": "bf61a0ca523740b166a4039b8bb94d459bb79cac2342f4126f5c0bbff65a1023",
       "warning_sha256": "8719e4f397d4fc797b5b8bc982e4f832024b0bc8b0fffbe4d2cc1747523448d2"
     }
@@ -1250,6 +1250,589 @@ export const API_APPROVAL_REFUSED: Problem = {
   "status": 403,
   "detail": "a decision needs the approver's token; nothing was recorded",
   "instance": "/v1/approvals",
+  "statement": STATEMENT,
+  "data_version": "fixture"
+};
+
+/** The drafts to label for the judge, none labelled yet: the three drafts the runs above wrote. */
+export const API_LABELS_OPEN: S["LabelList"] = {
+  "statement": STATEMENT,
+  "data_version": "fixture",
+  "drafts": [
+    {
+      "draft_id": "12ab187d954b3c38",
+      "kind": "plan",
+      "cve_id": "CVE-2099-0001",
+      "as_of": "2021-06-01T23:59:59.999999+00:00",
+      "sha256": "bf61a0ca523740b166a4039b8bb94d459bb79cac2342f4126f5c0bbff65a1023",
+      "draft": {
+        "kind": "patch_plan",
+        "cve_id": "CVE-2099-0001",
+        "component": "example.org/fixture/logkit",
+        "installed_version": "1.2.0",
+        "fixed_version": "1.2.1",
+        "steps": [
+          "Upgrade example.org/fixture/logkit from 1.2.0 to 1.2.1 or later.",
+          "Rebuild and redeploy go-edge-service with the change.",
+          "Run the scanner again and confirm that it no longer reports CVE-2099-0001."
+        ],
+        "claims": [
+          {
+            "field": "component",
+            "value": "example.org/fixture/logkit",
+            "text": "The affected component is example.org/fixture/logkit.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "component",
+                "version": null
+              }
+            ]
+          },
+          {
+            "field": "installed_version",
+            "value": "1.2.0",
+            "text": "The product runs example.org/fixture/logkit 1.2.0.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "installed_version",
+                "version": null
+              }
+            ]
+          },
+          {
+            "field": "fixed_version",
+            "value": "1.2.1",
+            "text": "The advisory states that 1.2.1 fixes CVE-2099-0001.",
+            "citations": [
+              {
+                "source": "ghsa:GHSA-fx01-0001-aaaa",
+                "section": "affected",
+                "version": "2021-03-02T00:00:00Z"
+              }
+            ]
+          },
+          {
+            "field": "action",
+            "value": "1.2.1",
+            "text": "Upgrade example.org/fixture/logkit from 1.2.0 to 1.2.1 or later.",
+            "citations": [
+              {
+                "source": "ghsa:GHSA-fx01-0001-aaaa",
+                "section": "affected",
+                "version": "2021-03-02T00:00:00Z"
+              }
+            ]
+          }
+        ]
+      },
+      "label": null
+    },
+    {
+      "draft_id": "5f542cc12e9e0513",
+      "kind": "plan",
+      "cve_id": "CVE-2099-0001",
+      "as_of": "2022-01-15T23:59:59.999999+00:00",
+      "sha256": "bf61a0ca523740b166a4039b8bb94d459bb79cac2342f4126f5c0bbff65a1023",
+      "draft": {
+        "kind": "patch_plan",
+        "cve_id": "CVE-2099-0001",
+        "component": "example.org/fixture/logkit",
+        "installed_version": "1.2.0",
+        "fixed_version": "1.2.1",
+        "steps": [
+          "Upgrade example.org/fixture/logkit from 1.2.0 to 1.2.1 or later.",
+          "Rebuild and redeploy go-edge-service with the change.",
+          "Run the scanner again and confirm that it no longer reports CVE-2099-0001."
+        ],
+        "claims": [
+          {
+            "field": "component",
+            "value": "example.org/fixture/logkit",
+            "text": "The affected component is example.org/fixture/logkit.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "component",
+                "version": null
+              }
+            ]
+          },
+          {
+            "field": "installed_version",
+            "value": "1.2.0",
+            "text": "The product runs example.org/fixture/logkit 1.2.0.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "installed_version",
+                "version": null
+              }
+            ]
+          },
+          {
+            "field": "fixed_version",
+            "value": "1.2.1",
+            "text": "The advisory states that 1.2.1 fixes CVE-2099-0001.",
+            "citations": [
+              {
+                "source": "ghsa:GHSA-fx01-0001-aaaa",
+                "section": "affected",
+                "version": "2021-03-02T00:00:00Z"
+              }
+            ]
+          },
+          {
+            "field": "action",
+            "value": "1.2.1",
+            "text": "Upgrade example.org/fixture/logkit from 1.2.0 to 1.2.1 or later.",
+            "citations": [
+              {
+                "source": "ghsa:GHSA-fx01-0001-aaaa",
+                "section": "affected",
+                "version": "2021-03-02T00:00:00Z"
+              }
+            ]
+          }
+        ]
+      },
+      "label": null
+    },
+    {
+      "draft_id": "f378aee59fe9fc01",
+      "kind": "warning",
+      "cve_id": "CVE-2099-0001",
+      "as_of": "2022-01-15T23:59:59.999999+00:00",
+      "sha256": "8719e4f397d4fc797b5b8bc982e4f832024b0bc8b0fffbe4d2cc1747523448d2",
+      "draft": {
+        "kind": "early_warning",
+        "cve_id": "CVE-2099-0001",
+        "product": "go-edge-service",
+        "vulnerability": "CVE-2099-0001, Fixture logkit deserialization vulnerability",
+        "actively_exploited": true,
+        "evidence": "CISA added it to the Known Exploited Vulnerabilities catalog on 2021-12-10; exploit code was first seen in metasploit on 2021-12-09.",
+        "member_states": "not known",
+        "claims": [
+          {
+            "field": "product",
+            "value": "go-edge-service",
+            "text": "The product is go-edge-service.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "product",
+                "version": null
+              }
+            ]
+          },
+          {
+            "field": "vulnerability",
+            "value": "Fixture logkit deserialization vulnerability",
+            "text": "The vulnerability is CVE-2099-0001, Fixture logkit deserialization vulnerability.",
+            "citations": [
+              {
+                "source": "kev:CVE-2099-0001",
+                "section": "entry",
+                "version": "2021.12.10"
+              }
+            ]
+          },
+          {
+            "field": "exploitation_evidence",
+            "value": "2021-12-10",
+            "text": "CISA added CVE-2099-0001 to the Known Exploited Vulnerabilities catalog on 2021-12-10.",
+            "citations": [
+              {
+                "source": "kev:CVE-2099-0001",
+                "section": "entry",
+                "version": "2021.12.10"
+              }
+            ]
+          },
+          {
+            "field": "exploitation_evidence",
+            "value": "2021-12-09",
+            "text": "Exploit code for CVE-2099-0001 was first seen in metasploit on 2021-12-09.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "exploits",
+                "version": null
+              }
+            ]
+          },
+          {
+            "field": "exploitation",
+            "value": "actively exploited",
+            "text": "CVE-2099-0001 is actively exploited.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "exploits",
+                "version": null
+              }
+            ]
+          },
+          {
+            "field": "member_states",
+            "value": "not known",
+            "text": "No source names the member states concerned.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "member_states",
+                "version": null
+              }
+            ]
+          }
+        ]
+      },
+      "label": null
+    }
+  ],
+  "labelled": 0,
+  "total": 3,
+  "note": null
+};
+
+/** A label kept with the token, on the draft's hash. */
+export const API_LABEL_KEPT: S["LabelResult"] = {
+  "statement": STATEMENT,
+  "data_version": "fixture",
+  "draft": {
+    "draft_id": "12ab187d954b3c38",
+    "kind": "plan",
+    "cve_id": "CVE-2099-0001",
+    "as_of": "2021-06-01T23:59:59.999999+00:00",
+    "sha256": "bf61a0ca523740b166a4039b8bb94d459bb79cac2342f4126f5c0bbff65a1023",
+    "draft": {
+      "kind": "patch_plan",
+      "cve_id": "CVE-2099-0001",
+      "component": "example.org/fixture/logkit",
+      "installed_version": "1.2.0",
+      "fixed_version": "1.2.1",
+      "steps": [
+        "Upgrade example.org/fixture/logkit from 1.2.0 to 1.2.1 or later.",
+        "Rebuild and redeploy go-edge-service with the change.",
+        "Run the scanner again and confirm that it no longer reports CVE-2099-0001."
+      ],
+      "claims": [
+        {
+          "field": "component",
+          "value": "example.org/fixture/logkit",
+          "text": "The affected component is example.org/fixture/logkit.",
+          "citations": [
+            {
+              "source": "state",
+              "section": "component",
+              "version": null
+            }
+          ]
+        },
+        {
+          "field": "installed_version",
+          "value": "1.2.0",
+          "text": "The product runs example.org/fixture/logkit 1.2.0.",
+          "citations": [
+            {
+              "source": "state",
+              "section": "installed_version",
+              "version": null
+            }
+          ]
+        },
+        {
+          "field": "fixed_version",
+          "value": "1.2.1",
+          "text": "The advisory states that 1.2.1 fixes CVE-2099-0001.",
+          "citations": [
+            {
+              "source": "ghsa:GHSA-fx01-0001-aaaa",
+              "section": "affected",
+              "version": "2021-03-02T00:00:00Z"
+            }
+          ]
+        },
+        {
+          "field": "action",
+          "value": "1.2.1",
+          "text": "Upgrade example.org/fixture/logkit from 1.2.0 to 1.2.1 or later.",
+          "citations": [
+            {
+              "source": "ghsa:GHSA-fx01-0001-aaaa",
+              "section": "affected",
+              "version": "2021-03-02T00:00:00Z"
+            }
+          ]
+        }
+      ]
+    },
+    "label": {
+      "usable": true,
+      "reason": "It names the fixed version from the advisory and the steps to take.",
+      "by": "ajay",
+      "at": "2026-11-16T07:17:26.346613Z"
+    }
+  },
+  "labelled": 1,
+  "total": 3
+};
+
+/** The drafts after that label: one labelled. */
+export const API_LABELS: S["LabelList"] = {
+  "statement": STATEMENT,
+  "data_version": "fixture",
+  "drafts": [
+    {
+      "draft_id": "12ab187d954b3c38",
+      "kind": "plan",
+      "cve_id": "CVE-2099-0001",
+      "as_of": "2021-06-01T23:59:59.999999+00:00",
+      "sha256": "bf61a0ca523740b166a4039b8bb94d459bb79cac2342f4126f5c0bbff65a1023",
+      "draft": {
+        "kind": "patch_plan",
+        "cve_id": "CVE-2099-0001",
+        "component": "example.org/fixture/logkit",
+        "installed_version": "1.2.0",
+        "fixed_version": "1.2.1",
+        "steps": [
+          "Upgrade example.org/fixture/logkit from 1.2.0 to 1.2.1 or later.",
+          "Rebuild and redeploy go-edge-service with the change.",
+          "Run the scanner again and confirm that it no longer reports CVE-2099-0001."
+        ],
+        "claims": [
+          {
+            "field": "component",
+            "value": "example.org/fixture/logkit",
+            "text": "The affected component is example.org/fixture/logkit.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "component",
+                "version": null
+              }
+            ]
+          },
+          {
+            "field": "installed_version",
+            "value": "1.2.0",
+            "text": "The product runs example.org/fixture/logkit 1.2.0.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "installed_version",
+                "version": null
+              }
+            ]
+          },
+          {
+            "field": "fixed_version",
+            "value": "1.2.1",
+            "text": "The advisory states that 1.2.1 fixes CVE-2099-0001.",
+            "citations": [
+              {
+                "source": "ghsa:GHSA-fx01-0001-aaaa",
+                "section": "affected",
+                "version": "2021-03-02T00:00:00Z"
+              }
+            ]
+          },
+          {
+            "field": "action",
+            "value": "1.2.1",
+            "text": "Upgrade example.org/fixture/logkit from 1.2.0 to 1.2.1 or later.",
+            "citations": [
+              {
+                "source": "ghsa:GHSA-fx01-0001-aaaa",
+                "section": "affected",
+                "version": "2021-03-02T00:00:00Z"
+              }
+            ]
+          }
+        ]
+      },
+      "label": {
+        "usable": true,
+        "reason": "It names the fixed version from the advisory and the steps to take.",
+        "by": "ajay",
+        "at": "2026-11-16T07:17:26.346613Z"
+      }
+    },
+    {
+      "draft_id": "5f542cc12e9e0513",
+      "kind": "plan",
+      "cve_id": "CVE-2099-0001",
+      "as_of": "2022-01-15T23:59:59.999999+00:00",
+      "sha256": "bf61a0ca523740b166a4039b8bb94d459bb79cac2342f4126f5c0bbff65a1023",
+      "draft": {
+        "kind": "patch_plan",
+        "cve_id": "CVE-2099-0001",
+        "component": "example.org/fixture/logkit",
+        "installed_version": "1.2.0",
+        "fixed_version": "1.2.1",
+        "steps": [
+          "Upgrade example.org/fixture/logkit from 1.2.0 to 1.2.1 or later.",
+          "Rebuild and redeploy go-edge-service with the change.",
+          "Run the scanner again and confirm that it no longer reports CVE-2099-0001."
+        ],
+        "claims": [
+          {
+            "field": "component",
+            "value": "example.org/fixture/logkit",
+            "text": "The affected component is example.org/fixture/logkit.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "component",
+                "version": null
+              }
+            ]
+          },
+          {
+            "field": "installed_version",
+            "value": "1.2.0",
+            "text": "The product runs example.org/fixture/logkit 1.2.0.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "installed_version",
+                "version": null
+              }
+            ]
+          },
+          {
+            "field": "fixed_version",
+            "value": "1.2.1",
+            "text": "The advisory states that 1.2.1 fixes CVE-2099-0001.",
+            "citations": [
+              {
+                "source": "ghsa:GHSA-fx01-0001-aaaa",
+                "section": "affected",
+                "version": "2021-03-02T00:00:00Z"
+              }
+            ]
+          },
+          {
+            "field": "action",
+            "value": "1.2.1",
+            "text": "Upgrade example.org/fixture/logkit from 1.2.0 to 1.2.1 or later.",
+            "citations": [
+              {
+                "source": "ghsa:GHSA-fx01-0001-aaaa",
+                "section": "affected",
+                "version": "2021-03-02T00:00:00Z"
+              }
+            ]
+          }
+        ]
+      },
+      "label": null
+    },
+    {
+      "draft_id": "f378aee59fe9fc01",
+      "kind": "warning",
+      "cve_id": "CVE-2099-0001",
+      "as_of": "2022-01-15T23:59:59.999999+00:00",
+      "sha256": "8719e4f397d4fc797b5b8bc982e4f832024b0bc8b0fffbe4d2cc1747523448d2",
+      "draft": {
+        "kind": "early_warning",
+        "cve_id": "CVE-2099-0001",
+        "product": "go-edge-service",
+        "vulnerability": "CVE-2099-0001, Fixture logkit deserialization vulnerability",
+        "actively_exploited": true,
+        "evidence": "CISA added it to the Known Exploited Vulnerabilities catalog on 2021-12-10; exploit code was first seen in metasploit on 2021-12-09.",
+        "member_states": "not known",
+        "claims": [
+          {
+            "field": "product",
+            "value": "go-edge-service",
+            "text": "The product is go-edge-service.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "product",
+                "version": null
+              }
+            ]
+          },
+          {
+            "field": "vulnerability",
+            "value": "Fixture logkit deserialization vulnerability",
+            "text": "The vulnerability is CVE-2099-0001, Fixture logkit deserialization vulnerability.",
+            "citations": [
+              {
+                "source": "kev:CVE-2099-0001",
+                "section": "entry",
+                "version": "2021.12.10"
+              }
+            ]
+          },
+          {
+            "field": "exploitation_evidence",
+            "value": "2021-12-10",
+            "text": "CISA added CVE-2099-0001 to the Known Exploited Vulnerabilities catalog on 2021-12-10.",
+            "citations": [
+              {
+                "source": "kev:CVE-2099-0001",
+                "section": "entry",
+                "version": "2021.12.10"
+              }
+            ]
+          },
+          {
+            "field": "exploitation_evidence",
+            "value": "2021-12-09",
+            "text": "Exploit code for CVE-2099-0001 was first seen in metasploit on 2021-12-09.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "exploits",
+                "version": null
+              }
+            ]
+          },
+          {
+            "field": "exploitation",
+            "value": "actively exploited",
+            "text": "CVE-2099-0001 is actively exploited.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "exploits",
+                "version": null
+              }
+            ]
+          },
+          {
+            "field": "member_states",
+            "value": "not known",
+            "text": "No source names the member states concerned.",
+            "citations": [
+              {
+                "source": "state",
+                "section": "member_states",
+                "version": null
+              }
+            ]
+          }
+        ]
+      },
+      "label": null
+    }
+  ],
+  "labelled": 1,
+  "total": 3,
+  "note": null
+};
+
+/** A label sent without the token: refused, nothing recorded. */
+export const API_LABEL_REFUSED: Problem = {
+  "type": "https://github.com/mekala27-45/unscheduled/blob/main/docs/SPEC.md#problem-label-refused",
+  "title": "The label was refused and nothing was recorded",
+  "status": 403,
+  "detail": "a label needs the approver's token; nothing was recorded",
+  "instance": "/v1/labels",
   "statement": STATEMENT,
   "data_version": "fixture"
 };

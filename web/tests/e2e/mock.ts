@@ -1,6 +1,6 @@
 import type { Page, Route } from "@playwright/test";
 import { API_CVE, API_HEALTH_EMPTY, API_META_EMPTY, API_MODELS, API_SUMMARIES, API_TIMELINE, FIXTURE_ID, apiPage } from "../../lib/fixtures/api";
-import { API_RUNS, API_RUN_WAITING, API_SEARCH } from "../../lib/fixtures/runs";
+import { API_LABELS_OPEN, API_RUNS, API_RUN_WAITING, API_SEARCH } from "../../lib/fixtures/runs";
 
 export const API = "http://api.unscheduled.test";
 
@@ -43,6 +43,7 @@ export async function mockApi(page: Page, overrides: Record<string, Handler> = {
     if (url.pathname === "/v1/runs") return json(route, API_RUNS);
     if (url.pathname === `/v1/runs/${API_RUN_WAITING.run_id}`) return json(route, API_RUN_WAITING);
     if (url.pathname === "/v1/search") return json(route, API_SEARCH);
+    if (req.method() === "GET" && url.pathname === "/v1/labels") return json(route, API_LABELS_OPEN);
     return json(route, { detail: "Not Found" }, 404);
   });
 }

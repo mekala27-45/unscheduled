@@ -53,6 +53,7 @@ from unscheduled_api import (
     agent_tools,
     cves,
     exposure,
+    labels,
     legacy,
     logs,
     matching,
@@ -73,6 +74,9 @@ from unscheduled_api.schemas import (
     DataFacts,
     Exposure,
     Health,
+    LabelList,
+    LabelRequest,
+    LabelResult,
     Limits,
     MatchCounts,
     MatchResponse,
@@ -141,6 +145,12 @@ TRIAGE_TEXT = (
     "(config/providers.yaml, serving); past either, the no model floor drafts and the run says so. "
     "Nothing is applied, sent or filed: a draft becomes approved only by a person's decision on its hash."
 )
+LABEL_TEXT = (
+    "Ajay's label on one of the forty development drafts the judge is calibrated against: usable or "
+    "not, with a short reason. The approver's token travels as Authorization: Bearer, as for a "
+    "decision; without it, or on a hash that is not the hash of the draft, nothing is recorded."
+)
+
 APPROVAL_TEXT = (
     "The approver's token travels as Authorization: Bearer. The API keeps only its SHA-256, hashes what "
     "it receives, compares the two in constant time and logs neither; without the token, or on a hash "
@@ -327,6 +337,8 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
             )
 
     looked_up = [Depends(charge_lookup), Depends(require_data)]
+    # Counted like a lookup, but reads no serving data: the drafts to label are a committed file.
+    counted_only = [Depends(charge_lookup)]
 
     # Service -------------------------------------------------------------------------------------
 
@@ -931,6 +943,47 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
             return view(
                 svc.triage().decide(body.run_id, body.kind, body.sha256, body.decision, token, body.by)
             )
+
+    @app.get(
+        "/v1/labels",
+        response_model=LabelList,
+        tags=["agent"],
+        summary="The drafts to label for the judge, each with the label that counts",
+        response_description="The forty development drafts, without the configuration that wrote each",
+        dependencies=counted_only,
+        responses=openapi.problem_responses(429, 500, 503),
+    )
+    def get_labels() -> LabelList:
+        with database_errors(), svc.connection() as conn:
+            found = labels.listing(conn, svc.settings.schema, svc.settings.root)
+        return LabelList.model_validate({**found, "statement": svc.statement, "data_version": svc.label()})
+
+    @app.post(
+        "/v1/labels",
+        response_model=LabelResult,
+        tags=["agent"],
+        summary="A label on a draft for the judge, named by its hash, with the approver's token",
+        response_description="The draft with the label that now counts, and how many are labelled",
+        description=LABEL_TEXT,
+        responses=openapi.problem_responses(403, 404, 422, 500, 503),
+    )
+    def post_label(body: LabelRequest, request: Request) -> LabelResult:
+        header = request.headers.get("authorization", "")
+        scheme, _, credential = header.partition(" ")
+        token = credential.strip() if scheme.lower() == "bearer" and credential.strip() else None
+        with database_errors(), svc.connection() as conn, conn.begin():
+            item = labels.record(
+                conn,
+                svc.settings.schema,
+                svc.settings.root,
+                draft_id=body.draft_id,
+                sha256=body.sha256,
+                usable=body.usable,
+                reason=body.reason,
+                by=body.by,
+                token=token,
+            )
+        return LabelResult.model_validate({**item, "statement": svc.statement, "data_version": svc.label()})
 
     @app.get(
         "/v1/search",

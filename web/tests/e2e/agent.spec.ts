@@ -1,5 +1,14 @@
 import { expect, test } from "@playwright/test";
-import { API_APPROVAL_REFUSED, API_RUNS, API_RUN_DECIDED, API_RUN_PLAN_APPROVED, API_RUN_WAITING } from "../../lib/fixtures/runs";
+import {
+  API_APPROVAL_REFUSED,
+  API_LABELS_OPEN,
+  API_LABEL_KEPT,
+  API_LABEL_REFUSED,
+  API_RUNS,
+  API_RUN_DECIDED,
+  API_RUN_PLAN_APPROVED,
+  API_RUN_WAITING,
+} from "../../lib/fixtures/runs";
 import { json, mockApi } from "./mock";
 
 const RUN = API_RUN_WAITING.run_id;
@@ -99,12 +108,60 @@ test.describe("one run", () => {
   });
 });
 
-test("the inbox lists what waits, read only", async ({ page }) => {
-  await mockApi(page);
-  await page.goto("/app/inbox");
-  const waiting = API_RUNS.runs.filter((r) => r.status === "waiting").length;
-  await expect(page.getByRole("region", { name: /waits for a person/ }).getByRole("row")).toHaveCount(waiting + 1);
-  await expect(page.getByText("The drafts to label come with the agent evals")).toBeVisible();
+test.describe("the inbox", () => {
+  test("lists what waits, read only", async ({ page }) => {
+    await mockApi(page);
+    await page.goto("/app/inbox");
+    const waiting = API_RUNS.runs.filter((r) => r.status === "waiting").length;
+    await expect(page.getByRole("region", { name: /waits for a person/ }).getByRole("row")).toHaveCount(waiting + 1);
+  });
+
+  test("before the development evals there is nothing to label", async ({ page }) => {
+    await mockApi(page, { "GET /v1/labels": (r) => json(r, { ...API_LABELS_OPEN, drafts: [], labelled: 0, total: 0, note: "the forty drafts come with the development evals of step 12" }) });
+    await page.goto("/app/inbox");
+    await expect(page.getByText("The drafts to label come with the agent evals")).toBeVisible();
+  });
+
+  test("shows each draft without what wrote it, and keeps a label only with the token", async ({ page }) => {
+    let header: string | null = null;
+    let body: Record<string, unknown> | null = null;
+    await mockApi(page, {
+      "POST /v1/labels": (r) => {
+        header = r.request().headers()["authorization"] ?? null;
+        body = r.request().postDataJSON() as Record<string, unknown>;
+        return json(r, API_LABEL_KEPT);
+      },
+    });
+    await page.goto("/app/inbox");
+    const first = API_LABELS_OPEN.drafts[0];
+    await expect(page.getByText(`0 of ${API_LABELS_OPEN.total} labelled`)).toBeVisible();
+    await expect(page.getByRole("heading", { level: 3, name: /^Draft 1: a patch plan/ })).toBeVisible();
+    await expect(page.getByText("floor", { exact: false })).toHaveCount(0);
+    const card = page.getByRole("listitem").filter({ has: page.getByRole("heading", { name: /^Draft 1:/ }) });
+    await expect(card.getByRole("button", { name: "Usable", exact: true })).toBeDisabled();
+    await card.getByLabel("Why, in a sentence").fill("It names the fixed version and the steps.");
+    await expect(card.getByRole("button", { name: "Usable", exact: true })).toBeDisabled();
+    await page.getByLabel("Approver token").fill(TEST_TOKEN);
+    await card.getByRole("button", { name: "Usable", exact: true }).click();
+    await expect(card.getByText("Labelled usable")).toBeVisible();
+    await expect(page.getByText(`1 of ${API_LABELS_OPEN.total} labelled`)).toBeVisible();
+    expect(header).toBe(`Bearer ${TEST_TOKEN}`);
+    expect(body).toMatchObject({ draft_id: first.draft_id, sha256: first.sha256, usable: true });
+    await expect(card.getByLabel("A new label, and why")).toHaveValue("");
+    await page.getByRole("button", { name: "Forget the token" }).click();
+    await expect(page.getByLabel("Approver token")).toHaveValue("");
+  });
+
+  test("a refused label says why", async ({ page }) => {
+    await mockApi(page, { "POST /v1/labels": (r) => json(r, API_LABEL_REFUSED, 403) });
+    await page.goto("/app/inbox");
+    const card = page.getByRole("listitem").filter({ has: page.getByRole("heading", { name: /^Draft 2:/ }) });
+    await page.getByLabel("Approver token").fill("not-the-token");
+    await card.getByLabel("Why, in a sentence").fill("The steps are vague.");
+    await card.getByRole("button", { name: "Not usable" }).click();
+    await expect(card.getByRole("alert").filter({ hasText: /token/ })).toBeVisible();
+    await expect(card.getByText("Not labelled")).toBeVisible();
+  });
 });
 
 test("the advisory search answers as of a day and marks every chunk untrusted", async ({ page }) => {

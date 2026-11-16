@@ -116,15 +116,16 @@ function DraftStatus({ status }: { status: string }) {
   return <StatusText tone={s.tone}>{s.label}</StatusText>;
 }
 
-function ClaimsTable({ draft }: { draft: Draft }) {
+/** The claims of a draft with their citations in words, and the verifier's result unless checks is false. */
+export function ClaimsTable({ draft, checks = true, label }: { draft: Draft; checks?: boolean; label?: string }) {
   return (
-    <Table className="claims" label={`The claims of the ${draft.kind === "plan" ? "plan" : "warning"} and their checks`}>
+    <Table className="claims" label={label ?? `The claims of the ${draft.kind === "plan" ? "plan" : "warning"}${checks ? " and their checks" : ""}`}>
       <TableHeader>
         <TableRow>
           <TableHead>Field</TableHead>
           <TableHead>Claim</TableHead>
           <TableHead>Cited</TableHead>
-          <TableHead>Check</TableHead>
+          {checks ? <TableHead>Check</TableHead> : null}
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -146,13 +147,15 @@ function ClaimsTable({ draft }: { draft: Draft }) {
                 ),
               )}
             </TableCell>
-            <TableCell className="wrap">
-              {c.failures.length ? (
-                <StatusText tone="critical">{c.failures.map((f) => REASONS[f] ?? f).join("; ")}</StatusText>
-              ) : (
-                <StatusText tone="good">Holds in its source</StatusText>
-              )}
-            </TableCell>
+            {checks ? (
+              <TableCell className="wrap">
+                {c.failures.length ? (
+                  <StatusText tone="critical">{c.failures.map((f) => REASONS[f] ?? f).join("; ")}</StatusText>
+                ) : (
+                  <StatusText tone="good">Holds in its source</StatusText>
+                )}
+              </TableCell>
+            ) : null}
           </TableRow>
         ))}
       </TableBody>

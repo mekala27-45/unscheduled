@@ -359,3 +359,22 @@ export type RunList = ResponseMeta & { runs: RunSummary[] };
 export type SearchHit = Evidence & { untrusted: boolean };
 
 export type SearchResults = ResponseMeta & { query: string; as_of: string; configuration: string; results: SearchHit[] };
+
+/** A person's label on a draft for the judge: usable or not, and why. */
+export type Label = { usable: boolean; reason: string; by: string; at: string };
+
+/** A draft to label for the judge, shown without the configuration that wrote it. */
+export type LabelDraft = {
+  draft_id: string;
+  kind: DraftKind;
+  cve_id: string;
+  as_of: string;
+  sha256: string;
+  /** The draft in the words a person reads: the plan's steps or the warning's fields, and its claims. */
+  draft: Draft;
+  label: Label | null;
+};
+
+export type LabelList = ResponseMeta & { drafts: LabelDraft[]; labelled: number; total: number; note: string | null };
+
+export type LabelResult = ResponseMeta & { draft: LabelDraft; labelled: number; total: number };

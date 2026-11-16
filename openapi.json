@@ -1186,6 +1186,223 @@
         "type": "object"
       },
       "JsonValue": {},
+      "Label": {
+        "additionalProperties": false,
+        "properties": {
+          "at": {
+            "format": "date-time",
+            "title": "At",
+            "type": "string"
+          },
+          "by": {
+            "title": "By",
+            "type": "string"
+          },
+          "reason": {
+            "title": "Reason",
+            "type": "string"
+          },
+          "usable": {
+            "title": "Usable",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "usable",
+          "reason",
+          "by",
+          "at"
+        ],
+        "title": "Label",
+        "type": "object"
+      },
+      "LabelDraft": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "description": "the run time the draft was written as of",
+            "title": "As Of",
+            "type": "string"
+          },
+          "cve_id": {
+            "title": "Cve Id",
+            "type": "string"
+          },
+          "draft": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "description": "the draft as the development eval kept it, untrusted text",
+            "title": "Draft",
+            "type": "object"
+          },
+          "draft_id": {
+            "title": "Draft Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "plan",
+              "warning"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "label": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Label"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "the newest label on this hash, or none yet"
+          },
+          "sha256": {
+            "title": "Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "draft_id",
+          "kind",
+          "cve_id",
+          "as_of",
+          "sha256",
+          "draft",
+          "label"
+        ],
+        "title": "LabelDraft",
+        "type": "object"
+      },
+      "LabelList": {
+        "additionalProperties": false,
+        "properties": {
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "drafts": {
+            "items": {
+              "$ref": "#/components/schemas/LabelDraft"
+            },
+            "title": "Drafts",
+            "type": "array"
+          },
+          "labelled": {
+            "title": "Labelled",
+            "type": "integer"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "drafts",
+          "labelled",
+          "total"
+        ],
+        "title": "LabelList",
+        "type": "object"
+      },
+      "LabelRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "by": {
+            "default": "ajay",
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9 ._-]+$",
+            "title": "By",
+            "type": "string"
+          },
+          "draft_id": {
+            "description": "the draft, as GET /v1/labels lists it",
+            "pattern": "^[0-9a-f]{16}$",
+            "title": "Draft Id",
+            "type": "string"
+          },
+          "reason": {
+            "description": "why, in a sentence",
+            "maxLength": 280,
+            "minLength": 1,
+            "title": "Reason",
+            "type": "string"
+          },
+          "sha256": {
+            "description": "the hash of the draft the label is on, as shown",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Sha256",
+            "type": "string"
+          },
+          "usable": {
+            "description": "whether a person could act on the draft as it stands",
+            "title": "Usable",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "draft_id",
+          "sha256",
+          "usable",
+          "reason"
+        ],
+        "title": "LabelRequest",
+        "type": "object"
+      },
+      "LabelResult": {
+        "additionalProperties": false,
+        "properties": {
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "draft": {
+            "$ref": "#/components/schemas/LabelDraft",
+            "description": "the draft with the label that now counts"
+          },
+          "labelled": {
+            "title": "Labelled",
+            "type": "integer"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          },
+          "total": {
+            "title": "Total",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "draft",
+          "labelled",
+          "total"
+        ],
+        "title": "LabelResult",
+        "type": "object"
+      },
       "LastSync": {
         "additionalProperties": false,
         "properties": {
@@ -2972,7 +3189,7 @@
                 }
               }
             },
-            "description": "The decision was refused and nothing was recorded"
+            "description": "The decision was refused and nothing was recorded; The label was refused and nothing was recorded"
           },
           "404": {
             "content": {
@@ -3605,6 +3822,137 @@
         "summary": "The ruler events of a CVE, in time order",
         "tags": [
           "cves"
+        ]
+      }
+    },
+    "/v1/labels": {
+      "get": {
+        "operationId": "get_labels_v1_labels_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LabelList"
+                }
+              }
+            },
+            "description": "The forty development drafts, without the configuration that wrote each"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "The drafts to label for the judge, each with the label that counts",
+        "tags": [
+          "agent"
+        ]
+      },
+      "post": {
+        "description": "Ajay's label on one of the forty development drafts the judge is calibrated against: usable or not, with a short reason. The approver's token travels as Authorization: Bearer, as for a decision; without it, or on a hash that is not the hash of the draft, nothing is recorded.",
+        "operationId": "post_label_v1_labels_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LabelRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LabelResult"
+                }
+              }
+            },
+            "description": "The draft with the label that now counts, and how many are labelled"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The decision was refused and nothing was recorded; The label was refused and nothing was recorded"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The resource does not exist"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The document is neither CycloneDX nor SPDX JSON; The request did not validate"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "A label on a draft for the judge, named by its hash, with the approver's token",
+        "tags": [
+          "agent"
         ]
       }
     },

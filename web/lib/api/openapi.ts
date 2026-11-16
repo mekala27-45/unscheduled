@@ -133,6 +133,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/labels": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The drafts to label for the judge, each with the label that counts */
+        get: operations["get_labels_v1_labels_get"];
+        put?: never;
+        /**
+         * A label on a draft for the judge, named by its hash, with the approver's token
+         * @description Ajay's label on one of the forty development drafts the judge is calibrated against: usable or not, with a short reason. The approver's token travels as Authorization: Bearer, as for a decision; without it, or on a hash that is not the hash of the draft, nothing is recorded.
+         */
+        post: operations["post_label_v1_labels_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/legacy/report.csv": {
         parameters: {
             query?: never;
@@ -656,6 +677,104 @@ export interface components {
             version: string;
         };
         JsonValue: unknown;
+        /** Label */
+        Label: {
+            /**
+             * At
+             * Format: date-time
+             */
+            at: string;
+            /** By */
+            by: string;
+            /** Reason */
+            reason: string;
+            /** Usable */
+            usable: boolean;
+        };
+        /** LabelDraft */
+        LabelDraft: {
+            /**
+             * As Of
+             * @description the run time the draft was written as of
+             */
+            as_of: string;
+            /** Cve Id */
+            cve_id: string;
+            /**
+             * Draft
+             * @description the draft as the development eval kept it, untrusted text
+             */
+            draft: {
+                [key: string]: components["schemas"]["JsonValue"];
+            };
+            /** Draft Id */
+            draft_id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "plan" | "warning";
+            /** @description the newest label on this hash, or none yet */
+            label: components["schemas"]["Label"] | null;
+            /** Sha256 */
+            sha256: string;
+        };
+        /** LabelList */
+        LabelList: {
+            /** Data Version */
+            data_version: string;
+            /** Drafts */
+            drafts: components["schemas"]["LabelDraft"][];
+            /** Labelled */
+            labelled: number;
+            /** Note */
+            note?: string | null;
+            /** Statement */
+            statement: string;
+            /** Total */
+            total: number;
+        };
+        /** LabelRequest */
+        LabelRequest: {
+            /**
+             * By
+             * @default ajay
+             */
+            by: string;
+            /**
+             * Draft Id
+             * @description the draft, as GET /v1/labels lists it
+             */
+            draft_id: string;
+            /**
+             * Reason
+             * @description why, in a sentence
+             */
+            reason: string;
+            /**
+             * Sha256
+             * @description the hash of the draft the label is on, as shown
+             */
+            sha256: string;
+            /**
+             * Usable
+             * @description whether a person could act on the draft as it stands
+             */
+            usable: boolean;
+        };
+        /** LabelResult */
+        LabelResult: {
+            /** Data Version */
+            data_version: string;
+            /** @description the draft with the label that now counts */
+            draft: components["schemas"]["LabelDraft"];
+            /** Labelled */
+            labelled: number;
+            /** Statement */
+            statement: string;
+            /** Total */
+            total: number;
+        };
         /** LastSync */
         LastSync: {
             /**
@@ -1431,7 +1550,7 @@ export interface operations {
                     "application/json": components["schemas"]["RunView"];
                 };
             };
-            /** @description The decision was refused and nothing was recorded */
+            /** @description The decision was refused and nothing was recorded; The label was refused and nothing was recorded */
             403: {
                 headers: {
                     [name: string]: unknown;
@@ -1738,6 +1857,122 @@ export interface operations {
             };
             /** @description The sync was called too often; This client has used its daily budget */
             429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The server failed while answering */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_labels_v1_labels_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The forty development drafts, without the configuration that wrote each */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LabelList"];
+                };
+            };
+            /** @description The sync was called too often; This client has used its daily budget */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The server failed while answering */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_label_v1_labels_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LabelRequest"];
+            };
+        };
+        responses: {
+            /** @description The draft with the label that now counts, and how many are labelled */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LabelResult"];
+                };
+            };
+            /** @description The decision was refused and nothing was recorded; The label was refused and nothing was recorded */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The resource does not exist */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The document is neither CycloneDX nor SPDX JSON; The request did not validate */
+            422: {
                 headers: {
                     [name: string]: unknown;
                 };

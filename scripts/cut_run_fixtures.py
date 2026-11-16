@@ -1,11 +1,14 @@
 """Cut the console's run fixtures from real answers: the API in process over the API tests' fixture
 bundle and corpus, in a Postgres of its own, a run to its first interrupt, the plan approved by its
-hash, the warning approved, an earlier run, the runs, a search and a decision without the token.
+hash, the warning approved, an earlier run, the runs, a search and a decision without the token; then
+the labels for the judge over the drafts those runs wrote: the drafts unlabelled, one label kept with
+the token, the listing after it, and a label without the token.
 
     python scripts/cut_run_fixtures.py        # writes web/lib/fixtures/runs.ts
 
 The fixture CVE is renamed CVE-2099-0001 and the data version set to fixture, as every fixture of the
-console is; the run ids and hashes are the ones the API answered."""
+console is. The hashes are the ones the API answered; the two run ids are pinned to the ids of the
+first cut, so the routes the design gates and the review shots visit stay the same."""
 
 from __future__ import annotations
 
@@ -21,11 +24,13 @@ sys.path.insert(0, str(ROOT))
 os.environ.setdefault("UNSCHED_ROOT", str(ROOT))
 
 from fastapi.testclient import TestClient
+from unscheduled_api import labels
 from unscheduled_api.app import create_app
 from unscheduled_api.matching import PackageMatcher, StaticAdvisories
 from unscheduled_api.releases import GitHubReleases
 from unscheduled_api.services import Services
 
+from scripts import draw_judge_drafts
 from tests.api import postgres
 from tests.api.conftest import PUBLISHED_AT, TAG, fresh_schema, settings_for, sync_until_done
 from tests.api.fixtures.bundle import corpus_documents, osv_records, write_bundle
@@ -33,6 +38,8 @@ from tests.api.fixtures.github import FakeGitHub
 
 TOKEN = "-".join(["fixture", "approver", "words"])  # built from words; no scanner reads a credential
 OUT = ROOT / "web" / "lib" / "fixtures" / "runs.ts"
+# The run ids of the first cut: the waiting run and the earlier one.
+PINNED = ("3b4b263ad2a84712bbd485f5b32a73ca", "f6533f9ed27749d18105310c7f4551d3")
 NAMES = {
     "waiting": (
         "API_RUN_WAITING",
@@ -61,11 +68,25 @@ NAMES = {
         "Problem",
         "A decision sent without the token: refused, nothing recorded.",
     ),
+    "labels_open": (
+        "API_LABELS_OPEN",
+        'S["LabelList"]',
+        "The drafts to label for the judge, none labelled yet: the three drafts the runs above wrote.",
+    ),
+    "label_kept": ("API_LABEL_KEPT", 'S["LabelResult"]', "A label kept with the token, on the draft's hash."),
+    "labels": ("API_LABELS", 'S["LabelList"]', "The drafts after that label: one labelled."),
+    "label_refused": (
+        "API_LABEL_REFUSED",
+        "Problem",
+        "A label sent without the token: refused, nothing recorded.",
+    ),
 }
 
 
-def fixture(answers: dict[str, object]) -> str:
+def fixture(answers: dict[str, object], run_ids: tuple[str, str]) -> str:
     text = json.dumps(answers).replace("CVE-2021-90001", "CVE-2099-0001")
+    for found, pinned in zip(run_ids, PINNED, strict=True):
+        text = text.replace(found, pinned)
 
     def clean(obj: object) -> object:
         if isinstance(obj, dict):
@@ -156,6 +177,37 @@ def main() -> None:
                 "by": "ajay",
             },
         ).json()
+        # The judge's labels over the drafts the runs wrote, drawn as the development drafts are.
+        written = [
+            {
+                "configuration": "floor",
+                "cve_id": r["cve_id"],
+                "as_of": r["as_of"],
+                "kind": kind,
+                "sha256": r["drafts"][kind]["sha256"],
+                "draft": r["drafts"][kind]["check"]["draft"],
+            }
+            for r, kind in ((run, "plan"), (plan, "warning"), (second, "plan"))
+        ]
+        shown, _key = draw_judge_drafts.split(
+            sorted(written, key=draw_judge_drafts.draft_id), draw_judge_drafts.SEED
+        )
+        labels.DRAFTS = tmp / "drafts.json"
+        labels.DRAFTS.write_text(json.dumps(shown), encoding="utf-8")
+        labels_open = client.get("/v1/labels").json()
+        first = labels_open["drafts"][0]
+        label = {
+            "draft_id": first["draft_id"],
+            "sha256": first["sha256"],
+            "usable": True,
+            "reason": "It names the fixed version from the advisory and the steps to take.",
+            "by": "ajay",
+        }
+        label_kept = client.post(
+            "/v1/labels", json=label, headers={"Authorization": f"Bearer {TOKEN}"}
+        ).json()
+        listed = client.get("/v1/labels").json()
+        label_refused = client.post("/v1/labels", json=label).json()
     answers = {
         "waiting": run,
         "plan_approved": plan,
@@ -164,8 +216,12 @@ def main() -> None:
         "runs": runs,
         "search": search,
         "refused": refused,
+        "labels_open": labels_open,
+        "label_kept": label_kept,
+        "labels": listed,
+        "label_refused": label_refused,
     }
-    OUT.write_text(fixture(answers), encoding="utf-8")
+    OUT.write_text(fixture(answers, (run["run_id"], second["run_id"])), encoding="utf-8")
     print(f"wrote {OUT.relative_to(ROOT)}")
 
 

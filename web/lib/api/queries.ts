@@ -69,5 +69,12 @@ export const useDecide = () =>
     mutationFn: ({ body, token }: { body: Parameters<typeof api.decide>[0]; token: string }) => api.decide(body, token),
   });
 
+export const useLabels = () => useQuery({ queryKey: ["labels"], queryFn: ({ signal }) => api.labels(signal) });
+
+export const useLabel = () =>
+  useMutation({
+    mutationFn: ({ body, token }: { body: Parameters<typeof api.label>[0]; token: string }) => api.label(body, token),
+  });
+
 export const useSearch = (q: string, asOf: string, enabled: boolean) =>
   useQuery({ queryKey: ["search", q, asOf], queryFn: ({ signal }) => api.search(q, asOf, 10, signal), enabled });

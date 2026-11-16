@@ -653,6 +653,15 @@ select.field { padding-right: var(--space-lg); }
 .draft__steps { display: grid; gap: var(--space-2xs); max-width: 80ch; padding-left: var(--space-lg); font-size: var(--app-text-sm); list-style: decimal; }
 /* A claim, its citations and its check wrap; each keeps a readable width and the table scrolls sideways on a phone. */
 .claims td.wrap { min-width: 18ch; max-width: 52ch; }
+/* The judge's labels: the token once for the page, then each draft with its own reason and two answers. */
+.judge { display: grid; gap: var(--space-md); }
+.judge__progress { max-width: 80ch; color: var(--color-ink-2); font-size: var(--app-text-sm); }
+.judge__token { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-sm) var(--space-md); }
+.judge__drafts { display: grid; gap: 0; padding: 0; list-style: none; }
+.judge-draft { display: grid; gap: var(--space-sm); padding: var(--space-md) 0; border-top: var(--rule-hair) solid var(--color-rule); }
+.judge-draft__given { max-width: 80ch; color: var(--color-ink-2); font-size: var(--app-text-sm); overflow-wrap: anywhere; }
+.judge-draft__form { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-sm); }
+.judge-draft__reason { flex: 1 1 22rem; min-width: 0; }
 .decision { display: grid; gap: var(--space-sm); max-width: 80ch; }
 .decision > p { font-size: var(--app-text-sm); color: var(--color-ink-2); overflow-wrap: anywhere; }
 .decision__row { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--space-sm); }

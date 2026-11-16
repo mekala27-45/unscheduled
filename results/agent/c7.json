@@ -18,6 +18,7 @@
    "/v1/cves",
    "/v1/cves/{cve_id}",
    "/v1/cves/{cve_id}/timeline",
+   "/v1/labels",
    "/v1/legacy/report.csv",
    "/v1/match",
    "/v1/meta",

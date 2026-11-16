@@ -5,6 +5,8 @@ import {
   toCveList,
   toExposure,
   toHealth,
+  toLabelList,
+  toLabelResult,
   toMatch,
   toMeta,
   toModels,
@@ -43,6 +45,10 @@ export type RunSummary = View.RunSummary;
 export type Draft = View.Draft;
 export type DraftKind = View.DraftKind;
 export type SearchResults = View.SearchResults;
+export type Label = View.Label;
+export type LabelDraft = View.LabelDraft;
+export type LabelList = View.LabelList;
+export type LabelResult = View.LabelResult;
 export type CveQuery = NonNullable<paths["/v1/cves"]["get"]["parameters"]["query"]>;
 
 type S = components["schemas"];
@@ -223,6 +229,24 @@ export const api = {
       (c) => c.POST("/v1/approvals", { body, headers: { Authorization: `Bearer ${token}` }, signal }),
       isRun,
       toRun,
+    ),
+
+  /** The drafts to label for the judge, each with the label that counts; none before the development evals. */
+  labels: (signal?: AbortSignal) =>
+    run<S["LabelList"], LabelList>(
+      "/v1/labels",
+      (c) => c.GET("/v1/labels", { signal }),
+      (v) => enveloped(v) && hasArrays(v, "drafts"),
+      toLabelList,
+    ),
+
+  /** A label on the draft of that hash. The token goes in the header and nowhere else. */
+  label: (body: S["LabelRequest"], token: string, signal?: AbortSignal) =>
+    run<S["LabelResult"], LabelResult>(
+      "/v1/labels",
+      (c) => c.POST("/v1/labels", { body, headers: { Authorization: `Bearer ${token}` }, signal }),
+      (v) => enveloped(v) && hasRecords(v, "draft"),
+      toLabelResult,
     ),
 
   search: (q: string, asOf: string, limit = 10, signal?: AbortSignal) =>

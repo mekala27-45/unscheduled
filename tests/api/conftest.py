@@ -45,6 +45,7 @@ TABLES = (
     "agent_run",
     "agent_approval",
     "agent_budget",
+    "judge_label",
 )
 ORIGIN = "https://unscheduled-triage.vercel.app"
 ORIGINS = f"{ORIGIN}, https://unscheduled-sigma.vercel.app/"
