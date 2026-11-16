@@ -6679,7 +6679,7 @@
    }
   },
   "build.phase3.checklist_done": {
-   "value": 1,
+   "value": 2,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/build_manifest.py",
@@ -12849,6 +12849,50 @@
     "note": null
    }
   },
+  "room.neon_after.cve_event_mb": {
+   "value": 319.4,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "Neon as the API read it at 2026-11-16T03:12:16Z, holding serving-202611152200+f89ae3f7e825",
+    "source": "live",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.neon_after.result": {
+   "value": "pass",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "Neon as the API read it at 2026-11-16T03:12:16Z, holding serving-202611152200+f89ae3f7e825",
+    "source": "live",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.neon_after.share": {
+   "value": 0.8758,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "Neon as the API read it at 2026-11-16T03:12:16Z, holding serving-202611152200+f89ae3f7e825",
+    "source": "live",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.neon_after.size_mb": {
+   "value": 700.6,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "Neon as the API read it at 2026-11-16T03:12:16Z, holding serving-202611152200+f89ae3f7e825",
+    "source": "live",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
   "room.projected_mb": {
    "value": 754.1,
    "fmt": "float1",
@@ -18685,7 +18729,7 @@
     ],
     [
      2,
-     "not done",
+     "done",
      "The room plan measured before any load (ADR 0011); Neon under its ceiling with the daily growth covered to 13 December",
      "results/agent/room.json, docs/adr/0011-the-room-in-neon.md"
     ],

@@ -72,6 +72,15 @@ Once the event table is loaded again, Neon holds {{ v("room.after_mb") }} MB. Wi
 13 December, the dead rows at their bound, the corpus and the run store at its caps, the database
 would hold {{ v("room.projected_mb") }} MB on 13 December, {{ v("room.projected_share") }} of the ceiling and {{ v("room.margin_mb") }} MB under it ({{ v("room.result") }}).
 {% endif %}
+{% if room and room.get("neon_after") and has("room.neon_after.size_mb") %}
+
+## What happened
+
+Once migration 0004 was deployed, the sync loaded the events again in one run of calls to
+/internal/sync. When the API read the database at {{ room.neon_after.read_at }} it held {{ v("room.neon_after.size_mb") }} MB, {{ v("room.neon_after.share") }} of
+the ceiling, against the {{ v("room.after_mb") }} MB the replica gave; the event table, with its key rebuilt, takes
+{{ v("room.neon_after.cve_event_mb") }} MB ({{ v("room.neon_after.result") }}).
+{% endif %}
 
 ## Consequences
 

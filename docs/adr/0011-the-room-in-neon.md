@@ -64,6 +64,13 @@ Once the event table is loaded again, Neon holds 700.5 MB. With the new rows of 
 13 December, the dead rows at their bound, the corpus and the run store at its caps, the database
 would hold 754.1 MB on 13 December, 94.3% of the ceiling and 45.9 MB under it (pass).
 
+## What happened
+
+Once migration 0004 was deployed, the sync loaded the events again in one run of calls to
+/internal/sync. When the API read the database at 2026-11-16T03:12:16Z it held 700.6 MB, 87.6% of
+the ceiling, against the 700.5 MB the replica gave; the event table, with its key rebuilt, takes
+319.4 MB (pass).
+
 ## Consequences
 
 - From the deploy of migration 0004 until the sync has loaded the events again, the timeline and the

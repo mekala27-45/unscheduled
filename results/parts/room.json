@@ -289,6 +289,50 @@
    },
    "value": 752.7
   },
+  "room.neon_after.cve_event_mb": {
+   "fmt": "float1",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/measure_room.py",
+    "population": "Neon as the API read it at 2026-11-16T03:12:16Z, holding serving-202611152200+f89ae3f7e825",
+    "source": "live"
+   },
+   "value": 319.4
+  },
+  "room.neon_after.result": {
+   "fmt": "text",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/measure_room.py",
+    "population": "Neon as the API read it at 2026-11-16T03:12:16Z, holding serving-202611152200+f89ae3f7e825",
+    "source": "live"
+   },
+   "value": "pass"
+  },
+  "room.neon_after.share": {
+   "fmt": "pct1",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/measure_room.py",
+    "population": "Neon as the API read it at 2026-11-16T03:12:16Z, holding serving-202611152200+f89ae3f7e825",
+    "source": "live"
+   },
+   "value": 0.8758
+  },
+  "room.neon_after.size_mb": {
+   "fmt": "float1",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/measure_room.py",
+    "population": "Neon as the API read it at 2026-11-16T03:12:16Z, holding serving-202611152200+f89ae3f7e825",
+    "source": "live"
+   },
+   "value": 700.6
+  },
   "room.projected_mb": {
    "fmt": "float1",
    "provenance": {

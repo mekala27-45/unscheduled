@@ -7,7 +7,7 @@ the manifest or a committed file: edit the template, then render.
 ## Where it stands
 
 ```
-Phase            3 of 5, the agent: 1 of 18 checklist lines done (RESULTS.md); the
+Phase            3 of 5, the agent: 2 of 18 checklist lines done (RESULTS.md); the
                  prompt is claude/unscheduled-phase-3-prompt.md in the Project
 Phase 2          the models, tagged v0.2.0 on the commit that adds the release record;
                  its checklist 18 of 18 lines done (RESULTS.md)
@@ -19,7 +19,7 @@ Vercel           unscheduled-api (container) at unscheduled-api.vercel.app
                  character field, the console, the docs with six archify diagrams, the
                  report, status and design
 Neon             project unscheduled, free plan, ceiling 800 MB (config/budgets.yaml)
-                 94.1 percent in use when the probe read it at 2026-11-16T02:24:50Z
+                 87.6 percent in use when the API read it at 2026-11-16T03:12:16Z, after the room plan (ADR 0011)
 Data             the committed numbers come from the lake cut 2026-11-13T06:00:00+00:00
                  rebuilt here from the lake release lake-20261112
 Look approval    Phase 1: approved by Ajay on the evening of 11 November, New York time, after
@@ -29,9 +29,8 @@ Look approval    Phase 1: approved by Ajay on the evening of 11 November, New Yo
                  Phase 3: the run viewer and the approval inbox wait for his review
 ```
 
-Open checklist lines, Phase 3 (1 of 18 done):
+Open checklist lines, Phase 3 (2 of 18 done):
 
-- 2. The room plan measured before any load (ADR 0011); Neon under its ceiling with the daily growth covered to 13 December
 - 3. The Phase 3 plan and the red team hashed as the agent stage before any evaluation
 - 4. The advisory corpus built point in time, the leakage test passing, the corpus published by digest
 - 5. Retrieval measured against its lexical floor with paired intervals; pgvector compared with the file index
@@ -52,11 +51,10 @@ Open checklist lines, Phase 3 (1 of 18 done):
 ## Next action
 
 Phase 3 runs from its prompt in the Project and the hand off below, and DECISIONS.md holds every
-choice made on the way. Done: step 1.
-Next: step 2, the room plan measured before any load (ADR 0011); Neon under its ceiling with the
-daily growth covered to 13 December. The room in Neon comes before anything new loads, the plan is
-hashed before any evaluation, and every script whose numbers are committed runs with the numeric
-pins (AGENTS.md).
+choice made on the way. Done: step 1, step 2.
+Next: step 3, the Phase 3 plan and the red team hashed as the agent stage before any evaluation. The
+room in Neon comes before anything new loads, the plan is hashed before any evaluation, and every
+script whose numbers are committed runs with the numeric pins (AGENTS.md).
 
 ## Open problems
 
@@ -68,6 +66,10 @@ pins (AGENTS.md).
 - Under load the prediction route waits: with 5 clients at once its 95th percentile was
   1,189 ms, against 376 ms for one client alone, and scoring is a few milliseconds of each call
   (ADR 0008). The API records no server timing yet, so where the calls wait is open for Phase 4.
+- The room in Neon is planned to 13 December (ADR 0011): 754.1 MB projected against the
+  800 MB ceiling, with the corpus, the run store and the daily growth counted. The projection
+  rests on the new rows of one day of the lake; the daily probe reads Neon through the API, and two
+  more trims are measured for when the readings ask for them.
 - No model provider has a key yet: the probe found none of GROQ_API_KEY, GEMINI_API_KEY, OPENROUTER_API_KEY, CEREBRAS_API_KEY.
   The agent runs on its no model floor until Ajay adds at least GROQ_API_KEY and GEMINI_API_KEY as
   Actions secrets and Vercel variables (Part 4 of the Phase 3 prompt); nobody types a key here.

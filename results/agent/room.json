@@ -298,5 +298,67 @@
   "kev": "the KEV catalog from cisagov/kev-data",
   "cwe": "the CWE catalog from cwe.mitre.org"
  },
- "result": "pass"
+ "result": "pass",
+ "neon_after": {
+  "read_at": "2026-11-16T03:12:16Z",
+  "data_version": "serving-202611152200+f89ae3f7e825",
+  "migration": "0004",
+  "database_size_bytes": 700637184,
+  "storage_share_used": 0.8758,
+  "events_loaded": 1292258,
+  "tables": {
+   "cve_event": {
+    "total_bytes": 319406080,
+    "index_bytes": 73785344,
+    "rows_estimate": 1292258
+   },
+   "cve": {
+    "total_bytes": 304185344,
+    "index_bytes": 35635200,
+    "rows_estimate": 260508
+   },
+   "prediction": {
+    "total_bytes": 65609728,
+    "index_bytes": 6955008,
+    "rows_estimate": 181904
+   },
+   "finding": {
+    "total_bytes": 1998848,
+    "index_bytes": 294912,
+    "rows_estimate": 1275
+   },
+   "settings": {
+    "total_bytes": 385024,
+    "index_bytes": 16384,
+    "rows_estimate": 5
+   },
+   "ops_run": {
+    "total_bytes": 114688,
+    "index_bytes": 32768,
+    "rows_estimate": 180
+   },
+   "client_budget": {
+    "total_bytes": 65536,
+    "index_bytes": 16384,
+    "rows_estimate": 75
+   },
+   "match_log": {
+    "total_bytes": 49152,
+    "index_bytes": 32768,
+    "rows_estimate": 0
+   },
+   "product": {
+    "total_bytes": 32768,
+    "index_bytes": 16384,
+    "rows_estimate": 6
+   },
+   "alembic_version": {
+    "total_bytes": 24576,
+    "index_bytes": 16384,
+    "rows_estimate": 0
+   }
+  },
+  "planned_bytes": 700506112,
+  "result": "pass"
+ }
 }

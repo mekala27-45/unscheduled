@@ -24,7 +24,14 @@
 {% set room = data("results/agent/room.json") if tracked("results/agent/room.json") else none %}
 {% set probe3 = (data("results/probe.json").get("phase3") or {}) if tracked("results/probe.json") else {} %}
 {% set neon3 = probe3.get("neon") or {} %}
-{% set neon_now = ("%.1f percent in use when the probe read it at %s" | format(neon3.storage_share_used * 100, neon3.read_at)) if neon3.get("storage_share_used") is not none else "" %}
+{% set after3 = room.get("neon_after") if room else none %}
+{% if after3 and after3.get("storage_share_used") is not none %}
+{% set neon_now = ("%.1f percent in use when the API read it at %s, after the room plan (ADR 0011)" | format(after3.storage_share_used * 100, after3.read_at)) %}
+{% elif neon3.get("storage_share_used") is not none %}
+{% set neon_now = ("%.1f percent in use when the probe read it at %s" | format(neon3.storage_share_used * 100, neon3.read_at)) %}
+{% else %}
+{% set neon_now = "" %}
+{% endif %}
 # Build state
 
 The hand off between sessions and phases. Every session reads it first and updates it last. It is
@@ -102,6 +109,12 @@ Next: the Phase 4 prompt, written from the repository as tagged v0.3.0.
 {% set health = (verify.checks | selectattr("name", "equalto", "health, with the database and the data") | first).facts if verify else {} %}
 {% set neon = health.get("storage_share_used") %}
 {% set neon = neon3.get("storage_share_used") if neon3.get("storage_share_used") is not none else neon %}
+{% if room and has("room.projected_mb") %}
+- The room in Neon is planned to 13 December (ADR 0011): {{ v("room.projected_mb") }} MB projected against the
+  {{ budgets.neon.storage_ceiling_mb }} MB ceiling, with the corpus, the run store and the daily growth counted. The projection
+  rests on the new rows of one day of the lake; the daily probe reads Neon through the API, and two
+  more trims are measured for when the readings ask for them.
+{% endif %}
 {% if neon is not none and neon > 0.9 and not room %}
 - Neon holds {{ "%.1f" | format(neon * 100) }} percent of its {{ budgets.neon.storage_ceiling_mb }} MB ceiling with the predictions loaded, and the lake
   grows every day. The sync refuses a chunk that would pass the ceiling and writes nothing, so the
