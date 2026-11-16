@@ -46,8 +46,9 @@ from unscheduled_api.settings import Settings
 from unscheduled_api.sync import Sync
 from unscheduled_core.manifest import ManifestBuilder
 from unscheduled_retrieval.chunks import Chunk, chunk_document
-from unscheduled_retrieval.documents import cwe_entries, from_cwe, from_kev, from_osv
+from unscheduled_retrieval.documents import from_cwe, from_kev, from_osv
 from unscheduled_retrieval.tokenizer import counter, fetch_tokenizer
+from unscheduled_sources.cwe import text_rows
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "results" / "agent" / "room.json"
@@ -215,7 +216,7 @@ def sample_documents(advisories: Path, kev: Path, cwe: Path) -> dict[str, list[A
             )
         )
     with zipfile.ZipFile(cwe) as archive:
-        info, entries = cwe_entries(archive.read(archive.namelist()[0]))
+        info, entries = text_rows(archive.read(archive.namelist()[0]))
     for entry in entries:
         docs["cwe"].append(
             from_cwe(

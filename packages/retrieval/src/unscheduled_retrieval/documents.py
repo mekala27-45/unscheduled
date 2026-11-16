@@ -147,64 +147,10 @@ def from_cwe(entry: Mapping[str, Any], *, catalog_version: str, known_from: str)
         cve_ids=(),
         sections=_sections(
             (
-                ("description", f"{entry.get('name', '')}\n\n{entry.get('description', '')}"),
+                ("description", f"{entry.get('name') or ''}\n\n{entry.get('description') or ''}"),
                 ("extended_description", entry.get("extended_description") or ""),
                 ("consequences", entry.get("consequences") or ""),
                 ("mitigations", entry.get("mitigations") or ""),
             )
         ),
     )
-
-
-def _local(tag: str) -> str:
-    return tag.rsplit("}", 1)[-1]
-
-
-def _text_of(element: Any) -> str:
-    return clean(" ".join(t.strip() for t in element.itertext() if t.strip()))
-
-
-def cwe_entries(xml: bytes) -> tuple[dict[str, str], list[dict[str, str]]]:
-    """The catalog's name, version and date, and every weakness with the text a citation can name:
-    its description and extended description, its common consequences (scope, impact and note) and
-    its potential mitigations (phase, strategy and description)."""
-    from xml.etree import ElementTree
-
-    root = ElementTree.fromstring(xml)
-    info = {k: v for k, v in root.attrib.items() if k in ("Name", "Version", "Date")}
-    entries: list[dict[str, str]] = []
-    for element in root.iter():
-        if _local(element.tag) != "Weakness":
-            continue
-        parts: dict[str, list[str]] = {
-            "description": [],
-            "extended_description": [],
-            "consequences": [],
-            "mitigations": [],
-        }
-        for child in element:
-            kind = _local(child.tag)
-            if kind == "Description":
-                parts["description"].append(_text_of(child))
-            elif kind == "Extended_Description":
-                parts["extended_description"].append(_text_of(child))
-            elif kind == "Common_Consequences":
-                for item in child:
-                    fields = {_local(f.tag): _text_of(f) for f in item}
-                    parts["consequences"].append(
-                        "; ".join(f"{k.lower()}: {v}" for k, v in fields.items() if v)
-                    )
-            elif kind == "Potential_Mitigations":
-                for item in child:
-                    fields = {_local(f.tag): _text_of(f) for f in item}
-                    parts["mitigations"].append(
-                        "; ".join(f"{k.lower()}: {v}" for k, v in fields.items() if v)
-                    )
-        entries.append(
-            {
-                "cwe_id": f"CWE-{element.attrib['ID']}",
-                "name": element.attrib.get("Name", ""),
-                **{k: "\n\n".join(v for v in values if v) for k, values in parts.items()},
-            }
-        )
-    return info, entries

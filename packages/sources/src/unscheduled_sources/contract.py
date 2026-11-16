@@ -271,6 +271,66 @@ TABLES: dict[str, Table] = {
             key=("cwe_id",),
             mode="replace",
         ),
+        # Phase 3: the text the advisory corpus is cut from. Each source has a table of its own, so
+        # every version above gets its text on the next fetch without rewriting the tables the lake
+        # and the matcher already read (an upsert table never writes a key it has seen).
+        Table(
+            "osv_text",
+            {
+                "id": STR,
+                "ecosystem": STR,
+                "modified": UTC_TS,
+                "published": UTC_TS,
+                "details": STR,
+                "references_json": STR,
+            },
+            key=("id", "ecosystem", "modified"),
+            partition="published_year",
+        ),
+        Table(
+            "ghsa_text",
+            {
+                "ghsa_id": STR,
+                "modified": UTC_TS,
+                "summary": STR,
+                "details": STR,
+                "references_json": STR,
+            },
+            key=("ghsa_id", "modified"),
+        ),
+        # A KEV entry's text is a new row only when it changes; captured_at is the fetch that first saw
+        # this text. Text from before the first capture is not in the catalog the build reads.
+        Table(
+            "kev_text",
+            {
+                "cve_id": STR,
+                "text_digest": STR,
+                "catalog_version": STR,
+                "date_added": DAY,
+                "vulnerability_name": STR,
+                "short_description": STR,
+                "required_action": STR,
+                "notes": STR,
+                "captured_at": UTC_TS,
+            },
+            key=("cve_id", "text_digest"),
+        ),
+        # One row per weakness per catalog version, the archived versions included, so a CWE entry can
+        # be read as the version known on a date.
+        Table(
+            "cwe_text",
+            {
+                "cwe_id": STR,
+                "catalog_version": STR,
+                "catalog_date": DAY,
+                "name": STR,
+                "description": STR,
+                "extended_description": STR,
+                "consequences": STR,
+                "mitigations": STR,
+            },
+            key=("cwe_id", "catalog_version"),
+        ),
         Table(
             "exploit_signals",
             {

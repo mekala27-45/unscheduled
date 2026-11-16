@@ -12,14 +12,15 @@ import httpx
 import polars as pl
 import pytest
 from unscheduled_sources import base, cvelist, gitrepo, kev, ledger, locks
+from unscheduled_sources.bronze import Bronze
 from unscheduled_sources.cna_list import build, group_for
 from unscheduled_sources.contract import frame
 from unscheduled_sources.cvelist import CveList, parse_record
-from unscheduled_sources.cwe import Cwe, parse_catalog
+from unscheduled_sources.cwe import Cwe, parse_catalog, text_of, text_rows
 from unscheduled_sources.epss import Epss, read_header, read_scores
 from unscheduled_sources.exploits import module_cves
-from unscheduled_sources.ghsa import ghsa_row
-from unscheduled_sources.kev import Kev, first_seen_from_log
+from unscheduled_sources.ghsa import ghsa_row, ghsa_text_row
+from unscheduled_sources.kev import Kev, first_seen_from_log, kev_text_rows
 from unscheduled_sources.nvd import Nvd, parse_history, source_type
 from unscheduled_sources.osv import Osv, source_db
 from unscheduled_sources.registries import Registries, gleif_matches, name_check
@@ -183,6 +184,29 @@ def test_kev_from_the_pinned_commit_with_its_first_appearance(
     assert note is not None and "only in repo 0" in note and "only on cisa.gov 0" in note
     entries = locks.load(ctx.locks_dir, "kev").entries
     assert any(e.url.endswith(f"/{commit}/known_exploited_vulnerabilities.json") for e in entries)
+    texts = _rows(ctx, "kev_text")
+    assert texts.height == 3 and texts.get_column("text_digest").n_unique() == 3
+    assert texts.get_column("captured_at").null_count() == 0
+    text = texts.filter(pl.col("cve_id") == "CVE-2021-44228").row(0, named=True)
+    assert text["short_description"] and text["date_added"] == date(2021, 12, 10)
+
+
+def test_a_kev_entry_gets_a_new_text_row_only_when_its_text_changes(tmp_path: Path) -> None:
+    catalog = json.loads(fixture_bytes("kev.json.gz", unzip=True))
+    first = kev_text_rows(catalog, WHEN)
+    edited = json.loads(json.dumps(catalog))
+    edited["catalogVersion"] = "2026.11.09"
+    edited["vulnerabilities"][0]["notes"] = "https://vendor.test/advisory-updated"
+    second = kev_text_rows(edited, datetime(2026, 11, 9, 3, 0, tzinfo=UTC))
+    assert [r["text_digest"] for r in first[1:]] == [r["text_digest"] for r in second[1:]]
+    assert first[0]["text_digest"] != second[0]["text_digest"]
+    store = Bronze(tmp_path / "bronze")
+    store.write("kev_text", frame("kev_text", first), "first")
+    store.write("kev_text", frame("kev_text", second), "second")
+    kept = store.read("kev_text")
+    assert kept.height == len(first) + 1
+    changed = kept.filter(pl.col("cve_id") == first[0]["cve_id"]).sort("captured_at")
+    assert changed.get_column("captured_at").to_list() == [WHEN, datetime(2026, 11, 9, 3, 0, tzinfo=UTC)]
 
 
 def test_the_first_appearance_is_the_oldest_adding_commit() -> None:
@@ -299,14 +323,23 @@ def test_osv_reads_each_advisory_with_its_database(tmp_root: Path) -> None:
     assert set(table.get_column("ecosystem").to_list()) == {"crates.io"}
     assert set(table.get_column("source_db").to_list()) == {"GHSA"}
     assert source_db("RUSTSEC-2024-0001") == "RUSTSEC" and source_db("MAL-2025-1") == "MAL"
+    texts = _rows(ctx, "osv_text")
+    key = ["id", "ecosystem", "modified"]
+    assert texts.select(key).sort(key).equals(table.select(key).sort(key))
+    assert texts.get_column("details").null_count() == 0
+    refs = json.loads(texts.get_column("references_json").drop_nulls()[0])
+    assert all("url" in r for r in refs)
 
 
-def test_cwe_catalog_with_parents_in_the_research_view(tmp_root: Path) -> None:
+def _cwe_fixture() -> bytes:
     import zipfile
 
     with zipfile.ZipFile(Path(__file__).parent / "fixtures" / "cwec_latest.xml.zip") as z:
-        xml = z.read(z.namelist()[0])
-    rows, info = parse_catalog(xml)
+        return z.read(z.namelist()[0])
+
+
+def test_cwe_catalog_with_parents_in_the_research_view(tmp_root: Path) -> None:
+    rows, info = parse_catalog(_cwe_fixture())
     by_id = {r["cwe_id"]: r for r in rows}
     assert by_id["CWE-79"]["abstraction"] == "Base" and "CWE-74" in by_id["CWE-79"]["parents"]
     assert by_id["CWE-16"]["abstraction"] == "Grouping"
@@ -316,8 +349,64 @@ def test_cwe_catalog_with_parents_in_the_research_view(tmp_root: Path) -> None:
         return httpx.Response(200, content=fixture_bytes("cwec_latest.xml.zip"))
 
     ctx = make_context(tmp_root, handler)
+    ctx.config["sources"]["cwe"]["archive"] = []
     base.run(Cwe(ctx))
     assert _rows(ctx, "cwe").height == len(rows)
+    texts = _rows(ctx, "cwe_text")
+    assert texts.height == sum(r["abstraction"] not in ("Category", "Grouping") for r in rows)
+    assert set(texts.get_column("catalog_version").to_list()) == {"5.0"}
+
+
+def test_the_text_of_a_weakness_keeps_every_field_and_paragraph() -> None:
+    _, rows = text_rows(_cwe_fixture())
+    xss = next(r for r in rows if r["cwe_id"] == "CWE-79")
+    assert xss["catalog_date"] == date(2026, 10, 28) and xss["description"].startswith("The product")
+    first = xss["consequences"].split("\n\n")[0]
+    assert first.startswith("scope: Access Control, Confidentiality; impact: Bypass Protection")
+    assert "strategy: Libraries or Frameworks" in xss["mitigations"]
+    from xml.etree import ElementTree
+
+    element = ElementTree.fromstring(
+        '<Extended_Description xmlns:x="http://www.w3.org/1999/xhtml">Lead  in'
+        "<x:p>First\n   paragraph.</x:p><x:ul><x:li>one</x:li><x:li>two</x:li></x:ul>tail"
+        "</Extended_Description>"
+    )
+    assert text_of(element) == "Lead in\n\nFirst paragraph.\n\none\n\ntwo\n\ntail"
+
+
+def test_an_archived_catalog_adds_its_text_and_leaves_the_snapshot(tmp_root: Path) -> None:
+    import io
+    import zipfile
+
+    latest = _cwe_fixture().decode()
+    older = (
+        latest.replace('Version="5.0"', 'Version="4.13"', 1)
+        .replace('Date="2026-10-28"', 'Date="2023-10-26"', 1)
+        .replace("The product does not neutralize", "The software does not neutralize")
+    )
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer, "w") as z:
+        z.writestr("cwec_v4.13.xml", older)
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if request.url.path.endswith("cwec_v4.13.xml.zip"):
+            return httpx.Response(200, content=buffer.getvalue())
+        return httpx.Response(200, content=fixture_bytes("cwec_latest.xml.zip"))
+
+    ctx = make_context(tmp_root, handler)
+    ctx.config["sources"]["cwe"]["archive"] = ["4.13"]
+    base.run(Cwe(ctx))
+    snapshot, info = parse_catalog(latest.encode())
+    assert _rows(ctx, "cwe").height == len(snapshot) and info["Version"] == "5.0"
+    texts = _rows(ctx, "cwe_text")
+    assert sorted(set(texts.get_column("catalog_version").to_list())) == ["4.13", "5.0"]
+    old = texts.filter((pl.col("cwe_id") == "CWE-79") & (pl.col("catalog_version") == "4.13"))
+    assert old.row(0, named=True)["description"].startswith("The software")
+    assert old.row(0, named=True)["catalog_date"] == date(2023, 10, 26)
+    notes = {r.window: r.note for r in ledger.rows(ctx.locks_dir, "cwe")}
+    assert "archived, text only" in str(notes["catalog 4.13"])
+    again = base.run(Cwe(ctx))
+    assert again.units == 0 and again.skipped == 2
 
 
 def test_a_registry_refusal_is_a_result_not_a_crash(tmp_root: Path) -> None:
@@ -346,6 +435,10 @@ def test_ghsa_and_vulnrichment_records_on_recorded_files() -> None:
     row = ghsa_row(advisory, None)
     assert row["ghsa_id"] == "GHSA-jfh8-c2jp-5v3q" and row["cve_ids"] == ["CVE-2021-44228"]
     assert row["severity"] == "CRITICAL" and "CWE-502" in row["cwe_ids"]
+    text = ghsa_text_row(advisory)
+    assert text["ghsa_id"] == row["ghsa_id"] and text["modified"] == row["modified"]
+    assert text["summary"] and text["details"]
+    assert any(r["url"].startswith("https://") for r in json.loads(text["references_json"]))
     record = json.loads(fixture_bytes("vulnrichment_CVE-2021-44228.json.gz", unzip=True))
     vr = vulnrichment_row(record, WHEN)
     assert vr["cve_id"] == "CVE-2021-44228"

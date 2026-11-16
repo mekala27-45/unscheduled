@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import csv
 import gzip
+import hashlib
 import io
 import json
 import re
@@ -19,6 +20,8 @@ from collections.abc import Iterator
 from datetime import datetime
 from pathlib import Path
 from typing import Any, ClassVar
+
+from unscheduled_core.hashing import canonical_json
 
 from unscheduled_sources import gitrepo
 from unscheduled_sources.base import Fetcher, Output, RawFile, Unit
@@ -77,6 +80,32 @@ def kev_rows(catalog: dict[str, Any], first_seen: dict[str, datetime]) -> list[d
     return rows
 
 
+TEXT_FIELDS = ("vulnerabilityName", "shortDescription", "requiredAction", "notes")
+
+
+def kev_text_rows(catalog: dict[str, Any], captured_at: datetime) -> list[dict[str, Any]]:
+    """The text of every entry, for the advisory corpus, keyed by a digest of the text: an entry gets
+    a new row only when CISA edits its name, description, required action or notes."""
+    version = str(catalog.get("catalogVersion") or "")
+    rows: list[dict[str, Any]] = []
+    for v in catalog.get("vulnerabilities") or []:
+        text = {k: v.get(k) for k in TEXT_FIELDS}
+        rows.append(
+            {
+                "cve_id": str(v["cveID"]).strip(),
+                "text_digest": hashlib.sha256(canonical_json(text).encode()).hexdigest()[:16],
+                "catalog_version": version,
+                "date_added": parse_day(v.get("dateAdded")),
+                "vulnerability_name": v.get("vulnerabilityName"),
+                "short_description": v.get("shortDescription"),
+                "required_action": v.get("requiredAction"),
+                "notes": v.get("notes"),
+                "captured_at": captured_at,
+            }
+        )
+    return rows
+
+
 def cross_check(repo: dict[str, Any], feed: dict[str, Any], csv_text: str | None) -> str:
     ours = {v["cveID"] for v in repo.get("vulnerabilities") or []}
     theirs = {v["cveID"] for v in feed.get("vulnerabilities") or []}
@@ -94,7 +123,7 @@ def cross_check(repo: dict[str, Any], feed: dict[str, Any], csv_text: str | None
 
 class Kev(Fetcher):
     source = "kev"
-    tables: ClassVar[tuple[str, ...]] = ("kev",)
+    tables: ClassVar[tuple[str, ...]] = ("kev", "kev_text")
 
     def units(self) -> Iterator[Unit]:
         head = gitrepo.remote_head(self.cfg["git"])
@@ -162,3 +191,4 @@ class Kev(Fetcher):
             main.meta["note"] = note
             self.ctx.log(f"kev cross check: {note}")
         yield "kev", frame("kev", rows)
+        yield "kev_text", frame("kev_text", kev_text_rows(catalog, main.fetched_at))

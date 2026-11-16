@@ -30,7 +30,8 @@ def test_a_reparse_of_kept_raw_files_writes_nothing(tmp_root: Path) -> None:
     base.run(Osv(ctx))
     before = _bronze_digests(ctx.bronze.root)
     again = base.reparse(Osv(make_context(tmp_root, _osv_handler)), ctx.raw_dir / "osv")
-    assert again.units == 9 and again.rows_in == 3 and again.rows_changed == 0
+    # Three advisories and the text of each.
+    assert again.units == 9 and again.rows_in == 6 and again.rows_changed == 0
     assert _bronze_digests(ctx.bronze.root) == before
 
 

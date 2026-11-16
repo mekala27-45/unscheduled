@@ -74,9 +74,14 @@ All terms below were read on 8 November 2026 (UTC) unless the entry says otherwi
   appeared, and the cisa.gov feed for a cross check (catalog version and CVE set).
 - **Licence:** the repository LICENSE: the KEV database is distributed under the Creative Commons
   0 1.0 License; information from third parties linked from the catalog may carry its own terms.
+- **Kept:** per entry its CVE, vendor and product, name, dates, ransomware use, CWEs, catalog
+  version and first appearance (kev). From Phase 3, for the advisory corpus, the text of every
+  entry: its name, short description, required action and notes (kev_text), one row per distinct
+  text with the fetch that first saw it, so an edit by CISA is a new row and the old text stays.
 - **Note:** the kev-data history starts on 27 January 2025, so first_seen_commit for an entry
   added to the catalog before then is the first commit of the repository; dateAdded is the date
-  CISA states.
+  CISA states. The text of an entry is kept from the first fetch after 16 November 2026 on; text
+  CISA wrote and edited before then is not in the catalog the build reads.
 
 ## EPSS (epss)
 
@@ -108,7 +113,10 @@ All terms below were read on 8 November 2026 (UTC) unless the entry says otherwi
   converted data, so their upstream terms (the Debian security tracker, the NVD notice above)
   apply.
 - **Kept:** per advisory its id, ecosystem, aliases, dates, summary, severity and affected blocks
-  (osv_advisories), keyed by id, ecosystem and modified, so each new version is a new row.
+  (osv_advisories), keyed by id, ecosystem and modified, so each new version is a new row. From
+  Phase 3, for the advisory corpus, the details and references of each version as written
+  (osv_text), under the same key. A version replaced before the first fetch after 16 November 2026
+  has no text: all.zip holds only the newest version of each advisory.
 
 ## GitHub Advisory Database (ghsa)
 
@@ -120,7 +128,9 @@ All terms below were read on 8 November 2026 (UTC) unless the entry says otherwi
 - **Kept:** per advisory its GHSA id, CVE aliases, dates, severity, CWEs and affected ranges, and
   first_seen_commit, the commit time of the first commit that added the file under
   github-reviewed. That time needs the whole history; its clone without blobs is several gigabytes,
-  so the log pass runs only where the disk allows it, and the ledger says when it did not.
+  so the log pass runs only where the disk allows it, and the ledger says when it did not. From
+  Phase 3, for the advisory corpus, the summary, details and references of each version as
+  written (ghsa_text), keyed by GHSA id and modified, under the same CC BY 4.0 attribution.
 
 ## CISA Vulnrichment (vulnrichment)
 
@@ -140,7 +150,12 @@ All terms below were read on 8 November 2026 (UTC) unless the entry says otherwi
   designation and the license. Copyright 2006-2026, The MITRE Corporation. CWE is a trademark of
   The MITRE Corporation.
 - **Kept:** per weakness and grouping its id, name, abstraction (or element kind) and its ChildOf
-  parents in the Research Concepts view (CWE-1000).
+  parents in the Research Concepts view (CWE-1000). From Phase 3, for the advisory corpus, the text
+  of every weakness in each catalog version: its name, description, extended description, common
+  consequences and potential mitigations (cwe_text). The versions from 4.13 (26 October 2023) to
+  4.21 are read once each from cwe.mitre.org/data/xml/cwec_v<version>.xml.zip, and every later
+  version from the daily file, so a weakness is read as the version known on a date. Any page or
+  file that shows CWE text carries the copyright designation above.
 
 ## Exploit code signals (exploits)
 

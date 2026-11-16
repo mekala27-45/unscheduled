@@ -46,9 +46,21 @@ def ghsa_row(record: dict[str, Any], first_seen: Any) -> dict[str, Any]:
     }
 
 
+def ghsa_text_row(record: dict[str, Any]) -> dict[str, Any]:
+    """The text of one version, for the advisory corpus: its summary, details and references."""
+    references = record.get("references")
+    return {
+        "ghsa_id": str(record["id"]),
+        "modified": parse_ts(record.get("modified")),
+        "summary": record.get("summary"),
+        "details": record.get("details"),
+        "references_json": canonical_json(references) if references else None,
+    }
+
+
 class Ghsa(Fetcher):
     source = "ghsa"
-    tables: ClassVar[tuple[str, ...]] = ("ghsa",)
+    tables: ClassVar[tuple[str, ...]] = ("ghsa", "ghsa_text")
 
     @property
     def repo(self) -> Path:
@@ -142,6 +154,7 @@ class Ghsa(Fetcher):
         for year in sorted(years):
             gitrepo.checkout(repo, commit, [f"/{self.cfg['path']}/{year}/"])
             rows: list[dict[str, Any]] = []
+            texts: list[dict[str, Any]] = []
             for path in years[year]:
                 try:
                     record = json.loads((repo / path).read_bytes())
@@ -150,9 +163,11 @@ class Ghsa(Fetcher):
                     continue
                 added = first.get(path)
                 rows.append(ghsa_row(record, added[1] if added else None))
+                texts.append(ghsa_text_row(record))
             total += len(rows)
             self.ctx.log(f"ghsa {year}: {len(rows)} reviewed advisories")
             yield "ghsa", frame("ghsa", rows)
+            yield "ghsa_text", frame("ghsa_text", texts)
         gitrepo.checkout(repo, commit, ["/README.md"])
         tree_raw.rows = total
         if unreadable:

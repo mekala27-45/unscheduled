@@ -47,9 +47,22 @@ def advisory_row(record: dict[str, Any], ecosystem: str) -> dict[str, Any]:
     }
 
 
+def text_row(record: dict[str, Any], ecosystem: str) -> dict[str, Any]:
+    """The text of one version, for the advisory corpus: its details and references as written."""
+    references = record.get("references")
+    return {
+        "id": str(record["id"]),
+        "ecosystem": ecosystem,
+        "modified": parse_ts(record.get("modified")),
+        "published": parse_ts(record.get("published")),
+        "details": record.get("details"),
+        "references_json": canonical_json(references) if references else None,
+    }
+
+
 class Osv(Fetcher):
     source = "osv"
-    tables: ClassVar[tuple[str, ...]] = ("osv_advisories",)
+    tables: ClassVar[tuple[str, ...]] = ("osv_advisories", "osv_text")
 
     def units(self) -> Iterator[Unit]:
         day = self.ctx.today.isoformat()
@@ -72,6 +85,7 @@ class Osv(Fetcher):
         for raw in raws:
             eco = raw.meta.get("ecosystem") or ecosystem_of(raw.unit, self.cfg["ecosystems"])
             rows: list[dict[str, Any]] = []
+            texts: list[dict[str, Any]] = []
             prefixes: Counter[str] = Counter()
             read = 0
             unreadable = 0
@@ -80,17 +94,23 @@ class Osv(Fetcher):
                     if info.is_dir() or not info.filename.endswith(".json"):
                         continue
                     try:
-                        row = advisory_row(json.loads(archive.read(info)), eco)
+                        record = json.loads(archive.read(info))
+                        row = advisory_row(record, eco)
+                        text = text_row(record, eco)
                     except (ValueError, KeyError, TypeError):
                         unreadable += 1
                         continue
                     prefixes[row["source_db"]] += 1
                     rows.append(row)
+                    texts.append(text)
                     read += 1
                     if len(rows) >= CHUNK:
                         yield "osv_advisories", frame("osv_advisories", rows)
+                        yield "osv_text", frame("osv_text", texts)
                         rows = []
+                        texts = []
             yield "osv_advisories", frame("osv_advisories", rows)
+            yield "osv_text", frame("osv_text", texts)
             raw.rows = read
             top = ", ".join(f"{k} {v}" for k, v in prefixes.most_common())
             note = f"{eco}: {read} advisories by database: {top}"
