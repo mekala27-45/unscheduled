@@ -38,15 +38,19 @@ FLOOR = "floor"
 
 @dataclass(frozen=True)
 class Prompt:
-    """A prompt as a versioned file gives it (prompts/, step 7): its text and the hash of that text."""
+    """A prompt as a versioned file under prompts/ gives it: the text the model reads, and the hash
+    of the whole file (its header included), which every call records."""
 
     id: str
     version: str
     text: str
+    file_sha256: str | None = None
+    max_tokens: int = 1200
+    context_tokens: int = 3000
 
     @property
     def sha256(self) -> str:
-        return hashlib.sha256(self.text.encode("utf-8")).hexdigest()
+        return self.file_sha256 or hashlib.sha256(self.text.encode("utf-8")).hexdigest()
 
 
 @dataclass
