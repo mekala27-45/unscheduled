@@ -266,6 +266,18 @@ class SyncResponse(Envelope):
 # Health and meta -------------------------------------------------------------------------------
 
 
+class TableRoom(StrictModel):
+    name: str
+    total_bytes: int
+    index_bytes: int
+    rows_estimate: int
+
+
+class SchemaRoom(StrictModel):
+    name: str
+    total_bytes: int
+
+
 class DatabaseFacts(StrictModel):
     configured: bool
     variable: str | None
@@ -276,10 +288,14 @@ class DatabaseFacts(StrictModel):
     server_version: str | None
     pgvector_available: bool | None
     pgvector_installed: bool | None
+    pgvector_version: str | None = None
+    pg_search_available: bool | None = None
     database_size_bytes: int | None
     storage_ceiling_mb: int
     storage_ceiling_bytes: int
     storage_share_used: float | None
+    tables: list[TableRoom] | None = None
+    schemas: list[SchemaRoom] | None = None
     error: str | None
 
 

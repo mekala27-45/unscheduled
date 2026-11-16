@@ -416,14 +416,20 @@ export interface components {
             error: string | null;
             /** Migration */
             migration: string | null;
+            /** Pg Search Available */
+            pg_search_available?: boolean | null;
             /** Pgvector Available */
             pgvector_available: boolean | null;
             /** Pgvector Installed */
             pgvector_installed: boolean | null;
+            /** Pgvector Version */
+            pgvector_version?: string | null;
             /** Reachable */
             reachable: boolean;
             /** Schema Name */
             schema_name: string;
+            /** Schemas */
+            schemas?: components["schemas"]["SchemaRoom"][] | null;
             /** Server Version */
             server_version: string | null;
             /** Storage Ceiling Bytes */
@@ -432,6 +438,8 @@ export interface components {
             storage_ceiling_mb: number;
             /** Storage Share Used */
             storage_share_used: number | null;
+            /** Tables */
+            tables?: components["schemas"]["TableRoom"][] | null;
             /** Variable */
             variable: string | null;
             /** Variables Found */
@@ -812,6 +820,13 @@ export interface components {
             /** Without Purl */
             without_purl: number;
         };
+        /** SchemaRoom */
+        SchemaRoom: {
+            /** Name */
+            name: string;
+            /** Total Bytes */
+            total_bytes: number;
+        };
         /** SyncChunk */
         SyncChunk: {
             /** Offset */
@@ -857,6 +872,17 @@ export interface components {
             storage_ceiling_bytes: number;
             /** Target */
             target: string | null;
+        };
+        /** TableRoom */
+        TableRoom: {
+            /** Index Bytes */
+            index_bytes: number;
+            /** Name */
+            name: string;
+            /** Rows Estimate */
+            rows_estimate: number;
+            /** Total Bytes */
+            total_bytes: number;
         };
         /** Timeline */
         Timeline: {

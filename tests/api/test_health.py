@@ -68,7 +68,16 @@ def test_health_reports_the_database_facts_the_probe_reads(client: TestClient) -
     assert database["server_version"] and database["server_version"][0].isdigit()
     assert isinstance(database["pgvector_available"], bool)
     assert isinstance(database["pgvector_installed"], bool)
+    assert isinstance(database["pg_search_available"], bool)
+    if database["pgvector_available"]:
+        assert database["pgvector_version"][0].isdigit()
     assert database["database_size_bytes"] > 0
+    tables = {t["name"]: t for t in database["tables"]}
+    assert {"cve", "cve_event", "prediction", "alembic_version"} <= set(tables)
+    assert all(t["total_bytes"] >= t["index_bytes"] >= 0 and t["rows_estimate"] >= 0 for t in tables.values())
+    schemas = {s["name"]: s["total_bytes"] for s in database["schemas"]}
+    assert schemas["unscheduled"] == sum(t["total_bytes"] for t in tables.values())
+    assert sum(schemas.values()) <= database["database_size_bytes"]
     assert database["storage_ceiling_bytes"] == database["storage_ceiling_mb"] * 1_000_000
     assert 0 < database["storage_share_used"] < 1
     assert database["schema_name"] == "unscheduled" and database["error"] is None

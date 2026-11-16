@@ -1,11 +1,13 @@
 """What the API can say about its own database, read on the live host and never a connection value.
 
 The probe (results/probe.json) and /health both read these: the server version, whether pgvector is
-available for Phase 3 and whether it is installed, the database size against the ceiling in
-config/budgets.yaml, the Alembic revision, and the names, only the names, of the connection
-variables the container found. An error is reported by its class name alone, because a driver
-message can carry a host name. The facts are held for thirty seconds so a status page that polls
-/health does not keep a free tier compute awake.
+available for Phase 3, the version it would install and whether it is installed, whether pg_search
+is offered, the database size against the ceiling in config/budgets.yaml, the room each table and
+each schema takes (the Phase 3 room plan reads these, since only the API can reach the database),
+the Alembic revision, and the names, only the names, of the connection variables the container
+found. An error is reported by its class name alone, because a driver message can carry a host
+name. The facts are held for thirty seconds so a status page that polls /health does not keep a free
+tier compute awake.
 """
 
 from __future__ import annotations
@@ -40,8 +42,12 @@ def read_facts(engine: sa.Engine | None, settings: Settings) -> DatabaseFacts:
         "server_version": None,
         "pgvector_available": None,
         "pgvector_installed": None,
+        "pgvector_version": None,
+        "pg_search_available": None,
         "database_size_bytes": None,
         "storage_share_used": None,
+        "tables": None,
+        "schemas": None,
     }
     if engine is None:
         return DatabaseFacts.model_validate({**base, **empty, "error": None})
@@ -54,7 +60,23 @@ def read_facts(engine: sa.Engine | None, settings: Settings) -> DatabaseFacts:
             installed = conn.execute(
                 sa.text("select exists (select 1 from pg_extension where extname = 'vector')")
             ).scalar()
+            vector_version = conn.execute(
+                sa.text("select default_version from pg_available_extensions where name = 'vector'")
+            ).scalar()
+            search = conn.execute(
+                sa.text("select exists (select 1 from pg_available_extensions where name = 'pg_search')")
+            ).scalar()
             size = int(conn.execute(sa.text("select pg_database_size(current_database())")).scalar() or 0)
+            tables = [
+                {
+                    "name": str(r.name),
+                    "total_bytes": int(r.total),
+                    "index_bytes": int(r.indexes),
+                    "rows_estimate": max(int(r.rows), 0),
+                }
+                for r in conn.execute(TABLES, {"s": settings.schema})
+            ]
+            schemas = [{"name": str(r.name), "total_bytes": int(r.total)} for r in conn.execute(SCHEMAS)]
             migration = conn.execute(
                 sa.text(f"select version_num from {qualified(settings.schema, 'alembic_version')} limit 1")
                 if _has_version_table(conn, settings.schema)
@@ -71,11 +93,35 @@ def read_facts(engine: sa.Engine | None, settings: Settings) -> DatabaseFacts:
             "server_version": str(version) if version is not None else None,
             "pgvector_available": bool(available),
             "pgvector_installed": bool(installed),
+            "pgvector_version": str(vector_version) if vector_version is not None else None,
+            "pg_search_available": bool(search),
             "database_size_bytes": size,
             "storage_share_used": round(size / ceiling, 4) if ceiling else None,
+            "tables": tables,
+            "schemas": schemas,
             "error": None,
         }
     )
+
+
+# Every table of the API schema with what it holds on disk: the total counts its indexes and its
+# TOAST, the row count is the planner estimate, so reading it costs nothing.
+TABLES = sa.text(
+    "select c.relname as name, pg_total_relation_size(c.oid) as total, "
+    "pg_indexes_size(c.oid) as indexes, c.reltuples::bigint as rows "
+    "from pg_class c join pg_namespace n on n.oid = c.relnamespace "
+    "where n.nspname = :s and c.relkind in ('r', 'p', 'm') "
+    "order by total desc, name"
+)
+# Every schema that is not the catalog, so a schema left behind by a load shows up beside the API.
+SCHEMAS = sa.text(
+    "select n.nspname as name, coalesce(sum(pg_total_relation_size(c.oid)), 0) as total "
+    "from pg_namespace n left join pg_class c on c.relnamespace = n.oid "
+    "and c.relkind in ('r', 'p', 'm') "
+    "where n.nspname not in ('pg_catalog', 'information_schema') "
+    "and n.nspname not like 'pg_toast%' and n.nspname not like 'pg_temp%' "
+    "group by n.nspname order by total desc, name"
+)
 
 
 def _has_version_table(conn: sa.Connection, schema: str) -> bool:

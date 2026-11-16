@@ -728,6 +728,17 @@
             ],
             "title": "Migration"
           },
+          "pg_search_available": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pg Search Available"
+          },
           "pgvector_available": {
             "anyOf": [
               {
@@ -750,6 +761,17 @@
             ],
             "title": "Pgvector Installed"
           },
+          "pgvector_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pgvector Version"
+          },
           "reachable": {
             "title": "Reachable",
             "type": "boolean"
@@ -757,6 +779,20 @@
           "schema_name": {
             "title": "Schema Name",
             "type": "string"
+          },
+          "schemas": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/SchemaRoom"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Schemas"
           },
           "server_version": {
             "anyOf": [
@@ -787,6 +823,20 @@
               }
             ],
             "title": "Storage Share Used"
+          },
+          "tables": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/TableRoom"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Tables"
           },
           "variable": {
             "anyOf": [
@@ -1924,6 +1974,25 @@
         "title": "SbomSummary",
         "type": "object"
       },
+      "SchemaRoom": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "total_bytes": {
+            "title": "Total Bytes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "total_bytes"
+        ],
+        "title": "SchemaRoom",
+        "type": "object"
+      },
       "SyncChunk": {
         "additionalProperties": false,
         "properties": {
@@ -2088,6 +2157,35 @@
           "checked_release"
         ],
         "title": "SyncResponse",
+        "type": "object"
+      },
+      "TableRoom": {
+        "additionalProperties": false,
+        "properties": {
+          "index_bytes": {
+            "title": "Index Bytes",
+            "type": "integer"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "rows_estimate": {
+            "title": "Rows Estimate",
+            "type": "integer"
+          },
+          "total_bytes": {
+            "title": "Total Bytes",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name",
+          "total_bytes",
+          "index_bytes",
+          "rows_estimate"
+        ],
+        "title": "TableRoom",
         "type": "object"
       },
       "Timeline": {
