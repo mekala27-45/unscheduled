@@ -47,8 +47,9 @@ the batch of 181,904 predictions with its serving measures; the load test with /
 reset and rederive, 713 of 713 values equal (pass), with the test recheck
 (pass).
 
-Next: Ajay pushes v0.2.0 from his machine, and the Phase 3 prompt is written from the repository
-as it stands then.
+Phase 2 is tagged v0.2.0 on the commit that adds the release record, pushed by Ajay from his
+machine on the evening of 15 November, New York time; release.yml reran the gates on the tag and
+published the release notes. Next: the Phase 3 prompt, written from the repository as tagged.
 
 ## Open problems
 
