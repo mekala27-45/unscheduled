@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-15",
+ "as_of": "2026-11-16",
  "values": {
   "backlog.q1.analysis_undated": {
    "value": 0,
@@ -6641,7 +6641,7 @@
     "origin": "scripts/build_manifest.py",
     "population": "the section 20 checklist",
     "source": "build",
-    "as_of": "2026-11-15",
+    "as_of": "2026-11-16",
     "note": null
    }
   },
@@ -6652,7 +6652,7 @@
     "origin": "scripts/build_manifest.py",
     "population": "the section 20 checklist",
     "source": "build",
-    "as_of": "2026-11-15",
+    "as_of": "2026-11-16",
     "note": null
    }
   },
@@ -6663,7 +6663,7 @@
     "origin": "scripts/build_manifest.py",
     "population": "the Phase 2 checklist, section 20 of the Phase 2 prompt",
     "source": "build",
-    "as_of": "2026-11-15",
+    "as_of": "2026-11-16",
     "note": null
    }
   },
@@ -6674,7 +6674,7 @@
     "origin": "scripts/build_manifest.py",
     "population": "the Phase 2 checklist, section 20 of the Phase 2 prompt",
     "source": "build",
-    "as_of": "2026-11-15",
+    "as_of": "2026-11-16",
     "note": null
    }
   },
@@ -18033,7 +18033,7 @@
     "origin": "scripts/build_manifest.py",
     "population": "the section 20 checklist",
     "source": "build",
-    "as_of": "2026-11-15",
+    "as_of": "2026-11-16",
     "note": null
    }
   },
@@ -18164,7 +18164,7 @@
     "origin": "scripts/build_manifest.py",
     "population": "the Phase 2 checklist, section 20 of the Phase 2 prompt",
     "source": "build",
-    "as_of": "2026-11-15",
+    "as_of": "2026-11-16",
     "note": null
    }
   },
