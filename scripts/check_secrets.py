@@ -7,6 +7,7 @@ report a pass when it found nothing to scan.
 
 from __future__ import annotations
 
+import gzip
 import re
 import sys
 from pathlib import Path
@@ -25,6 +26,11 @@ PATTERNS: tuple[tuple[str, re.Pattern[str]], ...] = (
     ("slack token", re.compile(r"\bxox[abposr]-[A-Za-z0-9-]{10,}\b")),
     ("private key block", re.compile(r"-----BEGIN (?:RSA |EC |OPENSSH |DSA )?PRIVATE KEY-----")),
     ("vercel or neon style api key", re.compile(r"\b(?:napi|vcp)_[A-Za-z0-9]{24,}\b")),
+    # The model providers of Phase 3, and the header a key travels in.
+    ("groq api key", re.compile(r"\bgsk_[A-Za-z0-9]{40,}\b")),
+    ("openrouter api key", re.compile(r"\bsk-or-v1-[0-9a-f]{40,}\b")),
+    ("cerebras api key", re.compile(r"\bcsk-[a-z0-9]{30,}\b")),
+    ("bearer credential", re.compile(r"(?i)\bbearer\s+[A-Za-z0-9._~+/\-]{20,}")),
     (
         "generic assigned secret",
         re.compile(
@@ -46,8 +52,12 @@ def check(root: Path, files: list[Path] | None = None) -> int:
     problems: list[str] = []
     for path in targets:
         try:
-            text = path.read_text(encoding="utf-8")
-        except (UnicodeDecodeError, OSError):
+            if path.suffix == ".gz":
+                # The recorded provider calls under tests/replays are gzipped JSON lines.
+                text = gzip.decompress(path.read_bytes()).decode("utf-8", "replace")
+            else:
+                text = path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError, EOFError, gzip.BadGzipFile):
             continue
         for name in find_secrets(text):
             problems.append(f"{path.relative_to(root)}: {name}")

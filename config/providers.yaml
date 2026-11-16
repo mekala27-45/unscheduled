@@ -5,9 +5,14 @@
 # read; the router budgets come from the probe, and from these only when a provider reports none.
 # config/budgets.yaml is a registered file, so the agent budgets live here.
 providers:
+  # budget: what the router may spend a UTC day, per model, counted in Postgres. Until the probe reads
+  # a provider's own limits with its key, the budget is half the documented daily limit, so a day of
+  # evals leaves room for the console. timeout_s: one call, before the router moves on.
   groq:
     base_url: https://api.groq.com/openai/v1
     key_env: GROQ_API_KEY
+    timeout_s: 20
+    budget: {requests_per_day: 500, tokens_per_day: 100000, from: documented}
     models:
       - openai/gpt-oss-120b
       - openai/gpt-oss-20b
@@ -25,6 +30,9 @@ providers:
   gemini:
     base_url: https://generativelanguage.googleapis.com/v1beta/openai
     key_env: GEMINI_API_KEY
+    timeout_s: 20
+    # The page lists no limit; a low one until the probe reads the real one from a call.
+    budget: {requests_per_day: 100, tokens_per_day: 100000, from: assumed}
     models: []
     documented:
       plan: the Gemini API free tier from Google AI Studio
@@ -36,6 +44,8 @@ providers:
   openrouter:
     base_url: https://openrouter.ai/api/v1
     key_env: OPENROUTER_API_KEY
+    timeout_s: 20
+    budget: {requests_per_day: 25, tokens_per_day: 100000, from: documented}
     models: []
     model_suffix: ":free"
     documented:
@@ -46,6 +56,8 @@ providers:
   cerebras:
     base_url: https://api.cerebras.ai/v1
     key_env: CEREBRAS_API_KEY
+    timeout_s: 20
+    budget: {requests_per_day: 500, tokens_per_day: 500000, from: documented}
     models:
       - gpt-oss-120b
     documented:
@@ -63,6 +75,9 @@ probe_prompt: Reply with the single word ready.
 probe_max_tokens: 5
 # The list price of every call comes from a locked copy of this book, in the mlspend schema. The
 # expanded book is the one with model token rows; the main book keeps compute and hosting only.
+# The shadow price of every free call: its tokens at the list price of this SKU of the book, the
+# cheapest token SKU it holds, so the shadow price is a lower bound on a paid call and never a bill.
+shadow_sku: gpt-6-luna
 price_book:
   repository: mekala27-45/mlspend
   path: data/prices/expanded/book.json

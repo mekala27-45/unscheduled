@@ -20,6 +20,8 @@ jobs:
       UNSCHED_REQUIRE_POSTGRES: "1"
       # The retrieval tests need pgvector with halfvec, which the step below installs.
       UNSCHED_REQUIRE_PGVECTOR: "1"
+      # CI never calls a model: a provider call is served from tests/replays or it is an error.
+      UNSCHED_REPLAY_ONLY: "1"
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:

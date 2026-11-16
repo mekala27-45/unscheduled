@@ -1,0 +1,57 @@
+name: agent-record
+
+# Records provider calls into tests/replays with the keys Ajay added as Actions secrets. Started by
+# hand. The cassettes come back as an artifact after the secrets gate has read them, and a person
+# commits them; CI only ever serves them.
+
+on:
+  workflow_dispatch:
+    inputs:
+      job:
+        description: "What to record: smoke (one patch plan from every provider and model with a key)"
+        required: true
+        default: smoke
+
+permissions: {}
+
+concurrency:
+  group: agent-record
+  cancel-in-progress: false
+
+jobs:
+  record:
+    name: record provider calls
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+    env:
+      PYTHONHASHSEED: "0"
+      JOB: ${{ inputs.job }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          python-version: "3.12"
+          enable-cache: false
+      - run: uv sync --frozen
+
+      - name: Record
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
+        run: uv run python scripts/record_replays.py "$JOB"
+
+      - name: The secrets gate over what was recorded
+        run: uv run python scripts/check_secrets.py
+
+      - name: Keep the cassettes
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: replays-${{ inputs.job }}
+          path: tests/replays
+          if-no-files-found: warn

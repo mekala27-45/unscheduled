@@ -1,0 +1,11 @@
+{
+ "file": "data/prices/book.json",
+ "sha256": "f4cb45b054f367f67ee05e1a1a5693352d054a4ef3fbe335c24fa0bff2f13fcb",
+ "bytes": 39528,
+ "source": "https://raw.githubusercontent.com/mekala27-45/mlspend/main/data/prices/expanded/book.json",
+ "repository": "mekala27-45/mlspend",
+ "path": "data/prices/expanded/book.json",
+ "book_version": "expanded-1",
+ "read_on": "2026-11-16",
+ "note": "the probe read the same digest on 16 November 2026 (results/probe.json, phase3.price_book)"
+}
