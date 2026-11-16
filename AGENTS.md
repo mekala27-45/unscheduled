@@ -54,10 +54,13 @@ batch builds on Vercel.
 
 - results/manifest.json and every rendered document (edit the template or the query instead)
 - data/locks/*.json (written by the fetchers)
-- the six registered files (config/criteria.yaml, splits.yaml, budgets.yaml, labels.yaml,
-  samples.yaml and evaluation/phase1_plan.yaml) and evaluation/registration_plan.json and
-  registration.json once hashed; `make gates` fails on any edit, and a change is a dated
-  DECISIONS.md entry with both verdicts
+- the registered files: the six of Phase 1 (config/criteria.yaml, splits.yaml, budgets.yaml,
+  labels.yaml, samples.yaml and evaluation/phase1_plan.yaml), the Phase 2 stages
+  (evaluation/phase2_plan.yaml, config/models.yaml, config/operating_points.yaml), the Phase 3 stages
+  (evaluation/phase3_plan.yaml and evaluation/redteam/cases.jsonl, written by
+  scripts/make_redteam.py; then config/retrieval.yaml and config/agent_points.yaml), and
+  evaluation/registration_plan.json and registration.json once hashed; `make gates` fails on any
+  edit, and a change is a dated DECISIONS.md entry with both verdicts
 
 ## Where to look
 

@@ -4,6 +4,8 @@
     python scripts/register.py data     # then the status vocabulary and the seeded samples
     python scripts/register.py models   # Phase 2: its plan and the pinned weights, before any model
     python scripts/register.py operating_points  # the frozen operating points, before test
+    python scripts/register.py agent    # Phase 3: its plan and the red team, before any evaluation
+    python scripts/register.py agent_points  # the retrieval and agent choices, before shadow
     python scripts/register.py --check  # fail if any registered file changed since its hash
 
 The plan stage is hashed before the lake exists and before any result is computed, and records
@@ -49,13 +51,25 @@ STAGES: dict[str, tuple[str, ...]] = {
         "config/models.yaml",
     ),
     "operating_points": ("config/operating_points.yaml",),
+    # Phase 3: the plan with the red team, before any retrieval or agent evaluation; then the choices
+    # made on development, before the shadow window is scored.
+    "agent": (
+        "evaluation/phase3_plan.yaml",
+        "evaluation/redteam/cases.jsonl",
+    ),
+    "agent_points": (
+        "config/retrieval.yaml",
+        "config/agent_points.yaml",
+    ),
 }
-LATER = ("models", "operating_points")
+LATER = ("models", "operating_points", "agent", "agent_points")
 NOTES = {
     "plan": "hashed before the lake existed and before any result was computed",
     "data": "read from the data or drawn with a fixed seed, hashed before any test CVE was scored",
     "models": "the Phase 2 plan and the pinned weights, hashed before any model saw a test CVE",
     "operating_points": "the operating points chosen on development, hashed before test was scored",
+    "agent": "the Phase 3 plan and the red team, hashed before any retrieval or agent evaluation",
+    "agent_points": "the retrieval and agent choices made on development, hashed before shadow was scored",
 }
 PLAN_OUT = Path("evaluation/registration_plan.json")
 FULL_OUT = Path("evaluation/registration.json")
@@ -158,6 +172,17 @@ def model_results(root: Path) -> list[str]:
     return sorted(p.name for p in folder.glob("*.json")) if folder.exists() else []
 
 
+def agent_results(root: Path) -> list[str]:
+    """The Phase 3 evaluation records: the retrieval eval and every agent result but the room plan,
+    which is measured before the plan and evaluates nothing."""
+    found = []
+    for folder in ("retrieval", "agent"):
+        path = root / "results" / folder
+        if path.exists():
+            found += sorted(f"{folder}/{p.name}" for p in path.glob("*.json") if p.name != "room.json")
+    return found
+
+
 def later_refusal(root: Path, name: str) -> str | None:
     """Why a later stage cannot be hashed now: what it must come before already exists."""
     found = model_results(root)
@@ -165,6 +190,11 @@ def later_refusal(root: Path, name: str) -> str | None:
         return "a model result already exists: " + ", ".join(found)
     if name == "operating_points" and "test_scoring.json" in found:
         return "test was already scored"
+    agents = agent_results(root)
+    if name == "agent" and agents:
+        return "a Phase 3 evaluation result already exists: " + ", ".join(agents)
+    if name == "agent_points" and any(a.endswith("shadow_scoring.json") for a in agents):
+        return "the shadow window was already scored"
     return None
 
 
@@ -187,6 +217,8 @@ def register_later(root: Path, name: str) -> int:
         return 1
     record = stage_record(root, name, digests(root, STAGES[name]))
     record["model_results_at_hash"] = model_results(root)
+    if name in ("agent", "agent_points"):
+        record["agent_results_at_hash"] = agent_results(root)
     full["stages"].append(record)
     write(full_path, full)
     print(f"registration: the {name} stage hashed as {str(record['hash'])[:12]}")

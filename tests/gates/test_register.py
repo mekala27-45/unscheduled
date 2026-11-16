@@ -102,3 +102,31 @@ def test_a_later_stage_is_refused_after_what_it_must_precede(tmp_path: Path) -> 
     _later(tmp_path, "operating_points")
     (results / "test_scoring.json").write_text("{}", encoding="utf-8")
     assert register.register(tmp_path, "operating_points") == 1
+
+
+def test_the_agent_stage_comes_before_any_phase_three_evaluation(tmp_path: Path) -> None:
+    """The room plan is measured before the plan and does not block it; any retrieval or agent result
+    does, and the agent choices are refused once the shadow window is scored."""
+    _tree(tmp_path)
+    assert register.register(tmp_path, "plan") == 0
+    assert register.register(tmp_path, "data") == 0
+    _later(tmp_path, "agent")
+    agent = tmp_path / "results" / "agent"
+    agent.mkdir(parents=True)
+    (agent / "room.json").write_text("{}", encoding="utf-8")
+    retrieval = tmp_path / "results" / "retrieval"
+    retrieval.mkdir(parents=True)
+    (retrieval / "eval.json").write_text("{}", encoding="utf-8")
+    assert register.register(tmp_path, "agent") == 1
+    (retrieval / "eval.json").unlink()
+    assert register.register(tmp_path, "agent") == 0
+    full = json.loads((tmp_path / register.FULL_OUT).read_text(encoding="utf-8"))
+    assert [s["stage"] for s in full["stages"]] == ["plan", "data", "agent"]
+    assert full["stages"][2]["agent_results_at_hash"] == []
+    _later(tmp_path, "agent_points")
+    (agent / "shadow_scoring.json").write_text("{}", encoding="utf-8")
+    assert register.register(tmp_path, "agent_points") == 1
+    (agent / "shadow_scoring.json").unlink()
+    assert register.register(tmp_path, "agent_points") == 0
+    (tmp_path / "evaluation" / "redteam" / "cases.jsonl").write_text("{}\n", encoding="utf-8")
+    assert register.check(tmp_path) == 1
