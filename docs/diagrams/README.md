@@ -18,6 +18,10 @@ are generated from it and are not edited by hand.
 - status.archify.json: the NVD statuses as a lifecycle and the rule that dates each one, shown on
   /docs/as-of. Each status cites its meaning in config/labels.yaml and the lines of
   dbt/models/intermediate/int_obs_status.sql that set and date it.
+- triage.archify.json: the triage graph of the agent as a workflow, its two interrupts where a run
+  waits for a person, shown on /docs/adr-0013. Each node cites the lines of
+  packages/agent/src/unscheduled_agent/graph.py that make it, and the drafting, checking and
+  waiting nodes the router, the verifier and the decision they rest on.
 
 To redraw one, from the repository root, with archify installed and Chromium on the path given in
 ARCHIFY_CHROME:
@@ -34,6 +38,8 @@ ARCHIFY_CHROME:
       web/public/diagrams/match.html --repo-root . --quality showcase --json
     node <archify>/bin/archify.mjs finalize dataflow docs/diagrams/lineage.archify.json \
       web/public/diagrams/lineage.html --repo-root . --quality showcase --json
+    node <archify>/bin/archify.mjs finalize workflow docs/diagrams/triage.archify.json \
+      web/public/diagrams/triage.html --repo-root . --quality showcase --json
 
 The finalize run validates the source, renders the page, checks it, and loads it in a real browser.
 The SVG files come from the page's Export menu (SVG, Light and SVG, Dark), saved as

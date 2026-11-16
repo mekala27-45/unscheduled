@@ -40,6 +40,8 @@ export const ROUTES = [
   "/docs/adr-0008",
   "/docs/adr-0009",
   "/docs/adr-0010",
+  "/docs/adr-0011",
+  "/docs/adr-0013",
   "/report",
   "/report/backlog",
   "/report/discovery",

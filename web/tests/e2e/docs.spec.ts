@@ -52,6 +52,7 @@ for (const [slug, name, what] of [
   ["adr-0002", "slice", "the tables of the slice"],
   ["adr-0004", "match", "a match as a sequence"],
   ["adr-0007", "sync", "the sync as a sequence"],
+  ["adr-0013", "triage", "the triage graph"],
 ] as const) {
   test(`/docs/${slug} opens with ${what}`, async ({ page }) => {
     await mockApi(page);

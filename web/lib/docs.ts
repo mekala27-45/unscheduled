@@ -95,6 +95,15 @@ export const DOC_DIAGRAMS: Record<string, DocDiagram> = {
     alt: "The sync as a sequence: lake.yml publishes the serving bundle, then calls the API, which takes an advisory lock in Neon, reads the newest serving release, downloads and checks one file, upserts one chunk and answers more, until a call answers done; a later call from the Vercel cron answers current",
     source: "docs/diagrams/sync.archify.json",
   },
+  "adr-0013": {
+    light: "/diagrams/triage-light.svg",
+    dark: "/diagrams/triage-dark.svg",
+    page: "/diagrams/triage.html",
+    width: 847,
+    height: 534,
+    alt: "The triage graph in three rows: intake, match, fill, rank and retrieve fill the state by code as known at the run time; plan drafts through the models and then the floor, verify checks every claim and approve waits for a person; for a CVE in KEV or with exploit code, warn, verify_warning and approve_warning do the same for the early warning; both end in done",
+    source: "docs/diagrams/triage.archify.json",
+  },
 };
 
 export function architectureDiagram(): DocDiagram {

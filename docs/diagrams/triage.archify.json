@@ -1,0 +1,350 @@
+{
+ "schema_version": 2,
+ "diagram_type": "workflow",
+ "meta": {
+  "title": "The triage graph",
+  "output": "web/public/diagrams/triage.html",
+  "locale": "en",
+  "quality_profile": "showcase",
+  "repository": {
+   "url": "https://github.com/mekala27-45/unscheduled",
+   "provider": "github",
+   "link_mode": "web",
+   "revision": "10deaa9cce691782a413fb1adbba786d47f38b4f"
+  }
+ },
+ "lanes": [
+  {
+   "id": "state",
+   "label": "Code fills the state"
+  },
+  {
+   "id": "plan",
+   "label": "The patch plan"
+  },
+  {
+   "id": "warning",
+   "label": "The early warning"
+  }
+ ],
+ "nodes": [
+  {
+   "id": "intake",
+   "lane": "state",
+   "col": 0,
+   "type": "backend",
+   "label": "intake",
+   "sublabel": "the CVE as known",
+   "sources": [
+    {
+     "path": "packages/agent/src/unscheduled_agent/graph.py",
+     "line": 168,
+     "end_line": 170,
+     "label": "intake"
+    }
+   ]
+  },
+  {
+   "id": "match",
+   "lane": "state",
+   "col": 1,
+   "type": "backend",
+   "label": "match",
+   "sublabel": "product and fix",
+   "sources": [
+    {
+     "path": "packages/agent/src/unscheduled_agent/graph.py",
+     "line": 172,
+     "end_line": 176,
+     "label": "match"
+    }
+   ]
+  },
+  {
+   "id": "fill",
+   "lane": "state",
+   "col": 2,
+   "type": "backend",
+   "label": "fill",
+   "sublabel": "the predictions",
+   "sources": [
+    {
+     "path": "packages/agent/src/unscheduled_agent/graph.py",
+     "line": 178,
+     "end_line": 179,
+     "label": "fill"
+    }
+   ]
+  },
+  {
+   "id": "rank",
+   "lane": "state",
+   "col": 3,
+   "type": "backend",
+   "label": "rank",
+   "sublabel": "KEV, exploits, EPSS",
+   "sources": [
+    {
+     "path": "packages/agent/src/unscheduled_agent/graph.py",
+     "line": 181,
+     "end_line": 188,
+     "label": "rank"
+    }
+   ]
+  },
+  {
+   "id": "retrieve",
+   "lane": "state",
+   "col": 4,
+   "type": "database",
+   "label": "retrieve",
+   "sublabel": "advisory chunks",
+   "sources": [
+    {
+     "path": "packages/agent/src/unscheduled_agent/graph.py",
+     "line": 190,
+     "end_line": 193,
+     "label": "retrieve"
+    }
+   ]
+  },
+  {
+   "id": "plan",
+   "lane": "plan",
+   "col": 2,
+   "type": "messagebus",
+   "label": "plan",
+   "sublabel": "models, then floor",
+   "sources": [
+    {
+     "path": "packages/agent/src/unscheduled_agent/graph.py",
+     "line": 195,
+     "end_line": 224,
+     "label": "a drafting node"
+    },
+    {
+     "path": "packages/agent/src/unscheduled_agent/router.py",
+     "line": 291,
+     "end_line": 336,
+     "label": "the router, the floor last"
+    }
+   ]
+  },
+  {
+   "id": "verify",
+   "lane": "plan",
+   "col": 3,
+   "type": "security",
+   "label": "verify",
+   "sublabel": "every claim",
+   "sources": [
+    {
+     "path": "packages/agent/src/unscheduled_agent/graph.py",
+     "line": 226,
+     "end_line": 243,
+     "label": "a checking node"
+    },
+    {
+     "path": "packages/agent/src/unscheduled_agent/verify.py",
+     "line": 203,
+     "label": "the verifier"
+    }
+   ]
+  },
+  {
+   "id": "approve",
+   "lane": "plan",
+   "col": 4,
+   "type": "security",
+   "label": "approve",
+   "sublabel": "waits for a person",
+   "tag": "interrupt",
+   "sources": [
+    {
+     "path": "packages/agent/src/unscheduled_agent/graph.py",
+     "line": 245,
+     "end_line": 258,
+     "label": "an approve node"
+    },
+    {
+     "path": "packages/agent/src/unscheduled_agent/graph.py",
+     "line": 142,
+     "end_line": 156,
+     "label": "a decision names the hash"
+    }
+   ]
+  },
+  {
+   "id": "warn",
+   "lane": "warning",
+   "col": 3,
+   "type": "messagebus",
+   "label": "warn",
+   "sublabel": "models, then floor",
+   "sources": [
+    {
+     "path": "packages/agent/src/unscheduled_agent/graph.py",
+     "line": 195,
+     "end_line": 224,
+     "label": "a drafting node"
+    }
+   ]
+  },
+  {
+   "id": "verify_warning",
+   "lane": "warning",
+   "col": 4,
+   "type": "security",
+   "label": "verify_warning",
+   "sublabel": "every claim",
+   "sources": [
+    {
+     "path": "packages/agent/src/unscheduled_agent/graph.py",
+     "line": 226,
+     "end_line": 243,
+     "label": "a checking node"
+    }
+   ]
+  },
+  {
+   "id": "approve_warning",
+   "lane": "warning",
+   "col": 5,
+   "type": "security",
+   "label": "approve_warning",
+   "sublabel": "waits for a person",
+   "tag": "interrupt",
+   "sources": [
+    {
+     "path": "packages/agent/src/unscheduled_agent/graph.py",
+     "line": 245,
+     "end_line": 258,
+     "label": "an approve node"
+    }
+   ]
+  },
+  {
+   "id": "done",
+   "lane": "plan",
+   "col": 5,
+   "type": "backend",
+   "label": "done",
+   "sublabel": "drafts on record",
+   "sources": [
+    {
+     "path": "packages/agent/src/unscheduled_agent/graph.py",
+     "line": 263,
+     "end_line": 264,
+     "label": "done"
+    }
+   ]
+  }
+ ],
+ "edges": [
+  {
+   "id": "intake-match",
+   "from": "intake",
+   "to": "match"
+  },
+  {
+   "id": "match-fill",
+   "from": "match",
+   "to": "fill"
+  },
+  {
+   "id": "fill-rank",
+   "from": "fill",
+   "to": "rank"
+  },
+  {
+   "id": "rank-retrieve",
+   "from": "rank",
+   "to": "retrieve"
+  },
+  {
+   "id": "retrieve-plan",
+   "from": "retrieve",
+   "to": "plan",
+   "label": "typed state",
+   "variant": "emphasis"
+  },
+  {
+   "id": "plan-verify",
+   "from": "plan",
+   "to": "verify",
+   "label": "draft"
+  },
+  {
+   "id": "verify-approve",
+   "from": "verify",
+   "to": "approve",
+   "label": "hash"
+  },
+  {
+   "id": "approve-warn",
+   "from": "approve",
+   "to": "warn",
+   "label": "KEV or exploit",
+   "variant": "emphasis",
+   "role": "branch"
+  },
+  {
+   "id": "approve-done",
+   "from": "approve",
+   "to": "done",
+   "label": "no evidence",
+   "role": "branch"
+  },
+  {
+   "id": "warn-verify",
+   "from": "warn",
+   "to": "verify_warning",
+   "label": "draft"
+  },
+  {
+   "id": "verify-approve-warning",
+   "from": "verify_warning",
+   "to": "approve_warning",
+   "label": "hash"
+  },
+  {
+   "id": "approve-warning-done",
+   "from": "approve_warning",
+   "to": "done"
+  }
+ ],
+ "cards": [
+  {
+   "dot": "rose",
+   "title": "Nothing acts",
+   "items": [
+    "A decision resumes a run only when it names the hash of the draft it was shown",
+    "No node applies a plan or files a warning; an approved draft is a record a person acts on"
+   ]
+  },
+  {
+   "dot": "violet",
+   "title": "Checkpoints in Postgres",
+   "items": [
+    "Every step is a checkpoint; a run waits at an interrupt with its checkpoints in Neon",
+    "A decided run keeps its latest checkpoint, and a run replays or forks from any of them"
+   ]
+  },
+  {
+   "dot": "cyan",
+   "title": "As known then",
+   "items": [
+    "Every source answers as of the run time, never later",
+    "Advisory text is fenced as untrusted, with its id and the time it became known"
+   ]
+  },
+  {
+   "dot": "amber",
+   "title": "The floor",
+   "items": [
+    "Past a budget, the deadline, a refusal or two schema failures, the floor drafts from templates",
+    "A model draft the verifier blocks is replaced by the floor's"
+   ]
+  }
+ ]
+}
