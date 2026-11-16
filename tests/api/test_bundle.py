@@ -92,8 +92,19 @@ def test_lists_arrive_in_any_of_the_shapes_a_writer_uses() -> None:
 def test_an_event_id_is_a_digest_of_its_content() -> None:
     raw = rows("cve_event")[2]
     one, two = bnd.event_row(raw), bnd.event_row(dict(raw))
-    assert one["event_id"] == two["event_id"] and len(one["event_id"]) == 16
+    assert one["event_id"] == two["event_id"] and isinstance(one["event_id"], int)
+    assert -(2**63) <= one["event_id"] < 2**63
+    assert len(bnd.event_hex(one["event_id"])) == 16
     assert bnd.event_row(dict(raw, kind="other"))["event_id"] != one["event_id"]
+
+
+def test_the_event_key_keeps_the_order_of_the_hex_ids() -> None:
+    ids = ["0000000000000000", "00000000000000ff", "7fffffffffffffff", "8000000000000000", "ffffffffffffffff"]
+    keys = [bnd.event_key(i) for i in ids]
+    assert keys == sorted(keys) and keys[0] == -(2**63) and keys[-1] == 2**63 - 1
+    assert [bnd.event_hex(k) for k in keys] == ids
+    with pytest.raises(bnd.BundleError, match="16"):
+        bnd.event_key("abc")
 
 
 def test_a_finding_names_every_cve_it_carries() -> None:

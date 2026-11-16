@@ -177,6 +177,24 @@ PREDICTION_COLUMNS: tuple[Column, ...] = (
 )
 
 EVENT_ID_LENGTH = 16
+# The 16 hex characters of an event id are 64 bits; the table keeps them as one bigint, shifted by
+# 2**63 so that the signed order of the numbers is the order of the hex strings, which the timeline
+# and the as-of view sort by. Answers carry the hex string, so the contract does not change. Stored
+# as text the key took 22 MB of the table and a 69 MB index; as a bigint, 10 MB and 29 MB (ADR 0011).
+EVENT_KEY_OFFSET = 1 << 63
+
+
+def event_key(event_id: str) -> int:
+    """The bigint the table keys an event by, from its 16 hex characters."""
+    if len(event_id) != EVENT_ID_LENGTH:
+        raise BundleError(f"an event id has {len(event_id)} characters, not {EVENT_ID_LENGTH}")
+    return int(event_id, 16) - EVENT_KEY_OFFSET
+
+
+def event_hex(key: int) -> str:
+    """The 16 hex characters of an event, from the bigint the table keys it by."""
+    return format(int(key) + EVENT_KEY_OFFSET, f"0{EVENT_ID_LENGTH}x")
+
 
 # The fields of a CVE record the API serves with a source and a known_from each.
 CVE_FIELDS: tuple[str, ...] = tuple(
@@ -420,8 +438,8 @@ def event_row(raw: Mapping[str, Any]) -> dict[str, Any]:
         "detail": jsonable(detail),
     }
     # 16 hex characters, 64 bits: the key of a few million events without a collision in practice,
-    # and half the size of the primary key index of 32.
-    out["event_id"] = row_digest(out)[:EVENT_ID_LENGTH]
+    # kept in the table as one bigint (event_key).
+    out["event_id"] = event_key(row_digest(out)[:EVENT_ID_LENGTH])
     return out
 
 

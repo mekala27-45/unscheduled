@@ -66,6 +66,33 @@ def test_a_full_load_reports_every_step_and_ends_done(
     assert statuses[0] == "started" and statuses[-1] == "done"
 
 
+def test_a_load_rebuilds_an_event_key_index_it_left_oversized(
+    client: TestClient,
+    github: FakeGitHub,
+    bundle_dir: Path,
+    postgres_url: str,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    """A full load inserts the event keys in random order; the end of the load rebuilds the primary
+    key when it is much larger than a fresh build would be, and says so in the loaded record. Small
+    tables are left alone at the default floor of 8 MB, so the floor is lowered here."""
+    from unscheduled_api import sync as sync_module
+
+    github.publish(bundle_dir, TAG, PUBLISHED_AT)
+    sync_until_done(client)
+    assert setting(postgres_url, "data_version")["rebuilt_indexes"] == {}
+    monkeypatch.setattr(sync_module, "REBUILD_MIN_BYTES", 0)
+    with psycopg.connect(plain(postgres_url), autocommit=True) as conn:
+        conn.execute(
+            "delete from \"unscheduled\".\"settings\" where key in ('data_version', 'release_check')"
+        )
+    sync_until_done(client)
+    rebuilt = setting(postgres_url, "data_version")["rebuilt_indexes"]
+    assert set(rebuilt) == {"cve_event_pkey"}
+    assert rebuilt["cve_event_pkey"]["after_bytes"] <= rebuilt["cve_event_pkey"]["before_bytes"]
+    assert count(postgres_url, "cve_event") == len(rows("cve_event"))
+
+
 def test_a_call_when_current_is_a_no_op_that_asks_github_nothing(
     loaded: TestClient, github: FakeGitHub, clock: Clock
 ) -> None:

@@ -84,7 +84,8 @@ sa.Index("ix_cve_cwes", cve.c.cwes, postgresql_using="gin")
 cve_event = sa.Table(
     "cve_event",
     metadata,
-    sa.Column("event_id", sa.Text, primary_key=True),
+    # 64 bits of the event digest as a bigint (bundle.event_key); answers carry the hex string.
+    sa.Column("event_id", sa.BigInteger, primary_key=True, autoincrement=False),
     sa.Column("cve_id", sa.Text, nullable=False),
     sa.Column("at", sa.DateTime(timezone=True), nullable=False),
     sa.Column("kind", sa.Text, nullable=False),

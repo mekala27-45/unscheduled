@@ -123,6 +123,11 @@ DB_COLUMNS: dict[str, tuple[str, ...]] = {
 JSON_COLUMNS = frozenset({"provenance", "detail", "body"})
 # cve_event rows are immutable: their key is their digest.
 DIGESTED = frozenset({"cve", "product", "finding", "prediction"})
+# An index the end of a load rebuilds when it is REBUILD_RATIO times the size of a fresh build, which
+# takes about row_bytes a row: a btree entry of a bigint with its item pointer at the default fill.
+REBUILT: dict[str, tuple[str, int]] = {"cve_event": ("cve_event_pkey", 23)}
+REBUILD_RATIO = 1.15
+REBUILD_MIN_BYTES = 8_000_000
 
 SyncStatus = Literal["current", "more", "done"]
 
@@ -604,7 +609,8 @@ class Sync:
     def _sweep(self, conn: sa.Connection, table: str, path: Path) -> int:
         """Delete the rows of a table whose key the new file does not hold. Returns how many went."""
         key = bnd.TABLES[table].key
-        conn.execute(sa.text("create temp table sync_keys (key text not null) on commit drop"))
+        kind = "bigint" if table == "cve_event" else "text"
+        conn.execute(sa.text(f"create temp table sync_keys (key {kind} not null) on commit drop"))
         raw = conn.connection.driver_connection
         assert raw is not None
         with raw.cursor() as cur, cur.copy("copy pg_temp.sync_keys (key) from stdin") as copy:
@@ -705,6 +711,7 @@ class Sync:
         }
         for table in bnd.TABLES:
             conn.execute(sa.text(f"analyze {self.t(table)}"))
+        rebuilt = self._rebuild(conn, counts)
         conn.execute(sa.text(f"delete from {self.t('client_budget')} where day < current_date - 31"))
         conn.execute(
             sa.text(f"delete from {self.t('ops_run')} where started_at < now() - interval '90 days'")
@@ -722,9 +729,26 @@ class Sync:
             "absent_columns": cursor.get("absent_columns", {}),
             "counts": counts,
             "freshness": freshness,
+            "rebuilt_indexes": rebuilt,
             "loaded_at": _now_iso(now),
             "started_at": cursor.get("started_at"),
         }
+
+    def _rebuild(self, conn: sa.Connection, counts: dict[str, int]) -> dict[str, dict[str, int]]:
+        """Rebuild an index a load left much larger than a fresh build. The event key is a digest, so
+        a full load of the events inserts it in random order and leaves its primary key about a third
+        larger than a rebuild would (38 MB against 29 MB on the replica, ADR 0011)."""
+        out: dict[str, dict[str, int]] = {}
+        for table, (index, row_bytes) in REBUILT.items():
+            name = f'"{self.schema}".{index}'
+            size = int(conn.execute(sa.text(f"select pg_relation_size('{name}')")).scalar() or 0)
+            fresh = counts.get(table, 0) * row_bytes
+            if size < REBUILD_MIN_BYTES or size <= REBUILD_RATIO * fresh:
+                continue
+            conn.execute(sa.text(f"reindex index {name}"))
+            after = int(conn.execute(sa.text(f"select pg_relation_size('{name}')")).scalar() or 0)
+            out[index] = {"before_bytes": size, "after_bytes": after}
+        return out
 
     # Bookkeeping -------------------------------------------------------------------------------
 

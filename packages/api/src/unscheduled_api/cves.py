@@ -22,7 +22,7 @@ from unscheduled_core.hashing import sha256_json
 
 from unscheduled_api import db, predictions
 from unscheduled_api.asof import Event, Fact, current_facts, end_of_day, facts_as_of
-from unscheduled_api.bundle import jsonable
+from unscheduled_api.bundle import event_hex, jsonable
 from unscheduled_api.problems import ProblemError
 from unscheduled_api.schemas import CvePage, CveRecord, CveSummary, FieldValue, Timeline, TimelineEvent
 
@@ -76,7 +76,13 @@ def field_events(conn: sa.Connection, cve_ids: Sequence[str]) -> dict[str, list[
     out: dict[str, list[Event]] = {}
     for r in rows:
         out.setdefault(str(r.cve_id), []).append(
-            Event(event_id=str(r.event_id), at=r.at, kind=str(r.kind), source=r.source, detail=dict(r.detail))
+            Event(
+                event_id=event_hex(r.event_id),
+                at=r.at,
+                kind=str(r.kind),
+                source=r.source,
+                detail=dict(r.detail),
+            )
         )
     return out
 
@@ -274,7 +280,11 @@ def timeline(conn: sa.Connection, cve_id: str, *, statement: str, data_version: 
         published=published[0],
         events=[
             TimelineEvent(
-                event_id=str(r.event_id), at=r.at, kind=str(r.kind), source=r.source, detail=dict(r.detail)
+                event_id=event_hex(r.event_id),
+                at=r.at,
+                kind=str(r.kind),
+                source=r.source,
+                detail=dict(r.detail),
             )
             for r in rows
         ],
