@@ -68,10 +68,6 @@ pins (AGENTS.md).
 - Under load the prediction route waits: with 5 clients at once its 95th percentile was
   1,189 ms, against 376 ms for one client alone, and scoring is a few milliseconds of each call
   (ADR 0008). The API records no server timing yet, so where the calls wait is open for Phase 4.
-- Neon holds 94.1 percent of its 800 MB ceiling with the predictions loaded, and the lake
-  grows every day. The sync refuses a chunk that would pass the ceiling and writes nothing, so the
-  site stays up on old data while nothing new arrives. Step 2 measures the room and frees it before
-  anything new loads (ADR 0011).
 - No model provider has a key yet: the probe found none of GROQ_API_KEY, GEMINI_API_KEY, OPENROUTER_API_KEY, CEREBRAS_API_KEY.
   The agent runs on its no model floor until Ajay adds at least GROQ_API_KEY and GEMINI_API_KEY as
   Actions secrets and Vercel variables (Part 4 of the Phase 3 prompt); nobody types a key here.

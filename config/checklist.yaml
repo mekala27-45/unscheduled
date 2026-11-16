@@ -198,7 +198,7 @@ phase3:
   - n: 2
     text: "The room plan measured before any load (ADR 0011); Neon under its ceiling with the daily growth covered to 13 December"
     evidence:
-      - results/agent/room.json
+      - {file: results/agent/room.json, equals: {neon_after/result: pass}}
       - docs/adr/0011-the-room-in-neon.md
   - n: 3
     text: "The Phase 3 plan and the red team hashed as the agent stage before any evaluation"

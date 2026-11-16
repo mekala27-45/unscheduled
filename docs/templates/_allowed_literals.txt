@@ -110,3 +110,12 @@ Step 2
 Part 4
 unscheduled-phase-3-prompt.md
 13 December
+0011. The room in Neon
+migration 0004
+16 November 2026
+1 GB a project
+64
+16 hex characters
+halfvec(384)
+step 4
+step 5

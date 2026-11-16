@@ -34,7 +34,7 @@
     "population": "the fixture run after keep_latest",
     "source": "build"
    },
-   "value": 9.8
+   "value": 10.7
   },
   "room.checkpoint_kb_waiting": {
    "fmt": "float1",
@@ -221,7 +221,7 @@
     "population": "the ceiling less the projection for 2026-12-13",
     "source": "build"
    },
-   "value": 46.3
+   "value": 45.9
   },
   "room.neon.ceiling_mb": {
    "fmt": "float1",
@@ -229,7 +229,7 @@
     "as_of": "2026-11-16",
     "note": null,
     "origin": "scripts/measure_room.py",
-    "population": "Neon as the API read it at 2026-11-16T02:52:46Z, holding serving-202611152200+f89ae3f7e825",
+    "population": "Neon as the API read it at 2026-11-16T02:59:27Z, holding serving-202611152200+f89ae3f7e825",
     "source": "live"
    },
    "value": 800.0
@@ -240,7 +240,7 @@
     "as_of": "2026-11-16",
     "note": null,
     "origin": "scripts/measure_room.py",
-    "population": "Neon as the API read it at 2026-11-16T02:52:46Z, holding serving-202611152200+f89ae3f7e825",
+    "population": "Neon as the API read it at 2026-11-16T02:59:27Z, holding serving-202611152200+f89ae3f7e825",
     "source": "live"
    },
    "value": 371.6
@@ -251,7 +251,7 @@
     "as_of": "2026-11-16",
     "note": null,
     "origin": "scripts/measure_room.py",
-    "population": "Neon as the API read it at 2026-11-16T02:52:46Z, holding serving-202611152200+f89ae3f7e825",
+    "population": "Neon as the API read it at 2026-11-16T02:59:27Z, holding serving-202611152200+f89ae3f7e825",
     "source": "live"
    },
    "value": 304.2
@@ -262,7 +262,7 @@
     "as_of": "2026-11-16",
     "note": null,
     "origin": "scripts/measure_room.py",
-    "population": "Neon as the API read it at 2026-11-16T02:52:46Z, holding serving-202611152200+f89ae3f7e825",
+    "population": "Neon as the API read it at 2026-11-16T02:59:27Z, holding serving-202611152200+f89ae3f7e825",
     "source": "live"
    },
    "value": 65.6
@@ -273,7 +273,7 @@
     "as_of": "2026-11-16",
     "note": null,
     "origin": "scripts/measure_room.py",
-    "population": "Neon as the API read it at 2026-11-16T02:52:46Z, holding serving-202611152200+f89ae3f7e825",
+    "population": "Neon as the API read it at 2026-11-16T02:59:27Z, holding serving-202611152200+f89ae3f7e825",
     "source": "live"
    },
    "value": 0.9408
@@ -284,7 +284,7 @@
     "as_of": "2026-11-16",
     "note": null,
     "origin": "scripts/measure_room.py",
-    "population": "Neon as the API read it at 2026-11-16T02:52:46Z, holding serving-202611152200+f89ae3f7e825",
+    "population": "Neon as the API read it at 2026-11-16T02:59:27Z, holding serving-202611152200+f89ae3f7e825",
     "source": "live"
    },
    "value": 752.7
@@ -298,7 +298,7 @@
     "population": "the database on 2026-12-13 under the plan",
     "source": "build"
    },
-   "value": 753.7
+   "value": 754.1
   },
   "room.projected_share": {
    "fmt": "pct1",
@@ -309,7 +309,7 @@
     "population": "the database on 2026-12-13 under the plan",
     "source": "build"
    },
-   "value": 0.9422
+   "value": 0.9427
   },
   "room.rebuilt_pk_mb": {
    "fmt": "float1",
@@ -353,7 +353,7 @@
     "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
     "source": "build"
    },
-   "value": 33.7
+   "value": 33.4
   },
   "room.replica.cve_mb": {
    "fmt": "float1",
@@ -364,7 +364,7 @@
     "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
     "source": "build"
    },
-   "value": 288.7
+   "value": 288.3
   },
   "room.replica.event_rows": {
    "fmt": "int",
@@ -430,7 +430,7 @@
     "population": "the run store at its caps",
     "source": "build"
    },
-   "value": 18.8
+   "value": 19.2
   },
   "room.run_waiting_cap": {
    "fmt": "int",

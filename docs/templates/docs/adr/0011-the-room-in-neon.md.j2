@@ -1,0 +1,103 @@
+{% set room = data("results/agent/room.json") if tracked("results/agent/room.json") else none %}
+# 0011. The room in Neon is measured before it is spent
+
+Status: accepted, 16 November 2026
+
+## Context
+
+Phase 3 adds an advisory corpus with its vectors, a store of triage runs and the checkpoints of the
+graph, and the API serves all of it from the same Neon database as everything else. The plan limit
+is {{ room.plan_limit if room else "1 GB a project" }}, and this build keeps a ceiling of
+{{ data("config/budgets.yaml").neon.storage_ceiling_mb }} MB (config/budgets.yaml). The sync refuses a chunk that would pass the ceiling and writes nothing, so a
+full database keeps the site up on old data while nothing new arrives.
+{% if room and has("room.neon.size_mb") %}
+
+When the API read the database at {{ room.neon_now.read_at }} it held {{ v("room.neon.size_mb") }} MB, {{ v("room.neon.share") }} of the
+ceiling: the event table {{ v("room.neon.cve_event_mb") }} MB, the CVE table {{ v("room.neon.cve_mb") }} MB and the predictions
+{{ v("room.neon.prediction_mb") }} MB, almost all of it.
+{% endif %}
+
+## What was measured
+
+Only the API reaches Neon, so nothing was tried there. scripts/measure_room.py measures on a Postgres
+with pgvector that is not Neon (results/agent/room.json){% if room %}: Postgres {{ room.replica.server_version.split(" ")[0] }} with pgvector {{ room.replica.pgvector }}, the
+pgvector Neon offers. Neon runs Postgres {{ room.neon_now.server_version.split(" ")[0] }}; the prediction table, which no sync has updated, takes the
+same room in both{% endif %}.
+{% if has("room.replica.cve_mb") %}
+
+- **The serving tables, fresh.** The newest serving bundle loaded into an empty schema by the sync's
+  own loader, with the event key this decision gives it: the CVE table takes {{ v("room.replica.cve_mb") }} MB against
+  {{ v("room.neon.cve_mb") }} MB in Neon, so its updates leave little behind; the predictions take the same {{ v("room.replica.prediction_mb") }} MB. The
+  event table, {{ v("room.replica.event_rows") }} rows, takes {{ v("room.replica.cve_event_mb") }} MB, of which {{ v("room.replica.cve_event_index_mb") }} MB are its two indexes.
+- **A day of the lake.** Two daily bundles compared row by row with the sync's own digests,
+  {{ v("room.churn.days") }} days apart: {{ v("room.churn.cve_new") }} new CVEs, {{ v("room.churn.cve_changed") }} changed CVE rows and {{ v("room.churn.events_new") }} new events, so the
+  new rows add {{ v("room.growth_mb_per_day") }} MB a day and the changes leave dead rows behind for autovacuum.
+- **The corpus.** {{ v("room.sample.chunks") }} chunks cut from the GitHub advisories that name a CVE the six stand in
+  products carry, from the KEV catalog and from the CWE catalog, stored the way step 4 will store
+  them, with a full text index, a halfvec(384) column and an HNSW index: {{ v("room.sample.bytes_per_chunk") }} bytes a chunk with its
+  indexes. The vectors are random unit vectors from a fixed seed, since the size of a halfvec column
+  and of an HNSW graph depends on how many vectors there are, not on their values.
+- **The checkpoints.** A fixture graph with the node names of the triage graph and the planned state,
+  run to its approval interrupt with the Postgres checkpointer: {{ v("room.checkpoint_kb_waiting") }} KB a run while it waits for a
+  person, {{ v("room.checkpoint_kb_kept") }} KB once only its latest checkpoint is kept.
+{% endif %}
+
+## Decision
+
+- **Events are keyed by a bigint** (migration 0004). The 16 hex characters of an event id are 64
+  bits; the table keeps them as one number, shifted so that the order of the numbers is the order of
+  the hex strings, and every answer still carries the hex string.{% if has("room.freed_mb") %} That frees {{ v("room.freed_mb") }} MB. Rewriting the
+  table in place would need a second copy of it, and the plan has no room for one, so the migration
+  empties the table and the sync loads it again from the serving release. A load inserts the keys
+  in random order and leaves the primary key at {{ v("room.unbuilt_pk_mb") }} MB, so the end of a load rebuilds an index it
+  left much larger than a fresh build: {{ v("room.rebuilt_pk_mb") }} MB.{% endif %}
+
+- **The CVE table is vacuumed sooner.** Autovacuum reclaims its dead rows once they pass two percent
+  of the table rather than a fifth{% if has("room.bloat_bound_mb") %}, which bounds the room they hold to {{ v("room.bloat_bound_mb") }} MB{% endif %}.
+- **Neon holds a scoped corpus.** {% if has("room.corpus_advisories") %}The {{ v("room.corpus_advisories") }} advisories that name a CVE the six stand in products
+  carry, the {{ v("room.corpus_kev") }} KEV entries and the {{ v("room.corpus_cwe") }} CWE weaknesses: {{ v("room.corpus_chunks") }} chunks in {{ v("room.corpus_mb") }} MB. {% endif %}The
+  short sections of one document share a chunk, so a KEV entry is one chunk and not four; the links
+  of an advisory and the notes of a KEV entry are kept with the document and not chunked; and the
+  full text index is built on an expression rather than a stored column. The whole corpus, for the
+  retrieval and agent evals, lives in Actions, in a Postgres that runs beside the job.
+- **The run store is capped.**{% if has("room.run_waiting_cap") %} At most {{ v("room.run_waiting_cap") }} runs wait for a person with every checkpoint; a decided
+  run keeps only its latest checkpoint, for at most {{ v("room.run_decided_cap") }} runs, and after that only its record in
+  the run tables: {{ v("room.run_store_mb") }} MB at the caps.{% endif %}
+
+
+## The projection
+{% if has("room.projected_mb") %}
+
+Once the event table is loaded again, Neon holds {{ v("room.after_mb") }} MB. With the new rows of every day to
+13 December, the dead rows at their bound, the corpus and the run store at its caps, the database
+would hold {{ v("room.projected_mb") }} MB on 13 December, {{ v("room.projected_share") }} of the ceiling and {{ v("room.margin_mb") }} MB under it ({{ v("room.result") }}).
+{% endif %}
+
+## Consequences
+
+- From the deploy of migration 0004 until the sync has loaded the events again, the timeline and the
+  as-of view of a CVE have no events. The reload is started by calling /internal/sync, which needs no
+  input, until it answers done.
+- The daily probe reads the room through /health, table by table, so the growth is read from one
+  probe to the next rather than assumed.
+{% if has("room.lever.predictions_mb") %}
+- Two more trims are measured and kept for when the readings ask for them, each a dated decision:
+  serving predictions only for CVEs without an NVD analysis and the evaluation sample frees the rows
+  of {{ v("room.lever.predictions_rows") }} predictions ({{ v("room.lever.predictions_mb") }} MB before their index), and keeping no history for CVEs published
+  before 2024 that no stand in product carries and KEV does not list frees {{ v("room.lever.events_rows") }} events
+  ({{ v("room.lever.events_mb") }} MB before their indexes).
+{% endif %}
+- A change to what the row digest of a CVE covers rewrites every row of the CVE table at once, which
+  the room cannot hold; such a change ships with a load that vacuums between chunks.
+- The ceiling stays where it is. Raising it is a dated change request with the plan limit it rests
+  on, never an edit of config/budgets.yaml, which the plan stage of the registration holds.
+
+## Alternatives
+
+- **Raise the ceiling.** It would buy room without a measurement of where the room goes, and the
+  plan has enough once the event key is a number.
+- **Keep the vectors out of Postgres.** A file index in the bundle would hold them in the API's memory
+  and keep the dense search out of SQL; step 5 compares the two on the same vectors, and the room
+  plan does not depend on the answer.
+- **Trim the history of old CVEs now.** It frees the most, but it takes the timeline away from CVEs
+  a person may still look up; it waits until a reading asks for it.

@@ -1,11 +1,13 @@
 {
- "measured_at": "2026-11-16T02:54:33Z",
+ "measured_at": "2026-11-16T03:01:17Z",
  "ceiling_bytes": 800000000,
  "plan_limit": "1 GB a project on the Neon free plan (its FAQ, updated 3 November 2026)",
  "neon_now": {
-  "read_at": "2026-11-16T02:52:46Z",
+  "read_at": "2026-11-16T02:59:27Z",
   "data_version": "serving-202611152200+f89ae3f7e825",
   "migration": "0003",
+  "server_version": "18.7 (a21afb5)",
+  "pgvector_version": "0.8.7",
   "database_size_bytes": 752672768,
   "storage_ceiling_bytes": 800000000,
   "storage_share_used": 0.9408,
@@ -85,9 +87,9 @@
     "rows": 1292258
    },
    "cve": {
-    "total_bytes": 288710656,
-    "index_bytes": 33652736,
-    "rows": 260575
+    "total_bytes": 288317440,
+    "index_bytes": 33357824,
+    "rows": 260535
    },
    "prediction": {
     "total_bytes": 65609728,
@@ -258,7 +260,7 @@
   },
   "keep_latest": {
    "runs": 10,
-   "bytes_per_run": 9830
+   "bytes_per_run": 10650
   },
   "deleted": {
    "checkpoints_left": 10,
@@ -269,12 +271,12 @@
  "projection": {
   "freed_by_event_key_bytes": 52166656,
   "after_plan_bytes": 700506112,
-  "growth_bytes_per_day": 286595,
+  "growth_bytes_per_day": 286467,
   "days": 27,
   "until": "2026-12-13",
-  "growth_bytes": 7738067,
-  "dead_rows_bound": 5262,
-  "bloat_bound_bytes": 5829612,
+  "growth_bytes": 7734596,
+  "dead_rows_bound": 5261,
+  "bloat_bound_bytes": 5821681,
   "corpus_chunks": {
    "ghsa": 1856,
    "kev": 1781,
@@ -285,11 +287,11 @@
    "waiting_cap": 100,
    "decided_cap": 500,
    "record_bytes_per_run": 12000,
-   "bytes": 18832400
+   "bytes": 19242400
   },
-  "projected_bytes": 753726169,
-  "projected_share": 0.9422,
-  "margin_bytes": 46273831
+  "projected_bytes": 754124767,
+  "projected_share": 0.9427,
+  "margin_bytes": 45875233
  },
  "sources": {
   "advisories": "the 473 GitHub reviewed advisories that name a CVE the six stand in products carry, from github/advisory-database at 0c2374cd80aeb7a98bd3cb28cb775b74c86abc0a",

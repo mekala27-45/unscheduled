@@ -12562,6 +12562,479 @@
     "as_of": "2026-11-13",
     "note": null
    }
+  },
+  "room.after_mb": {
+   "value": 700.5,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "Neon once the event table is loaded again",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.bloat_bound_mb": {
+   "value": 5.8,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "dead CVE rows autovacuum lets wait at the scale of migration 0004",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.checkpoint_kb_kept": {
+   "value": 10.7,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the fixture run after keep_latest",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.checkpoint_kb_waiting": {
+   "value": 67.2,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the fixture run waiting for a person",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.churn.cve_changed": {
+   "value": 3345,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "serving-202611141230 to serving-202611152200",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.churn.cve_new": {
+   "value": 134,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "serving-202611141230 to serving-202611152200",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.churn.days": {
+   "value": 1.396,
+   "fmt": "float2",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "serving-202611141230 to serving-202611152200",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.churn.events_new": {
+   "value": 1018,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "serving-202611141230 to serving-202611152200",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.corpus_advisories": {
+   "value": 602,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "advisories that name a CVE the six products carry",
+    "source": "lake",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.corpus_chunks": {
+   "value": 4828,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the Neon scope of the corpus",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.corpus_cwe": {
+   "value": 984,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the CWE catalog",
+    "source": "source:cwe",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.corpus_kev": {
+   "value": 1781,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the KEV catalog",
+    "source": "source:kev",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.corpus_mb": {
+   "value": 20.8,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the Neon scope of the corpus",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.freed_mb": {
+   "value": 52.2,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "Neon now less the replica's event table",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.growth_mb_per_day": {
+   "value": 0.29,
+   "fmt": "float2",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "new rows a day at the replica's bytes a row",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.lever.events_mb": {
+   "value": 59.1,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.lever.events_rows": {
+   "value": 331668,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.lever.predictions_mb": {
+   "value": 14.3,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.lever.predictions_rows": {
+   "value": 45727,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.margin_mb": {
+   "value": 45.9,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the ceiling less the projection for 2026-12-13",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.neon.ceiling_mb": {
+   "value": 800.0,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "Neon as the API read it at 2026-11-16T02:59:27Z, holding serving-202611152200+f89ae3f7e825",
+    "source": "live",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.neon.cve_event_mb": {
+   "value": 371.6,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "Neon as the API read it at 2026-11-16T02:59:27Z, holding serving-202611152200+f89ae3f7e825",
+    "source": "live",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.neon.cve_mb": {
+   "value": 304.2,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "Neon as the API read it at 2026-11-16T02:59:27Z, holding serving-202611152200+f89ae3f7e825",
+    "source": "live",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.neon.prediction_mb": {
+   "value": 65.6,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "Neon as the API read it at 2026-11-16T02:59:27Z, holding serving-202611152200+f89ae3f7e825",
+    "source": "live",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.neon.share": {
+   "value": 0.9408,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "Neon as the API read it at 2026-11-16T02:59:27Z, holding serving-202611152200+f89ae3f7e825",
+    "source": "live",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.neon.size_mb": {
+   "value": 752.7,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "Neon as the API read it at 2026-11-16T02:59:27Z, holding serving-202611152200+f89ae3f7e825",
+    "source": "live",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.projected_mb": {
+   "value": 754.1,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the database on 2026-12-13 under the plan",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.projected_share": {
+   "value": 0.9427,
+   "fmt": "pct1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the database on 2026-12-13 under the plan",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.rebuilt_pk_mb": {
+   "value": 29.0,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.replica.cve_event_index_mb": {
+   "value": 73.8,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.replica.cve_event_mb": {
+   "value": 319.4,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.replica.cve_index_mb": {
+   "value": 33.4,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.replica.cve_mb": {
+   "value": 288.3,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.replica.event_rows": {
+   "value": 1292258,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.replica.prediction_index_mb": {
+   "value": 7.0,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.replica.prediction_mb": {
+   "value": 65.6,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.result": {
+   "value": "pass",
+   "fmt": "text",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the room plan against the ceiling",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.run_decided_cap": {
+   "value": 500,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the retention rule of the plan",
+    "source": "static",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.run_store_mb": {
+   "value": 19.2,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the run store at its caps",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.run_waiting_cap": {
+   "value": 100,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the retention rule of the plan",
+    "source": "static",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.sample.bytes_per_chunk": {
+   "value": 3949,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the corpus sample with its three indexes",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.sample.chunks": {
+   "value": 1006,
+   "fmt": "int",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "the corpus sample",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
+  },
+  "room.unbuilt_pk_mb": {
+   "value": 38.3,
+   "fmt": "float1",
+   "provenance": {
+    "origin": "scripts/measure_room.py",
+    "population": "a fresh load of serving-202611152200 on Postgres 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1) with pgvector 0.8.7",
+    "source": "build",
+    "as_of": "2026-11-16",
+    "note": null
+   }
   }
  },
  "tables": {

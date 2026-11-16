@@ -784,3 +784,34 @@ batch before. The API takes the three values together or not at all, alembic 000
 their columns, and for such a CVE the predictions block leaves out the exploitation value and says
 why: its listing is a fact, not a prediction. A test holds the committed serving files to numbers,
 so a NaN there fails CI before it reaches a release.
+
+## 2026-11-16: the room in Neon comes from the event key, before Phase 3 loads anything
+
+Phase 3 cannot load a corpus, runs or checkpoints into a database at 94 percent of its ceiling, and
+only the API can reach Neon, so the room was measured elsewhere first (scripts/measure_room.py,
+results/agent/room.json, ADR 0011). The API's health facts now list the room each table takes: the
+event table 372 MB, the CVE table 304 MB, the predictions 66 MB. A fresh load of the newest serving
+bundle into a local Postgres with pgvector 0.8.7, the version Neon offers, showed that Neon is not
+bloated, so vacuuming would free little: the room has to come from how the data is stored.
+
+The event id is 16 hex characters, 64 bits, stored as text in the row and in a primary key of 69
+MB. Stored as one bigint, shifted by 2**63 so that the numbers sort the way the hex strings do, it
+frees 52 MB with the key rebuilt after the load, and every answer still carries the hex string, so
+the contract and the order of events with the same time do not change. Migration 0004 empties the
+event table and the sync loads it again, because rewriting 372 MB in place needs a second copy and
+the plan has no room for one; the end of a load rebuilds the key, which random inserts leave a third
+larger. The CVE table is vacuumed at two percent of its rows instead of a fifth.
+
+Neon holds a scoped corpus: the advisories that name a CVE the six stand in products carry, every
+KEV entry and every CWE weakness. Two changes to the chunker came from the measure. Packing the short
+sections of one document into one chunk took KEV from four chunks an entry to one, and the links of
+an advisory and the notes of a KEV entry, which are links (1,494 of the 1,781 notes of catalog
+2026.11.13 are nothing else), stay with the document and are not chunked. A sample of October 2026
+advisories gave nine chunks an advisory; the advisories of the scope itself give three, and the
+scope is what Neon holds. The run store is capped at 100 runs waiting for a person and 500 decided
+runs with their latest checkpoint. With the new rows of each day and the dead rows at their bound,
+the projection for 13 December stays under the ceiling, with the room in the record.
+
+The prompt asks the chunks to be split by section, then by paragraph. They still are; packing only
+joins whole pieces of one document in their order, and each chunk records where every section it
+holds starts and ends, so a citation still names a section and the verifier gets it back exactly.
