@@ -9,6 +9,22 @@
 {% set look = data("results/design/look_review.json") if tracked("results/design/look_review.json") else none %}
 {% set rederive = data("results/rederive.json") if tracked("results/rederive.json") else none %}
 {% set live_predictions = verify is not none and verify.get("predictions") is not none %}
+{% set look3 = look if look and look.get("phase") == 3 else none %}
+{% set p3 = namespace(rows=[], done=[], open=[]) %}
+{% if has("checklist.phase3") %}
+{% set p3.rows = rows("checklist.phase3") %}
+{% for row in p3.rows %}
+{% if row[1] == "done" %}
+{% set p3.done = p3.done + [row] %}
+{% else %}
+{% set p3.open = p3.open + [row] %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% set room = data("results/agent/room.json") if tracked("results/agent/room.json") else none %}
+{% set probe3 = (data("results/probe.json").get("phase3") or {}) if tracked("results/probe.json") else {} %}
+{% set neon3 = probe3.get("neon") or {} %}
+{% set neon_now = ("%.1f percent in use when the probe read it at %s" | format(neon3.storage_share_used * 100, neon3.read_at)) if neon3.get("storage_share_used") is not none else "" %}
 # Build state
 
 The hand off between sessions and phases. Every session reads it first and updates it last. It is
@@ -18,17 +34,10 @@ the manifest or a committed file: edit the template, then render.
 ## Where it stands
 
 ```
-Phase            2 of 5, the models: every model step is in, from the probes and the plan hashed
-                 as the models stage {{ (reg.stages | selectattr("stage", "equalto", "models") | first).hash[:12] }} to the product models, the operating points
-{% if points %}
-                 frozen as the stage {{ (reg.stages | selectattr("stage", "equalto", "operating_points") | first).hash[:12] }}, the registry, test scored once (C1 {{ v("models.test.c1.verdict") }}, C2
-                 {{ v("models.test.c2.verdict") }}), the prediction batch with its serving measures, the load test
-                 with /v1/predict, and reset and rederive with the test recheck;
-                 {{ v("build.phase2.checklist_done") }} of {{ v("build.phase2.checklist_total") }} checklist lines done (RESULTS.md); the prompt is
-                 claude/unscheduled-phase-2-prompt.md in the Project
-{% else %}
-                 wait to be frozen; the prompt is claude/unscheduled-phase-2-prompt.md in the Project
-{% endif %}
+Phase            3 of 5, the agent{% if p3.rows %}: {{ v("build.phase3.checklist_done") }} of {{ v("build.phase3.checklist_total") }} checklist lines done (RESULTS.md){% endif %}; the
+                 prompt is claude/unscheduled-phase-3-prompt.md in the Project
+Phase 2          the models, tagged v0.2.0 on the commit that adds the release record;
+                 its checklist {{ v("build.phase2.checklist_done") }} of {{ v("build.phase2.checklist_total") }} lines done (RESULTS.md)
 Phase 1          the ground truth, tagged v0.1.0 on the commit that adds the release record;
                  its checklist {{ v("build.checklist_done") }} of {{ v("build.checklist_total") }} lines done (RESULTS.md)
 Repository       public; every commit conventional; CI, web and exposure green on main
@@ -37,6 +46,9 @@ Vercel           unscheduled-api (container) at unscheduled-api.vercel.app
                  character field, the console, the docs with six archify diagrams, the
                  report, status and design
 Neon             project unscheduled, free plan, ceiling {{ budgets.neon.storage_ceiling_mb }} MB (config/budgets.yaml)
+{% if neon_now %}
+                 {{ neon_now }}
+{% endif %}
 Data             the committed numbers come from the lake cut {{ v("lake.data_cut") }}
 {% if restored %}
                  rebuilt here from the lake release {{ restored.tag }}
@@ -45,75 +57,32 @@ Data             the committed numbers come from the lake cut {{ v("lake.data_cu
 {% endif %}
 Look approval    Phase 1: approved by Ajay on the evening of 11 November, New York time, after
                  the landing, docs, report and ruler screens: everything is good so far
-{% if look %}
-                 {{ ("Phase 2: " ~ look.summary) | wordwrap(83, wrapstring="\n                 ") }}
+                 Phase 2: approved by Ajay on the evening of 15 November, New York time, after the
+                 CVE page with predictions and the models page: everything is good
+{% if look3 %}
+                 {{ ("Phase 3: " ~ look3.summary) | wordwrap(83, wrapstring="\n                 ") }}
 {% else %}
-                 Phase 2: the CVE page with predictions and /app/models wait for his review
+                 Phase 3: the run viewer and the approval inbox wait for his review
 {% endif %}
 ```
 
-{% set p2 = namespace(open=[]) %}
-{% if has("checklist.phase2") %}
-{% for row in rows("checklist.phase2") %}
-{% if row[1] != "done" %}
-{% set p2.open = p2.open + [row] %}
-{% endif %}
-{% endfor %}
-{% endif %}
-{% if p2.open %}
-Open checklist lines, Phase 2 ({{ v("build.phase2.checklist_done") }} of {{ v("build.phase2.checklist_total") }} done):
+{% if p3.open %}
+Open checklist lines, Phase 3 ({{ v("build.phase3.checklist_done") }} of {{ v("build.phase3.checklist_total") }} done):
 
-{% for row in p2.open %}
+{% for row in p3.open %}
 - {{ row[0] }}. {{ row[2] }}
-{% endfor %}
-
-{% elif open_items() %}
-Open checklist lines:
-
-{% for row in open_items() %}
-- {{ row[2] }}
 {% endfor %}
 
 {% endif %}
 ## Next action
 
-Phase 2 runs from the hand off below, and DECISIONS.md holds every choice made on the way. Done: the
-probes and the scoped model gate; the plan hashed as the models stage; the sets, {{ v("models.sets.train.rows") }} train,
-{{ v("models.sets.development.rows") }} development, {{ v("models.sets.test.rows") }} test and {{ v("models.sets.shadow.rows") }} shadow rows; the floors, where the band floor reaches a
-development kappa of {{ v("models.floors.band.dev") }}; the fallback text model, at {{ v("models.fallback.band.dev") }}; the exploitation models, where
-LightGBM holds {{ v("models.rank.lgbm.dev_recall_at_top5") }} of the development listings in its top five percent and the floor
-{{ v("models.rank.floor.dev_recall_at_top5") }}{% if has("models.rank.runs.count") %}, from the run with the numeric kernels pinned, the one of {{ v("models.rank.runs.count") }} runs that reproduced
-on a second processor{% endif %}; the survival models, checked in R ({{ v("models.survival.r_check.result") }}); the ONNX exports
-({{ v("models.onnx.parity") }}); calibration, conformal sets and the shadow weights on development; the misses read; the
-humanizer pass{% if has("models.product.floor.threshold") %}; the product models, where the floor at its threshold finds, on average,
-{{ v("models.product.floor_at_threshold.dev_recall_at_10") }} of a development CVE's labeled products among its first ten candidates and the
-retrieval {{ v("models.product.retrieval.dev_recall_at_10") }}{% endif %}{% if points %}; the operating points frozen and hashed; the registry; test scored once{% endif %}{% if has("models.predictions.batch") %};
-the batch of {{ v("models.predictions.rows") }} predictions with its serving measures{% endif %}{% if has("load.predict_requests") %}; the load test with /v1/predict{% endif %}{% if rederive %};
-reset and rederive, {{ rederive.equal }} of {{ rederive.compared }} values equal ({{ rederive.result }}), with the test recheck
-({{ rederive.test_recheck.result }}){% endif %}.
-{% if has("models.predictions.batch") and not live_predictions %}
+Phase 3 runs from its prompt in the Project and the hand off below, and DECISIONS.md holds every
+choice made on the way.{% if p3.done %} Done: {% for row in p3.done %}step {{ row[0] }}{{ ", " if not loop.last else "." }}{% endfor %}{% endif %}
 
-Waiting: the live database holds no predictions yet. The lake build carries the batch in the
-serving bundle and its sync loads it into Neon. The run of 14 November started before the batch was
-committed, and the run of 15 November stopped at the bundle's check against the API on five rows
-without an exploitation score, fixed since (DECISIONS.md, 15 November). Once the API with the new
-migration is deployed, Ajay can start a lake run (gh workflow run lake.yml), or the next daily run
-does; this session starts no workflow that creates a release.
-{% endif %}
-
-{% set release = data("results/release.json") if tracked("results/release.json") else none %}
-{% if look and release and release.tag == "v0.2.0" and release.result == "pass" %}
-Phase 2 is tagged v0.2.0 on the commit that adds the release record, pushed by Ajay from his
-machine on the evening of 15 November, New York time; release.yml reran the gates on the tag and
-published the release notes. Next: the Phase 3 prompt, written from the repository as tagged.
-{% elif look %}
-Next: the changelog and the release record on a clean checkout, then Ajay pushes v0.2.0 from his
-machine. Every script whose numbers are committed runs with the numeric pins (AGENTS.md).
+{% if p3.open %}
+{{ ("Next: step " ~ p3.open[0][0] ~ ", " ~ (p3.open[0][2][:1] | lower) ~ p3.open[0][2][1:] ~ ". The room in Neon comes before anything new loads, the plan is hashed before any evaluation, and every script whose numbers are committed runs with the numeric pins (AGENTS.md).") | wordwrap(100) }}
 {% else %}
-Next, in order: the API verify with the predictions; the live check awake, then asleep after
-twenty idle minutes; the screens of a CVE page with predictions and of /app/models to Ajay for his
-look review; the changelog and the release record; then Ajay pushes v0.2.0. Every script whose
-numbers are committed runs with the numeric pins (AGENTS.md).
+Next: the Phase 4 prompt, written from the repository as tagged v0.3.0.
 {% endif %}
 
 ## Open problems
@@ -132,10 +101,17 @@ numbers are committed runs with the numeric pins (AGENTS.md).
 {% endif %}
 {% set health = (verify.checks | selectattr("name", "equalto", "health, with the database and the data") | first).facts if verify else {} %}
 {% set neon = health.get("storage_share_used") %}
-{% if neon is not none and neon > 0.9 %}
-- Neon holds {{ "%.1f" | format(neon * 100) }} percent of its {{ health.get("storage_ceiling_mb") }} MB ceiling with the predictions loaded, and the lake
+{% set neon = neon3.get("storage_share_used") if neon3.get("storage_share_used") is not none else neon %}
+{% if neon is not none and neon > 0.9 and not room %}
+- Neon holds {{ "%.1f" | format(neon * 100) }} percent of its {{ budgets.neon.storage_ceiling_mb }} MB ceiling with the predictions loaded, and the lake
   grows every day. The sync refuses a chunk that would pass the ceiling and writes nothing, so the
-  site stays up, but Phase 3 adds pgvector: it measures the room first and trims a table if it must.
+  site stays up on old data while nothing new arrives. Step 2 measures the room and frees it before
+  anything new loads (ADR 0011).
+{% endif %}
+{% if probe3.get("providers") is not none and not probe3.get("providers_with_a_key") %}
+- No model provider has a key yet: the probe found none of {{ probe3.providers.values() | map(attribute="key_env") | join(", ") }}.
+  The agent runs on its no model floor until Ajay adds at least GROQ_API_KEY and GEMINI_API_KEY as
+  Actions secrets and Vercel variables (Part 4 of the Phase 3 prompt); nobody types a key here.
 {% endif %}
 - Kaggle and Databricks secrets are not set. Step eight took its CPU fallback (DECISIONS.md, step
   eight takes the fallback), and KAGGLE_USERNAME with KAGGLE_KEY would let ModernBERT run; without
@@ -150,7 +126,7 @@ numbers are committed runs with the numeric pins (AGENTS.md).
   so only the last commit of a batch builds, and a change reaches the site only once a deploy of it
   succeeds.
 - Releases and tags come only from Ajay: this session cannot create a release or start a workflow
-  that creates one, and its git access cannot push a tag, so v0.2.0 is pushed from his machine.
+  that creates one, and its git access cannot push a tag, so v0.3.0 is pushed from his machine.
 - The schedules fire hours late and less often than they ask: on 14 November the daily fetch ran
   about seven hours after its time and the lake build too, before the batch existed, so the live
   API gets new predictions only from a lake run after they are committed. The newest lake release

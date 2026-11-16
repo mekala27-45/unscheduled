@@ -128,26 +128,33 @@ def build(root: Path, as_of: str) -> ManifestBuilder:
         population="the section 20 checklist",
         source="build",
     )
-    phase2 = checklist_rows(root, "phase2")
-    if phase2:
-        population = "the Phase 2 checklist, section 20 of the Phase 2 prompt"
+    for phase in PHASES:
+        lines = checklist_rows(root, f"phase{phase}")
+        if not lines:
+            continue
+        population = f"the Phase {phase} checklist, section 20 of the Phase {phase} prompt"
         builder.table(
-            "checklist.phase2",
+            f"checklist.phase{phase}",
             ["Item", "Status", "Line", "Evidence"],
             ["int", "text", "text", "text"],
-            phase2,
+            lines,
             origin="scripts/build_manifest.py",
             population=population,
             source="build",
         )
         for key, value in (
-            ("build.phase2.checklist_done", sum(1 for r in phase2 if r[1] == "done")),
-            ("build.phase2.checklist_total", len(phase2)),
+            (f"build.phase{phase}.checklist_done", sum(1 for r in lines if r[1] == "done")),
+            (f"build.phase{phase}.checklist_total", len(lines)),
         ):
             builder.value(
                 key, value, "int", origin="scripts/build_manifest.py", population=population, source="build"
             )
     return builder
+
+
+# The phases after the first, each with its own section of config/checklist.yaml once its prompt
+# exists; Phase 1 is the items section.
+PHASES = (2, 3, 4, 5)
 
 
 def main() -> int:

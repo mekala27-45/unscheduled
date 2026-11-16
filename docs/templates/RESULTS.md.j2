@@ -68,4 +68,14 @@ writes into it.
 {{ table("checklist.phase2") }}
 
 {% endif %}
+{% if has("checklist.phase3") %}
+## The Phase 3 checklist
+
+{{ v("build.phase3.checklist_done") }} of the {{ v("build.phase3.checklist_total") }} lines are done. A line is done
+only when its evidence says pass, and a file an earlier phase wrote counts here only with what Phase 3
+writes into it.
+
+{{ table("checklist.phase3") }}
+
+{% endif %}
 {{ statement() }}

@@ -113,4 +113,31 @@ writes into it.
 | 17 | done | The live check awake and asleep; reset and rederive reproduced every CPU model number | results/live_check.json, results/rederive.json |
 | 18 | done | At least fifty conventional commits; the release record passing; v0.2.0 pushed by Ajay; BUILD_STATE.md written for Phase 3 | results/release.json |
 
+## The Phase 3 checklist
+
+0 of the 18 lines are done. A line is done
+only when its evidence says pass, and a file an earlier phase wrote counts here only with what Phase 3
+writes into it.
+
+| Item | Status | Line | Evidence |
+|---:|---|---|---|
+| 1 | not done | The probes extended and read by every agent step; the model gate rescoped in CI with its three tests | results/probe.json |
+| 2 | not done | The room plan measured before any load (ADR 0011); Neon under its ceiling with the daily growth covered to 13 December | results/agent/room.json, docs/adr/0011-the-room-in-neon.md |
+| 3 | not done | The Phase 3 plan and the red team hashed as the agent stage before any evaluation | evaluation/registration.json |
+| 4 | not done | The advisory corpus built point in time, the leakage test passing, the corpus published by digest | results/retrieval/corpus.json |
+| 5 | not done | Retrieval measured against its lexical floor with paired intervals; pgvector compared with the file index | results/retrieval/eval.json, results/retrieval/index.json |
+| 6 | not done | The router with budgets, fallbacks, the no model floor and replays; no live call in CI | results/agent/router.json |
+| 7 | not done | Prompts versioned and hashed; every output validated against its schema | results/agent/prompts.json |
+| 8 | not done | The LangGraph agent with checkpoints in Postgres, the approval interrupt, replay and time travel | results/agent/graph.json |
+| 9 | not done | C5 evidence: every claim checked by code; zero unverified citations in approved drafts | results/agent/c5.json |
+| 10 | not done | C7 evidence: the property test over every path, passing | results/agent/c7.json |
+| 11 | not done | C6 evidence: zero planted instructions followed in the registered red team set, its held out half scored once | results/agent/c6.json |
+| 12 | not done | The agent evals on KEV listings with the floor beside every router configuration, the choices frozen before the shadow window was scored once; tokens, latency and cost per node and per run; the judge calibrated against the labels Ajay gave | evaluation/registration.json, results/agent/evals.json, results/agent/costs.json, results/agent/judge.json |
+| 13 | not done | One step built in three frameworks, compared in ADR 0012 | results/agent/frameworks.json, docs/adr/0012-one-step-three-frameworks.md |
+| 14 | not done | /v1/triage, runs, approvals and search live; the MCP server over both transports; the CLI | results/live/api_verify.json |
+| 15 | not done | The console shows every run with its claims and checks, and the inbox; design gates green; the look reviewed by Ajay | results/design/gates.json, results/design/look_review.json |
+| 16 | not done | The docs, ADRs 0011 to 0013, report/agent.md and notebooks 07 to 09; the humanizer pass done | docs/agent.md, docs/adr/0011-the-room-in-neon.md, docs/adr/0012-one-step-three-frameworks.md, docs/adr/0013-the-agent-cannot-act-alone.md, report/agent.md, notebooks/07_retrieval_without_time.ipynb, notebooks/08_the_floor_drafts.ipynb, notebooks/09_the_red_team_misses.ipynb, results/humanizer.json |
+| 17 | not done | The live check awake and asleep with a triage run and an MCP session; reset and rederive reproduced every retrieval and eval number | results/live_check.json, results/rederive.json |
+| 18 | not done | At least fifty conventional commits; the release record passing; v0.3.0 pushed by Ajay; BUILD_STATE.md written for Phase 4 | results/release.json |
+
 > unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.

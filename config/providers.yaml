@@ -1,0 +1,69 @@
+# The model providers behind the Phase 3 router. Free tiers only, and no card anywhere. Every key is
+# a secret Ajay adds himself (an Actions secret and a Vercel variable of the name in key_env); the
+# probe reads a provider only when its secret exists, records whether it answered and the limits it
+# reports, and never writes a key. The documented limits below are what a page said on the day it was
+# read; the router budgets come from the probe, and from these only when a provider reports none.
+# config/budgets.yaml is a registered file, so the agent budgets live here.
+providers:
+  groq:
+    base_url: https://api.groq.com/openai/v1
+    key_env: GROQ_API_KEY
+    models:
+      - openai/gpt-oss-120b
+      - openai/gpt-oss-20b
+      - qwen/qwen3.8-27b
+    guard_models:
+      - meta-llama/llama-prompt-guard-2-86m
+      - meta-llama/llama-prompt-guard-2-22m
+    documented:
+      plan: free
+      per_model: 30 requests a minute, 1,000 a day, 8,000 tokens a minute, 200,000 a day
+      guard: 30 requests a minute, 14,400 a day
+      read_on: 2026-11-06
+      read_from: https://www.developersdigest.tech/rate-limits/groq
+      note: a third party summary; the exact limits are on the signed in limits page
+  gemini:
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai
+    key_env: GEMINI_API_KEY
+    models: []
+    documented:
+      plan: the Gemini API free tier from Google AI Studio
+      per_model: the page says the limits can be viewed in Google AI Studio and lists none, so the
+        build records them from there with the date
+      read_on: 2026-11-16
+      read_from: https://ai.google.dev/gemini-api/docs/rate-limits
+      note: the page was last updated on 28 October 2026
+  openrouter:
+    base_url: https://openrouter.ai/api/v1
+    key_env: OPENROUTER_API_KEY
+    models: []
+    model_suffix: ":free"
+    documented:
+      plan: free models
+      per_model: 20 requests a minute, and 50 a day until 10 credits are bought
+      read_on: 2026-11-06
+      read_from: https://www.developersdigest.tech/rate-limits/openrouter
+  cerebras:
+    base_url: https://api.cerebras.ai/v1
+    key_env: CEREBRAS_API_KEY
+    models:
+      - gpt-oss-120b
+    documented:
+      plan: free trial
+      per_model: gpt-oss-120b at 5 requests a minute and 1,000,000 tokens a day
+      read_on: 2026-11-15
+      read_from: https://inference-docs.cerebras.ai/support/rate-limits
+retired:
+  github_models:
+    closed_on: 2026-07-30
+    read_from: https://klymentiev.com/blog/github-models-shutdown
+    note: GITHUB_TOKEN gives no model since then, so Actions has no free model of its own
+# The one line every probe sends, so the limits come from a real answer and cost almost nothing.
+probe_prompt: Reply with the single word ready.
+probe_max_tokens: 5
+# The list price of every call comes from a locked copy of this book, in the mlspend schema. The
+# expanded book is the one with model token rows; the main book keeps compute and hosting only.
+price_book:
+  repository: mekala27-45/mlspend
+  path: data/prices/expanded/book.json
+  ref: main

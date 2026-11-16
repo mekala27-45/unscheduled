@@ -1,0 +1,31 @@
+# Phase 3, the agent: the libraries it needs and the rule that pins them. The probe reads this file
+# and records, for each library, the newest release and the release the rule picks; pyproject pins
+# the picked release. A library released this week has not been used by anyone yet, so the rule
+# takes the newest release that was already at least min_age_days old on the first day of the phase.
+phase_start: 2026-11-16
+pin_rule:
+  min_age_days: 14
+  skip_prereleases: true
+libraries:
+  # the graph and its checkpoints in Postgres
+  - langgraph
+  - langgraph-checkpoint-postgres
+  - langchain-core
+  # the MCP server, over stdio and streamable HTTP
+  - mcp
+  # retrieval: vectors in Postgres, the embedding and the reranker, the file index
+  - pgvector
+  - psycopg
+  - sentence-transformers
+  - tokenizers
+  - onnxruntime
+  - optimum
+  - faiss-cpu
+  # the provider clients: one OpenAI compatible client for every provider that offers the endpoint
+  - openai
+  - google-genai
+  # the comparison of step 13, outside the production path
+  - openai-agents
+  - google-adk
+  # the property tests
+  - hypothesis

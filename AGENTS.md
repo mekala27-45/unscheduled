@@ -6,7 +6,7 @@ point here.
 ## What this is
 
 unscheduled is a triage platform for the CVEs the NVD no longer analyzes. The month is built in five
-phases; this repository is in Phase 2, the models (BUILD_STATE.md says where it stands).
+phases; this repository is in Phase 3, the agent (BUILD_STATE.md says where it stands).
 
 ## Setup
 
@@ -18,9 +18,13 @@ cd web && pnpm install       # Next.js, the console, the landing and the docs
 ## Before every commit
 
 ```
-make gates                   # dash, vocabulary, statement, secret and no model gates
+make gates                   # dash, vocabulary, statement, secret and model gates
 make lint types test         # ruff, mypy strict, pytest
+make check-render            # the claim gate: every document matches the manifest
 ```
+
+A commit that needs no deploy carries [skip deploy] in its message, so only the last commit of a
+batch builds on Vercel.
 
 ## Rules that hold everywhere
 
@@ -32,9 +36,14 @@ make lint types test         # ruff, mypy strict, pytest
   the time asked for. No random split anywhere.
 - Nobody types a secret. The database connection reaches Vercel through the Neon integration and
   GitHub Actions holds no credential. scripts/check_secrets.py fails on anything that looks like one.
-- No language model before Phase 3. The deep learning and embedding libraries are imported only
-  under packages/models and kaggle/, and the ONNX runtime only there and in packages/api.
-  scripts/check_no_model.py enforces both.
+- A language model only inside the agent. Model provider clients and the agent graph are imported
+  only under packages/agent (the two comparison frameworks only under packages/agent/compare, which
+  the API never imports), and the MCP SDK only under packages/mcp. The deep learning and embedding
+  libraries are imported only under packages/models, kaggle/ and packages/retrieval, and the ONNX
+  runtime only there and in packages/api. scripts/check_no_model.py enforces all of it.
+- The model proposes, code decides: no language model sets a severity, a metric, a CWE, a score, a
+  match, a version or a date, and nothing is applied, sent or filed without a person approving the
+  exact draft. CI never calls a model; every provider call in a test comes from a recorded replay.
 - A model fit, the operating points, the test scoring and the batch predictions run with the numeric
   pins of unscheduled_models.numerics, so their numbers are the same on any machine: run
   `eval "$(uv run python -m unscheduled_models.numerics)"` first. Those scripts refuse to start

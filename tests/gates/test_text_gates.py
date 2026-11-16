@@ -101,8 +101,21 @@ def test_no_model_gate_passes_data_code_and_scoped_model_code(tmp_path: Path) ->
         _module(tmp_path, "packages/models/train.py", "import torch\nfrom transformers import AutoModel\n"),
         _module(tmp_path, "kaggle/kernel.py", "from sentence_transformers import SentenceTransformer\n"),
         _module(tmp_path, "packages/api/serve.py", "import onnxruntime as ort\n"),
+        _module(
+            tmp_path,
+            "packages/agent/src/unscheduled_agent/router.py",
+            "import openai\nfrom google import genai\nfrom langgraph.graph import StateGraph\n",
+        ),
+        _module(
+            tmp_path,
+            "packages/agent/compare/adk_plan.py",
+            "from google.adk.agents import Agent\nimport agents\n",
+        ),
+        _module(tmp_path, "packages/mcp/server.py", "from mcp.server.fastmcp import FastMCP\n"),
+        _module(tmp_path, "packages/retrieval/dense.py", "from sentence_transformers import CrossEncoder\n"),
+        _module(tmp_path, "packages/match/a.py", "from google.protobuf import message\n"),
     ]
-    assert check_no_model.check(tmp_path, files) == 4
+    assert check_no_model.check(tmp_path, files) == 9
 
 
 @pytest.mark.parametrize(
@@ -114,6 +127,13 @@ def test_no_model_gate_passes_data_code_and_scoped_model_code(tmp_path: Path) ->
         ("packages/models/a.py", "import openai\n"),
         ("kaggle/kernel.py", "from langgraph.graph import StateGraph\n"),
         ("packages/models_extra/a.py", "import torch\n"),
+        ("packages/api/triage.py", "from openai import OpenAI\n"),
+        ("packages/match/a.py", "from google import genai\n"),
+        ("packages/agent/graph.py", "from google.adk.agents import Agent\n"),
+        ("packages/agent/graph.py", "import agents\n"),
+        ("packages/agent/router.py", "import anthropic\n"),
+        ("packages/agent/router.py", "from mcp import ClientSession\n"),
+        ("scripts/eval.py", "import langchain_core\n"),
     ],
 )
 def test_no_model_gate_catches_a_model_import_out_of_place(tmp_path: Path, where: str, text: str) -> None:

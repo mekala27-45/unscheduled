@@ -5,6 +5,10 @@ NVD_API_KEY is present), and the probe times a burst of requests within the docu
 to measure the limit the NVD enforces without exceeding it. GitHub release downloads are checked
 on a real asset, uploads where a token exists. The Fontsource packages are looked up on npm. The
 Neon and Vercel sections are kept as written by the step that probes them, or left pending.
+Phase 2 adds the model libraries and weights, Kaggle, Databricks and R. Phase 3 adds each library
+with the release its pin rule picks (config/agent.yaml), each model provider when its secret exists
+(config/providers.yaml), the mlspend price book by digest, the Neon room as the API reads it, and
+the function duration the API runs under.
 
 A probe that fails is recorded with its error and the run goes on; the file always says what was
 reachable on the day, which every deploy step reads.
@@ -22,7 +26,7 @@ import subprocess
 import sys
 import time
 from collections.abc import Callable
-from datetime import UTC, datetime
+from datetime import UTC, date, datetime, timedelta
 from email.utils import parsedate_to_datetime
 from pathlib import Path
 from typing import Any
@@ -411,6 +415,234 @@ def r_survival() -> dict[str, Any]:
     }
 
 
+API = "https://unscheduled-api.vercel.app"
+VERCEL_DURATION = {
+    "documented_max_s": 300,
+    "documented_default_s": 300,
+    "read_from": "https://vercel.com/docs/functions/configuring-functions/duration",
+    "page_updated": "2026-08-24",
+    "read_on": "2026-11-15",
+    "note": "the Hobby plan with fluid compute; C8 asks a triage run for 30 s at the 95th percentile",
+}
+
+
+def phase3(probe: Probe, root: Path) -> dict[str, Any]:
+    """What Phase 3 needs before it starts: each library with the release the pin rule picks, each
+    model provider when its secret exists (answered or not, its listed models and the limits it
+    reports on one short answer, never a key), the price book locked by digest, the Neon room as the
+    API reads it, and the function duration the API runs under."""
+    import yaml
+
+    agent = yaml.safe_load((root / "config" / "agent.yaml").read_text(encoding="utf-8"))
+    # YAML reads a bare date as a date; the probe writes JSON, so every value becomes plain text.
+    providers = json.loads(
+        json.dumps(
+            yaml.safe_load((root / "config" / "providers.yaml").read_text(encoding="utf-8")), default=str
+        )
+    )
+    rule = agent["pin_rule"]
+    cutoff = date.fromisoformat(str(agent["phase_start"])) - timedelta(days=int(rule["min_age_days"]))
+    libraries: dict[str, Any] = {}
+    for name in agent["libraries"]:
+
+        def lib(n: str = name) -> dict[str, Any]:
+            result, body = probe.get_json(f"https://pypi.org/pypi/{n}/json")
+            if body is not None:
+                result.update(pinned_release(body, cutoff, bool(rule.get("skip_prereleases", True))))
+            return result
+
+        libraries[name] = guarded(lib)
+    answers: dict[str, Any] = {}
+    for name, cfg in providers["providers"].items():
+
+        def one(n: str = name, c: dict[str, Any] = cfg) -> dict[str, Any]:
+            return probe_provider(probe.client, n, c, providers, os.environ.get(str(c["key_env"])))
+
+        answers[name] = guarded(one)
+    return {
+        "pin_rule": {
+            "phase_start": str(agent["phase_start"]),
+            "min_age_days": int(rule["min_age_days"]),
+            "released_on_or_before": cutoff.isoformat(),
+        },
+        "libraries": libraries,
+        "providers": answers,
+        "providers_with_a_key": sorted(n for n, a in answers.items() if a.get("token_present")),
+        "retired": providers.get("retired", {}),
+        "price_book": guarded(lambda: price_book(probe.client, providers["price_book"])),
+        "neon": guarded(lambda: neon_from_the_api(probe.client)),
+        "vercel": vercel_duration(root),
+    }
+
+
+def _released(files: list[dict[str, Any]]) -> str | None:
+    times = sorted(
+        str(f.get("upload_time_iso_8601") or "")[:10] for f in files if f.get("upload_time_iso_8601")
+    )
+    return times[0] if times else None
+
+
+def pinned_release(body: dict[str, Any], cutoff: date, skip_prereleases: bool = True) -> dict[str, Any]:
+    """The newest release and the one the pin rule picks: the highest version, not yanked and not a
+    prerelease, whose first file was uploaded on or before the cutoff."""
+    from packaging.version import InvalidVersion, Version
+
+    info = body.get("info") or {}
+    releases: dict[str, list[dict[str, Any]]] = body.get("releases") or {}
+    latest = str(info.get("version"))
+    eligible: list[tuple[Version, str, str]] = []
+    for text, files in releases.items():
+        if not files or all(f.get("yanked") for f in files):
+            continue
+        try:
+            version = Version(text)
+        except InvalidVersion:
+            continue
+        if skip_prereleases and (version.is_prerelease or version.is_devrelease):
+            continue
+        released = _released(files)
+        if released is not None and released <= cutoff.isoformat():
+            eligible.append((version, text, released))
+    pin = max(eligible)[1:] if eligible else (None, None)
+    return {
+        "latest": latest,
+        "latest_released": _released(releases.get(latest) or []),
+        "pin": pin[0],
+        "pin_released": pin[1],
+        "requires_python": info.get("requires_python"),
+    }
+
+
+def probe_provider(
+    client: httpx.Client, name: str, cfg: dict[str, Any], common: dict[str, Any], key: str | None
+) -> dict[str, Any]:
+    """One provider: absent without its key; with it, the model list and one short answer, whose
+    rate limit headers are the limits the provider says it enforces. Nothing from the key or the
+    answer text is kept."""
+    out: dict[str, Any] = {
+        "ok": True,
+        "token_present": bool(key),
+        "key_env": cfg["key_env"],
+        "base_url": cfg["base_url"],
+        "documented": cfg.get("documented"),
+    }
+    if not key:
+        out["note"] = f"{cfg['key_env']} is not set, so the router skips {name} and the floor answers"
+        return out
+    headers = {"Authorization": f"Bearer {key}"}
+    listed = client.get(f"{cfg['base_url']}/models", headers=headers)
+    ids: list[str] = []
+    if listed.status_code == 200:
+        ids = sorted(str(m.get("id")) for m in (listed.json().get("data") or []) if m.get("id"))
+    wanted = [str(m) for m in cfg.get("models") or []]
+    out.update(
+        ok=listed.status_code == 200,
+        models_status=listed.status_code,
+        models_listed=len(ids),
+        wanted={m: m in ids for m in wanted},
+    )
+    guards = [str(m) for m in cfg.get("guard_models") or []]
+    if guards:
+        out["guards"] = {m: m in ids for m in guards}
+    suffix = cfg.get("model_suffix")
+    pool = [i for i in ids if i.endswith(str(suffix))] if suffix else ids
+    if not wanted:
+        out["models"] = pool[:80]
+    model = next((m for m in wanted if m in ids), None) or (pool[0] if pool else None)
+    if model is None:
+        return out
+    started = time.monotonic()
+    answer = client.post(
+        f"{cfg['base_url']}/chat/completions",
+        headers=headers,
+        json={
+            "model": model,
+            "messages": [{"role": "user", "content": str(common["probe_prompt"])}],
+            "max_tokens": int(common["probe_max_tokens"]),
+        },
+    )
+    usage = answer.json().get("usage") if answer.status_code == 200 else None
+    out["one_line"] = {
+        "model": model,
+        "status": answer.status_code,
+        "elapsed_s": round(time.monotonic() - started, 3),
+        "limits": {k.lower(): v for k, v in answer.headers.items() if "ratelimit" in k.lower()},
+        "usage": {k: usage[k] for k in ("prompt_tokens", "completion_tokens", "total_tokens") if k in usage}
+        if isinstance(usage, dict)
+        else None,
+    }
+    return out
+
+
+def price_book(client: httpx.Client, cfg: dict[str, Any]) -> dict[str, Any]:
+    """The mlspend price book, locked by the digest of the exact bytes read."""
+    import hashlib
+
+    url = f"https://raw.githubusercontent.com/{cfg['repository']}/{cfg['ref']}/{cfg['path']}"
+    response = client.get(url)
+    body = response.content
+    out: dict[str, Any] = {"ok": response.status_code == 200, "status": response.status_code, "url": url}
+    if response.status_code != 200:
+        return out
+    rows = json.loads(body).get("rows") or []
+    tokens = [r for r in rows if "token" in str(r.get("unit", "")).lower()]
+    out.update(
+        sha256=hashlib.sha256(body).hexdigest(),
+        bytes=len(body),
+        rows=len(rows),
+        token_rows=len(tokens),
+        token_skus=sorted({str(r.get("sku")) for r in tokens}),
+        providers=sorted({str(r.get("provider")) for r in rows}),
+        retrieved=sorted({str(r.get("retrieved_date")) for r in rows}),
+    )
+    return out
+
+
+NEON_FIELDS = (
+    "reachable",
+    "migration",
+    "server_version",
+    "pgvector_available",
+    "pgvector_version",
+    "pgvector_installed",
+    "pg_search_available",
+    "database_size_bytes",
+    "storage_ceiling_bytes",
+    "storage_share_used",
+    "tables",
+    "schemas",
+)
+
+
+def neon_from_the_api(client: httpx.Client) -> dict[str, Any]:
+    """The room in Neon as the API reads it: only the API can reach the database, and /health says
+    what it holds without a credential."""
+    response = client.get(f"{API}/health")
+    out: dict[str, Any] = {
+        "ok": response.status_code == 200,
+        "status": response.status_code,
+        "read_at": now(),
+    }
+    if response.status_code != 200:
+        return out
+    body = response.json()
+    database = body.get("database") or {}
+    out.update({k: database.get(k) for k in NEON_FIELDS})
+    out["data_version"] = body.get("data_version")
+    return out
+
+
+def vercel_duration(root: Path) -> dict[str, Any]:
+    """The longest a request to the API may run: what vercel.json sets, else the documented default."""
+    cfg = json.loads((root / "vercel.json").read_text(encoding="utf-8"))
+    configured = {
+        path: spec.get("maxDuration")
+        for path, spec in (cfg.get("functions") or {}).items()
+        if isinstance(spec, dict) and "maxDuration" in spec
+    }
+    return {"ok": True, "configured_max_duration_s": configured or None, **VERCEL_DURATION}
+
+
 def run(skip_burst: bool) -> dict[str, Any]:
     probe = Probe()
     nvd_cfg = probe.cfg["nvd"]
@@ -477,6 +709,7 @@ def run(skip_burst: bool) -> dict[str, Any]:
         "github_release": guarded(probe.github_release),
         "fontsource": probe.fontsource(),
         "phase2": phase2(probe, paths.root()),
+        "phase3": phase3(probe, paths.root()),
     }
 
 

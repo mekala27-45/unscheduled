@@ -7,13 +7,10 @@ the manifest or a committed file: edit the template, then render.
 ## Where it stands
 
 ```
-Phase            2 of 5, the models: every model step is in, from the probes and the plan hashed
-                 as the models stage 8e72e6298a18 to the product models, the operating points
-                 frozen as the stage 406e8887f350, the registry, test scored once (C1 not met, C2
-                 not met), the prediction batch with its serving measures, the load test
-                 with /v1/predict, and reset and rederive with the test recheck;
-                 18 of 18 checklist lines done (RESULTS.md); the prompt is
-                 claude/unscheduled-phase-2-prompt.md in the Project
+Phase            3 of 5, the agent: 0 of 18 checklist lines done (RESULTS.md); the
+                 prompt is claude/unscheduled-phase-3-prompt.md in the Project
+Phase 2          the models, tagged v0.2.0 on the commit that adds the release record;
+                 its checklist 18 of 18 lines done (RESULTS.md)
 Phase 1          the ground truth, tagged v0.1.0 on the commit that adds the release record;
                  its checklist 18 of 18 lines done (RESULTS.md)
 Repository       public; every commit conventional; CI, web and exposure green on main
@@ -28,28 +25,37 @@ Look approval    Phase 1: approved by Ajay on the evening of 11 November, New Yo
                  the landing, docs, report and ruler screens: everything is good so far
                  Phase 2: approved by Ajay on the evening of 15 November, New York time, after the
                  CVE page with predictions and the models page: everything is good
+                 Phase 3: the run viewer and the approval inbox wait for his review
 ```
+
+Open checklist lines, Phase 3 (0 of 18 done):
+
+- 1. The probes extended and read by every agent step; the model gate rescoped in CI with its three tests
+- 2. The room plan measured before any load (ADR 0011); Neon under its ceiling with the daily growth covered to 13 December
+- 3. The Phase 3 plan and the red team hashed as the agent stage before any evaluation
+- 4. The advisory corpus built point in time, the leakage test passing, the corpus published by digest
+- 5. Retrieval measured against its lexical floor with paired intervals; pgvector compared with the file index
+- 6. The router with budgets, fallbacks, the no model floor and replays; no live call in CI
+- 7. Prompts versioned and hashed; every output validated against its schema
+- 8. The LangGraph agent with checkpoints in Postgres, the approval interrupt, replay and time travel
+- 9. C5 evidence: every claim checked by code; zero unverified citations in approved drafts
+- 10. C7 evidence: the property test over every path, passing
+- 11. C6 evidence: zero planted instructions followed in the registered red team set, its held out half scored once
+- 12. The agent evals on KEV listings with the floor beside every router configuration, the choices frozen before the shadow window was scored once; tokens, latency and cost per node and per run; the judge calibrated against the labels Ajay gave
+- 13. One step built in three frameworks, compared in ADR 0012
+- 14. /v1/triage, runs, approvals and search live; the MCP server over both transports; the CLI
+- 15. The console shows every run with its claims and checks, and the inbox; design gates green; the look reviewed by Ajay
+- 16. The docs, ADRs 0011 to 0013, report/agent.md and notebooks 07 to 09; the humanizer pass done
+- 17. The live check awake and asleep with a triage run and an MCP session; reset and rederive reproduced every retrieval and eval number
+- 18. At least fifty conventional commits; the release record passing; v0.3.0 pushed by Ajay; BUILD_STATE.md written for Phase 4
 
 ## Next action
 
-Phase 2 runs from the hand off below, and DECISIONS.md holds every choice made on the way. Done: the
-probes and the scoped model gate; the plan hashed as the models stage; the sets, 220,803 train,
-39,924 development, 63,304 test and 78,676 shadow rows; the floors, where the band floor reaches a
-development kappa of 0.669; the fallback text model, at 0.594; the exploitation models, where
-LightGBM holds 49.6% of the development listings in its top five percent and the floor
-40.9%, from the run with the numeric kernels pinned, the one of 4 runs that reproduced
-on a second processor; the survival models, checked in R (pass); the ONNX exports
-(pass); calibration, conformal sets and the shadow weights on development; the misses read; the
-humanizer pass; the product models, where the floor at its threshold finds, on average,
-42.1% of a development CVE's labeled products among its first ten candidates and the
-retrieval 34.5%; the operating points frozen and hashed; the registry; test scored once;
-the batch of 181,904 predictions with its serving measures; the load test with /v1/predict;
-reset and rederive, 713 of 713 values equal (pass), with the test recheck
-(pass).
-
-Phase 2 is tagged v0.2.0 on the commit that adds the release record, pushed by Ajay from his
-machine on the evening of 15 November, New York time; release.yml reran the gates on the tag and
-published the release notes. Next: the Phase 3 prompt, written from the repository as tagged.
+Phase 3 runs from its prompt in the Project and the hand off below, and DECISIONS.md holds every
+choice made on the way.
+Next: step 1, the probes extended and read by every agent step; the model gate rescoped in CI with
+its three tests. The room in Neon comes before anything new loads, the plan is hashed before any
+evaluation, and every script whose numbers are committed runs with the numeric pins (AGENTS.md).
 
 ## Open problems
 
@@ -63,7 +69,8 @@ published the release notes. Next: the Phase 3 prompt, written from the reposito
   (ADR 0008). The API records no server timing yet, so where the calls wait is open for Phase 4.
 - Neon holds 94.1 percent of its 800 MB ceiling with the predictions loaded, and the lake
   grows every day. The sync refuses a chunk that would pass the ceiling and writes nothing, so the
-  site stays up, but Phase 3 adds pgvector: it measures the room first and trims a table if it must.
+  site stays up on old data while nothing new arrives. Step 2 measures the room and frees it before
+  anything new loads (ADR 0011).
 - Kaggle and Databricks secrets are not set. Step eight took its CPU fallback (DECISIONS.md, step
   eight takes the fallback), and KAGGLE_USERNAME with KAGGLE_KEY would let ModernBERT run; without
   the Databricks pair, the registry uses the file store.
@@ -77,7 +84,7 @@ published the release notes. Next: the Phase 3 prompt, written from the reposito
   so only the last commit of a batch builds, and a change reaches the site only once a deploy of it
   succeeds.
 - Releases and tags come only from Ajay: this session cannot create a release or start a workflow
-  that creates one, and its git access cannot push a tag, so v0.2.0 is pushed from his machine.
+  that creates one, and its git access cannot push a tag, so v0.3.0 is pushed from his machine.
 - The schedules fire hours late and less often than they ask: on 14 November the daily fetch ran
   about seven hours after its time and the lake build too, before the batch existed, so the live
   API gets new predictions only from a lake run after they are committed. The newest lake release

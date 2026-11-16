@@ -188,3 +188,94 @@ phase2:
     text: "At least fifty conventional commits; the release record passing; v0.2.0 pushed by Ajay; BUILD_STATE.md written for Phase 3"
     evidence:
       - {file: results/release.json, equals: {tag: v0.2.0}}
+# Section 20 of the Phase 3 prompt (claude/unscheduled-phase-3-prompt.md in the Project). A file an
+# earlier phase also writes is asked for what only this phase puts in it.
+phase3:
+  - n: 1
+    text: "The probes extended and read by every agent step; the model gate rescoped in CI with its three tests"
+    evidence:
+      - {file: results/probe.json, has: [[phase3, libraries], [phase3, providers], [phase3, price_book, sha256], [phase3, neon, tables]]}
+  - n: 2
+    text: "The room plan measured before any load (ADR 0011); Neon under its ceiling with the daily growth covered to 13 December"
+    evidence:
+      - results/agent/room.json
+      - docs/adr/0011-the-room-in-neon.md
+  - n: 3
+    text: "The Phase 3 plan and the red team hashed as the agent stage before any evaluation"
+    evidence:
+      - {file: evaluation/registration.json, equals: {stages/4/stage: agent}}
+  - n: 4
+    text: "The advisory corpus built point in time, the leakage test passing, the corpus published by digest"
+    evidence:
+      - results/retrieval/corpus.json
+  - n: 5
+    text: "Retrieval measured against its lexical floor with paired intervals; pgvector compared with the file index"
+    evidence:
+      - results/retrieval/eval.json
+      - results/retrieval/index.json
+  - n: 6
+    text: "The router with budgets, fallbacks, the no model floor and replays; no live call in CI"
+    evidence:
+      - results/agent/router.json
+  - n: 7
+    text: "Prompts versioned and hashed; every output validated against its schema"
+    evidence:
+      - results/agent/prompts.json
+  - n: 8
+    text: "The LangGraph agent with checkpoints in Postgres, the approval interrupt, replay and time travel"
+    evidence:
+      - results/agent/graph.json
+  - n: 9
+    text: "C5 evidence: every claim checked by code; zero unverified citations in approved drafts"
+    evidence:
+      - {file: results/agent/c5.json, has: [[verdict]]}
+  - n: 10
+    text: "C7 evidence: the property test over every path, passing"
+    evidence:
+      - {file: results/agent/c7.json, has: [[verdict]]}
+  - n: 11
+    text: "C6 evidence: zero planted instructions followed in the registered red team set, its held out half scored once"
+    evidence:
+      - {file: results/agent/c6.json, has: [[verdict], [held_out]]}
+  - n: 12
+    text: "The agent evals on KEV listings with the floor beside every router configuration, the choices frozen before the shadow window was scored once; tokens, latency and cost per node and per run; the judge calibrated against the labels Ajay gave"
+    evidence:
+      - {file: evaluation/registration.json, equals: {stages/5/stage: agent_points}}
+      - results/agent/evals.json
+      - results/agent/costs.json
+      - results/agent/judge.json
+  - n: 13
+    text: "One step built in three frameworks, compared in ADR 0012"
+    evidence:
+      - results/agent/frameworks.json
+      - docs/adr/0012-one-step-three-frameworks.md
+  - n: 14
+    text: "/v1/triage, runs, approvals and search live; the MCP server over both transports; the CLI"
+    evidence:
+      - {file: results/live/api_verify.json, has: [[triage], [mcp]]}
+  - n: 15
+    text: "The console shows every run with its claims and checks, and the inbox; design gates green; the look reviewed by Ajay"
+    evidence:
+      - results/design/gates.json
+      - {file: results/design/look_review.json, equals: {phase: 3}}
+  - n: 16
+    text: "The docs, ADRs 0011 to 0013, report/agent.md and notebooks 07 to 09; the humanizer pass done"
+    evidence:
+      - docs/agent.md
+      - docs/adr/0011-the-room-in-neon.md
+      - docs/adr/0012-one-step-three-frameworks.md
+      - docs/adr/0013-the-agent-cannot-act-alone.md
+      - report/agent.md
+      - notebooks/07_retrieval_without_time.ipynb
+      - notebooks/08_the_floor_drafts.ipynb
+      - notebooks/09_the_red_team_misses.ipynb
+      - {file: results/humanizer.json, has: [[phase3]]}
+  - n: 17
+    text: "The live check awake and asleep with a triage run and an MCP session; reset and rederive reproduced every retrieval and eval number"
+    evidence:
+      - {file: results/live_check.json, has: [[awake, triage], [asleep, triage], [awake, mcp]]}
+      - {file: results/rederive.json, has: [[parts, retrieval.json], [parts, agent.json]]}
+  - n: 18
+    text: "At least fifty conventional commits; the release record passing; v0.3.0 pushed by Ajay; BUILD_STATE.md written for Phase 4"
+    evidence:
+      - {file: results/release.json, equals: {tag: v0.3.0}}

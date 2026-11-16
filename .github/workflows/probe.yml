@@ -3,7 +3,8 @@ name: probe
 # Every host the build depends on, probed daily and on demand: every source answers with a size and
 # a date, the NVD answers keyless (and with the optional key) and a burst within the documented
 # allowance measures the limit it enforces, release downloads are checked, and the Fontsource
-# packages are looked up; for Phase 2 the libraries, the model weights, Kaggle, Databricks and R.
+# packages are looked up; for Phase 2 the libraries, the model weights, Kaggle, Databricks and R;
+# for Phase 3 the agent libraries, the model providers, the price book and the Neon room.
 # results/probe.json is uploaded as an artifact for the deploy steps.
 on:
   schedule:
@@ -41,6 +42,12 @@ jobs:
           KAGGLE_KEY: ${{ secrets.KAGGLE_KEY }}
           DATABRICKS_HOST: ${{ secrets.DATABRICKS_HOST }}
           DATABRICKS_TOKEN: ${{ secrets.DATABRICKS_TOKEN }}
+          # Phase 3: the model providers, each optional; the probe sends one short line to read the
+          # limits a provider reports, and writes neither the key nor the answer.
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+          CEREBRAS_API_KEY: ${{ secrets.CEREBRAS_API_KEY }}
         run: uv run python scripts/probe_hosts.py
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
