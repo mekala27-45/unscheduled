@@ -6679,7 +6679,7 @@
    }
   },
   "build.phase3.checklist_done": {
-   "value": 0,
+   "value": 1,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/build_manifest.py",
@@ -18206,7 +18206,7 @@
    "rows": [
     [
      1,
-     "not done",
+     "done",
      "The probes extended and read by every agent step; the model gate rescoped in CI with its three tests",
      "results/probe.json"
     ],

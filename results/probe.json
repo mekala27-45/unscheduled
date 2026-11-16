@@ -1,32 +1,34 @@
 {
- "probed_at": "2026-11-14T03:40:22Z",
+ "probed_at": "2026-11-16T02:24:43Z",
  "user_agent": "unscheduled/0.1 (+https://github.com/mekala27-45/unscheduled)",
  "summary": {
   "sources": 16,
-  "answered": 15,
+  "answered": 14,
   "refused": [
    "edgar"
   ],
-  "failed": []
+  "failed": [
+   "cvelist"
+  ]
  },
  "sources": {
   "cvelist": {
-   "url": "https://github.com/CVEProject/cvelistV5/releases/download/cve_2026-11-14_0000Z/2026-11-14_all_CVEs_at_midnight.zip.zip",
-   "status": 206,
-   "ok": true,
-   "size": 663341831,
-   "date": "2026-11-14T03:00:00Z",
-   "newest_release": "cve_2026-11-14_0300Z",
-   "releases_listed": 31753
+   "url": "https://github.com/CVEProject/cvelistV5/releases/download/cve_2026-11-16_0000Z/2026-11-16_all_CVEs_at_midnight.zip.zip",
+   "status": 404,
+   "ok": false,
+   "size": 29,
+   "date": "2026-11-16T01:00:00Z",
+   "newest_release": "cve_2026-11-16_0100Z",
+   "releases_listed": 31799
   },
   "nvd_cves": {
    "url": "https://services.nvd.nist.gov/rest/json/cves/2.0?resultsPerPage=1",
    "status": 200,
    "ok": true,
    "size": 2517,
-   "elapsed_s": 9.17,
-   "date": "2026-11-14T03:39:55.076",
-   "total_results": 425693,
+   "elapsed_s": 6.372,
+   "date": "2026-11-16T02:22:53.852",
+   "total_results": 425878,
    "answered_keyless": true
   },
   "nvd_history": {
@@ -34,9 +36,9 @@
    "status": 200,
    "ok": true,
    "size": 354,
-   "elapsed_s": 12.181,
-   "date": "2026-11-14T03:40:07.517",
-   "total_results": 2467641,
+   "elapsed_s": 26.972,
+   "date": "2026-11-16T02:23:20.837",
+   "total_results": 2467945,
    "answered_keyless": true
   },
   "kev": {
@@ -44,7 +46,7 @@
    "status": 200,
    "ok": true,
    "size": 1854379,
-   "elapsed_s": 0.284,
+   "elapsed_s": 0.078,
    "date": "2026-11-13T20:24:18.3008Z",
    "catalog_version": "2026.11.13",
    "entries": 1781,
@@ -55,47 +57,47 @@
    "status": 200,
    "ok": true,
    "size": 1854379,
-   "elapsed_s": 0.56,
+   "elapsed_s": 0.088,
    "date": "2026-11-13T20:24:18.3008Z",
    "catalog_version": "2026.11.13"
   },
   "epss_daily": {
-   "url": "https://epss.empiricalsecurity.com/epss_scores-2026-11-13.csv.gz",
+   "url": "https://epss.empiricalsecurity.com/epss_scores-2026-11-15.csv.gz",
    "status": 200,
    "ok": true,
-   "size": 2845761,
-   "date": "2026-11-13T13:30:36Z",
-   "file_day": "2026-11-13"
+   "size": 2849232,
+   "date": "2026-11-15T13:30:36Z",
+   "file_day": "2026-11-15"
   },
   "epss_api": {
    "url": "https://api.first.org/data/v1/epss?cve=CVE-2021-44228",
    "status": 200,
    "ok": true,
    "size": 203,
-   "elapsed_s": 0.554,
-   "date": "2026-11-13"
+   "elapsed_s": 0.27,
+   "date": "2026-11-15"
   },
   "osv": {
    "npm": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/npm/all.zip",
     "status": 200,
     "ok": true,
-    "size": 221443172,
-    "date": "2026-11-14T03:33:06Z"
+    "size": 221450784,
+    "date": "2026-11-16T01:03:09Z"
    },
    "PyPI": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/PyPI/all.zip",
     "status": 200,
     "ok": true,
-    "size": 37909150,
-    "date": "2026-11-14T03:02:50Z"
+    "size": 37923125,
+    "date": "2026-11-15T09:18:04Z"
    },
    "Go": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/Go/all.zip",
     "status": 200,
     "ok": true,
-    "size": 12934640,
-    "date": "2026-11-13T23:17:54Z"
+    "size": 12927125,
+    "date": "2026-11-14T13:17:57Z"
    },
    "Maven": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/Maven/all.zip",
@@ -108,15 +110,15 @@
     "url": "https://osv-vulnerabilities.storage.googleapis.com/crates.io/all.zip",
     "status": 200,
     "ok": true,
-    "size": 3914513,
-    "date": "2026-11-14T03:02:50Z"
+    "size": 3914505,
+    "date": "2026-11-15T10:03:04Z"
    },
    "RubyGems": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/RubyGems/all.zip",
     "status": 200,
     "ok": true,
-    "size": 5329206,
-    "date": "2026-11-13T19:19:22Z"
+    "size": 5330110,
+    "date": "2026-11-14T20:47:57Z"
    },
    "NuGet": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/NuGet/all.zip",
@@ -130,36 +132,36 @@
     "status": 200,
     "ok": true,
     "size": 11144090,
-    "date": "2026-11-14T03:02:50Z"
+    "date": "2026-11-14T07:02:59Z"
    },
    "Debian": {
     "url": "https://osv-vulnerabilities.storage.googleapis.com/Debian/all.zip",
     "status": 200,
     "ok": true,
-    "size": 82035854,
-    "date": "2026-11-14T02:02:45Z"
+    "size": 81477633,
+    "date": "2026-11-16T01:03:06Z"
    },
    "ok": true
   },
   "ghsa": {
    "url": "https://github.com/github/advisory-database",
    "ok": true,
-   "head": "21efe5eaa20b8cef01c13876237426387565a6d3",
-   "date": "2026-11-14T00:37:03+00:00",
-   "size": 51506543,
+   "head": "0c2374cd80aeb7a98bd3cb28cb775b74c86abc0a",
+   "date": "2026-11-15T21:37:22Z",
+   "size": 51526235,
    "size_is": "bytes of the head commit and its trees, fetched without blobs",
-   "files_at_head": 405652,
-   "elapsed_s": 6.218
+   "files_at_head": 405806,
+   "elapsed_s": 4.963
   },
   "vulnrichment": {
    "url": "https://github.com/cisagov/vulnrichment",
    "ok": true,
    "head": "12068c70ac2b3a7d371213a5509f59809ac1d99c",
-   "date": "2026-11-12T21:17:55+00:00",
+   "date": "2026-11-12T21:17:55Z",
    "size": 5542879,
    "size_is": "bytes of the head commit and its trees, fetched without blobs",
    "files_at_head": 219905,
-   "elapsed_s": 1.634
+   "elapsed_s": 0.923
   },
   "cwe": {
    "url": "https://cwe.mitre.org/data/xml/cwec_latest.xml.zip",
@@ -172,29 +174,29 @@
    "url": "https://github.com/rapid7/metasploit-framework",
    "ok": true,
    "head": "bea1fb069e79cb610fe3981f16b8697790369c63",
-   "date": "2026-11-13T16:53:40+00:00",
+   "date": "2026-11-13T16:53:40Z",
    "size": 724437,
    "size_is": "bytes of the head commit and its trees, fetched without blobs",
    "files_at_head": 15152,
-   "elapsed_s": 1.41
+   "elapsed_s": 0.477
   },
   "nuclei": {
    "url": "https://github.com/projectdiscovery/nuclei-templates",
    "ok": true,
-   "head": "1cb2d50b4f0f5cbdb600165b0afe556b4623f29a",
-   "date": "2026-11-14T03:11:08+00:00",
-   "size": 521993,
+   "head": "288e206a5c7616d7d1d4e6ce86e6ce6ac94143b1",
+   "date": "2026-11-16T02:07:05Z",
+   "size": 522588,
    "size_is": "bytes of the head commit and its trees, fetched without blobs",
-   "files_at_head": 14626,
-   "elapsed_s": 0.931
+   "files_at_head": 14638,
+   "elapsed_s": 0.41
   },
   "gleif": {
    "url": "https://api.gleif.org/api/v1/lei-records?filter%5Bentity.legalName%5D=Velloran+Systems",
    "status": 200,
    "ok": true,
    "size": 448,
-   "elapsed_s": 0.543,
-   "date": "2026-11-14T03:40:21Z",
+   "elapsed_s": 0.832,
+   "date": "2026-11-16T02:23:29Z",
    "records_for_name": 0
   },
   "edgar": {
@@ -202,8 +204,8 @@
    "status": 403,
    "ok": false,
    "refused": true,
-   "size": 1924,
-   "date": "2026-11-14T03:40:21Z",
+   "size": 1925,
+   "date": "2026-11-16T02:23:29Z",
    "note": "the SEC refused a client that names the project and gives no contact address; recorded as the result, not retried"
   },
   "cna_list": {
@@ -211,7 +213,7 @@
    "status": 200,
    "ok": true,
    "size": 66892,
-   "date": "2026-11-14T03:40:22Z",
+   "date": "2026-11-16T02:23:29Z",
    "head": "45144483c9deec52a9b07dcd43f41f4581cc43bd"
   }
  },
@@ -246,26 +248,26 @@
     200
    ],
    "latencies_s": [
-    0.375,
-    0.067,
-    0.083,
-    0.064,
-    0.055
+    3.418,
+    6.699,
+    8.878,
+    10.479,
+    12.176
    ],
-   "elapsed_s": 0.644,
-   "measured": "5 of 5 requests sent within 0.644 s were answered; the enforced limit is at least the documented allowance",
-   "measured_at": "2026-11-08T03:39:49Z"
+   "elapsed_s": 41.65,
+   "measured": "5 of 5 requests sent within 41.65 s were answered; the enforced limit is at least the documented allowance",
+   "measured_at": "2026-11-16T02:24:43Z"
   }
  },
  "github_release": {
   "download": {
-   "url": "https://github.com/CVEProject/cvelistV5/releases/download/cve_2026-11-14_0000Z/2026-11-14_all_CVEs_at_midnight.zip.zip",
-   "status": 206,
-   "ok": true,
-   "size": 663341831,
-   "date": "2026-11-14T03:00:00Z",
-   "newest_release": "cve_2026-11-14_0300Z",
-   "releases_listed": 31753
+   "url": "https://github.com/CVEProject/cvelistV5/releases/download/cve_2026-11-16_0000Z/2026-11-16_all_CVEs_at_midnight.zip.zip",
+   "status": 404,
+   "ok": false,
+   "size": 29,
+   "date": "2026-11-16T01:00:00Z",
+   "newest_release": "cve_2026-11-16_0100Z",
+   "releases_listed": 31799
   },
   "upload": {
    "tested": true,
@@ -279,7 +281,7 @@
    "status": 200,
    "ok": true,
    "size": null,
-   "elapsed_s": 0.191,
+   "elapsed_s": 0.308,
    "date": "2026-07-19T03:45:45.529Z",
    "latest": "5.3.0",
    "has_5.3.0": true
@@ -289,7 +291,7 @@
    "status": 200,
    "ok": true,
    "size": null,
-   "elapsed_s": 0.351,
+   "elapsed_s": 0.153,
    "date": "2026-07-19T03:36:08.045Z",
    "latest": "5.3.0",
    "has_5.3.0": true
@@ -299,7 +301,7 @@
    "status": 200,
    "ok": true,
    "size": null,
-   "elapsed_s": 0.146,
+   "elapsed_s": 0.144,
    "date": "2026-07-19T03:49:00.889Z",
    "latest": "5.3.0",
    "has_5.3.0": true
@@ -312,8 +314,8 @@
     "status": 200,
     "ok": true,
     "size": 895766,
-    "elapsed_s": 0.058,
-    "date": "2026-11-14T03:40:24Z",
+    "elapsed_s": 0.091,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "2.15.0",
     "released": "2026-10-28",
     "requires_python": ">=3.11"
@@ -323,8 +325,8 @@
     "status": 200,
     "ok": true,
     "size": 428549,
-    "elapsed_s": 0.037,
-    "date": "2026-11-14T03:40:24Z",
+    "elapsed_s": 0.021,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "5.23.0",
     "released": "2026-11-13",
     "requires_python": ">=3.11.0"
@@ -334,8 +336,8 @@
     "status": 200,
     "ok": true,
     "size": 123748,
-    "elapsed_s": 0.036,
-    "date": "2026-11-14T03:40:24Z",
+    "elapsed_s": 0.025,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "6.3.0",
     "released": "2026-11-11",
     "requires_python": ">=3.10"
@@ -345,8 +347,8 @@
     "status": 200,
     "ok": true,
     "size": 128638,
-    "elapsed_s": 0.036,
-    "date": "2026-11-14T03:40:24Z",
+    "elapsed_s": 0.025,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "2.3.0",
     "released": "2026-08-04",
     "requires_python": ">=3.9.0"
@@ -357,7 +359,7 @@
     "ok": true,
     "size": 1016708,
     "elapsed_s": 0.039,
-    "date": "2026-11-14T03:40:24Z",
+    "date": "2026-11-16T02:24:45Z",
     "latest": "1.23.2",
     "released": "2026-10-06",
     "requires_python": ">=3.10"
@@ -367,8 +369,8 @@
     "status": 200,
     "ok": true,
     "size": 1123855,
-    "elapsed_s": 0.04,
-    "date": "2026-11-14T03:40:25Z",
+    "elapsed_s": 0.024,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "1.32.0",
     "released": "2026-11-13",
     "requires_python": ">=3.11"
@@ -378,8 +380,8 @@
     "status": 200,
     "ok": true,
     "size": 54092,
-    "elapsed_s": 0.067,
-    "date": "2026-11-14T03:40:25Z",
+    "elapsed_s": 0.019,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "1.20.0",
     "released": "2026-01-30",
     "requires_python": ">=3.8"
@@ -389,8 +391,8 @@
     "status": 200,
     "ok": true,
     "size": 39970,
-    "elapsed_s": 0.036,
-    "date": "2026-11-14T03:40:25Z",
+    "elapsed_s": 0.02,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "1.16.0",
     "released": "2026-01-30",
     "requires_python": ">=3.9"
@@ -400,8 +402,8 @@
     "status": 200,
     "ok": true,
     "size": 168622,
-    "elapsed_s": 0.036,
-    "date": "2026-11-14T03:40:25Z",
+    "elapsed_s": 0.019,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "4.7.0",
     "released": "2026-07-18",
     "requires_python": ">=3.10"
@@ -411,8 +413,8 @@
     "status": 200,
     "ok": true,
     "size": 113678,
-    "elapsed_s": 0.036,
-    "date": "2026-11-14T03:40:25Z",
+    "elapsed_s": 0.019,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "5.0.0",
     "released": "2026-09-07",
     "requires_python": ">=3.9"
@@ -422,8 +424,8 @@
     "status": 200,
     "ok": true,
     "size": 310804,
-    "elapsed_s": 0.037,
-    "date": "2026-11-14T03:40:25Z",
+    "elapsed_s": 0.034,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "0.30.3",
     "released": "2026-03-05",
     "requires_python": ">=3.11"
@@ -433,8 +435,8 @@
     "status": 200,
     "ok": true,
     "size": 269180,
-    "elapsed_s": 0.066,
-    "date": "2026-11-14T03:40:25Z",
+    "elapsed_s": 0.021,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "0.28.0",
     "released": "2026-07-05",
     "requires_python": ">=3.11"
@@ -444,8 +446,8 @@
     "status": 200,
     "ok": true,
     "size": 77516,
-    "elapsed_s": 0.068,
-    "date": "2026-11-14T03:40:25Z",
+    "elapsed_s": 0.036,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "1.6.0",
     "released": "2026-10-19",
     "requires_python": ">=3.10"
@@ -455,8 +457,8 @@
     "status": 200,
     "ok": true,
     "size": 350589,
-    "elapsed_s": 0.037,
-    "date": "2026-11-14T03:40:25Z",
+    "elapsed_s": 0.02,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "3.18.0",
     "released": "2026-11-03",
     "requires_python": ">=3.10"
@@ -466,8 +468,8 @@
     "status": 200,
     "ok": true,
     "size": 527691,
-    "elapsed_s": 0.037,
-    "date": "2026-11-14T03:40:25Z",
+    "elapsed_s": 0.02,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "1.16.0",
     "released": "2026-11-10",
     "requires_python": ">=3.10"
@@ -477,8 +479,8 @@
     "status": 200,
     "ok": true,
     "size": 104480,
-    "elapsed_s": 0.065,
-    "date": "2026-11-14T03:40:25Z",
+    "elapsed_s": 0.019,
+    "date": "2026-11-16T02:24:45Z",
     "latest": "2.2.5",
     "released": "2026-10-22",
     "requires_python": ">=3.11"
@@ -490,8 +492,8 @@
     "status": 200,
     "ok": true,
     "size": 7298,
-    "elapsed_s": 0.194,
-    "date": "2026-11-14T03:40:25Z",
+    "elapsed_s": 0.061,
+    "date": "2026-11-16T02:24:45Z",
     "id": "answerdotai/ModernBERT-base",
     "pinned": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
     "resolved": "8949b909ec900327062f0ebf497f51aef5e6f0c8",
@@ -503,9 +505,9 @@
     "url": "https://huggingface.co/api/models/BAAI/bge-small-en-v1.5/revision/5c38ec7c405ec4b44b94cc5a9bb96e735b38267a?blobs=true",
     "status": 200,
     "ok": true,
-    "size": 150350,
-    "elapsed_s": 0.087,
-    "date": "2026-11-14T03:40:25Z",
+    "size": 150327,
+    "elapsed_s": 0.054,
+    "date": "2026-11-16T02:24:45Z",
     "id": "BAAI/bge-small-en-v1.5",
     "pinned": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
     "resolved": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
@@ -531,6 +533,414 @@
   "image": {
    "status": "pending",
    "note": "measured at step 13 from a build of Dockerfile.vercel with onnxruntime added"
+  }
+ },
+ "phase3": {
+  "pin_rule": {
+   "phase_start": "2026-11-16",
+   "min_age_days": 14,
+   "released_on_or_before": "2026-11-02"
+  },
+  "libraries": {
+   "langgraph": {
+    "url": "https://pypi.org/pypi/langgraph/json",
+    "status": 200,
+    "ok": true,
+    "size": 453984,
+    "elapsed_s": 0.021,
+    "date": "2026-11-16T02:24:45Z",
+    "latest": "1.2.22",
+    "latest_released": "2026-11-14",
+    "pin": "1.2.19",
+    "pin_released": "2026-10-30",
+    "requires_python": ">=3.10"
+   },
+   "langgraph-checkpoint-postgres": {
+    "url": "https://pypi.org/pypi/langgraph-checkpoint-postgres/json",
+    "status": 200,
+    "ok": true,
+    "size": 95991,
+    "elapsed_s": 0.023,
+    "date": "2026-11-16T02:24:45Z",
+    "latest": "3.2.1",
+    "latest_released": "2026-11-14",
+    "pin": "3.2.0",
+    "pin_released": "2026-10-14",
+    "requires_python": ">=3.10"
+   },
+   "langchain-core": {
+    "url": "https://pypi.org/pypi/langchain-core/json",
+    "status": 200,
+    "ok": true,
+    "size": 519854,
+    "elapsed_s": 0.021,
+    "date": "2026-11-16T02:24:45Z",
+    "latest": "1.8.1",
+    "latest_released": "2026-11-15",
+    "pin": "1.7.4",
+    "pin_released": "2026-11-02",
+    "requires_python": "<4.0.0,>=3.11.0"
+   },
+   "mcp": {
+    "url": "https://pypi.org/pypi/mcp/json",
+    "status": 200,
+    "ok": true,
+    "size": 120104,
+    "elapsed_s": 0.025,
+    "date": "2026-11-16T02:24:45Z",
+    "latest": "2.3.0",
+    "latest_released": "2026-10-02",
+    "pin": "2.3.0",
+    "pin_released": "2026-10-02",
+    "requires_python": ">=3.10"
+   },
+   "pgvector": {
+    "url": "https://pypi.org/pypi/pgvector/json",
+    "status": 200,
+    "ok": true,
+    "size": 49874,
+    "elapsed_s": 0.018,
+    "date": "2026-11-16T02:24:45Z",
+    "latest": "0.5.1",
+    "latest_released": "2026-10-09",
+    "pin": "0.5.1",
+    "pin_released": "2026-10-09",
+    "requires_python": ">=3.10"
+   },
+   "psycopg": {
+    "url": "https://pypi.org/pypi/psycopg/json",
+    "status": 200,
+    "ok": true,
+    "size": 105804,
+    "elapsed_s": 0.018,
+    "date": "2026-11-16T02:24:45Z",
+    "latest": "3.3.9",
+    "latest_released": "2026-11-12",
+    "pin": "3.3.6",
+    "pin_released": "2026-09-18",
+    "requires_python": ">=3.10"
+   },
+   "sentence-transformers": {
+    "url": "https://pypi.org/pypi/sentence-transformers/json",
+    "status": 200,
+    "ok": true,
+    "size": 123748,
+    "elapsed_s": 0.026,
+    "date": "2026-11-16T02:24:45Z",
+    "latest": "6.3.0",
+    "latest_released": "2026-11-11",
+    "pin": "6.2.0",
+    "pin_released": "2026-10-21",
+    "requires_python": ">=3.10"
+   },
+   "tokenizers": {
+    "url": "https://pypi.org/pypi/tokenizers/json",
+    "status": 200,
+    "ok": true,
+    "size": 2499092,
+    "elapsed_s": 0.037,
+    "date": "2026-11-16T02:24:45Z",
+    "latest": "0.23.3",
+    "latest_released": "2026-10-09",
+    "pin": "0.23.3",
+    "pin_released": "2026-10-09",
+    "requires_python": ">=3.10"
+   },
+   "onnxruntime": {
+    "url": "https://pypi.org/pypi/onnxruntime/json",
+    "status": 200,
+    "ok": true,
+    "size": 1123855,
+    "elapsed_s": 0.023,
+    "date": "2026-11-16T02:24:45Z",
+    "latest": "1.32.0",
+    "latest_released": "2026-11-13",
+    "pin": "1.31.1",
+    "pin_released": "2026-10-26",
+    "requires_python": ">=3.11"
+   },
+   "optimum": {
+    "url": "https://pypi.org/pypi/optimum/json",
+    "status": 200,
+    "ok": true,
+    "size": 128638,
+    "elapsed_s": 0.018,
+    "date": "2026-11-16T02:24:45Z",
+    "latest": "2.3.0",
+    "latest_released": "2026-08-04",
+    "pin": "2.3.0",
+    "pin_released": "2026-08-04",
+    "requires_python": ">=3.9.0"
+   },
+   "faiss-cpu": {
+    "url": "https://pypi.org/pypi/faiss-cpu/json",
+    "status": 200,
+    "ok": true,
+    "size": 527691,
+    "elapsed_s": 0.019,
+    "date": "2026-11-16T02:24:45Z",
+    "latest": "1.16.0",
+    "latest_released": "2026-11-10",
+    "pin": "1.15.1",
+    "pin_released": "2026-09-16",
+    "requires_python": ">=3.10"
+   },
+   "openai": {
+    "url": "https://pypi.org/pypi/openai/json",
+    "status": 200,
+    "ok": true,
+    "size": 725051,
+    "elapsed_s": 0.028,
+    "date": "2026-11-16T02:24:45Z",
+    "latest": "3.51.0",
+    "latest_released": "2026-11-13",
+    "pin": "3.42.1",
+    "pin_released": "2026-11-01",
+    "requires_python": ">=3.10"
+   },
+   "google-genai": {
+    "url": "https://pypi.org/pypi/google-genai/json",
+    "status": 200,
+    "ok": true,
+    "size": 281292,
+    "elapsed_s": 0.024,
+    "date": "2026-11-16T02:24:45Z",
+    "latest": "3.3.0",
+    "latest_released": "2026-11-12",
+    "pin": "2.34.0",
+    "pin_released": "2026-10-29",
+    "requires_python": ">=3.11"
+   },
+   "openai-agents": {
+    "url": "https://pypi.org/pypi/openai-agents/json",
+    "status": 200,
+    "ok": true,
+    "size": 209365,
+    "elapsed_s": 0.025,
+    "date": "2026-11-16T02:24:45Z",
+    "latest": "0.24.0",
+    "latest_released": "2026-10-15",
+    "pin": "0.24.0",
+    "pin_released": "2026-10-15",
+    "requires_python": ">=3.10"
+   },
+   "google-adk": {
+    "url": "https://pypi.org/pypi/google-adk/json",
+    "status": 200,
+    "ok": true,
+    "size": 180344,
+    "elapsed_s": 0.023,
+    "date": "2026-11-16T02:24:46Z",
+    "latest": "2.14.1",
+    "latest_released": "2026-11-12",
+    "pin": "2.13.0",
+    "pin_released": "2026-10-23",
+    "requires_python": ">=3.11"
+   },
+   "hypothesis": {
+    "url": "https://pypi.org/pypi/hypothesis/json",
+    "status": 200,
+    "ok": true,
+    "size": 6956881,
+    "elapsed_s": 0.041,
+    "date": "2026-11-16T02:24:46Z",
+    "latest": "6.170.15",
+    "latest_released": "2026-11-06",
+    "pin": "6.170.14",
+    "pin_released": "2026-10-30",
+    "requires_python": ">=3.11"
+   }
+  },
+  "providers": {
+   "groq": {
+    "ok": true,
+    "token_present": false,
+    "key_env": "GROQ_API_KEY",
+    "base_url": "https://api.groq.com/openai/v1",
+    "documented": {
+     "plan": "free",
+     "per_model": "30 requests a minute, 1,000 a day, 8,000 tokens a minute, 200,000 a day",
+     "guard": "30 requests a minute, 14,400 a day",
+     "read_on": "2026-11-06",
+     "read_from": "https://www.developersdigest.tech/rate-limits/groq",
+     "note": "a third party summary; the exact limits are on the signed in limits page"
+    },
+    "note": "GROQ_API_KEY is not set, so the router skips groq and the floor answers"
+   },
+   "gemini": {
+    "ok": true,
+    "token_present": false,
+    "key_env": "GEMINI_API_KEY",
+    "base_url": "https://generativelanguage.googleapis.com/v1beta/openai",
+    "documented": {
+     "plan": "the Gemini API free tier from Google AI Studio",
+     "per_model": "the page says the limits can be viewed in Google AI Studio and lists none, so the build records them from there with the date",
+     "read_on": "2026-11-16",
+     "read_from": "https://ai.google.dev/gemini-api/docs/rate-limits",
+     "note": "the page was last updated on 28 October 2026"
+    },
+    "note": "GEMINI_API_KEY is not set, so the router skips gemini and the floor answers"
+   },
+   "openrouter": {
+    "ok": true,
+    "token_present": false,
+    "key_env": "OPENROUTER_API_KEY",
+    "base_url": "https://openrouter.ai/api/v1",
+    "documented": {
+     "plan": "free models",
+     "per_model": "20 requests a minute, and 50 a day until 10 credits are bought",
+     "read_on": "2026-11-06",
+     "read_from": "https://www.developersdigest.tech/rate-limits/openrouter"
+    },
+    "note": "OPENROUTER_API_KEY is not set, so the router skips openrouter and the floor answers"
+   },
+   "cerebras": {
+    "ok": true,
+    "token_present": false,
+    "key_env": "CEREBRAS_API_KEY",
+    "base_url": "https://api.cerebras.ai/v1",
+    "documented": {
+     "plan": "free trial",
+     "per_model": "gpt-oss-120b at 5 requests a minute and 1,000,000 tokens a day",
+     "read_on": "2026-11-15",
+     "read_from": "https://inference-docs.cerebras.ai/support/rate-limits"
+    },
+    "note": "CEREBRAS_API_KEY is not set, so the router skips cerebras and the floor answers"
+   }
+  },
+  "providers_with_a_key": [],
+  "retired": {
+   "github_models": {
+    "closed_on": "2026-07-30",
+    "read_from": "https://klymentiev.com/blog/github-models-shutdown",
+    "note": "GITHUB_TOKEN gives no model since then, so Actions has no free model of its own"
+   }
+  },
+  "price_book": {
+   "ok": true,
+   "status": 200,
+   "url": "https://raw.githubusercontent.com/mekala27-45/mlspend/main/data/prices/expanded/book.json",
+   "sha256": "f4cb45b054f367f67ee05e1a1a5693352d054a4ef3fbe335c24fa0bff2f13fcb",
+   "bytes": 39528,
+   "rows": 79,
+   "token_rows": 6,
+   "token_skus": [
+    "gpt-6-luna cached",
+    "gpt-6-luna input",
+    "gpt-6-luna output",
+    "gpt-6.1-terra cached",
+    "gpt-6.1-terra input",
+    "gpt-6.1-terra output"
+   ],
+   "providers": [
+    "AWS",
+    "Azure",
+    "GitHub",
+    "OpenAI",
+    "Vercel"
+   ],
+   "retrieved": [
+    "2026-10-31",
+    "2026-11-01"
+   ]
+  },
+  "neon": {
+   "ok": true,
+   "status": 200,
+   "read_at": "2026-11-16T02:24:50Z",
+   "reachable": true,
+   "migration": "0003",
+   "server_version": "18.7 (a21afb5)",
+   "pgvector_available": true,
+   "pgvector_version": "0.8.7",
+   "pgvector_installed": false,
+   "pg_search_available": true,
+   "database_size_bytes": 752672768,
+   "storage_ceiling_bytes": 800000000,
+   "storage_share_used": 0.9408,
+   "tables": [
+    {
+     "name": "cve_event",
+     "total_bytes": 371572736,
+     "index_bytes": 114212864,
+     "rows_estimate": 1292251
+    },
+    {
+     "name": "cve",
+     "total_bytes": 304185344,
+     "index_bytes": 35635200,
+     "rows_estimate": 260528
+    },
+    {
+     "name": "prediction",
+     "total_bytes": 65609728,
+     "index_bytes": 6955008,
+     "rows_estimate": 181904
+    },
+    {
+     "name": "finding",
+     "total_bytes": 1998848,
+     "index_bytes": 294912,
+     "rows_estimate": 1275
+    },
+    {
+     "name": "settings",
+     "total_bytes": 294912,
+     "index_bytes": 16384,
+     "rows_estimate": 5
+    },
+    {
+     "name": "ops_run",
+     "total_bytes": 98304,
+     "index_bytes": 32768,
+     "rows_estimate": 114
+    },
+    {
+     "name": "client_budget",
+     "total_bytes": 65536,
+     "index_bytes": 16384,
+     "rows_estimate": 75
+    },
+    {
+     "name": "match_log",
+     "total_bytes": 49152,
+     "index_bytes": 32768,
+     "rows_estimate": 0
+    },
+    {
+     "name": "product",
+     "total_bytes": 32768,
+     "index_bytes": 16384,
+     "rows_estimate": 6
+    },
+    {
+     "name": "alembic_version",
+     "total_bytes": 24576,
+     "index_bytes": 16384,
+     "rows_estimate": 0
+    }
+   ],
+   "schemas": [
+    {
+     "name": "unscheduled",
+     "total_bytes": 743931904
+    },
+    {
+     "name": "public",
+     "total_bytes": 0
+    }
+   ],
+   "data_version": "serving-202611152200+f89ae3f7e825"
+  },
+  "vercel": {
+   "ok": true,
+   "configured_max_duration_s": null,
+   "documented_max_s": 300,
+   "documented_default_s": 300,
+   "read_from": "https://vercel.com/docs/functions/configuring-functions/duration",
+   "page_updated": "2026-08-24",
+   "read_on": "2026-11-15",
+   "note": "the Hobby plan with fluid compute; C8 asks a triage run for 30 s at the 95th percentile"
   }
  },
  "neon": {

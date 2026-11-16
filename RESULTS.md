@@ -115,13 +115,13 @@ writes into it.
 
 ## The Phase 3 checklist
 
-0 of the 18 lines are done. A line is done
+1 of the 18 lines are done. A line is done
 only when its evidence says pass, and a file an earlier phase wrote counts here only with what Phase 3
 writes into it.
 
 | Item | Status | Line | Evidence |
 |---:|---|---|---|
-| 1 | not done | The probes extended and read by every agent step; the model gate rescoped in CI with its three tests | results/probe.json |
+| 1 | done | The probes extended and read by every agent step; the model gate rescoped in CI with its three tests | results/probe.json |
 | 2 | not done | The room plan measured before any load (ADR 0011); Neon under its ceiling with the daily growth covered to 13 December | results/agent/room.json, docs/adr/0011-the-room-in-neon.md |
 | 3 | not done | The Phase 3 plan and the red team hashed as the agent stage before any evaluation | evaluation/registration.json |
 | 4 | not done | The advisory corpus built point in time, the leakage test passing, the corpus published by digest | results/retrieval/corpus.json |
