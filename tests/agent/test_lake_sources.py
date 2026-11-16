@@ -8,8 +8,9 @@ from datetime import UTC, datetime
 
 import polars as pl
 import pytest
+from unscheduled_agent.affected import version_key
 
-from scripts.agent_sources import LakeSources, listings, version_key
+from scripts.agent_sources import LakeSources, listings
 from scripts.build_corpus import build as build_corpus
 from tests.retrieval import corpus_fixture
 

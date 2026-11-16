@@ -85,6 +85,9 @@ class Store:
 
     conn: psycopg.Connection[Any]
     schema: str
+    # The table of chunks; its indexes are named after it (chunk_text and chunk_hnsw for the evals,
+    # corpus_chunk_text and corpus_chunk_hnsw in Neon, migration 0005).
+    chunks: str = "chunk"
 
     def table(self, name: str) -> sql.Composed:
         return sql.SQL("{}.{}").format(sql.Identifier(self.schema), sql.Identifier(name))
@@ -93,13 +96,13 @@ class Store:
         with self.conn.cursor() as cur:
             cur.execute("create extension if not exists vector")
             cur.execute(sql.SQL("create schema if not exists {}").format(sql.Identifier(self.schema)))
-            cur.execute(sql.SQL("drop table if exists {}").format(self.table("chunk")))
+            cur.execute(sql.SQL("drop table if exists {}").format(self.table(self.chunks)))
             cur.execute(
                 sql.SQL(
                     "create table {} (chunk_id text primary key, doc_id text not null, source text not null, "
                     "version text not null, known_from timestamptz not null, known_to timestamptz, "
                     "withdrawn timestamptz, ordinal integer not null, text text not null, embedding halfvec(384))"
-                ).format(self.table("chunk"))
+                ).format(self.table(self.chunks))
             )
         self.conn.commit()
         register_vector(self.conn)
@@ -117,7 +120,7 @@ class Store:
             "text",
         ]
         copy = sql.SQL("copy {} ({}) from stdin").format(
-            self.table("chunk"),
+            self.table(self.chunks),
             sql.SQL(", ").join(sql.Identifier(c) for c in [*columns, "embedding"]),
         )
         with self.conn.cursor() as cur, cur.copy(copy) as out:
@@ -132,31 +135,40 @@ class Store:
         with self.conn.cursor() as cur:
             start = time.perf_counter()
             cur.execute(
-                sql.SQL("create index chunk_text on {} using gin (to_tsvector('english', text))").format(
-                    self.table("chunk")
+                sql.SQL("create index {} on {} using gin (to_tsvector('english', text))").format(
+                    sql.Identifier(f"{self.chunks}_text"), self.table(self.chunks)
                 )
             )
             took["text"] = time.perf_counter() - start
             start = time.perf_counter()
             cur.execute(
                 sql.SQL(
-                    "create index chunk_hnsw on {} using hnsw (embedding halfvec_cosine_ops) "
+                    "create index {} on {} using hnsw (embedding halfvec_cosine_ops) "
                     "with (m = {}, ef_construction = {})"
-                ).format(self.table("chunk"), sql.Literal(HNSW_M), sql.Literal(HNSW_EF_CONSTRUCTION))
+                ).format(
+                    sql.Identifier(f"{self.chunks}_hnsw"),
+                    self.table(self.chunks),
+                    sql.Literal(HNSW_M),
+                    sql.Literal(HNSW_EF_CONSTRUCTION),
+                )
             )
             took["hnsw"] = time.perf_counter() - start
-            cur.execute(sql.SQL("analyze {}").format(self.table("chunk")))
+            cur.execute(sql.SQL("analyze {}").format(self.table(self.chunks)))
         self.conn.commit()
         return took
 
     def sizes(self) -> dict[str, int]:
         with self.conn.cursor() as cur:
             out: dict[str, int] = {}
-            for name in ("chunk", "chunk_text", "chunk_hnsw"):
-                cur.execute("select pg_relation_size(%s::regclass)", (f'"{self.schema}"."{name}"',))
+            for name, relation in (
+                ("chunk", self.chunks),
+                ("chunk_text", f"{self.chunks}_text"),
+                ("chunk_hnsw", f"{self.chunks}_hnsw"),
+            ):
+                cur.execute("select pg_relation_size(%s::regclass)", (f'"{self.schema}"."{relation}"',))
                 row = cur.fetchone()
                 out[name] = int(row[0]) if row else 0
-            cur.execute("select pg_total_relation_size(%s::regclass)", (f'"{self.schema}"."chunk"',))
+            cur.execute("select pg_total_relation_size(%s::regclass)", (f'"{self.schema}"."{self.chunks}"',))
             row = cur.fetchone()
             out["total"] = int(row[0]) if row else 0
             return out
@@ -170,7 +182,7 @@ class Store:
             "from {}, websearch_to_tsquery('english', %(query)s) as q "
             "where to_tsvector('english', text) @@ q and {} "
             "order by score desc, chunk_id limit %(limit)s"
-        ).format(self.table("chunk"), self._visible(timed))
+        ).format(self.table(self.chunks), self._visible(timed))
         with self.conn.cursor() as cur:
             cur.execute(statement, {"query": query, "t": at, "limit": limit})
             return [(str(c), str(d), float(s)) for c, d, s in cur.fetchall()]
@@ -187,7 +199,7 @@ class Store:
         statement = sql.SQL(
             "select chunk_id, doc_id, embedding <=> %(v)s as distance from {} where {} "
             "order by embedding <=> %(v)s limit %(limit)s"
-        ).format(self.table("chunk"), self._visible(timed))
+        ).format(self.table(self.chunks), self._visible(timed))
         with self.conn.cursor() as cur:
             cur.execute(sql.SQL("set local hnsw.ef_search = {}").format(sql.Literal(int(ef_search))))
             cur.execute("set local hnsw.iterative_scan = relaxed_order")

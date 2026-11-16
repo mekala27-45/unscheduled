@@ -190,6 +190,84 @@ ops_run = sa.Table(
 )
 sa.Index("ix_ops_run_kind_started", ops_run.c.kind, ops_run.c.started_at)
 
+# Phase 3 (migration 0005, ADR 0011): the scoped corpus, the triage runs, the approvals, the budget.
+corpus_document = sa.Table(
+    "corpus_document",
+    metadata,
+    sa.Column("doc_id", sa.Text, primary_key=True),
+    sa.Column("version", sa.Text, primary_key=True),
+    sa.Column("source", sa.Text, nullable=False),
+    sa.Column("known_from", sa.DateTime(timezone=True), nullable=False),
+    sa.Column("known_to", sa.DateTime(timezone=True)),
+    sa.Column("withdrawn", sa.DateTime(timezone=True)),
+    sa.Column("cve_ids", ARRAY(sa.Text), nullable=False, server_default=sa.text("'{}'")),
+    sa.Column("sections", JSONB, nullable=False),
+)
+sa.Index("corpus_document_cves", corpus_document.c.cve_ids, postgresql_using="gin")
+
+corpus_chunk = sa.Table(
+    "corpus_chunk",
+    metadata,
+    sa.Column("chunk_id", sa.Text, primary_key=True),
+    sa.Column("doc_id", sa.Text, nullable=False),
+    sa.Column("version", sa.Text, nullable=False),
+    sa.Column("source", sa.Text, nullable=False),
+    sa.Column("known_from", sa.DateTime(timezone=True), nullable=False),
+    sa.Column("known_to", sa.DateTime(timezone=True)),
+    sa.Column("withdrawn", sa.DateTime(timezone=True)),
+    sa.Column("ordinal", sa.Integer, nullable=False),
+    sa.Column("sections", ARRAY(sa.Text), nullable=False),
+    sa.Column("text", sa.Text, nullable=False),
+    # halfvec(384) of pgvector, created by migration 0005; the API reads and writes it as text.
+    sa.Column("embedding", sa.types.NullType()),
+)
+sa.Index(
+    "corpus_chunk_text", sa.text("to_tsvector('english', text)"), postgresql_using="gin", _table=corpus_chunk
+)
+sa.Index("corpus_chunk_hnsw", corpus_chunk.c.embedding, postgresql_using="hnsw", _table=corpus_chunk)
+
+agent_run = sa.Table(
+    "agent_run",
+    metadata,
+    sa.Column("run_id", sa.Text, primary_key=True),
+    sa.Column("cve_id", sa.Text, nullable=False),
+    sa.Column("as_of", sa.DateTime(timezone=True), nullable=False),
+    sa.Column("parent_run_id", sa.Text),
+    sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
+    sa.Column("updated_at", sa.DateTime(timezone=True), nullable=False),
+    sa.Column("status", sa.Text, nullable=False),
+    sa.Column("plan_sha256", sa.Text),
+    sa.Column("warning_sha256", sa.Text),
+    sa.Column("checkpoints", sa.Text, nullable=False, server_default=sa.text("'kept'")),
+    sa.Column("summary", JSONB, nullable=False, server_default=sa.text("'{}'::jsonb")),
+)
+sa.Index("agent_run_created", agent_run.c.created_at.desc())
+sa.Index("agent_run_status", agent_run.c.status)
+
+agent_approval = sa.Table(
+    "agent_approval",
+    metadata,
+    sa.Column("id", sa.BigInteger, sa.Identity(always=True), primary_key=True),
+    sa.Column("run_id", sa.Text, nullable=False),
+    sa.Column("kind", sa.Text, nullable=False),
+    sa.Column("sha256", sa.Text, nullable=False),
+    sa.Column("decision", sa.Text, nullable=False),
+    sa.Column("decided_by", sa.Text, nullable=False),
+    sa.Column("decided_at", sa.DateTime(timezone=True), nullable=False),
+    sa.Column("token_ok", sa.Boolean, nullable=False),
+)
+sa.Index("agent_approval_run", agent_approval.c.run_id)
+
+agent_budget = sa.Table(
+    "agent_budget",
+    metadata,
+    sa.Column("provider", sa.Text, primary_key=True),
+    sa.Column("model", sa.Text, primary_key=True),
+    sa.Column("day", sa.Date, primary_key=True),
+    sa.Column("requests", sa.Integer, nullable=False, server_default=sa.text("0")),
+    sa.Column("tokens", sa.Integer, nullable=False, server_default=sa.text("0")),
+)
+
 DATA_TABLES = ("cve", "cve_event", "product", "finding", "prediction")
 
 

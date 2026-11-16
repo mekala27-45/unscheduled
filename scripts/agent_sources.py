@@ -18,25 +18,19 @@ known at the run time: what the agent evals of step 12 run on.
 from __future__ import annotations
 
 import json
-import re
 from collections.abc import Callable
 from datetime import datetime
 from pathlib import Path
 from typing import Any
 
 import polars as pl
-from unscheduled_agent import verify
+from unscheduled_agent import affected, verify
 from unscheduled_agent.graph import Match
 from unscheduled_agent.schemas import Evidence, ExploitSignal, FixedVersion, KevListing
 from unscheduled_lake.engine import Engine
 from unscheduled_retrieval import corpus
 
-FIXED = re.compile(r"fixed in ([^\s;]+)")
 Retrieve = Callable[[str, datetime, int], list[Evidence]]
-
-
-def version_key(version: str) -> tuple[tuple[int, str], ...]:
-    return tuple((int(p), "") if p.isdigit() else (-1, p) for p in re.split(r"[.\-+_]", version) if p)
 
 
 class LakeSources:
@@ -116,22 +110,14 @@ class LakeSources:
     def fixed_versions(self, cve_id: str, match: Match | None, at: datetime) -> list[FixedVersion]:
         if not match or "ecosystem" not in match:
             return []
-        prefix = f"{match['ecosystem']}/{match['component']}: "
-        found: list[FixedVersion] = []
-        for doc_id in sorted(self.by_cve.get(cve_id, [])):
-            version = self._known(doc_id, at)
-            if version is None:
-                continue
-            for line in (version.sections.get("affected") or "").split("\n"):
-                if line.startswith(prefix):
-                    for fixed in FIXED.findall(line):
-                        found.append(FixedVersion(version=fixed, source=doc_id, doc_version=version.version))
-        installed = match.get("installed_version")
-        if installed:
-            above = [f for f in found if version_key(f.version) > version_key(installed)]
-            above.sort(key=lambda f: version_key(f.version))
-            return above[:1]
-        return found[:1]
+        known = [
+            (doc_id, v.version, v.sections.get("affected") or "")
+            for doc_id in sorted(self.by_cve.get(cve_id, []))
+            if (v := self._known(doc_id, at)) is not None
+        ]
+        return affected.fixed_versions(
+            known, match["ecosystem"], match["component"], match.get("installed_version")
+        )
 
     def predictions(self, cve_id: str, at: datetime) -> dict[str, Any]:
         return {}
