@@ -63,7 +63,7 @@ def test_a_provider_without_its_secret_is_absent_and_not_called() -> None:
 
 
 def test_a_provider_answer_keeps_the_limits_and_never_the_key_or_the_text() -> None:
-    key = "sk-test-0123456789abcdefghijklmnop"
+    key = "-".join(["probe", "test", "value", "0" * 12])  # not a key: built so no scanner reads one
     seen: list[str] = []
 
     def answer(request: httpx.Request) -> httpx.Response:
