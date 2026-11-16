@@ -132,6 +132,14 @@ def test_the_search_view_holds_the_newest_version_known_and_nothing_later(built:
         ("cwe:CWE-22", "4.13"),
         ("cwe:CWE-77", "4.13"),
     }
+    ends = {
+        (r["version"], r["known_to"])
+        for r in chunks.filter(pl.col("doc_id") == "ghsa:GHSA-aaaa-bbbb-cccc").iter_rows(named=True)
+    }
+    assert ends == {
+        ("2024-03-01T12:00:00Z", datetime(2025, 6, 1, tzinfo=UTC)),
+        ("2025-06-01T00:00:00Z", None),
+    }
     later = corpus.as_of(chunks, datetime(2026, 11, 1, tzinfo=UTC))
     assert ("cwe:CWE-22", "5.0") in {(r["doc_id"], r["version"]) for r in later.iter_rows(named=True)}
     assert later.filter(pl.col("doc_id") == "kev:CVE-2021-44228").get_column(

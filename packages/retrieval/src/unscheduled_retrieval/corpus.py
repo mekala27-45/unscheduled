@@ -58,6 +58,7 @@ CHUNK_SCHEMA: dict[str, Any] = {
     "source": pl.String,
     "version": pl.String,
     "known_from": pl.Datetime("us", "UTC"),
+    "known_to": pl.Datetime("us", "UTC"),
     "withdrawn": pl.Datetime("us", "UTC"),
     "cve_ids": pl.List(pl.String),
     "ordinal": pl.Int32,
@@ -295,7 +296,17 @@ def chunk_frame(
         for c in chunk_document(v.doc, count, max_tokens):
             rows.append(_chunk_row(v, c))
     frame = pl.DataFrame(rows, schema=CHUNK_SCHEMA)
-    return frame.sort(["doc_id", "known_from", "version", "ordinal"])
+    # A version is current from its known_from until the next version of its document is known,
+    # so a search can read the view at a time as one condition on each row.
+    order = ["doc_id", "known_from", "version"]
+    spans = (
+        frame.select(order)
+        .unique()
+        .sort(order)
+        .with_columns(pl.col("known_from").shift(-1).over("doc_id").alias("next_known"))
+    )
+    frame = frame.drop("known_to").join(spans, on=order, how="left").rename({"next_known": "known_to"})
+    return frame.select(list(CHUNK_SCHEMA)).sort([*order, "ordinal"])
 
 
 def _chunk_row(v: Version, c: Chunk) -> dict[str, Any]:
@@ -305,6 +316,7 @@ def _chunk_row(v: Version, c: Chunk) -> dict[str, Any]:
         "source": c.source,
         "version": v.doc.version,
         "known_from": v.known_from,
+        "known_to": None,
         "withdrawn": v.withdrawn,
         "cve_ids": list(v.doc.cve_ids),
         "ordinal": c.ordinal,
@@ -316,20 +328,24 @@ def _chunk_row(v: Version, c: Chunk) -> dict[str, Any]:
     }
 
 
-def as_of(chunks: pl.DataFrame, at: datetime) -> pl.DataFrame:
-    """The chunks a search may read at a time: for each document, its newest version known by then,
-    unless that version had been withdrawn by then. Every index is built from this view."""
-    known = chunks.filter(pl.col("known_from") <= at)
-    newest = (
-        known.select("doc_id", "known_from", "version", "withdrawn")
-        .unique()
-        .sort(["doc_id", "known_from", "version"])
-        .group_by("doc_id", maintain_order=True)
-        .last()
-        .filter(pl.col("withdrawn").is_null() | (pl.col("withdrawn") > at))
-        .select("doc_id", "known_from", "version")
+VISIBLE_SQL = (
+    "known_from <= {t} and (known_to is null or known_to > {t}) and (withdrawn is null or withdrawn > {t})"
+)
+
+
+def visible(at: datetime) -> pl.Expr:
+    """A chunk a search may read at a time: its version is the newest of its document known by then,
+    and that version had not been withdrawn by then. VISIBLE_SQL is the same condition in SQL."""
+    return (
+        (pl.col("known_from") <= at)
+        & (pl.col("known_to").is_null() | (pl.col("known_to") > at))
+        & (pl.col("withdrawn").is_null() | (pl.col("withdrawn") > at))
     )
-    return known.join(newest, on=["doc_id", "known_from", "version"], how="semi").sort(["doc_id", "ordinal"])
+
+
+def as_of(chunks: pl.DataFrame, at: datetime) -> pl.DataFrame:
+    """The chunks a search may read at a time. Every index is built from this condition."""
+    return chunks.filter(visible(at)).sort(["doc_id", "ordinal"])
 
 
 def description_facts(con: duckdb.DuckDBPyConnection) -> None:
@@ -495,6 +511,7 @@ def content_digest(chunks: pl.DataFrame) -> str:
                     pl.col("doc_id"),
                     pl.col("version"),
                     pl.col("known_from").dt.to_string("%Y-%m-%dT%H:%M:%S%.6f"),
+                    pl.col("known_to").dt.to_string("%Y-%m-%dT%H:%M:%S%.6f").fill_null(""),
                     pl.col("withdrawn").dt.to_string("%Y-%m-%dT%H:%M:%S%.6f").fill_null(""),
                     pl.col("digest"),
                 ],
