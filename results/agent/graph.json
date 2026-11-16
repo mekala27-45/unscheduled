@@ -1,0 +1,112 @@
+{
+ "checkpoints": {
+  "retention": "a decided run keeps its latest checkpoint; past the newest 500 decided runs only its record stays, and at most 100 runs wait at once (ADR 0011)",
+  "saver": "langgraph.checkpoint.postgres.PostgresSaver",
+  "schema": "the API schema with _checkpoints after it (unscheduled_checkpoints in Neon)"
+ },
+ "control": "tests/agent/test_control.py and tests/api/test_control_served.py, results/agent/c7.json",
+ "deadline_s": 25.0,
+ "edges": [
+  {
+   "conditional": false,
+   "from": "__start__",
+   "to": "intake"
+  },
+  {
+   "conditional": true,
+   "from": "approve",
+   "to": "done"
+  },
+  {
+   "conditional": true,
+   "from": "approve",
+   "to": "warn"
+  },
+  {
+   "conditional": false,
+   "from": "approve_warning",
+   "to": "done"
+  },
+  {
+   "conditional": false,
+   "from": "done",
+   "to": "__end__"
+  },
+  {
+   "conditional": false,
+   "from": "fill",
+   "to": "rank"
+  },
+  {
+   "conditional": false,
+   "from": "intake",
+   "to": "match"
+  },
+  {
+   "conditional": false,
+   "from": "match",
+   "to": "fill"
+  },
+  {
+   "conditional": false,
+   "from": "plan",
+   "to": "verify"
+  },
+  {
+   "conditional": false,
+   "from": "rank",
+   "to": "retrieve"
+  },
+  {
+   "conditional": false,
+   "from": "retrieve",
+   "to": "plan"
+  },
+  {
+   "conditional": false,
+   "from": "verify",
+   "to": "approve"
+  },
+  {
+   "conditional": false,
+   "from": "verify_warning",
+   "to": "approve_warning"
+  },
+  {
+   "conditional": false,
+   "from": "warn",
+   "to": "verify_warning"
+  }
+ ],
+ "interrupts": [
+  "approve",
+  "approve_warning"
+ ],
+ "nodes": [
+  "intake",
+  "match",
+  "fill",
+  "rank",
+  "retrieve",
+  "plan",
+  "verify",
+  "approve",
+  "warn",
+  "verify_warning",
+  "approve_warning",
+  "done"
+ ],
+ "proven": [
+  "a run waits twice and keeps only decisions on the hash it showed",
+  "a CVE without exploitation evidence gets no warning",
+  "a model draft the verifier blocks is replaced by the floor",
+  "a run replays from a checkpoint to the same state",
+  "a fork with a changed input is a new run that keeps its parent",
+  "a run waiting in Postgres is decided by a new process",
+  "a decision without the hash is void"
+ ],
+ "sentence": "The triage graph in LangGraph: code fills the typed state as known at the run time, the router drafts, the verifier checks every claim, and the run waits for a person at each approve node, with every checkpoint in Postgres.",
+ "step": 8,
+ "verdict": "pass",
+ "warning_branch": "after the plan is decided, only for a CVE with exploitation evidence: a KEV listing, or exploit code seen by the run time"
+}

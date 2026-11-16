@@ -5,6 +5,7 @@ same state, a fork that keeps its parent, and a run resumed from Postgres by a n
 from __future__ import annotations
 
 import json
+import sys
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
@@ -19,6 +20,7 @@ from unscheduled_agent import floor, graph, prices, replay
 from unscheduled_agent.router import MemoryBudget, Router, adapters, limits
 from unscheduled_agent.schemas import Facts
 
+from tests.agent import evidence
 from tests.agent.fixtures import AS_OF, CVE, FixtureSources
 from tests.api import postgres as _postgres
 
@@ -196,3 +198,40 @@ def test_a_decision_without_the_hash_is_void(bad: str) -> None:
     out = compiled.invoke(graph.Command(resume={"decision": bad}), graph.config("nohash"))
     assert compiled.get_state(graph.config("nohash")).values["plan_decision"]["decision"] == "void"
     assert out["__interrupt__"][0].value["kind"] == "early_warning"
+
+
+def test_the_record_of_the_graph() -> None:
+    """results/agent/graph.json, step 8: the nodes and edges as compiled, and the tests behind them."""
+    proven = evidence.proven(sys.modules[__name__], "test_the_record_of_the_graph")
+    if proven is None:
+        pytest.skip("not every graph test passed in this session; the record is written by a full run")
+    drawn = graph.build(FixtureSources(), None).compile(checkpointer=InMemorySaver()).get_graph()
+    nodes = [n for n in drawn.nodes if not n.startswith("__")]
+    edges = [
+        {"from": e.source, "to": e.target, "conditional": bool(e.conditional)}
+        for e in sorted(drawn.edges, key=lambda e: (e.source, e.target))
+    ]
+    evidence.write(
+        "graph",
+        {
+            "step": 8,
+            "sentence": "The triage graph in LangGraph: code fills the typed state as known at the run time, "
+            "the router drafts, the verifier checks every claim, and the run waits for a person at each "
+            "approve node, with every checkpoint in Postgres.",
+            "nodes": nodes,
+            "edges": edges,
+            "interrupts": [n for n in nodes if n.startswith("approve")],
+            "warning_branch": "after the plan is decided, only for a CVE with exploitation evidence: a KEV "
+            "listing, or exploit code seen by the run time",
+            "deadline_s": graph.DEADLINE_S,
+            "checkpoints": {
+                "saver": "langgraph.checkpoint.postgres.PostgresSaver",
+                "schema": "the API schema with _checkpoints after it (unscheduled_checkpoints in Neon)",
+                "retention": "a decided run keeps its latest checkpoint; past the newest 500 decided runs only "
+                "its record stays, and at most 100 runs wait at once (ADR 0011)",
+            },
+            "control": "tests/agent/test_control.py and tests/api/test_control_served.py, results/agent/c7.json",
+            "proven": proven,
+            "verdict": "pass",
+        },
+    )

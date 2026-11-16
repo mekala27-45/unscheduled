@@ -1,0 +1,100 @@
+{
+ "deadline_s": 25.0,
+ "floor": "the plan and the warning from the typed state alone, with templates, each claim citing the advisory section that holds it; always answers, costs nothing",
+ "moves_on_at": [
+  "past the provider's daily budget",
+  "a timeout the run's deadline would not leave room for",
+  "a refusal or an error",
+  "a schema failure after one retry"
+ ],
+ "order": {
+  "file": "config/agent_points.yaml",
+  "frozen": false,
+  "until_frozen": "the API calls no provider and the floor drafts every run; the order is chosen on development by the evals of step 12"
+ },
+ "price_book": {
+  "file": "data/prices/book.json",
+  "sha256": "f4cb45b054f367f67ee05e1a1a5693352d054a4ef3fbe335c24fa0bff2f13fcb",
+  "shadow_sku": "gpt-6-luna",
+  "source": "mekala27-45/mlspend"
+ },
+ "proven": [
+  "the floor plan cites the advisory for the fixed version",
+  "the floor says no source gives a fix when none does",
+  "the floor warning has the early warning fields",
+  "a recorded call is served back and keeps no request header",
+  "the router skips what it cannot use and ends with the floor",
+  "the shadow price comes from the locked book",
+  "the secrets gate reads inside a cassette",
+  "with replays only no call reaches a provider"
+ ],
+ "providers": [
+  {
+   "budget": {
+    "from": "documented",
+    "requests_per_day": 500,
+    "tokens_per_day": 100000
+   },
+   "guard_models": [
+    "meta-llama/llama-prompt-guard-2-86m",
+    "meta-llama/llama-prompt-guard-2-22m"
+   ],
+   "key_env": "GROQ_API_KEY",
+   "models": [
+    "openai/gpt-oss-120b",
+    "openai/gpt-oss-20b",
+    "qwen/qwen3.8-27b"
+   ],
+   "provider": "groq",
+   "timeout_s": 20
+  },
+  {
+   "budget": {
+    "from": "assumed",
+    "requests_per_day": 100,
+    "tokens_per_day": 100000
+   },
+   "guard_models": [],
+   "key_env": "GEMINI_API_KEY",
+   "models": [],
+   "provider": "gemini",
+   "timeout_s": 20
+  },
+  {
+   "budget": {
+    "from": "documented",
+    "requests_per_day": 25,
+    "tokens_per_day": 100000
+   },
+   "guard_models": [],
+   "key_env": "OPENROUTER_API_KEY",
+   "models": [],
+   "provider": "openrouter",
+   "timeout_s": 20
+  },
+  {
+   "budget": {
+    "from": "documented",
+    "requests_per_day": 500,
+    "tokens_per_day": 500000
+   },
+   "guard_models": [],
+   "key_env": "CEREBRAS_API_KEY",
+   "models": [
+    "gpt-oss-120b"
+   ],
+   "provider": "cerebras",
+   "timeout_s": 20
+  }
+ ],
+ "replays": {
+  "calls": 0,
+  "cassettes": 0,
+  "ci": "UNSCHED_REPLAY_ONLY=1, under which a network transport is refused",
+  "folder": "tests/replays",
+  "recorded_by": ".github/workflows/agent-record.yml, started by Ajay once the provider keys are secrets"
+ },
+ "sentence": "Every free provider behind one interface under a daily budget counted in Postgres; past its budget, the run's deadline, a refusal, an error or a schema failure after one retry the router moves on, and the no model floor ends every order.",
+ "step": 6,
+ "verdict": "pass"
+}

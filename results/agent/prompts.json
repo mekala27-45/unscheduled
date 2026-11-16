@@ -1,0 +1,45 @@
+{
+ "frozen_in": "config/agent_points.yaml freezes each version and hash before the shadow window is recorded (step 12)",
+ "packing": [
+  "the typed state first, then the retrieved chunks in rank order",
+  "each chunk fenced between UNTRUSTED START and UNTRUSTED END with its chunk id, document, version and the time it became known",
+  "a line inside a chunk that imitates a fence is defused, so no chunk closes its own fence",
+  "a chunk that would pass the budget is left out whole and counted, never cut",
+  "tokens estimated as four bytes of UTF-8 each, since every provider counts its own way"
+ ],
+ "prompts": [
+  {
+   "context_tokens": 3000,
+   "file": "prompts/plan.md",
+   "id": "plan",
+   "max_tokens": 1500,
+   "node": "plan",
+   "schema": "PatchPlan",
+   "schema_sha256": "4f22c3c8f910dfd7b8e7e07f24997cca43052406ef442ca422d088fb8b3f9cef",
+   "sha256": "c84d9aa94e19486ebd945ce08490a1bef2d7d604b66da60bd6083518c22b6efb",
+   "version": "1"
+  },
+  {
+   "context_tokens": 2500,
+   "file": "prompts/warning.md",
+   "id": "warning",
+   "max_tokens": 1200,
+   "node": "warn",
+   "schema": "EarlyWarning",
+   "schema_sha256": "838e460dcaefccd5624ccdce7bc49d7e5949642bf131fd764803cf2d89eb01a8",
+   "sha256": "e7253f9968628c76540025a76829d0f6f0da1401688b84c2d80e744757991328",
+   "version": "1"
+  }
+ ],
+ "proven": [
+  "every prompt file loads with its version hash and schema",
+  "a changed prompt file has a new hash",
+  "the typed state comes first and the evidence is fenced in rank order",
+  "a chunk cannot close its own fence or pass the budget",
+  "the estimate is four bytes a token",
+  "an answer that fails its schema twice is never taken"
+ ],
+ "sentence": "Each prompt is a versioned file whose hash every call records; every answer is validated against its Pydantic schema, retried once when it fails, and never taken when it fails twice.",
+ "step": 7,
+ "verdict": "pass"
+}

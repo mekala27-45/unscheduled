@@ -115,7 +115,7 @@ writes into it.
 
 ## The Phase 3 checklist
 
-4 of the 18 lines are done. A line is done
+7 of the 18 lines are done. A line is done
 only when its evidence says pass, and a file an earlier phase wrote counts here only with what Phase 3
 writes into it.
 
@@ -126,9 +126,9 @@ writes into it.
 | 3 | done | The Phase 3 plan and the red team hashed as the agent stage before any evaluation | evaluation/registration.json |
 | 4 | not done | The advisory corpus built point in time, the leakage test passing, the corpus published by digest | results/retrieval/corpus.json |
 | 5 | not done | Retrieval measured against its lexical floor with paired intervals; pgvector compared with the file index | results/retrieval/eval.json, results/retrieval/index.json |
-| 6 | not done | The router with budgets, fallbacks, the no model floor and replays; no live call in CI | results/agent/router.json |
-| 7 | not done | Prompts versioned and hashed; every output validated against its schema | results/agent/prompts.json |
-| 8 | not done | The LangGraph agent with checkpoints in Postgres, the approval interrupt, replay and time travel | results/agent/graph.json |
+| 6 | done | The router with budgets, fallbacks, the no model floor and replays; no live call in CI | results/agent/router.json |
+| 7 | done | Prompts versioned and hashed; every output validated against its schema | results/agent/prompts.json |
+| 8 | done | The LangGraph agent with checkpoints in Postgres, the approval interrupt, replay and time travel | results/agent/graph.json |
 | 9 | not done | C5 evidence: every claim checked by code; zero unverified citations in approved drafts | results/agent/c5.json |
 | 10 | done | C7 evidence: the property test over every path, passing | results/agent/c7.json |
 | 11 | not done | C6 evidence: zero planted instructions followed in the registered red team set, its held out half scored once | results/agent/c6.json |

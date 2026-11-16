@@ -6679,7 +6679,7 @@
    }
   },
   "build.phase3.checklist_done": {
-   "value": 4,
+   "value": 7,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/build_manifest.py",
@@ -18753,19 +18753,19 @@
     ],
     [
      6,
-     "not done",
+     "done",
      "The router with budgets, fallbacks, the no model floor and replays; no live call in CI",
      "results/agent/router.json"
     ],
     [
      7,
-     "not done",
+     "done",
      "Prompts versioned and hashed; every output validated against its schema",
      "results/agent/prompts.json"
     ],
     [
      8,
-     "not done",
+     "done",
      "The LangGraph agent with checkpoints in Postgres, the approval interrupt, replay and time travel",
      "results/agent/graph.json"
     ],

@@ -9,17 +9,20 @@ from __future__ import annotations
 
 import gzip
 import json
+import sys
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
 import httpx
 import pytest
-from unscheduled_agent import floor, prices, replay
+import yaml
+from unscheduled_agent import floor, graph, prices, replay
 from unscheduled_agent.router import Limit, MemoryBudget, Prompt, Router, adapters, limits
 from unscheduled_agent.schemas import STATE, EarlyWarning, Facts, FixedVersion, KevListing, PatchPlan
 
 from scripts.check_secrets import check as check_secrets
+from tests.agent import evidence
 
 ROOT = Path(__file__).resolve().parents[2]
 AS_OF = datetime(2024, 8, 19, 23, 59, 59, tzinfo=UTC)
@@ -187,3 +190,78 @@ def test_the_secrets_gate_reads_inside_a_cassette(tmp_path: Path) -> None:
     leaked.write_bytes(gzip.compress(line.encode()))
     with pytest.raises(ValueError, match="bearer credential"):
         check_secrets(tmp_path, [leaked])
+
+
+def test_with_replays_only_no_call_reaches_a_provider(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    monkeypatch.setenv(replay.REPLAY_ONLY, "1")
+    assert not replay.live_allowed()
+    with pytest.raises(RuntimeError, match=replay.REPLAY_ONLY):
+        replay.Recording(replay.Cassette(tmp_path / "live.jsonl.gz"), httpx.HTTPTransport())
+
+
+def _calls(cassette: Path) -> int:
+    return len([line for line in gzip.decompress(cassette.read_bytes()).splitlines() if line.strip()])
+
+
+def test_the_record_of_the_router() -> None:
+    """results/agent/router.json, step 6: what the router is configured with and the tests behind it."""
+    proven = evidence.proven(sys.modules[__name__], "test_the_record_of_the_router")
+    if proven is None:
+        pytest.skip("not every router test passed in this session; the record is written by a full run")
+    config = yaml.safe_load((ROOT / "config" / "providers.yaml").read_text(encoding="utf-8"))
+    lock = json.loads((ROOT / "data" / "prices" / "book.lock.json").read_text(encoding="utf-8"))
+    cassettes = sorted((ROOT / "tests" / "replays").glob("*.jsonl.gz"))
+    points = ROOT / "config" / "agent_points.yaml"
+    evidence.write(
+        "router",
+        {
+            "step": 6,
+            "sentence": "Every free provider behind one interface under a daily budget counted in Postgres; past "
+            "its budget, the run's deadline, a refusal, an error or a schema failure after one retry the router "
+            "moves on, and the no model floor ends every order.",
+            "providers": [
+                {
+                    "provider": name,
+                    "key_env": p["key_env"],
+                    "timeout_s": p.get("timeout_s"),
+                    "budget": p.get("budget"),
+                    "models": p.get("models") or [],
+                    "guard_models": p.get("guard_models") or [],
+                }
+                for name, p in config["providers"].items()
+            ],
+            "moves_on_at": [
+                "past the provider's daily budget",
+                "a timeout the run's deadline would not leave room for",
+                "a refusal or an error",
+                "a schema failure after one retry",
+            ],
+            "floor": "the plan and the warning from the typed state alone, with templates, each claim citing "
+            "the advisory section that holds it; always answers, costs nothing",
+            "deadline_s": graph.DEADLINE_S,
+            "order": {
+                "file": "config/agent_points.yaml",
+                "frozen": points.exists(),
+                "until_frozen": "the API calls no provider and the floor drafts every run; the order is "
+                "chosen on development by the evals of step 12",
+            },
+            "price_book": {
+                "file": lock["file"],
+                "sha256": lock["sha256"],
+                "source": lock["repository"],
+                "shadow_sku": config.get("shadow_sku"),
+            },
+            "replays": {
+                "folder": "tests/replays",
+                "cassettes": len(cassettes),
+                "calls": sum(_calls(c) for c in cassettes),
+                "recorded_by": ".github/workflows/agent-record.yml, started by Ajay once the provider keys "
+                "are secrets",
+                "ci": "UNSCHED_REPLAY_ONLY=1, under which a network transport is refused",
+            },
+            "proven": proven,
+            "verdict": "pass",
+        },
+    )

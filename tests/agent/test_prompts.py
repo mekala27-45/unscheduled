@@ -3,12 +3,19 @@ evidence fenced in rank order within the budget, and no chunk able to close its 
 
 from __future__ import annotations
 
+import hashlib
+import sys
 from datetime import UTC, datetime
 from pathlib import Path
 
+import httpx
 import pytest
-from unscheduled_agent import prompts
+from unscheduled_agent import floor, prices, prompts
+from unscheduled_agent.router import Limit, MemoryBudget, Router, adapters
 from unscheduled_agent.schemas import EarlyWarning, Evidence, Facts, PatchPlan
+from unscheduled_core.hashing import canonical_json
+
+from tests.agent import evidence
 
 ROOT = Path(__file__).resolve().parents[2]
 AT = datetime(2024, 8, 19, 23, 59, 59, tzinfo=UTC)
@@ -74,3 +81,90 @@ def test_a_chunk_cannot_close_its_own_fence_or_pass_the_budget() -> None:
 @pytest.mark.parametrize("text", ["abcd", "é" * 3, ""])
 def test_the_estimate_is_four_bytes_a_token(text: str) -> None:
     assert prompts.estimate(text) == -(-len(text.encode()) // 4)
+
+
+def test_an_answer_that_fails_its_schema_twice_is_never_taken() -> None:
+    """Every answer is validated against the prompt's schema; one retry, told what failed, then the next."""
+    asked: list[int] = []
+
+    def provider(request: httpx.Request) -> httpx.Response:
+        asked.append(len(request.content))
+        content = '{"kind": "patch_plan", "fixed_version": 7}'
+        return httpx.Response(
+            200,
+            json={
+                "choices": [{"message": {"content": content}}],
+                "usage": {"prompt_tokens": 50, "completion_tokens": 9},
+            },
+        )
+
+    config = {
+        "providers": {"p": {"base_url": "https://p.test/v1", "key_env": "P_KEY", "timeout_s": 5}},
+        "shadow_sku": "gpt-6-luna",
+    }
+    plan = prompts.load("plan", ROOT)
+    facts = Facts(cve_id="CVE-2024-1", as_of=AT)
+    router = Router(
+        adapters(
+            config, [("p", "m")], httpx.MockTransport(provider), prices.load(ROOT), {"P_KEY": "made-up"}
+        ),
+        MemoryBudget({"p": Limit(5, 5_000)}),
+    )
+    draft, calls = router.generate(
+        plan, {"facts": facts.model_dump(mode="json")}, PatchPlan, lambda: floor.plan(facts), max_tokens=500
+    )
+    assert len(asked) == 2 and [(c.provider, c.outcome) for c in calls] == [
+        ("p", "schema"),
+        ("floor", "floor"),
+    ]
+    assert calls[0].retries == 1 and isinstance(draft, PatchPlan)
+    assert {(c.prompt_id, c.prompt_version, c.prompt_sha256) for c in calls} == {("plan", "1", plan.sha256)}
+
+
+def test_the_record_of_the_prompts() -> None:
+    """results/agent/prompts.json, step 7: each prompt file with its version, hash and schema."""
+    proven = evidence.proven(sys.modules[__name__], "test_the_record_of_the_prompts")
+    if proven is None:
+        pytest.skip("not every prompt test passed in this session; the record is written by a full run")
+    schemas = {"PatchPlan": PatchPlan, "EarlyWarning": EarlyWarning}
+    files = []
+    for name, found in prompts.versions(ROOT).items():
+        head = prompts.header(name, ROOT)
+        schema = schemas[str(head["schema"])]
+        files.append(
+            {
+                "id": name,
+                "file": f"prompts/{name}.md",
+                "version": found["version"],
+                "sha256": found["sha256"],
+                "node": head["node"],
+                "schema": head["schema"],
+                "schema_sha256": hashlib.sha256(
+                    canonical_json(schema.model_json_schema()).encode()
+                ).hexdigest(),
+                "max_tokens": head["max_tokens"],
+                "context_tokens": head["context_tokens"],
+            }
+        )
+    evidence.write(
+        "prompts",
+        {
+            "step": 7,
+            "sentence": "Each prompt is a versioned file whose hash every call records; every answer is "
+            "validated against its Pydantic schema, retried once when it fails, and never taken when it "
+            "fails twice.",
+            "prompts": files,
+            "packing": [
+                "the typed state first, then the retrieved chunks in rank order",
+                "each chunk fenced between UNTRUSTED START and UNTRUSTED END with its chunk id, document, "
+                "version and the time it became known",
+                "a line inside a chunk that imitates a fence is defused, so no chunk closes its own fence",
+                "a chunk that would pass the budget is left out whole and counted, never cut",
+                "tokens estimated as four bytes of UTF-8 each, since every provider counts its own way",
+            ],
+            "frozen_in": "config/agent_points.yaml freezes each version and hash before the shadow window is "
+            "recorded (step 12)",
+            "proven": proven,
+            "verdict": "pass",
+        },
+    )

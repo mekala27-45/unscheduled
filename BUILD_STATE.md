@@ -7,7 +7,7 @@ the manifest or a committed file: edit the template, then render.
 ## Where it stands
 
 ```
-Phase            3 of 5, the agent: 4 of 18 checklist lines done (RESULTS.md); the
+Phase            3 of 5, the agent: 7 of 18 checklist lines done (RESULTS.md); the
                  prompt is claude/unscheduled-phase-3-prompt.md in the Project
 Phase 2          the models, tagged v0.2.0 on the commit that adds the release record;
                  its checklist 18 of 18 lines done (RESULTS.md)
@@ -29,13 +29,10 @@ Look approval    Phase 1: approved by Ajay on the evening of 11 November, New Yo
                  Phase 3: the run viewer and the approval inbox wait for his review
 ```
 
-Open checklist lines, Phase 3 (4 of 18 done):
+Open checklist lines, Phase 3 (7 of 18 done):
 
 - 4. The advisory corpus built point in time, the leakage test passing, the corpus published by digest
 - 5. Retrieval measured against its lexical floor with paired intervals; pgvector compared with the file index
-- 6. The router with budgets, fallbacks, the no model floor and replays; no live call in CI
-- 7. Prompts versioned and hashed; every output validated against its schema
-- 8. The LangGraph agent with checkpoints in Postgres, the approval interrupt, replay and time travel
 - 9. C5 evidence: every claim checked by code; zero unverified citations in approved drafts
 - 11. C6 evidence: zero planted instructions followed in the registered red team set, its held out half scored once
 - 12. The agent evals on KEV listings with the floor beside every router configuration, the choices frozen before the shadow window was scored once; tokens, latency and cost per node and per run; the judge calibrated against the labels Ajay gave
@@ -49,7 +46,7 @@ Open checklist lines, Phase 3 (4 of 18 done):
 ## Next action
 
 Phase 3 runs from its prompt in the Project and the hand off below, and DECISIONS.md holds every
-choice made on the way. Done: step 1, step 2, step 3, step 10.
+choice made on the way. Done: step 1, step 2, step 3, step 6, step 7, step 8, step 10.
 Next: step 4, the advisory corpus built point in time, the leakage test passing, the corpus
 published by digest. The room in Neon comes before anything new loads, the plan is hashed before any
 evaluation, and every script whose numbers are committed runs with the numeric pins (AGENTS.md).
