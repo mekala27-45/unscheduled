@@ -122,7 +122,7 @@ def warning(facts: Facts) -> EarlyWarning:
         )
     evidence: list[str] = []
     if kev:
-        day = kev.listed_at.date().isoformat()
+        day = (kev.date_added or kev.listed_at.date()).isoformat()
         evidence.append(f"CISA added it to the Known Exploited Vulnerabilities catalog on {day}")
         claims.append(
             Claim(

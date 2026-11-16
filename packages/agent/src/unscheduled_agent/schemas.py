@@ -10,7 +10,7 @@ so the two are compared field by field.
 
 from __future__ import annotations
 
-from datetime import datetime
+from datetime import date, datetime
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -62,6 +62,7 @@ class KevListing(Strict):
     source: str
     doc_version: str | None = None
     listed_at: datetime
+    date_added: date | None = Field(default=None, description="the dateAdded CISA states")
     vulnerability_name: str | None = None
     vendor_project: str | None = None
     product: str | None = None
