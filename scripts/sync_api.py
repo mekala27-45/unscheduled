@@ -2,11 +2,16 @@
 
     python scripts/sync_api.py                       # https://unscheduled-api.vercel.app
     python scripts/sync_api.py --base http://127.0.0.1:8000 --max-calls 50
+    python scripts/sync_api.py --reads-corpus        # exit 0 only if the live API reads the corpus
 
 The sync takes no input: the API decides what to load from the newest serving release of this
 repository and checks every digest itself (ADR 0007), so this client only knocks and reads the
 answer. It paces itself under the API's limit, waits as told on a 429 or a busy answer, and stops at
 done or current. Every answer is written to results/live/sync.json, with no secret anywhere.
+
+--reads-corpus asks only whether the live API reads the advisory corpus, from its published schema
+(a path /v1/search). An API that predates the corpus refuses a bundle whose manifest names corpus
+files, so lake.yml adds the scoped corpus to the bundle only when this answers yes.
 """
 
 from __future__ import annotations
@@ -44,11 +49,28 @@ def call(base: str) -> tuple[int, dict[str, Any], float | None]:
         return int(error.code), payload, float(retry) if retry and retry.isdigit() else None
 
 
+def reads_corpus(base: str) -> bool:
+    """True when the API's published schema has the corpus search, the route that came with it."""
+    request = urllib.request.Request(f"{base}/openapi.json", headers={"User-Agent": AGENT})
+    try:
+        with urllib.request.urlopen(request, timeout=60) as response:
+            schema = json.loads(response.read())
+    except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as error:
+        print(f"reads corpus: the schema could not be read ({type(error).__name__})")
+        return False
+    return "/v1/search" in (schema.get("paths") or {})
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--base", default=BASE)
     parser.add_argument("--max-calls", type=int, default=400)
+    parser.add_argument("--reads-corpus", action="store_true")
     args = parser.parse_args(argv)
+    if args.reads_corpus:
+        yes = reads_corpus(args.base)
+        print(f"reads corpus: {'yes' if yes else 'no, the bundle goes without the corpus'}")
+        return 0 if yes else 1
     answers: list[dict[str, Any]] = []
     final = "stopped"
     started = time.monotonic()

@@ -85,15 +85,18 @@ jobs:
         run: uv run python scripts/build_serving_bundle.py
 
       # Phase 3: the advisory corpus point in time, from the same work database and this bundle's
-      # findings, its scoped part (ADR 0011) added to the bundle for Neon. A corpus that waits for its
-      # first text fetch, or fails, adds nothing, and the sync keeps the corpus Neon holds, so this
-      # step never holds the data back.
-      - name: The advisory corpus, its scoped part in the bundle
+      # findings. Its scoped part (ADR 0011) joins the bundle for Neon only once the live API reads
+      # it, since an API that predates the corpus refuses a manifest naming corpus files. A corpus
+      # that waits for its first text fetch, or fails, adds nothing, and the sync keeps the corpus
+      # Neon holds, so this step never holds the data back.
+      - name: The advisory corpus, its scoped part in the bundle once the API reads it
         if: steps.restore.outputs.skip != 'true'
         continue-on-error: true
         run: |
           uv run python scripts/build_corpus.py
-          uv run python scripts/build_serving_bundle.py --corpus
+          if uv run python scripts/sync_api.py --reads-corpus; then
+            uv run python scripts/build_serving_bundle.py --corpus
+          fi
 
       - name: The serving bundle, published as a prerelease
         if: steps.restore.outputs.skip != 'true'

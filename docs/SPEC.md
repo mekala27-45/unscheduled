@@ -71,7 +71,9 @@ packages/match writes them), and any further columns, kept whole. `backlog.json`
 or list; /v1/backlog serves it as it is.
 
 Optional, both or neither: the scoped advisory corpus of ADR 0011, which `build_serving_bundle.py
---corpus` adds once `build_corpus.py` has built the corpus. `corpus_document.parquet` holds every
+--corpus` adds once `build_corpus.py` has built the corpus, and lake.yml only once the live API reads
+it (`sync_api.py --reads-corpus`: its schema has /v1/search), since an API that predates the corpus
+refuses a manifest that names these files. `corpus_document.parquet` holds every
 version of the advisories that name a CVE the six stand in products carry, of every KEV entry and of
 every CWE weakness: `doc_id`, `version`, `source`, `known_from`, `known_to`, `withdrawn`, `cve_ids`,
 `sections_json` (the sections by name). `corpus_chunk.parquet` holds their chunks: `chunk_id`,
