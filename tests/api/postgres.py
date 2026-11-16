@@ -27,6 +27,9 @@ from typing import Any
 import pytest
 
 PG_BIN_CANDIDATES = (
+    # The CI runner is Ubuntu 26.04 with PostgreSQL 18, the major version Neon runs; scripts/ci/pgvector.sh
+    # installs pgvector for it.
+    "/usr/lib/postgresql/18/bin",
     "/usr/lib/postgresql/17/bin",
     "/usr/lib/postgresql/16/bin",
     "/usr/lib/postgresql/15/bin",
