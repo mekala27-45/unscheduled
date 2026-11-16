@@ -17,6 +17,8 @@ dependencies = [
   "unscheduled-analysis",
   "unscheduled-cli",
   "unscheduled-models",
+  "unscheduled-retrieval",
+  "unscheduled-agent",
   "typer>=0.15",
   "httpx>=0.28",
 ]
@@ -53,6 +55,8 @@ unscheduled-lake = { workspace = true }
 unscheduled-analysis = { workspace = true }
 unscheduled-cli = { workspace = true }
 unscheduled-models = { workspace = true }
+unscheduled-retrieval = { workspace = true }
+unscheduled-agent = { workspace = true }
 
 [tool.ruff]
 line-length = 110
@@ -71,11 +75,11 @@ python_version = "3.12"
 strict = true
 files = ["packages", "scripts"]
 explicit_package_bases = true
-mypy_path = ["packages/core/src", "packages/render/src", "packages/api/src", "packages/sources/src", "packages/match/src", "packages/legacy_adapter/src", "packages/lake/src", "packages/analysis/src", "packages/cli/src", "packages/models/src"]
+mypy_path = ["packages/core/src", "packages/render/src", "packages/api/src", "packages/sources/src", "packages/match/src", "packages/legacy_adapter/src", "packages/lake/src", "packages/analysis/src", "packages/cli/src", "packages/models/src", "packages/retrieval/src", "packages/agent/src"]
 exclude = ["/tests/", "web/", "dbt/"]
 
 [[tool.mypy.overrides]]
-module = ["yaml", "markdown_it.*", "cvss", "cvss.*", "sklearn.*", "scipy.*", "statsmodels.*", "docker", "docker.*", "pandas", "pandas.*", "joblib", "joblib.*", "lifelines", "lifelines.*", "sksurv", "sksurv.*", "onnxruntime", "onnxruntime.*", "onnxmltools", "onnxmltools.*", "mlflow", "mlflow.*", "threadpoolctl"]
+module = ["yaml", "markdown_it.*", "cvss", "cvss.*", "sklearn.*", "scipy.*", "statsmodels.*", "docker", "docker.*", "pandas", "pandas.*", "joblib", "joblib.*", "lifelines", "lifelines.*", "sksurv", "sksurv.*", "onnxruntime", "onnxruntime.*", "onnxmltools", "onnxmltools.*", "mlflow", "mlflow.*", "threadpoolctl", "tokenizers", "tokenizers.*", "pyarrow", "pyarrow.*"]
 ignore_missing_imports = true
 
 [tool.pytest.ini_options]

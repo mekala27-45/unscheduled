@@ -1,0 +1,300 @@
+{
+ "measured_at": "2026-11-16T02:54:33Z",
+ "ceiling_bytes": 800000000,
+ "plan_limit": "1 GB a project on the Neon free plan (its FAQ, updated 3 November 2026)",
+ "neon_now": {
+  "read_at": "2026-11-16T02:52:46Z",
+  "data_version": "serving-202611152200+f89ae3f7e825",
+  "migration": "0003",
+  "database_size_bytes": 752672768,
+  "storage_ceiling_bytes": 800000000,
+  "storage_share_used": 0.9408,
+  "tables": {
+   "cve_event": {
+    "total_bytes": 371572736,
+    "index_bytes": 114212864,
+    "rows_estimate": 1292251
+   },
+   "cve": {
+    "total_bytes": 304185344,
+    "index_bytes": 35635200,
+    "rows_estimate": 260528
+   },
+   "prediction": {
+    "total_bytes": 65609728,
+    "index_bytes": 6955008,
+    "rows_estimate": 181904
+   },
+   "finding": {
+    "total_bytes": 1998848,
+    "index_bytes": 294912,
+    "rows_estimate": 1275
+   },
+   "settings": {
+    "total_bytes": 294912,
+    "index_bytes": 16384,
+    "rows_estimate": 5
+   },
+   "ops_run": {
+    "total_bytes": 98304,
+    "index_bytes": 32768,
+    "rows_estimate": 114
+   },
+   "client_budget": {
+    "total_bytes": 65536,
+    "index_bytes": 16384,
+    "rows_estimate": 75
+   },
+   "match_log": {
+    "total_bytes": 49152,
+    "index_bytes": 32768,
+    "rows_estimate": 0
+   },
+   "product": {
+    "total_bytes": 32768,
+    "index_bytes": 16384,
+    "rows_estimate": 6
+   },
+   "alembic_version": {
+    "total_bytes": 24576,
+    "index_bytes": 16384,
+    "rows_estimate": 0
+   }
+  }
+ },
+ "replica": {
+  "server_version": "16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)",
+  "pgvector": "0.8.7",
+  "rows_loaded": {
+   "product": 6,
+   "cve": 260589,
+   "cve_event": 1292258,
+   "finding": 1275,
+   "prediction": 181904
+  },
+  "rebuilt_indexes": {
+   "cve_event_pkey": {
+    "before_bytes": 38273024,
+    "after_bytes": 29048832
+   }
+  },
+  "tables": {
+   "cve_event": {
+    "total_bytes": 319406080,
+    "index_bytes": 73785344,
+    "rows": 1292258
+   },
+   "cve": {
+    "total_bytes": 288710656,
+    "index_bytes": 33652736,
+    "rows": 260575
+   },
+   "prediction": {
+    "total_bytes": 65609728,
+    "index_bytes": 6955008,
+    "rows": 181904
+   },
+   "finding": {
+    "total_bytes": 1998848,
+    "index_bytes": 294912,
+    "rows": 1275
+   },
+   "product": {
+    "total_bytes": 65536,
+    "index_bytes": 16384,
+    "rows": 6
+   },
+   "alembic_version": {
+    "total_bytes": 57344,
+    "index_bytes": 16384,
+    "rows": 1
+   },
+   "match_log": {
+    "total_bytes": 24576,
+    "index_bytes": 16384,
+    "rows": 0
+   },
+   "ops_run": {
+    "total_bytes": 24576,
+    "index_bytes": 16384,
+    "rows": 0
+   },
+   "client_budget": {
+    "total_bytes": 16384,
+    "index_bytes": 8192,
+    "rows": 0
+   },
+   "settings": {
+    "total_bytes": 16384,
+    "index_bytes": 8192,
+    "rows": 0
+   }
+  },
+  "event_key_column_bytes": 10338064,
+  "next_levers": {
+   "predictions of scored development and test CVEs": {
+    "rows": 45727,
+    "row_bytes": 14270336
+   },
+   "events of CVEs before 2024 outside the products and KEV": {
+    "rows": 331668,
+    "row_bytes": 59147434
+   }
+  }
+ },
+ "churn": {
+  "previous": {
+   "tag": "serving-202611141230",
+   "generated_at": "2026-11-14T12:30:47Z"
+  },
+  "newest": {
+   "tag": "serving-202611152200",
+   "generated_at": "2026-11-15T22:00:52Z"
+  },
+  "days": 1.396,
+  "cve_new": 134,
+  "cve_gone": 0,
+  "cve_changed": 3345,
+  "events_new": 1018
+ },
+ "sample": {
+  "chunks": 1006,
+  "per_source": {
+   "ghsa": {
+    "documents": 229,
+    "chunks": 706,
+    "chunks_per_document": 3.083,
+    "row_bytes": 1666
+   },
+   "kev": {
+    "documents": 150,
+    "chunks": 150,
+    "chunks_per_document": 1.0,
+    "row_bytes": 1972
+   },
+   "cwe": {
+    "documents": 124,
+    "chunks": 150,
+    "chunks_per_document": 1.21,
+    "row_bytes": 1658
+   }
+  },
+  "tokens": {
+   "max": 256,
+   "mean": 176.3,
+   "limit": 256
+  },
+  "pgvector": "0.8.7",
+  "hnsw": {
+   "m": 16,
+   "ef_construction": 64
+  },
+  "heap_bytes": 2015232,
+  "index_bytes": {
+   "chunk_pkey": 81920,
+   "chunk_text": 638976,
+   "chunk_hnsw": 1187840,
+   "chunk_known": 49152
+  },
+  "bytes_per_chunk": 3949,
+  "documents": 503,
+  "document_bytes_per_document": 521,
+  "heap_bytes_per_chunk": 2003,
+  "index_bytes_per_chunk": {
+   "chunk_pkey": 81,
+   "chunk_text": 635,
+   "chunk_hnsw": 1181,
+   "chunk_known": 49
+  },
+  "column_bytes_mean": {
+   "text": 622,
+   "tsvector_if_stored": 719,
+   "embedding": 776,
+   "text_octets": 635
+  },
+  "vectors": "random unit vectors, seed 7",
+  "tokenizer": {
+   "model": "BAAI/bge-small-en-v1.5",
+   "revision": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+   "sha256": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66"
+  }
+ },
+ "scope": {
+  "product_cves": 663,
+  "advisories": 602,
+  "kev_entries": 1781,
+  "cwe_weaknesses": 984
+ },
+ "checkpoints": {
+  "runs": 20,
+  "nodes": [
+   "intake",
+   "match",
+   "fill",
+   "rank",
+   "retrieve",
+   "plan",
+   "verify",
+   "approve"
+  ],
+  "fixture_bytes": {
+   "finding": 1000,
+   "match": 500,
+   "predictions": 2000,
+   "retrieved": 12000,
+   "claims": 6000,
+   "checks": 3000,
+   "costs": 1200
+  },
+  "state_bytes": 25831,
+  "empty_tables_bytes": 73728,
+  "waiting": {
+   "tables": {
+    "checkpoints": 876544,
+    "checkpoint_blobs": 49152,
+    "checkpoint_writes": 491520
+   },
+   "bytes_per_run": 67174
+  },
+  "keep_latest": {
+   "runs": 10,
+   "bytes_per_run": 9830
+  },
+  "deleted": {
+   "checkpoints_left": 10,
+   "bytes_left": 163840
+  },
+  "note": "a fixture graph with the node names of the triage graph and the planned state sizes, run to its approval interrupt; step 8 measures the real graph the same way"
+ },
+ "projection": {
+  "freed_by_event_key_bytes": 52166656,
+  "after_plan_bytes": 700506112,
+  "growth_bytes_per_day": 286595,
+  "days": 27,
+  "until": "2026-12-13",
+  "growth_bytes": 7738067,
+  "dead_rows_bound": 5262,
+  "bloat_bound_bytes": 5829612,
+  "corpus_chunks": {
+   "ghsa": 1856,
+   "kev": 1781,
+   "cwe": 1191
+  },
+  "corpus_bytes": 20819979,
+  "run_store": {
+   "waiting_cap": 100,
+   "decided_cap": 500,
+   "record_bytes_per_run": 12000,
+   "bytes": 18832400
+  },
+  "projected_bytes": 753726169,
+  "projected_share": 0.9422,
+  "margin_bytes": 46273831
+ },
+ "sources": {
+  "advisories": "the 473 GitHub reviewed advisories that name a CVE the six stand in products carry, from github/advisory-database at 0c2374cd80aeb7a98bd3cb28cb775b74c86abc0a",
+  "kev": "the KEV catalog from cisagov/kev-data",
+  "cwe": "the CWE catalog from cwe.mitre.org"
+ },
+ "result": "pass"
+}
