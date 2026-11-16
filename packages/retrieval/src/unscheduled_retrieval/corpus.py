@@ -374,14 +374,9 @@ def _chunk_row(v: Version, c: Chunk) -> dict[str, Any]:
     }
 
 
-VISIBLE_SQL = (
-    "known_from <= {t} and (known_to is null or known_to > {t}) and (withdrawn is null or withdrawn > {t})"
-)
-
-
 def visible(at: datetime) -> pl.Expr:
     """A chunk a search may read at a time: its version is the newest of its document known by then,
-    and that version had not been withdrawn by then. VISIBLE_SQL is the same condition in SQL."""
+    and that version had not been withdrawn by then. visible.VISIBLE_SQL is the same condition in SQL."""
     return (
         (pl.col("known_from") <= at)
         & (pl.col("known_to").is_null() | (pl.col("known_to") > at))

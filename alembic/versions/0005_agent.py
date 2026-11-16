@@ -8,7 +8,9 @@
 - agent_budget: the provider calls of each UTC day, so every function instance reads one count.
 
 pgvector is installed here, after the room plan was committed, as ADR 0011 requires. The checkpoint
-tables of the graph are created by the LangGraph saver itself in the schema agent_checkpoints.
+tables of the graph are created by the LangGraph saver itself, in a schema of their own named after
+the API's (unscheduled_checkpoints beside unscheduled; db.checkpoint_schema), so two API schemas in
+one database never share or drop each other's runs.
 """
 
 from __future__ import annotations
@@ -20,11 +22,14 @@ down_revision = "0004"
 branch_labels = None
 depends_on = None
 
-CHECKPOINTS = "agent_checkpoints"
-
 
 def _schema() -> str | None:
     return op.get_context().version_table_schema
+
+
+def _checkpoints() -> str:
+    # The same name as unscheduled_api.db.checkpoint_schema gives.
+    return f"{_schema() or 'public'}_checkpoints"
 
 
 def _t(name: str) -> str:
@@ -47,7 +52,9 @@ def upgrade() -> None:
         "known_from timestamptz not null, known_to timestamptz, withdrawn timestamptz, "
         "ordinal integer not null, sections text[] not null, text text not null, embedding halfvec(384))"
     )
-    op.execute(f"create index corpus_chunk_text on {_t('corpus_chunk')} using gin (to_tsvector('english', text))")
+    op.execute(
+        f"create index corpus_chunk_text on {_t('corpus_chunk')} using gin (to_tsvector('english', text))"
+    )
     op.execute(
         f"create index corpus_chunk_hnsw on {_t('corpus_chunk')} "
         "using hnsw (embedding halfvec_cosine_ops) with (m = 16, ef_construction = 64)"
@@ -74,10 +81,10 @@ def upgrade() -> None:
         "provider text not null, model text not null, day date not null, "
         "requests integer not null default 0, tokens integer not null default 0, primary key (provider, model, day))"
     )
-    op.execute(f'create schema if not exists "{CHECKPOINTS}"')
+    op.execute(f'create schema if not exists "{_checkpoints()}"')
 
 
 def downgrade() -> None:
     for table in ("agent_budget", "agent_approval", "agent_run", "corpus_chunk", "corpus_document"):
         op.execute(f"drop table if exists {_t(table)}")
-    op.execute(f'drop schema if exists "{CHECKPOINTS}" cascade')
+    op.execute(f'drop schema if exists "{_checkpoints()}" cascade')

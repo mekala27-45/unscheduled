@@ -28,6 +28,9 @@ from unscheduled_api.problems import ProblemError
 SALT_KEY = "client_salt"
 LOOKUPS = "lookups"
 MATCHES = "matches"
+TRIAGE = "triage"
+# The key of the count across every client. A client key is 32 hex digits, so none can equal it.
+EVERYONE = "everyone"
 
 
 def client_address(request: Request) -> str:
@@ -86,23 +89,37 @@ class Budget:
     def client(self, address: str) -> str:
         return client_hash(self.salt(), address)
 
+    def _count(self, conn: sa.Connection, client: str, day: date, kind: str) -> int:
+        table = qualified(self.schema, "client_budget")
+        return int(
+            conn.execute(
+                sa.text(
+                    f"insert into {table} as b (client, day, kind, used) values (:c, :d, :k, 1) "
+                    "on conflict (client, day, kind) do update set used = b.used + 1 returning used"
+                ),
+                {"c": client, "d": day, "k": kind},
+            ).scalar_one()
+        )
+
+    def tally(self, address: str, kind: str) -> tuple[str, int, int]:
+        """Count one request of a kind for the client and for every client, with no limit of its own:
+        (client, this client's count today, everyone's count today). The triage route reads the two
+        against the serving budgets and drafts with the floor past either."""
+        client = self.client(address)
+        day: date = self.clock().date()
+        with self.engine.begin() as conn:
+            mine = self._count(conn, client, day, kind)
+            everyone = self._count(conn, EVERYONE, day, kind)
+        return client, mine, everyone
+
     def charge(self, address: str, kind: str) -> tuple[str, int, int]:
         """Count one request; (client, used, limit). Past the limit, raise budget-exhausted."""
         limit = self.limits[kind]
         client = self.client(address)
         now = self.clock()
         day: date = now.date()
-        table = qualified(self.schema, "client_budget")
         with self.engine.begin() as conn:
-            used = int(
-                conn.execute(
-                    sa.text(
-                        f"insert into {table} as b (client, day, kind, used) values (:c, :d, :k, 1) "
-                        "on conflict (client, day, kind) do update set used = b.used + 1 returning used"
-                    ),
-                    {"c": client, "d": day, "k": kind},
-                ).scalar_one()
-            )
+            used = self._count(conn, client, day, kind)
         if used > limit:
             midnight = datetime.combine(day + timedelta(days=1), datetime.min.time(), tzinfo=UTC)
             raise ProblemError(

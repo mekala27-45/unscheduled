@@ -12,6 +12,12 @@
     GET  /v1/legacy/report.csv       the customer's legacy CSV, written by the strangler adapter
     POST /internal/sync              one bounded step of loading the newest serving release
     GET  /internal/sync              the same handler, for the Vercel cron, which sends GET
+    POST /v1/triage                  a triage run for a CVE to its first approval interrupt
+    GET  /v1/runs                    the newest runs
+    GET  /v1/runs/{id}               one run: its drafts, their checks, the costs per node
+    POST /v1/approvals               a person's decision on a draft hash, with the approver's token
+    GET  /v1/search                  ranked advisory chunks as known at the end of a past day
+    POST /mcp                        the MCP server over streamable HTTP, stateless
 
 /health and /v1/meta are free; every /v1 data route counts against the client's daily budget.
 """
@@ -37,14 +43,29 @@ from fastapi.responses import JSONResponse
 from fastapi.routing import APIRoute
 from pydantic import BeforeValidator, JsonValue
 from starlette.exceptions import HTTPException as StarletteHTTPException
+from starlette.routing import Route
 from unscheduled_core.hashing import sha256_file
 from unscheduled_core.statements import GHSA_ATTRIBUTION, NVD_NOTICE
+from unscheduled_mcp import server as mcp_server
 
-from unscheduled_api import VERSION, cves, exposure, legacy, logs, matching, migrate, openapi, predictions
-from unscheduled_api.budget import LOOKUPS, MATCHES, client_address
+from unscheduled_api import (
+    VERSION,
+    agent_tools,
+    cves,
+    exposure,
+    legacy,
+    logs,
+    matching,
+    migrate,
+    openapi,
+    predictions,
+    triage,
+)
+from unscheduled_api.budget import LOOKUPS, MATCHES, TRIAGE, client_address
 from unscheduled_api.problems import MEDIA_TYPE, FieldError, ProblemError
 from unscheduled_api.releases import OWNER, REPO, TAG_PREFIX
 from unscheduled_api.schemas import (
+    ApprovalRequest,
     Backlog,
     BundleFacts,
     BundleFile,
@@ -62,13 +83,17 @@ from unscheduled_api.schemas import (
     PredictResponse,
     Products,
     ReleaseFacts,
+    RunList,
+    RunView,
     SbomSummary,
+    SearchResults,
     SyncChunk,
     SyncResponse,
     Timeline,
+    TriageRequest,
 )
 from unscheduled_api.scoring import NOTE as PREDICT_NOTE
-from unscheduled_api.services import Services, database_problem
+from unscheduled_api.services import Services, database_errors, database_problem
 from unscheduled_api.settings import Settings
 from unscheduled_api.sync import CALLS_PER_MINUTE
 
@@ -107,6 +132,21 @@ SBOM_SCHEMA: dict[str, Any] = {
 }
 DATA_ERRORS = (404, 422, 429, 500, 503)
 ISO_DATE = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{2}$")
+RUN_PATTERN = r"^[0-9a-f]{32}$"
+TRIAGE_TEXT = (
+    "Runs the triage graph for the CVE over what the slice knew at the end of as_of (or now): the match, "
+    "the fixed version from the advisories known by then, the KEV listing and exploit signals, the "
+    "retrieved advisory chunks, a drafted patch plan and, for a listed or exploited CVE, an early "
+    "warning, each checked claim by claim against its cited source. It answers at the first approval "
+    "interrupt. A client may start a number of runs each UTC day and the API a number in all "
+    "(config/providers.yaml, serving); past either, the no model floor drafts and the run says so. "
+    "Nothing is applied, sent or filed: a draft becomes approved only by a person's decision on its hash."
+)
+APPROVAL_TEXT = (
+    "The approver's token travels as Authorization: Bearer. The API keeps only its SHA-256, hashes what "
+    "it receives, compares the two in constant time and logs neither; without the token, or on a hash "
+    "that is not the hash of the draft that waits, nothing is recorded and the run does not move."
+)
 
 
 def _iso_date(value: Any) -> Any:
@@ -135,6 +175,8 @@ def local_locks(root: FilePath) -> dict[str, JsonValue]:
 def create_app(services: Services | None = None, *, settings: Settings | None = None) -> FastAPI:
     logs.configure()
     svc = services or Services.build(settings)
+    # The MCP server over streamable HTTP, stateless: each request stands alone, as a function must.
+    mcp_app, mcp_running = mcp_server.http_app(agent_tools.build(svc, counted=True))
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
@@ -145,7 +187,8 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
                     await run_in_threadpool(svc.budget.salt)
                 except sa.exc.SQLAlchemyError as err:
                     log.error("the client salt could not be made", error=type(err).__name__)
-        yield
+        async with mcp_running():
+            yield
         svc.dispose()
 
     app = FastAPI(
@@ -158,6 +201,11 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
     )
     app.state.services = svc
     openapi.install(app)
+    # Not a REST route, so not in the OpenAPI document: the MCP endpoint, its tools those of
+    # packages/mcp, each call counted against the caller's budget as the routes count theirs. POST
+    # only: stateless, it has no session to end with DELETE, and a GET stream would hold a function
+    # open until its time ran out, so both answer 405.
+    app.router.routes.append(Route("/mcp", endpoint=mcp_app, methods=["POST"]))
 
     # Problems ------------------------------------------------------------------------------------
 
@@ -250,7 +298,7 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
         CORSMiddleware,
         allow_origins=list(svc.settings.cors_origins),
         allow_methods=["GET", "POST", "OPTIONS"],
-        allow_headers=["Content-Type", "Accept"],
+        allow_headers=["Content-Type", "Accept", "Authorization"],
         expose_headers=["X-Data-Version", "X-Budget-Limit", "X-Budget-Remaining", "Retry-After"],
         max_age=600,
     )
@@ -802,5 +850,120 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
     )
     def sync_get() -> SyncResponse:
         return run_sync()
+
+    # The agent (Phase 3, step 14) ------------------------------------------------------------------
+
+    def past_day(as_of: date | None) -> None:
+        if as_of is not None and as_of >= svc.clock().date():
+            raise ProblemError(
+                "invalid-request",
+                "as_of must be a day that has already ended in UTC",
+                errors=[FieldError(location="as_of", message="a day before today, UTC")],
+            )
+
+    def view(payload: dict[str, Any]) -> RunView:
+        return RunView.model_validate({**payload, "statement": svc.statement, "data_version": svc.label()})
+
+    @app.post(
+        "/v1/triage",
+        response_model=RunView,
+        tags=["agent"],
+        summary="Start a triage run for one CVE, now or as of a past day, to its first approval",
+        response_description="The run at its first interrupt: the drafts with their checks, what waits, the costs",
+        description=TRIAGE_TEXT,
+        dependencies=looked_up,
+        responses=openapi.problem_responses(404, 422, 429, 500, 503),
+    )
+    def post_triage(body: TriageRequest, request: Request) -> RunView:
+        past_day(body.as_of)
+        budget = svc.require_budget()
+        with database_errors():
+            _client, mine, everyone = budget.tally(client_address(request), TRIAGE)
+            reason = triage.floor_reason(mine, everyone, triage.serving(svc.settings.root))
+            return view(svc.triage().start(body.cve_id, body.as_of, reason=reason))
+
+    @app.get(
+        "/v1/runs",
+        response_model=RunList,
+        tags=["agent"],
+        summary="The newest triage runs, newest first",
+        response_description="The runs with their status and the hashes of their drafts",
+        dependencies=looked_up,
+        responses=openapi.problem_responses(422, 429, 500, 503),
+    )
+    def get_runs(
+        limit: Annotated[int, Query(ge=1, le=100, description="how many runs, at most 100")] = 25,
+    ) -> RunList:
+        with database_errors():
+            runs = svc.triage().runs(limit)
+        return RunList.model_validate({"runs": runs, "statement": svc.statement, "data_version": svc.label()})
+
+    @app.get(
+        "/v1/runs/{run_id}",
+        response_model=RunView,
+        tags=["agent"],
+        summary="One triage run: its state, the claims with their checks, the costs per node",
+        response_description="The run as it stands",
+        dependencies=looked_up,
+        responses=openapi.problem_responses(404, 422, 429, 500, 503),
+    )
+    def get_run(
+        run_id: Annotated[str, Path(pattern=RUN_PATTERN, description="the run id POST /v1/triage answered")],
+    ) -> RunView:
+        with database_errors():
+            return view(svc.triage().read(run_id))
+
+    @app.post(
+        "/v1/approvals",
+        response_model=RunView,
+        tags=["agent"],
+        summary="A person's decision on a draft, named by its hash, with the approver's token",
+        response_description="The run after the decision",
+        description=APPROVAL_TEXT,
+        responses=openapi.problem_responses(403, 404, 422, 500, 503),
+    )
+    def post_approval(body: ApprovalRequest, request: Request) -> RunView:
+        header = request.headers.get("authorization", "")
+        scheme, _, credential = header.partition(" ")
+        token = credential.strip() if scheme.lower() == "bearer" and credential.strip() else None
+        with database_errors():
+            return view(
+                svc.triage().decide(body.run_id, body.kind, body.sha256, body.decision, token, body.by)
+            )
+
+    @app.get(
+        "/v1/search",
+        response_model=SearchResults,
+        tags=["agent"],
+        summary="Ranked chunks of the advisory corpus as it was known at the end of a past day",
+        response_description="The chunks, best first, each marked as untrusted text",
+        dependencies=looked_up,
+        responses=openapi.problem_responses(422, 429, 500, 503),
+    )
+    def get_search(
+        q: Annotated[
+            str,
+            Query(
+                min_length=1, max_length=2000, pattern=r"^[^\x00]+$", description="the words to search for"
+            ),
+        ],
+        as_of: Annotated[
+            IsoDate, Query(description="a past day; only what was known by its end is searched")
+        ],
+        limit: Annotated[int, Query(ge=1, le=50, description="how many chunks, at most 50")] = 10,
+    ) -> SearchResults:
+        past_day(as_of)
+        with database_errors():
+            results = svc.triage().search(q, as_of, limit)
+        return SearchResults.model_validate(
+            {
+                "query": q,
+                "as_of": as_of,
+                "configuration": triage.CONFIGURATION,
+                "results": results,
+                "statement": svc.statement,
+                "data_version": svc.label(),
+            }
+        )
 
     return app

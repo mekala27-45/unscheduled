@@ -26,6 +26,12 @@ ROUTES = {
     ("get", "/v1/legacy/report.csv"),
     ("post", "/internal/sync"),
     ("get", "/internal/sync"),
+    # Phase 3, section 13: the agent. /mcp is not a REST route and stays out of the document.
+    ("post", "/v1/triage"),
+    ("get", "/v1/runs"),
+    ("get", "/v1/runs/{run_id}"),
+    ("post", "/v1/approvals"),
+    ("get", "/v1/search"),
 }
 
 

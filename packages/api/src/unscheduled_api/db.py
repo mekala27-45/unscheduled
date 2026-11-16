@@ -271,6 +271,11 @@ agent_budget = sa.Table(
 DATA_TABLES = ("cve", "cve_event", "product", "finding", "prediction")
 
 
+def checkpoint_schema(schema: str) -> str:
+    """The schema of the triage graph's checkpoints, beside the API's own (migration 0005)."""
+    return f"{schema}_checkpoints"
+
+
 def make_engine(url: str, schema: str) -> sa.Engine:
     """One engine per process. A pooled Neon host gets no server side prepared statements."""
     connect_args: dict[str, Any] = {"connect_timeout": 10, "application_name": "unscheduled-api"}

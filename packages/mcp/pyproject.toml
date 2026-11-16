@@ -7,6 +7,8 @@ license = "Apache-2.0"
 dependencies = [
   "unscheduled-core",
   "pydantic>=2.10",
+  # Pinned by the rule in config/agent.yaml: the newest release at least 14 days old on 16 November.
+  "mcp==2.3.0",
 ]
 
 [build-system]

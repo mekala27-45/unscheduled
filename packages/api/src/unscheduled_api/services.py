@@ -12,6 +12,7 @@ from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 
+import psycopg
 import sqlalchemy as sa
 import structlog
 from unscheduled_core.statements import STATEMENT
@@ -26,6 +27,7 @@ from unscheduled_api.releases import GitHubReleases
 from unscheduled_api.scoring import Scorer
 from unscheduled_api.settings import DATABASE_VARIABLES, Settings
 from unscheduled_api.sync import Sync
+from unscheduled_api.triage import Triage
 from unscheduled_api.versions import VersionCache
 
 log = structlog.get_logger("unscheduled.services")
@@ -37,6 +39,21 @@ NO_DATABASE = "no database is configured: none of " + ", ".join(DATABASE_VARIABL
 def database_problem(err: BaseException) -> ProblemError:
     cause = err.orig if isinstance(err, sa.exc.DBAPIError) and err.orig is not None else err
     return ProblemError("database-unavailable", f"the database did not answer ({type(cause).__name__})")
+
+
+@contextmanager
+def database_errors() -> Iterator[None]:
+    """A database that does not answer, through SQLAlchemy or a connection psycopg opened itself, as
+    the database-unavailable problem rather than an internal error."""
+    try:
+        yield
+    except (
+        sa.exc.OperationalError,
+        sa.exc.InterfaceError,
+        psycopg.OperationalError,
+        psycopg.InterfaceError,
+    ) as err:
+        raise database_problem(err) from err
 
 
 @dataclass
@@ -112,6 +129,19 @@ class Services:
         if self.budget is None:
             raise ProblemError("database-unavailable", NO_DATABASE + "; the client budget is kept there")
         return self.budget
+
+    def triage(self) -> Triage:
+        """The triage service of Phase 3 over this process's engine and the same database URL."""
+        if self.engine is None or self.settings.database_url is None:
+            raise ProblemError("database-unavailable", NO_DATABASE + "; the runs are kept there")
+        return Triage(
+            self.engine,
+            self.settings.database_url,
+            self.settings.schema,
+            self.statement,
+            self.label(),
+            root=self.settings.root,
+        )
 
     def sync(self) -> Sync:
         if self.engine is None:

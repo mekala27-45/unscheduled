@@ -371,3 +371,96 @@ class Meta(Envelope):
     # of the fetch run ledger. Empty until a bundle is loaded.
     quarantine: list[dict[str, JsonValue]] = Field(default_factory=list)
     run_ledger: list[dict[str, JsonValue]] = Field(default_factory=list)
+
+
+# The agent (Phase 3) --------------------------------------------------------------------------------
+
+
+class TriageRequest(StrictModel):
+    cve_id: Annotated[
+        str,
+        Field(
+            pattern=r"^CVE-\d{4}-\d{4,7}$",
+            description="a CVE in the serving slice",
+            examples=["CVE-2024-23897"],
+        ),
+    ]
+    as_of: date | None = Field(
+        default=None, description="a past day; the run reads only what was known by its end. Absent: now"
+    )
+
+
+class ApprovalRequest(StrictModel):
+    run_id: Annotated[str, Field(pattern=r"^[0-9a-f]{32}$", description="the run the draft belongs to")]
+    kind: Literal["plan", "warning"]
+    sha256: Annotated[
+        str,
+        Field(pattern=r"^[0-9a-f]{64}$", description="the hash of the draft the decision is on, as shown"),
+    ]
+    decision: Literal["approve", "reject"]
+    by: Annotated[str, Field(min_length=1, max_length=64, pattern=r"^[A-Za-z0-9 ._-]+$")] = "ajay"
+
+
+class NodeCost(StrictModel):
+    ms: float = Field(description="the time the node took, milliseconds")
+    calls: int = Field(description="model calls made by the node, the floor's included")
+    tokens_in: int
+    tokens_out: int
+    shadow_usd: float = Field(description="what the calls would have cost at the locked price book, USD")
+
+
+class RunView(Envelope):
+    run_id: str
+    cve_id: str | None
+    as_of: str | None = Field(description="the run time: what the run could read was known by then")
+    parent_run_id: str | None = None
+    status: str = Field(description="running, waiting, decided or failed")
+    waiting_for: list[dict[str, JsonValue]] = Field(
+        default_factory=list, description="the draft that waits for a person, by kind and hash"
+    )
+    drafts: dict[str, JsonValue] = Field(
+        default_factory=dict,
+        description="each draft with its status (waiting, approved, ready, rejected or blocked) and its check",
+    )
+    approvals: list[dict[str, JsonValue]] = Field(default_factory=list, description="every decision recorded")
+    facts: dict[str, JsonValue] = Field(default_factory=dict, description="what the run read, as of its time")
+    nodes: dict[str, NodeCost] = Field(default_factory=dict, description="time, tokens and price per node")
+    calls: list[dict[str, JsonValue]] = Field(
+        default_factory=list, description="every model call, the floor's included"
+    )
+    cost: dict[str, JsonValue] = Field(default_factory=dict, description="tokens and shadow price of the run")
+    checkpoints: str = Field(description="kept, gone (past the cap of ADR 0011) or none")
+    note: str | None = None
+    untrusted: str
+
+
+class RunSummary(StrictModel):
+    run_id: str
+    cve_id: str
+    as_of: UtcDatetime
+    status: str
+    created_at: UtcDatetime
+    plan_sha256: str | None
+    warning_sha256: str | None
+
+
+class RunList(Envelope):
+    runs: list[RunSummary]
+
+
+class SearchHit(StrictModel):
+    chunk_id: str
+    doc_id: str
+    version: str
+    sections: list[str]
+    known_from: UtcDatetime
+    text: str
+    score: float
+    untrusted: bool
+
+
+class SearchResults(Envelope):
+    query: str
+    as_of: date
+    configuration: str
+    results: list[SearchHit]

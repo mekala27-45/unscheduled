@@ -17,7 +17,7 @@ dependencies = [
   "unscheduled-analysis",
   "unscheduled-cli",
   "unscheduled-models",
-  "unscheduled-retrieval",
+  "unscheduled-retrieval[corpus,embed]",
   "unscheduled-agent",
   "unscheduled-mcp",
   "typer>=0.15",

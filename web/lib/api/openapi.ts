@@ -45,6 +45,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/approvals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * A person's decision on a draft, named by its hash, with the approver's token
+         * @description The approver's token travels as Authorization: Bearer. The API keeps only its SHA-256, hashes what it receives, compares the two in constant time and logs neither; without the token, or on a hash that is not the hash of the draft that waits, nothing is recorded and the run does not move.
+         */
+        post: operations["post_approval_v1_approvals_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/v1/backlog": {
         parameters: {
             query?: never;
@@ -232,10 +252,109 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/v1/runs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The newest triage runs, newest first */
+        get: operations["get_runs_v1_runs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/runs/{run_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One triage run: its state, the claims with their checks, the costs per node */
+        get: operations["get_run_v1_runs__run_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Ranked chunks of the advisory corpus as it was known at the end of a past day */
+        get: operations["get_search_v1_search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/v1/triage": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Start a triage run for one CVE, now or as of a past day, to its first approval
+         * @description Runs the triage graph for the CVE over what the slice knew at the end of as_of (or now): the match, the fixed version from the advisories known by then, the KEV listing and exploit signals, the retrieved advisory chunks, a drafted patch plan and, for a listed or exploited CVE, an early warning, each checked claim by claim against its cited source. It answers at the first approval interrupt. A client may start a number of runs each UTC day and the API a number in all (config/providers.yaml, serving); past either, the no model floor drafts and the run says so. Nothing is applied, sent or filed: a draft becomes approved only by a person's decision on its hash.
+         */
+        post: operations["post_triage_v1_triage_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** ApprovalRequest */
+        ApprovalRequest: {
+            /**
+             * By
+             * @default ajay
+             */
+            by: string;
+            /**
+             * Decision
+             * @enum {string}
+             */
+            decision: "approve" | "reject";
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "plan" | "warning";
+            /**
+             * Run Id
+             * @description the run the draft belongs to
+             */
+            run_id: string;
+            /**
+             * Sha256
+             * @description the hash of the draft the decision is on, as shown
+             */
+            sha256: string;
+        };
         /** Backlog */
         Backlog: {
             backlog: components["schemas"]["JsonValue"];
@@ -647,6 +766,28 @@ export interface components {
             /** Statement */
             statement: string;
         };
+        /** NodeCost */
+        NodeCost: {
+            /**
+             * Calls
+             * @description model calls made by the node, the floor's included
+             */
+            calls: number;
+            /**
+             * Ms
+             * @description the time the node took, milliseconds
+             */
+            ms: number;
+            /**
+             * Shadow Usd
+             * @description what the calls would have cost at the locked price book, USD
+             */
+            shadow_usd: number;
+            /** Tokens In */
+            tokens_in: number;
+            /** Tokens Out */
+            tokens_out: number;
+        };
         /**
          * PredictRequest
          * @description A description and what a filer would give at publication, scored as a CVE at its day 0. No
@@ -800,6 +941,119 @@ export interface components {
             /** Tag Prefix */
             tag_prefix: string;
         };
+        /** RunList */
+        RunList: {
+            /** Data Version */
+            data_version: string;
+            /** Runs */
+            runs: components["schemas"]["RunSummary"][];
+            /** Statement */
+            statement: string;
+        };
+        /** RunSummary */
+        RunSummary: {
+            /**
+             * As Of
+             * Format: date-time
+             */
+            as_of: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Cve Id */
+            cve_id: string;
+            /** Plan Sha256 */
+            plan_sha256: string | null;
+            /** Run Id */
+            run_id: string;
+            /** Status */
+            status: string;
+            /** Warning Sha256 */
+            warning_sha256: string | null;
+        };
+        /** RunView */
+        RunView: {
+            /**
+             * Approvals
+             * @description every decision recorded
+             */
+            approvals?: {
+                [key: string]: components["schemas"]["JsonValue"];
+            }[];
+            /**
+             * As Of
+             * @description the run time: what the run could read was known by then
+             */
+            as_of: string | null;
+            /**
+             * Calls
+             * @description every model call, the floor's included
+             */
+            calls?: {
+                [key: string]: components["schemas"]["JsonValue"];
+            }[];
+            /**
+             * Checkpoints
+             * @description kept, gone (past the cap of ADR 0011) or none
+             */
+            checkpoints: string;
+            /**
+             * Cost
+             * @description tokens and shadow price of the run
+             */
+            cost?: {
+                [key: string]: components["schemas"]["JsonValue"];
+            };
+            /** Cve Id */
+            cve_id: string | null;
+            /** Data Version */
+            data_version: string;
+            /**
+             * Drafts
+             * @description each draft with its status (waiting, approved, ready, rejected or blocked) and its check
+             */
+            drafts?: {
+                [key: string]: components["schemas"]["JsonValue"];
+            };
+            /**
+             * Facts
+             * @description what the run read, as of its time
+             */
+            facts?: {
+                [key: string]: components["schemas"]["JsonValue"];
+            };
+            /**
+             * Nodes
+             * @description time, tokens and price per node
+             */
+            nodes?: {
+                [key: string]: components["schemas"]["NodeCost"];
+            };
+            /** Note */
+            note?: string | null;
+            /** Parent Run Id */
+            parent_run_id?: string | null;
+            /** Run Id */
+            run_id: string;
+            /** Statement */
+            statement: string;
+            /**
+             * Status
+             * @description running, waiting, decided or failed
+             */
+            status: string;
+            /** Untrusted */
+            untrusted: string;
+            /**
+             * Waiting For
+             * @description the draft that waits for a person, by kind and hash
+             */
+            waiting_for?: {
+                [key: string]: components["schemas"]["JsonValue"];
+            }[];
+        };
         /** SbomSummary */
         SbomSummary: {
             /** Bytes */
@@ -826,6 +1080,46 @@ export interface components {
             name: string;
             /** Total Bytes */
             total_bytes: number;
+        };
+        /** SearchHit */
+        SearchHit: {
+            /** Chunk Id */
+            chunk_id: string;
+            /** Doc Id */
+            doc_id: string;
+            /**
+             * Known From
+             * Format: date-time
+             */
+            known_from: string;
+            /** Score */
+            score: number;
+            /** Sections */
+            sections: string[];
+            /** Text */
+            text: string;
+            /** Untrusted */
+            untrusted: boolean;
+            /** Version */
+            version: string;
+        };
+        /** SearchResults */
+        SearchResults: {
+            /**
+             * As Of
+             * Format: date
+             */
+            as_of: string;
+            /** Configuration */
+            configuration: string;
+            /** Data Version */
+            data_version: string;
+            /** Query */
+            query: string;
+            /** Results */
+            results: components["schemas"]["SearchHit"][];
+            /** Statement */
+            statement: string;
         };
         /** SyncChunk */
         SyncChunk: {
@@ -914,6 +1208,20 @@ export interface components {
             kind: string;
             /** Source */
             source: string | null;
+        };
+        /** TriageRequest */
+        TriageRequest: {
+            /**
+             * As Of
+             * @description a past day; the run reads only what was known by its end. Absent: now
+             */
+            as_of?: string | null;
+            /**
+             * Cve Id
+             * @description a CVE in the serving slice
+             * @example CVE-2024-23897
+             */
+            cve_id: string;
         };
     };
     responses: never;
@@ -1007,7 +1315,7 @@ export interface operations {
                     "application/problem+json": components["schemas"]["Problem"];
                 };
             };
-            /** @description A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
             503: {
                 headers: {
                     [name: string]: unknown;
@@ -1081,7 +1389,7 @@ export interface operations {
                     "application/problem+json": components["schemas"]["Problem"];
                 };
             };
-            /** @description A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
             503: {
                 headers: {
                     [name: string]: unknown;
@@ -1092,6 +1400,75 @@ export interface operations {
             };
             /** @description Loading more would pass the storage ceiling */
             507: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_approval_v1_approvals_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ApprovalRequest"];
+            };
+        };
+        responses: {
+            /** @description The run after the decision */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunView"];
+                };
+            };
+            /** @description The decision was refused and nothing was recorded */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The resource does not exist */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The document is neither CycloneDX nor SPDX JSON; The request did not validate */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The server failed while answering */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            503: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -1137,7 +1514,7 @@ export interface operations {
                     "application/problem+json": components["schemas"]["Problem"];
                 };
             };
-            /** @description A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
             503: {
                 headers: {
                     [name: string]: unknown;
@@ -1238,7 +1615,7 @@ export interface operations {
                     "application/problem+json": components["schemas"]["Problem"];
                 };
             };
-            /** @description A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
             503: {
                 headers: {
                     [name: string]: unknown;
@@ -1309,7 +1686,7 @@ export interface operations {
                     "application/problem+json": components["schemas"]["Problem"];
                 };
             };
-            /** @description A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
             503: {
                 headers: {
                     [name: string]: unknown;
@@ -1377,7 +1754,7 @@ export interface operations {
                     "application/problem+json": components["schemas"]["Problem"];
                 };
             };
-            /** @description A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
             503: {
                 headers: {
                     [name: string]: unknown;
@@ -1424,7 +1801,7 @@ export interface operations {
                     "application/problem+json": components["schemas"]["Problem"];
                 };
             };
-            /** @description A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
             503: {
                 headers: {
                     [name: string]: unknown;
@@ -1538,7 +1915,7 @@ export interface operations {
                     "application/problem+json": components["schemas"]["Problem"];
                 };
             };
-            /** @description A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
             503: {
                 headers: {
                     [name: string]: unknown;
@@ -1614,7 +1991,7 @@ export interface operations {
                     "application/problem+json": components["schemas"]["Problem"];
                 };
             };
-            /** @description A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
             503: {
                 headers: {
                     [name: string]: unknown;
@@ -1692,7 +2069,7 @@ export interface operations {
                     "application/problem+json": components["schemas"]["Problem"];
                 };
             };
-            /** @description A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
             503: {
                 headers: {
                     [name: string]: unknown;
@@ -1739,7 +2116,7 @@ export interface operations {
                     "application/problem+json": components["schemas"]["Problem"];
                 };
             };
-            /** @description A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
             503: {
                 headers: {
                     [name: string]: unknown;
@@ -1810,7 +2187,266 @@ export interface operations {
                     "application/problem+json": components["schemas"]["Problem"];
                 };
             };
-            /** @description A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_runs_v1_runs_get: {
+        parameters: {
+            query?: {
+                /** @description how many runs, at most 100 */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The runs with their status and the hashes of their drafts */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunList"];
+                };
+            };
+            /** @description The document is neither CycloneDX nor SPDX JSON; The request did not validate */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The sync was called too often; This client has used its daily budget */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The server failed while answering */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_run_v1_runs__run_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description the run id POST /v1/triage answered */
+                run_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The run as it stands */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunView"];
+                };
+            };
+            /** @description The resource does not exist */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The document is neither CycloneDX nor SPDX JSON; The request did not validate */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The sync was called too often; This client has used its daily budget */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The server failed while answering */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    get_search_v1_search_get: {
+        parameters: {
+            query: {
+                /** @description the words to search for */
+                q: string;
+                /** @description a past day; only what was known by its end is searched */
+                as_of: string;
+                /** @description how many chunks, at most 50 */
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The chunks, best first, each marked as untrusted text */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SearchResults"];
+                };
+            };
+            /** @description The document is neither CycloneDX nor SPDX JSON; The request did not validate */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The sync was called too often; This client has used its daily budget */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The server failed while answering */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+        };
+    };
+    post_triage_v1_triage_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TriageRequest"];
+            };
+        };
+        responses: {
+            /** @description The run at its first interrupt: the drafts with their checks, what waits, the costs */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RunView"];
+                };
+            };
+            /** @description The resource does not exist */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The document is neither CycloneDX nor SPDX JSON; The request did not validate */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The sync was called too often; This client has used its daily budget */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description The server failed while answering */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["Problem"];
+                };
+            };
+            /** @description A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment */
             503: {
                 headers: {
                     [name: string]: unknown;

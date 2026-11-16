@@ -1528,6 +1528,44 @@ wheels = [
 ]
 
 [[package]]
+name = "mcp"
+version = "2.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "anyio" },
+    { name = "httpx2" },
+    { name = "jsonschema" },
+    { name = "mcp-types" },
+    { name = "opentelemetry-api" },
+    { name = "pydantic" },
+    { name = "pyjwt", extra = ["crypto"] },
+    { name = "python-multipart" },
+    { name = "pywin32", marker = "sys_platform == 'win32'" },
+    { name = "sse-starlette" },
+    { name = "starlette" },
+    { name = "typing-extensions" },
+    { name = "typing-inspection" },
+    { name = "uvicorn", marker = "sys_platform != 'emscripten'" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9d/8d/e0d339616f4810e9051d4aba6887afab289ab1f81875fe908b606cdfd0e3/mcp-2.3.0.tar.gz", hash = "sha256:8b147a50441cf059dc88c684e0aeed3687f0aa0f39c6cde7b90330effd2b34d8", size = 4171955, upload-time = "2026-10-02T22:06:56.091Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/20/d7/4a2878f128df729db3ca04e71bfce26405cc2e0c9ebe19c592feeb4c61b9/mcp-2.3.0-py3-none-any.whl", hash = "sha256:dd0c44c089d16453e8ae31a3877a0054d7a2314caaa81f5e0541b9b1734b2377", size = 368664, upload-time = "2026-10-02T22:06:52.119Z" },
+]
+
+[[package]]
+name = "mcp-types"
+version = "2.3.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/9e/2d/7c251e34207f6c51000312fc8839111ac45cfe02023f90b44e7f1051dd8e/mcp_types-2.3.0.tar.gz", hash = "sha256:d1e46549edb35ee19a94940fcee6d1addd7e589ab7ea92dda83f5d84781fc362", size = 65898, upload-time = "2026-10-02T22:06:57.863Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/ce/48/32583066b155bb5d4507e7887dc88ee23118cc4de8e2a12870c49719e2a8/mcp_types-2.3.0-py3-none-any.whl", hash = "sha256:968efdbdaedfab06adae40d378a34395f1090c5921d4be3c9cde283aaf76d91d", size = 69108, upload-time = "2026-10-02T22:06:54.099Z" },
+]
+
+[[package]]
 name = "mdurl"
 version = "0.1.2"
 source = { registry = "https://pypi.org/simple" }
@@ -2223,6 +2261,20 @@ wheels = [
 ]
 
 [[package]]
+name = "pyjwt"
+version = "2.15.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/43/ea/5194e52748b0da83d71e082d75496eaec6e58f419f5e184786ded517e6a9/pyjwt-2.15.1.tar.gz", hash = "sha256:4f259e80cdfb6b3fc18a7de51fd1ef9ec79652f25019bae68975ca2468a34df8", size = 121252, upload-time = "2026-09-28T18:40:42.598Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/50/ca/44de4e75f8aadc457f0634be3b542815078ded46dca30efb960edeecad6e/pyjwt-2.15.1-py3-none-any.whl", hash = "sha256:42d59d631f7768a1028a64c7ff581a9bf7519804daf91fc5b6c56e30eec5e193", size = 33860, upload-time = "2026-09-28T18:40:41.429Z" },
+]
+
+[package.optional-dependencies]
+crypto = [
+    { name = "cryptography" },
+]
+
+[[package]]
 name = "pyparsing"
 version = "3.3.3"
 source = { registry = "https://pypi.org/simple" }
@@ -2756,6 +2808,19 @@ wheels = [
 ]
 
 [[package]]
+name = "sse-starlette"
+version = "3.7.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "anyio" },
+    { name = "starlette" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/41/43/a232e3cd804293bd4f6d01e8895bc0f6f83ea148d712baf9d783c7d93d23/sse_starlette-3.7.0.tar.gz", hash = "sha256:326416da2ab52e9a41b3f409d3ff897eda45aa68c9f3b7b17d0913aab8d219c3", size = 43869, upload-time = "2026-11-07T11:15:49.389Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/6a/11/25cabac0a24fa76f58637d8671b549c90d818d69d26beecf0c59a3b186e0/sse_starlette-3.7.0-py3-none-any.whl", hash = "sha256:f1d3136caa12d129284fca3d2ded79bc9af943320b6472712955fea52a6d3eea", size = 18432, upload-time = "2026-11-07T11:15:47.86Z" },
+]
+
+[[package]]
 name = "starlette"
 version = "1.10.0"
 source = { registry = "https://pypi.org/simple" }
@@ -2986,7 +3051,7 @@ dependencies = [
     { name = "unscheduled-mcp" },
     { name = "unscheduled-models" },
     { name = "unscheduled-render" },
-    { name = "unscheduled-retrieval" },
+    { name = "unscheduled-retrieval", extra = ["corpus", "embed"] },
     { name = "unscheduled-sources" },
 ]
 
@@ -3019,7 +3084,7 @@ requires-dist = [
     { name = "unscheduled-mcp", editable = "packages/mcp" },
     { name = "unscheduled-models", editable = "packages/models" },
     { name = "unscheduled-render", editable = "packages/render" },
-    { name = "unscheduled-retrieval", editable = "packages/retrieval" },
+    { name = "unscheduled-retrieval", extras = ["corpus", "embed"], editable = "packages/retrieval" },
     { name = "unscheduled-sources", editable = "packages/sources" },
 ]
 
@@ -3046,6 +3111,7 @@ dependencies = [
     { name = "langchain-core" },
     { name = "langgraph" },
     { name = "langgraph-checkpoint-postgres" },
+    { name = "polars" },
     { name = "psycopg", extra = ["binary"] },
     { name = "pydantic" },
     { name = "pyyaml" },
@@ -3058,6 +3124,7 @@ requires-dist = [
     { name = "langchain-core", specifier = "==1.7.4" },
     { name = "langgraph", specifier = "==1.2.19" },
     { name = "langgraph-checkpoint-postgres", specifier = "==3.2.0" },
+    { name = "polars", specifier = ">=1.30" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.3" },
     { name = "pydantic", specifier = ">=2.10" },
     { name = "pyyaml", specifier = ">=6.0" },
@@ -3106,9 +3173,12 @@ dependencies = [
     { name = "pyyaml" },
     { name = "sqlalchemy" },
     { name = "structlog" },
+    { name = "unscheduled-agent" },
     { name = "unscheduled-core" },
     { name = "unscheduled-legacy-adapter" },
     { name = "unscheduled-match" },
+    { name = "unscheduled-mcp" },
+    { name = "unscheduled-retrieval" },
     { name = "uvicorn" },
 ]
 
@@ -3124,9 +3194,12 @@ requires-dist = [
     { name = "pyyaml", specifier = ">=6.0" },
     { name = "sqlalchemy", specifier = ">=2.1" },
     { name = "structlog", specifier = ">=26.1" },
+    { name = "unscheduled-agent", editable = "packages/agent" },
     { name = "unscheduled-core", editable = "packages/core" },
     { name = "unscheduled-legacy-adapter", editable = "packages/legacy_adapter" },
     { name = "unscheduled-match", editable = "packages/match" },
+    { name = "unscheduled-mcp", editable = "packages/mcp" },
+    { name = "unscheduled-retrieval", editable = "packages/retrieval" },
     { name = "uvicorn", specifier = ">=0.54" },
 ]
 
@@ -3248,12 +3321,14 @@ name = "unscheduled-mcp"
 version = "0.1.0"
 source = { editable = "packages/mcp" }
 dependencies = [
+    { name = "mcp" },
     { name = "pydantic" },
     { name = "unscheduled-core" },
 ]
 
 [package.metadata]
 requires-dist = [
+    { name = "mcp", specifier = "==2.3.0" },
     { name = "pydantic", specifier = ">=2.10" },
     { name = "unscheduled-core", editable = "packages/core" },
 ]
@@ -3343,31 +3418,44 @@ name = "unscheduled-retrieval"
 version = "0.1.0"
 source = { editable = "packages/retrieval" }
 dependencies = [
-    { name = "duckdb" },
-    { name = "httpx" },
     { name = "numpy" },
-    { name = "onnxruntime" },
     { name = "pgvector" },
     { name = "polars" },
     { name = "psycopg", extra = ["binary"] },
+    { name = "unscheduled-core" },
+]
+
+[package.optional-dependencies]
+corpus = [
+    { name = "duckdb" },
+    { name = "httpx" },
     { name = "pyyaml" },
     { name = "tokenizers" },
-    { name = "unscheduled-core" },
+]
+embed = [
+    { name = "httpx" },
+    { name = "onnxruntime" },
+    { name = "pyyaml" },
+    { name = "tokenizers" },
 ]
 
 [package.metadata]
 requires-dist = [
-    { name = "duckdb", specifier = "==2.0.0" },
-    { name = "httpx", specifier = ">=0.28" },
+    { name = "duckdb", marker = "extra == 'corpus'", specifier = "==2.0.0" },
+    { name = "httpx", marker = "extra == 'corpus'", specifier = ">=0.28" },
+    { name = "httpx", marker = "extra == 'embed'", specifier = ">=0.28" },
     { name = "numpy", specifier = ">=2.0" },
-    { name = "onnxruntime", specifier = "==1.32.0" },
+    { name = "onnxruntime", marker = "extra == 'embed'", specifier = "==1.32.0" },
     { name = "pgvector", specifier = "==0.5.1" },
     { name = "polars", specifier = ">=2.1" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.3" },
-    { name = "pyyaml", specifier = ">=6.0" },
-    { name = "tokenizers", specifier = "==0.23.3" },
+    { name = "pyyaml", marker = "extra == 'corpus'", specifier = ">=6.0" },
+    { name = "pyyaml", marker = "extra == 'embed'", specifier = ">=6.0" },
+    { name = "tokenizers", marker = "extra == 'corpus'", specifier = "==0.23.3" },
+    { name = "tokenizers", marker = "extra == 'embed'", specifier = "==0.23.3" },
     { name = "unscheduled-core", editable = "packages/core" },
 ]
+provides-extras = ["corpus", "embed"]
 
 [[package]]
 name = "unscheduled-sources"

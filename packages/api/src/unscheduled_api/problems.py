@@ -51,6 +51,8 @@ KINDS: dict[str, Kind] = {
         Kind("data-not-loaded", "No serving bundle has been loaded yet", 503),
         Kind("matcher-unavailable", "The matcher is not available in this deployment", 503),
         Kind("legacy-unavailable", "The legacy report adapter is not available in this deployment", 503),
+        Kind("run-store-full", "As many runs wait for a person as the store keeps", 503),
+        Kind("approval-refused", "The decision was refused and nothing was recorded", 403),
         Kind("internal", "The server failed while answering", 500),
     )
 }

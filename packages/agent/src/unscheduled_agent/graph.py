@@ -313,9 +313,15 @@ def config(run_id: str, checkpoint_id: str | None = None) -> RunnableConfig:
 
 
 def decide(graph: Any, run_id: str, decision: str, sha256: str, by: str) -> dict[str, Any]:
-    """Resume a run waiting at an approval with a person's decision on the draft of that hash."""
+    """Resume a run waiting at an approval with a person's decision on the draft of that hash.
+
+    The run may resume in another process than the one that started it, whose monotonic clock means
+    nothing here, so the deadline of the drafting that follows starts again from now."""
     out: dict[str, Any] = graph.invoke(
-        Command(resume={"decision": decision, "sha256": sha256, "by": by}), config(run_id)
+        Command(
+            resume={"decision": decision, "sha256": sha256, "by": by}, update={"started": time.monotonic()}
+        ),
+        config(run_id),
     )
     return out
 

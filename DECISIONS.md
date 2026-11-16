@@ -815,3 +815,29 @@ the projection for 13 December stays under the ceiling, with the room in the rec
 The prompt asks the chunks to be split by section, then by paragraph. They still are; packing only
 joins whole pieces of one document in their order, and each chunk records where every section it
 holds starts and ends, so a citation still names a section and the verifier gets it back exactly.
+
+## 2026-11-16: the serving budgets of a triage run, and where its checkpoints wait
+
+A triage run started through the API or the MCP server drafts its plan with the providers before it
+waits for a person, so strangers spend the provider budgets of config/providers.yaml. Those budgets,
+for one model of each provider, come to 800,000 tokens a UTC day: 100,000 each for Groq, Gemini and
+OpenRouter and 500,000 for Cerebras, half the documented limits until the probe reads the real ones.
+A plan call carries the prompt file (1,616 bytes, about 400 tokens), at most 3,000 tokens of packed
+context, the output schema, and at most 1,500 tokens out: at most about 5,400 tokens, twice that
+when a schema failure is retried once. So the API lets every client together start 100 runs a day,
+at most 540,000 tokens without retries, which leaves the rest for the warnings an approval drafts
+and for the console, and one client 10 of them. Past either count the run still drafts, with the no
+model floor, and says why in its note. The router's own daily budgets still stop it per provider,
+so a budget set too high here falls back to the floor rather than to a bill.
+
+The checkpoints of the graph wait in a schema named after the API's own, unscheduled_checkpoints,
+not in a fixed agent_checkpoints. Migration 0005 had not been deployed, so the name changed before
+any run existed: two API schemas in one database (the test suites make several) then never share
+runs, and the downgrade of one never drops the checkpoints of another.
+
+The MCP endpoint answers POST only. It is stateless, so it has no session for DELETE to end, and a
+GET stream would hold a Vercel function open until its time ran out. The retrieval package keeps the
+search over Postgres in its base and moves the corpus builder (DuckDB, the tokenizer) and the encoder
+(the tokenizer, ONNX Runtime) to the extras corpus and embed, so the API's search pulls in neither
+(DuckDB still reaches the image through the Phase 1 matcher). The encoder joins the image only if
+config/retrieval.yaml freezes a configuration that needs it.

@@ -45,6 +45,21 @@ def test_the_version_table_lives_in_the_schema_and_nowhere_else(
     assert revision == ("0005",)
 
 
+def test_the_checkpoints_get_a_schema_of_their_own_named_after_the_api_schema(
+    migrated: sa.Engine, postgres_url: str
+) -> None:
+    """The LangGraph saver makes its tables there; a second API schema in the same database gets its
+    own, so a downgrade of one never drops the runs of the other."""
+    with psycopg.connect(plain(postgres_url)) as conn:
+        found = conn.execute(
+            "select schema_name from information_schema.schemata where schema_name = %s",
+            (db.checkpoint_schema("unscheduled"),),
+        ).fetchall()
+        vector = conn.execute("select extversion from pg_extension where extname = 'vector'").fetchone()
+    assert found == [("unscheduled_checkpoints",)]
+    assert vector is not None
+
+
 def test_two_instances_starting_together_migrate_once(postgres_url: str, tmp_path: Path) -> None:
     """Three processes, as three containers would be, each running the migration at start."""
     schema = "unscheduled_twice"
@@ -75,6 +90,7 @@ def test_two_instances_starting_together_migrate_once(postgres_url: str, tmp_pat
     with psycopg.connect(plain(postgres_url), autocommit=True) as conn:
         assert conn.execute(f'select count(*) from "{schema}"."alembic_version"').fetchone() == (1,)
         conn.execute(f'drop schema "{schema}" cascade')
+        conn.execute(f'drop schema "{db.checkpoint_schema(schema)}" cascade')
 
 
 def test_a_migration_that_cannot_reach_the_database_reports_the_class_only(tmp_path: Path) -> None:

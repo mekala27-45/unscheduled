@@ -121,13 +121,17 @@ class PostgresBudget:
     """The budget of each provider and model for the current UTC day, counted in Postgres so every
     function instance of the API reads the same count."""
 
-    def __init__(self, conn: psycopg.Connection[Any], schema: str, limits: dict[str, Limit]) -> None:
+    def __init__(
+        self, conn: psycopg.Connection[Any], schema: str, limits: dict[str, Limit], *, create: bool = True
+    ) -> None:
+        # The API passes create=False: migration 0005 made the table, and a request runs no DDL.
         self.conn = conn
         self.schema = schema
         self.limits = limits
-        with conn.cursor() as cur:
-            cur.execute(BUDGET_TABLE.format(schema=schema))
-        conn.commit()
+        if create:
+            with conn.cursor() as cur:
+                cur.execute(BUDGET_TABLE.format(schema=schema))
+            conn.commit()
 
     def allow(self, provider: str, model: str) -> bool:
         limit = self.limits.get(provider)

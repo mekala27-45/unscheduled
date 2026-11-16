@@ -28,6 +28,7 @@ from unscheduled_agent.verify import draft_sha256
 
 TOKEN_ENV = "APPROVER_TOKEN_SHA256"
 Kind = Literal["plan", "warning"]
+Decision = Literal["approve", "reject"]
 Status = Literal["absent", "blocked", "waiting", "approved", "ready", "rejected"]
 
 
@@ -44,7 +45,7 @@ class Approval:
     run_id: str
     kind: Kind
     sha256: str
-    decision: Literal["approve", "reject"]
+    decision: Decision
     by: str
     at: str
     token_ok: bool
@@ -88,12 +89,14 @@ create index if not exists agent_approval_run on {schema}.agent_approval (run_id
 class PostgresStore:
     """Approvals as rows that are only ever added: a decision is never edited or deleted."""
 
-    def __init__(self, conn: psycopg.Connection[Any], schema: str) -> None:
+    def __init__(self, conn: psycopg.Connection[Any], schema: str, *, create: bool = True) -> None:
+        # The API passes create=False: migration 0005 made the table, and a request runs no DDL.
         self.conn = conn
         self.schema = schema
-        with conn.cursor() as cur:
-            cur.execute(TABLE.format(schema=schema))
-        conn.commit()
+        if create:
+            with conn.cursor() as cur:
+                cur.execute(TABLE.format(schema=schema))
+            conn.commit()
 
     def add(self, approval: Approval) -> None:
         with self.conn.cursor() as cur:
@@ -130,7 +133,7 @@ def record(
     run_id: str,
     kind: Kind,
     sha256: str,
-    decision: Literal["approve", "reject"],
+    decision: Decision,
     by: str,
     token: str | None,
     expected_sha256: str | None = None,

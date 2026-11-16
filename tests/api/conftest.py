@@ -17,7 +17,7 @@ import sqlalchemy as sa
 from fastapi.testclient import TestClient
 from unscheduled_api import migrate
 from unscheduled_api.app import create_app
-from unscheduled_api.db import make_engine
+from unscheduled_api.db import checkpoint_schema, make_engine
 from unscheduled_api.matching import PackageMatcher, StaticAdvisories
 from unscheduled_api.releases import GitHubReleases
 from unscheduled_api.services import Services
@@ -40,6 +40,11 @@ TABLES = (
     "client_budget",
     "ops_run",
     "settings",
+    "corpus_document",
+    "corpus_chunk",
+    "agent_run",
+    "agent_approval",
+    "agent_budget",
 )
 ORIGIN = "https://unscheduled-triage.vercel.app"
 ORIGINS = f"{ORIGIN}, https://unscheduled-sigma.vercel.app/"
@@ -74,6 +79,7 @@ def fresh_schema(url: str, schema: str, cache: Path) -> sa.Engine:
     plain = sa.create_engine(url)
     with plain.begin() as conn:
         conn.execute(sa.text(f'drop schema if exists "{schema}" cascade'))
+        conn.execute(sa.text(f'drop schema if exists "{checkpoint_schema(schema)}" cascade'))
     plain.dispose()
     failed = migrate.upgrade(settings_for(url, cache, schema=schema))
     assert failed is None, f"the migration failed: {failed}"

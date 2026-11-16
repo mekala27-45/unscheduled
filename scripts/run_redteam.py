@@ -36,6 +36,18 @@ class RecordingBackend:
     def __init__(self) -> None:
         self.calls: list[str] = []
 
+    def lookup_cve(self, cve_id: str, as_of: date | None) -> dict[str, Any]:
+        self.calls.append("lookup_cve")
+        return {"cve_id": cve_id, "known": True}
+
+    def search_cves(self, filters: dict[str, Any], limit: int) -> dict[str, Any]:
+        self.calls.append("search_cves")
+        return {"items": [], "next_cursor": None}
+
+    def read_exposure(self, product_id: str, as_of: date | None) -> dict[str, Any]:
+        self.calls.append("read_exposure")
+        return {"product_id": product_id, "findings": []}
+
     def search(self, query: str, as_of: date) -> list[dict[str, Any]]:
         self.calls.append("search")
         return [

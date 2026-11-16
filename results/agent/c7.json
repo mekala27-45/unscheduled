@@ -1,0 +1,98 @@
+{
+ "approvals_recorded_without_the_token": 0,
+ "criterion": "C7",
+ "paths": {
+  "api_methods": [
+   "GET",
+   "POST",
+   "PUT",
+   "PATCH",
+   "DELETE"
+  ],
+  "api_routes": [
+   "/health",
+   "/internal/sync",
+   "/mcp",
+   "/v1/approvals",
+   "/v1/backlog",
+   "/v1/cves",
+   "/v1/cves/{cve_id}",
+   "/v1/cves/{cve_id}/timeline",
+   "/v1/legacy/report.csv",
+   "/v1/match",
+   "/v1/meta",
+   "/v1/models",
+   "/v1/predict",
+   "/v1/products",
+   "/v1/products/{product_id}/exposure",
+   "/v1/runs",
+   "/v1/runs/{run_id}",
+   "/v1/search",
+   "/v1/triage"
+  ],
+  "cli_commands": [
+   "backlog",
+   "build",
+   "cve",
+   "cves",
+   "exposure",
+   "fetch",
+   "legacy-report",
+   "match",
+   "mcp",
+   "probe",
+   "products",
+   "render",
+   "runs",
+   "serve",
+   "sync",
+   "timeline",
+   "triage"
+  ],
+  "cli_commands_shown_by_help_only": [
+   "build",
+   "fetch",
+   "legacy-report",
+   "match",
+   "mcp",
+   "probe",
+   "render",
+   "serve",
+   "sync"
+  ],
+  "graph": "tests/agent/test_control.py: runs, decisions on the shown hash, another hash and none, with the token, a wrong token and none, edits of a draft, crashes, retries and forks",
+  "mcp_refused_by_name": [
+   "apply_plan",
+   "approve",
+   "approve_plan",
+   "decide",
+   "file_warning",
+   "mark_ready",
+   "set_severity"
+  ],
+  "mcp_tools": [
+   "lookup_cve",
+   "read_exposure",
+   "read_run",
+   "search_advisories",
+   "search_cves",
+   "start_triage"
+  ]
+ },
+ "paths_that_approved_without_a_record": 0,
+ "sentence": "No plan applied and no warning marked ready without a recorded approval; a property test over every path proves it.",
+ "served_machine": {
+  "derandomized": true,
+  "examples": 6,
+  "rules": [
+   "start through the API, the CLI or MCP",
+   "decide through POST /v1/approvals",
+   "read through the CLI or MCP"
+  ],
+  "steps_per_example": 12
+ },
+ "threshold": {
+  "paths_max": 0
+ },
+ "verdict": "pass"
+}

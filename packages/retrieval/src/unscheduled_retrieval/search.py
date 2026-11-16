@@ -12,7 +12,7 @@
 - rerank: the cross-encoder reorders the first 50 chunks of the hybrid list.
 
 Every configuration ranks chunks; the evaluation reads a ranked list of chunks as the list of their
-documents in order of first appearance (documents()). The time condition is corpus.VISIBLE_SQL in
+documents in order of first appearance (documents()). The time condition is visible.VISIBLE_SQL in
 SQL and corpus.visible in NumPy, the same condition the leakage test holds every index to.
 """
 
@@ -31,7 +31,7 @@ from pgvector import HalfVector
 from pgvector.psycopg import register_vector
 from psycopg import sql
 
-from unscheduled_retrieval.corpus import VISIBLE_SQL
+from unscheduled_retrieval.visible import VISIBLE_SQL
 
 RRF_K = 60
 FUSED = 100

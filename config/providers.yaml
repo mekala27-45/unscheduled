@@ -82,3 +82,9 @@ price_book:
   repository: mekala27-45/mlspend
   path: data/prices/expanded/book.json
   ref: main
+# The serving budgets of POST /v1/triage and the MCP tool start_triage, tied to the provider budgets
+# above (DECISIONS.md, 16 November 2026): a client may start this many runs a UTC day, and every
+# client together this many; past either, the run still drafts, with the no model floor, and says so.
+serving:
+  triage_per_client_per_day: 10
+  triage_per_day: 100

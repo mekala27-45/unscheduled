@@ -12,6 +12,9 @@ COPY config ./config
 COPY packages ./packages
 # The ONNX floor and exploitation model POST /v1/predict scores with, and their input specs.
 COPY models ./models
+# The triage agent: its prompt files, hashed on every call, and the locked price book it prices with.
+COPY prompts ./prompts
+COPY data/prices ./data/prices
 # Only the API and what it imports: the lake, the analysis and the command line stay out of the image.
 RUN uv sync --frozen --no-dev --package unscheduled-api
 EXPOSE 80

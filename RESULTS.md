@@ -115,7 +115,7 @@ writes into it.
 
 ## The Phase 3 checklist
 
-3 of the 18 lines are done. A line is done
+4 of the 18 lines are done. A line is done
 only when its evidence says pass, and a file an earlier phase wrote counts here only with what Phase 3
 writes into it.
 
@@ -130,7 +130,7 @@ writes into it.
 | 7 | not done | Prompts versioned and hashed; every output validated against its schema | results/agent/prompts.json |
 | 8 | not done | The LangGraph agent with checkpoints in Postgres, the approval interrupt, replay and time travel | results/agent/graph.json |
 | 9 | not done | C5 evidence: every claim checked by code; zero unverified citations in approved drafts | results/agent/c5.json |
-| 10 | not done | C7 evidence: the property test over every path, passing | results/agent/c7.json |
+| 10 | done | C7 evidence: the property test over every path, passing | results/agent/c7.json |
 | 11 | not done | C6 evidence: zero planted instructions followed in the registered red team set, its held out half scored once | results/agent/c6.json |
 | 12 | not done | The agent evals on KEV listings with the floor beside every router configuration, the choices frozen before the shadow window was scored once; tokens, latency and cost per node and per run; the judge calibrated against the labels Ajay gave | evaluation/registration.json, results/agent/evals.json, results/agent/costs.json, results/agent/judge.json |
 | 13 | not done | One step built in three frameworks, compared in ADR 0012 | results/agent/frameworks.json, docs/adr/0012-one-step-three-frameworks.md |

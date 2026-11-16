@@ -1,6 +1,55 @@
 {
   "components": {
     "schemas": {
+      "ApprovalRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "by": {
+            "default": "ajay",
+            "maxLength": 64,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9 ._-]+$",
+            "title": "By",
+            "type": "string"
+          },
+          "decision": {
+            "enum": [
+              "approve",
+              "reject"
+            ],
+            "title": "Decision",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "plan",
+              "warning"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "run_id": {
+            "description": "the run the draft belongs to",
+            "pattern": "^[0-9a-f]{32}$",
+            "title": "Run Id",
+            "type": "string"
+          },
+          "sha256": {
+            "description": "the hash of the draft the decision is on, as shown",
+            "pattern": "^[0-9a-f]{64}$",
+            "title": "Sha256",
+            "type": "string"
+          }
+        },
+        "required": [
+          "run_id",
+          "kind",
+          "sha256",
+          "decision"
+        ],
+        "title": "ApprovalRequest",
+        "type": "object"
+      },
       "Backlog": {
         "additionalProperties": false,
         "properties": {
@@ -1433,6 +1482,43 @@
         "title": "ModelsDocument",
         "type": "object"
       },
+      "NodeCost": {
+        "additionalProperties": false,
+        "properties": {
+          "calls": {
+            "description": "model calls made by the node, the floor's included",
+            "title": "Calls",
+            "type": "integer"
+          },
+          "ms": {
+            "description": "the time the node took, milliseconds",
+            "title": "Ms",
+            "type": "number"
+          },
+          "shadow_usd": {
+            "description": "what the calls would have cost at the locked price book, USD",
+            "title": "Shadow Usd",
+            "type": "number"
+          },
+          "tokens_in": {
+            "title": "Tokens In",
+            "type": "integer"
+          },
+          "tokens_out": {
+            "title": "Tokens Out",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "ms",
+          "calls",
+          "tokens_in",
+          "tokens_out",
+          "shadow_usd"
+        ],
+        "title": "NodeCost",
+        "type": "object"
+      },
       "PredictRequest": {
         "additionalProperties": false,
         "description": "A description and what a filer would give at publication, scored as a CVE at its day 0. No\nvalue is coerced: a number sent as text or a boolean sent as a number is refused.",
@@ -1919,6 +2005,246 @@
         "title": "ReleaseFacts",
         "type": "object"
       },
+      "RunList": {
+        "additionalProperties": false,
+        "properties": {
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "runs": {
+            "items": {
+              "$ref": "#/components/schemas/RunSummary"
+            },
+            "title": "Runs",
+            "type": "array"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "runs"
+        ],
+        "title": "RunList",
+        "type": "object"
+      },
+      "RunSummary": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "format": "date-time",
+            "title": "As Of",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "cve_id": {
+            "title": "Cve Id",
+            "type": "string"
+          },
+          "plan_sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Plan Sha256"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string"
+          },
+          "warning_sha256": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Warning Sha256"
+          }
+        },
+        "required": [
+          "run_id",
+          "cve_id",
+          "as_of",
+          "status",
+          "created_at",
+          "plan_sha256",
+          "warning_sha256"
+        ],
+        "title": "RunSummary",
+        "type": "object"
+      },
+      "RunView": {
+        "additionalProperties": false,
+        "properties": {
+          "approvals": {
+            "description": "every decision recorded",
+            "items": {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/JsonValue"
+              },
+              "type": "object"
+            },
+            "title": "Approvals",
+            "type": "array"
+          },
+          "as_of": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "the run time: what the run could read was known by then",
+            "title": "As Of"
+          },
+          "calls": {
+            "description": "every model call, the floor's included",
+            "items": {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/JsonValue"
+              },
+              "type": "object"
+            },
+            "title": "Calls",
+            "type": "array"
+          },
+          "checkpoints": {
+            "description": "kept, gone (past the cap of ADR 0011) or none",
+            "title": "Checkpoints",
+            "type": "string"
+          },
+          "cost": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "description": "tokens and shadow price of the run",
+            "title": "Cost",
+            "type": "object"
+          },
+          "cve_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Cve Id"
+          },
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "drafts": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "description": "each draft with its status (waiting, approved, ready, rejected or blocked) and its check",
+            "title": "Drafts",
+            "type": "object"
+          },
+          "facts": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/JsonValue"
+            },
+            "description": "what the run read, as of its time",
+            "title": "Facts",
+            "type": "object"
+          },
+          "nodes": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/NodeCost"
+            },
+            "description": "time, tokens and price per node",
+            "title": "Nodes",
+            "type": "object"
+          },
+          "note": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Note"
+          },
+          "parent_run_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Run Id"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          },
+          "status": {
+            "description": "running, waiting, decided or failed",
+            "title": "Status",
+            "type": "string"
+          },
+          "untrusted": {
+            "title": "Untrusted",
+            "type": "string"
+          },
+          "waiting_for": {
+            "description": "the draft that waits for a person, by kind and hash",
+            "items": {
+              "additionalProperties": {
+                "$ref": "#/components/schemas/JsonValue"
+              },
+              "type": "object"
+            },
+            "title": "Waiting For",
+            "type": "array"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "run_id",
+          "cve_id",
+          "as_of",
+          "status",
+          "checkpoints",
+          "untrusted"
+        ],
+        "title": "RunView",
+        "type": "object"
+      },
       "SbomSummary": {
         "additionalProperties": false,
         "properties": {
@@ -1991,6 +2317,102 @@
           "total_bytes"
         ],
         "title": "SchemaRoom",
+        "type": "object"
+      },
+      "SearchHit": {
+        "additionalProperties": false,
+        "properties": {
+          "chunk_id": {
+            "title": "Chunk Id",
+            "type": "string"
+          },
+          "doc_id": {
+            "title": "Doc Id",
+            "type": "string"
+          },
+          "known_from": {
+            "format": "date-time",
+            "title": "Known From",
+            "type": "string"
+          },
+          "score": {
+            "title": "Score",
+            "type": "number"
+          },
+          "sections": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Sections",
+            "type": "array"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "untrusted": {
+            "title": "Untrusted",
+            "type": "boolean"
+          },
+          "version": {
+            "title": "Version",
+            "type": "string"
+          }
+        },
+        "required": [
+          "chunk_id",
+          "doc_id",
+          "version",
+          "sections",
+          "known_from",
+          "text",
+          "score",
+          "untrusted"
+        ],
+        "title": "SearchHit",
+        "type": "object"
+      },
+      "SearchResults": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "format": "date",
+            "title": "As Of",
+            "type": "string"
+          },
+          "configuration": {
+            "title": "Configuration",
+            "type": "string"
+          },
+          "data_version": {
+            "title": "Data Version",
+            "type": "string"
+          },
+          "query": {
+            "title": "Query",
+            "type": "string"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/SearchHit"
+            },
+            "title": "Results",
+            "type": "array"
+          },
+          "statement": {
+            "title": "Statement",
+            "type": "string"
+          }
+        },
+        "required": [
+          "statement",
+          "data_version",
+          "query",
+          "as_of",
+          "configuration",
+          "results"
+        ],
+        "title": "SearchResults",
         "type": "object"
       },
       "SyncChunk": {
@@ -2277,6 +2699,38 @@
         ],
         "title": "TimelineEvent",
         "type": "object"
+      },
+      "TriageRequest": {
+        "additionalProperties": false,
+        "properties": {
+          "as_of": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "a past day; the run reads only what was known by its end. Absent: now",
+            "title": "As Of"
+          },
+          "cve_id": {
+            "description": "a CVE in the serving slice",
+            "examples": [
+              "CVE-2024-23897"
+            ],
+            "pattern": "^CVE-\\d{4}-\\d{4,7}$",
+            "title": "Cve Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "cve_id"
+        ],
+        "title": "TriageRequest",
+        "type": "object"
       }
     }
   },
@@ -2386,7 +2840,7 @@
                 }
               }
             },
-            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
           },
           "507": {
             "content": {
@@ -2466,7 +2920,7 @@
                 }
               }
             },
-            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
           },
           "507": {
             "content": {
@@ -2482,6 +2936,88 @@
         "summary": "Load the next step of the newest serving release",
         "tags": [
           "sync"
+        ]
+      }
+    },
+    "/v1/approvals": {
+      "post": {
+        "description": "The approver's token travels as Authorization: Bearer. The API keeps only its SHA-256, hashes what it receives, compares the two in constant time and logs neither; without the token, or on a hash that is not the hash of the draft that waits, nothing is recorded and the run does not move.",
+        "operationId": "post_approval_v1_approvals_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ApprovalRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            },
+            "description": "The run after the decision"
+          },
+          "403": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The decision was refused and nothing was recorded"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The resource does not exist"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The document is neither CycloneDX nor SPDX JSON; The request did not validate"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "A person's decision on a draft, named by its hash, with the approver's token",
+        "tags": [
+          "agent"
         ]
       }
     },
@@ -2527,7 +3063,7 @@
                 }
               }
             },
-            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
           }
         },
         "summary": "The backlog questions Q1 to Q6, as the release carries them",
@@ -2868,7 +3404,7 @@
                 }
               }
             },
-            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
           }
         },
         "summary": "A page of CVEs, newest published first, with filters and a cursor",
@@ -2975,7 +3511,7 @@
                 }
               }
             },
-            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
           }
         },
         "summary": "One CVE with every field, its source and since when; with as_of, as known that day",
@@ -3063,7 +3599,7 @@
                 }
               }
             },
-            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
           }
         },
         "summary": "The ruler events of a CVE, in time order",
@@ -3114,7 +3650,7 @@
                 }
               }
             },
-            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
           }
         },
         "summary": "The customer's legacy nightly CSV, written from the findings",
@@ -3352,7 +3888,7 @@
                 }
               }
             },
-            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
           }
         },
         "summary": "Match a CycloneDX or SPDX JSON SBOM; only its digest is kept",
@@ -3434,7 +3970,7 @@
                 }
               }
             },
-            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
           }
         },
         "summary": "The registered models, their chosen versions and the evidence of how each was judged",
@@ -3525,7 +4061,7 @@
                 }
               }
             },
-            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
           }
         },
         "summary": "Score a description and optional filer values with the ONNX floor and exploitation model",
@@ -3576,7 +4112,7 @@
                 }
               }
             },
-            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
           }
         },
         "summary": "The six stand in products with their pins",
@@ -3683,12 +4219,359 @@
                 }
               }
             },
-            "description": "A public source the API reads did not answer; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
           }
         },
         "summary": "The findings of one product at its pin or today, each CVE as known that day",
         "tags": [
           "exposure"
+        ]
+      }
+    },
+    "/v1/runs": {
+      "get": {
+        "operationId": "get_runs_v1_runs_get",
+        "parameters": [
+          {
+            "description": "how many runs, at most 100",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 25,
+              "description": "how many runs, at most 100",
+              "maximum": 100,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunList"
+                }
+              }
+            },
+            "description": "The runs with their status and the hashes of their drafts"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The document is neither CycloneDX nor SPDX JSON; The request did not validate"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "The newest triage runs, newest first",
+        "tags": [
+          "agent"
+        ]
+      }
+    },
+    "/v1/runs/{run_id}": {
+      "get": {
+        "operationId": "get_run_v1_runs__run_id__get",
+        "parameters": [
+          {
+            "description": "the run id POST /v1/triage answered",
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "description": "the run id POST /v1/triage answered",
+              "pattern": "^[0-9a-f]{32}$",
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            },
+            "description": "The run as it stands"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The resource does not exist"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The document is neither CycloneDX nor SPDX JSON; The request did not validate"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "One triage run: its state, the claims with their checks, the costs per node",
+        "tags": [
+          "agent"
+        ]
+      }
+    },
+    "/v1/search": {
+      "get": {
+        "operationId": "get_search_v1_search_get",
+        "parameters": [
+          {
+            "description": "the words to search for",
+            "in": "query",
+            "name": "q",
+            "required": true,
+            "schema": {
+              "description": "the words to search for",
+              "maxLength": 2000,
+              "minLength": 1,
+              "pattern": "^[^\\x00]+$",
+              "title": "Q",
+              "type": "string"
+            }
+          },
+          {
+            "description": "a past day; only what was known by its end is searched",
+            "in": "query",
+            "name": "as_of",
+            "required": true,
+            "schema": {
+              "description": "a past day; only what was known by its end is searched",
+              "format": "date",
+              "title": "As Of",
+              "type": "string"
+            }
+          },
+          {
+            "description": "how many chunks, at most 50",
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 10,
+              "description": "how many chunks, at most 50",
+              "maximum": 50,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SearchResults"
+                }
+              }
+            },
+            "description": "The chunks, best first, each marked as untrusted text"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The document is neither CycloneDX nor SPDX JSON; The request did not validate"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "Ranked chunks of the advisory corpus as it was known at the end of a past day",
+        "tags": [
+          "agent"
+        ]
+      }
+    },
+    "/v1/triage": {
+      "post": {
+        "description": "Runs the triage graph for the CVE over what the slice knew at the end of as_of (or now): the match, the fixed version from the advisories known by then, the KEV listing and exploit signals, the retrieved advisory chunks, a drafted patch plan and, for a listed or exploited CVE, an early warning, each checked claim by claim against its cited source. It answers at the first approval interrupt. A client may start a number of runs each UTC day and the API a number in all (config/providers.yaml, serving); past either, the no model floor drafts and the run says so. Nothing is applied, sent or filed: a draft becomes approved only by a person's decision on its hash.",
+        "operationId": "post_triage_v1_triage_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TriageRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RunView"
+                }
+              }
+            },
+            "description": "The run at its first interrupt: the drafts with their checks, what waits, the costs"
+          },
+          "404": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The resource does not exist"
+          },
+          "422": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The document is neither CycloneDX nor SPDX JSON; The request did not validate"
+          },
+          "429": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The sync was called too often; This client has used its daily budget"
+          },
+          "500": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "The server failed while answering"
+          },
+          "503": {
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            },
+            "description": "A public source the API reads did not answer; As many runs wait for a person as the store keeps; No serving bundle has been loaded yet; The database is not configured or did not answer; The legacy report adapter is not available in this deployment; The matcher is not available in this deployment"
+          }
+        },
+        "summary": "Start a triage run for one CVE, now or as of a past day, to its first approval",
+        "tags": [
+          "agent"
         ]
       }
     }

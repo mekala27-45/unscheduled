@@ -133,6 +133,17 @@ transaction level advisory lock, so two instances starting together run them onc
 | client_budget | per hashed client, UTC day and kind: the count |
 | ops_run | the run ledger of the sync: step, rows in, rows changed, storage, status |
 | settings | `client_salt`, `data_version`, `sync`, `release_check`, `backlog` |
+| corpus_document | the scoped advisory corpus (ADR 0011), each version with known_from, known_to, withdrawn and its sections |
+| corpus_chunk | its chunks: the text with a full text index on an expression, a halfvec(384) column with an HNSW index |
+| agent_run | one row per triage run: CVE, run time, status, the hashes of its drafts, a summary that stays after its checkpoints go |
+| agent_approval | every decision on a draft: run, kind, hash, decision, who, when, whether the token matched; only ever added |
+| agent_budget | the model calls and tokens of each provider and model, per UTC day, so every instance reads one count |
+
+The checkpoints of the triage graph live in a schema of their own beside it, `unscheduled_checkpoints`
+(the API's schema name with `_checkpoints`), made by migration 0005 and filled by the LangGraph saver,
+which sets up its tables there once per process under an advisory lock. At most 100 runs wait for a
+person with every checkpoint; a decided run keeps its latest checkpoint for the newest 500 decided
+runs, and after that only its row in agent_run.
 
 The uploaded SBOM is never stored. The client address is never stored; the client is the first 32
 hex digits of sha256(salt:address), with a salt the API makes on its first start.
@@ -157,6 +168,12 @@ response carries the `X-Data-Version` header. The CSV carries the statement in
 | POST /v1/match | a CycloneDX JSON or SPDX 2 JSON body up to `sbom_upload_max_bytes`; findings by packages/match over the OSV records that name the SBOM's packages |
 | GET /v1/legacy/report.csv | the legacy CSV from packages/legacy_adapter |
 | POST and GET /internal/sync | section 3 |
+| POST /v1/triage | `{cve_id, as_of?}`: a run of the triage graph over what the slice knew at the end of `as_of` (or now), answered at its first approval interrupt: the drafts with their checks, what waits, the facts it read, time, tokens and shadow price per node |
+| GET /v1/runs | the newest runs, `limit` 1 to 100 |
+| GET /v1/runs/{id} | one run as it stands; a run past the cap answers from its row in agent_run |
+| POST /v1/approvals | `{run_id, kind, sha256, decision, by}` with `Authorization: Bearer` and the approver's token: a person's decision on the draft of that hash |
+| GET /v1/search | `q`, `as_of` (a past day), `limit` 1 to 50: ranked chunks of the corpus as known at the end of that day, each marked untrusted |
+| POST /mcp | the MCP server over streamable HTTP, stateless, answering in JSON; GET and DELETE answer 405 |
 
 The as-of rule (the same one the lake follows): a field with events takes its newest event at or
 before T; a field without events takes its current value when its known_from is at or before T; a
@@ -171,6 +188,18 @@ The budget: each hashed client may make `client_budget_per_day.lookups` reads of
 and `sbom_matches` matches per UTC day; /health, /v1/meta and the sync are not counted. Every counted
 response carries `X-Budget-Limit` and `X-Budget-Remaining`. CORS allows the origins in
 `UNSCHED_CORS_ORIGINS`, a comma separated list, for GET, POST and OPTIONS.
+
+A triage run counts as a read, and also against two serving budgets in config/providers.yaml: the runs
+one client may start in a UTC day and the runs all clients may start together. Past either, the no
+model floor drafts and the run's `note` says so; with no provider configured the floor drafts too and
+says that. The MCP tools count as reads, one each, and start_triage against the serving budgets.
+
+A decision needs the approver's token. The API keeps only its SHA-256, lowercase hex, in
+`APPROVER_TOKEN_SHA256`, hashes what it receives and compares the two in constant time. Without the
+token, with another, or on a hash that is not the hash of the draft that waits, the answer is
+approval-refused, nothing is recorded and the run still waits. The status of a draft is read every
+time from the draft as it stands and the decisions of its hash, so a draft changed after a decision
+has a new hash and no approval. No route, command or tool applies, sends or files anything.
 
 Logs are one JSON object per line: method, route template, status, time taken, the first eight hex
 digits of the hashed client. Never a connection value, a token, an SBOM or an address.
@@ -269,6 +298,17 @@ publish workflow.
 503. packages/legacy_adapter lacks `adapter.report`, or the stored findings do not carry the fields
 of a packages/match Finding.
 
+### problem-run-store-full
+
+503. As many triage runs wait for a person as the store keeps (ADR 0011 caps the waiting runs). Decide
+some of the runs that wait, in the console with the approver's token, then start another.
+
+### problem-approval-refused
+
+403. A decision on a draft needs the approver's token and the hash of the draft that waits. The
+request lacked the token, carried another, or named another hash; nothing was recorded and the run
+still waits.
+
 ### problem-internal
 
 500. The server failed while answering. The log has the error class and the frames, never the
@@ -278,16 +318,18 @@ request body.
 
 `unsched` (packages/cli) runs the pipeline scripts (`probe`, `fetch`, `build`, `render`) and answers
 from the same functions as the API (`sync`, `cve`, `cves`, `timeline`, `backlog`, `products`,
-`exposure`, `match`, `legacy-report`), against the database named by the same variables. `serve` runs
-the API. A data command prints the JSON the API would answer; a problem prints the same problem
+`exposure`, `match`, `legacy-report`, `triage`, `runs`), against the database named by the same
+variables. `serve` runs the API, and `mcp` the MCP server over stdio with the tools of /mcp, counting
+nothing, as no command counts its calls. No command takes the approver's token. A data command prints the JSON the API would answer; a problem prints the same problem
 document to stderr and exits 1. tests/cli runs every data command beside its route on the same
 database and writes results/cli_parity.json when every answer agrees.
 
 ## 8. Deployment
 
 `Dockerfile.vercel` builds the API container on Vercel from the repository alone: `uv sync --frozen
---no-dev`, then alembic.ini, alembic/ and config/ copied in, uvicorn on port 80. The Neon integration
-writes the connection variables into the Vercel project; nobody types them. The container
+--no-dev`, then alembic.ini, alembic/, config/, models/, prompts/ and data/prices/ copied in, uvicorn
+on port 80. The Neon integration writes the connection variables into the Vercel project; nobody types
+them. The container
 migrates at start, makes the client salt if there is none, and serves /health even when the
 database is missing, so the first deploy can be checked before Neon is linked.
 
@@ -297,6 +339,8 @@ UNSCHED_CORS_ORIGINS                                 comma separated web origins
 UNSCHED_DB_SCHEMA                                    default unscheduled
 UNSCHED_MIGRATE_ON_START                             default on
 UNSCHED_CACHE_DIR                                    where bundle files are kept by digest
+APPROVER_TOKEN_SHA256                                the SHA-256 of the approver's token, never the token
+GROQ_API_KEY, GEMINI_API_KEY, ...                    the provider keys config/providers.yaml names; none, and the floor drafts
 ```
 
 ## 9. Tests
@@ -309,5 +353,13 @@ rule as a property test with a planted future fact, the budget and its salt, the
 CORS, the migrations against the table definitions, the committed openapi.json, schemathesis
 against it, and scripts/check_persistence.py, which starts the API in a child process and reads what
 it stored from a connection of its own. tests/cli holds the command line to the same answers.
+
+For the agent: a run to its first interrupt over a scoped corpus, what it may read as of its time,
+the decisions with and without the token and on another hash, the prune of a decided run's
+checkpoints, the cap on waiting runs, the serving budgets, search as of a day, and the token never in a
+log (tests/api/test_triage.py); the MCP server through the SDK's own client over streamable HTTP
+under a real uvicorn and over stdio as a child process (tests/api/test_mcp.py); and C7 over every
+route, method, command and tool, with a state machine across the three surfaces, which writes
+results/agent/c7.json (tests/api/test_control_served.py).
 
 > unscheduled is a portfolio demonstration. Its customer is fictional, and public open source repositories stand in for the products of that customer. It is not affiliated with NIST, the NVD, CISA, FIRST, MITRE, ENISA or any vendor named in the data, and its values are not official scores. It is not for security, legal or regulatory decisions. It never files a report and never applies a patch: a person approves every plan and files every report. This product uses data from the NVD API but is not endorsed or certified by the NVD.

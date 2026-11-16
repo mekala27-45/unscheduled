@@ -6,16 +6,18 @@ requires-python = ">=3.12,<3.13"
 license = "Apache-2.0"
 dependencies = [
   "unscheduled-core",
-  "tokenizers==0.23.3",
-  "httpx>=0.28",
-  "pyyaml>=6.0",
   "numpy>=2.0",
-  "duckdb==2.0.0",
   "polars>=2.1",
-  "onnxruntime==1.32.0",
   "psycopg[binary]>=3.3",
   "pgvector==0.5.1",
 ]
+
+# The API needs only the search over Postgres; building the corpus and encoding text are extras, so
+# the API's container image carries neither DuckDB nor the tokenizer unless the frozen configuration
+# needs the encoder.
+[project.optional-dependencies]
+corpus = ["duckdb==2.0.0", "tokenizers==0.23.3", "httpx>=0.28", "pyyaml>=6.0"]
+embed = ["tokenizers==0.23.3", "onnxruntime==1.32.0", "httpx>=0.28", "pyyaml>=6.0"]
 
 [build-system]
 requires = ["hatchling>=1.25"]

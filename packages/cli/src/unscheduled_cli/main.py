@@ -13,6 +13,9 @@
     unsched exposure ID [--as-of]      as GET /v1/products/{id}/exposure
     unsched match SBOM                 as POST /v1/match
     unsched legacy-report [--out FILE] as GET /v1/legacy/report.csv
+    unsched triage ID [--as-of DATE]   as POST /v1/triage: a run to its first approval
+    unsched runs [ID] [--limit N]      as GET /v1/runs, or GET /v1/runs/{id} with an id
+    unsched mcp                        the MCP server over stdio, the tools of the API's /mcp
     unsched serve [--host --port]      the API itself, under uvicorn
 
 The data commands print the same JSON the API answers, built by the same functions from the same
@@ -20,12 +23,15 @@ database (the variables the API reads: DATABASE_URL_UNPOOLED, DATABASE_URL or PO
 A problem prints the same problem document to stderr and exits 1. tests/cli holds the two to the
 same answers. Two differences are deliberate: `match` reads a local file of any size, since the
 upload limit protects the public service and not a laptop, and `match --advisories FILE` matches
-against a local copy of OSV records instead of api.osv.dev.
+against a local copy of OSV records instead of api.osv.dev. Nothing here approves a draft: a person
+approves one by its hash through POST /v1/approvals with the approver's token, and no command takes
+that token.
 """
 
 from __future__ import annotations
 
 import json
+import re
 import subprocess
 import sys
 import time
@@ -41,11 +47,20 @@ from unscheduled_api import exposure as exposure_service
 from unscheduled_api import legacy as legacy_service
 from unscheduled_api import matching
 from unscheduled_api.problems import MEDIA_TYPE, ProblemError
-from unscheduled_api.schemas import MatchCounts, MatchResponse, SbomSummary, SyncChunk, SyncResponse
-from unscheduled_api.services import Services
+from unscheduled_api.schemas import (
+    MatchCounts,
+    MatchResponse,
+    RunList,
+    RunView,
+    SbomSummary,
+    SyncChunk,
+    SyncResponse,
+)
+from unscheduled_api.services import Services, database_errors
 from unscheduled_core import paths
 
 ServicesFactory = Callable[[], Services]
+RUN_ID = re.compile(r"^[0-9a-f]{32}$")
 STORED_LOCALLY = "Nothing was stored: the command line matches locally and keeps no log."
 PASS_THROUGH = {"allow_extra_args": True, "ignore_unknown_options": True}
 
@@ -356,6 +371,65 @@ def create_cli(factory: ServicesFactory | None = None) -> typer.Typer:
         else:
             out.write_bytes(data)
             typer.echo(f"unsched: wrote {out} ({len(data)} bytes)", err=True)
+
+    # The agent ------------------------------------------------------------------------------------
+
+    def past_day(as_of: str | None) -> date | None:
+        try:
+            day = date.fromisoformat(as_of) if as_of else None
+        except ValueError as err:
+            raise ProblemError("invalid-request", "as_of is a date, YYYY-MM-DD") from err
+        if day is not None and day >= date.today():
+            raise ProblemError("invalid-request", "as_of must be a day that has already ended in UTC")
+        return day
+
+    def envelope(svc: Services, payload: dict[str, Any]) -> dict[str, Any]:
+        return {**payload, "statement": svc.statement, "data_version": svc.label()}
+
+    @app.command()
+    def triage(
+        cve_id: Annotated[str, typer.Argument(help="a CVE id in the serving slice")],
+        as_of: Annotated[
+            str | None, typer.Option(help="a past day, YYYY-MM-DD: the run reads what was known by its end")
+        ] = None,
+    ) -> None:
+        """Run the triage graph for a CVE to its first approval interrupt, as POST /v1/triage. It
+        drafts and checks; it approves nothing."""
+
+        def produce(svc: Services) -> BaseModel:
+            day = past_day(as_of)
+            require_data(svc)
+            with database_errors():
+                return RunView.model_validate(envelope(svc, svc.triage().start(cve_id, day)))
+
+        answer(f"unsched triage {cve_id}", produce)
+
+    @app.command()
+    def runs(
+        run_id: Annotated[str | None, typer.Argument(help="a run id, or none for the newest runs")] = None,
+        limit: Annotated[int, typer.Option(min=1, max=100, help="how many runs, at most 100")] = 25,
+    ) -> None:
+        """The newest triage runs, as GET /v1/runs; with a run id, that run as GET /v1/runs/{id}."""
+
+        def produce(svc: Services) -> BaseModel:
+            with database_errors():
+                if run_id is not None:
+                    if not RUN_ID.match(run_id):
+                        raise ProblemError("invalid-request", "a run id is 32 hexadecimal characters")
+                    return RunView.model_validate(envelope(svc, svc.triage().read(run_id)))
+                return RunList.model_validate(envelope(svc, {"runs": svc.triage().runs(limit)}))
+
+        answer("unsched runs" + (f" {run_id}" if run_id else ""), produce)
+
+    @app.command()
+    def mcp() -> None:
+        """The MCP server over stdio, with the tools of the API's /mcp. No tool approves, applies or
+        files anything; the calls are not counted, as no command here counts its calls."""
+        import anyio
+        from unscheduled_api import agent_tools
+        from unscheduled_mcp import server as mcp_server
+
+        anyio.run(mcp_server.serve_stdio, agent_tools.build(services(), counted=False))
 
     @app.command()
     def serve(
