@@ -77,11 +77,16 @@ All terms below were read on 8 November 2026 (UTC) unless the entry says otherwi
 - **Kept:** per entry its CVE, vendor and product, name, dates, ransomware use, CWEs, catalog
   version and first appearance (kev). From Phase 3, for the advisory corpus, the text of every
   entry: its name, short description, required action and notes (kev_text), one row per distinct
-  text with the fetch that first saw it, so an edit by CISA is a new row and the old text stays.
+  text with the time it was first seen, so an edit by CISA is a new row and the old text stays. A
+  one time pass reads the catalog file at every commit of the repository history, oldest first,
+  and dates each text by the first commit that held it; after that each new head commit adds the
+  texts it is the first to hold, dated by the fetch.
 - **Note:** the kev-data history starts on 27 January 2025, so first_seen_commit for an entry
   added to the catalog before then is the first commit of the repository; dateAdded is the date
-  CISA states. The text of an entry is kept from the first fetch after 16 November 2026 on; text
-  CISA wrote and edited before then is not in the catalog the build reads.
+  CISA states. For the same reason the text of an entry listed before then is known from that
+  first commit on, and the text it had when it was listed is not in the history. The catalog file
+  at commit 15200f913fd2 (25 February 2025) is cut off and does not parse; the pass leaves it out
+  and the ledger note names it.
 
 ## EPSS (epss)
 

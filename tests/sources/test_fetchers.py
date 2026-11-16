@@ -172,7 +172,26 @@ def test_kev_from_the_pinned_commit_with_its_first_appearance(
     monkeypatch.setattr(gitrepo, "remote_head", lambda *_a, **_k: commit)
     monkeypatch.setattr(gitrepo, "ensure_clone", lambda *a, **k: Path("."))
     log = fixture_bytes("kev_gitlog.txt.gz", unzip=True).decode()
-    monkeypatch.setattr(gitrepo, "git", lambda *a, **k: log)
+    # The history of the catalog file: the first commit lists two entries, the Citrix one with
+    # shorter notes; the second commit's file is cut off; the head is the recorded catalog.
+    head = json.loads(fixture_bytes("kev.json.gz", unzip=True))
+    first = json.loads(json.dumps(head))
+    first["vulnerabilities"] = first["vulnerabilities"][:2]
+    first["vulnerabilities"][0]["notes"] = "https://nvd.nist.gov/vuln/detail/CVE-2023-4966"
+    history = {
+        "1" * 40: ("2025-01-27T16:38:50-06:00", json.dumps(first)),
+        "2" * 40: ("2025-02-25T23:44:29-06:00", '{"catalogVersion": "2025.02.25", "vulner'),
+        commit: ("2026-11-06T21:18:59+00:00", json.dumps(head)),
+    }
+
+    def git(_repo: object, *args: str, **_k: object) -> str:
+        if args[0] == "show":
+            return history[args[1].split(":", 1)[0]][1]
+        if "--format=%H %cI" in args:
+            return "".join(f"{sha} {when}\n" for sha, (when, _) in history.items())
+        return log
+
+    monkeypatch.setattr(gitrepo, "git", git)
     ctx = make_context(tmp_root, handler)
     base.run(Kev(ctx))
     table = _rows(ctx, "kev")
@@ -180,15 +199,29 @@ def test_kev_from_the_pinned_commit_with_its_first_appearance(
     assert table.get_column("first_seen_commit").null_count() == 0
     log4shell = table.filter(pl.col("cve_id") == "CVE-2021-44228").row(0, named=True)
     assert log4shell["date_added"] == date(2021, 12, 10)
-    note = next(r.note for r in ledger.rows(ctx.locks_dir, "kev"))
+    notes = {r.window: r.note for r in ledger.rows(ctx.locks_dir, "kev")}
+    note = notes[f"head {commit[:12]}"]
     assert note is not None and "only in repo 0" in note and "only on cisa.gov 0" in note
+    assert notes["text history"] == (
+        "4 texts of 3 entries; catalog unreadable at 222222222222 (2025-02-25T23:44:29-06:00)"
+    )
     entries = locks.load(ctx.locks_dir, "kev").entries
     assert any(e.url.endswith(f"/{commit}/known_exploited_vulnerabilities.json") for e in entries)
+    # Each text is known from the first commit that held it; the head adds none it did not hold.
     texts = _rows(ctx, "kev_text")
-    assert texts.height == 3 and texts.get_column("text_digest").n_unique() == 3
-    assert texts.get_column("captured_at").null_count() == 0
+    assert texts.height == 4 and texts.get_column("captured_at").null_count() == 0
+    by_cve = {c: sorted(g.get_column("captured_at").to_list()) for (c,), g in texts.group_by("cve_id")}
+    first_time = datetime(2025, 1, 27, 22, 38, 50, tzinfo=UTC)
+    head_time = datetime(2026, 11, 6, 21, 18, 59, tzinfo=UTC)
+    assert by_cve == {
+        "CVE-2023-4966": [first_time, head_time],
+        "CVE-2021-44228": [first_time],
+        "CVE-2026-19868": [head_time],
+    }
     text = texts.filter(pl.col("cve_id") == "CVE-2021-44228").row(0, named=True)
     assert text["short_description"] and text["date_added"] == date(2021, 12, 10)
+    again = base.run(Kev(ctx))
+    assert again.units == 0 and again.skipped == 2
 
 
 def test_a_kev_entry_gets_a_new_text_row_only_when_its_text_changes(tmp_path: Path) -> None:
