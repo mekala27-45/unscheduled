@@ -197,6 +197,82 @@
     "survival.json",
     "taxonomy.json"
    ]
+  },
+  {
+   "stage": "agent",
+   "registered_at": "2026-11-16T03:20:11+00:00",
+   "hash": "22c712be23ca343d03f618c595ec3475153d96f28c6f02054ce2de05875ba00d",
+   "files": {
+    "evaluation/phase3_plan.yaml": "f9c26fcc69958155a9383e4c452650a2c2c808f26f674da759d394155044feb9",
+    "evaluation/redteam/cases.jsonl": "f29ee3cda59b48646440c0109942b09dfef61e50201c50040f56d6a74609594f"
+   },
+   "first_committed": {
+    "evaluation/phase3_plan.yaml": {
+     "added_in": "c7c628a9e5a2250a9202d749993376b468d816a5",
+     "added_at": "2026-11-15T22:20:11-05:00",
+     "changed_since": false
+    },
+    "evaluation/redteam/cases.jsonl": {
+     "added_in": "c7c628a9e5a2250a9202d749993376b468d816a5",
+     "added_at": "2026-11-15T22:20:11-05:00",
+     "changed_since": false
+    }
+   },
+   "state_at_hash": {
+    "bronze_tables": [
+     "cpe_names",
+     "cve_metrics",
+     "cve_records",
+     "cve_weaknesses",
+     "cwe",
+     "epss_offsets",
+     "exploit_signals",
+     "ghsa",
+     "kev",
+     "nvd_changes",
+     "nvd_cves",
+     "osv_advisories",
+     "vulnrichment"
+    ],
+    "lake_file": true,
+    "result_files": [
+     "charts.json",
+     "q1.json",
+     "q2.json",
+     "q3.json",
+     "q4.json",
+     "q5.json",
+     "q6.json",
+     "q8.json"
+    ]
+   },
+   "note": "the Phase 3 plan and the red team, hashed before any retrieval or agent evaluation",
+   "model_results_at_hash": [
+    "c1.json",
+    "c2.json",
+    "calibration.json",
+    "conformal.json",
+    "fallback.json",
+    "fallback_first.json",
+    "floors.json",
+    "misses.json",
+    "onnx.json",
+    "onnx_refit.json",
+    "predictions.json",
+    "product.json",
+    "rank.json",
+    "rank_refit.json",
+    "rank_reproduction.json",
+    "rank_rerun.json",
+    "rank_unpinned.json",
+    "reweighting.json",
+    "serving.json",
+    "sets.json",
+    "survival.json",
+    "taxonomy.json",
+    "test_scoring.json"
+   ],
+   "agent_results_at_hash": []
   }
  ],
  "note": "registered before any test CVE was scored by anything"

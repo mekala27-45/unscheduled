@@ -6679,7 +6679,7 @@
    }
   },
   "build.phase3.checklist_done": {
-   "value": 2,
+   "value": 3,
    "fmt": "int",
    "provenance": {
     "origin": "scripts/build_manifest.py",
@@ -18735,7 +18735,7 @@
     ],
     [
      3,
-     "not done",
+     "done",
      "The Phase 3 plan and the red team hashed as the agent stage before any evaluation",
      "evaluation/registration.json"
     ],

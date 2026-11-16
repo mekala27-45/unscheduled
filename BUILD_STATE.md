@@ -7,7 +7,7 @@ the manifest or a committed file: edit the template, then render.
 ## Where it stands
 
 ```
-Phase            3 of 5, the agent: 2 of 18 checklist lines done (RESULTS.md); the
+Phase            3 of 5, the agent: 3 of 18 checklist lines done (RESULTS.md); the
                  prompt is claude/unscheduled-phase-3-prompt.md in the Project
 Phase 2          the models, tagged v0.2.0 on the commit that adds the release record;
                  its checklist 18 of 18 lines done (RESULTS.md)
@@ -29,9 +29,8 @@ Look approval    Phase 1: approved by Ajay on the evening of 11 November, New Yo
                  Phase 3: the run viewer and the approval inbox wait for his review
 ```
 
-Open checklist lines, Phase 3 (2 of 18 done):
+Open checklist lines, Phase 3 (3 of 18 done):
 
-- 3. The Phase 3 plan and the red team hashed as the agent stage before any evaluation
 - 4. The advisory corpus built point in time, the leakage test passing, the corpus published by digest
 - 5. Retrieval measured against its lexical floor with paired intervals; pgvector compared with the file index
 - 6. The router with budgets, fallbacks, the no model floor and replays; no live call in CI
@@ -51,10 +50,10 @@ Open checklist lines, Phase 3 (2 of 18 done):
 ## Next action
 
 Phase 3 runs from its prompt in the Project and the hand off below, and DECISIONS.md holds every
-choice made on the way. Done: step 1, step 2.
-Next: step 3, the Phase 3 plan and the red team hashed as the agent stage before any evaluation. The
-room in Neon comes before anything new loads, the plan is hashed before any evaluation, and every
-script whose numbers are committed runs with the numeric pins (AGENTS.md).
+choice made on the way. Done: step 1, step 2, step 3.
+Next: step 4, the advisory corpus built point in time, the leakage test passing, the corpus
+published by digest. The room in Neon comes before anything new loads, the plan is hashed before any
+evaluation, and every script whose numbers are committed runs with the numeric pins (AGENTS.md).
 
 ## Open problems
 
