@@ -147,6 +147,20 @@ def test_the_search_view_holds_the_newest_version_known_and_nothing_later(built:
     ).unique().to_list() == ["d3"]
 
 
+def test_the_documents_keep_every_section_and_end_like_their_chunks(built: dict[str, object]) -> None:
+    adv, kev = built["adv"], built["kev"]
+    assert isinstance(adv, corpus.Corpus) and isinstance(kev, corpus.Corpus)
+    docs = corpus.document_frame([*adv.versions, *kev.versions])
+    ghsa = docs.filter(pl.col("doc_id") == "ghsa:GHSA-aaaa-bbbb-cccc").sort("known_from")
+    assert ghsa.get_column("known_to").to_list() == [datetime(2025, 6, 1, tzinfo=UTC), None]
+    sections = dict(json.loads(ghsa.row(0, named=True)["sections_json"]))
+    assert sections["references"] == "ADVISORY: https://example.test/advisory"
+    notes = dict(
+        json.loads(docs.filter(pl.col("doc_id") == "kev:CVE-2026-1000").row(0, named=True)["sections_json"])
+    )
+    assert notes["notes"] == "https://example.test/gw"
+
+
 def test_a_withdrawn_advisory_leaves_the_view_from_its_withdrawal() -> None:
     record = {"id": "GHSA-wwww-xxxx-yyyy", "modified": "2024-01-01T00:00:00Z", "aliases": ["CVE-2024-5"]}
     doc = from_osv(
@@ -237,4 +251,4 @@ def test_the_corpus_has_the_same_digests_under_two_hash_seeds(tmp_path: Path) ->
         )
         found.append(json.loads(done.stdout.strip().splitlines()[-1]))
     assert found[0] == found[1]
-    assert set(found[0]["files"]) == {"chunks.parquet", "queries.parquet"}
+    assert set(found[0]["files"]) == {"chunks.parquet", "documents.parquet", "queries.parquet"}

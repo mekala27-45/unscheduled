@@ -288,25 +288,71 @@ def cwe(con: duckdb.DuckDBPyConnection) -> Corpus:
     return Corpus(versions, counts)
 
 
+ORDER = ["doc_id", "known_from", "version"]
+
+
+def _ends(versions: Sequence[Version]) -> pl.DataFrame:
+    """When each version stopped being current: the moment the next version of its document became
+    known, over every version, so a version without chunks still ends the one before it."""
+    frame = pl.DataFrame(
+        [{"doc_id": v.doc.doc_id, "known_from": v.known_from, "version": v.doc.version} for v in versions],
+        schema={"doc_id": pl.String, "known_from": pl.Datetime("us", "UTC"), "version": pl.String},
+    )
+    return (
+        frame.unique().sort(ORDER).with_columns(pl.col("known_from").shift(-1).over("doc_id").alias("ends"))
+    )
+
+
 def chunk_frame(
     versions: Iterable[Version], count: Callable[[str], int], max_tokens: int = MAX_TOKENS
 ) -> pl.DataFrame:
+    """Every chunk of every version. A version is current from its known_from until the next version
+    of its document is known, so a search reads the view at a time as one condition on each row."""
+    listed = list(versions)
     rows: list[dict[str, Any]] = []
-    for v in versions:
+    for v in listed:
         for c in chunk_document(v.doc, count, max_tokens):
             rows.append(_chunk_row(v, c))
     frame = pl.DataFrame(rows, schema=CHUNK_SCHEMA)
-    # A version is current from its known_from until the next version of its document is known,
-    # so a search can read the view at a time as one condition on each row.
-    order = ["doc_id", "known_from", "version"]
-    spans = (
-        frame.select(order)
-        .unique()
-        .sort(order)
-        .with_columns(pl.col("known_from").shift(-1).over("doc_id").alias("next_known"))
+    frame = frame.drop("known_to").join(_ends(listed), on=ORDER, how="left").rename({"ends": "known_to"})
+    return frame.select(list(CHUNK_SCHEMA)).sort([*ORDER, "ordinal"])
+
+
+DOCUMENT_SCHEMA: dict[str, Any] = {
+    "doc_id": pl.String,
+    "source": pl.String,
+    "version": pl.String,
+    "known_from": pl.Datetime("us", "UTC"),
+    "known_to": pl.Datetime("us", "UTC"),
+    "withdrawn": pl.Datetime("us", "UTC"),
+    "cve_ids": pl.List(pl.String),
+    "sections_json": pl.String,
+}
+
+
+def document_frame(versions: Iterable[Version]) -> pl.DataFrame:
+    """Every version with all its sections, the ones no search reads included (the references of an
+    advisory, the notes of a KEV entry), for the verifier to check a citation against."""
+    listed = list(versions)
+    rows = [
+        {
+            "doc_id": v.doc.doc_id,
+            "source": v.doc.source,
+            "version": v.doc.version,
+            "known_from": v.known_from,
+            "withdrawn": v.withdrawn,
+            "cve_ids": list(v.doc.cve_ids),
+            "sections_json": canonical_json([[s.name, s.text] for s in v.doc.sections]),
+        }
+        for v in listed
+    ]
+    schema = {k: t for k, t in DOCUMENT_SCHEMA.items() if k != "known_to"}
+    frame = (
+        pl.DataFrame(rows, schema=schema)
+        .join(_ends(listed), on=ORDER, how="left")
+        .rename({"ends": "known_to"})
     )
-    frame = frame.drop("known_to").join(spans, on=order, how="left").rename({"next_known": "known_to"})
-    return frame.select(list(CHUNK_SCHEMA)).sort([*order, "ordinal"])
+    return frame.select(list(DOCUMENT_SCHEMA)).unique(ORDER, keep="first").sort(ORDER)
 
 
 def _chunk_row(v: Version, c: Chunk) -> dict[str, Any]:

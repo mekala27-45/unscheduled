@@ -60,6 +60,7 @@ jobs:
           cd data/corpus
           mv corpus-manifest-*.json manifest.json
           mv corpus-queries-*.parquet queries.parquet
+          mv corpus-documents-*.parquet documents.parquet
           mv corpus-[0-9a-f]*.parquet chunks.parquet
           echo "The corpus of $tag."
 

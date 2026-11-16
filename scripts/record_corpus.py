@@ -37,6 +37,7 @@ LEAKAGE_TESTS = (
 )
 NAMES = {
     "chunks.parquet": "corpus-{digest}.parquet",
+    "documents.parquet": "corpus-documents-{digest}.parquet",
     "queries.parquet": "corpus-queries-{digest}.parquet",
 }
 

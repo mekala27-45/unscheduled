@@ -12,7 +12,7 @@ digest alone. The release it made is recorded in data/serving/published.json; wi
 file the bundle was built from goes up to that release as lake-<first twelve of its sha256>.duckdb,
 after the API has loaded the bundle, so a slow upload never holds the data back. With --corpus the
 files of data/corpus go up to the same release named by their digests (corpus-<twelve>.parquet,
-corpus-queries-<twelve>.parquet, corpus-manifest-<twelve>.json), and data/corpus/published.json
+corpus-documents-<twelve>.parquet, corpus-queries-<twelve>.parquet, corpus-manifest-<twelve>.json), and data/corpus/published.json
 records the release and every name with its full sha256.
 """
 
@@ -33,6 +33,7 @@ LAKE_FILE = ROOT / "data" / "lake" / "unscheduled.duckdb"
 CORPUS = ROOT / "data" / "corpus"
 CORPUS_FILES = {
     "chunks.parquet": "corpus-{digest}.parquet",
+    "documents.parquet": "corpus-documents-{digest}.parquet",
     "queries.parquet": "corpus-queries-{digest}.parquet",
     "manifest.json": "corpus-manifest-{digest}.json",
 }

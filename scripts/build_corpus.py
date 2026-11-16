@@ -5,7 +5,8 @@
     python scripts/build_corpus.py                # data/corpus: chunks, queries, manifest
 
 Writes data/corpus/chunks.parquet (every chunk of every document version with the moment it became
-known), data/corpus/queries.parquet (the development and shadow queries with their relevant
+known), data/corpus/documents.parquet (every version with all its sections, for the verifier),
+data/corpus/queries.parquet (the development and shadow queries with their relevant
 documents) and data/corpus/manifest.json (what went in, what was left out and why, the files with
 their digests). Tokens are counted with the tokenizer of the embedding model config/models.yaml
 pins. While a text table has no rows yet the corpus waits: the manifest says so and the script exits
@@ -85,7 +86,9 @@ def build(
     adv = corpus.advisories(con, scope)
     kev = corpus.kev(con)
     cwe = corpus.cwe(con)
-    chunks = corpus.chunk_frame([*adv.versions, *kev.versions, *cwe.versions], count)
+    versions = [*adv.versions, *kev.versions, *cwe.versions]
+    chunks = corpus.chunk_frame(versions, count)
+    documents = corpus.document_frame(versions)
 
     corpus.description_facts(con)
     engine = Engine(con, facts=corpus.DESCRIPTION_FACTS)
@@ -95,6 +98,7 @@ def build(
     con.close()
 
     files = {"chunks.parquet": write(chunks, out / "chunks.parquet")}
+    files["documents.parquet"] = write(documents, out / "documents.parquet")
     files["queries.parquet"] = write(queries, out / "queries.parquet")
     by_source = chunks.group_by("source").agg(
         pl.len().alias("chunks"),
