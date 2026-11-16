@@ -2,12 +2,14 @@ import { test } from "@playwright/test";
 import { mkdirSync } from "node:fs";
 import path from "node:path";
 import { FIXTURE_ID } from "../../lib/fixtures/cve";
+import { API_RUN_WAITING } from "../../lib/fixtures/runs";
 import { mockApi } from "../e2e/mock";
 
 /**
  * Screenshots for the look review. The console answers as the API stub answers today, so its regions
  * show their real empty and error states; the CVE page reads the labelled fixture (data version
- * "fixture") so the ruler has events to draw. SHOTS_DIR says where the files go.
+ * "fixture") so the ruler has events to draw, and the runs and the inbox read the run fixtures cut
+ * from real answers (lib/fixtures/runs.ts). SHOTS_DIR says where the files go.
  */
 const OUT = process.env.SHOTS_DIR ?? path.join("test-results", "shots");
 const PAGES = [
@@ -15,6 +17,9 @@ const PAGES = [
   { name: "console-home", route: "/app" },
   { name: "cve-fixture", route: `/app/cves/${FIXTURE_ID}` },
   { name: "design", route: "/design" },
+  { name: "runs", route: "/app/runs" },
+  { name: "run-fixture", route: `/app/runs/${API_RUN_WAITING.run_id}` },
+  { name: "inbox", route: "/app/inbox" },
 ];
 
 for (const p of PAGES) {

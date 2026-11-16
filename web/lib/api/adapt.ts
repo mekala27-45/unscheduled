@@ -25,7 +25,17 @@ import type {
   Product,
   ProductList,
   QuarantineCount,
+  Claim,
+  Decision,
+  Draft,
+  DraftKind,
+  Evidence,
+  Run,
+  RunFacts,
   RunLedgerRow,
+  RunList,
+  RunNode,
+  SearchResults,
   SourceFreshness,
   Timeline,
   TimelineEvent,
@@ -467,3 +477,187 @@ export function toMatch(m: S["MatchResponse"]): MatchResult {
     engine: m.engine,
   };
 }
+
+// The agent ------------------------------------------------------------------------------------
+
+/** The nodes of the triage graph in the order a run goes through them. */
+export const GRAPH_ORDER = [
+  "intake",
+  "match",
+  "fill",
+  "rank",
+  "retrieve",
+  "plan",
+  "verify",
+  "approve",
+  "warn",
+  "verify_warning",
+  "approve_warning",
+  "done",
+] as const;
+
+const records = (v: unknown): Record<string, unknown>[] => (Array.isArray(v) ? v.filter(isRecord) : []);
+
+function toNodes(nodes: Record<string, unknown>): RunNode[] {
+  const out = Object.entries(nodes)
+    .filter((entry): entry is [string, Record<string, unknown>] => isRecord(entry[1]))
+    .map(([name, n]) => ({
+      name,
+      ms: num(n.ms) ?? 0,
+      calls: num(n.calls) ?? 0,
+      tokens_in: num(n.tokens_in) ?? 0,
+      tokens_out: num(n.tokens_out) ?? 0,
+      shadow_usd: num(n.shadow_usd) ?? 0,
+    }));
+  const rank = (name: string) => {
+    const i = (GRAPH_ORDER as readonly string[]).indexOf(name);
+    return i === -1 ? GRAPH_ORDER.length : i;
+  };
+  return out.sort((a, b) => rank(a.name) - rank(b.name));
+}
+
+function toClaims(draft: Record<string, unknown>, failures: Record<string, unknown>[]): Claim[] {
+  return records(draft.claims).map((c) => {
+    const field = text(c.field) ?? "";
+    const citations = records(c.citations).map((x) => ({ source: text(x.source) ?? "", section: text(x.section) ?? "", version: text(x.version) }));
+    const sources = new Set(citations.map((x) => x.source));
+    const reasons = failures.filter((f) => text(f.field) === field && sources.has(text(f.source) ?? "")).map((f) => text(f.reason) ?? "failed");
+    return { field, value: text(c.value) ?? String(c.value ?? ""), text: text(c.text) ?? "", citations, failures: reasons };
+  });
+}
+
+const WARNING_FIELDS: [string, string][] = [
+  ["product", "Product"],
+  ["vulnerability", "Vulnerability"],
+  ["evidence", "Evidence of exploitation"],
+  ["member_states", "Member states concerned"],
+];
+
+function toDraft(kind: DraftKind, d: Record<string, unknown>): Draft {
+  const check = isRecord(d.check) ? d.check : {};
+  const draft = isRecord(check.draft) ? check.draft : {};
+  const failures = records(check.failures);
+  const fields =
+    kind === "warning"
+      ? [
+          ...WARNING_FIELDS.map(([key, label]) => ({ label, value: text(draft[key]) ?? "" })),
+          { label: "Actively exploited", value: draft.actively_exploited === true ? "yes" : draft.actively_exploited === false ? "no" : "" },
+        ].filter((f) => f.value)
+      : [
+          { label: "Component", value: text(draft.component) ?? "" },
+          { label: "Installed", value: text(draft.installed_version) ?? "" },
+          { label: "Fixed in", value: text(draft.fixed_version) ?? "" },
+        ].filter((f) => f.value);
+  return {
+    kind,
+    status: text(d.status) ?? "waiting",
+    by: text(d.by) ?? text(check.by),
+    sha256: text(d.sha256) ?? text(check.sha256),
+    blocked: check.blocked === true,
+    reasons: texts(check.reasons),
+    claims: toClaims(draft, failures),
+    claimsDrafted: num(check.claims_drafted) ?? 0,
+    claimsVerified: num(check.claims_verified) ?? 0,
+    claimsRemoved: num(check.claims_removed) ?? 0,
+    replacedByFloor: isRecord(check.replaced),
+    steps: texts(draft.steps),
+    fields,
+  };
+}
+
+function toEvidence(e: Record<string, unknown>): Evidence {
+  return {
+    chunk_id: text(e.chunk_id) ?? "",
+    doc_id: text(e.doc_id) ?? "",
+    version: text(e.version) ?? "",
+    sections: texts(e.sections),
+    known_from: text(e.known_from) ?? "",
+    text: text(e.text) ?? "",
+    score: num(e.score) ?? 0,
+  };
+}
+
+function toFacts(f: Record<string, unknown>): RunFacts {
+  const match = isRecord(f.match) ? f.match : {};
+  const kev = isRecord(f.kev) ? f.kev : null;
+  return {
+    description: text(f.description),
+    product: text(match.product),
+    component: text(match.component),
+    installed: text(match.installed_version),
+    ecosystem: text(match.ecosystem),
+    fixed: records(f.fixed_versions).map((x) => ({ version: text(x.version) ?? "", source: text(x.source) ?? "", doc_version: text(x.doc_version) })),
+    kev: kev
+      ? { date_added: text(kev.date_added), listed_at: text(kev.listed_at) ?? "", name: text(kev.vulnerability_name), source: text(kev.source) ?? "" }
+      : null,
+    exploits: records(f.exploits).map((x) => ({ source: text(x.source) ?? "", first_seen: text(x.first_seen) ?? "" })),
+    epss: num(f.epss),
+    evidence: records(f.evidence).map(toEvidence),
+  };
+}
+
+const KIND_OF_WAIT: Record<string, DraftKind> = { patch_plan: "plan", early_warning: "warning" };
+
+export function toRun(r: S["RunView"]): Run {
+  const drafts = isRecord(r.drafts) ? r.drafts : {};
+  const waiting = records(r.waiting_for)[0];
+  const cost = isRecord(r.cost) ? r.cost : {};
+  return {
+    data_version: r.data_version,
+    statement: r.statement,
+    run_id: r.run_id,
+    cve_id: r.cve_id ?? null,
+    as_of: r.as_of ?? null,
+    parent_run_id: r.parent_run_id ?? null,
+    status: r.status,
+    waiting:
+      waiting && KIND_OF_WAIT[text(waiting.kind) ?? ""] && text(waiting.sha256)
+        ? { kind: KIND_OF_WAIT[text(waiting.kind) ?? ""], sha256: text(waiting.sha256) ?? "" }
+        : null,
+    drafts: (["plan", "warning"] as const).filter((k) => isRecord(drafts[k])).map((k) => toDraft(k, drafts[k] as Record<string, unknown>)),
+    decisions: records(r.approvals).map(
+      (a): Decision => ({
+        kind: text(a.kind) ?? "",
+        decision: text(a.decision) ?? "",
+        sha256: text(a.sha256) ?? "",
+        by: text(a.by) ?? "",
+        at: text(a.at) ?? "",
+        token_ok: a.token_ok === true,
+      }),
+    ),
+    facts: toFacts(isRecord(r.facts) ? r.facts : {}),
+    nodes: toNodes(isRecord(r.nodes) ? (r.nodes as Record<string, unknown>) : {}),
+    cost: { tokens_in: num(cost.tokens_in) ?? 0, tokens_out: num(cost.tokens_out) ?? 0, shadow_usd: num(cost.shadow_usd) ?? 0 },
+    checkpoints: r.checkpoints,
+    note: r.note ?? null,
+    untrusted: r.untrusted,
+  };
+}
+
+export function toRunList(l: S["RunList"]): RunList {
+  return {
+    data_version: l.data_version,
+    statement: l.statement,
+    runs: l.runs.map((x) => ({
+      run_id: x.run_id,
+      cve_id: x.cve_id,
+      as_of: x.as_of,
+      status: x.status,
+      created_at: x.created_at,
+      plan_sha256: x.plan_sha256 ?? null,
+      warning_sha256: x.warning_sha256 ?? null,
+    })),
+  };
+}
+
+export function toSearch(s: S["SearchResults"]): SearchResults {
+  return {
+    data_version: s.data_version,
+    statement: s.statement,
+    query: s.query,
+    as_of: s.as_of,
+    configuration: s.configuration,
+    results: s.results.map((h) => ({ ...toEvidence(h as unknown as Record<string, unknown>), untrusted: h.untrusted })),
+  };
+}
+

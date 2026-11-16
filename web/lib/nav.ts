@@ -2,8 +2,8 @@
 export type Destination = {
   href: string;
   label: string;
-  /** Second key after g, from section 15: c, b, p, m or d. */
-  go?: "c" | "b" | "p" | "m" | "d";
+  /** Second key after g, from section 15: c, b, p, m, d, r or i. */
+  go?: "c" | "b" | "p" | "m" | "d" | "r" | "i";
   summary: string;
 };
 
@@ -13,6 +13,9 @@ export const DESTINATIONS: Destination[] = [
   { href: "/app/backlog", label: "Backlog", go: "b", summary: "Q1 to Q6, what the NVD no longer analyzes" },
   { href: "/app/products", label: "Products", go: "p", summary: "The stand-in products and their exposure" },
   { href: "/app/match", label: "Match", go: "m", summary: "Match an SBOM; only its digest is kept" },
+  { href: "/app/runs", label: "Runs", go: "r", summary: "Triage runs: the drafts, every claim checked, the costs" },
+  { href: "/app/inbox", label: "Inbox", go: "i", summary: "What waits for a person, by the hash of its draft" },
+  { href: "/app/search", label: "Advisories", summary: "The advisory corpus as known on a day" },
   { href: "/app/data", label: "Data", go: "d", summary: "Sources, licences, locks, freshness" },
   { href: "/app/models", label: "Models", summary: "The models, their floors, C1 and C2, the misses read" },
   { href: "/app/criteria", label: "Criteria", summary: "C1 to C9, signed before any result" },

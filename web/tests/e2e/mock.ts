@@ -1,11 +1,12 @@
 import type { Page, Route } from "@playwright/test";
 import { API_CVE, API_HEALTH_EMPTY, API_META_EMPTY, API_MODELS, API_SUMMARIES, API_TIMELINE, FIXTURE_ID, apiPage } from "../../lib/fixtures/api";
+import { API_RUNS, API_RUN_WAITING, API_SEARCH } from "../../lib/fixtures/runs";
 
 export const API = "http://api.unscheduled.test";
 
 const CORS = {
   "access-control-allow-origin": "*",
-  "access-control-allow-headers": "content-type",
+  "access-control-allow-headers": "content-type, authorization",
   "access-control-allow-methods": "GET, POST, OPTIONS",
 };
 
@@ -39,6 +40,9 @@ export async function mockApi(page: Page, overrides: Record<string, Handler> = {
     if (url.pathname === "/health") return json(route, STUB_HEALTH);
     if (url.pathname === "/v1/meta") return json(route, STUB_META);
     if (url.pathname === "/v1/models") return json(route, API_MODELS);
+    if (url.pathname === "/v1/runs") return json(route, API_RUNS);
+    if (url.pathname === `/v1/runs/${API_RUN_WAITING.run_id}`) return json(route, API_RUN_WAITING);
+    if (url.pathname === "/v1/search") return json(route, API_SEARCH);
     return json(route, { detail: "Not Found" }, 404);
   });
 }

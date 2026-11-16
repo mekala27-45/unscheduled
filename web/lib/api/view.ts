@@ -278,3 +278,84 @@ export type MatchResult = ResponseMeta & {
 /** The registry export of the loaded release with the evidence of how each model was chosen and
  * judged, as GET /v1/models serves it; document is null when the release carries none. */
 export type ModelsEvidence = ResponseMeta & { note: string; document: Record<string, unknown> | null };
+
+// The agent (Phase 3): triage runs, their drafts and checks, and advisory search ---------------
+
+/** One node of the triage graph as a run went through it: its time, its model calls, its price. */
+export type RunNode = { name: string; ms: number; calls: number; tokens_in: number; tokens_out: number; shadow_usd: number };
+
+export type Citation = { source: string; section: string; version: string | null };
+
+/** A claim of a draft, with the verifier's verdict: every citation checked against its source. */
+export type Claim = { field: string; value: string; text: string; citations: Citation[]; failures: string[] };
+
+export type DraftKind = "plan" | "warning";
+
+/** A draft as it stands: waiting, approved, ready, rejected or blocked, read from the draft and the decisions of its hash. */
+export type Draft = {
+  kind: DraftKind;
+  status: string;
+  by: string | null;
+  sha256: string | null;
+  blocked: boolean;
+  reasons: string[];
+  claims: Claim[];
+  claimsDrafted: number;
+  claimsVerified: number;
+  claimsRemoved: number;
+  replacedByFloor: boolean;
+  /** The plan's steps, or the warning's fields, in the words of the draft. */
+  steps: string[];
+  fields: { label: string; value: string }[];
+};
+
+export type Decision = { kind: string; decision: string; sha256: string; by: string; at: string; token_ok: boolean };
+
+export type Evidence = { chunk_id: string; doc_id: string; version: string; sections: string[]; known_from: string; text: string; score: number };
+
+export type RunFacts = {
+  description: string | null;
+  product: string | null;
+  component: string | null;
+  installed: string | null;
+  ecosystem: string | null;
+  fixed: { version: string; source: string; doc_version: string | null }[];
+  kev: { date_added: string | null; listed_at: string; name: string | null; source: string } | null;
+  exploits: { source: string; first_seen: string }[];
+  epss: number | null;
+  evidence: Evidence[];
+};
+
+export type Run = ResponseMeta & {
+  run_id: string;
+  cve_id: string | null;
+  as_of: string | null;
+  parent_run_id: string | null;
+  status: string;
+  /** The draft that waits for a person, if one does. */
+  waiting: { kind: DraftKind; sha256: string } | null;
+  drafts: Draft[];
+  decisions: Decision[];
+  facts: RunFacts;
+  nodes: RunNode[];
+  cost: { tokens_in: number; tokens_out: number; shadow_usd: number };
+  checkpoints: string;
+  note: string | null;
+  untrusted: string;
+};
+
+export type RunSummary = {
+  run_id: string;
+  cve_id: string;
+  as_of: string;
+  status: string;
+  created_at: string;
+  plan_sha256: string | null;
+  warning_sha256: string | null;
+};
+
+export type RunList = ResponseMeta & { runs: RunSummary[] };
+
+export type SearchHit = Evidence & { untrusted: boolean };
+
+export type SearchResults = ResponseMeta & { query: string; as_of: string; configuration: string; results: SearchHit[] };

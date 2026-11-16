@@ -56,3 +56,18 @@ export const useExposure = (id: string | null, asOf: string | null) =>
   });
 
 export const useMatch = () => useMutation({ mutationFn: (sbom: Record<string, unknown>) => api.match(sbom) });
+
+export const useRuns = () => useQuery({ queryKey: ["runs"], queryFn: ({ signal }) => api.runs(50, signal), refetchInterval: 30_000 });
+
+export const useRun = (id: string) => useQuery({ queryKey: ["run", id], queryFn: ({ signal }) => api.run(id, signal) });
+
+export const useTriage = () =>
+  useMutation({ mutationFn: ({ cveId, asOf }: { cveId: string; asOf: string | null }) => api.triage(cveId, asOf) });
+
+export const useDecide = () =>
+  useMutation({
+    mutationFn: ({ body, token }: { body: Parameters<typeof api.decide>[0]; token: string }) => api.decide(body, token),
+  });
+
+export const useSearch = (q: string, asOf: string, enabled: boolean) =>
+  useQuery({ queryKey: ["search", q, asOf], queryFn: ({ signal }) => api.search(q, asOf, 10, signal), enabled });

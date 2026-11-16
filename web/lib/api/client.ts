@@ -1,5 +1,19 @@
 import createClient, { type Client } from "openapi-fetch";
-import { toBacklog, toCve, toCveList, toExposure, toHealth, toMatch, toMeta, toModels, toProducts, toTimeline } from "./adapt";
+import {
+  toBacklog,
+  toCve,
+  toCveList,
+  toExposure,
+  toHealth,
+  toMatch,
+  toMeta,
+  toModels,
+  toProducts,
+  toRun,
+  toRunList,
+  toSearch,
+  toTimeline,
+} from "./adapt";
 import type { components, paths } from "./openapi";
 import type * as View from "./view";
 
@@ -23,6 +37,12 @@ export type Exposure = View.Exposure;
 export type Finding = View.Finding;
 export type MatchResult = View.MatchResult;
 export type ModelsEvidence = View.ModelsEvidence;
+export type Run = View.Run;
+export type RunList = View.RunList;
+export type RunSummary = View.RunSummary;
+export type Draft = View.Draft;
+export type DraftKind = View.DraftKind;
+export type SearchResults = View.SearchResults;
 export type CveQuery = NonNullable<paths["/v1/cves"]["get"]["parameters"]["query"]>;
 
 type S = components["schemas"];
@@ -175,7 +195,48 @@ export const api = {
       (v) => enveloped(v) && hasRecords(v, "sbom", "counts") && hasArrays(v, "findings"),
       toMatch,
     ),
+
+  runs: (limit = 50, signal?: AbortSignal) =>
+    run<S["RunList"], RunList>("/v1/runs", (c) => c.GET("/v1/runs", { params: { query: { limit } }, signal }), (v) => enveloped(v) && hasArrays(v, "runs"), toRunList),
+
+  run: (id: string, signal?: AbortSignal) =>
+    run<S["RunView"], Run>(
+      `/v1/runs/${id}`,
+      (c) => c.GET("/v1/runs/{run_id}", { params: { path: { run_id: id } }, signal }),
+      isRun,
+      toRun,
+    ),
+
+  /** A run to its first approval interrupt; asOf is a past day, or null for now. */
+  triage: (cveId: string, asOf: string | null, signal?: AbortSignal) =>
+    run<S["RunView"], Run>(
+      "/v1/triage",
+      (c) => c.POST("/v1/triage", { body: { cve_id: cveId, ...(asOf ? { as_of: asOf } : {}) }, signal }),
+      isRun,
+      toRun,
+    ),
+
+  /** A person's decision on the draft of that hash. The token goes in the header and nowhere else. */
+  decide: (body: S["ApprovalRequest"], token: string, signal?: AbortSignal) =>
+    run<S["RunView"], Run>(
+      "/v1/approvals",
+      (c) => c.POST("/v1/approvals", { body, headers: { Authorization: `Bearer ${token}` }, signal }),
+      isRun,
+      toRun,
+    ),
+
+  search: (q: string, asOf: string, limit = 10, signal?: AbortSignal) =>
+    run<S["SearchResults"], SearchResults>(
+      "/v1/search",
+      (c) => c.GET("/v1/search", { params: { query: { q, as_of: asOf, limit } }, signal }),
+      (v) => enveloped(v) && hasArrays(v, "results") && hasStrings(v, "query", "as_of"),
+      toSearch,
+    ),
 };
+
+function isRun(v: unknown): boolean {
+  return enveloped(v) && hasStrings(v, "run_id", "status", "untrusted") && hasRecords(v, "drafts", "nodes");
+}
 
 /** What to tell a person about a failed request: what broke and what to do next. */
 export function describeError(error: unknown): { title: string; body: string; detail: string | null; retry: boolean } {

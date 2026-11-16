@@ -1,5 +1,5 @@
 {
- "date": "2026-11-14",
+ "date": "2026-11-16",
  "base": "http://127.0.0.1:3210",
  "sloplint": {
   "result": "pass",
@@ -177,6 +177,58 @@
    },
    {
     "route": "/app/match",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/app/runs",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/app/runs/3b4b263ad2a84712bbd485f5b32a73ca",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/app/inbox",
+    "genre": null,
+    "scope": "app",
+    "render": true,
+    "fail": 0,
+    "reflex": 0,
+    "warn": 0,
+    "dismissed": 0,
+    "answered": 0,
+    "result": "pass",
+    "findings": []
+   },
+   {
+    "route": "/app/search",
     "genre": null,
     "scope": "app",
     "render": true,
@@ -432,6 +484,33 @@
     }
    },
    {
+    "route": "/app/inbox",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     }
+    }
+   },
+   {
     "route": "/app/limits",
     "serious": 0,
     "critical": 0,
@@ -514,6 +593,87 @@
    },
    {
     "route": "/app/products",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     }
+    }
+   },
+   {
+    "route": "/app/runs/3b4b263ad2a84712bbd485f5b32a73ca",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     }
+    }
+   },
+   {
+    "route": "/app/runs",
+    "serious": 0,
+    "critical": 0,
+    "projects": {
+     "desktop-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "desktop-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-dark": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     },
+     "phone-light": {
+      "serious": 0,
+      "critical": 0,
+      "other": []
+     }
+    }
+   },
+   {
+    "route": "/app/search",
     "serious": 0,
     "critical": 0,
     "projects": {

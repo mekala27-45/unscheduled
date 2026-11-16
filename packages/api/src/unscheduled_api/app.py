@@ -59,7 +59,6 @@ from unscheduled_api import (
     migrate,
     openapi,
     predictions,
-    triage,
 )
 from unscheduled_api.budget import LOOKUPS, MATCHES, TRIAGE, client_address
 from unscheduled_api.problems import MEDIA_TYPE, FieldError, ProblemError
@@ -875,6 +874,8 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
         responses=openapi.problem_responses(404, 422, 429, 500, 503),
     )
     def post_triage(body: TriageRequest, request: Request) -> RunView:
+        from unscheduled_api import triage
+
         past_day(body.as_of)
         budget = svc.require_budget()
         with database_errors():
@@ -952,6 +953,8 @@ def create_app(services: Services | None = None, *, settings: Settings | None = 
         ],
         limit: Annotated[int, Query(ge=1, le=50, description="how many chunks, at most 50")] = 10,
     ) -> SearchResults:
+        from unscheduled_api import triage
+
         past_day(as_of)
         with database_errors():
             results = svc.triage().search(q, as_of, limit)

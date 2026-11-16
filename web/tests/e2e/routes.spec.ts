@@ -4,6 +4,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { STATEMENT, NVD_NOTICE, GHSA_ATTRIBUTION } from "../../lib/statement";
 import { FIXTURE_ID } from "../../lib/fixtures/cve";
+import { API_RUN_WAITING } from "../../lib/fixtures/runs";
 import { mockApi } from "./mock";
 
 export const ROUTES = [
@@ -15,6 +16,10 @@ export const ROUTES = [
   "/app/backlog",
   "/app/products",
   "/app/match",
+  "/app/runs",
+  `/app/runs/${API_RUN_WAITING.run_id}`,
+  "/app/inbox",
+  "/app/search",
   "/app/data",
   "/app/models",
   "/app/criteria",

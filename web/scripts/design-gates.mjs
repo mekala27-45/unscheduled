@@ -57,7 +57,24 @@ const DOCS = {
 const CONSOLE = {
   scope: "app",
   files: ["web/styles/console.css", "web/styles/tokens.css", "web/styles/base.css", "web/components/console", "web/components/ui", "web/components/ruler", "web/components/charts", "web/app/(console)", "web/app/(site)/design"],
-  routes: ["/app", "/app/cves", "/app/cves/CVE-2099-0001", "/app/backlog", "/app/products", "/app/match", "/app/data", "/app/models", "/app/criteria", "/app/limits", "/status", "/design"],
+  routes: [
+    "/app",
+    "/app/cves",
+    "/app/cves/CVE-2099-0001",
+    "/app/backlog",
+    "/app/products",
+    "/app/match",
+    "/app/runs",
+    "/app/runs/3b4b263ad2a84712bbd485f5b32a73ca",
+    "/app/inbox",
+    "/app/search",
+    "/app/data",
+    "/app/models",
+    "/app/criteria",
+    "/app/limits",
+    "/status",
+    "/design",
+  ],
 };
 
 function sloplint(set) {
@@ -108,7 +125,7 @@ const axeRows = Object.values(axe);
 // 4. The screenshots of the look review.
 const shots = existsSync(SHOTS)
   ? readdirSync(SHOTS)
-      .filter((n) => /^(landing|console-home|cve-fixture|design)-\d+x\d+-(light|dark)\.png$/.test(n))
+      .filter((n) => /^(landing|console-home|cve-fixture|design|runs|run-fixture|inbox)-\d+x\d+-(light|dark)\.png$/.test(n))
       .sort()
       .map((n) => path.join(SHOTS, n))
   : [];

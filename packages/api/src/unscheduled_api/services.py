@@ -11,6 +11,7 @@ from collections.abc import Callable, Iterator
 from contextlib import contextmanager
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
+from typing import TYPE_CHECKING
 
 import psycopg
 import sqlalchemy as sa
@@ -27,8 +28,10 @@ from unscheduled_api.releases import GitHubReleases
 from unscheduled_api.scoring import Scorer
 from unscheduled_api.settings import DATABASE_VARIABLES, Settings
 from unscheduled_api.sync import Sync
-from unscheduled_api.triage import Triage
 from unscheduled_api.versions import VersionCache
+
+if TYPE_CHECKING:  # the agent's graph is imported on the first triage request, not at start
+    from unscheduled_api.triage import Triage
 
 log = structlog.get_logger("unscheduled.services")
 
@@ -131,7 +134,11 @@ class Services:
         return self.budget
 
     def triage(self) -> Triage:
-        """The triage service of Phase 3 over this process's engine and the same database URL."""
+        """The triage service of Phase 3 over this process's engine and the same database URL. The
+        graph and its libraries load here, on the first request that needs them, so a cold start of
+        the API pays for them only when it triages."""
+        from unscheduled_api.triage import Triage
+
         if self.engine is None or self.settings.database_url is None:
             raise ProblemError("database-unavailable", NO_DATABASE + "; the runs are kept there")
         return Triage(

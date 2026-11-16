@@ -17,7 +17,7 @@ from typing import Any, TypeVar
 from unscheduled_mcp import server as mcp_server
 from unscheduled_mcp import tools
 
-from unscheduled_api import VERSION, cves, exposure, triage
+from unscheduled_api import VERSION, cves, exposure
 from unscheduled_api.budget import LOOKUPS, TRIAGE, client_address
 from unscheduled_api.problems import ProblemError
 from unscheduled_api.services import Services, database_errors
@@ -91,6 +91,8 @@ class ServicesBackend:
 
     def start_triage(self, cve_id: str, as_of: date | None) -> dict[str, Any]:
         def call() -> dict[str, Any]:
+            from unscheduled_api import triage
+
             reason = None
             if self.address is not None:
                 _client, mine, everyone = self.svc.require_budget().tally(self.address, TRIAGE)

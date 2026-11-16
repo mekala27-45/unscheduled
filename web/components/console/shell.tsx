@@ -60,6 +60,8 @@ const SHORTCUTS: [string, string[]][] = [
   ["Go to Backlog", ["g", "b"]],
   ["Go to Products", ["g", "p"]],
   ["Go to Match", ["g", "m"]],
+  ["Go to Runs", ["g", "r"]],
+  ["Go to Inbox", ["g", "i"]],
   ["Go to Data", ["g", "d"]],
   ["Next row, previous row", ["j", "k"]],
   ["Open the row", ["Enter"]],
