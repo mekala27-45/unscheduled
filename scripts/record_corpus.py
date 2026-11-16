@@ -67,20 +67,22 @@ def find_release(tag: str | None) -> dict[str, Any]:
 
 
 def leakage() -> dict[str, Any]:
+    # addopts already holds -q; a second -q would drop the line that counts what passed and skipped.
     done = subprocess.run(
-        [sys.executable, "-m", "pytest", "-q", "-p", "no:cacheprovider", *LEAKAGE_TESTS],
+        [sys.executable, "-m", "pytest", "-o", "addopts=", "-q", "-p", "no:cacheprovider", *LEAKAGE_TESTS],
         cwd=ROOT,
         capture_output=True,
         text=True,
         check=False,
     )
-    last = (done.stdout.strip().splitlines() or [""])[-1]
+    lines = done.stdout.strip().splitlines()
+    last = next((line for line in reversed(lines) if re.search(r"\d+ (passed|failed|error)", line)), "")
     passed = re.search(r"(\d+) passed", last)
     return {
         "tests": list(LEAKAGE_TESTS),
         "passed": int(passed.group(1)) if passed else 0,
-        "summary": last,
-        "result": "pass" if done.returncode == 0 and "skipped" not in last else "fail",
+        "summary": re.sub(r"\s+in [0-9.]+s.*$", "", last.strip("= ")),
+        "result": "pass" if done.returncode == 0 and passed and "skipped" not in last else "fail",
     }
 
 

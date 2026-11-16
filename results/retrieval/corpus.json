@@ -1,0 +1,168 @@
+{
+ "phase": 3,
+ "status": "built",
+ "built_at": "2026-11-16T14:01:35Z",
+ "code": "5721dc19597619542ce973fa52dabc487c92da70",
+ "lake_data_cut": "2026-11-16 13:08:11+00:00",
+ "content_digest": "43f6181c0e22b1dac400b071caa8a066428bc3c3794a88e322e60a58c6267043",
+ "tokenizer": {
+  "model": "BAAI/bge-small-en-v1.5",
+  "revision": "5c38ec7c405ec4b44b94cc5a9bb96e735b38267a",
+  "sha256": "d241a60d5e8f04cc1b2b3e9ef7a4921b27bf526d9f6050ab90f9267a1f9e5c66"
+ },
+ "max_tokens": 256,
+ "bronze": {
+  "cve_records": {
+   "files": 28,
+   "rows": 431639
+  },
+  "cwe_text": {
+   "files": 1,
+   "rows": 9694
+  },
+  "ghsa": {
+   "files": 1,
+   "rows": 37817
+  },
+  "ghsa_text": {
+   "files": 1,
+   "rows": 37810
+  },
+  "kev": {
+   "files": 1,
+   "rows": 3560
+  },
+  "kev_text": {
+   "files": 1,
+   "rows": 1939
+  },
+  "osv_advisories": {
+   "files": 30,
+   "rows": 373333
+  },
+  "osv_text": {
+   "files": 30,
+   "rows": 369073
+  }
+ },
+ "scope": {
+  "product_cves": 663,
+  "cves": 119841
+ },
+ "documents": {
+  "advisories": {
+   "versions_in_scope": 15589,
+   "versions_without_text": 104,
+   "versions": 15485,
+   "documents": 15485,
+   "by_database": {
+    "ghsa": 10490,
+    "osv": 4995
+   }
+  },
+  "kev": {
+   "texts": 1936,
+   "documents": 1781,
+   "edited": 136,
+   "first_text_read_from_listing": 1261,
+   "never_in_a_lake_catalog": 3
+  },
+  "cwe": {
+   "catalog_versions": 10,
+   "texts": 1961,
+   "documents": 984
+  }
+ },
+ "chunks": {
+  "total": 68441,
+  "by_source": {
+   "cwe": {
+    "chunks": 3895,
+    "documents": 984,
+    "tokens": 653812,
+    "max_tokens": 256
+   },
+   "ghsa": {
+    "chunks": 50407,
+    "documents": 10490,
+    "tokens": 9690911,
+    "max_tokens": 2045
+   },
+   "kev": {
+    "chunks": 1937,
+    "documents": 1781,
+    "tokens": 184755,
+    "max_tokens": 248
+   },
+   "osv": {
+    "chunks": 12202,
+    "documents": 4995,
+    "tokens": 2134710,
+    "max_tokens": 303
+   }
+  },
+  "over_limit": 52
+ },
+ "queries": {
+  "development": {
+   "published": 39924,
+   "queries": 188,
+   "left_out": {
+    "no_advisory_or_kev_at_day0": 4129,
+    "no_description_at_day0": 35607
+   },
+   "with_kev": 0,
+   "with_cwe": 162,
+   "relevant_per_query": 1.963
+  },
+  "shadow": {
+   "published": 79666,
+   "queries": 1114,
+   "left_out": {
+    "no_advisory_or_kev_at_day0": 24320,
+    "no_description_at_day0": 54232
+   },
+   "with_kev": 2,
+   "with_cwe": 1097,
+   "relevant_per_query": 2.47
+  }
+ },
+ "files": {
+  "chunks.parquet": {
+   "sha256": "db600d52fcd5b2d869734a870b39db807433ad92ab19ccf4dbaf4dd1199851e6",
+   "bytes": 16554430,
+   "rows": 68441
+  },
+  "documents.parquet": {
+   "sha256": "6c936be9c2a2ecf02109d934ed6998b738d91754da995b9576cea99e77ba45e9",
+   "bytes": 13579052,
+   "rows": 19382
+  },
+  "queries.parquet": {
+   "sha256": "2db40b7401ba4570b929a6a5879b101bca9cc9bd82ebdf44fb19769c127c20f6",
+   "bytes": 271995,
+   "rows": 1302
+  }
+ },
+ "published": {
+  "tag": "serving-202611161401",
+  "release_id": 447117747,
+  "assets": {
+   "corpus-db600d52fcd5.parquet": "db600d52fcd5b2d869734a870b39db807433ad92ab19ccf4dbaf4dd1199851e6",
+   "corpus-documents-6c936be9c2a2.parquet": "6c936be9c2a2ecf02109d934ed6998b738d91754da995b9576cea99e77ba45e9",
+   "corpus-queries-2db40b7401ba.parquet": "2db40b7401ba4570b929a6a5879b101bca9cc9bd82ebdf44fb19769c127c20f6",
+   "corpus-manifest-7a407616dcfd.json": "7a407616dcfd9a67708d14e9e91f9b6da5de17b4d5afb19b4f54e34b3e42dcd7"
+  }
+ },
+ "leakage": {
+  "tests": [
+   "tests/retrieval/test_corpus.py::test_a_document_planted_after_the_query_time_is_never_returned",
+   "tests/retrieval/test_corpus.py::test_the_corpus_has_the_same_digests_under_two_hash_seeds",
+   "tests/retrieval/test_search.py::test_a_document_planted_after_the_query_time_is_returned_by_no_index"
+  ],
+  "passed": 5,
+  "summary": "5 passed",
+  "result": "pass"
+ },
+ "result": "pass"
+}

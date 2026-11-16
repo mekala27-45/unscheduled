@@ -1,0 +1,282 @@
+{
+ "as_of": "2026-11-16",
+ "figures": {},
+ "tables": {},
+ "values": {
+  "corpus.advisory_documents": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 15485
+  },
+  "corpus.advisory_versions": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 15485
+  },
+  "corpus.advisory_versions_without_text": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 104
+  },
+  "corpus.chunks": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 68441
+  },
+  "corpus.cwe_catalogs": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 10
+  },
+  "corpus.cwe_documents": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 984
+  },
+  "corpus.cwe_texts": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 1961
+  },
+  "corpus.development.no_description": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 35607
+  },
+  "corpus.development.no_document": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 4129
+  },
+  "corpus.development.published": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 39924
+  },
+  "corpus.development.queries": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 188
+  },
+  "corpus.development.relevant_per_query": {
+   "fmt": "float2",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 1.963
+  },
+  "corpus.development.with_kev": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 0
+  },
+  "corpus.kev_documents": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 1781
+  },
+  "corpus.kev_edited": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 136
+  },
+  "corpus.kev_read_from_listing": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 1261
+  },
+  "corpus.kev_texts": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 1936
+  },
+  "corpus.product_cves": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 663
+  },
+  "corpus.scope_cves": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 119841
+  },
+  "corpus.shadow.no_description": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 54232
+  },
+  "corpus.shadow.no_document": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 24320
+  },
+  "corpus.shadow.published": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 79666
+  },
+  "corpus.shadow.queries": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 1114
+  },
+  "corpus.shadow.relevant_per_query": {
+   "fmt": "float2",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 2.47
+  },
+  "corpus.shadow.with_kev": {
+   "fmt": "int",
+   "provenance": {
+    "as_of": "2026-11-16",
+    "note": null,
+    "origin": "scripts/record_corpus.py",
+    "population": "the corpus 43f6181c0e22 published with serving-202611161401",
+    "source": "build"
+   },
+   "value": 2
+  }
+ }
+}
