@@ -207,7 +207,7 @@ phase3:
   - n: 4
     text: "The advisory corpus built point in time, the leakage test passing, the corpus published by digest"
     evidence:
-      - results/retrieval/corpus.json
+      - {file: results/retrieval/corpus.json, equals: {status: built, leakage/result: pass}, has: [[published, tag], [published, assets]]}
   - n: 5
     text: "Retrieval measured against its lexical floor with paired intervals; pgvector compared with the file index"
     evidence:

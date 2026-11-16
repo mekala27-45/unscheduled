@@ -71,7 +71,8 @@ jobs:
 
       - name: The lake, with the as-of checks on the real facts
         if: steps.restore.outputs.skip != 'true'
-        run: uv run python scripts/build_lake.py --memory 10GB --threads 4
+        # The work database stays for the corpus step at the end (data/cache/lake/unscheduled.duckdb).
+        run: uv run python scripts/build_lake.py --memory 10GB --threads 4 --keep-work
 
       - name: The backlog questions and their charts
         if: steps.restore.outputs.skip != 'true'
@@ -93,6 +94,16 @@ jobs:
         if: steps.restore.outputs.skip != 'true'
         run: uv run python scripts/publish_serving.py --lake
 
+      # Phase 3: the advisory corpus point in time, from the same work database, beside the lake file
+      # by digest. It runs last, so it never holds the data back, and it waits (exit 0, a manifest
+      # that says so) until every text table has had its first fetch.
+      - name: The advisory corpus, published by digest
+        if: steps.restore.outputs.skip != 'true'
+        continue-on-error: true
+        run: |
+          uv run python scripts/build_corpus.py
+          uv run python scripts/publish_serving.py --corpus
+
       - name: Keep the reports
         if: always() && steps.restore.outputs.skip != 'true'
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -106,4 +117,6 @@ jobs:
             results/live/sync.json
             data/serving/bundle_manifest.json
             data/serving/published.json
+            data/corpus/manifest.json
+            data/corpus/published.json
           if-no-files-found: warn

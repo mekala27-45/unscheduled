@@ -3316,8 +3316,10 @@ name = "unscheduled-retrieval"
 version = "0.1.0"
 source = { editable = "packages/retrieval" }
 dependencies = [
+    { name = "duckdb" },
     { name = "httpx" },
     { name = "numpy" },
+    { name = "polars" },
     { name = "pyyaml" },
     { name = "tokenizers" },
     { name = "unscheduled-core" },
@@ -3325,8 +3327,10 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
+    { name = "duckdb", specifier = "==2.0.0" },
     { name = "httpx", specifier = ">=0.28" },
     { name = "numpy", specifier = ">=2.0" },
+    { name = "polars", specifier = ">=2.1" },
     { name = "pyyaml", specifier = ">=6.0" },
     { name = "tokenizers", specifier = "==0.23.3" },
     { name = "unscheduled-core", editable = "packages/core" },

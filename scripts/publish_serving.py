@@ -3,13 +3,17 @@
     python scripts/publish_serving.py            # data/serving/ to a new serving-<stamp> release
     python scripts/publish_serving.py --dry-run  # check the bundle and print what would be sent
     python scripts/publish_serving.py --lake     # then the lake file it was built from, to that release
+    python scripts/publish_serving.py --corpus   # and the advisory corpus built from that lake
 
 Uses only the GitHub REST API through the gh command line, which reads its own credential; this
 script never sees a token. The bundle manifest lists every file with its sha256, and the release is
 refused when a file on disk does not match the manifest, so the API can trust what it downloads by
 digest alone. The release it made is recorded in data/serving/published.json; with --lake the lake
 file the bundle was built from goes up to that release as lake-<first twelve of its sha256>.duckdb,
-after the API has loaded the bundle, so a slow upload never holds the data back.
+after the API has loaded the bundle, so a slow upload never holds the data back. With --corpus the
+files of data/corpus go up to the same release named by their digests (corpus-<twelve>.parquet,
+corpus-queries-<twelve>.parquet, corpus-manifest-<twelve>.json), and data/corpus/published.json
+records the release and every name with its full sha256.
 """
 
 from __future__ import annotations
@@ -26,6 +30,12 @@ REPO = "mekala27-45/unscheduled"
 BUNDLE = ROOT / "data" / "serving"
 PUBLISHED = BUNDLE / "published.json"
 LAKE_FILE = ROOT / "data" / "lake" / "unscheduled.duckdb"
+CORPUS = ROOT / "data" / "corpus"
+CORPUS_FILES = {
+    "chunks.parquet": "corpus-{digest}.parquet",
+    "queries.parquet": "corpus-queries-{digest}.parquet",
+    "manifest.json": "corpus-manifest-{digest}.json",
+}
 
 
 def sha256(path: Path) -> str:
@@ -85,6 +95,33 @@ def publish_lake() -> int:
     return 0
 
 
+def publish_corpus() -> int:
+    """The advisory corpus beside the lake it was built from, each file named by its digest."""
+    if not PUBLISHED.exists():
+        raise SystemExit("publish: data/serving/published.json does not exist; publish the bundle first")
+    manifest_path = CORPUS / "manifest.json"
+    if not manifest_path.exists():
+        raise SystemExit("publish: data/corpus/manifest.json does not exist; build the corpus first")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("status") != "built":
+        print(f"publish: the corpus is not built ({manifest.get('status')}); nothing to send")
+        return 0
+    for file, entry in manifest["files"].items():
+        if sha256(CORPUS / file) != entry["sha256"]:
+            raise SystemExit(f"publish: data/corpus/{file} does not match its digest in the manifest")
+    release = json.loads(PUBLISHED.read_text(encoding="utf-8"))
+    assets: dict[str, str] = {}
+    for file, pattern in CORPUS_FILES.items():
+        digest = sha256(CORPUS / file)
+        name = pattern.format(digest=digest[:12])
+        upload(int(release["id"]), CORPUS / file, name)
+        assets[name] = digest
+        print(f"publish: uploaded {name} to {release['tag']}")
+    record = {"tag": release["tag"], "id": release["id"], "assets": assets}
+    (CORPUS / "published.json").write_text(json.dumps(record, indent=1) + "\n", encoding="utf-8")
+    return 0
+
+
 def main(dry_run: bool) -> int:
     files = verify(BUNDLE)
     stamp = datetime.now(UTC).strftime("%Y%m%d%H%M")
@@ -121,4 +158,6 @@ def main(dry_run: bool) -> int:
 
 
 if __name__ == "__main__":
+    if "--corpus" in sys.argv:
+        sys.exit(publish_corpus())
     sys.exit(publish_lake() if "--lake" in sys.argv else main("--dry-run" in sys.argv))
